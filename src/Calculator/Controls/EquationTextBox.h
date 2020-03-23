@@ -6,6 +6,7 @@
 #include "CalcViewModel/Common/Utils.h"
 #include "CalcViewModel/GraphingCalculator/EquationViewModel.h"
 #include "Calculator/Controls/MathRichEditBox.h"
+#include "CalcViewModel/Common/TraceLogger.h"
 
 namespace CalculatorApp
 {
@@ -24,6 +25,7 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY(Platform::String ^, MathEquation);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, HasError);
             DEPENDENCY_PROPERTY_WITH_CALLBACK(bool, IsAddEquationMode);
+            DEPENDENCY_PROPERTY(bool, IsEquationLineDisabled);
 
             PROPERTY_R(bool, HasFocus);
 

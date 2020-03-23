@@ -15,6 +15,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
+            <converters:BooleanNegationConverter x:Name="BooleanNegationConverter"/>
 
             <DataTemplate x:Key="VariableDataTemplate" x:DataType="vm:VariableViewModel">
                 <Grid DataContext="{x:Bind}" Tapped="VariableAreaTapped">
@@ -130,10 +131,12 @@
                             <Slider Grid.Column="1"
                                     Margin="8,0,8,-6"
                                     VerticalAlignment="Center"
-                                    Maximum="{x:Bind Max, Mode=TwoWay}"
-                                    Minimum="{x:Bind Min, Mode=TwoWay}"
+                                    DataContext="{x:Bind}"
                                     StepFrequency="{x:Bind Step, Mode=TwoWay}"
-                                    Value="{x:Bind Value, Mode=TwoWay}"/>
+                                    ValueChanged="Slider_ValueChanged"
+                                    Value="{x:Bind Value, Mode=TwoWay}"
+                                    Maximum="{x:Bind Max, Mode=TwoWay}"
+                                    Minimum="{x:Bind Min, Mode=TwoWay}"/>
 
                             <Grid Grid.Row="1"
                                   Padding="8,0,8,8"
@@ -391,7 +394,8 @@
                                               Grid.Column="1"
                                               MinWidth="44"
                                               MinHeight="44"
-                                              VerticalAlignment="Stretch">
+                                              VerticalAlignment="Stretch"
+                                              IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsEquationLineDisabled, Mode=TwoWay}">
                                     <ToggleButton.Content>
                                         <StackPanel HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
@@ -863,10 +867,11 @@
                             <Setter Property="Margin" Value="1,0,1,0"/>
                         </Style>
                     </ListView.ItemContainerStyle>
+                    <ListView.ItemContainerTransitions>
+                        <TransitionCollection/>
+                    </ListView.ItemContainerTransitions>
                     <ListView.Transitions>
-                        <TransitionCollection>
-                            <AddDeleteThemeTransition/>
-                        </TransitionCollection>
+                        <TransitionCollection/>
                     </ListView.Transitions>
                 </ListView>
             </StackPanel>

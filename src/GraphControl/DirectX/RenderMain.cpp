@@ -86,7 +86,12 @@ namespace GraphControl::DX
             {
                 m_Tracing = false;
             }
-            RunRenderPass();
+
+            bool wasPointRendered = m_Tracing;
+            if (CanRenderPoint() || wasPointRendered)
+            {
+                RunRenderPassAsync();
+            }
         }
     }
 
@@ -95,7 +100,12 @@ namespace GraphControl::DX
         if (m_pointerLocation != location)
         {
             m_pointerLocation = location;
-            RunRenderPass();
+
+            bool wasPointRendered = m_Tracing;
+            if (CanRenderPoint() || wasPointRendered)
+            {
+                RunRenderPassAsync();
+            }
         }
     }
 
@@ -104,7 +114,12 @@ namespace GraphControl::DX
         if (m_drawActiveTracing != value)
         {
             m_drawActiveTracing = value;
-            RunRenderPass();
+
+            bool wasPointRendered = m_Tracing;
+            if (CanRenderPoint() || wasPointRendered)
+            {
+                RunRenderPassAsync();
+            }
         }
     }
 
@@ -125,6 +140,51 @@ namespace GraphControl::DX
             m_activeTracingPointerLocation.X = m_swapChainPanel->ActualWidth / 2 + 40;
             m_activeTracingPointerLocation.Y = m_swapChainPanel->ActualHeight / 2 - 40;
         }
+    }
+
+    bool RenderMain::CanRenderPoint()
+    {
+        if (m_drawNearestPoint || m_drawActiveTracing)
+        {
+            Point trackPoint = m_pointerLocation;
+
+            if (m_drawActiveTracing)
+            {
+                trackPoint = m_activeTracingPointerLocation;
+            }
+
+            if (!m_criticalSection.try_lock())
+            {
+                return false;
+            }
+
+            m_criticalSection.unlock();
+
+            critical_section::scoped_lock lock(m_criticalSection);
+
+            int formulaId = -1;
+            float nearestPointLocationX, nearestPointLocationY;
+            double nearestPointValueX, nearestPointValueY, rhoValueOut, thetaValueOut, tValueOut;
+            m_Tracing = m_graph->GetRenderer()->GetClosePointData(
+                            trackPoint.X,
+                            trackPoint.Y,
+                            formulaId,
+                            nearestPointLocationX,
+                            nearestPointLocationY,
+                            nearestPointValueX,
+                            nearestPointValueY,
+                            rhoValueOut,
+                            thetaValueOut,
+                            tValueOut)
+                        == S_OK;
+            m_Tracing = m_Tracing && !isnan(nearestPointLocationX) && !isnan(nearestPointLocationY);
+        }
+        else
+        {
+            m_Tracing = false;
+        }
+
+        return m_Tracing;
     }
 
     bool RenderMain::RunRenderPass()

@@ -27,6 +27,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, HasError);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, IsAddEquationMode);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, MathEquation);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, IsEquationLineDisabled);
 
 EquationTextBox::EquationTextBox()
 {
@@ -69,9 +70,8 @@ void EquationTextBox::OnApplyTemplate()
         auto toolTip = ref new ToolTip();
 
         auto equationButtonMessage = LocalizationStringUtil::GetLocalizedString(
-            m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
-                                               : resProvider->GetResourceString(L"hideEquationButtonToolTip"),
-            EquationButtonContentIndex);
+            IsEquationLineDisabled ? resProvider->GetResourceString(L"showEquationButtonToolTip")
+                                               : resProvider->GetResourceString(L"hideEquationButtonToolTip"), EquationButtonContentIndex);
 
         toolTip->Content = equationButtonMessage;
         ToolTipService::SetToolTip(m_equationButton, toolTip);
@@ -238,9 +238,8 @@ void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^
     auto resProvider = AppResourceProvider::GetInstance();
 
     auto equationButtonMessage = LocalizationStringUtil::GetLocalizedString(
-        m_equationButton->IsChecked->Value ? resProvider->GetResourceString(L"showEquationButtonToolTip")
-                                           : resProvider->GetResourceString(L"hideEquationButtonToolTip"),
-        EquationButtonContentIndex);
+        IsEquationLineDisabled ? resProvider->GetResourceString(L"showEquationButtonToolTip")
+                                           : resProvider->GetResourceString(L"hideEquationButtonToolTip"), EquationButtonContentIndex);
 
     toolTip->Content = equationButtonMessage;
     ToolTipService::SetToolTip(m_equationButton, toolTip);
@@ -269,8 +268,10 @@ void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e
 
     if (m_equationButton)
     {
-        m_equationButton->IsChecked = false;
+        IsEquationLineDisabled = false;
     }
+
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::RemoveFunction);
 
     VisualStateManager::GoToState(this, "Normal", true);
 }
@@ -280,6 +281,7 @@ void EquationTextBox::OnColorChooserButtonClicked(Object ^ sender, RoutedEventAr
     if (ColorChooserFlyout != nullptr && m_richEditBox != nullptr)
     {
         ColorChooserFlyout->ShowAt(m_richEditBox);
+        TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::StylePicker);
     }
 }
 

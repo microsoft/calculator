@@ -328,6 +328,7 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\ViewState.cpp" />
+    <ClCompile Include="Utils\DispatcherTimerDelayer.cpp" />
     <ClCompile Include="Controls\TwoPaneViewCX.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -441,6 +442,7 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\ViewState.h" />
+    <ClInclude Include="Utils\DispatcherTimerDelayer.h" />
     <ClInclude Include="Controls\TwoPaneViewCX.h">
       <Filter>Controls</Filter>
     </ClInclude>

@@ -158,7 +158,7 @@ public
         {
             auto equation = static_cast<Equation ^>(sender);
             auto propertyName = args->PropertyName;
-            if (propertyName == GraphControl::Equation::LineColorPropertyName)
+            if (propertyName == GraphControl::Equation::LineColorPropertyName || propertyName == GraphControl::Equation::IsSelectedPropertyName)
             {
                 EquationStyleChanged(equation);
             }
