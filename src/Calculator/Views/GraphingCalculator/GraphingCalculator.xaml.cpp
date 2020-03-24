@@ -49,8 +49,9 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Popups;
 using namespace Windows::UI::ViewManagement;
+namespace MUXC = Microsoft::UI::Xaml::Controls;
 
-constexpr auto sc_ViewModelPropertyName = L"ViewModel";
+    constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, GraphControlAutomationName);
@@ -434,9 +435,9 @@ void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventAr
     ViewModel->SelectedEquation->GraphEquation->IsSelected = false;
 }
 
-Visibility GraphingCalculator::ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel)
+MUXC::TwoPaneViewPriority GraphingCalculator::GetPanePriority(bool isEquationModeActivated)
 {
-    return (!isSmallState || isEquationModeActivated ^ isGraphPanel) ? ::Visibility::Visible : ::Visibility::Collapsed;
+    return isEquationModeActivated ? MUXC::TwoPaneViewPriority::Pane2 : MUXC::TwoPaneViewPriority::Pane1;
 }
 
 Platform::String ^ GraphingCalculator::GetInfoForSwitchModeToggleButton(bool isChecked)
@@ -573,7 +574,10 @@ void GraphingCalculator::DisplayGraphSettings()
     auto flyoutGraphSettings = ref new Flyout();
     flyoutGraphSettings->Content = graphSettings;
     flyoutGraphSettings->Closing += ref new TypedEventHandler<FlyoutBase ^, FlyoutBaseClosingEventArgs ^>(this, &GraphingCalculator::OnSettingsFlyout_Closing);
-    flyoutGraphSettings->ShowAt(GraphSettingsButton);
+
+    auto options = ref new FlyoutShowOptions();
+    options->Placement = FlyoutPlacementMode::BottomEdgeAlignedRight;
+    flyoutGraphSettings->ShowAt(GraphSettingsButton, options);
 }
 
 void CalculatorApp::GraphingCalculator::AddTracePointerShadow()

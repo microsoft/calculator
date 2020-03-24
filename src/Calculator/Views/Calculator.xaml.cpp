@@ -674,6 +674,11 @@ void Calculator::DockPanelTapped(_In_ TappedRoutedEventArgs ^ e)
 void Calculator::UnregisterEventHandlers()
 {
     ExpressionText->UnregisterEventHandlers();
+    AlwaysOnTopResults->UnregisterEventHandlers();
+    if (DualScreenExpressionText != nullptr)
+    {
+        DualScreenExpressionText->UnregisterEventHandlers();
+    }
 }
 
 void Calculator::OnErrorVisualStateCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e)
