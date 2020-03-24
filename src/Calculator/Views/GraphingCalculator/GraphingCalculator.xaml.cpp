@@ -94,12 +94,8 @@ GraphingCalculator::GraphingCalculator()
     m_uiSettings->ColorValuesChanged += ref new TypedEventHandler<UISettings ^, Object ^>(this, &GraphingCalculator::OnColorValuesChanged);
 
     ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
-    if (localSettings == nullptr)
-    {
-        return;
-    }
 
-    if (localSettings->Values->HasKey(L"IsGraphThemeMatchApp"))
+    if (localSettings != nullptr && localSettings->Values->HasKey(L"IsGraphThemeMatchApp"))
     {
         auto isMatchAppLocalSetting = static_cast<bool>(localSettings->Values->Lookup(L"IsGraphThemeMatchApp"));
         if (isMatchAppLocalSetting)
@@ -598,7 +594,7 @@ void GraphingCalculator::GraphSettingsButton_Click(Object ^ sender, RoutedEventA
 void GraphingCalculator::DisplayGraphSettings()
 {
     m_graphSettings = ref new GraphingSettings();
-    m_graphSettings->ViewModel->GraphThemeSettingChanged += ref new EventHandler<String ^>(this, &GraphingCalculator::OnGraphThemeSettingChanged);
+    m_graphSettings->ViewModel->GraphThemeSettingChanged += ref new EventHandler<bool>(this, &GraphingCalculator::OnGraphThemeSettingChanged);
     m_graphSettings->SetGrapher(this->GraphingControl);
     auto flyoutGraphSettings = ref new Flyout();
     flyoutGraphSettings->Content = m_graphSettings;
@@ -747,14 +743,9 @@ void GraphingCalculator::UpdateGraphTheme(ApplicationTheme appTheme)
     }
 }
 
-void GraphingCalculator::OnGraphThemeSettingChanged(Object ^ sender, String ^ settingName)
+void GraphingCalculator::OnGraphThemeSettingChanged(Object ^ sender, bool isMatchAppTheme)
 {
-    if (settingName == L"IsAlwaysLightTheme")
-    {
-        GraphingControl->GraphTheme = L"AlwaysLight";
-        UpdateGraphTheme(ApplicationTheme::Light);
-    }
-    if (settingName == L"IsMatchAppTheme")
+    if (isMatchAppTheme)
     {
         GraphingControl->GraphTheme = L"MatchApp";
         WeakReference weakThis(this);
@@ -765,5 +756,10 @@ void GraphingCalculator::OnGraphThemeSettingChanged(Object ^ sender, String ^ se
                                            refThis->UpdateGraphTheme(Application::Current->RequestedTheme);
                                        }
                                    }));
+    }
+    else
+    {
+        GraphingControl->GraphTheme = L"AlwaysLight";
+        UpdateGraphTheme(ApplicationTheme::Light);
     }
 }

@@ -291,7 +291,7 @@ namespace CalculatorApp::ViewModel
 
                 if (m_IsAlwaysLightTheme)
                 {
-                    GraphThemeSettingChanged(this, L"IsAlwaysLightTheme");
+                    GraphThemeSettingChanged(this, false);
                     TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Theme, L"IsAlwaysLightTheme");
                 }
             }
@@ -309,14 +309,15 @@ namespace CalculatorApp::ViewModel
 
                 if (m_IsMatchAppTheme)
                 {
-                    GraphThemeSettingChanged(this, L"IsMatchAppTheme");
+                    GraphThemeSettingChanged(this, true);
                     TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Theme, L"IsMatchAppTheme");
                 }
             }
         }
 
     public:
-        event Windows::Foundation::EventHandler<Platform::String ^> ^ GraphThemeSettingChanged;
+        // Event sends the if the IsMatchAppTheme is selected
+        event Windows::Foundation::EventHandler<bool> ^ GraphThemeSettingChanged;
 
         void UpdateDisplayRange();
 

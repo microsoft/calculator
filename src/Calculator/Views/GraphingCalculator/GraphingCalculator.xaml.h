@@ -87,7 +87,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void UpdateGraphAutomationName();
         void OnColorValuesChanged(Windows::UI::ViewManagement::UISettings ^ sender, Platform::Object ^ args);
         void UpdateGraphTheme(Windows::UI::Xaml::ApplicationTheme appTheme);
-        void OnGraphThemeSettingChanged(Platform::Object ^ sender, Platform::String ^ settingName);
+        void OnGraphThemeSettingChanged(Platform::Object ^ sender, bool isMatchAppTheme);
 
     private:
         Windows::Foundation::EventRegistrationToken m_dataRequestedToken;
