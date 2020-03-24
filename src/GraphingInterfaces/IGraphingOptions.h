@@ -52,9 +52,9 @@ namespace Graphing
         virtual void SetBackColor(const Graphing::Color& value) = 0;
         virtual void ResetBackColor() = 0;
 
-		virtual void SetAllowKeyGraphFeaturesForFunctionsWithParameters(bool kgf) = 0;
-		virtual bool GetAllowKeyGraphFeaturesForFunctionsWithParameters() const = 0;
-		virtual void ResetAllowKeyGraphFeaturesForFunctionsWithParameters() = 0;
+        virtual void SetAllowKeyGraphFeaturesForFunctionsWithParameters(bool kgf) = 0;
+        virtual bool GetAllowKeyGraphFeaturesForFunctionsWithParameters() const = 0;
+        virtual void ResetAllowKeyGraphFeaturesForFunctionsWithParameters() = 0;
 
         virtual Graphing::Color GetZerosColor() const = 0;
         virtual void SetZerosColor(const Graphing::Color& value) = 0;

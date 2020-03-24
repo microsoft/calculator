@@ -123,17 +123,3 @@ bool GraphingSettingsViewModel::HasError()
 {
     return m_XMinError || m_YMinError || m_XMaxError || m_YMaxError || XError || YError;
 }
-
-void GraphingSettingsViewModel::OnPropertyChanged(Platform::String ^ propertyName)
-{
-    if (propertyName == L"IsAlwaysLightTheme" && IsAlwaysLightTheme)
-    {
-        GraphThemeSettingChanged(this, propertyName);
-        TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Theme, propertyName);
-    }
-    if (propertyName == L"IsMatchAppTheme" && IsMatchAppTheme)
-    {
-        GraphThemeSettingChanged(this, propertyName);
-        TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Theme, propertyName);
-    }
-}

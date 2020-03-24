@@ -313,7 +313,8 @@ namespace CalculatorApp
 
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_GRAPH_SETTINGS_CHANGED), fields);
     }
-    void TraceLogger::LogGraphTheme(Platform::String ^ graphTheme)
+
+    void TraceLogger::LogGraphTheme(String ^ graphTheme)
     {
         auto fields = ref new LoggingFields();
         fields->AddString(StringReference(CALC_MODE), StringReference(GRAPHING_MODE));

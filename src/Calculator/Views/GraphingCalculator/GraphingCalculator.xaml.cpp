@@ -98,7 +98,8 @@ GraphingCalculator::GraphingCalculator()
     {
         return;
     }
-    if (localSettings->Values->HasKey(L"IsGraphThemeMatchApp") == true)
+
+    if (localSettings->Values->HasKey(L"IsGraphThemeMatchApp"))
     {
         auto isMatchAppLocalSetting = static_cast<bool>(localSettings->Values->Lookup(L"IsGraphThemeMatchApp"));
         if (isMatchAppLocalSetting)
