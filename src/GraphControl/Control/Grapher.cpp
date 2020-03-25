@@ -406,7 +406,7 @@ namespace GraphControl
                     initResult = m_graph->TryInitialize();
                     if (initResult != nullopt)
                     {
-                        UpdateGraphOptions(m_graph->GetOptions(), vector<Equation^>());
+                        UpdateGraphOptions(m_graph->GetOptions(), vector<Equation ^>());
                         SetGraphArgs(m_graph);
 
                         m_renderMain->Graph = m_graph;
@@ -566,7 +566,7 @@ namespace GraphControl
                     }
 
                     eq->GraphedEquation->GetGraphEquationOptions()->SetLineWidth(LineWidth);
-                    eq->GraphedEquation->GetGraphEquationOptions()->SetSelectedEquationLineWidth(LineWidth + 1);
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetSelectedEquationLineWidth(LineWidth + ((LineWidth <= 2) ? 1 : 2));
                 }
             }
             options.SetGraphColors(graphColors);
@@ -1064,6 +1064,8 @@ void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
         {
             m_renderMain->SetPointRadius(LineWidth + 1);
             m_renderMain->RunRenderPass();
+
+             TraceLogger::GetInstance()->LogLineWidthChanged();
         }
     }
 }
