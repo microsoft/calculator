@@ -36,7 +36,6 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Equations);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, AxesColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GraphBackground);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GridLinesColor);
-DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GraphTheme);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, LineWidth);
 
 namespace
@@ -1067,23 +1066,6 @@ void Grapher::OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, W
         auto gridLinesColor = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
         m_graph->GetOptions().SetGridColor(gridLinesColor);
         m_renderMain->RunRenderPassAsync();
-    }
-}
-
-void Grapher::OnGraphThemePropertyChanged(String ^ /*oldValue*/, String ^ newValue)
-{
-    ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
-    if (localSettings == nullptr)
-    {
-        return;
-    }
-    if (newValue == L"MatchApp")
-    {
-        localSettings->Values->Insert(StringReference(L"IsGraphThemeMatchApp"), true);
-    }
-    if (newValue == L"AlwaysLight")
-    {
-        localSettings->Values->Insert(StringReference(L"IsGraphThemeMatchApp"), false);
     }
 }
 

@@ -101,13 +101,14 @@ GraphingCalculator::GraphingCalculator()
         if (isMatchAppLocalSetting)
         {
             UpdateGraphTheme(Application::Current->RequestedTheme);
-            GraphingControl->GraphTheme = L"MatchApp";
+            IsMatchAppTheme = true;
             TraceLogger::GetInstance()->LogGraphTheme(L"IsMatchAppTheme");
         }
     }
     else
     {
         UpdateGraphTheme(ApplicationTheme::Light);
+        IsMatchAppTheme = false;
         TraceLogger::GetInstance()->LogGraphTheme(L"IsAlwaysLightTheme");
     }
 
@@ -121,7 +122,6 @@ void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
         TraceValuePopup->Visibility = newValue ? ::Visibility::Visible : ::Visibility::Collapsed;
     }
 }
-
 void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
 {
     if (ViewModel != nullptr)
@@ -593,8 +593,16 @@ void GraphingCalculator::GraphSettingsButton_Click(Object ^ sender, RoutedEventA
 
 void GraphingCalculator::DisplayGraphSettings()
 {
-    m_graphSettings = ref new GraphingSettings();
-    m_graphSettings->ViewModel->GraphThemeSettingChanged += ref new EventHandler<bool>(this, &GraphingCalculator::OnGraphThemeSettingChanged);
+    if (m_graphSettingsVM == nullptr)
+    {
+        m_graphSettingsVM = ref new GraphingSettingsViewModel();
+        m_graphSettingsVM->IsAlwaysLightTheme = !IsMatchAppTheme;
+        m_graphSettingsVM->IsMatchAppTheme = IsMatchAppTheme;
+    }
+
+    m_graphSettingsVM->GraphThemeSettingChanged += ref new EventHandler<bool>(this, &GraphingCalculator::OnGraphThemeSettingChanged);
+    GraphingSettings ^ m_graphSettings = ref new GraphingSettings();
+    m_graphSettings->ViewModel = m_graphSettingsVM;
     m_graphSettings->SetGrapher(this->GraphingControl);
     auto flyoutGraphSettings = ref new Flyout();
     flyoutGraphSettings->Content = m_graphSettings;
@@ -723,7 +731,7 @@ void GraphingCalculator::OnColorValuesChanged(Windows::UI::ViewManagement::UISet
     WeakReference weakThis(this);
     this->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([weakThis]() {
                                    auto refThis = weakThis.Resolve<GraphingCalculator>();
-                                   if (refThis != nullptr && refThis->GraphingControl->GraphTheme == L"MatchApp")
+                                   if (refThis != nullptr && refThis->IsMatchAppTheme)
                                    {
                                        refThis->UpdateGraphTheme(Application::Current->RequestedTheme);
                                    }
@@ -747,7 +755,7 @@ void GraphingCalculator::OnGraphThemeSettingChanged(Object ^ sender, bool isMatc
 {
     if (isMatchAppTheme)
     {
-        GraphingControl->GraphTheme = L"MatchApp";
+        IsMatchAppTheme = true;
         WeakReference weakThis(this);
         this->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([weakThis]() {
                                        auto refThis = weakThis.Resolve<GraphingCalculator>();
@@ -759,7 +767,7 @@ void GraphingCalculator::OnGraphThemeSettingChanged(Object ^ sender, bool isMatc
     }
     else
     {
-        GraphingControl->GraphTheme = L"AlwaysLight";
+        IsMatchAppTheme = false;
         UpdateGraphTheme(ApplicationTheme::Light);
     }
 }

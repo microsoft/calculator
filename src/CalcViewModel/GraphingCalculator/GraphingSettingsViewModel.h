@@ -291,8 +291,7 @@ namespace CalculatorApp::ViewModel
 
                 if (m_IsAlwaysLightTheme)
                 {
-                    GraphThemeSettingChanged(this, false);
-                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Theme, L"IsAlwaysLightTheme");
+                    SetGraphTheme(false);
                 }
             }
         }
@@ -309,8 +308,7 @@ namespace CalculatorApp::ViewModel
 
                 if (m_IsMatchAppTheme)
                 {
-                    GraphThemeSettingChanged(this, true);
-                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Theme, L"IsMatchAppTheme");
+                    SetGraphTheme(true);
                 }
             }
         }
@@ -326,6 +324,7 @@ namespace CalculatorApp::ViewModel
         void InitRanges();
         void ResetView();
         bool HasError();
+        void SetGraphTheme(bool isMatchAppTheme);
 
     private:
         Platform::String ^ m_XMin;

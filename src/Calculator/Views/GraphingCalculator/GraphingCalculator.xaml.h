@@ -31,6 +31,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         OBSERVABLE_PROPERTY_R(bool, IsKeyGraphFeaturesVisible);
         DEPENDENCY_PROPERTY(bool, IsSmallState);
         DEPENDENCY_PROPERTY(Platform::String ^, GraphControlAutomationName);
+        OBSERVABLE_PROPERTY_R(bool, IsMatchAppTheme);
 
         property CalculatorApp::ViewModel::GraphingCalculatorViewModel^ ViewModel
         {
@@ -99,7 +100,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         bool m_cursorShadowInitialized;
         Windows::UI::ViewManagement::UISettings ^ m_uiSettings;
-        CalculatorApp::GraphingSettings ^ m_graphSettings;
+        CalculatorApp::ViewModel::GraphingSettingsViewModel ^ m_graphSettingsVM;
         void OnSettingsFlyout_Closing(Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
         void Canvas_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);

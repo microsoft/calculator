@@ -850,6 +850,7 @@
                                 <Flyout x:Uid="ColorChooserFlyout" Placement="Bottom">
                                     <local:EquationStylePanelControl EnableLineStylePicker="{x:Bind GraphEquation.IsInequality, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                                                                      SelectedColor="{x:Bind LineColor, Mode=TwoWay}"
+                                                                     SelectedColorIndex="{x:Bind LineColorIndex , Mode=TwoWay}"
                                                                      SelectedStyle="{x:Bind GraphEquation.EquationStyle, Mode=TwoWay}"/>
                                 </Flyout>
                             </controls:EquationTextBox.ColorChooserFlyout>

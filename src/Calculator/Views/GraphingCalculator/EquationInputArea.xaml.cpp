@@ -31,6 +31,7 @@ namespace
     inline constexpr std::array<int, 14> colorAssignmentMapping = { 0, 3, 7, 10, 1, 4, 8, 11, 2, 5, 9, 12, 6, 13 };
 
     StringReference EquationsPropertyName(L"Equations");
+    StringReference IsMatchAppThemePropertyName(L"IsMatchAppTheme");
 }
 
 EquationInputArea::EquationInputArea()
@@ -42,7 +43,7 @@ EquationInputArea::EquationInputArea()
     m_accessibilitySettings->HighContrastChanged +=
         ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &EquationInputArea::OnHighContrastChanged);
 
-    ReloadAvailableColors(m_accessibilitySettings->HighContrast);
+    ReloadAvailableColors(m_accessibilitySettings->HighContrast, true);
 
     InitializeComponent();
 }
@@ -52,6 +53,11 @@ void EquationInputArea::OnPropertyChanged(String ^ propertyName)
     if (propertyName == EquationsPropertyName)
     {
         OnEquationsPropertyChanged();
+    }
+
+    if (propertyName == IsMatchAppThemePropertyName)
+    {
+        ReloadAvailableColors(m_accessibilitySettings->HighContrast, false);
     }
 }
 
@@ -89,7 +95,7 @@ void EquationInputArea::AddNewEquation()
         colorIndex = colorAssignmentMapping[m_lastLineColorIndex];
     }
 
-    auto eq = ref new EquationViewModel(ref new Equation(), ++m_lastFunctionLabelIndex, AvailableColors->GetAt(colorIndex)->Color);
+    auto eq = ref new EquationViewModel(ref new Equation(), ++m_lastFunctionLabelIndex, AvailableColors->GetAt(colorIndex)->Color, colorIndex);
     eq->IsLastItemInList = true;
     m_equationToFocus = eq;
     Equations->Append(eq);
@@ -281,31 +287,43 @@ void EquationInputArea::FocusEquationIfNecessary(CalculatorApp::Controls::Equati
 
 void EquationInputArea::OnHighContrastChanged(AccessibilitySettings ^ sender, Object ^ args)
 {
-    ReloadAvailableColors(sender->HighContrast);
+    ReloadAvailableColors(sender->HighContrast, true);
 }
 
-void EquationInputArea::ReloadAvailableColors(bool isHighContrast)
+void EquationInputArea::ReloadAvailableColors(bool isHighContrast, bool reassignColors)
 {
     m_AvailableColors->Clear();
-
-    m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush1")));
-    m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush2")));
-    m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush3")));
-    m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush4")));
+    if (isHighContrast)
+    {
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush1")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush2")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush3")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush4")));
+    }
 
     // If this is not high contrast, we have all 16 colors, otherwise we will restrict this to a subset of high contrast colors
-    if (!isHighContrast)
+    else
     {
-        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush5")));
-        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush6")));
-        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush7")));
-        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush8")));
-        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush9")));
-        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush10")));
-        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush11")));
-        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush12")));
-        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush13")));
-        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush14")));
+        Object ^ themeDictionaryName = L"Light";
+        if (IsMatchAppTheme && Application::Current->RequestedTheme == ApplicationTheme::Dark)
+        {
+            themeDictionaryName = L"Default";
+        }
+        auto themeDictionary = static_cast<ResourceDictionary ^>(Application::Current->Resources->ThemeDictionaries->Lookup(themeDictionaryName));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush1")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush2")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush3")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush4")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush5")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush6")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush7")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush8")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush9")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush10")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush11")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush12")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush13")));
+        m_AvailableColors->Append(safe_cast<SolidColorBrush ^>(themeDictionary->Lookup(L"EquationBrush14")));
     }
 
     // If there are no equations to reload, quit early
@@ -318,8 +336,12 @@ void EquationInputArea::ReloadAvailableColors(bool isHighContrast)
     m_lastLineColorIndex = -1;
     for (auto equationViewModel : Equations)
     {
-        m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
-        equationViewModel->LineColor = AvailableColors->GetAt(m_lastLineColorIndex)->Color;
+        if (reassignColors)
+        {
+            m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
+            equationViewModel->LineColorIndex = m_lastLineColorIndex;
+        }
+        equationViewModel->LineColor = AvailableColors->GetAt(equationViewModel->LineColorIndex)->Color;
     }
 }
 

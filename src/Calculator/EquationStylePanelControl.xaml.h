@@ -17,6 +17,7 @@ namespace CalculatorApp
 
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, SelectedColor, Windows::UI::Colors::Black);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(GraphControl::EquationLineStyle, SelectedStyle, GraphControl::EquationLineStyle::Solid);
+        DEPENDENCY_PROPERTY(int, SelectedColorIndex);
         DEPENDENCY_PROPERTY_WITH_DEFAULT(Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::SolidColorBrush ^> ^, AvailableColors, nullptr);
         DEPENDENCY_PROPERTY(bool, EnableLineStylePicker);
 

@@ -17,7 +17,7 @@ namespace CalculatorApp
     public:
         GraphingSettings();
 
-        PROPERTY_R(CalculatorApp::ViewModel::GraphingSettingsViewModel ^, ViewModel);
+        PROPERTY_RW(CalculatorApp::ViewModel::GraphingSettingsViewModel ^, ViewModel);
         Windows::UI::Xaml::Style ^ SelectTextBoxStyle(bool incorrectRange, bool error);
         void SetGrapher(GraphControl::Grapher ^ grapher);
         void RefreshRanges();

@@ -72,16 +72,16 @@
                     <SolidColorBrush x:Key="AppChromeAcrylicOperatorFlyoutBackgroundBrush" Color="#FF2F2F2F"/>
                     <SolidColorBrush x:Key="AppControlTransparentButtonBackgroundBrush" Color="Transparent"/>
 
-<SolidColorBrush x:Key="EquationBrush1" Color="#EF5865"/>
-                    <SolidColorBrush x:Key="EquationBrush2" Color="#EB4DAF"/>
-                    <SolidColorBrush x:Key="EquationBrush3" Color="#CA5B93"/>
+                    <SolidColorBrush x:Key="EquationBrush1" Color="#4D92C8"/>
+                    <SolidColorBrush x:Key="EquationBrush2" Color="#4DCDD5"/>
+                    <SolidColorBrush x:Key="EquationBrush3" Color="#A366E0"/>
                     <SolidColorBrush x:Key="EquationBrush4" Color="#58A358"/>
                     <SolidColorBrush x:Key="EquationBrush5" Color="#4DDB97"/>
                     <SolidColorBrush x:Key="EquationBrush6" Color="#4DA688"/>
                     <SolidColorBrush x:Key="EquationBrush7" Color="#8A8B8C"/>
-                    <SolidColorBrush x:Key="EquationBrush8" Color="#4D92C8"/>
-                    <SolidColorBrush x:Key="EquationBrush9" Color="#4DCDD5"/>
-                    <SolidColorBrush x:Key="EquationBrush10" Color="#A366E0"/>
+                    <SolidColorBrush x:Key="EquationBrush8" Color="#EF5865"/>
+                    <SolidColorBrush x:Key="EquationBrush9" Color="#EB4DAF"/>
+                    <SolidColorBrush x:Key="EquationBrush10" Color="#CA5B93"/>
                     <SolidColorBrush x:Key="EquationBrush11" Color="#FFCE4D"/>
                     <SolidColorBrush x:Key="EquationBrush12" Color="#F99255"/>
                     <SolidColorBrush x:Key="EquationBrush13" Color="#B0896D"/>

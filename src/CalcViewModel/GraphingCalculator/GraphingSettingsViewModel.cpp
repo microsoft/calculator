@@ -41,17 +41,6 @@ void GraphingSettingsViewModel::SetGrapher(Grapher ^ grapher)
     }
     Graph = grapher;
 
-    if (Graph->GraphTheme == L"MatchApp")
-    {
-        IsAlwaysLightTheme = false;
-        IsMatchAppTheme = true;
-    }
-    else
-    {
-        IsAlwaysLightTheme = true;
-        IsMatchAppTheme = false;
-    }
-
     InitRanges();
     RaisePropertyChanged(L"TrigUnit");
 }
@@ -122,4 +111,13 @@ void GraphingSettingsViewModel::UpdateDisplayRange()
 bool GraphingSettingsViewModel::HasError()
 {
     return m_XMinError || m_YMinError || m_XMaxError || m_YMaxError || XError || YError;
+}
+
+void GraphingSettingsViewModel::SetGraphTheme(bool isMatchAppTheme)
+{
+    String ^ propertyName = isMatchAppTheme ? L"IsMatchAppTheme" : L"IsAlwaysLightTheme";
+    ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
+    localSettings->Values->Insert(L"IsGraphThemeMatchApp", isMatchAppTheme);
+    GraphThemeSettingChanged(this, isMatchAppTheme);
+    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Theme, propertyName);
 }

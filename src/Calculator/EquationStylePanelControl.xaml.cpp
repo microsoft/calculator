@@ -25,6 +25,7 @@ using namespace GraphControl;
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, SelectedColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, SelectedStyle);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, EnableLineStylePicker);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, SelectedColorIndex);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationStylePanelControl, AvailableColors);
 
 EquationStylePanelControl::EquationStylePanelControl()
@@ -69,8 +70,9 @@ void EquationStylePanelControl::ColorChooserLoaded(Object ^ sender, RoutedEventA
 
 void EquationStylePanelControl::SelectColor(Color selectedColor)
 {
-    for (auto item : ColorChooser->Items->GetView())
+    for (unsigned int i = 0; i < ColorChooser->Items->Size; i++)
     {
+        auto item = ColorChooser->Items->GetAt(i);
         auto brush = static_cast<SolidColorBrush ^>(item);
         auto gridViewItem = dynamic_cast<GridViewItem ^>(ColorChooser->ContainerFromItem(brush));
 
@@ -82,6 +84,7 @@ void EquationStylePanelControl::SelectColor(Color selectedColor)
         if (Utils::AreColorsEqual(brush->Color, selectedColor))
         {
             gridViewItem->IsSelected = true;
+            SelectedColorIndex = i;
             return;
         }
         else
