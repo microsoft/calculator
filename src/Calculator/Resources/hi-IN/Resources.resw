@@ -697,9 +697,9 @@
     <value>हटाएँ</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
   </data>
-  <data name="CopyHistoryMenuItem.Text" xml:space="preserve"> 
-     <value>प्रतिलिपि बनाएँ</value> 
-     <comment>Text string for the Calculator Copy option in the History list context menu</comment> 
+  <data name="CopyHistoryMenuItem.Text" xml:space="preserve">
+    <value>प्रतिलिपि बनाएँ</value>
+    <comment>Text string for the Calculator Copy option in the History list context menu</comment>
   </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
     <value>हटाएँ</value>
@@ -867,7 +867,7 @@
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>बराबर</value>
-    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+    <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>प्रतिलोम फ़ंक्शन</value>
@@ -1074,11 +1074,11 @@
     <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>शीर्ष पर रखें</value>
+    <value>शीर्ष पर रखें (Alt+Up)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
   </data>
   <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>पूर्ण दृश्य पर वापस जाएँ</value>
+    <value>पूर्ण दृश्य पर वापस जाएँ (Alt+Down)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
@@ -2691,10 +2691,6 @@
     <value>AB</value>
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
-  <data name="DateCalculationModeAccessKey" xml:space="preserve">
-    <value>4</value>
-    <comment>AccessKey for the Date Calculation mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>इ</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
@@ -2706,18 +2702,6 @@
   <data name="NavView.AccessKey" xml:space="preserve">
     <value>है</value>
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ProgrammerModeAccessKey" xml:space="preserve">
-    <value>3</value>
-    <comment>AccessKey for the Programmer mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ScientificModeAccessKey" xml:space="preserve">
-    <value>2</value>
-    <comment>AccessKey for the Scientific mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="StandardModeAccessKey" xml:space="preserve">
-    <value>1</value>
-    <comment>AccessKey for the Standard mode navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AngleAccessKey" xml:space="preserve">
     <value>को</value>
@@ -3061,7 +3045,7 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>गणना विफल</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>  
+    <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
   <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>लघुगुणक आधार X</value>
@@ -3074,6 +3058,10 @@
   <data name="funcButton.Text" xml:space="preserve">
     <value>फलन</value>
     <comment>Displayed on the button that contains a flyout for the general functions in scientific mode.</comment>
+  </data>
+  <data name="inequalityButton.Text" xml:space="preserve">
+    <value>असमानताएँ</value>
+    <comment>Displayed on the button that contains a flyout for the inequality functions.</comment>
   </data>
   <data name="bitwiseButton.Text" xml:space="preserve">
     <value>बिटवाइज़</value>
@@ -3250,5 +3238,428 @@
   <data name="MostSignificantBit" xml:space="preserve">
     <value>सबसे अधिक महत्वपूर्ण बिट</value>
     <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
+  </data>
+  <data name="GraphingCalculatorModeText" xml:space="preserve">
+    <value>ग्राफ़िंग</value>
+    <comment>Name of the Graphing mode of the Calculator app. Displayed in the navigation menu.</comment>
+  </data>
+  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>बराबर</value>
+    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="plotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>प्लॉट</value>
+    <comment>Screen reader prompt for the plot button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="zoomResetButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>दृश्य रीसेट करें (Ctrl + 0)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom reset button.</comment>
+  </data>
+  <data name="zoomResetButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>दृश्य रीसेट करें</value>
+    <comment>Screen reader prompt for the reset zoom button.</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>ज़ूम इन करें (Ctrl + प्लस)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom in button.</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ज़ूम इन करें</value>
+    <comment>Screen reader prompt for the zoom in button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>ज़ूम आउट करें (Ctrl + माइनस)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom out button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ज़ूम आउट करें</value>
+    <comment>Screen reader prompt for the zoom out button.</comment>
+  </data>
+  <data name="EquationTextBoxAddPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>समीकरण जोड़ें</value>
+    <comment>Placeholder text for the equation input button</comment>
+  </data>
+  <data name="ShareActionErrorMessage" xml:space="preserve">
+    <value>इस समय साझा करने में असमर्थ.</value>
+    <comment>If there is an error in the sharing action will display a dialog with this text.</comment>
+  </data>
+  <data name="ShareActionErrorOk" xml:space="preserve">
+    <value>ठीक</value>
+    <comment>Used on the dismiss button of the share action error dialog.</comment>
+  </data>
+  <data name="ShareActionTitle" xml:space="preserve">
+    <value>देखें कि Windows कैल्क्यूलेटर के साथ मैंने क्या ग्राफ़ बनाया है</value>
+    <comment>Sent as part of the shared content. The title for the share.</comment>
+  </data>
+  <data name="EquationsShareHeader" xml:space="preserve">
+    <value>समीकरण</value>
+    <comment>Header that appears over the equations section when sharing</comment>
+  </data>
+  <data name="VariablesShareHeader" xml:space="preserve">
+    <value>चर</value>
+    <comment>Header that appears over the variables section when sharing</comment>
+  </data>
+  <data name="GraphImageAltText" xml:space="preserve">
+    <value>समीकरणों के साथ ग्राफ़ की छवि</value>
+    <comment>Alt text for the graph image when output via Share</comment>
+  </data>
+  <data name="VaiablesHeader.Text" xml:space="preserve">
+    <value>चर</value>
+    <comment>Header text for variables area</comment>
+  </data>
+  <data name="StepTextBlock.Text" xml:space="preserve">
+    <value>चरण</value>
+    <comment>Label text for the step text box</comment>
+  </data>
+  <data name="MinTextBlock.Text" xml:space="preserve">
+    <value>न्यून</value>
+    <comment>Label text for the min text box</comment>
+  </data>
+  <data name="MaxTextBlock.Text" xml:space="preserve">
+    <value>अधिक</value>
+    <comment>Label text for the max text box</comment>
+  </data>
+  <data name="LineColorText.Text" xml:space="preserve">
+    <value>रेखा का रंग</value>
+    <comment>Label for the Line Color section of the style picker</comment>
+  </data>
+  <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
+    <value>फ़ंक्शन विश्लेषण</value>
+    <comment>Title for KeyGraphFeatures Control</comment>
+  </data>
+  <data name="KGFHorizontalAsymptotesNone" xml:space="preserve">
+    <value>फ़ंक्शन में कोई भी क्षैतिज अनंतस्पर्शी नहीं हैं.</value>
+    <comment>Message displayed when the graph does not have any horizontal asymptotes</comment>
+  </data>
+  <data name="KGFInflectionPointsNone" xml:space="preserve">
+    <value>फ़ंक्शन में कोई भी मोड़ बिंदु नहीं हैं.</value>
+    <comment>Message displayed when the graph does not have any inflection points</comment>
+  </data>
+  <data name="KGFMaximaNone" xml:space="preserve">
+    <value>फ़ंक्शन में कोई भी अधिकतम बिंदु नहीं हैं.</value>
+    <comment>Message displayed when the graph does not have any maxima</comment>
+  </data>
+  <data name="KGFMinimaNone" xml:space="preserve">
+    <value>फ़ंक्शन में कोई भी न्यूनतम बिंदु नहीं हैं.</value>
+    <comment>Message displayed when the graph does not have any minima</comment>
+  </data>
+  <data name="KGFMonotonicityConstant" xml:space="preserve">
+    <value>लगातार</value>
+    <comment>String describing constant monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityDecreasing" xml:space="preserve">
+    <value>कम होते हुए</value>
+    <comment>String describing decreasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityError" xml:space="preserve">
+    <value>फ़ंक्शन का एकदिष्टता निर्धारित करने में असमर्थ.</value>
+    <comment>Error displayed when monotonicity cannot be determined</comment>
+  </data>
+  <data name="KGFMonotonicityIncreasing" xml:space="preserve">
+    <value>बढ़ते हुए</value>
+    <comment>String describing increasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityUnknown" xml:space="preserve">
+    <value>फ़ंक्शन की एकदिष्टता अज्ञात है.</value>
+    <comment>Error displayed when monotonicity is unknown</comment>
+  </data>
+  <data name="KGFObliqueAsymptotesNone" xml:space="preserve">
+    <value>फ़ंक्शन में कोई भी तिर्यक अनंतस्पर्शी नहीं हैं.</value>
+    <comment>Message displayed when the graph does not have any oblique asymptotes</comment>
+  </data>
+  <data name="KGFParityError" xml:space="preserve">
+    <value>फ़ंक्शन की समता को निर्धारित करने में असमर्थ.</value>
+    <comment>Error displayed when parity is cannot be determined</comment>
+  </data>
+  <data name="KGFParityEven" xml:space="preserve">
+    <value>फ़ंक्शन सम है.</value>
+    <comment>Message displayed with the function parity is even</comment>
+  </data>
+  <data name="KGFParityNeither" xml:space="preserve">
+    <value>फ़ंक्शन न तो सम है और न ही विषम.</value>
+    <comment>Message displayed with the function parity is neither even nor odd</comment>
+  </data>
+  <data name="KGFParityOdd" xml:space="preserve">
+    <value>फ़ंक्शन विषम है.</value>
+    <comment>Message displayed with the function parity is odd</comment>
+  </data>
+  <data name="KGFParityUnknown" xml:space="preserve">
+    <value>फ़ंक्शन समता अज्ञात है.</value>
+    <comment>Error displayed when parity is unknown</comment>
+  </data>
+  <data name="KGFPeriodicityError" xml:space="preserve">
+    <value>इस फ़ंक्शन के लिए आवधिकता समर्थित नहीं है.</value>
+    <comment>Error displayed when periodicity is not supported</comment>
+  </data>
+  <data name="KGFPeriodicityNotPeriodic" xml:space="preserve">
+    <value>फ़ंक्शन आवधिक नहीं है.</value>
+    <comment>Message displayed with the function periodicity is not periodic</comment>
+  </data>
+  <data name="KGFPeriodicityUnknown" xml:space="preserve">
+    <value>फ़ंक्शन आवधिकता अज्ञात है.</value>
+    <comment>Message displayed with the function periodicity is unknown</comment>
+  </data>
+  <data name="KGFTooComplexFeaturesError" xml:space="preserve">
+    <value>कैल्क्यूलेटर की गणना करने के लिए ये सुविधाएँ बहुत जटिल हैं:</value>
+    <comment>Error displayed when analysis features cannot be calculated</comment>
+  </data>
+  <data name="KGFVerticalAsymptotesNone" xml:space="preserve">
+    <value>फ़ंक्शन में कोई भी अनुलंब अनंतस्पर्शी नहीं हैं.</value>
+    <comment>Message displayed when the graph does not have any vertical asymptotes</comment>
+  </data>
+  <data name="KGFXInterceptNone" xml:space="preserve">
+    <value>फ़ंक्शन में कोई भी x-अवरोधन नहीं हैं.</value>
+    <comment>Message displayed when the graph does not have any x-intercepts</comment>
+  </data>
+  <data name="KGFYInterceptNone" xml:space="preserve">
+    <value>फ़ंक्शन में कोई भी y-अवरोधन नहीं हैं.</value>
+    <comment>Message displayed when the graph does not have any y-intercepts</comment>
+  </data>
+  <data name="Domain" xml:space="preserve">
+    <value>डोमेन</value>
+    <comment>Title for KeyGraphFeatures Domain Property</comment>
+  </data>
+  <data name="HorizontalAsymptotes" xml:space="preserve">
+    <value>क्षैतिज अनंतस्पर्शी</value>
+    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+  </data>
+  <data name="InflectionPoints" xml:space="preserve">
+    <value>मोड़ बिंदु</value>
+    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+  </data>
+  <data name="KGFAnalysisNotSupported" xml:space="preserve">
+    <value>इस फ़ंक्शन के लिए विश्लेषण समर्थित नहीं है.</value>
+    <comment>Error displayed when graph analysis is not supported or had an error.</comment>
+  </data>
+  <data name="Maxima" xml:space="preserve">
+    <value>अधिकतम</value>
+    <comment>Title for KeyGraphFeatures Maxima Property</comment>
+  </data>
+  <data name="Minima" xml:space="preserve">
+    <value>न्यूनतम</value>
+    <comment>Title for KeyGraphFeatures Minima Property</comment>
+  </data>
+  <data name="Monotonicity" xml:space="preserve">
+    <value>एकदिष्टता</value>
+    <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
+  </data>
+  <data name="ObliqueAsymptotes" xml:space="preserve">
+    <value>तिर्यक अनंतस्पर्शी</value>
+    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+  </data>
+  <data name="Parity" xml:space="preserve">
+    <value>समता</value>
+    <comment>Title for KeyGraphFeatures Parity Property</comment>
+  </data>
+  <data name="Periodicity" xml:space="preserve">
+    <value>अवधि</value>
+    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>रेंज</value>
+    <comment>Title for KeyGraphFeatures Range Property</comment>
+  </data>
+  <data name="VerticalAsymptotes" xml:space="preserve">
+    <value>अनुलंब अनंतस्पर्शी</value>
+    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
+  </data>
+  <data name="XIntercept" xml:space="preserve">
+    <value>X-अवरोधन</value>
+    <comment>Title for KeyGraphFeatures XIntercept Property</comment>
+  </data>
+  <data name="YIntercept" xml:space="preserve">
+    <value>Y-अवरोधन</value>
+    <comment>Title for KeyGraphFeatures YIntercept Property</comment>
+  </data>
+  <data name="KGFAnalysisCouldNotBePerformed" xml:space="preserve">
+    <value>फ़ंक्शन के लिए विश्लेषण निष्पादित नहीं किया जा सका.</value>
+  </data>
+  <data name="KGFDomainNone" xml:space="preserve">
+    <value>इस फ़ंक्शन के लिए डोमेन की गणना करने में असमर्थ.</value>
+    <comment>Error displayed when Domain is not returned from the analyzer.</comment>
+  </data>
+  <data name="KGFRangeNone" xml:space="preserve">
+    <value>इस फ़ंक्शन के लिए श्रेणी की गणना करने में असमर्थ.</value>
+    <comment>Error displayed when Range is not returned from the analyzer.</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>वापस</value>
+    <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>वापस</value>
+    <comment>This is the automation name for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>फ़ंक्शन का विश्लेषण करें</value>
+    <comment>This is the tooltip for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>फ़ंक्शन का विश्लेषण करें</value>
+    <comment>This is the automation name for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisMenuItem" xml:space="preserve">
+    <value>फ़ंक्शन का विश्लेषण करें</value>
+    <comment>This is the text for the for the analyze function context menu command</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>समीकरण निकालें</value>
+    <comment>This is the tooltip for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>समीकरण निकालें</value>
+    <comment>This is the automation name for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeMenuItem" xml:space="preserve">
+    <value>समीकरण निकालें</value>
+    <comment>This is the text for the for the remove equation context menu command</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>साझा करें</value>
+    <comment>This is the automation name for the graphing calculator share button.</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>साझा करें</value>
+    <comment>This is the tooltip for the graphing calculator share button.</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>समीकरण शैली परिवर्तित करें</value>
+    <comment>This is the tooltip for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>समीकरण शैली परिवर्तित करें</value>
+    <comment>This is the automation name for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserMenuItem" xml:space="preserve">
+    <value>समीकरण शैली परिवर्तित करें</value>
+    <comment>This is the text for the for the equation style context menu command</comment>
+  </data>
+  <data name="showEquationButtonToolTip" xml:space="preserve">
+    <value>समीकरण %1 दिखाएँ</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="hideEquationButtonToolTip" xml:space="preserve">
+    <value>समीकरण %1 छुपाएँ</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="disableTracingButtonToolTip" xml:space="preserve">
+    <value>ट्रेसिंग रोकें</value>
+    <comment>This is the tooltip/automation name for the graphing calculator stop tracing button</comment>
+  </data>
+  <data name="enableTracingButtonToolTip" xml:space="preserve">
+    <value>ट्रेसिंग प्रारंभ करें</value>
+    <comment>This is the tooltip/automation name for the graphing calculator start tracing button</comment>
+  </data>
+  <data name="graphAutomationName" xml:space="preserve">
+    <value>ग्राफ़ दृश्य विंडो, x-अक्ष, %1 और %2 द्वारा बाउंड है, %3 और %4 द्वारा बाउंड किए गए y-अक्ष, %5 समीकरणों को प्रदर्शित करते हुए</value>
+    <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
+    </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>स्लाइडर कॉन्फ़िगर करें</value>
+    <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>स्लाइडर कॉन्फ़िगर करें</value>
+    <comment>This is the automation name text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphSwitchToEquationMode" xml:space="preserve">
+    <value>समीकरण मोड पर स्विच करें</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchToGraphMode" xml:space="preserve">
+    <value>ग्राफ़ मोड पर स्विच करें</value>
+    <comment>Used in Graphing Calculator to switch the view to the graph mode</comment>
+  </data>
+  <data name="SwitchModeToggleButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>समीकरण मोड पर स्विच करें</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToEquationModeAnnouncement" xml:space="preserve">
+    <value>वर्तमान मोड समीकरण मोड है</value>
+    <comment>Announcement used in Graphing Calculator when switching to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToGraphModeAnnouncement" xml:space="preserve">
+    <value>वर्तमान मोड ग्राफ़ मोड है</value>
+    <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
+  </data>
+  <data name="GridHeading.Text" xml:space="preserve">
+    <value>विंडो</value>
+    <comment>Heading for window extents on the settings </comment>
+  </data>
+  <data name="TrigModeDegrees.Content" xml:space="preserve">
+    <value>डिग्री</value>
+    <comment>Degrees mode on settings page</comment>
+  </data>
+  <data name="TrigModeGradians.Content" xml:space="preserve">
+    <value>ग्रेडियन</value>
+    <comment>Gradian mode on settings page</comment>
+  </data>
+  <data name="TrigModeRadians.Content" xml:space="preserve">
+    <value>रेडियन</value>
+    <comment>Radians mode on settings page</comment>
+  </data>
+  <data name="UnitsHeading.Text" xml:space="preserve">
+    <value>इकाइयाँ</value>
+    <comment>Heading for Unit's on the settings</comment>
+  </data>
+  <data name="ResetViewButton.Content" xml:space="preserve">
+    <value>दृश्य रीसेट करें</value>
+    <comment>Hyperlink button to reset the view of the graph</comment>
+  </data>
+  <data name="GraphSettingsXMax.Header" xml:space="preserve">
+    <value>X-अधिकतम</value>
+    <comment>X maximum value header</comment>
+  </data>
+  <data name="GraphSettingsXMin.Header" xml:space="preserve">
+    <value>X-न्यूनतम</value>
+    <comment>X minimum value header</comment>
+  </data>
+  <data name="GraphSettingsYMax.Header" xml:space="preserve">
+    <value>Y-अधिकतम</value>
+    <comment>Y Maximum value header</comment>
+  </data>
+  <data name="GraphSettingsYMin.Header" xml:space="preserve">
+    <value>Y-न्यूनतम</value>
+    <comment>Y minimum value header</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>ग्रिड विकल्प</value>
+    <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ग्रिड विकल्प</value>
+    <comment>This is the automation name text for the grid options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphOptionsHeading.Text" xml:space="preserve">
+    <value>ग्राफ़ विकल्प</value>
+    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+  </data>
+  <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
+    <value>कोई व्यंजक दर्ज करें</value>
+    <comment>this is the placeholder text used by the textbox to enter an equation</comment>
+  </data>
+  <data name="GraphCopyMenuItem.Text">
+    <value>प्रतिलिपि बनाएँ</value>
+    <comment>Copy menu item for the graph context menu</comment>
+  </data>
+  <data name="cutEquationMenuItem.Text" xml:space="preserve">
+    <value>काटें</value>
+    <comment>Cut menu item from the Equation TextBox</comment>
+  </data>
+  <data name="copyEquationMenuItem.Text" xml:space="preserve">
+    <value>प्रतिलिपि बनाएँ</value>
+    <comment>Copy menu item from the Equation TextBox</comment>
+  </data>
+  <data name="pasteEquationMenuItem.Text" xml:space="preserve">
+    <value>चिपकाएँ</value>
+    <comment>Paste menu item from the Equation TextBox</comment>
+  </data>
+  <data name="undoEquationMenuItem.Text" xml:space="preserve">
+    <value>पूर्ववत् करें</value>
+    <comment>Undo menu item from the Equation TextBox</comment>
+  </data>
+  <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
+    <value>सभी का चयन करें</value>
+    <comment>Select all menu item from the Equation TextBox</comment>
   </data>
 </root>
