@@ -21,6 +21,6 @@
 #include <vector>
 #include <winerror.h>
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #include <random>
 #include <iomanip>

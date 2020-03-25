@@ -336,6 +336,8 @@ public
         bool m_Moving;
         Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
         Windows::UI::Core::CoreCursor ^ m_cachedCursor;
+        int m_errorType;
+        int m_errorCode;
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();

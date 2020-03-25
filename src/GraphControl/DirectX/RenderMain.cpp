@@ -279,7 +279,9 @@ namespace GraphControl::DX
                 pRenderTarget->BeginDraw();
 
                 bool hasMissingData = false;
-                successful = SUCCEEDED(renderer->DrawD2D1(pFactory, pRenderTarget, hasMissingData));
+                m_HResult = renderer->DrawD2D1(pFactory, pRenderTarget, hasMissingData);
+
+                successful = SUCCEEDED(m_HResult);
 
                 // We ignore D2DERR_RECREATE_TARGET here. This error indicates that the device
                 // is lost. It will be handled during the next call to Present.
@@ -348,6 +350,11 @@ namespace GraphControl::DX
         }
 
         return successful;
+    }
+
+    HRESULT RenderMain::GetRenderError()
+    {
+        return m_HResult;
     }
 
     void RenderMain::OnLoaded(Object ^ sender, RoutedEventArgs ^ e)

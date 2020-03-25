@@ -63,6 +63,8 @@ namespace GraphControl::DX
             return m_isRenderPassSuccesful;
         }
 
+        HRESULT GetRenderError();
+
         // Indicates if we are in active tracing mode (the tracing box is being used and controlled through keyboard input)
         property bool ActiveTracing
         {
@@ -191,5 +193,7 @@ namespace GraphControl::DX
          Windows::Foundation::IAsyncAction ^ m_renderPass = nullptr;
 
          bool m_isRenderPassSuccesful;
+
+         HRESULT m_HResult;
     };
 }
