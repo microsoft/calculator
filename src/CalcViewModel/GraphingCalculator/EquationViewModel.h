@@ -103,6 +103,8 @@ public
 
         void PopulateKeyGraphFeatures(GraphControl::KeyGraphFeaturesInfo ^ info);
 
+        static Platform::String ^ EquationErrorText(GraphControl::ErrorType errorType, int errorCode);
+
     private:
         void AddKeyGraphFeature(Platform::String ^ title, Platform::String ^ expression, Platform::String ^ errorString);
         void AddKeyGraphFeature(

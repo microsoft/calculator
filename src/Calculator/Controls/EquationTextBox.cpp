@@ -27,6 +27,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, HasError);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, IsAddEquationMode);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, MathEquation);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, ErrorText);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, IsEquationLineDisabled);
 
 EquationTextBox::EquationTextBox()
@@ -432,12 +433,12 @@ void EquationTextBox::OnRichEditMenuOpened(Object ^ /*sender*/, Object ^ /*args*
 
     if (m_richEditBox != nullptr && m_cutMenuItem != nullptr)
     {
-        m_cutMenuItem->IsEnabled = m_richEditBox->TextDocument->CanCopy() && m_richEditBox->TextDocument->Selection->Length > 0;
+        m_cutMenuItem->IsEnabled = m_richEditBox->TextDocument->CanCopy();
     }
 
     if (m_richEditBox != nullptr && m_copyMenuItem != nullptr)
     {
-        m_copyMenuItem->IsEnabled = m_richEditBox->TextDocument->CanCopy() && m_richEditBox->TextDocument->Selection->Length > 0;
+        m_copyMenuItem->IsEnabled = m_richEditBox->TextDocument->CanCopy();
     }
 
     if (m_richEditBox != nullptr && m_pasteMenuItem != nullptr)
