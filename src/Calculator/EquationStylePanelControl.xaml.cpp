@@ -91,9 +91,13 @@ void EquationStylePanelControl::SelectColor(Color selectedColor)
     }
 }
 
-void EquationStylePanelControl::OnSelectedStylePropertyChanged(EquationLineStyle, EquationLineStyle newStyle)
+void EquationStylePanelControl::OnSelectedStylePropertyChanged(EquationLineStyle oldStyle, EquationLineStyle newStyle)
 {
-    SelectStyle(newStyle);
+    if (oldStyle != newStyle)
+    {
+        SelectStyle(newStyle);
+        TraceLogger::GetInstance()->LogGraphLineStyleChanged(LineStyleType::Pattern);
+    }
 }
 
 void EquationStylePanelControl::SelectStyle(EquationLineStyle selectedStyle)
@@ -136,7 +140,7 @@ void EquationStylePanelControl::StyleChooserBox_Loaded(Object ^ sender, RoutedEv
 String ^ EquationStylePanelControl::GetColorAutomationName(Brush ^ brush)
 {
     auto resourceLoader = AppResourceProvider::GetInstance();
-    auto color = static_cast<SolidColorBrush ^ >(brush);
+    auto color = static_cast<SolidColorBrush ^>(brush);
 
     if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush1")))
     {

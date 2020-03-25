@@ -112,8 +112,8 @@
                               StrokeDashArray="{x:Bind local:EquationStylePanelControl.GetLinePattern((x:Object))}"
                               X1="0"
                               X2="200"
-                              Y1="0"
-                              Y2="0"/>
+                              Y1="4"
+                              Y2="4"/>
                     </Grid>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
