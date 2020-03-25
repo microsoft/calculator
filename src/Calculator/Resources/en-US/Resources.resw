@@ -4108,159 +4108,159 @@
   </data>
   <data name="Overflow" xml:space="preserve">
     <value>Overflow (the number is too large)</value>
-    <comment>Error that occurs during graping when the number is too large. To see this error, assign a large number to variable a, then keep doing "a:=a*a" until it happens.</comment>
+    <comment>Error that occurs during graphing when the number is too large. To see this error, assign a large number to variable a, then keep doing "a:=a*a" until it happens.</comment>
   </data>
   <data name="RequireRadiansMode" xml:space="preserve">
     <value>Radians mode is required to graph this equation.</value>
-    <comment>Error that occurs during graping when radians is required.</comment>
+    <comment>Error that occurs during graphing when radians is required.</comment>
   </data>
   <data name="TooComplexToSolve" xml:space="preserve">
     <value>This function is too complex to graph</value>
-    <comment>Error that occurs during graping when the equation is too complex.</comment>
+    <comment>Error that occurs during graphing when the equation is too complex.</comment>
   </data>
   <data name="RequireDegreesMode" xml:space="preserve">
     <value>Degrees mode is required to graph this function</value>
-    <comment>Error that occurs during graping when degrees is required</comment>
+    <comment>Error that occurs during graphing when degrees is required</comment>
   </data>
   <data name="FactorialInvalidArgument" xml:space="preserve">
     <value>The factorial function has an invalid argument</value>
-    <comment>Error that occurs during graping when a factorial function has an invalid argument.</comment>
+    <comment>Error that occurs during graphing when a factorial function has an invalid argument.</comment>
   </data>
   <data name="FactorialCannotPerformOnLargeNumber" xml:space="preserve">
     <value>The factorial function has an argument that is too large to graph</value>
-    <comment>Error that occurs during graping when a factorial has a large n</comment>
+    <comment>Error that occurs during graphing when a factorial has a large n</comment>
   </data>
   <data name="ModuloCannotPerformOnFloat" xml:space="preserve">
     <value>Modulo can only be used with whole numbers</value>
-    <comment>Error that occurs during graping when modulo is used with a float.</comment>
+    <comment>Error that occurs during graphing when modulo is used with a float.</comment>
   </data>
   <data name="EquationHasNoSolution" xml:space="preserve">
     <value>The equation has no solution</value>
-    <comment>Error that occurs during graping when the equation has no solution.</comment>
+    <comment>Error that occurs during graphing when the equation has no solution.</comment>
   </data>
   <data name="DivideByZero" xml:space="preserve">
     <value>Cannot divide by zero</value>
-    <comment>Error that occurs during graping when a divison by zero occurs.</comment>
+    <comment>Error that occurs during graphing when a divison by zero occurs.</comment>
   </data>
   <data name="MutuallyExclusiveConditions" xml:space="preserve">
     <value>The equation contains logical conditions that are mutually exclusive</value>
-    <comment>Error that occurs during graping when mutually exclusive conditions are used.</comment>
+    <comment>Error that occurs during graphing when mutually exclusive conditions are used.</comment>
   </data>
     <data name="OutOfDomain" xml:space="preserve">
     <value>Equation is out of domain</value>
-    <comment>Error that occurs during graping when the equation is out of domain.</comment>
+    <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
     <data name="GE_NotSupported" xml:space="preserve">
     <value>Graphing this equation is not supported</value>
-    <comment>Error that occurs during graping when the equation is not supported.</comment>
+    <comment>Error that occurs during graphing when the equation is not supported.</comment>
   </data>
   <data name="ParenthesisMismatch" xml:space="preserve">
-    <value>The equation is missing an opening paranthesis</value>
-    <comment>Error that occurs during graping when the equation is missing a (</comment>
+    <value>The equation is missing an opening parenthesis</value>
+    <comment>Error that occurs during graphing when the equation is missing a (</comment>
   </data>
   <data name="UnmatchedParenthesis" xml:space="preserve">
-    <value>The equation is missing a closing paranthesis</value>
-    <comment>Error that occurs during graping when the equation is missing a )</comment>
+    <value>The equation is missing a closing parenthesis</value>
+    <comment>Error that occurs during graphing when the equation is missing a )</comment>
   </data>
   <data name="TooManyDecimalPoints" xml:space="preserve">
     <value>There are too many decimal points in a number</value>
-    <comment>Error that occurs during graping when a number has too many decimals. Ex: 1.2.3</comment>
+    <comment>Error that occurs during graphing when a number has too many decimals. Ex: 1.2.3</comment>
   </data>
   <data name="DecimalPointWithoutDigits" xml:space="preserve">
     <value>A decimal point is missing digits</value>
-    <comment></comment>
+    <comment>Error that occurs during graphing with a decimal point without digits</comment>
   </data>
   <data name="UnexpectedEndOfExpression" xml:space="preserve">
     <value>Unexpected end of expression</value>
-    <comment>Error that occurs during graping when the expression ends unexpectedly. Ex: 3-4*</comment>
+    <comment>Error that occurs during graphing when the expression ends unexpectedly. Ex: 3-4*</comment>
   </data>
   <data name="UnexpectedToken" xml:space="preserve">
     <value>Unexpected characters in the expression</value>
-    <comment>Error that occurs during graping when there is an unexpected token.</comment>
+    <comment>Error that occurs during graphing when there is an unexpected token.</comment>
   </data>
   <data name="InvalidToken" xml:space="preserve">
     <value>Invalid characters in the expression</value>
-    <comment>Error that occurs during graping when there is an invalid token.</comment>
+    <comment>Error that occurs during graphing when there is an invalid token.</comment>
   </data>
   <data name="TooManyEquals" xml:space="preserve">
     <value>There are too many equal signs</value>
-    <comment>Error that occurs during graping when there are too many equals.</comment>
+    <comment>Error that occurs during graphing when there are too many equals.</comment>
   </data>
   <data name="EqualWithoutGraphVariable" xml:space="preserve">
     <value>The function must contain at least one x or y variable</value>
-    <comment>Error that occurs during graping when the equation is missing x or y.</comment>
+    <comment>Error that occurs during graphing when the equation is missing x or y.</comment>
   </data>
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>Invalid expression</value>
-    <comment>Error that occurs during graping when an invalid syntax is used.</comment>
+    <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
     </data>
     <data name="EmptyExpression" xml:space="preserve">
     <value>The expression is empty</value>
-    <comment>Error that occurs during graping when the expression is empty</comment>
+    <comment>Error that occurs during graphing when the expression is empty</comment>
   </data>
     <data name="EqualWithoutEquation" xml:space="preserve">
     <value>Equal was used without an equation</value>
-    <comment>Error that occurs during graping when equal is used without an equation. Ex: sin(x=y)</comment>
+    <comment>Error that occurs during graphing when equal is used without an equation. Ex: sin(x=y)</comment>
   </data>
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
-    <value>Paranthesis missing after function name</value>
-    <comment>Error that occurs during graping when paranthesis are missing after a function.</comment>
+    <value>Parenthesis missing after function name</value>
+    <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
     </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>A mathematical operation has the incorrect number of parameters</value>
-    <comment>Error that occurs during graping when a function has the wrong number of parameters</comment>
+    <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
   </data>
   <data name="InvalidVariableNameFormat" xml:space="preserve">
     <value>A variable name is invalid</value>
-    <comment>Error that occurs during graping when a variable name is invalid.</comment>
+    <comment>Error that occurs during graphing when a variable name is invalid.</comment>
   </data>
   <data name="BracketMismatch" xml:space="preserve">
     <value>The equation is missing an opening bracket</value>
-    <comment>Error that occurs during graping when a { is missing</comment>
+    <comment>Error that occurs during graphing when a { is missing</comment>
   </data>
   <data name="UnmatchedBracket" xml:space="preserve">
     <value>The equation is missing a closing bracket</value>
-    <comment>Error that occurs during graping when a } is missing.</comment>
+    <comment>Error that occurs during graphing when a } is missing.</comment>
   </data>
   <data name="CannotUseIInReal" xml:space="preserve">
     <value>"i" and "I" cannot be used as variable names</value>
-    <comment>Error that occurs during graping when i or I is used.</comment>
+    <comment>Error that occurs during graphing when i or I is used.</comment>
   </data>
   <data name="GeneralError" xml:space="preserve">
     <value>The equation could not be graphed</value>
-    <comment>General error that occurs during graping.</comment>
+    <comment>General error that occurs during graphing.</comment>
   </data>
   <data name="InvalidNumberDigit" xml:space="preserve">
     <value>The digit could not be resolved for the given base</value>
-    <comment>Error that occurs during graping when trying to use bases incorrect. Ex: base(2,1020).</comment>
+    <comment>Error that occurs during graphing when trying to use bases incorrect. Ex: base(2,1020).</comment>
   </data>
   <data name="InvalidNumberBase" xml:space="preserve">
     <value>The base must be greater than 2 and less than 36</value>
-    <comment>Error that occurs during graping when the base is out of range.</comment>
+    <comment>Error that occurs during graphing when the base is out of range.</comment>
   </data>
   <data name="InvalidVariableSpecification" xml:space="preserve">
     <value>A mathematical operation requires one of its paramaters to be a variable</value>
-    <comment>Error that occurs during graping when a function requires a variable in a particular position. Ex: 2nd argument of deriv.</comment>
+    <comment>Error that occurs during graphing when a function requires a variable in a particular position. Ex: 2nd argument of deriv.</comment>
   </data>
   <data name="ExpectingLogicalOperands" xml:space="preserve">
     <value>Equation is mixing logical and scalar operands</value>
-    <comment>Error that occurs during graping when operands are mixed. Such as true and 1.</comment>
+    <comment>Error that occurs during graphing when operands are mixed. Such as true and 1.</comment>
   </data>
   <data name="CannotUseIndexVarInOpLimits" xml:space="preserve">
     <value>x or y cannot be used in the upper or lower limits</value>
-    <comment>Error that occurs during graping when x or y is used in integral upper limits.</comment>
+    <comment>Error that occurs during graphing when x or y is used in integral upper limits.</comment>
   </data>
   <data name="CannotUseIndexVarInLimPoint" xml:space="preserve">
     <value>x or y cannot be used in the limit point</value>
-    <comment>Error that occurs during graping when x or y is used in the limit point.</comment>
+    <comment>Error that occurs during graphing when x or y is used in the limit point.</comment>
   </data>
   <data name="CannotUseComplexInfinityInReal" xml:space="preserve">
     <value>Cannot use complex infinity</value>
-    <comment>Error that occurs during graping when complex infinity is used</comment>
+    <comment>Error that occurs during graphing when complex infinity is used</comment>
   </data>
   <data name="CannotUseIInInequalitySolving" xml:space="preserve">
     <value>Cannot use complex numbers in inequalities</value>
-    <comment>Error that occurs during graping when complex numbers are used in inequalities.</comment>
+    <comment>Error that occurs during graphing when complex numbers are used in inequalities.</comment>
   </data>
     <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Back</value>
