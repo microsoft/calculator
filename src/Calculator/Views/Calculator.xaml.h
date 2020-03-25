@@ -24,6 +24,7 @@
 #include "Views/Memory.xaml.h"
 #include "Views/OperatorsPanel.xaml.h"
 #include "Views/StateTriggers/ControlSizeTrigger.h"
+#include "Views/StateTriggers/ApplicationViewModeTrigger.h"
 
 namespace CalculatorApp
 {

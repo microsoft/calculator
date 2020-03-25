@@ -60,7 +60,7 @@ DateCalculatorViewModel::DateCalculatorViewModel()
     auto today = calendar->GetDateTime();
 
     // FromDate and ToDate should be clipped (adjusted to a consistent hour in UTC)
-    m_fromDate = m_toDate = ClipTime(today, true);
+    m_fromDate = m_toDate = ClipTime(today);
 
     // StartDate should not be clipped
     m_startDate = today;
@@ -83,7 +83,7 @@ DateCalculatorViewModel::DateCalculatorViewModel()
 
     DayOfWeek trueDayOfWeek = calendar->DayOfWeek;
 
-    DateTime clippedTime = ClipTime(today, false);
+    DateTime clippedTime = ClipTime(today);
     calendar->SetDateTime(clippedTime);
     if (calendar->DayOfWeek != trueDayOfWeek)
     {
@@ -113,8 +113,8 @@ void DateCalculatorViewModel::OnInputsChanged()
 {
     if (m_IsDateDiffMode)
     {
-        DateTime clippedFromDate = ClipTime(FromDate, true);
-        DateTime clippedToDate = ClipTime(ToDate, true);
+        DateTime clippedFromDate = ClipTime(FromDate);
+        DateTime clippedToDate = ClipTime(ToDate);
 
         // Calculate difference between two dates
         auto dateDiff = m_dateCalcEngine->TryGetDateDifference(clippedFromDate, clippedToDate, m_daysOutputFormat);

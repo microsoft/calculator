@@ -9,7 +9,9 @@
 #include "Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h"
 #include "Views\GraphingCalculator\GraphingNumPad.xaml.h"
 #include "Views\GraphingCalculator\GraphingSettings.xaml.h"
-#include "CalcViewModel/Common/TraceLogger.h"
+#include "Views\StateTriggers\ApplicationViewModeTrigger.h"
+#include "Controls\TwoPaneViewCX.h"
+#include "CalcViewModel\Common\TraceLogger.h"
 
 namespace CalculatorApp
 {
@@ -36,7 +38,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
             void set(CalculatorApp::ViewModel::GraphingCalculatorViewModel^ vm);
         }
 
-        static Windows::UI::Xaml::Visibility ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel);
+        static Microsoft::UI::Xaml::Controls::TwoPaneViewPriority GetPanePriority(bool isEquationModeActivated);
         static Platform::String ^ GetInfoForSwitchModeToggleButton(bool isChecked);
         static Windows::UI::Xaml::Visibility ManageEditVariablesButtonVisibility(unsigned int numberOfVariables);
         static Platform::String ^ GetTracingLegend(Platform::IBox<bool> ^ isTracing);

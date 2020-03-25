@@ -334,6 +334,7 @@
     <ClInclude Include="StandardCalculatorViewModel.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UnitConverterViewModel.h" />
+    <ClInclude Include="Utils\DeviceFamilyHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationViewModel.cpp" />
@@ -374,6 +375,7 @@
     </ClCompile>
     <ClCompile Include="StandardCalculatorViewModel.cpp" />
     <ClCompile Include="UnitConverterViewModel.cpp" />
+    <ClCompile Include="Utils\DeviceFamilyHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">

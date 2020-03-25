@@ -252,6 +252,7 @@
     </ClInclude>
     <ClInclude Include="Controls\RadixButton.h" />
     <ClInclude Include="Controls\SupplementaryItemsControl.h" />
+    <ClInclude Include="Controls\TwoPaneViewCX.h" />
     <ClInclude Include="Converters\BooleanNegationConverter.h" />
     <ClInclude Include="Converters\BooleanToVisibilityConverter.h" />
     <ClInclude Include="Converters\ExpressionItemTemplateSelector.h" />
@@ -329,6 +330,7 @@
     <ClInclude Include="Views\OperatorsPanel.xaml.h">
       <DependentUpon>Views\OperatorsPanel.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Views\StateTriggers\ApplicationViewModeTrigger.h" />
     <ClInclude Include="Views\StateTriggers\AspectRatioTrigger.h" />
     <ClInclude Include="Views\StateTriggers\ControlSizeTrigger.h" />
     <ClInclude Include="Views\SupplementaryResults.xaml.h">
@@ -422,6 +424,7 @@
     </ClCompile>
     <ClCompile Include="Controls\RadixButton.cpp" />
     <ClCompile Include="Controls\SupplementaryItemsControl.cpp" />
+    <ClCompile Include="Controls\TwoPaneViewCX.cpp" />
     <ClCompile Include="Converters\BooleanNegationConverter.cpp" />
     <ClCompile Include="Converters\BooleanToVisibilityConverter.cpp" />
     <ClCompile Include="Converters\ExpressionItemTemplateSelector.cpp" />
@@ -505,6 +508,7 @@
     <ClCompile Include="Views\OperatorsPanel.xaml.cpp">
       <DependentUpon>Views\OperatorsPanel.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="Views\StateTriggers\ApplicationViewModeTrigger.cpp" />
     <ClCompile Include="Views\StateTriggers\AspectRatioTrigger.cpp" />
     <ClCompile Include="Views\StateTriggers\ControlSizeTrigger.cpp" />
     <ClCompile Include="Views\SupplementaryResults.xaml.cpp">
@@ -899,6 +903,21 @@
     <Image Include="Assets\Date.targetsize-32_contrast-white.png" />
     <Image Include="Assets\Date.targetsize-64_contrast-black.png" />
     <Image Include="Assets\Date.targetsize-64_contrast-white.png" />
+    <Image Include="Assets\Graphing.targetsize-16.png" />
+    <Image Include="Assets\Graphing.targetsize-16_contrast-black.png" />
+    <Image Include="Assets\Graphing.targetsize-16_contrast-white.png" />
+    <Image Include="Assets\Graphing.targetsize-20.png" />
+    <Image Include="Assets\Graphing.targetsize-20_contrast-black.png" />
+    <Image Include="Assets\Graphing.targetsize-20_contrast-white.png" />
+    <Image Include="Assets\Graphing.targetsize-24.png" />
+    <Image Include="Assets\Graphing.targetsize-24_contrast-black.png" />
+    <Image Include="Assets\Graphing.targetsize-24_contrast-white.png" />
+    <Image Include="Assets\Graphing.targetsize-32.png" />
+    <Image Include="Assets\Graphing.targetsize-32_contrast-black.png" />
+    <Image Include="Assets\Graphing.targetsize-32_contrast-white.png" />
+    <Image Include="Assets\Graphing.targetsize-64.png" />
+    <Image Include="Assets\Graphing.targetsize-64_contrast-black.png" />
+    <Image Include="Assets\Graphing.targetsize-64_contrast-white.png" />
     <Image Include="Assets\Programmer.targetsize-16_contrast-black.png" />
     <Image Include="Assets\Programmer.targetsize-16_contrast-white.png" />
     <Image Include="Assets\Programmer.targetsize-20_contrast-black.png" />
@@ -961,7 +980,7 @@
   </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets" Condition="Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" />
-    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.3.200213001\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.3.200213001\build\native\Microsoft.UI.Xaml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -969,6 +988,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.2.190830001\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.3.200213001\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.3.200213001\build\native\Microsoft.UI.Xaml.targets'))" />
   </Target>
 </Project>

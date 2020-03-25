@@ -17,7 +17,7 @@
 #include <concrt.h>
 #include <future>
 #include <memory>
-#include <assert.h>
+#include <cassert>
 #include <functional>
 #include <string>
 #include <sstream>
