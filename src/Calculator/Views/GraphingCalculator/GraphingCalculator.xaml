@@ -721,8 +721,9 @@
                                                  Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"
                                                  x:Load="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"/>
 
-            <!-- This control should be within a grid that limits the hight to keep the sticky footer functionality from breaking -->
+            <!-- This control should be within a grid that limits the height to keep the sticky footer functionality from breaking -->
             <local:EquationInputArea x:Name="EquationInputAreaControl"
+                                     Grid.ColumnSpan="2"
                                      Margin="0,4,0,0"
                                      EquationFormatRequested="OnEquationFormatRequested"
                                      Equations="{x:Bind ViewModel.Equations}"
