@@ -564,7 +564,6 @@ namespace GraphControl
                     {
                         eq->GraphedEquation->TrySelectEquation();
                     }
-                    }
 
                     eq->GraphedEquation->GetGraphEquationOptions()->SetLineStyle(static_cast<::Graphing::Renderer::LineStyle>(eq->EquationStyle));
                     eq->GraphedEquation->GetGraphEquationOptions()->SetLineWidth(LineWidth);
