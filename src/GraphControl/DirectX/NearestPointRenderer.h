@@ -17,6 +17,7 @@ namespace GraphControl::DX
         void Render(const Windows::Foundation::Point& location);
         
         void SetColor(const D2D1::ColorF& color);
+        void SetRadius(float radius);
         
     private:
         void CreateBrush();

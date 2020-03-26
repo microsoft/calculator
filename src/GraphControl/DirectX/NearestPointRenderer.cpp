@@ -54,6 +54,12 @@ void NearestPointRenderer::Render(const Point& location)
     }
 }
 
+void NearestPointRenderer::SetRadius(float radius)
+{
+    m_ellipse.radiusX = radius;
+    m_ellipse.radiusY = radius;
+}
+
 void NearestPointRenderer::SetColor(const ColorF& color)
 {
     m_color = color;
@@ -63,7 +69,5 @@ void NearestPointRenderer::SetColor(const ColorF& color)
 void NearestPointRenderer::CreateBrush()
 {
     m_brush.Reset();
-    ThrowIfFailed(
-        m_deviceResources->GetD2DDeviceContext()->CreateSolidColorBrush(m_color, &m_brush)
-    );
+    ThrowIfFailed(m_deviceResources->GetD2DDeviceContext()->CreateSolidColorBrush(m_color, &m_brush));
 }

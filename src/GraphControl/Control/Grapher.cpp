@@ -34,6 +34,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Variables);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Equations);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, AxesColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GraphBackground);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, LineWidth);
 
 namespace
 {
@@ -405,7 +406,7 @@ namespace GraphControl
                     initResult = m_graph->TryInitialize();
                     if (initResult != nullopt)
                     {
-                        UpdateGraphOptions(m_graph->GetOptions(), vector<Equation^>());
+                        UpdateGraphOptions(m_graph->GetOptions(), vector<Equation ^>());
                         SetGraphArgs(m_graph);
 
                         m_renderMain->Graph = m_graph;
@@ -557,13 +558,17 @@ namespace GraphControl
                 auto lineColor = eq->LineColor;
                 graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
 
-                if (eq->GraphedEquation != nullptr)
+                if (eq->GraphedEquation)                
                 {
-                    eq->GraphedEquation->GetGraphEquationOptions()->SetLineStyle(static_cast<::Graphing::Renderer::LineStyle>(eq->EquationStyle));
                     if (!eq->HasGraphError && eq->IsSelected)
                     {
                         eq->GraphedEquation->TrySelectEquation();
                     }
+                    }
+
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetLineStyle(static_cast<::Graphing::Renderer::LineStyle>(eq->EquationStyle));
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetLineWidth(LineWidth);
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetSelectedEquationLineWidth(LineWidth + ((LineWidth <= 2) ? 1 : 2));
                 }
             }
             options.SetGraphColors(graphColors);
@@ -1049,6 +1054,21 @@ void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, 
         auto color = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
         m_graph->GetOptions().SetBackColor(color);
         m_graph->GetOptions().SetBoxColor(color);
+    }
+}
+
+void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
+{
+    if (m_graph)
+    {
+        UpdateGraphOptions(m_graph->GetOptions(), GetGraphableEquations());
+        if (m_renderMain)
+        {
+            m_renderMain->SetPointRadius(LineWidth + 1);
+            m_renderMain->RunRenderPass();
+
+             TraceLogger::GetInstance()->LogLineWidthChanged();
+        }
     }
 }
 
