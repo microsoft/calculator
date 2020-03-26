@@ -4414,6 +4414,26 @@
     <value>Graph Options</value>
     <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
   </data>
+  <data name="LineThicknessBox.Header" xml:space="preserve">
+    <value>Line Thickness</value>
+    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+  </data>
+  <data name="SmallLineWidthAutomationName" xml:space="preserve">
+    <value>Small Line Width</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="MediumLineWidthAutomationName" xml:space="preserve">
+    <value>Medium Line Width</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="LargeLineWidthAutomationName" xml:space="preserve">
+    <value>Large Line Width</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="ExtraLargeLineWidthAutomationName" xml:space="preserve">
+    <value>Extra Large Line Width</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
   <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
     <value>Enter an expression</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>

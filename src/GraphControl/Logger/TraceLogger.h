@@ -18,6 +18,7 @@ namespace GraphControl
         void LogEquationCountChanged(int currentValidEquations, int currentInvalidEquations);
         void LogFunctionAnalysisPerformed(int analysisErrorType, uint32 tooComplexFlag);
         void LogVariableCountChanged(int variablesCount);
+        void LogLineWidthChanged();
 
     private:
         TraceLogger()

@@ -47,6 +47,8 @@ namespace GraphControl::DX
 
         bool RenderMain::CanRenderPoint();
 
+        void SetPointRadius(float radius);
+
         bool RunRenderPass();
 
         Windows::Foundation::IAsyncAction ^ RunRenderPassAsync(bool allowCancel = true);
