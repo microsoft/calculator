@@ -53,7 +53,8 @@ using namespace Windows::UI::Popups;
 using namespace Windows::UI::ViewManagement;
 namespace MUXC = Microsoft::UI::Xaml::Controls;
 
-    constexpr auto sc_ViewModelPropertyName = L"ViewModel";
+constexpr auto sc_ViewModelPropertyName = L"ViewModel";
+constexpr auto sc_IsGraphThemeMatchApp = L"IsGraphThemeMatchApp";
 
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, GraphControlAutomationName);
@@ -95,9 +96,9 @@ GraphingCalculator::GraphingCalculator()
 
     ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
 
-    if (localSettings != nullptr && localSettings->Values->HasKey(L"IsGraphThemeMatchApp"))
+    if (localSettings != nullptr && localSettings->Values->HasKey(StringReference(sc_IsGraphThemeMatchApp)))
     {
-        auto isMatchAppLocalSetting = static_cast<bool>(localSettings->Values->Lookup(L"IsGraphThemeMatchApp"));
+        auto isMatchAppLocalSetting = static_cast<bool>(localSettings->Values->Lookup(StringReference(sc_IsGraphThemeMatchApp)));
         if (isMatchAppLocalSetting)
         {
             UpdateGraphTheme(Application::Current->RequestedTheme);
@@ -596,11 +597,10 @@ void GraphingCalculator::DisplayGraphSettings()
     if (m_graphSettingsVM == nullptr)
     {
         m_graphSettingsVM = ref new GraphingSettingsViewModel();
-        m_graphSettingsVM->IsAlwaysLightTheme = !IsMatchAppTheme;
         m_graphSettingsVM->IsMatchAppTheme = IsMatchAppTheme;
+        m_graphSettingsVM->GraphThemeSettingChanged += ref new EventHandler<bool>(this, &GraphingCalculator::OnGraphThemeSettingChanged);
     }
 
-    m_graphSettingsVM->GraphThemeSettingChanged += ref new EventHandler<bool>(this, &GraphingCalculator::OnGraphThemeSettingChanged);
     GraphingSettings ^ m_graphSettings = ref new GraphingSettings();
     m_graphSettings->ViewModel = m_graphSettingsVM;
     m_graphSettings->SetGrapher(this->GraphingControl);
