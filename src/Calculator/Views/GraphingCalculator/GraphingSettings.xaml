@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
+             xmlns:converters="using:CalculatorApp.Converters"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
              mc:Ignorable="d">
@@ -92,6 +93,8 @@
             <DataTemplate x:Key="XYTextBoxHeaderTemplate" x:DataType="x:String">
                 <TextBlock FontSize="14" Text="{x:Bind}"/>
             </DataTemplate>
+
+            <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -221,7 +224,7 @@
 
             <StackPanel Orientation="Vertical">
                 <RadioButton x:Uid="AlwaysLightTheme"
-                             IsChecked="{x:Bind ViewModel.IsAlwaysLightTheme, Mode=TwoWay}"/>
+                             IsChecked="{x:Bind ViewModel.IsMatchAppTheme, Mode=TwoWay, Converter={StaticResource BooleanNegationConverter}}"/>
                 <RadioButton x:Uid="MatchAppTheme"
                              Margin="1,0"
                              IsChecked="{x:Bind ViewModel.IsMatchAppTheme, Mode=TwoWay}"/>

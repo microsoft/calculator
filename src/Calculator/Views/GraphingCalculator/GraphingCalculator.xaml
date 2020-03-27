@@ -483,6 +483,13 @@
                         <Setter Target="GraphingControl.GridLinesColor" Value="{StaticResource LightThemeGridLinesColor}"/>
                     </VisualState.Setters>
                 </VisualState>
+                <VisualState x:Name="GrapherHighContrast">
+                    <VisualState.Setters>
+                        <Setter Target="GraphingControl.AxesColor" Value="{ThemeResource SystemColorWindowTextColor}"/>
+                        <Setter Target="GraphingControl.GraphBackground" Value="{ThemeResource SystemColorWindowColor}"/>
+                        <Setter Target="GraphingControl.GridLinesColor" Value="#FFFFFFFF"/>
+                    </VisualState.Setters>
+                </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <!-- Top panel -->
@@ -522,38 +529,23 @@
                                     <CornerRadius x:Key="BottomButtonCornerRadius">0,0,4,4</CornerRadius>
                                     <CornerRadius x:Key="LeftButtonCornerRadius">4,0,0,4</CornerRadius>
                                     <CornerRadius x:Key="RightButtonCornerRadius">0,4,4,0</CornerRadius>
-                                    <Style x:Key="ThemedGrapherStyle" TargetType="graphControl:Grapher">
-                                        <Setter Property="AxesColor" Value="Black"/>
-                                        <Setter Property="GraphBackground" Value="White"/>
-                                        <Setter Property="GridLinesColor" Value="{StaticResource LightThemeGridLinesColor}"/>
-                                    </Style>
                                 </ResourceDictionary>
                                 <ResourceDictionary x:Key="Dark">
                                     <CornerRadius x:Key="TopButtonCornerRadius">4,4,0,0</CornerRadius>
                                     <CornerRadius x:Key="BottomButtonCornerRadius">0,0,4,4</CornerRadius>
                                     <CornerRadius x:Key="LeftButtonCornerRadius">4,0,0,4</CornerRadius>
                                     <CornerRadius x:Key="RightButtonCornerRadius">0,4,4,0</CornerRadius>
-                                    <Style x:Key="ThemedGrapherStyle" TargetType="graphControl:Grapher">
-                                        <Setter Property="AxesColor" Value="White"/>
-                                        <Setter Property="GraphBackground" Value="Black"/>
-                                        <Setter Property="GridLinesColor" Value="{StaticResource DarkThemeGridLinesColor}"/>
-                                    </Style>
                                 </ResourceDictionary>
                                 <ResourceDictionary x:Key="HighContrast">
                                     <CornerRadius x:Key="TopButtonCornerRadius">0</CornerRadius>
                                     <CornerRadius x:Key="BottomButtonCornerRadius">0</CornerRadius>
                                     <CornerRadius x:Key="LeftButtonCornerRadius">0</CornerRadius>
                                     <CornerRadius x:Key="RightButtonCornerRadius">0</CornerRadius>
-                                    <Style x:Key="ThemedGrapherStyle" TargetType="graphControl:Grapher">
-                                        <Setter Property="AxesColor" Value="{ThemeResource SystemColorWindowTextColor}"/>
-                                        <Setter Property="GraphBackground" Value="{ThemeResource SystemColorWindowColor}"/>
-                                    </Style>
                                 </ResourceDictionary>
                             </ResourceDictionary.ThemeDictionaries>
                         </ResourceDictionary>
                     </Grid.Resources>
                     <graphControl:Grapher Name="GraphingControl"
-                                          Style="{ThemeResource ThemedGrapherStyle}"
                                           AutomationProperties.Name="{x:Bind GraphControlAutomationName, Mode=OneWay}"
                                           ForceProportionalAxes="False"
                                           GraphPlottedEvent="GraphingControl_GraphPlottedEvent"

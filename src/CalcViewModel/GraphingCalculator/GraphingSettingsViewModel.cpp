@@ -25,7 +25,6 @@ GraphingSettingsViewModel::GraphingSettingsViewModel()
     , m_dontUpdateDisplayRange()
     , m_XIsMinLastChanged(true)
     , m_YIsMinLastChanged(true)
-    , m_IsAlwaysLightTheme(true)
     , m_IsMatchAppTheme(false)
 {
 }

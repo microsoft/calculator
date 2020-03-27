@@ -279,23 +279,6 @@ namespace CalculatorApp::ViewModel
             }
         }
 
-        property bool IsAlwaysLightTheme
-        {
-            bool get()
-            {
-                return m_IsAlwaysLightTheme;
-            }
-            void set(bool value)
-            {
-                m_IsAlwaysLightTheme = value;
-
-                if (m_IsAlwaysLightTheme)
-                {
-                    SetGraphTheme(false);
-                }
-            }
-        }
-
         property bool IsMatchAppTheme
         {
             bool get()
@@ -309,6 +292,10 @@ namespace CalculatorApp::ViewModel
                 if (m_IsMatchAppTheme)
                 {
                     SetGraphTheme(true);
+                }
+                else
+                {
+                    SetGraphTheme(false);
                 }
             }
         }

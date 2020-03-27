@@ -91,6 +91,10 @@ GraphingCalculator::GraphingCalculator()
     virtualKey->Key = (VirtualKey)187; // OemAdd key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
+
+    m_accessibilitySettings->HighContrastChanged +=
+        ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &GraphingCalculator::OnHighContrastChanged);
+
     m_uiSettings = ref new UISettings();
     m_uiSettings->ColorValuesChanged += ref new TypedEventHandler<UISettings ^, Object ^>(this, &GraphingCalculator::OnColorValuesChanged);
 
@@ -112,8 +116,6 @@ GraphingCalculator::GraphingCalculator()
         IsMatchAppTheme = false;
         TraceLogger::GetInstance()->LogGraphTheme(L"IsAlwaysLightTheme");
     }
-
-    
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -537,9 +539,6 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^
         // hide the shadow in high contrast mode
         CursorShadow->Visibility = m_accessibilitySettings->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
 
-        m_accessibilitySettings->HighContrastChanged +=
-            ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &GraphingCalculator::OnHighContrastChanged);
-
         Canvas::SetLeft(TracePointer, TraceCanvas->ActualWidth / 2 + 40);
         Canvas::SetTop(TracePointer, TraceCanvas->ActualHeight / 2 - 40);
 
@@ -646,7 +645,12 @@ void GraphingCalculator::Canvas_SizeChanged(Object ^ /*sender*/, SizeChangedEven
 
 void GraphingCalculator::OnHighContrastChanged(AccessibilitySettings ^ sender, Object ^ /*args*/)
 {
-    CursorShadow->Visibility = sender->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
+    if (CursorShadow != nullptr)
+    {
+        CursorShadow->Visibility = sender->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
+    }
+
+    UpdateGraphTheme(IsMatchAppTheme ? Application::Current->RequestedTheme : ApplicationTheme::Light);
 }
 
 void GraphingCalculator::OnEquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
@@ -740,6 +744,11 @@ void GraphingCalculator::OnColorValuesChanged(Windows::UI::ViewManagement::UISet
 
 void GraphingCalculator::UpdateGraphTheme(ApplicationTheme appTheme)
 {
+    if (m_accessibilitySettings->HighContrast)
+    {
+        VisualStateManager::GoToState(this, L"GrapherHighContrast", true);
+        return;
+    }
     if (appTheme == ApplicationTheme::Dark)
     {
         VisualStateManager::GoToState(this, L"GrapherDarkTheme", true);
