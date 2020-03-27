@@ -55,7 +55,7 @@ void EquationInputArea::OnPropertyChanged(String ^ propertyName)
         OnEquationsPropertyChanged();
     }
 
-    if (propertyName == IsMatchAppThemePropertyName)
+    else if (propertyName == IsMatchAppThemePropertyName)
     {
         ReloadAvailableColors(m_accessibilitySettings->HighContrast, false);
     }
