@@ -45,7 +45,8 @@ namespace CalculatorApp
 
     public enum class LineStyleType
     {
-        Color
+        Color,
+        Pattern
     };
 
     public ref class TraceLogger sealed

@@ -558,13 +558,14 @@ namespace GraphControl
                 auto lineColor = eq->LineColor;
                 graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
 
-                if (eq->GraphedEquation)
+                if (eq->GraphedEquation)                
                 {
                     if (!eq->HasGraphError && eq->IsSelected)
                     {
                         eq->GraphedEquation->TrySelectEquation();
                     }
 
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetLineStyle(static_cast<::Graphing::Renderer::LineStyle>(eq->EquationStyle));
                     eq->GraphedEquation->GetGraphEquationOptions()->SetLineWidth(LineWidth);
                     eq->GraphedEquation->GetGraphEquationOptions()->SetSelectedEquationLineWidth(LineWidth + ((LineWidth <= 2) ? 1 : 2));
                 }
