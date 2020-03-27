@@ -697,9 +697,9 @@
     <value>Excluir</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
   </data>
-  <data name="CopyHistoryMenuItem.Text" xml:space="preserve"> 
-     <value>Copiar</value> 
-     <comment>Text string for the Calculator Copy option in the History list context menu</comment> 
+  <data name="CopyHistoryMenuItem.Text" xml:space="preserve">
+    <value>Copiar</value>
+    <comment>Text string for the Calculator Copy option in the History list context menu</comment>
   </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
     <value>Excluir</value>
@@ -867,7 +867,7 @@
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Igual a</value>
-    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+    <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Função Inversa</value>
@@ -1074,11 +1074,11 @@
     <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Manter na parte superior</value>
+    <value>Manter na parte superior (Alt+Up)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
   </data>
   <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Voltar para visualização completa</value>
+    <value>Voltar para visualização completa (Alt+Down)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
@@ -2691,10 +2691,6 @@
     <value>AB</value>
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
-  <data name="DateCalculationModeAccessKey" xml:space="preserve">
-    <value>4</value>
-    <comment>AccessKey for the Date Calculation mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
@@ -2706,18 +2702,6 @@
   <data name="NavView.AccessKey" xml:space="preserve">
     <value>H</value>
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ProgrammerModeAccessKey" xml:space="preserve">
-    <value>3</value>
-    <comment>AccessKey for the Programmer mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ScientificModeAccessKey" xml:space="preserve">
-    <value>2</value>
-    <comment>AccessKey for the Scientific mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="StandardModeAccessKey" xml:space="preserve">
-    <value>1</value>
-    <comment>AccessKey for the Standard mode navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AngleAccessKey" xml:space="preserve">
     <value>AN</value>
@@ -3061,7 +3045,7 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>Falha no cálculo</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>  
+    <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
   <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Log base X</value>
@@ -3074,6 +3058,10 @@
   <data name="funcButton.Text" xml:space="preserve">
     <value>Função</value>
     <comment>Displayed on the button that contains a flyout for the general functions in scientific mode.</comment>
+  </data>
+  <data name="inequalityButton.Text" xml:space="preserve">
+    <value>Desigualdades</value>
+    <comment>Displayed on the button that contains a flyout for the inequality functions.</comment>
   </data>
   <data name="bitwiseButton.Text" xml:space="preserve">
     <value>Bit a bit</value>
@@ -3250,5 +3238,428 @@
   <data name="MostSignificantBit" xml:space="preserve">
     <value>bit mais significativo</value>
     <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
+  </data>
+  <data name="GraphingCalculatorModeText" xml:space="preserve">
+    <value>Gráficos</value>
+    <comment>Name of the Graphing mode of the Calculator app. Displayed in the navigation menu.</comment>
+  </data>
+  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Igual a</value>
+    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="plotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Traçar</value>
+    <comment>Screen reader prompt for the plot button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="zoomResetButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Redefinir Modo de Exibição (Ctrl+0)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom reset button.</comment>
+  </data>
+  <data name="zoomResetButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Redefinir Exibição</value>
+    <comment>Screen reader prompt for the reset zoom button.</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Ampliar (Ctrl+sinal de adição)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom in button.</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ampliar</value>
+    <comment>Screen reader prompt for the zoom in button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Reduzir (Ctrl+sinal de subtração)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom out button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Reduzir</value>
+    <comment>Screen reader prompt for the zoom out button.</comment>
+  </data>
+  <data name="EquationTextBoxAddPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Adicionar Equação</value>
+    <comment>Placeholder text for the equation input button</comment>
+  </data>
+  <data name="ShareActionErrorMessage" xml:space="preserve">
+    <value>Não é possível compartilhar no momento.</value>
+    <comment>If there is an error in the sharing action will display a dialog with this text.</comment>
+  </data>
+  <data name="ShareActionErrorOk" xml:space="preserve">
+    <value>OK</value>
+    <comment>Used on the dismiss button of the share action error dialog.</comment>
+  </data>
+  <data name="ShareActionTitle" xml:space="preserve">
+    <value>Veja o gráfico que criei com a Calculadora Windows</value>
+    <comment>Sent as part of the shared content. The title for the share.</comment>
+  </data>
+  <data name="EquationsShareHeader" xml:space="preserve">
+    <value>Equações</value>
+    <comment>Header that appears over the equations section when sharing</comment>
+  </data>
+  <data name="VariablesShareHeader" xml:space="preserve">
+    <value>Variáveis</value>
+    <comment>Header that appears over the variables section when sharing</comment>
+  </data>
+  <data name="GraphImageAltText" xml:space="preserve">
+    <value>Imagem de um gráfico com equações</value>
+    <comment>Alt text for the graph image when output via Share</comment>
+  </data>
+  <data name="VaiablesHeader.Text" xml:space="preserve">
+    <value>Variáveis</value>
+    <comment>Header text for variables area</comment>
+  </data>
+  <data name="StepTextBlock.Text" xml:space="preserve">
+    <value>Etapa</value>
+    <comment>Label text for the step text box</comment>
+  </data>
+  <data name="MinTextBlock.Text" xml:space="preserve">
+    <value>Mín.</value>
+    <comment>Label text for the min text box</comment>
+  </data>
+  <data name="MaxTextBlock.Text" xml:space="preserve">
+    <value>Máx.</value>
+    <comment>Label text for the max text box</comment>
+  </data>
+  <data name="LineColorText.Text" xml:space="preserve">
+    <value>Cor da Linha</value>
+    <comment>Label for the Line Color section of the style picker</comment>
+  </data>
+  <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
+    <value>Análise de função</value>
+    <comment>Title for KeyGraphFeatures Control</comment>
+  </data>
+  <data name="KGFHorizontalAsymptotesNone" xml:space="preserve">
+    <value>A função não tem assíntotas horizontais.</value>
+    <comment>Message displayed when the graph does not have any horizontal asymptotes</comment>
+  </data>
+  <data name="KGFInflectionPointsNone" xml:space="preserve">
+    <value>A função não tem pontos de inflexão.</value>
+    <comment>Message displayed when the graph does not have any inflection points</comment>
+  </data>
+  <data name="KGFMaximaNone" xml:space="preserve">
+    <value>A função não tem pontos de máximo.</value>
+    <comment>Message displayed when the graph does not have any maxima</comment>
+  </data>
+  <data name="KGFMinimaNone" xml:space="preserve">
+    <value>A função não tem pontos de mínimo.</value>
+    <comment>Message displayed when the graph does not have any minima</comment>
+  </data>
+  <data name="KGFMonotonicityConstant" xml:space="preserve">
+    <value>Constante</value>
+    <comment>String describing constant monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityDecreasing" xml:space="preserve">
+    <value>Diminuição</value>
+    <comment>String describing decreasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityError" xml:space="preserve">
+    <value>Não é possível determinar a monotonicidade da função.</value>
+    <comment>Error displayed when monotonicity cannot be determined</comment>
+  </data>
+  <data name="KGFMonotonicityIncreasing" xml:space="preserve">
+    <value>Aumento</value>
+    <comment>String describing increasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityUnknown" xml:space="preserve">
+    <value>A monotonicidade da função é desconhecida.</value>
+    <comment>Error displayed when monotonicity is unknown</comment>
+  </data>
+  <data name="KGFObliqueAsymptotesNone" xml:space="preserve">
+    <value>A função não tem assíntotas oblíquas.</value>
+    <comment>Message displayed when the graph does not have any oblique asymptotes</comment>
+  </data>
+  <data name="KGFParityError" xml:space="preserve">
+    <value>Não é possível determinar a paridade da função.</value>
+    <comment>Error displayed when parity is cannot be determined</comment>
+  </data>
+  <data name="KGFParityEven" xml:space="preserve">
+    <value>A função é par.</value>
+    <comment>Message displayed with the function parity is even</comment>
+  </data>
+  <data name="KGFParityNeither" xml:space="preserve">
+    <value>A função não é nem par nem ímpar.</value>
+    <comment>Message displayed with the function parity is neither even nor odd</comment>
+  </data>
+  <data name="KGFParityOdd" xml:space="preserve">
+    <value>A função é ímpar.</value>
+    <comment>Message displayed with the function parity is odd</comment>
+  </data>
+  <data name="KGFParityUnknown" xml:space="preserve">
+    <value>A paridade da função é desconhecida.</value>
+    <comment>Error displayed when parity is unknown</comment>
+  </data>
+  <data name="KGFPeriodicityError" xml:space="preserve">
+    <value>A periodicidade não tem suporte para esta função.</value>
+    <comment>Error displayed when periodicity is not supported</comment>
+  </data>
+  <data name="KGFPeriodicityNotPeriodic" xml:space="preserve">
+    <value>A função não é periódica.</value>
+    <comment>Message displayed with the function periodicity is not periodic</comment>
+  </data>
+  <data name="KGFPeriodicityUnknown" xml:space="preserve">
+    <value>A periodicidade da função é desconhecida.</value>
+    <comment>Message displayed with the function periodicity is unknown</comment>
+  </data>
+  <data name="KGFTooComplexFeaturesError" xml:space="preserve">
+    <value>Estes recursos são muito complexos para a Calculadora calcular:</value>
+    <comment>Error displayed when analysis features cannot be calculated</comment>
+  </data>
+  <data name="KGFVerticalAsymptotesNone" xml:space="preserve">
+    <value>A função não tem assíntotas verticais.</value>
+    <comment>Message displayed when the graph does not have any vertical asymptotes</comment>
+  </data>
+  <data name="KGFXInterceptNone" xml:space="preserve">
+    <value>A função não tem interceptações em x.</value>
+    <comment>Message displayed when the graph does not have any x-intercepts</comment>
+  </data>
+  <data name="KGFYInterceptNone" xml:space="preserve">
+    <value>A função não tem interceptações em y.</value>
+    <comment>Message displayed when the graph does not have any y-intercepts</comment>
+  </data>
+  <data name="Domain" xml:space="preserve">
+    <value>Domínio</value>
+    <comment>Title for KeyGraphFeatures Domain Property</comment>
+  </data>
+  <data name="HorizontalAsymptotes" xml:space="preserve">
+    <value>Assíntotas Horizontais</value>
+    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+  </data>
+  <data name="InflectionPoints" xml:space="preserve">
+    <value>Pontos de Inflexão</value>
+    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+  </data>
+  <data name="KGFAnalysisNotSupported" xml:space="preserve">
+    <value>Não há suporte para análise nesta função.</value>
+    <comment>Error displayed when graph analysis is not supported or had an error.</comment>
+  </data>
+  <data name="Maxima" xml:space="preserve">
+    <value>Máximos</value>
+    <comment>Title for KeyGraphFeatures Maxima Property</comment>
+  </data>
+  <data name="Minima" xml:space="preserve">
+    <value>Mínimos</value>
+    <comment>Title for KeyGraphFeatures Minima Property</comment>
+  </data>
+  <data name="Monotonicity" xml:space="preserve">
+    <value>Monotonicidade</value>
+    <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
+  </data>
+  <data name="ObliqueAsymptotes" xml:space="preserve">
+    <value>Assíntotas Oblíquas</value>
+    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+  </data>
+  <data name="Parity" xml:space="preserve">
+    <value>Paridade</value>
+    <comment>Title for KeyGraphFeatures Parity Property</comment>
+  </data>
+  <data name="Periodicity" xml:space="preserve">
+    <value>Período</value>
+    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>Intervalo</value>
+    <comment>Title for KeyGraphFeatures Range Property</comment>
+  </data>
+  <data name="VerticalAsymptotes" xml:space="preserve">
+    <value>Assíntotas Verticais</value>
+    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
+  </data>
+  <data name="XIntercept" xml:space="preserve">
+    <value>Interceptação em X</value>
+    <comment>Title for KeyGraphFeatures XIntercept Property</comment>
+  </data>
+  <data name="YIntercept" xml:space="preserve">
+    <value>Interceptação em Y</value>
+    <comment>Title for KeyGraphFeatures YIntercept Property</comment>
+  </data>
+  <data name="KGFAnalysisCouldNotBePerformed" xml:space="preserve">
+    <value>Não foi possível executar a análise para a função.</value>
+  </data>
+  <data name="KGFDomainNone" xml:space="preserve">
+    <value>Não é possível calcular o domínio para esta função.</value>
+    <comment>Error displayed when Domain is not returned from the analyzer.</comment>
+  </data>
+  <data name="KGFRangeNone" xml:space="preserve">
+    <value>Não é possível calcular o intervalo para esta função.</value>
+    <comment>Error displayed when Range is not returned from the analyzer.</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Voltar</value>
+    <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Voltar</value>
+    <comment>This is the automation name for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Analisar função</value>
+    <comment>This is the tooltip for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Analisar função</value>
+    <comment>This is the automation name for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisMenuItem" xml:space="preserve">
+    <value>Analisar função</value>
+    <comment>This is the text for the for the analyze function context menu command</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Remover equação</value>
+    <comment>This is the tooltip for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Remover equação</value>
+    <comment>This is the automation name for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeMenuItem" xml:space="preserve">
+    <value>Remover equação</value>
+    <comment>This is the text for the for the remove equation context menu command</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Compartilhar</value>
+    <comment>This is the automation name for the graphing calculator share button.</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Compartilhar</value>
+    <comment>This is the tooltip for the graphing calculator share button.</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Alterar estilo de equação</value>
+    <comment>This is the tooltip for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Alterar estilo de equação</value>
+    <comment>This is the automation name for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserMenuItem" xml:space="preserve">
+    <value>Alterar estilo de equação</value>
+    <comment>This is the text for the for the equation style context menu command</comment>
+  </data>
+  <data name="showEquationButtonToolTip" xml:space="preserve">
+    <value>Mostrar equação %1</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="hideEquationButtonToolTip" xml:space="preserve">
+    <value>Ocultar equação %1</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="disableTracingButtonToolTip" xml:space="preserve">
+    <value>Parar rastreamento</value>
+    <comment>This is the tooltip/automation name for the graphing calculator stop tracing button</comment>
+  </data>
+  <data name="enableTracingButtonToolTip" xml:space="preserve">
+    <value>Iniciar rastreamento</value>
+    <comment>This is the tooltip/automation name for the graphing calculator start tracing button</comment>
+  </data>
+  <data name="graphAutomationName" xml:space="preserve">
+    <value>Janela de visualização de gráfico, eixo x limitado por %1 e %2, eixo y vinculado por %3 e %4, exibindo %5 equações</value>
+    <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
+    </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Configurar controle deslizante</value>
+    <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Configurar controle deslizante</value>
+    <comment>This is the automation name text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphSwitchToEquationMode" xml:space="preserve">
+    <value>Alternar para o modo de equação</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchToGraphMode" xml:space="preserve">
+    <value>Alternar para o modo de gráfico</value>
+    <comment>Used in Graphing Calculator to switch the view to the graph mode</comment>
+  </data>
+  <data name="SwitchModeToggleButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Alternar para o modo de equação</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToEquationModeAnnouncement" xml:space="preserve">
+    <value>O modo atual é o modo de equação</value>
+    <comment>Announcement used in Graphing Calculator when switching to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToGraphModeAnnouncement" xml:space="preserve">
+    <value>O modo atual é o modo de gráfico</value>
+    <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
+  </data>
+  <data name="GridHeading.Text" xml:space="preserve">
+    <value>Janela</value>
+    <comment>Heading for window extents on the settings </comment>
+  </data>
+  <data name="TrigModeDegrees.Content" xml:space="preserve">
+    <value>Graus</value>
+    <comment>Degrees mode on settings page</comment>
+  </data>
+  <data name="TrigModeGradians.Content" xml:space="preserve">
+    <value>Grados</value>
+    <comment>Gradian mode on settings page</comment>
+  </data>
+  <data name="TrigModeRadians.Content" xml:space="preserve">
+    <value>Radianos</value>
+    <comment>Radians mode on settings page</comment>
+  </data>
+  <data name="UnitsHeading.Text" xml:space="preserve">
+    <value>Unidades</value>
+    <comment>Heading for Unit's on the settings</comment>
+  </data>
+  <data name="ResetViewButton.Content" xml:space="preserve">
+    <value>Redefinir modo de exibição</value>
+    <comment>Hyperlink button to reset the view of the graph</comment>
+  </data>
+  <data name="GraphSettingsXMax.Header" xml:space="preserve">
+    <value>X-Máx.</value>
+    <comment>X maximum value header</comment>
+  </data>
+  <data name="GraphSettingsXMin.Header" xml:space="preserve">
+    <value>X-Mín.</value>
+    <comment>X minimum value header</comment>
+  </data>
+  <data name="GraphSettingsYMax.Header" xml:space="preserve">
+    <value>Y-Máx.</value>
+    <comment>Y Maximum value header</comment>
+  </data>
+  <data name="GraphSettingsYMin.Header" xml:space="preserve">
+    <value>Y-Mín.</value>
+    <comment>Y minimum value header</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Opções de grade</value>
+    <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Opções de grade</value>
+    <comment>This is the automation name text for the grid options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphOptionsHeading.Text" xml:space="preserve">
+    <value>Opções de Grafo</value>
+    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+  </data>
+  <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
+    <value>Insira uma expressão</value>
+    <comment>this is the placeholder text used by the textbox to enter an equation</comment>
+  </data>
+  <data name="GraphCopyMenuItem.Text">
+    <value>Copiar</value>
+    <comment>Copy menu item for the graph context menu</comment>
+  </data>
+  <data name="cutEquationMenuItem.Text" xml:space="preserve">
+    <value>Recortar</value>
+    <comment>Cut menu item from the Equation TextBox</comment>
+  </data>
+  <data name="copyEquationMenuItem.Text" xml:space="preserve">
+    <value>Copiar</value>
+    <comment>Copy menu item from the Equation TextBox</comment>
+  </data>
+  <data name="pasteEquationMenuItem.Text" xml:space="preserve">
+    <value>Colar</value>
+    <comment>Paste menu item from the Equation TextBox</comment>
+  </data>
+  <data name="undoEquationMenuItem.Text" xml:space="preserve">
+    <value>Desfazer</value>
+    <comment>Undo menu item from the Equation TextBox</comment>
+  </data>
+  <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
+    <value>Selecionar Tudo</value>
+    <comment>Select all menu item from the Equation TextBox</comment>
   </data>
 </root>

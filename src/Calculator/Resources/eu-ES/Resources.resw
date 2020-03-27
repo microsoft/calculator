@@ -698,9 +698,9 @@
     <value>Ezabatu</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
   </data>
-  <data name="CopyHistoryMenuItem.Text" xml:space="preserve"> 
-     <value>Kopiatu</value> 
-     <comment>Text string for the Calculator Copy option in the History list context menu</comment> 
+  <data name="CopyHistoryMenuItem.Text" xml:space="preserve">
+    <value>Kopiatu</value>
+    <comment>Text string for the Calculator Copy option in the History list context menu</comment>
   </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
     <value>Ezabatu</value>
@@ -868,7 +868,7 @@
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Berdin</value>
-    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+    <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Alderantzikatzeko funtzioa</value>
@@ -1075,11 +1075,11 @@
     <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Mantendu goran</value>
+    <value>Mantendu goran (Alt+Gora)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
   </data>
   <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Itzuli ikuspegi osora</value>
+    <value>Itzuli ikuspegi osora (Alt+Behera)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
@@ -2692,10 +2692,6 @@
     <value>AB</value>
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
-  <data name="DateCalculationModeAccessKey" xml:space="preserve">
-    <value>4</value>
-    <comment>AccessKey for the Date Calculation mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
@@ -2707,18 +2703,6 @@
   <data name="NavView.AccessKey" xml:space="preserve">
     <value>H</value>
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ProgrammerModeAccessKey" xml:space="preserve">
-    <value>3</value>
-    <comment>AccessKey for the Programmer mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ScientificModeAccessKey" xml:space="preserve">
-    <value>2</value>
-    <comment>AccessKey for the Scientific mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="StandardModeAccessKey" xml:space="preserve">
-    <value>1</value>
-    <comment>AccessKey for the Standard mode navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AngleAccessKey" xml:space="preserve">
     <value>AN</value>
@@ -3062,7 +3046,7 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>Ezin izan da kalkulatu</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>  
+    <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
   <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Egunkariaren oinarrizko X</value>
@@ -3075,6 +3059,10 @@
   <data name="funcButton.Text" xml:space="preserve">
     <value>Funtzioa</value>
     <comment>Displayed on the button that contains a flyout for the general functions in scientific mode.</comment>
+  </data>
+  <data name="inequalityButton.Text" xml:space="preserve">
+    <value>Desberdintasunak</value>
+    <comment>Displayed on the button that contains a flyout for the inequality functions.</comment>
   </data>
   <data name="bitwiseButton.Text" xml:space="preserve">
     <value>Bitwise</value>
@@ -3251,5 +3239,428 @@
   <data name="MostSignificantBit" xml:space="preserve">
     <value>bit esanguratsuenak</value>
     <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
+  </data>
+  <data name="GraphingCalculatorModeText" xml:space="preserve">
+    <value>Grafikoak sortzea</value>
+    <comment>Name of the Graphing mode of the Calculator app. Displayed in the navigation menu.</comment>
+  </data>
+  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Berdin</value>
+    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="plotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Marraztu</value>
+    <comment>Screen reader prompt for the plot button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="zoomResetButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Berrezarri ikuspegia (Ktrl+0)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom reset button.</comment>
+  </data>
+  <data name="zoomResetButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Berrezarri ikuspegia</value>
+    <comment>Screen reader prompt for the reset zoom button.</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Handiagotu (Ktrl+plus)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom in button.</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Handiagotu</value>
+    <comment>Screen reader prompt for the zoom in button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Txikiagotu (Ktrl+minus)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom out button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Txikiagotu</value>
+    <comment>Screen reader prompt for the zoom out button.</comment>
+  </data>
+  <data name="EquationTextBoxAddPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Gehitu ekuazioa</value>
+    <comment>Placeholder text for the equation input button</comment>
+  </data>
+  <data name="ShareActionErrorMessage" xml:space="preserve">
+    <value>Ezin da partekatu une honetan.</value>
+    <comment>If there is an error in the sharing action will display a dialog with this text.</comment>
+  </data>
+  <data name="ShareActionErrorOk" xml:space="preserve">
+    <value>Ados</value>
+    <comment>Used on the dismiss button of the share action error dialog.</comment>
+  </data>
+  <data name="ShareActionTitle" xml:space="preserve">
+    <value>Ikusi zer grafiko egin dudan Windows Kalkulagailua erabiliz</value>
+    <comment>Sent as part of the shared content. The title for the share.</comment>
+  </data>
+  <data name="EquationsShareHeader" xml:space="preserve">
+    <value>Ekuazioak</value>
+    <comment>Header that appears over the equations section when sharing</comment>
+  </data>
+  <data name="VariablesShareHeader" xml:space="preserve">
+    <value>Aldagaiak</value>
+    <comment>Header that appears over the variables section when sharing</comment>
+  </data>
+  <data name="GraphImageAltText" xml:space="preserve">
+    <value>Ekuazioak dituen diagrama baten irudia</value>
+    <comment>Alt text for the graph image when output via Share</comment>
+  </data>
+  <data name="VaiablesHeader.Text" xml:space="preserve">
+    <value>Aldagaiak</value>
+    <comment>Header text for variables area</comment>
+  </data>
+  <data name="StepTextBlock.Text" xml:space="preserve">
+    <value>Urratsa</value>
+    <comment>Label text for the step text box</comment>
+  </data>
+  <data name="MinTextBlock.Text" xml:space="preserve">
+    <value>Min</value>
+    <comment>Label text for the min text box</comment>
+  </data>
+  <data name="MaxTextBlock.Text" xml:space="preserve">
+    <value>Max</value>
+    <comment>Label text for the max text box</comment>
+  </data>
+  <data name="LineColorText.Text" xml:space="preserve">
+    <value>Marraren kolorea</value>
+    <comment>Label for the Line Color section of the style picker</comment>
+  </data>
+  <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
+    <value>Funtzio-analisia</value>
+    <comment>Title for KeyGraphFeatures Control</comment>
+  </data>
+  <data name="KGFHorizontalAsymptotesNone" xml:space="preserve">
+    <value>Funtzioak ez du asintota horizontalik.</value>
+    <comment>Message displayed when the graph does not have any horizontal asymptotes</comment>
+  </data>
+  <data name="KGFInflectionPointsNone" xml:space="preserve">
+    <value>Funtzioak ez du inflexio-punturik.</value>
+    <comment>Message displayed when the graph does not have any inflection points</comment>
+  </data>
+  <data name="KGFMaximaNone" xml:space="preserve">
+    <value>Funtzioak ez du puntu gehienekorik.</value>
+    <comment>Message displayed when the graph does not have any maxima</comment>
+  </data>
+  <data name="KGFMinimaNone" xml:space="preserve">
+    <value>Funtzioak ez du puntu gutxienekorik.</value>
+    <comment>Message displayed when the graph does not have any minima</comment>
+  </data>
+  <data name="KGFMonotonicityConstant" xml:space="preserve">
+    <value>Konstantea</value>
+    <comment>String describing constant monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityDecreasing" xml:space="preserve">
+    <value>Beherantz</value>
+    <comment>String describing decreasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityError" xml:space="preserve">
+    <value>Ezin da zehaztu funtzioaren monotonizazioa.</value>
+    <comment>Error displayed when monotonicity cannot be determined</comment>
+  </data>
+  <data name="KGFMonotonicityIncreasing" xml:space="preserve">
+    <value>Gorantz</value>
+    <comment>String describing increasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityUnknown" xml:space="preserve">
+    <value>Funtzioaren monotonizazioa ezezaguna da.</value>
+    <comment>Error displayed when monotonicity is unknown</comment>
+  </data>
+  <data name="KGFObliqueAsymptotesNone" xml:space="preserve">
+    <value>Funtzioak ez du asintota zeiharrik.</value>
+    <comment>Message displayed when the graph does not have any oblique asymptotes</comment>
+  </data>
+  <data name="KGFParityError" xml:space="preserve">
+    <value>Ezin da zehaztu funtzioaren paritaterik.</value>
+    <comment>Error displayed when parity is cannot be determined</comment>
+  </data>
+  <data name="KGFParityEven" xml:space="preserve">
+    <value>Funtzioa bikoitia da.</value>
+    <comment>Message displayed with the function parity is even</comment>
+  </data>
+  <data name="KGFParityNeither" xml:space="preserve">
+    <value>Funtzioa ez da bikoitia ezta bakoitia ere.</value>
+    <comment>Message displayed with the function parity is neither even nor odd</comment>
+  </data>
+  <data name="KGFParityOdd" xml:space="preserve">
+    <value>Funtzioa bakoitia da.</value>
+    <comment>Message displayed with the function parity is odd</comment>
+  </data>
+  <data name="KGFParityUnknown" xml:space="preserve">
+    <value>Funtzioaren paritatea ezezaguna da.</value>
+    <comment>Error displayed when parity is unknown</comment>
+  </data>
+  <data name="KGFPeriodicityError" xml:space="preserve">
+    <value>Aldizkakotasuna ez da onartzen funtzio honetan.</value>
+    <comment>Error displayed when periodicity is not supported</comment>
+  </data>
+  <data name="KGFPeriodicityNotPeriodic" xml:space="preserve">
+    <value>Funtzioa ez da aldizkakoa.</value>
+    <comment>Message displayed with the function periodicity is not periodic</comment>
+  </data>
+  <data name="KGFPeriodicityUnknown" xml:space="preserve">
+    <value>Funtzioaren aldizkakotasuna ezezaguna da.</value>
+    <comment>Message displayed with the function periodicity is unknown</comment>
+  </data>
+  <data name="KGFTooComplexFeaturesError" xml:space="preserve">
+    <value>Eginbide horiek konplexuegiak dira Kalkulagailuak kalkuluak egiteko:</value>
+    <comment>Error displayed when analysis features cannot be calculated</comment>
+  </data>
+  <data name="KGFVerticalAsymptotesNone" xml:space="preserve">
+    <value>Funtzioak ez du asintota bertikalik.</value>
+    <comment>Message displayed when the graph does not have any vertical asymptotes</comment>
+  </data>
+  <data name="KGFXInterceptNone" xml:space="preserve">
+    <value>Funtzioak ez du puntu X ebakitze-punturik.</value>
+    <comment>Message displayed when the graph does not have any x-intercepts</comment>
+  </data>
+  <data name="KGFYInterceptNone" xml:space="preserve">
+    <value>Funtzioak ez du puntu Y ebakitze-punturik.</value>
+    <comment>Message displayed when the graph does not have any y-intercepts</comment>
+  </data>
+  <data name="Domain" xml:space="preserve">
+    <value>Domeinua</value>
+    <comment>Title for KeyGraphFeatures Domain Property</comment>
+  </data>
+  <data name="HorizontalAsymptotes" xml:space="preserve">
+    <value>Asintota horizontalak</value>
+    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+  </data>
+  <data name="InflectionPoints" xml:space="preserve">
+    <value>Inflexio puntuak</value>
+    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+  </data>
+  <data name="KGFAnalysisNotSupported" xml:space="preserve">
+    <value>Ez da onartzen funtzio honen analisia.</value>
+    <comment>Error displayed when graph analysis is not supported or had an error.</comment>
+  </data>
+  <data name="Maxima" xml:space="preserve">
+    <value>Gehienekoa</value>
+    <comment>Title for KeyGraphFeatures Maxima Property</comment>
+  </data>
+  <data name="Minima" xml:space="preserve">
+    <value>Gutxienekoa</value>
+    <comment>Title for KeyGraphFeatures Minima Property</comment>
+  </data>
+  <data name="Monotonicity" xml:space="preserve">
+    <value>Monotonizazioa</value>
+    <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
+  </data>
+  <data name="ObliqueAsymptotes" xml:space="preserve">
+    <value>Asintota zeiharrak</value>
+    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+  </data>
+  <data name="Parity" xml:space="preserve">
+    <value>Paritatea</value>
+    <comment>Title for KeyGraphFeatures Parity Property</comment>
+  </data>
+  <data name="Periodicity" xml:space="preserve">
+    <value>Aldizkakotasuna</value>
+    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>Tartea</value>
+    <comment>Title for KeyGraphFeatures Range Property</comment>
+  </data>
+  <data name="VerticalAsymptotes" xml:space="preserve">
+    <value>Asintota bertikalak</value>
+    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
+  </data>
+  <data name="XIntercept" xml:space="preserve">
+    <value>X ebakitze-puntua</value>
+    <comment>Title for KeyGraphFeatures XIntercept Property</comment>
+  </data>
+  <data name="YIntercept" xml:space="preserve">
+    <value>Y ebakitze-puntua</value>
+    <comment>Title for KeyGraphFeatures YIntercept Property</comment>
+  </data>
+  <data name="KGFAnalysisCouldNotBePerformed" xml:space="preserve">
+    <value>Ezin izan da gauzatu analisia funtzioarentzat.</value>
+  </data>
+  <data name="KGFDomainNone" xml:space="preserve">
+    <value>Ezin izan da kalkulatu funtzioaren domeinua.</value>
+    <comment>Error displayed when Domain is not returned from the analyzer.</comment>
+  </data>
+  <data name="KGFRangeNone" xml:space="preserve">
+    <value>Ezin izan da kalkulatu tartearen domeinua.</value>
+    <comment>Error displayed when Range is not returned from the analyzer.</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Atzera</value>
+    <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Atzera</value>
+    <comment>This is the automation name for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Analizatu funtzioa</value>
+    <comment>This is the tooltip for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Analizatu funtzioa</value>
+    <comment>This is the automation name for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisMenuItem" xml:space="preserve">
+    <value>Analizatu funtzioa</value>
+    <comment>This is the text for the for the analyze function context menu command</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Kendu ekuazioa</value>
+    <comment>This is the tooltip for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kendu ekuazioa</value>
+    <comment>This is the automation name for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeMenuItem" xml:space="preserve">
+    <value>Kendu ekuazioa</value>
+    <comment>This is the text for the for the remove equation context menu command</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Partekatu</value>
+    <comment>This is the automation name for the graphing calculator share button.</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Partekatu</value>
+    <comment>This is the tooltip for the graphing calculator share button.</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Aldatu ekuazioaren estiloa</value>
+    <comment>This is the tooltip for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Aldatu ekuazioaren estiloa</value>
+    <comment>This is the automation name for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserMenuItem" xml:space="preserve">
+    <value>Aldatu ekuazioaren estiloa</value>
+    <comment>This is the text for the for the equation style context menu command</comment>
+  </data>
+  <data name="showEquationButtonToolTip" xml:space="preserve">
+    <value>Erakutsi %1 ekuazioa</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="hideEquationButtonToolTip" xml:space="preserve">
+    <value>Ezkutatu %1 ekuazioa</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="disableTracingButtonToolTip" xml:space="preserve">
+    <value>Gelditu jarraipena</value>
+    <comment>This is the tooltip/automation name for the graphing calculator stop tracing button</comment>
+  </data>
+  <data name="enableTracingButtonToolTip" xml:space="preserve">
+    <value>Hasi jarraipena</value>
+    <comment>This is the tooltip/automation name for the graphing calculator start tracing button</comment>
+  </data>
+  <data name="graphAutomationName" xml:space="preserve">
+    <value>Grafikoa ikusteko leihoa, x ardatza %1 eta %2 balioei lotuta, y ardatza %3 eta %4 balioei lotuta eta %5 ekuazio erakusten</value>
+    <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
+    </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Konfiguratu graduatzailea</value>
+    <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Konfiguratu graduatzailea</value>
+    <comment>This is the automation name text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphSwitchToEquationMode" xml:space="preserve">
+    <value>Aldatu ekuazio modura</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchToGraphMode" xml:space="preserve">
+    <value>Aldatu grafiko modura</value>
+    <comment>Used in Graphing Calculator to switch the view to the graph mode</comment>
+  </data>
+  <data name="SwitchModeToggleButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Aldatu ekuazio modura</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToEquationModeAnnouncement" xml:space="preserve">
+    <value>Uneko modua ekuazioa modua da</value>
+    <comment>Announcement used in Graphing Calculator when switching to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToGraphModeAnnouncement" xml:space="preserve">
+    <value>Uneko modua grafiko modua da</value>
+    <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
+  </data>
+  <data name="GridHeading.Text" xml:space="preserve">
+    <value>Leihoa</value>
+    <comment>Heading for window extents on the settings </comment>
+  </data>
+  <data name="TrigModeDegrees.Content" xml:space="preserve">
+    <value>Graduak</value>
+    <comment>Degrees mode on settings page</comment>
+  </data>
+  <data name="TrigModeGradians.Content" xml:space="preserve">
+    <value>Gradianak</value>
+    <comment>Gradian mode on settings page</comment>
+  </data>
+  <data name="TrigModeRadians.Content" xml:space="preserve">
+    <value>Radianak</value>
+    <comment>Radians mode on settings page</comment>
+  </data>
+  <data name="UnitsHeading.Text" xml:space="preserve">
+    <value>Unitateak</value>
+    <comment>Heading for Unit's on the settings</comment>
+  </data>
+  <data name="ResetViewButton.Content" xml:space="preserve">
+    <value>Berrezarri ikuspegia</value>
+    <comment>Hyperlink button to reset the view of the graph</comment>
+  </data>
+  <data name="GraphSettingsXMax.Header" xml:space="preserve">
+    <value>X-Max</value>
+    <comment>X maximum value header</comment>
+  </data>
+  <data name="GraphSettingsXMin.Header" xml:space="preserve">
+    <value>X-Min</value>
+    <comment>X minimum value header</comment>
+  </data>
+  <data name="GraphSettingsYMax.Header" xml:space="preserve">
+    <value>Y-Max</value>
+    <comment>Y Maximum value header</comment>
+  </data>
+  <data name="GraphSettingsYMin.Header" xml:space="preserve">
+    <value>Y-Min</value>
+    <comment>Y minimum value header</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Saretaren aukerak</value>
+    <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Saretaren aukerak</value>
+    <comment>This is the automation name text for the grid options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphOptionsHeading.Text" xml:space="preserve">
+    <value>Grafikoaren aukerak</value>
+    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+  </data>
+  <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
+    <value>Idatzi adierazpena</value>
+    <comment>this is the placeholder text used by the textbox to enter an equation</comment>
+  </data>
+  <data name="GraphCopyMenuItem.Text">
+    <value>Kopiatu</value>
+    <comment>Copy menu item for the graph context menu</comment>
+  </data>
+  <data name="cutEquationMenuItem.Text" xml:space="preserve">
+    <value>Ebaki</value>
+    <comment>Cut menu item from the Equation TextBox</comment>
+  </data>
+  <data name="copyEquationMenuItem.Text" xml:space="preserve">
+    <value>Kopiatu</value>
+    <comment>Copy menu item from the Equation TextBox</comment>
+  </data>
+  <data name="pasteEquationMenuItem.Text" xml:space="preserve">
+    <value>Itsatsi</value>
+    <comment>Paste menu item from the Equation TextBox</comment>
+  </data>
+  <data name="undoEquationMenuItem.Text" xml:space="preserve">
+    <value>Desegin</value>
+    <comment>Undo menu item from the Equation TextBox</comment>
+  </data>
+  <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
+    <value>Hautatu dena</value>
+    <comment>Select all menu item from the Equation TextBox</comment>
   </data>
 </root>
