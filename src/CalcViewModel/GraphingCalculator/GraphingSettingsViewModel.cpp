@@ -10,7 +10,6 @@ using namespace CalcManager::NumberFormattingUtils;
 using namespace GraphControl;
 using namespace std;
 using namespace Platform;
-using namespace Windows::Storage;
 using namespace Windows::UI::Xaml;
 
 GraphingSettingsViewModel::GraphingSettingsViewModel()
@@ -25,7 +24,6 @@ GraphingSettingsViewModel::GraphingSettingsViewModel()
     , m_dontUpdateDisplayRange()
     , m_XIsMinLastChanged(true)
     , m_YIsMinLastChanged(true)
-    , m_IsMatchAppTheme(false)
 {
 }
 
@@ -110,13 +108,4 @@ void GraphingSettingsViewModel::UpdateDisplayRange()
 bool GraphingSettingsViewModel::HasError()
 {
     return m_XMinError || m_YMinError || m_XMaxError || m_YMaxError || XError || YError;
-}
-
-void GraphingSettingsViewModel::SetGraphTheme(bool isMatchAppTheme)
-{
-    String ^ propertyName = isMatchAppTheme ? L"IsMatchAppTheme" : L"IsAlwaysLightTheme";
-    ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
-    localSettings->Values->Insert(L"IsGraphThemeMatchApp", isMatchAppTheme);
-    GraphThemeSettingChanged(this, isMatchAppTheme);
-    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Theme, propertyName);
 }

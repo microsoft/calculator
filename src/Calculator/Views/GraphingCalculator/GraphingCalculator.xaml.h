@@ -87,7 +87,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
 
         void UpdateGraphAutomationName();
         void OnColorValuesChanged(Windows::UI::ViewManagement::UISettings ^ sender, Platform::Object ^ args);
-        void UpdateGraphTheme(Windows::UI::Xaml::ApplicationTheme appTheme);
+        void UpdateGraphTheme();
         void OnGraphThemeSettingChanged(Platform::Object ^ sender, bool isMatchAppTheme);
 
     private:
@@ -100,7 +100,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         bool m_cursorShadowInitialized;
         Windows::UI::ViewManagement::UISettings ^ m_uiSettings;
-        CalculatorApp::ViewModel::GraphingSettingsViewModel ^ m_graphSettingsVM;
+        CalculatorApp::GraphingSettings ^ m_graphSettings;
         void OnSettingsFlyout_Closing(Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
         void Canvas_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);

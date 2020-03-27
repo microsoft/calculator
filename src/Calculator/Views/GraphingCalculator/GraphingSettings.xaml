@@ -224,10 +224,10 @@
 
             <StackPanel Orientation="Vertical">
                 <RadioButton x:Uid="AlwaysLightTheme"
-                             IsChecked="{x:Bind ViewModel.IsMatchAppTheme, Mode=TwoWay, Converter={StaticResource BooleanNegationConverter}}"/>
+                             IsChecked="{x:Bind IsMatchAppTheme, Mode=TwoWay, Converter={StaticResource BooleanNegationConverter}}"/>
                 <RadioButton x:Uid="MatchAppTheme"
                              Margin="1,0"
-                             IsChecked="{x:Bind ViewModel.IsMatchAppTheme, Mode=TwoWay}"/>
+                             IsChecked="{x:Bind IsMatchAppTheme, Mode=TwoWay}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -279,31 +279,7 @@ namespace CalculatorApp::ViewModel
             }
         }
 
-        property bool IsMatchAppTheme
-        {
-            bool get()
-            {
-                return m_IsMatchAppTheme;
-            }
-            void set(bool value)
-            {
-                m_IsMatchAppTheme = value;
-
-                if (m_IsMatchAppTheme)
-                {
-                    SetGraphTheme(true);
-                }
-                else
-                {
-                    SetGraphTheme(false);
-                }
-            }
-        }
-
     public:
-        // Event sends the if the IsMatchAppTheme is selected
-        event Windows::Foundation::EventHandler<bool> ^ GraphThemeSettingChanged;
-
         void UpdateDisplayRange();
 
     public:
@@ -311,7 +287,6 @@ namespace CalculatorApp::ViewModel
         void InitRanges();
         void ResetView();
         bool HasError();
-        void SetGraphTheme(bool isMatchAppTheme);
 
     private:
         Platform::String ^ m_XMin;
@@ -325,7 +300,5 @@ namespace CalculatorApp::ViewModel
         bool m_dontUpdateDisplayRange;
         bool m_XIsMinLastChanged;
         bool m_YIsMinLastChanged;
-        bool m_IsAlwaysLightTheme;
-        bool m_IsMatchAppTheme;
     };
 }
