@@ -16,6 +16,7 @@ using namespace std;
 using namespace Windows::Foundation;
 using namespace Windows::System;
 using namespace Windows::UI;
+using namespace Windows::UI::Core;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Media;
@@ -42,6 +43,9 @@ EquationInputArea::EquationInputArea()
 {
     m_accessibilitySettings->HighContrastChanged +=
         ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &EquationInputArea::OnHighContrastChanged);
+
+    m_uiSettings = ref new UISettings();
+    m_uiSettings->ColorValuesChanged += ref new TypedEventHandler<UISettings ^, Object ^>(this, &EquationInputArea::OnColorValuesChanged);
 
     ReloadAvailableColors(m_accessibilitySettings->HighContrast, true);
 
@@ -289,6 +293,19 @@ void EquationInputArea::OnHighContrastChanged(AccessibilitySettings ^ sender, Ob
 {
     ReloadAvailableColors(sender->HighContrast, true);
 }
+
+void EquationInputArea::OnColorValuesChanged(Windows::UI::ViewManagement::UISettings ^ sender, Platform::Object ^ args)
+{
+    WeakReference weakThis(this);
+    this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([weakThis]() {
+                                   auto refThis = weakThis.Resolve<EquationInputArea>();
+                                   if (refThis != nullptr)
+                                   {
+                                       refThis->ReloadAvailableColors(refThis->m_accessibilitySettings->HighContrast, false);
+                                   }
+                               }));
+}
+
 
 void EquationInputArea::ReloadAvailableColors(bool isHighContrast, bool reassignColors)
 {

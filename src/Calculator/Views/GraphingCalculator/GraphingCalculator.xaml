@@ -342,25 +342,22 @@
                            BasedOn="{StaticResource SwitchModeToggleButtonStyle}"
                            TargetType="ToggleButton"/>
                     <Style x:Key="GraphControlCommandPanel" TargetType="Border">
-                        <Setter Property="Background" Value="#303030"/>
-                        <Setter Property="BorderBrush" Value="#303030"/>
+                        <Setter Property="Background" Value="{StaticResource SystemControlAcrylicElementBrush}"/>
+                        <Setter Property="BorderBrush" Value="#e0e0e0"/>
                         <Setter Property="BorderThickness" Value="1"/>
                         <Setter Property="CornerRadius" Value="4"/>
                     </Style>
                     <Style x:Key="ThemedGraphRepeatButtonStyle"
                            BasedOn="{StaticResource GraphRepeatButtonStyle}"
                            TargetType="RepeatButton">
-                        <Setter Property="Foreground" Value="#FFFFFF"/>
                     </Style>
                     <Style x:Key="ThemedGraphButtonStyle"
                            BasedOn="{StaticResource GraphButtonStyle}"
                            TargetType="Button">
-                        <Setter Property="Foreground" Value="#FFFFFF"/>
                     </Style>
                     <Style x:Key="ThemedGraphToggleButtonStyle"
                            BasedOn="{StaticResource GraphToggleButtonStyle}"
                            TargetType="ToggleButton">
-                        <Setter Property="Foreground" Value="#FFFFFF"/>
                     </Style>
                     <Style x:Key="GraphTooltipStyle" TargetType="Border">
                         <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>

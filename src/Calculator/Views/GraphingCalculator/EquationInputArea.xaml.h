@@ -52,6 +52,7 @@ public
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void ReloadAvailableColors(bool isHighContrast, bool reassignColors);
         void FocusEquationTextBox(ViewModel::EquationViewModel ^ equation);
+        void OnColorValuesChanged(Windows::UI::ViewManagement::UISettings ^ sender, Platform::Object ^ args);
 
         void EquationTextBox_RemoveButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void EquationTextBox_KeyGraphFeaturesButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
@@ -72,6 +73,7 @@ public
         CalculatorApp::ViewModel::EquationViewModel ^ GetViewModelFromEquationTextBox(Platform::Object ^ sender);
 
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
+        Windows::UI::ViewManagement::UISettings ^ m_uiSettings;
         int m_lastLineColorIndex;
         int m_lastFunctionLabelIndex;
         ViewModel::EquationViewModel ^ m_equationToFocus;
