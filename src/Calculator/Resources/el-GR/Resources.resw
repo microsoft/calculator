@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2991,9 +2991,9 @@
     <value>Ρίζα κύβου</value>
     <comment>Name for the cube root function. Used by screen readers.</comment>
   </data>
-  <data name="Logx" xml:space="preserve">
+  <data name="Logy" xml:space="preserve">
     <value>Βασικός λογάριθμος</value>
-    <comment>Name for the logbasex function. Used by screen readers.</comment>
+    <comment>Name for the logbasey function. Used by screen readers.</comment>
   </data>
   <data name="AbsoluteValue" xml:space="preserve">
     <value>Απόλυτη τιμή</value>
@@ -3063,9 +3063,9 @@
     <value>Ο υπολογισμός απέτυχε</value>
     <comment>Text displayed when the application is not able to do a calculation</comment>  
   </data>
-  <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="logBaseY.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Βασικός λογάριθμός X</value>
-    <comment>Screen reader prompt for the logBaseX button</comment>
+    <comment>Screen reader prompt for the logBaseY button</comment>
   </data>
   <data name="trigButton.Text" xml:space="preserve">
     <value>Τριγωνομετρία</value>

@@ -3447,9 +3447,9 @@
     <value>Cube Root</value>
     <comment>Name for the cube root function. Used by screen readers.</comment>
   </data>
-  <data name="Logx" xml:space="preserve">
+  <data name="Logy" xml:space="preserve">
     <value>Base Log</value>
-    <comment>Name for the logbasex function. Used by screen readers.</comment>
+    <comment>Name for the logbasey function. Used by screen readers.</comment>
   </data>
   <data name="AbsoluteValue" xml:space="preserve">
     <value>Absolute Value</value>
@@ -3519,11 +3519,11 @@
     <value>Calculation failed</value>
     <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
-  <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="logBaseY.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Log base X</value>
-    <comment>Screen reader prompt for the logBaseX button</comment>
+    <comment>Screen reader prompt for the logBaseY button</comment>
   </data>
-  <data name="logBaseX.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+  <data name="logBaseY.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
     <value>L</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>

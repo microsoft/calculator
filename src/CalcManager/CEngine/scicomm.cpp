@@ -35,7 +35,7 @@ namespace
             IDC_ADD,2, IDC_SUB,2,
             IDC_RSHF,3, IDC_LSHF,3, IDC_RSHFL,3,
             IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,
-            IDC_PWR,4, IDC_ROOT,4, IDC_LOGBASEX,4 };
+            IDC_PWR,4, IDC_ROOT,4, IDC_LOGBASEY,4 };
 
         for (unsigned int iPrec = 0; iPrec < size(rgbPrec); iPrec += 2)
         {
@@ -948,7 +948,7 @@ static const std::unordered_map<int, FunctionNameElement> operatorStringTable =
     { IDC_SIGN, { SIDS_NEGATE } },
     { IDC_DEGREES, { SIDS_DEGREES } },
     { IDC_POW2, { SIDS_TWOPOWX } },
-    { IDC_LOGBASEX, { SIDS_LOGBASEX } },
+    { IDC_LOGBASEY, { SIDS_LOGBASEY } },
     { IDC_ABS, { SIDS_ABS } },
     { IDC_CEIL, { SIDS_CEIL } },
     { IDC_FLOOR, { SIDS_FLOOR } },
