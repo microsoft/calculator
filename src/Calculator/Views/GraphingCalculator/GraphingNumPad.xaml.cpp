@@ -63,7 +63,7 @@ static const std::unordered_map<NumbersAndOperatorsEnum, std::tuple<Platform::St
     { NumbersAndOperatorsEnum::CubeRoot, { L"cbrt()", 5, 0 } },
     { NumbersAndOperatorsEnum::YRootX, { L"root(x" + StringReference(LocalizationSettings::GetInstance().GetListSeparator().data()) + L"n)", 7, 1 } },
     { NumbersAndOperatorsEnum::TwoPowerX, { L"2^", 2, 0 } },
-    { NumbersAndOperatorsEnum::LogBaseX, { "log(b" + StringReference(LocalizationSettings::GetInstance().GetListSeparator().data()) + L" x)", 4, 1 } },
+    { NumbersAndOperatorsEnum::LogBaseX, { "log(x" + StringReference(LocalizationSettings::GetInstance().GetListSeparator().data()) + L"b)", 4, 1 } },
     { NumbersAndOperatorsEnum::EPowerX, { L"e^", 4, 0 } },
     { NumbersAndOperatorsEnum::Abs, { L"abs()", 4, 0 } },
     { NumbersAndOperatorsEnum::X, { L"x", 1, 0 } },

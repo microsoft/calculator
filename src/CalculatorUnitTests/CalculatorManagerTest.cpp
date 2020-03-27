@@ -614,7 +614,7 @@ namespace CalculatorManagerTest
         TestDriver::Test(L"4", L"ceil(3.8)", commands41);
 
         Command commands42[] = { Command::Command3, Command::CommandLogBaseX, Command::Command5, Command::CommandADD, Command::CommandNULL };
-        TestDriver::Test(L"1.464973520717927", L"3 base log 5 + ", commands42);
+        TestDriver::Test(L"0.682606194485985", L"3 base log 5 + ", commands42);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientificParenthesis()
