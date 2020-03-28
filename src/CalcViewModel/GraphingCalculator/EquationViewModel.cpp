@@ -33,7 +33,7 @@ namespace CalculatorApp::ViewModel
     {
     }
 
-    EquationViewModel::EquationViewModel(Equation ^ equation, int functionLabelIndex, Windows::UI::Color color)
+    EquationViewModel::EquationViewModel(Equation ^ equation, int functionLabelIndex, Windows::UI::Color color, int colorIndex)
         : m_AnalysisErrorVisible{ false }
         , m_FunctionLabelIndex{ functionLabelIndex }
         , m_KeyGraphFeaturesItems{ ref new Vector<KeyGraphFeaturesItem ^>() }
@@ -46,6 +46,7 @@ namespace CalculatorApp::ViewModel
 
         GraphEquation = equation;
         LineColor = color;
+        LineColorIndex = colorIndex;
         IsLineEnabled = true;
     }
 

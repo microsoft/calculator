@@ -286,27 +286,43 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <!-- Graph Theme Colors -->
+            <Color x:Key="LightThemeAxisColor">#000000</Color>
+            <Color x:Key="LightThemeGraphBackgroundColor">#FFFFFF</Color>
+            <Color x:Key="LightThemeGridLinesColor">#C6C6C6</Color>
+            <Color x:Key="DarkThemeAxisColor">#FFFFFF</Color>
+            <Color x:Key="DarkThemeGraphBackgroundColor">#1F1F1F</Color>
+            <Color x:Key="DarkThemeGridLinesColor">#4F4F4F</Color>
+
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
+           
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
                     <Style x:Key="ThemedSwitchModeToggleButtonStyle"
                            BasedOn="{StaticResource SwitchModeToggleButtonStyle}"
                            TargetType="ToggleButton"/>
                     <Style x:Key="GraphControlCommandPanel" TargetType="Border">
-                        <Setter Property="Background" Value="{StaticResource SystemControlAcrylicElementBrush}"/>
-                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="Background" Value="#303030"/>
+                        <Setter Property="BorderBrush" Value="#303030"/>
                         <Setter Property="BorderThickness" Value="0"/>
                         <Setter Property="CornerRadius" Value="4"/>
                     </Style>
                     <Style x:Key="ThemedGraphRepeatButtonStyle"
                            BasedOn="{StaticResource GraphRepeatButtonStyle}"
-                           TargetType="RepeatButton"/>
+                           TargetType="RepeatButton">
+                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                    </Style>
                     <Style x:Key="ThemedGraphButtonStyle"
                            BasedOn="{StaticResource GraphButtonStyle}"
-                           TargetType="Button"/>
+                           TargetType="Button">
+                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                    </Style>
                     <Style x:Key="ThemedGraphToggleButtonStyle"
                            BasedOn="{StaticResource GraphToggleButtonStyle}"
-                           TargetType="ToggleButton"/>
+                           TargetType="ToggleButton">
+                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                    </Style>
 
                     <Style x:Key="GraphTooltipStyle" TargetType="Border">
                         <Setter Property="BorderBrush" Value="#e0e0e0"/>
@@ -333,18 +349,21 @@
                     </Style>
                     <Style x:Key="ThemedGraphRepeatButtonStyle"
                            BasedOn="{StaticResource GraphRepeatButtonStyle}"
-                           TargetType="RepeatButton"/>
+                           TargetType="RepeatButton">
+                    </Style>
                     <Style x:Key="ThemedGraphButtonStyle"
                            BasedOn="{StaticResource GraphButtonStyle}"
-                           TargetType="Button"/>
+                           TargetType="Button">
+                    </Style>
                     <Style x:Key="ThemedGraphToggleButtonStyle"
                            BasedOn="{StaticResource GraphToggleButtonStyle}"
-                           TargetType="ToggleButton"/>
+                           TargetType="ToggleButton">
+                    </Style>
                     <Style x:Key="GraphTooltipStyle" TargetType="Border">
+                        <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
                         <Setter Property="BorderBrush" Value="#e0e0e0"/>
                         <Setter Property="BorderThickness" Value="1"/>
                         <Setter Property="CornerRadius" Value="4"/>
-                        <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
                     </Style>
                     <Style x:Key="TracePointerPathStyle" TargetType="Path">
                         <Setter Property="Fill" Value="White"/>
@@ -446,6 +465,29 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+            <VisualStateGroup x:Name="GrapherThemes">
+                <VisualState x:Name="GrapherDarkTheme">
+                    <VisualState.Setters>
+                        <Setter Target="GraphingControl.AxesColor" Value="{StaticResource DarkThemeAxisColor}"/>
+                        <Setter Target="GraphingControl.GraphBackground" Value="{StaticResource DarkThemeGraphBackgroundColor}"/>
+                        <Setter Target="GraphingControl.GridLinesColor" Value="{StaticResource DarkThemeGridLinesColor}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="GrapherLightTheme">
+                    <VisualState.Setters>
+                        <Setter Target="GraphingControl.AxesColor" Value="{StaticResource LightThemeAxisColor}"/>
+                        <Setter Target="GraphingControl.GraphBackground" Value="{StaticResource LightThemeGraphBackgroundColor}"/>
+                        <Setter Target="GraphingControl.GridLinesColor" Value="{StaticResource LightThemeGridLinesColor}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="GrapherHighContrast">
+                    <VisualState.Setters>
+                        <Setter Target="GraphingControl.AxesColor" Value="{ThemeResource SystemColorWindowTextColor}"/>
+                        <Setter Target="GraphingControl.GraphBackground" Value="{ThemeResource SystemColorWindowColor}"/>
+                        <Setter Target="GraphingControl.GridLinesColor" Value="#FFFFFFFF"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <!-- Top panel -->
         <ToggleSwitch x:Name="SwitchModeToggleButton"
@@ -484,36 +526,23 @@
                                     <CornerRadius x:Key="BottomButtonCornerRadius">0,0,4,4</CornerRadius>
                                     <CornerRadius x:Key="LeftButtonCornerRadius">4,0,0,4</CornerRadius>
                                     <CornerRadius x:Key="RightButtonCornerRadius">0,4,4,0</CornerRadius>
-                                    <Style x:Key="ThemedGrapherStyle" TargetType="graphControl:Grapher">
-                                        <Setter Property="AxesColor" Value="Black"/>
-                                        <Setter Property="GraphBackground" Value="White"/>
-                                    </Style>
                                 </ResourceDictionary>
                                 <ResourceDictionary x:Key="Dark">
                                     <CornerRadius x:Key="TopButtonCornerRadius">4,4,0,0</CornerRadius>
                                     <CornerRadius x:Key="BottomButtonCornerRadius">0,0,4,4</CornerRadius>
                                     <CornerRadius x:Key="LeftButtonCornerRadius">4,0,0,4</CornerRadius>
                                     <CornerRadius x:Key="RightButtonCornerRadius">0,4,4,0</CornerRadius>
-                                    <Style x:Key="ThemedGrapherStyle" TargetType="graphControl:Grapher">
-                                        <Setter Property="AxesColor" Value="White"/>
-                                        <Setter Property="GraphBackground" Value="Black"/>
-                                    </Style>
                                 </ResourceDictionary>
                                 <ResourceDictionary x:Key="HighContrast">
                                     <CornerRadius x:Key="TopButtonCornerRadius">0</CornerRadius>
                                     <CornerRadius x:Key="BottomButtonCornerRadius">0</CornerRadius>
                                     <CornerRadius x:Key="LeftButtonCornerRadius">0</CornerRadius>
                                     <CornerRadius x:Key="RightButtonCornerRadius">0</CornerRadius>
-                                    <Style x:Key="ThemedGrapherStyle" TargetType="graphControl:Grapher">
-                                        <Setter Property="AxesColor" Value="{ThemeResource SystemColorWindowTextColor}"/>
-                                        <Setter Property="GraphBackground" Value="{ThemeResource SystemColorWindowColor}"/>
-                                    </Style>
                                 </ResourceDictionary>
                             </ResourceDictionary.ThemeDictionaries>
                         </ResourceDictionary>
                     </Grid.Resources>
                     <graphControl:Grapher Name="GraphingControl"
-                                          Style="{ThemeResource ThemedGrapherStyle}"
                                           AutomationProperties.Name="{x:Bind GraphControlAutomationName, Mode=OneWay}"
                                           ForceProportionalAxes="False"
                                           GraphPlottedEvent="GraphingControl_GraphPlottedEvent"
@@ -681,15 +710,16 @@
                                                  Visibility="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"
                                                  x:Load="{x:Bind IsKeyGraphFeaturesVisible, Mode=OneWay}"/>
 
-                    <!-- This control should be within a grid that limits the hight to keep the sticky footer functionality from breaking -->
-                    <local:EquationInputArea x:Name="EquationInputAreaControl"
-                                             Grid.ColumnSpan="2"
-                                             Margin="0,4,0,0"
-                                             EquationFormatRequested="OnEquationFormatRequested"
-                                             Equations="{x:Bind ViewModel.Equations}"
-                                             KeyGraphFeaturesRequested="OnEquationKeyGraphFeaturesRequested"
-                                             Variables="{x:Bind ViewModel.Variables}"
-                                             Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+            <!-- This control should be within a grid that limits the height to keep the sticky footer functionality from breaking -->
+            <local:EquationInputArea x:Name="EquationInputAreaControl"
+                                     Grid.ColumnSpan="2"
+                                     Margin="0,4,0,0"
+                                     EquationFormatRequested="OnEquationFormatRequested"
+                                     Equations="{x:Bind ViewModel.Equations}"
+                                     KeyGraphFeaturesRequested="OnEquationKeyGraphFeaturesRequested"
+                                     Variables="{x:Bind ViewModel.Variables}"
+                                     Visibility="{x:Bind IsKeyGraphFeaturesVisible, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"
+                                     IsMatchAppTheme="{x:Bind IsMatchAppTheme, Mode=OneWay}"/>
 
                     <local:GraphingNumPad x:Name="GraphingNumPad"
                                           Grid.Row="1"

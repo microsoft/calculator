@@ -10,6 +10,7 @@ using namespace CalcManager::NumberFormattingUtils;
 using namespace GraphControl;
 using namespace std;
 using namespace Platform;
+using namespace Windows::UI::Xaml;
 
 GraphingSettingsViewModel::GraphingSettingsViewModel()
     : m_XMinValue(0)
@@ -36,6 +37,7 @@ void GraphingSettingsViewModel::SetGrapher(Grapher ^ grapher)
         }
     }
     Graph = grapher;
+
     InitRanges();
     RaisePropertyChanged(L"TrigUnit");
 }
@@ -100,7 +102,7 @@ void GraphingSettingsViewModel::UpdateDisplayRange()
 
     m_Graph->SetDisplayRanges(m_XMinValue, m_XMaxValue, m_YMinValue, m_YMaxValue);
 
-    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Grid);
+    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Grid, L"");
 }
 
 bool GraphingSettingsViewModel::HasError()

@@ -80,6 +80,10 @@ namespace Graphing
         virtual void SetBoxColor(const Graphing::Color& value) = 0;
         virtual void ResetBoxColor() = 0;
 
+        virtual Graphing::Color GetGridColor() const = 0;
+        virtual void SetGridColor(const Graphing::Color& value) = 0;
+        virtual void ResetGridColor() = 0;
+
         virtual Graphing::Color GetFontColor() const = 0;
         virtual void SetFontColor(const Graphing::Color& value) = 0;
         virtual void ResetFontColor() = 0;

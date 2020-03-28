@@ -16,6 +16,7 @@ using namespace Concurrency;
 using namespace Windows::Devices::Input;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
 using namespace Windows::System::Threading;
@@ -34,6 +35,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Variables);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Equations);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, AxesColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GraphBackground);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GridLinesColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, LineWidth);
 
 namespace
@@ -1053,6 +1055,17 @@ void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, 
         auto color = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
         m_graph->GetOptions().SetBackColor(color);
         m_graph->GetOptions().SetBoxColor(color);
+    }
+}
+
+
+void Grapher::OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
+{
+    if (m_renderMain != nullptr && m_graph != nullptr)
+    {
+        auto gridLinesColor = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
+        m_graph->GetOptions().SetGridColor(gridLinesColor);
+        m_renderMain->RunRenderPassAsync();
     }
 }
 

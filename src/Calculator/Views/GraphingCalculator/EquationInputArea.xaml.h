@@ -27,6 +27,7 @@ public
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<ViewModel::EquationViewModel ^> ^, Equations);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<ViewModel::VariableViewModel ^> ^, Variables);
         OBSERVABLE_PROPERTY_RW(Windows::Foundation::Collections::IObservableVector<Windows::UI::Xaml::Media::SolidColorBrush ^> ^, AvailableColors);
+        OBSERVABLE_PROPERTY_RW(bool, IsMatchAppTheme);
         event Windows::Foundation::EventHandler<ViewModel::EquationViewModel ^> ^ KeyGraphFeaturesRequested;
         event Windows::Foundation::EventHandler<CalculatorApp::Controls::MathRichEditBoxFormatRequest ^> ^ EquationFormatRequested;
 
@@ -49,8 +50,9 @@ public
         void EquationTextBox_Submitted(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxSubmission ^ e);
 
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
-        void ReloadAvailableColors(bool isHighContrast);
+        void ReloadAvailableColors(bool isHighContrast, bool reassignColors);
         void FocusEquationTextBox(ViewModel::EquationViewModel ^ equation);
+        void OnColorValuesChanged(Windows::UI::ViewManagement::UISettings ^ sender, Platform::Object ^ args);
 
         void EquationTextBox_RemoveButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void EquationTextBox_KeyGraphFeaturesButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
@@ -71,6 +73,7 @@ public
         CalculatorApp::ViewModel::EquationViewModel ^ GetViewModelFromEquationTextBox(Platform::Object ^ sender);
 
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
+        Windows::UI::ViewManagement::UISettings ^ m_uiSettings;
         int m_lastLineColorIndex;
         int m_lastFunctionLabelIndex;
         ViewModel::EquationViewModel ^ m_equationToFocus;

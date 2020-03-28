@@ -4534,4 +4534,28 @@
     <value>Black</value>
     <comment>Name of color in the color picker</comment>
   </data>
+  <data name="GraphThemeHeading.Text" xml:space="preserve">
+    <value>Theme</value>
+    <comment>Graph settings heading for the theme options</comment>
+  </data>
+  <data name="AlwaysLightTheme.Content" xml:space="preserve">
+    <value>Always light</value>
+    <comment>Graph settings option to set graph to light theme</comment>
+  </data>
+  <data name="MatchAppTheme.Content" xml:space="preserve">
+    <value>Match app theme</value>
+    <comment>Graph settings option to set graph to match the app theme</comment>
+  </data>
+  <data name="GraphThemeHeading.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Theme</value>
+    <comment>This is the automation name text for the Graph settings heading for the theme options</comment>
+  </data>
+    <data name="AlwaysLightTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Always light</value>
+    <comment>This is the automation name text for the Graph settings option to set graph to light theme</comment>
+  </data>
+    <data name="MatchAppTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Match app theme</value>
+    <comment>This is the automation name text for the Graph settings option to set graph to match the app theme</comment>
+  </data>
 </root>
