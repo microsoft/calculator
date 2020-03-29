@@ -3944,8 +3944,12 @@
     <comment>Label text for the max text box</comment>
   </data>
   <data name="LineColorText.Text" xml:space="preserve">
-    <value>Line Color</value>
+    <value>Color</value>
     <comment>Label for the Line Color section of the style picker</comment>
+  </data>
+  <data name="StyleChooserBox.Header" xml:space="preserve">
+    <value>Style</value>
+    <comment>Label for the Line Style section of the style picker</comment>
   </data>
   <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
     <value>Function analysis</value>
@@ -4461,5 +4465,97 @@
   <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
     <value>Select All</value>
     <comment>Select all menu item from the Equation TextBox</comment>
+  </data>
+  <data name="solidLineStyleAutomationName" xml:space="preserve">
+    <value>Solid line style</value>
+    <comment>Name of the solid line style for a graphed equation</comment>
+  </data>
+  <data name="dotLineStyleAutomationName" xml:space="preserve">
+    <value>Dot line style</value>
+    <comment>Name of the dotted line style for a graphed equation</comment>
+  </data>
+  <data name="dashLineStyleAutomationName" xml:space="preserve">
+    <value>Dash line style</value>
+    <comment>Name of the dashed line style for a graphed equation</comment>
+  </data>
+  <data name="equationColor1AutomationName" xml:space="preserve">
+    <value>Navy Blue</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor2AutomationName" xml:space="preserve">
+    <value>Seafoam</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationColor3AutomationName" xml:space="preserve">
+    <value>Violet</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationColor4AutomationName" xml:space="preserve">
+    <value>Green</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationColor5AutomationName" xml:space="preserve">
+    <value>Mint Green</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationColor6AutomationName" xml:space="preserve">
+    <value>Dark Green</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationColor7AutomationName" xml:space="preserve">
+    <value>Charcoal</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationColor8AutomationName" xml:space="preserve">
+    <value>Red</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationColor9AutomationName" xml:space="preserve">
+    <value>Plum Light</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationColor10AutomationName" xml:space="preserve">
+    <value>Magenta</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationColor11AutomationName" xml:space="preserve">
+    <value>Yellow Gold</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationColor12AutomationName" xml:space="preserve">
+    <value>Orange Bright</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationColor13AutomationName" xml:space="preserve">
+    <value>Brown</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationColor14AutomationName" xml:space="preserve">
+    <value>Black</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="GraphThemeHeading.Text" xml:space="preserve">
+    <value>Theme</value>
+    <comment>Graph settings heading for the theme options</comment>
+  </data>
+  <data name="AlwaysLightTheme.Content" xml:space="preserve">
+    <value>Always light</value>
+    <comment>Graph settings option to set graph to light theme</comment>
+  </data>
+  <data name="MatchAppTheme.Content" xml:space="preserve">
+    <value>Match app theme</value>
+    <comment>Graph settings option to set graph to match the app theme</comment>
+  </data>
+  <data name="GraphThemeHeading.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Theme</value>
+    <comment>This is the automation name text for the Graph settings heading for the theme options</comment>
+  </data>
+    <data name="AlwaysLightTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Always light</value>
+    <comment>This is the automation name text for the Graph settings option to set graph to light theme</comment>
+  </data>
+    <data name="MatchAppTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Match app theme</value>
+    <comment>This is the automation name text for the Graph settings option to set graph to match the app theme</comment>
   </data>
 </root>

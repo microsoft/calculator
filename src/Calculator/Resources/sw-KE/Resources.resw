@@ -859,7 +859,7 @@
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Sawa na</value>
-    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+    <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Kitendaji cha Mgeuko</value>
@@ -1064,14 +1064,6 @@
   <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Rudi kwenye muonekano kamili</value>
     <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
-  </data>
-  <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Iweke juu</value>
-    <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
-  </data>
-  <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Rudi kwenye muonekano kamili</value>
-    <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
     <value>Geuza kutoka %1 %2</value>
@@ -2683,10 +2675,6 @@
     <value>AB</value>
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
-  <data name="DateCalculationModeAccessKey" xml:space="preserve">
-    <value>4</value>
-    <comment>AccessKey for the Date Calculation mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I </value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
@@ -2698,18 +2686,6 @@
   <data name="NavView.AccessKey" xml:space="preserve">
     <value>H</value>
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ProgrammerModeAccessKey" xml:space="preserve">
-    <value>3</value>
-    <comment>AccessKey for the Programmer mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ScientificModeAccessKey" xml:space="preserve">
-    <value>2</value>
-    <comment>AccessKey for the Scientific mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="StandardModeAccessKey" xml:space="preserve">
-    <value>1</value>
-    <comment>AccessKey for the Standard mode navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AngleAccessKey" xml:space="preserve">
     <value>AN</value>
@@ -2945,6 +2921,6 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>Hesabu imeshindikana</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>  
+    <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
 </root>

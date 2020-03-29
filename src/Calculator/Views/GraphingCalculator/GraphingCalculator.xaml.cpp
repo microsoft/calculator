@@ -34,10 +34,12 @@ using namespace Windows::ApplicationModel::DataTransfer;
 using namespace Windows::ApplicationModel::Resources;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Input;
+using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Automation::Peers;
@@ -51,7 +53,8 @@ using namespace Windows::UI::Popups;
 using namespace Windows::UI::ViewManagement;
 namespace MUXC = Microsoft::UI::Xaml::Controls;
 
-    constexpr auto sc_ViewModelPropertyName = L"ViewModel";
+constexpr auto sc_ViewModelPropertyName = L"ViewModel";
+constexpr auto sc_IsGraphThemeMatchApp = L"IsGraphThemeMatchApp";
 
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, IsSmallState);
 DEPENDENCY_PROPERTY_INITIALIZATION(GraphingCalculator, GraphControlAutomationName);
@@ -88,6 +91,31 @@ GraphingCalculator::GraphingCalculator()
     virtualKey->Key = (VirtualKey)187; // OemAdd key
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
+
+    m_accessibilitySettings->HighContrastChanged +=
+        ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &GraphingCalculator::OnHighContrastChanged);
+
+    m_uiSettings = ref new UISettings();
+    m_uiSettings->ColorValuesChanged += ref new TypedEventHandler<UISettings ^, Object ^>(this, &GraphingCalculator::OnColorValuesChanged);
+
+    ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
+
+    if (localSettings != nullptr && localSettings->Values->HasKey(StringReference(sc_IsGraphThemeMatchApp)))
+    {
+        auto isMatchAppLocalSetting = static_cast<bool>(localSettings->Values->Lookup(StringReference(sc_IsGraphThemeMatchApp)));
+        if (isMatchAppLocalSetting)
+        {
+            IsMatchAppTheme = true;
+            TraceLogger::GetInstance()->LogGraphTheme(L"IsMatchAppTheme");
+        }
+    }
+    else
+    {
+        IsMatchAppTheme = false;
+        TraceLogger::GetInstance()->LogGraphTheme(L"IsAlwaysLightTheme");
+    }
+
+    UpdateGraphTheme();
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -97,7 +125,6 @@ void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
         TraceValuePopup->Visibility = newValue ? ::Visibility::Visible : ::Visibility::Collapsed;
     }
 }
-
 void GraphingCalculator::GraphingCalculator_DataContextChanged(FrameworkElement ^ sender, DataContextChangedEventArgs ^ args)
 {
     if (ViewModel != nullptr)
@@ -512,9 +539,6 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^
         // hide the shadow in high contrast mode
         CursorShadow->Visibility = m_accessibilitySettings->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
 
-        m_accessibilitySettings->HighContrastChanged +=
-            ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &GraphingCalculator::OnHighContrastChanged);
-
         Canvas::SetLeft(TracePointer, TraceCanvas->ActualWidth / 2 + 40);
         Canvas::SetTop(TracePointer, TraceCanvas->ActualHeight / 2 - 40);
 
@@ -569,10 +593,16 @@ void GraphingCalculator::GraphSettingsButton_Click(Object ^ sender, RoutedEventA
 
 void GraphingCalculator::DisplayGraphSettings()
 {
-    auto graphSettings = ref new GraphingSettings();
-    graphSettings->SetGrapher(this->GraphingControl);
+    if (m_graphSettings == nullptr)
+    {
+        m_graphSettings = ref new GraphingSettings();
+        m_graphSettings->GraphThemeSettingChanged += ref new EventHandler<bool>(this, &GraphingCalculator::OnGraphThemeSettingChanged);
+    }
+
+    m_graphSettings->IsMatchAppTheme = IsMatchAppTheme;
+    m_graphSettings->SetGrapher(this->GraphingControl);
     auto flyoutGraphSettings = ref new Flyout();
-    flyoutGraphSettings->Content = graphSettings;
+    flyoutGraphSettings->Content = m_graphSettings;
     flyoutGraphSettings->Closing += ref new TypedEventHandler<FlyoutBase ^, FlyoutBaseClosingEventArgs ^>(this, &GraphingCalculator::OnSettingsFlyout_Closing);
 
     auto options = ref new FlyoutShowOptions();
@@ -613,7 +643,12 @@ void GraphingCalculator::Canvas_SizeChanged(Object ^ /*sender*/, SizeChangedEven
 
 void GraphingCalculator::OnHighContrastChanged(AccessibilitySettings ^ sender, Object ^ /*args*/)
 {
-    CursorShadow->Visibility = sender->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
+    if (CursorShadow != nullptr)
+    {
+        CursorShadow->Visibility = sender->HighContrast ? ::Visibility::Collapsed : ::Visibility::Visible;
+    }
+
+    UpdateGraphTheme();
 }
 
 void GraphingCalculator::OnEquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
@@ -691,4 +726,52 @@ void GraphingCalculator::GraphMenuFlyoutItem_Click(Object ^ sender, RoutedEventA
 void GraphingCalculator::OnVisualStateChanged(Object ^ sender, VisualStateChangedEventArgs ^ e)
 {
     TraceLogger::GetInstance()->LogVisualStateChanged(ViewMode::Graphing, e->NewState->Name, false);
+}
+
+void GraphingCalculator::OnColorValuesChanged(Windows::UI::ViewManagement::UISettings ^ sender, Platform::Object ^ args)
+{
+    WeakReference weakThis(this);
+    this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([weakThis]() {
+                                   auto refThis = weakThis.Resolve<GraphingCalculator>();
+                                   if (refThis != nullptr && refThis->IsMatchAppTheme)
+                                   {
+                                       refThis->UpdateGraphTheme();
+                                   }
+                               }));
+}
+
+void GraphingCalculator::UpdateGraphTheme()
+{
+    if (m_accessibilitySettings->HighContrast)
+    {
+        VisualStateManager::GoToState(this, L"GrapherHighContrast", true);
+        return;
+    }
+
+    if (IsMatchAppTheme && Application::Current->RequestedTheme == ApplicationTheme::Dark)
+    {
+        VisualStateManager::GoToState(this, L"GrapherDarkTheme", true);
+    }
+    else
+    {
+        VisualStateManager::GoToState(this, L"GrapherLightTheme", true);
+    }
+}
+
+void GraphingCalculator::OnGraphThemeSettingChanged(Object ^ sender, bool isMatchAppTheme)
+{
+    if (IsMatchAppTheme == isMatchAppTheme)
+    {
+        return;
+    }
+
+    IsMatchAppTheme = isMatchAppTheme;
+    WeakReference weakThis(this);
+    this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([weakThis]() {
+                                    auto refThis = weakThis.Resolve<GraphingCalculator>();
+                                    if (refThis != nullptr)
+                                    {
+                                        refThis->UpdateGraphTheme();
+                                    }
+                                }));
 }

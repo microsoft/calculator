@@ -41,12 +41,13 @@ public
     ref class EquationViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {
     public:
-        EquationViewModel(GraphControl::Equation ^ equation, int functionLabelIndex, Windows::UI::Color color);
+        EquationViewModel(GraphControl::Equation ^ equation, int functionLabelIndex, Windows::UI::Color color, int colorIndex);
 
         OBSERVABLE_OBJECT();
         OBSERVABLE_PROPERTY_R(GraphControl::Equation ^, GraphEquation);
         OBSERVABLE_PROPERTY_RW(int, FunctionLabelIndex);
         OBSERVABLE_PROPERTY_RW(bool, IsLastItemInList);
+        PROPERTY_RW(int, LineColorIndex);
 
         property Platform::String ^ Expression
         {
