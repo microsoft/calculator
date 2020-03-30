@@ -21,68 +21,21 @@
                 <Grid DataContext="{x:Bind}" Tapped="VariableAreaTapped">
                     <Grid.Resources>
                         <ResourceDictionary>
-
-                            <Style x:Key="VariableTextBoxStyle" TargetType="TextBox">
-                                <Setter Property="Margin" Value="1,0,0,0"/>
-                                <Setter Property="Padding" Value="2,6,2,2"/>
-                                <Setter Property="TextAlignment" Value="Center"/>
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                                <Setter Property="FontSize" Value="14"/>
-                                <Setter Property="InputScope" Value="Number"/>
-                                <Setter Property="MinWidth" Value="30"/>
-                            </Style>
-
                             <ResourceDictionary.ThemeDictionaries>
                                 <ResourceDictionary x:Key="Default">
                                     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
                                     <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
                                     <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White"/>
-                                    <SolidColorBrush x:Key="SliderLegendBrush" Color="#B2ffffff"/>
-                                    <Style x:Key="VariableContainerStyle" TargetType="Border">
-                                        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltMediumLowBrush}"/>
-                                    </Style>
-                                    <Style x:Key="ThemedVariableTextBoxStyle"
-                                           BasedOn="{StaticResource VariableTextBoxStyle}"
-                                           TargetType="TextBox">
-                                        <Setter Property="BorderBrush" Value="#50ffffff"/>
-                                    </Style>
                                 </ResourceDictionary>
                                 <ResourceDictionary x:Key="Light">
                                     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
                                     <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
                                     <SolidColorBrush x:Key="TextControlForegroundFocused" Color="Black"/>
-                                    <SolidColorBrush x:Key="SliderLegendBrush" Color="#B2000000"/>
-                                    <Style x:Key="VariableContainerStyle" TargetType="Border">
-                                        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltMediumLowBrush}"/>
-                                    </Style>
-                                    <Style x:Key="ThemedVariableTextBoxStyle"
-                                           BasedOn="{StaticResource VariableTextBoxStyle}"
-                                           TargetType="TextBox">
-                                        <Setter Property="BorderBrush" Value="#70000000"/>
-                                    </Style>
                                 </ResourceDictionary>
                                 <ResourceDictionary x:Key="HighContrast">
                                     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{StaticResource SystemColorButtonFaceColor}"/>
                                     <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{StaticResource SystemColorButtonFaceColor}"/>
                                     <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{StaticResource SystemColorButtonTextColor}"/>
-                                    <SolidColorBrush x:Key="VariablesBackgroundBrush" Color="{StaticResource SystemColorBackgroundColor}"/>
-                                    <SolidColorBrush x:Key="SliderLegendBrush" Color="{StaticResource SystemColorWindowTextColor}"/>
-                                    <Style x:Key="VariableContainerStyle" TargetType="Border">
-                                        <Setter Property="Background" Value="{StaticResource SystemColorWindowColor}"/>
-                                        <Setter Property="BorderThickness" Value="1"/>
-                                        <Setter Property="BorderBrush" Value="{StaticResource SystemColorWindowTextColor}"/>
-                                    </Style>
-                                    <Style x:Key="ThemedVariableTextBoxStyle" TargetType="TextBox">
-                                        <Setter Property="Margin" Value="1,0,0,0"/>
-                                        <Setter Property="Padding" Value="2,6,2,2"/>
-                                        <Setter Property="TextAlignment" Value="Center"/>
-                                        <Setter Property="Background" Value="Transparent"/>
-                                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                                        <Setter Property="FontSize" Value="14"/>
-                                        <Setter Property="InputScope" Value="Number"/>
-                                        <Setter Property="MinWidth" Value="30"/>
-                                    </Style>
                                 </ResourceDictionary>
                             </ResourceDictionary.ThemeDictionaries>
                         </ResourceDictionary>

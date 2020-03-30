@@ -39,11 +39,11 @@ Style ^ GraphingSettings::SelectTextBoxStyle(bool incorrectRange, bool error)
 {
     if (incorrectRange || error)
     {
-        return static_cast<::Style ^>(this->Resources->Lookup(L"ErrorTextBoxStyle"));
+        return static_cast<::Style ^>(Application::Current->Resources->Lookup(L"VariableTextErrorBoxStyle"));
     }
     else
     {
-        return nullptr;
+        return static_cast<::Style ^>(Application::Current->Resources->Lookup(L"ThemedVariableTextBoxStyle"));
     }
 }
 
