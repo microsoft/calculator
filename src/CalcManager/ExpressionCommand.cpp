@@ -277,7 +277,7 @@ wstring COpndCommand::GetString(uint32_t radix, int32_t precision)
 {
     if (m_fInitialized)
     {
-        return m_value.ToString(radix, eNUMOBJ_FMT::FMT_FLOAT, precision);
+        return m_value.ToString(radix, NumberFormat::Float, precision);
     }
 
     return wstring{};

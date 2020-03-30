@@ -23,7 +23,7 @@ public:
     void RemoveLastOpndFromHistory();
     void AddBinOpToHistory(int nOpCode, bool isIntgerMode, bool fNoRepetition = true);
     void ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher, bool isIntgerMode);
-    void AddUnaryOpToHistory(int nOpCode, bool fInv, ANGLE_TYPE angletype);
+    void AddUnaryOpToHistory(int nOpCode, bool fInv, AngleType angletype);
     void AddOpenBraceToHistory();
     void AddCloseBraceToHistory();
     void PushLastOpndStart(int ichOpndStart = -1);

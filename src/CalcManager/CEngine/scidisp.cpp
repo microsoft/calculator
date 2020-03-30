@@ -67,10 +67,10 @@ CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational con
     {
         // if negative make positive by doing a twos complement
         result = -(result)-1;
-        result ^= m_chopNumbers[m_numwidth];
+        result ^= GetChopNumber();
     }
 
-    result &= m_chopNumbers[m_numwidth];
+    result &= GetChopNumber();
 
     return result;
 }
