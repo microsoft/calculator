@@ -697,9 +697,9 @@
     <value>Изтриване</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
   </data>
-  <data name="CopyHistoryMenuItem.Text" xml:space="preserve"> 
-     <value>Копиране</value> 
-     <comment>Text string for the Calculator Copy option in the History list context menu</comment> 
+  <data name="CopyHistoryMenuItem.Text" xml:space="preserve">
+    <value>Копиране</value>
+    <comment>Text string for the Calculator Copy option in the History list context menu</comment>
   </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
     <value>Изтриване</value>
@@ -867,7 +867,7 @@
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Равно на</value>
-    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+    <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Обратна функция</value>
@@ -1074,11 +1074,11 @@
     <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Задържане отгоре</value>
+    <value>Задържане отгоре (Alt + стрелка нагоре)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
   </data>
   <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Обратно към пълния изглед</value>
+    <value>Обратно към пълния изглед (Alt + стрелка надолу)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
@@ -2691,10 +2691,6 @@
     <value>AB</value>
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
-  <data name="DateCalculationModeAccessKey" xml:space="preserve">
-    <value>4</value>
-    <comment>AccessKey for the Date Calculation mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
@@ -2706,18 +2702,6 @@
   <data name="NavView.AccessKey" xml:space="preserve">
     <value>H</value>
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ProgrammerModeAccessKey" xml:space="preserve">
-    <value>3</value>
-    <comment>AccessKey for the Programmer mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ScientificModeAccessKey" xml:space="preserve">
-    <value>2</value>
-    <comment>AccessKey for the Scientific mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="StandardModeAccessKey" xml:space="preserve">
-    <value>1</value>
-    <comment>AccessKey for the Standard mode navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AngleAccessKey" xml:space="preserve">
     <value>AN</value>
@@ -3061,7 +3045,7 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>Изчислението е неуспешно</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>  
+    <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
   <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Логаритъм с основа X</value>
@@ -3074,6 +3058,10 @@
   <data name="funcButton.Text" xml:space="preserve">
     <value>Функция</value>
     <comment>Displayed on the button that contains a flyout for the general functions in scientific mode.</comment>
+  </data>
+  <data name="inequalityButton.Text" xml:space="preserve">
+    <value>Неравенства</value>
+    <comment>Displayed on the button that contains a flyout for the inequality functions.</comment>
   </data>
   <data name="bitwiseButton.Text" xml:space="preserve">
     <value>Побитови</value>
@@ -3250,5 +3238,428 @@
   <data name="MostSignificantBit" xml:space="preserve">
     <value>най-значим бит</value>
     <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
+  </data>
+  <data name="GraphingCalculatorModeText" xml:space="preserve">
+    <value>Графично изразяване</value>
+    <comment>Name of the Graphing mode of the Calculator app. Displayed in the navigation menu.</comment>
+  </data>
+  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Равно</value>
+    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="plotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Чертане</value>
+    <comment>Screen reader prompt for the plot button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="zoomResetButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Нулиране на изгледа (Ctrl + 0)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom reset button.</comment>
+  </data>
+  <data name="zoomResetButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Нулиране на изгледа</value>
+    <comment>Screen reader prompt for the reset zoom button.</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Увеличаване (Ctrl + плюс)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom in button.</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Увеличаване</value>
+    <comment>Screen reader prompt for the zoom in button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Намаляване (Ctrl + минус)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom out button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Намаляване</value>
+    <comment>Screen reader prompt for the zoom out button.</comment>
+  </data>
+  <data name="EquationTextBoxAddPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Добавяне на уравнение</value>
+    <comment>Placeholder text for the equation input button</comment>
+  </data>
+  <data name="ShareActionErrorMessage" xml:space="preserve">
+    <value>В момента не може да се сподели.</value>
+    <comment>If there is an error in the sharing action will display a dialog with this text.</comment>
+  </data>
+  <data name="ShareActionErrorOk" xml:space="preserve">
+    <value>OK</value>
+    <comment>Used on the dismiss button of the share action error dialog.</comment>
+  </data>
+  <data name="ShareActionTitle" xml:space="preserve">
+    <value>Вижте какво начертах с калкулатора на Windows</value>
+    <comment>Sent as part of the shared content. The title for the share.</comment>
+  </data>
+  <data name="EquationsShareHeader" xml:space="preserve">
+    <value>Уравнения</value>
+    <comment>Header that appears over the equations section when sharing</comment>
+  </data>
+  <data name="VariablesShareHeader" xml:space="preserve">
+    <value>Променливи</value>
+    <comment>Header that appears over the variables section when sharing</comment>
+  </data>
+  <data name="GraphImageAltText" xml:space="preserve">
+    <value>Изображение на графика с уравнения</value>
+    <comment>Alt text for the graph image when output via Share</comment>
+  </data>
+  <data name="VaiablesHeader.Text" xml:space="preserve">
+    <value>Променливи</value>
+    <comment>Header text for variables area</comment>
+  </data>
+  <data name="StepTextBlock.Text" xml:space="preserve">
+    <value>Стъпка</value>
+    <comment>Label text for the step text box</comment>
+  </data>
+  <data name="MinTextBlock.Text" xml:space="preserve">
+    <value>Мин.</value>
+    <comment>Label text for the min text box</comment>
+  </data>
+  <data name="MaxTextBlock.Text" xml:space="preserve">
+    <value>Макс.</value>
+    <comment>Label text for the max text box</comment>
+  </data>
+  <data name="LineColorText.Text" xml:space="preserve">
+    <value>Цвят на линията</value>
+    <comment>Label for the Line Color section of the style picker</comment>
+  </data>
+  <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
+    <value>Анализ на функция</value>
+    <comment>Title for KeyGraphFeatures Control</comment>
+  </data>
+  <data name="KGFHorizontalAsymptotesNone" xml:space="preserve">
+    <value>Функцията няма хоризонтални асимптоти. </value>
+    <comment>Message displayed when the graph does not have any horizontal asymptotes</comment>
+  </data>
+  <data name="KGFInflectionPointsNone" xml:space="preserve">
+    <value>Функцията няма инфлексни точки.</value>
+    <comment>Message displayed when the graph does not have any inflection points</comment>
+  </data>
+  <data name="KGFMaximaNone" xml:space="preserve">
+    <value>Функцията няма максимуми.</value>
+    <comment>Message displayed when the graph does not have any maxima</comment>
+  </data>
+  <data name="KGFMinimaNone" xml:space="preserve">
+    <value>Функцията няма минимуми.</value>
+    <comment>Message displayed when the graph does not have any minima</comment>
+  </data>
+  <data name="KGFMonotonicityConstant" xml:space="preserve">
+    <value>Константна</value>
+    <comment>String describing constant monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityDecreasing" xml:space="preserve">
+    <value>Намаляваща</value>
+    <comment>String describing decreasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityError" xml:space="preserve">
+    <value>Монотонността на функцията не може да бъде определена.</value>
+    <comment>Error displayed when monotonicity cannot be determined</comment>
+  </data>
+  <data name="KGFMonotonicityIncreasing" xml:space="preserve">
+    <value>Нарастваща</value>
+    <comment>String describing increasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityUnknown" xml:space="preserve">
+    <value>Монотонността на функцията е неизвестна.</value>
+    <comment>Error displayed when monotonicity is unknown</comment>
+  </data>
+  <data name="KGFObliqueAsymptotesNone" xml:space="preserve">
+    <value>Функцията няма наклонени асимптоти.</value>
+    <comment>Message displayed when the graph does not have any oblique asymptotes</comment>
+  </data>
+  <data name="KGFParityError" xml:space="preserve">
+    <value>Четността на функцията не може да бъде определена.</value>
+    <comment>Error displayed when parity is cannot be determined</comment>
+  </data>
+  <data name="KGFParityEven" xml:space="preserve">
+    <value>Функцията е четна.</value>
+    <comment>Message displayed with the function parity is even</comment>
+  </data>
+  <data name="KGFParityNeither" xml:space="preserve">
+    <value>Функцията не е нито четна, нито нечетна.</value>
+    <comment>Message displayed with the function parity is neither even nor odd</comment>
+  </data>
+  <data name="KGFParityOdd" xml:space="preserve">
+    <value>Функцията е нечетна.</value>
+    <comment>Message displayed with the function parity is odd</comment>
+  </data>
+  <data name="KGFParityUnknown" xml:space="preserve">
+    <value>Четността на функцията е неизвестна.</value>
+    <comment>Error displayed when parity is unknown</comment>
+  </data>
+  <data name="KGFPeriodicityError" xml:space="preserve">
+    <value>Периодичността не се поддържа за тази функция.</value>
+    <comment>Error displayed when periodicity is not supported</comment>
+  </data>
+  <data name="KGFPeriodicityNotPeriodic" xml:space="preserve">
+    <value>Функцията не е периодична.</value>
+    <comment>Message displayed with the function periodicity is not periodic</comment>
+  </data>
+  <data name="KGFPeriodicityUnknown" xml:space="preserve">
+    <value>Периодичността на функцията е неизвестна.</value>
+    <comment>Message displayed with the function periodicity is unknown</comment>
+  </data>
+  <data name="KGFTooComplexFeaturesError" xml:space="preserve">
+    <value>Тези функции са твърде сложни за изчисляване от калкулатора:</value>
+    <comment>Error displayed when analysis features cannot be calculated</comment>
+  </data>
+  <data name="KGFVerticalAsymptotesNone" xml:space="preserve">
+    <value>Функцията няма вертикални асимптоти.</value>
+    <comment>Message displayed when the graph does not have any vertical asymptotes</comment>
+  </data>
+  <data name="KGFXInterceptNone" xml:space="preserve">
+    <value>Функцията няма пресечни точки на x.</value>
+    <comment>Message displayed when the graph does not have any x-intercepts</comment>
+  </data>
+  <data name="KGFYInterceptNone" xml:space="preserve">
+    <value>Функцията няма пресечни точки на y.</value>
+    <comment>Message displayed when the graph does not have any y-intercepts</comment>
+  </data>
+  <data name="Domain" xml:space="preserve">
+    <value>Дефиниционно множество</value>
+    <comment>Title for KeyGraphFeatures Domain Property</comment>
+  </data>
+  <data name="HorizontalAsymptotes" xml:space="preserve">
+    <value>Хоризонтални асимптоти</value>
+    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+  </data>
+  <data name="InflectionPoints" xml:space="preserve">
+    <value>Точки на инфлексия</value>
+    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+  </data>
+  <data name="KGFAnalysisNotSupported" xml:space="preserve">
+    <value>Анализът не се поддържа за тази функция.</value>
+    <comment>Error displayed when graph analysis is not supported or had an error.</comment>
+  </data>
+  <data name="Maxima" xml:space="preserve">
+    <value>Максимум</value>
+    <comment>Title for KeyGraphFeatures Maxima Property</comment>
+  </data>
+  <data name="Minima" xml:space="preserve">
+    <value>Минимум</value>
+    <comment>Title for KeyGraphFeatures Minima Property</comment>
+  </data>
+  <data name="Monotonicity" xml:space="preserve">
+    <value>Монотонност</value>
+    <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
+  </data>
+  <data name="ObliqueAsymptotes" xml:space="preserve">
+    <value>Наклонени асимптоти</value>
+    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+  </data>
+  <data name="Parity" xml:space="preserve">
+    <value>Четност</value>
+    <comment>Title for KeyGraphFeatures Parity Property</comment>
+  </data>
+  <data name="Periodicity" xml:space="preserve">
+    <value>Период</value>
+    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>Множеството от стойности</value>
+    <comment>Title for KeyGraphFeatures Range Property</comment>
+  </data>
+  <data name="VerticalAsymptotes" xml:space="preserve">
+    <value>Вертикални асимптоти</value>
+    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
+  </data>
+  <data name="XIntercept" xml:space="preserve">
+    <value>Пресечна точка на X</value>
+    <comment>Title for KeyGraphFeatures XIntercept Property</comment>
+  </data>
+  <data name="YIntercept" xml:space="preserve">
+    <value>Пресечна точка на Y</value>
+    <comment>Title for KeyGraphFeatures YIntercept Property</comment>
+  </data>
+  <data name="KGFAnalysisCouldNotBePerformed" xml:space="preserve">
+    <value>Неуспешно анализиране на функцията.</value>
+  </data>
+  <data name="KGFDomainNone" xml:space="preserve">
+    <value>Не може да се изчисли дефиниционното множество на тази функция.</value>
+    <comment>Error displayed when Domain is not returned from the analyzer.</comment>
+  </data>
+  <data name="KGFRangeNone" xml:space="preserve">
+    <value>Не може да се изчисли множеството от стойности за тази функция.</value>
+    <comment>Error displayed when Range is not returned from the analyzer.</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Назад</value>
+    <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Назад</value>
+    <comment>This is the automation name for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Анализиране на функция</value>
+    <comment>This is the tooltip for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Анализиране на функция</value>
+    <comment>This is the automation name for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisMenuItem" xml:space="preserve">
+    <value>Анализиране на функция</value>
+    <comment>This is the text for the for the analyze function context menu command</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Премахване на уравнение</value>
+    <comment>This is the tooltip for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Премахване на уравнение</value>
+    <comment>This is the automation name for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeMenuItem" xml:space="preserve">
+    <value>Премахване на уравнение</value>
+    <comment>This is the text for the for the remove equation context menu command</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Споделяне</value>
+    <comment>This is the automation name for the graphing calculator share button.</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Споделяне</value>
+    <comment>This is the tooltip for the graphing calculator share button.</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Промяна на стила на уравнение</value>
+    <comment>This is the tooltip for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Промяна на стила на уравнение</value>
+    <comment>This is the automation name for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserMenuItem" xml:space="preserve">
+    <value>Промяна на стила на уравнение</value>
+    <comment>This is the text for the for the equation style context menu command</comment>
+  </data>
+  <data name="showEquationButtonToolTip" xml:space="preserve">
+    <value>Показване на уравнение %1</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="hideEquationButtonToolTip" xml:space="preserve">
+    <value>Скриване на уравнение %1</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="disableTracingButtonToolTip" xml:space="preserve">
+    <value>Спиране на проследяването</value>
+    <comment>This is the tooltip/automation name for the graphing calculator stop tracing button</comment>
+  </data>
+  <data name="enableTracingButtonToolTip" xml:space="preserve">
+    <value>Стартиране на проследяването</value>
+    <comment>This is the tooltip/automation name for the graphing calculator start tracing button</comment>
+  </data>
+  <data name="graphAutomationName" xml:space="preserve">
+    <value>Прозорец за преглед на графика, ос x, ограничена от %1 и %2, оста y, ограничена от %3 и %4, показваща %5 уравнения</value>
+    <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
+    </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Конфигуриране на плъзгача</value>
+    <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Конфигуриране на плъзгача</value>
+    <comment>This is the automation name text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphSwitchToEquationMode" xml:space="preserve">
+    <value>Превключване към режим на уравнение</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchToGraphMode" xml:space="preserve">
+    <value>Превключване към режим на графика</value>
+    <comment>Used in Graphing Calculator to switch the view to the graph mode</comment>
+  </data>
+  <data name="SwitchModeToggleButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Превключване към режим на уравнение</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToEquationModeAnnouncement" xml:space="preserve">
+    <value>Текущият режим е режим на уравнение</value>
+    <comment>Announcement used in Graphing Calculator when switching to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToGraphModeAnnouncement" xml:space="preserve">
+    <value>Текущият режим е режим на графика</value>
+    <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
+  </data>
+  <data name="GridHeading.Text" xml:space="preserve">
+    <value>Прозорец</value>
+    <comment>Heading for window extents on the settings </comment>
+  </data>
+  <data name="TrigModeDegrees.Content" xml:space="preserve">
+    <value>Градуси</value>
+    <comment>Degrees mode on settings page</comment>
+  </data>
+  <data name="TrigModeGradians.Content" xml:space="preserve">
+    <value>Гради</value>
+    <comment>Gradian mode on settings page</comment>
+  </data>
+  <data name="TrigModeRadians.Content" xml:space="preserve">
+    <value>Радиани</value>
+    <comment>Radians mode on settings page</comment>
+  </data>
+  <data name="UnitsHeading.Text" xml:space="preserve">
+    <value>Единици</value>
+    <comment>Heading for Unit's on the settings</comment>
+  </data>
+  <data name="ResetViewButton.Content" xml:space="preserve">
+    <value>Нулиране на изгледа</value>
+    <comment>Hyperlink button to reset the view of the graph</comment>
+  </data>
+  <data name="GraphSettingsXMax.Header" xml:space="preserve">
+    <value>Максимална стойност на X</value>
+    <comment>X maximum value header</comment>
+  </data>
+  <data name="GraphSettingsXMin.Header" xml:space="preserve">
+    <value>Минимална стойност на X</value>
+    <comment>X minimum value header</comment>
+  </data>
+  <data name="GraphSettingsYMax.Header" xml:space="preserve">
+    <value>Максимална стойност на Y</value>
+    <comment>Y Maximum value header</comment>
+  </data>
+  <data name="GraphSettingsYMin.Header" xml:space="preserve">
+    <value>Минимална стойност на Y</value>
+    <comment>Y minimum value header</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Опции на мрежата</value>
+    <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Опции на мрежата</value>
+    <comment>This is the automation name text for the grid options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphOptionsHeading.Text" xml:space="preserve">
+    <value>Графични опции</value>
+    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+  </data>
+  <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
+    <value>Въведете израз</value>
+    <comment>this is the placeholder text used by the textbox to enter an equation</comment>
+  </data>
+  <data name="GraphCopyMenuItem.Text">
+    <value>Копиране</value>
+    <comment>Copy menu item for the graph context menu</comment>
+  </data>
+  <data name="cutEquationMenuItem.Text" xml:space="preserve">
+    <value>Изрязване</value>
+    <comment>Cut menu item from the Equation TextBox</comment>
+  </data>
+  <data name="copyEquationMenuItem.Text" xml:space="preserve">
+    <value>Копиране</value>
+    <comment>Copy menu item from the Equation TextBox</comment>
+  </data>
+  <data name="pasteEquationMenuItem.Text" xml:space="preserve">
+    <value>Поставяне</value>
+    <comment>Paste menu item from the Equation TextBox</comment>
+  </data>
+  <data name="undoEquationMenuItem.Text" xml:space="preserve">
+    <value>Отменяне</value>
+    <comment>Undo menu item from the Equation TextBox</comment>
+  </data>
+  <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
+    <value>Избиране на всички</value>
+    <comment>Select all menu item from the Equation TextBox</comment>
   </data>
 </root>

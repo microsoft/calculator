@@ -73,7 +73,7 @@ CCalcEngine::CCalcEngine(
     , m_bRecord(false)
     , m_bSetCalcState(false)
     , m_input(DEFAULT_DEC_SEPARATOR)
-    , m_nFE(FMT_FLOAT)
+    , m_nFE(NumberFormat::Float)
     , m_memoryValue{ make_unique<Rational>() }
     , m_holdVal{}
     , m_currentVal{}
@@ -94,8 +94,8 @@ CCalcEngine::CCalcEngine(
     , m_nPrecOp()
     , m_precedenceOpCount(0)
     , m_nLastCom(0)
-    , m_angletype(ANGLE_DEG)
-    , m_numwidth(QWORD_WIDTH)
+    , m_angletype(AngleType::Degrees)
+    , m_numwidth(NUM_WIDTH::QWORD_WIDTH)
     , m_HistoryCollector(pCalcDisplay, pHistoryDisplay, DEFAULT_DEC_SEPARATOR)
     , m_groupSeparator(DEFAULT_GRP_SEPARATOR)
 {
@@ -105,7 +105,7 @@ CCalcEngine::CCalcEngine(
 
     m_maxTrigonometricNum = RationalMath::Pow(10, 100);
 
-    SetRadixTypeAndNumWidth(DEC_RADIX, m_numwidth);
+    SetRadixTypeAndNumWidth(RadixType::Decimal, m_numwidth);
     SettingsChanged();
     DisplayNum();
 }
@@ -128,8 +128,18 @@ void CCalcEngine::InitChopNumbers()
         auto maxVal = m_chopNumbers[i] / 2;
         maxVal = RationalMath::Integer(maxVal);
 
-        m_maxDecimalValueStrings[i] = maxVal.ToString(10, FMT_FLOAT, m_precision);
+        m_maxDecimalValueStrings[i] = maxVal.ToString(10, NumberFormat::Float, m_precision);
     }
+}
+
+CalcEngine::Rational CCalcEngine::GetChopNumber() const
+{
+    return m_chopNumbers[static_cast<int>(m_numwidth)];
+}
+
+std::wstring CCalcEngine::GetMaxDecimalValueString() const
+{
+    return m_maxDecimalValueStrings[static_cast<int>(m_numwidth)];
 }
 
 // Gets the number in memory for UI to keep it persisted and set it again to a different instance

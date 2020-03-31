@@ -11,6 +11,7 @@ using namespace Graphing;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace std;
+using namespace Windows::ApplicationModel::Resources;
 using namespace Windows::UI;
 using namespace Windows::UI::Xaml;
 using namespace Windows::Foundation::Collections;
@@ -32,11 +33,11 @@ namespace CalculatorApp::ViewModel
     {
     }
 
-    EquationViewModel::EquationViewModel(Equation ^ equation, int functionLabelIndex, Windows::UI::Color color)
+    EquationViewModel::EquationViewModel(Equation ^ equation, int functionLabelIndex, Windows::UI::Color color, int colorIndex)
         : m_AnalysisErrorVisible{ false }
         , m_FunctionLabelIndex{ functionLabelIndex }
         , m_KeyGraphFeaturesItems{ ref new Vector<KeyGraphFeaturesItem ^>() }
-        , m_resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() }
+        , m_resourceLoader{ ::ResourceLoader::GetForCurrentView() }
     {
         if (equation == nullptr)
         {
@@ -45,6 +46,7 @@ namespace CalculatorApp::ViewModel
 
         GraphEquation = equation;
         LineColor = color;
+        LineColorIndex = colorIndex;
         IsLineEnabled = true;
     }
 
@@ -72,11 +74,14 @@ namespace CalculatorApp::ViewModel
         AddKeyGraphFeature(m_resourceLoader->GetString(L"YIntercept"), graphEquation->YIntercept, m_resourceLoader->GetString(L"KGFYInterceptNone"));
         AddKeyGraphFeature(m_resourceLoader->GetString(L"Minima"), graphEquation->Minima, m_resourceLoader->GetString(L"KGFMinimaNone"));
         AddKeyGraphFeature(m_resourceLoader->GetString(L"Maxima"), graphEquation->Maxima, m_resourceLoader->GetString(L"KGFMaximaNone"));
-        AddKeyGraphFeature(m_resourceLoader->GetString(L"InflectionPoints"), graphEquation->InflectionPoints, m_resourceLoader->GetString(L"KGFInflectionPointsNone"));
+        AddKeyGraphFeature(
+            m_resourceLoader->GetString(L"InflectionPoints"), graphEquation->InflectionPoints, m_resourceLoader->GetString(L"KGFInflectionPointsNone"));
         AddKeyGraphFeature(
             m_resourceLoader->GetString(L"VerticalAsymptotes"), graphEquation->VerticalAsymptotes, m_resourceLoader->GetString(L"KGFVerticalAsymptotesNone"));
         AddKeyGraphFeature(
-            m_resourceLoader->GetString(L"HorizontalAsymptotes"), graphEquation->HorizontalAsymptotes, m_resourceLoader->GetString(L"KGFHorizontalAsymptotesNone"));
+            m_resourceLoader->GetString(L"HorizontalAsymptotes"),
+            graphEquation->HorizontalAsymptotes,
+            m_resourceLoader->GetString(L"KGFHorizontalAsymptotesNone"));
         AddKeyGraphFeature(
             m_resourceLoader->GetString(L"ObliqueAsymptotes"), graphEquation->ObliqueAsymptotes, m_resourceLoader->GetString(L"KGFObliqueAsymptotesNone"));
         AddParityKeyGraphFeature(graphEquation);
@@ -298,5 +303,155 @@ namespace CalculatorApp::ViewModel
         tooComplexItem->IsText = true;
 
         KeyGraphFeaturesItems->Append(tooComplexItem);
+    }
+
+    String ^ EquationViewModel::EquationErrorText(ErrorType errorType, int errorCode)
+    {
+        auto resLoader = ResourceLoader::GetForCurrentView();
+        if (errorType == ::ErrorType::Evaluation)
+        {
+            switch (static_cast<EvaluationErrorCode>(errorCode))
+            {
+            case (EvaluationErrorCode::Overflow):
+                return resLoader->GetString(L"Overflow");
+                break;
+            case (EvaluationErrorCode::RequireRadiansMode):
+                return resLoader->GetString(L"RequireRadiansMode");
+                break;
+            case (EvaluationErrorCode::TooComplexToSolve):
+                return resLoader->GetString(L"TooComplexToSolve");
+                break;
+            case (EvaluationErrorCode::RequireDegreesMode):
+                return resLoader->GetString(L"RequireDegreesMode");
+                break;
+            case (EvaluationErrorCode::FactorialInvalidArgument):
+            case (EvaluationErrorCode::Factorial2InvalidArgument):
+                return resLoader->GetString(L"FactorialInvalidArgument");
+                break;
+            case (EvaluationErrorCode::FactorialCannotPerformOnLargeNumber):
+                return resLoader->GetString(L"FactorialCannotPerformOnLargeNumber");
+                break;
+            case (EvaluationErrorCode::ModuloCannotPerformOnFloat):
+                return resLoader->GetString(L"ModuloCannotPerformOnFloat");
+                break;
+            case (EvaluationErrorCode::EquationTooComplexToSolve):
+            case (EvaluationErrorCode::EquationTooComplexToSolveSymbolic):
+            case (EvaluationErrorCode::EquationTooComplexToPlot):
+            case (EvaluationErrorCode::InequalityTooComplexToSolve):
+            case (EvaluationErrorCode::GE_TooComplexToSolve):
+                return resLoader->GetString(L"TooComplexToSolve");
+                break;
+            case (EvaluationErrorCode::EquationHasNoSolution):
+            case (EvaluationErrorCode::InequalityHasNoSolution):
+                return resLoader->GetString(L"EquationHasNoSolution");
+                break;
+            case (EvaluationErrorCode::DivideByZero):
+                return resLoader->GetString(L"DivideByZero");
+                break;
+            case (EvaluationErrorCode::MutuallyExclusiveConditions):
+                return resLoader->GetString(L"MutuallyExclusiveConditions");
+                break;
+            case (EvaluationErrorCode::OutOfDomain):
+                return resLoader->GetString(L"OutOfDomain");
+                break;
+            case (EvaluationErrorCode::GE_NotSupported):
+                return resLoader->GetString(L"GE_NotSupported");
+                break;
+            default:
+                return resLoader->GetString(L"GeneralError");
+                break;
+            }
+        }
+        else if (errorType == ::ErrorType::Syntax)
+        {
+            switch (static_cast<SyntaxErrorCode>(errorCode))
+            {
+            case (SyntaxErrorCode::ParenthesisMismatch):
+                return resLoader->GetString(L"ParenthesisMismatch");
+                break;
+            case (SyntaxErrorCode::UnmatchedParenthesis):
+                return resLoader->GetString(L"UnmatchedParenthesis");
+                break;
+            case (SyntaxErrorCode::TooManyDecimalPoints):
+                return resLoader->GetString(L"TooManyDecimalPoints");
+                break;
+            case (SyntaxErrorCode::DecimalPointWithoutDigits):
+                return resLoader->GetString(L"DecimalPointWithoutDigits");
+                break;
+            case (SyntaxErrorCode::UnexpectedEndOfExpression):
+                return resLoader->GetString(L"UnexpectedEndOfExpression");
+                break;
+            case (SyntaxErrorCode::UnexpectedToken):
+                return resLoader->GetString(L"UnexpectedToken");
+                break;
+            case (SyntaxErrorCode::InvalidToken):
+                return resLoader->GetString(L"InvalidToken");
+                break;
+            case (SyntaxErrorCode::TooManyEquals):
+                return resLoader->GetString(L"TooManyEquals");
+                break;
+            case (SyntaxErrorCode::EqualWithoutGraphVariable):
+                return resLoader->GetString(L"EqualWithoutGraphVariable");
+                break;
+            case (SyntaxErrorCode::InvalidEquationSyntax):
+            case (SyntaxErrorCode::InvalidEquationFormat):
+                return resLoader->GetString(L"InvalidEquationSyntax");
+                break;
+            case (SyntaxErrorCode::EmptyExpression):
+                return resLoader->GetString(L"EmptyExpression");
+                break;
+            case (SyntaxErrorCode::EqualWithoutEquation):
+                return resLoader->GetString(L"EqualWithoutEquation");
+                break;
+            case (SyntaxErrorCode::ExpectParenthesisAfterFunctionName):
+                return resLoader->GetString(L"ExpectParenthesisAfterFunctionName");
+                break;
+            case (SyntaxErrorCode::IncorrectNumParameter):
+                return resLoader->GetString(L"IncorrectNumParameter");
+                break;
+            case (SyntaxErrorCode::InvalidVariableNameFormat):
+                return resLoader->GetString(L"InvalidVariableNameFormat");
+                break;
+            case (SyntaxErrorCode::BracketMismatch):
+                return resLoader->GetString(L"BracketMismatch");
+                break;
+            case (SyntaxErrorCode::UnmatchedBracket):
+                return resLoader->GetString(L"UnmatchedBracket");
+                break;
+            case (SyntaxErrorCode::CannotUseIInReal):
+                return resLoader->GetString(L"CannotUseIInReal");
+                break;
+            case (SyntaxErrorCode::InvalidNumberDigit):
+                return resLoader->GetString(L"InvalidNumberDigit");
+                break;
+            case (SyntaxErrorCode::InvalidNumberBase):
+                return resLoader->GetString(L"InvalidNumberBase");
+                break;
+            case (SyntaxErrorCode::InvalidVariableSpecification):
+                return resLoader->GetString(L"InvalidVariableSpecification");
+                break;
+            case (SyntaxErrorCode::ExpectingLogicalOperands):
+            case (SyntaxErrorCode::ExpectingScalarOperands):
+                return resLoader->GetString(L"ExpectingLogicalOperands");
+                break;
+            case (SyntaxErrorCode::CannotUseIndexVarInOpLimits):
+                return resLoader->GetString(L"CannotUseIndexVarInOpLimits");
+                break;
+            case (SyntaxErrorCode::CannotUseIndexVarInLimPoint):
+                return resLoader->GetString(L"Overflow");
+                break;
+            case (SyntaxErrorCode::CannotUseComplexInfinityInReal):
+                return resLoader->GetString(L"CannotUseComplexInfinityInReal");
+                break;
+            case (SyntaxErrorCode::CannotUseIInInequalitySolving):
+                return resLoader->GetString(L"CannotUseIInInequalitySolving");
+                break;
+            default:
+                return resLoader->GetString(L"GeneralError");
+                break;
+            }
+        }
+
+        return resLoader->GetString(L"GeneralError");
     }
 }

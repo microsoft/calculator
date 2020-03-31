@@ -26,6 +26,7 @@ namespace GraphControl
     {
         wstring request;
         wstring_view expr{ Expression->Data() };
+        IsInequality = false;
 
         // Check for unicode characters of less than, less than or equal to, greater than and greater than or equal to.
         if (expr.find(L">&#x3E;<") != wstring_view::npos || expr.find(L">&#x3C;<") != wstring_view::npos || expr.find(L">&#x2265;<") != wstring_view::npos
@@ -33,6 +34,8 @@ namespace GraphControl
             || expr.find(L">&lt;<") != wstring_view::npos || expr.find(L">&gt;<") != wstring_view::npos)
         {
             request = L"<mrow><mi>plotIneq2D</mi><mfenced separators=\"\">";
+            IsInequality = true;
+            EquationStyle = EquationLineStyle::Dash;
         }
         else if (expr.find(L">=<") != wstring_view::npos)
         {

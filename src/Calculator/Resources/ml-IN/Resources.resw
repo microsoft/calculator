@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppName" xml:space="preserve">
-    <value>കാൽക്കുലേറ്റർ</value>
+    <value>കാല്‍ക്കുലേറ്റര്‍</value>
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppName" xml:space="preserve">
@@ -697,9 +697,9 @@
     <value>ഇല്ലാതാക്കുക</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
   </data>
-  <data name="CopyHistoryMenuItem.Text" xml:space="preserve"> 
-     <value>പകർത്തുക</value> 
-     <comment>Text string for the Calculator Copy option in the History list context menu</comment> 
+  <data name="CopyHistoryMenuItem.Text" xml:space="preserve">
+    <value>പകർത്തുക</value>
+    <comment>Text string for the Calculator Copy option in the History list context menu</comment>
   </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
     <value>ഇല്ലാതാക്കുക</value>
@@ -867,7 +867,7 @@
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>സമമായവ</value>
-    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+    <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>വിപരീത കാര്യ പ്രവർത്തനം</value>
@@ -1074,11 +1074,11 @@
     <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>മുകളിൽ തുടരുക</value>
+    <value>മുകളിൽ തുടരുക (Alt+Up)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
   </data>
   <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>പൂർണ്ണ വീക്ഷണത്തിലേക്കു മടങ്ങുക</value>
+    <value>പൂർണ്ണ കാഴ്ചയിലേക്ക് മടങ്ങുക (Alt+Down)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
@@ -2691,10 +2691,6 @@
     <value>AB</value>
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
-  <data name="DateCalculationModeAccessKey" xml:space="preserve">
-    <value>4</value>
-    <comment>AccessKey for the Date Calculation mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
@@ -2706,18 +2702,6 @@
   <data name="NavView.AccessKey" xml:space="preserve">
     <value>H</value>
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ProgrammerModeAccessKey" xml:space="preserve">
-    <value>3</value>
-    <comment>AccessKey for the Programmer mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ScientificModeAccessKey" xml:space="preserve">
-    <value>2</value>
-    <comment>AccessKey for the Scientific mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="StandardModeAccessKey" xml:space="preserve">
-    <value>1</value>
-    <comment>AccessKey for the Standard mode navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AngleAccessKey" xml:space="preserve">
     <value>AN</value>
@@ -3061,7 +3045,7 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>കണക്കുകൂട്ടൽ പരാജയപ്പെട്ടു</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>  
+    <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
   <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ലോഗ് ബേസ് എക്സ്</value>
@@ -3074,6 +3058,10 @@
   <data name="funcButton.Text" xml:space="preserve">
     <value>nകാര്യപ്രവർത്തനം</value>
     <comment>Displayed on the button that contains a flyout for the general functions in scientific mode.</comment>
+  </data>
+  <data name="inequalityButton.Text" xml:space="preserve">
+    <value>വ്യത്യാസങ്ങള്‍</value>
+    <comment>Displayed on the button that contains a flyout for the inequality functions.</comment>
   </data>
   <data name="bitwiseButton.Text" xml:space="preserve">
     <value>ബിറ്റ്വൈസ്</value>
@@ -3250,5 +3238,428 @@
   <data name="MostSignificantBit" xml:space="preserve">
     <value>ഏറ്റവും പ്രാധാന്യം കൂടിയ ബിറ്റ്</value>
     <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
+  </data>
+  <data name="GraphingCalculatorModeText" xml:space="preserve">
+    <value>ഗ്രാഫിംഗ്</value>
+    <comment>Name of the Graphing mode of the Calculator app. Displayed in the navigation menu.</comment>
+  </data>
+  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>സമം</value>
+    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="plotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>പ്ലോട്ട്</value>
+    <comment>Screen reader prompt for the plot button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="zoomResetButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>കാഴ്ച പുനസജ്ജീകരിക്കുക (Ctrl + 0)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom reset button.</comment>
+  </data>
+  <data name="zoomResetButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>കാഴ്ച പുനഃസജ്ജമാക്കുക</value>
+    <comment>Screen reader prompt for the reset zoom button.</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>സൂം ഇൻ (Ctrl + പ്ലസ്)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom in button.</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>സൂം ഇന്‍</value>
+    <comment>Screen reader prompt for the zoom in button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>സൂം ഔട്ട് ചെയ്യുക (Ctrl + മൈനസ്)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom out button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>സൂം ഔട്ട്</value>
+    <comment>Screen reader prompt for the zoom out button.</comment>
+  </data>
+  <data name="EquationTextBoxAddPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>സമവാക്യം ചേര്‍ക്കുക</value>
+    <comment>Placeholder text for the equation input button</comment>
+  </data>
+  <data name="ShareActionErrorMessage" xml:space="preserve">
+    <value>ഇപ്പോള്‍ പങ്കിടാന്‍ കഴിയുന്നില്ല.</value>
+    <comment>If there is an error in the sharing action will display a dialog with this text.</comment>
+  </data>
+  <data name="ShareActionErrorOk" xml:space="preserve">
+    <value>ശരി</value>
+    <comment>Used on the dismiss button of the share action error dialog.</comment>
+  </data>
+  <data name="ShareActionTitle" xml:space="preserve">
+    <value>Windows കാല്‍ക്കുലേറ്റര്‍ ഉപയോഗിച്ച് ഞാന്‍ എന്താണ് ഗ്രാഫ് ചെയ്തതെന്ന് നോക്കൂ</value>
+    <comment>Sent as part of the shared content. The title for the share.</comment>
+  </data>
+  <data name="EquationsShareHeader" xml:space="preserve">
+    <value>സമവാക്യങ്ങള്‍</value>
+    <comment>Header that appears over the equations section when sharing</comment>
+  </data>
+  <data name="VariablesShareHeader" xml:space="preserve">
+    <value>വേരിയബിളുകള്‍</value>
+    <comment>Header that appears over the variables section when sharing</comment>
+  </data>
+  <data name="GraphImageAltText" xml:space="preserve">
+    <value>സമവാക്യങ്ങളുള്ള ഒരു ഗ്രാഫിന്റെ ഇമേജ്</value>
+    <comment>Alt text for the graph image when output via Share</comment>
+  </data>
+  <data name="VaiablesHeader.Text" xml:space="preserve">
+    <value>വേരിയബിളുകള്‍</value>
+    <comment>Header text for variables area</comment>
+  </data>
+  <data name="StepTextBlock.Text" xml:space="preserve">
+    <value>ഘട്ടം</value>
+    <comment>Label text for the step text box</comment>
+  </data>
+  <data name="MinTextBlock.Text" xml:space="preserve">
+    <value>കുറഞ്ഞത്</value>
+    <comment>Label text for the min text box</comment>
+  </data>
+  <data name="MaxTextBlock.Text" xml:space="preserve">
+    <value>പരമാവധി</value>
+    <comment>Label text for the max text box</comment>
+  </data>
+  <data name="LineColorText.Text" xml:space="preserve">
+    <value>വരി വര്‍ണ്ണം</value>
+    <comment>Label for the Line Color section of the style picker</comment>
+  </data>
+  <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
+    <value>കാര്യപ്രവര് ത്തനം വിശകലനം</value>
+    <comment>Title for KeyGraphFeatures Control</comment>
+  </data>
+  <data name="KGFHorizontalAsymptotesNone" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന് സമാന്തര അസംപാതരേഖകള്‍ ഒന്നുമില്ല.</value>
+    <comment>Message displayed when the graph does not have any horizontal asymptotes</comment>
+  </data>
+  <data name="KGFInflectionPointsNone" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന് ഇൻഫ്ലക്ഷന്‍ പോയിന്റുകള്‍ ഒന്നുമില്ല.</value>
+    <comment>Message displayed when the graph does not have any inflection points</comment>
+  </data>
+  <data name="KGFMaximaNone" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന് മാക്‌സിമ പോയിന്റുകള്‍ ഒന്നുമില്ല.</value>
+    <comment>Message displayed when the graph does not have any maxima</comment>
+  </data>
+  <data name="KGFMinimaNone" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന് മിനിമ പോയിന്റുകള്‍ ഒന്നുമില്ല.</value>
+    <comment>Message displayed when the graph does not have any minima</comment>
+  </data>
+  <data name="KGFMonotonicityConstant" xml:space="preserve">
+    <value>സ്ഥിരമായത്</value>
+    <comment>String describing constant monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityDecreasing" xml:space="preserve">
+    <value>കുറയുന്നത്</value>
+    <comment>String describing decreasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityError" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന്റെ ഏകതാനത നിര്‍ണ്ണയിക്കാന്‍ കഴിയില്ല.</value>
+    <comment>Error displayed when monotonicity cannot be determined</comment>
+  </data>
+  <data name="KGFMonotonicityIncreasing" xml:space="preserve">
+    <value>വര്‍ദ്ധിക്കുന്നു</value>
+    <comment>String describing increasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityUnknown" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന്റെ ഏകതാനത അജ്ഞാതമാണ്.</value>
+    <comment>Error displayed when monotonicity is unknown</comment>
+  </data>
+  <data name="KGFObliqueAsymptotesNone" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന് ചരിവുള്ള അസംപാതരേഖകള്‍ ഒന്നുമില്ല.</value>
+    <comment>Message displayed when the graph does not have any oblique asymptotes</comment>
+  </data>
+  <data name="KGFParityError" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന്റെ സമാനത നിര്‍ണ്ണയിക്കാന്‍ കഴിയില്ല.</value>
+    <comment>Error displayed when parity is cannot be determined</comment>
+  </data>
+  <data name="KGFParityEven" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനം ഇരട്ടയാണ്.</value>
+    <comment>Message displayed with the function parity is even</comment>
+  </data>
+  <data name="KGFParityNeither" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനം ഇരട്ടയോ ഒറ്റയോ അല്ല.</value>
+    <comment>Message displayed with the function parity is neither even nor odd</comment>
+  </data>
+  <data name="KGFParityOdd" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനം ഒറ്റയാണ്.</value>
+    <comment>Message displayed with the function parity is odd</comment>
+  </data>
+  <data name="KGFParityUnknown" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന്റെ സമാനത അജ്ഞാതമാണ്.</value>
+    <comment>Error displayed when parity is unknown</comment>
+  </data>
+  <data name="KGFPeriodicityError" xml:space="preserve">
+    <value>ഈ കാര്യപ്രവര്‍ത്തനത്തിന് ആനുകാലികത പിന്തുണക്കുന്നില്ല.</value>
+    <comment>Error displayed when periodicity is not supported</comment>
+  </data>
+  <data name="KGFPeriodicityNotPeriodic" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനം ആനുകാലികമല്ല.</value>
+    <comment>Message displayed with the function periodicity is not periodic</comment>
+  </data>
+  <data name="KGFPeriodicityUnknown" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന്റെ ആനുകാലികത അജ്ഞാതമാണ്.</value>
+    <comment>Message displayed with the function periodicity is unknown</comment>
+  </data>
+  <data name="KGFTooComplexFeaturesError" xml:space="preserve">
+    <value>ഈ സവിശേഷതകള്‍ കാല്‍‌ക്കുലേറ്റര്‍നായി കണക്കാക്കാനാവുന്നതിനേക്കാളേറേ സങ്കീര്‍ണ്ണമാണ്:</value>
+    <comment>Error displayed when analysis features cannot be calculated</comment>
+  </data>
+  <data name="KGFVerticalAsymptotesNone" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന് ലംബ അസംപാതരേഖകള്‍ ഒന്നുമില്ല.</value>
+    <comment>Message displayed when the graph does not have any vertical asymptotes</comment>
+  </data>
+  <data name="KGFXInterceptNone" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന് X-ഇന്റര്‍സെപ്റ്റുകള്‍ ഒന്നുമില്ല.</value>
+    <comment>Message displayed when the graph does not have any x-intercepts</comment>
+  </data>
+  <data name="KGFYInterceptNone" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന് Y-ഇന്റര്‍സെപ്റ്റുകള്‍ ഒന്നുമില്ല.</value>
+    <comment>Message displayed when the graph does not have any y-intercepts</comment>
+  </data>
+  <data name="Domain" xml:space="preserve">
+    <value>ഡൊമൈന്‍</value>
+    <comment>Title for KeyGraphFeatures Domain Property</comment>
+  </data>
+  <data name="HorizontalAsymptotes" xml:space="preserve">
+    <value>സമാന്തര അസംപാതരേഖകള്‍</value>
+    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+  </data>
+  <data name="InflectionPoints" xml:space="preserve">
+    <value>ഇൻഫ്ലക്ഷന്‍ പോയിന്റുകള്‍</value>
+    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+  </data>
+  <data name="KGFAnalysisNotSupported" xml:space="preserve">
+    <value>ഈ കാര്യപ്രവര്‍ത്തനത്തിന് വിശകലനം പിന്തുണക്കുന്നില്ല.</value>
+    <comment>Error displayed when graph analysis is not supported or had an error.</comment>
+  </data>
+  <data name="Maxima" xml:space="preserve">
+    <value>മാക്‌സിമ</value>
+    <comment>Title for KeyGraphFeatures Maxima Property</comment>
+  </data>
+  <data name="Minima" xml:space="preserve">
+    <value>മിനിമ</value>
+    <comment>Title for KeyGraphFeatures Minima Property</comment>
+  </data>
+  <data name="Monotonicity" xml:space="preserve">
+    <value>ഏകതാനത</value>
+    <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
+  </data>
+  <data name="ObliqueAsymptotes" xml:space="preserve">
+    <value>ചരിവുള്ള അസംപാതരേഖകള്‍</value>
+    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+  </data>
+  <data name="Parity" xml:space="preserve">
+    <value>സമാനത</value>
+    <comment>Title for KeyGraphFeatures Parity Property</comment>
+  </data>
+  <data name="Periodicity" xml:space="preserve">
+    <value>കാലയളവ്</value>
+    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>ശ്രേണി</value>
+    <comment>Title for KeyGraphFeatures Range Property</comment>
+  </data>
+  <data name="VerticalAsymptotes" xml:space="preserve">
+    <value>ലംബ അസംപാതരേഖകള്‍</value>
+    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
+  </data>
+  <data name="XIntercept" xml:space="preserve">
+    <value>X-ഇന്റര്‍സെപ്റ്റ്‌</value>
+    <comment>Title for KeyGraphFeatures XIntercept Property</comment>
+  </data>
+  <data name="YIntercept" xml:space="preserve">
+    <value>Y-ഇന്റര്‍സെപ്റ്റ്‌</value>
+    <comment>Title for KeyGraphFeatures YIntercept Property</comment>
+  </data>
+  <data name="KGFAnalysisCouldNotBePerformed" xml:space="preserve">
+    <value>കാര്യപ്രവര്‍ത്തനത്തിന്റെ വിശകലനം നടപ്പിലാക്കാന്‍ കഴിഞ്ഞില്ല.</value>
+  </data>
+  <data name="KGFDomainNone" xml:space="preserve">
+    <value>ഈ കാര്യപ്രവര്‍ത്തനത്തിന് ഡൊമൈന്‍ കണക്കാക്കാന്‍ കഴിയില്ല.</value>
+    <comment>Error displayed when Domain is not returned from the analyzer.</comment>
+  </data>
+  <data name="KGFRangeNone" xml:space="preserve">
+    <value>ഈ കാര്യപ്രവര്‍ത്തനത്തിന്റെ ശ്രേണി കണക്കാക്കാന്‍ കഴിയുന്നില്ല.</value>
+    <comment>Error displayed when Range is not returned from the analyzer.</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>പിന്നിലേക്ക്</value>
+    <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>പിന്നിലേക്ക്</value>
+    <comment>This is the automation name for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>കാര്യപ്രവര് ത്തനം വിശകലനം ചെയ്യുക</value>
+    <comment>This is the tooltip for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>കാര്യപ്രവര് ത്തനം വിശകലനം ചെയ്യുക</value>
+    <comment>This is the automation name for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisMenuItem" xml:space="preserve">
+    <value>കാര്യപ്രവര് ത്തനം വിശകലനം ചെയ്യുക</value>
+    <comment>This is the text for the for the analyze function context menu command</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>സമവാക്യം നീക്കം ചെയ്യുക</value>
+    <comment>This is the tooltip for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>സമവാക്യം നീക്കം ചെയ്യുക</value>
+    <comment>This is the automation name for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeMenuItem" xml:space="preserve">
+    <value>സമവാക്യം നീക്കം ചെയ്യുക</value>
+    <comment>This is the text for the for the remove equation context menu command</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>പങ്കിടുക</value>
+    <comment>This is the automation name for the graphing calculator share button.</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>പങ്കിടുക</value>
+    <comment>This is the tooltip for the graphing calculator share button.</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>സമവാക്യ ശൈലി മാറ്റുക</value>
+    <comment>This is the tooltip for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>സമവാക്യ ശൈലി മാറ്റുക</value>
+    <comment>This is the automation name for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserMenuItem" xml:space="preserve">
+    <value>സമവാക്യ ശൈലി മാറ്റുക</value>
+    <comment>This is the text for the for the equation style context menu command</comment>
+  </data>
+  <data name="showEquationButtonToolTip" xml:space="preserve">
+    <value>സമവാക്യം %1 കാണിക്കുക</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="hideEquationButtonToolTip" xml:space="preserve">
+    <value>സമവാക്യം %1 മറയ്ക്കുക</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="disableTracingButtonToolTip" xml:space="preserve">
+    <value>കണ്ടെത്തല്‍ നിര്‍ത്തുക</value>
+    <comment>This is the tooltip/automation name for the graphing calculator stop tracing button</comment>
+  </data>
+  <data name="enableTracingButtonToolTip" xml:space="preserve">
+    <value>കണ്ടെത്തല്‍ തുടങ്ങുക</value>
+    <comment>This is the tooltip/automation name for the graphing calculator start tracing button</comment>
+  </data>
+  <data name="graphAutomationName" xml:space="preserve">
+    <value>ഗ്രാഫ് കാണിക്കുന്ന വിൻഡോ, %1, %2 ബൗണ്ടഡ് ആയ എക്സ്-ആക്സിസ്, %3, %4 ബൗണ്ടഡ് ആയ വൈയ്-ആക്സിസ്, %5 ഈക്വാഷനുകൾ കാണിക്കുന്നു</value>
+    <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
+    </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>സ്ലൈഡര്‍ കോണ്‍ഫിഗര്‍ ചെയ്യുക</value>
+    <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>സ്ലൈഡര്‍ കോണ്‍ഫിഗര്‍ ചെയ്യുക</value>
+    <comment>This is the automation name text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphSwitchToEquationMode" xml:space="preserve">
+    <value>സമവാക്യ മോഡിലേക്ക് മാറുക</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchToGraphMode" xml:space="preserve">
+    <value>ഗ്രാഫ് മോഡിലേക്ക് മാറുക</value>
+    <comment>Used in Graphing Calculator to switch the view to the graph mode</comment>
+  </data>
+  <data name="SwitchModeToggleButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>സമവാക്യ മോഡിലേക്ക് മാറുക</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToEquationModeAnnouncement" xml:space="preserve">
+    <value>നിലവിലെ മോഡ് സമവാക്യ മോഡ് ആണ്</value>
+    <comment>Announcement used in Graphing Calculator when switching to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToGraphModeAnnouncement" xml:space="preserve">
+    <value>നിലവിലെ മോഡ് ഗ്രാഫ് മോഡ് ആണ്‌</value>
+    <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
+  </data>
+  <data name="GridHeading.Text" xml:space="preserve">
+    <value>ജാലക</value>
+    <comment>Heading for window extents on the settings </comment>
+  </data>
+  <data name="TrigModeDegrees.Content" xml:space="preserve">
+    <value>ഡിഗ്രികള്‍</value>
+    <comment>Degrees mode on settings page</comment>
+  </data>
+  <data name="TrigModeGradians.Content" xml:space="preserve">
+    <value>ഗ്രേഡിയനുകള്‍</value>
+    <comment>Gradian mode on settings page</comment>
+  </data>
+  <data name="TrigModeRadians.Content" xml:space="preserve">
+    <value>റേഡിയനുകള്‍</value>
+    <comment>Radians mode on settings page</comment>
+  </data>
+  <data name="UnitsHeading.Text" xml:space="preserve">
+    <value>യൂണിറ്റുകള്‍</value>
+    <comment>Heading for Unit's on the settings</comment>
+  </data>
+  <data name="ResetViewButton.Content" xml:space="preserve">
+    <value>കാഴ്ച പുനഃസജ്ജീകരിക്കുക</value>
+    <comment>Hyperlink button to reset the view of the graph</comment>
+  </data>
+  <data name="GraphSettingsXMax.Header" xml:space="preserve">
+    <value>X-പരമാവധി</value>
+    <comment>X maximum value header</comment>
+  </data>
+  <data name="GraphSettingsXMin.Header" xml:space="preserve">
+    <value>X-കുറഞ്ഞത്</value>
+    <comment>X minimum value header</comment>
+  </data>
+  <data name="GraphSettingsYMax.Header" xml:space="preserve">
+    <value>Y-പരമാവധി</value>
+    <comment>Y Maximum value header</comment>
+  </data>
+  <data name="GraphSettingsYMin.Header" xml:space="preserve">
+    <value>Y-കുറഞ്ഞത്</value>
+    <comment>Y minimum value header</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>ഗ്രിഡ് ഐച്ഛികങ്ങള്‍</value>
+    <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ഗ്രിഡ് ഐച്ഛികങ്ങള്‍</value>
+    <comment>This is the automation name text for the grid options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphOptionsHeading.Text" xml:space="preserve">
+    <value>ഗ്രാഫ് ഐച്ഛികങ്ങള്‍</value>
+    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+  </data>
+  <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
+    <value>ഗണനപ്രയോഗം നല് കുക</value>
+    <comment>this is the placeholder text used by the textbox to enter an equation</comment>
+  </data>
+  <data name="GraphCopyMenuItem.Text">
+    <value>പകർത്തുക</value>
+    <comment>Copy menu item for the graph context menu</comment>
+  </data>
+  <data name="cutEquationMenuItem.Text" xml:space="preserve">
+    <value>മുറിക്കുക</value>
+    <comment>Cut menu item from the Equation TextBox</comment>
+  </data>
+  <data name="copyEquationMenuItem.Text" xml:space="preserve">
+    <value>പകർത്തുക</value>
+    <comment>Copy menu item from the Equation TextBox</comment>
+  </data>
+  <data name="pasteEquationMenuItem.Text" xml:space="preserve">
+    <value>ഒട്ടിക്കുക</value>
+    <comment>Paste menu item from the Equation TextBox</comment>
+  </data>
+  <data name="undoEquationMenuItem.Text" xml:space="preserve">
+    <value>പൂർവ്വാവസ്ഥയിലാക്കുക</value>
+    <comment>Undo menu item from the Equation TextBox</comment>
+  </data>
+  <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
+    <value>എല്ലാം തിരഞ്ഞെടുക്കുക</value>
+    <comment>Select all menu item from the Equation TextBox</comment>
   </data>
 </root>

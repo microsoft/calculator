@@ -50,7 +50,9 @@ public
         DEPENDENCY_PROPERTY_R_WITH_DEFAULT_AND_CALLBACK(GraphControl::EquationCollection ^, Equations, nullptr);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, AxesColor, Windows::UI::Colors::Transparent);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, GraphBackground, Windows::UI::Colors::Transparent);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, GridLinesColor, Windows::UI::Colors::Transparent);
 
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, LineWidth, 2.0);
         // Pass active tracing turned on or off down to the renderer
         property bool ActiveTracing
         {
@@ -276,6 +278,8 @@ public
         void OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue);
         void OnAxesColorPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
         void OnGraphBackgroundPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
+        void OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue);
+        void OnLineWidthPropertyChanged(double oldValue, double newValue);
         void OnEquationChanged(Equation ^ equation);
         void OnEquationStyleChanged(Equation ^ equation);
         void OnEquationLineEnabledChanged(Equation ^ equation);
@@ -335,6 +339,8 @@ public
         bool m_Moving;
         Windows::UI::Xaml::DispatcherTimer ^ m_TracingTrackingTimer;
         Windows::UI::Core::CoreCursor ^ m_cachedCursor;
+        int m_errorType;
+        int m_errorCode;
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();

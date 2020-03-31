@@ -307,7 +307,7 @@ namespace CalculatorApp
                 _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands);
             void SetTokens(_Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens);
             NumbersAndOperatorsEnum ConvertIntegerToNumbersAndOperatorsEnum(unsigned int parameter);
-            static RADIX_TYPE GetRadixTypeFromNumberBase(CalculatorApp::Common::NumberBase base);
+            static RadixType GetRadixTypeFromNumberBase(CalculatorApp::Common::NumberBase base);
             NumbersAndOperatorsEnum m_CurrentAngleType;
             wchar_t m_decimalSeparator;
             CalculatorDisplay m_calculatorDisplay;

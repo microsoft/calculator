@@ -29,6 +29,7 @@ namespace MockGraphingImpl
             , m_asymptotesColor()
             , m_axisColor()
             , m_boxColor()
+            , m_gridColor()
             , m_fontColor()
             , m_showAxis(true)
             , m_showGrid(true)
@@ -251,6 +252,19 @@ namespace MockGraphingImpl
             m_boxColor = Graphing::Color();
         }
 
+        virtual Graphing::Color GetGridColor() const
+        {
+            return m_gridColor;
+        }
+        virtual void SetGridColor(const Graphing::Color& value)
+        {
+            m_gridColor = value;
+        }
+        virtual void ResetGridColor()
+        {
+            m_gridColor = Graphing::Color();
+        }
+
         virtual Graphing::Color GetFontColor() const
         {
             return m_fontColor;
@@ -404,6 +418,7 @@ namespace MockGraphingImpl
         Graphing::Color m_asymptotesColor;
         Graphing::Color m_axisColor;
         Graphing::Color m_boxColor;
+        Graphing::Color m_gridColor;
         Graphing::Color m_fontColor;
         bool m_showAxis;
         bool m_showGrid;

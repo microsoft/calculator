@@ -41,11 +41,11 @@ void HistoryViewModel::ReloadHistory(_In_ ViewMode currentMode)
 {
     if (currentMode == ViewMode::Standard)
     {
-        m_currentMode = CalculationManager::CALCULATOR_MODE::CM_STD;
+        m_currentMode = CalculationManager::CalculatorMode::Standard;
     }
     else if (currentMode == ViewMode::Scientific)
     {
-        m_currentMode = CalculationManager::CALCULATOR_MODE::CM_SCI;
+        m_currentMode = CalculationManager::CalculatorMode::Scientific;
     }
     else
     {
@@ -127,7 +127,7 @@ void HistoryViewModel::DeleteItem(_In_ HistoryItemViewModel ^ e)
         {
             // Keys for the history container are index based.
             // SaveHistory() re-inserts the items anyway, so it's faster to just clear out the container.
-            CalculationManager::CALCULATOR_MODE currentMode = m_currentMode;
+            CalculationManager::CalculatorMode currentMode = m_currentMode;
             ApplicationDataContainer ^ historyContainer = GetHistoryContainer(currentMode);
             historyContainer->Values->Clear();
 
@@ -152,7 +152,7 @@ void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
 
         if (Items->Size > 0)
         {
-            CalculationManager::CALCULATOR_MODE currentMode = m_currentMode;
+            CalculationManager::CalculatorMode currentMode = m_currentMode;
             ClearHistoryContainer(currentMode);
             Items->Clear();
             UpdateItemSize();
@@ -167,7 +167,7 @@ void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
 }
 
 // this method restores history vector per mode
-void HistoryViewModel::RestoreHistory(_In_ CalculationManager::CALCULATOR_MODE cMode)
+void HistoryViewModel::RestoreHistory(_In_ CalculationManager::CalculatorMode cMode)
 {
     ApplicationDataContainer ^ historyContainer = GetHistoryContainer(cMode);
     std::shared_ptr<std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>> historyVector =
@@ -209,13 +209,13 @@ void HistoryViewModel::RestoreHistory(_In_ CalculationManager::CALCULATOR_MODE c
     }
 }
 
-Platform::String ^ HistoryViewModel::GetHistoryContainerKey(_In_ CalculationManager::CALCULATOR_MODE cMode)
+Platform::String ^ HistoryViewModel::GetHistoryContainerKey(_In_ CalculationManager::CalculatorMode cMode)
 {
     Platform::ValueType ^ modeValue = static_cast<int>(cMode);
     return Platform::String::Concat(modeValue->ToString(), L"_History");
 }
 
-ApplicationDataContainer ^ HistoryViewModel::GetHistoryContainer(_In_ CalculationManager::CALCULATOR_MODE cMode)
+ApplicationDataContainer ^ HistoryViewModel::GetHistoryContainer(_In_ CalculationManager::CalculatorMode cMode)
 {
     ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
     ApplicationDataContainer ^ historyContainer;
@@ -238,14 +238,14 @@ ApplicationDataContainer ^ HistoryViewModel::GetHistoryContainer(_In_ Calculatio
     return historyContainer;
 }
 
-void HistoryViewModel::ClearHistoryContainer(_In_ CalculationManager::CALCULATOR_MODE cMode)
+void HistoryViewModel::ClearHistoryContainer(_In_ CalculationManager::CalculatorMode cMode)
 {
     ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
     localSettings->DeleteContainer(GetHistoryContainerKey(cMode));
 }
 
 // this method will be used to update the history item length
-void HistoryViewModel::UpdateHistoryVectorLength(_In_ int newValue, _In_ CalculationManager::CALCULATOR_MODE cMode)
+void HistoryViewModel::UpdateHistoryVectorLength(_In_ int newValue, _In_ CalculationManager::CalculatorMode cMode)
 {
     ApplicationDataContainer ^ historyContainer = GetHistoryContainer(cMode);
     historyContainer->Values->Remove(HistoryVectorLengthKey);
@@ -254,8 +254,8 @@ void HistoryViewModel::UpdateHistoryVectorLength(_In_ int newValue, _In_ Calcula
 
 void HistoryViewModel::ClearHistory()
 {
-    ClearHistoryContainer(CalculationManager::CALCULATOR_MODE::CM_STD);
-    ClearHistoryContainer(CalculationManager::CALCULATOR_MODE::CM_SCI);
+    ClearHistoryContainer(CalculationManager::CalculatorMode::Standard);
+    ClearHistoryContainer(CalculationManager::CalculatorMode::Scientific);
 }
 
 void HistoryViewModel::SaveHistory()

@@ -64,9 +64,11 @@ namespace Graphing
         virtual IEvalOptions& EvalOptions() = 0;
         virtual IFormatOptions& FormatOptions() = 0;
 
-        virtual std::unique_ptr<IExpression> ParseInput(const std::wstring& input) = 0;
-        virtual std::shared_ptr<IGraph> CreateGrapher(const IExpression* expression) = 0;
+        virtual std::unique_ptr<IExpression> ParseInput(const std::wstring& input, int& errorCodeOut, int& errorTypeOut) = 0;
 
+        virtual void HRErrorToErrorInfo(HRESULT hr, int& errorCodeOut, int& errorTypeOut) = 0;
+
+        virtual std::shared_ptr<IGraph> CreateGrapher(const IExpression* expression) = 0;
         virtual std::shared_ptr<Graphing::IGraph> CreateGrapher() = 0;
 
         virtual std::wstring Serialize(const IExpression* expression) = 0;

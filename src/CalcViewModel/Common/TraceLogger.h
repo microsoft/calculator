@@ -27,7 +27,8 @@ namespace CalculatorApp
     public enum class GraphSettingsType
     {
         Grid,
-        TrigUnits
+        TrigUnits,
+        Theme
     };
 
     public enum class GraphButton
@@ -45,7 +46,8 @@ namespace CalculatorApp
 
     public enum class LineStyleType
     {
-        Color
+        Color,
+        Pattern
     };
 
     public ref class TraceLogger sealed
@@ -72,7 +74,8 @@ namespace CalculatorApp
         void LogGraphLineStyleChanged(LineStyleType style);
         void LogVariableChanged(Platform::String ^ inputChangedType, Platform::String ^ variableName);
         void LogVariableSettingsChanged(Platform::String ^ setting);
-        void LogGraphSettingsChanged(GraphSettingsType settingsType);
+        void LogGraphSettingsChanged(GraphSettingsType settingsType, Platform::String ^ settingValue);
+        void LogGraphTheme(Platform::String ^ graphTheme);
         internal:
         void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
         void LogPlatformException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ Platform::Exception ^ e);

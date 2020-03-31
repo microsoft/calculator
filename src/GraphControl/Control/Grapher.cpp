@@ -16,6 +16,7 @@ using namespace Concurrency;
 using namespace Windows::Devices::Input;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::System;
 using namespace Windows::System::Threading;
@@ -34,6 +35,8 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Variables);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, Equations);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, AxesColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GraphBackground);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GridLinesColor);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, LineWidth);
 
 namespace
 {
@@ -297,6 +300,8 @@ namespace GraphControl
     {
         optional<vector<shared_ptr<IEquation>>> initResult = nullopt;
         bool successful = false;
+        m_errorCode = 0;
+        m_errorType = 0;
 
         if (m_renderMain && m_graph != nullptr)
         {
@@ -345,7 +350,7 @@ namespace GraphControl
                     parsableEquation += s_getGraphClosingTags;
 
                     // Wire up the corresponding error to an error message in the UI at some point
-                    if (!(expr = m_solver->ParseInput(parsableEquation)))
+                    if (!(expr = m_solver->ParseInput(parsableEquation, m_errorCode, m_errorType)))
                     {
                         co_return false;
                     }
@@ -356,7 +361,7 @@ namespace GraphControl
                 request += s_getGraphClosingTags;
             }
 
-            if (graphExpression = m_solver->ParseInput(request))
+            if (graphExpression = m_solver->ParseInput(request, m_errorCode, m_errorType))
             {
                 initResult = TryInitializeGraph(keepCurrentView, graphExpression.get());
 
@@ -386,7 +391,12 @@ namespace GraphControl
                         // If we failed to render then we have already lost the previous graph
                         shouldKeepPreviousGraph = false;
                         initResult = nullopt;
+                        m_solver->HRErrorToErrorInfo(m_renderMain->GetRenderError(), m_errorCode, m_errorType);
                     }
+                }
+                else
+                {
+                    m_solver->HRErrorToErrorInfo(m_graph->GetInitializationError(), m_errorCode, m_errorType);
                 }
             }
 
@@ -398,7 +408,7 @@ namespace GraphControl
                     initResult = m_graph->TryInitialize();
                     if (initResult != nullopt)
                     {
-                        UpdateGraphOptions(m_graph->GetOptions(), validEqs);
+                        UpdateGraphOptions(m_graph->GetOptions(), vector<Equation ^>());
                         SetGraphArgs(m_graph);
 
                         m_renderMain->Graph = m_graph;
@@ -431,6 +441,8 @@ namespace GraphControl
         {
             if (!eq->IsValidated)
             {
+                eq->GraphErrorType = static_cast<ErrorType>(m_errorType);
+                eq->GraphErrorCode = m_errorCode;
                 eq->HasGraphError = true;
             }
         }
@@ -457,7 +469,7 @@ namespace GraphControl
         request += equation->GetRequest()->Data();
         request += s_getGraphClosingTags;
 
-        if (unique_ptr<IExpression> graphExpression = m_solver->ParseInput(request))
+        if (unique_ptr<IExpression> graphExpression = m_solver->ParseInput(request, m_errorCode, m_errorType))
         {
             if (graph->TryInitialize(graphExpression.get()))
             {
@@ -516,7 +528,6 @@ namespace GraphControl
             Variables->Insert(variableName, ref new Variable(newValue));
         }
 
-
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
             auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
@@ -524,7 +535,7 @@ namespace GraphControl
                 m_graph->SetArgValue(variableName->Data(), newValue);
                 m_renderMain->GetCriticalSection().unlock();
 
-                m_renderMain->RunRenderPassAsync();
+                m_renderMain->RunRenderPass();
             });
 
             ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
@@ -549,9 +560,16 @@ namespace GraphControl
                 auto lineColor = eq->LineColor;
                 graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
 
-                if (eq->IsSelected)
+                if (eq->GraphedEquation)                
                 {
-                    eq->GraphedEquation->TrySelectEquation();
+                    if (!eq->HasGraphError && eq->IsSelected)
+                    {
+                        eq->GraphedEquation->TrySelectEquation();
+                    }
+
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetLineStyle(static_cast<::Graphing::Renderer::LineStyle>(eq->EquationStyle));
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetLineWidth(LineWidth);
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetSelectedEquationLineWidth(LineWidth + ((LineWidth <= 2) ? 1 : 2));
                 }
             }
             options.SetGraphColors(graphColors);
@@ -1001,7 +1019,7 @@ String ^ Grapher::ConvertToLinear(String ^ mmlString)
 {
     m_solver->FormatOptions().SetFormatType(FormatType::LinearInput);
 
-    auto expression = m_solver->ParseInput(mmlString->Data());
+    auto expression = m_solver->ParseInput(mmlString->Data(), m_errorCode, m_errorType);
     auto linearExpression = m_solver->Serialize(expression.get());
 
     m_solver->FormatOptions().SetFormatType(s_defaultFormatType);
@@ -1011,7 +1029,7 @@ String ^ Grapher::ConvertToLinear(String ^ mmlString)
 
 String ^ Grapher::FormatMathML(String ^ mmlString)
 {
-    auto expression = m_solver->ParseInput(mmlString->Data());
+    auto expression = m_solver->ParseInput(mmlString->Data(), m_errorCode, m_errorType);
     auto formattedExpression = m_solver->Serialize(expression.get());
     return ref new String(formattedExpression.c_str());
 }
@@ -1037,6 +1055,32 @@ void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, 
         auto color = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
         m_graph->GetOptions().SetBackColor(color);
         m_graph->GetOptions().SetBoxColor(color);
+    }
+}
+
+
+void Grapher::OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
+{
+    if (m_renderMain != nullptr && m_graph != nullptr)
+    {
+        auto gridLinesColor = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
+        m_graph->GetOptions().SetGridColor(gridLinesColor);
+        m_renderMain->RunRenderPassAsync();
+    }
+}
+
+void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
+{
+    if (m_graph)
+    {
+        UpdateGraphOptions(m_graph->GetOptions(), GetGraphableEquations());
+        if (m_renderMain)
+        {
+            m_renderMain->SetPointRadius(LineWidth + 1);
+            m_renderMain->RunRenderPass();
+
+             TraceLogger::GetInstance()->LogLineWidthChanged();
+        }
     }
 }
 
