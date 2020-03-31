@@ -51,7 +51,10 @@ TwoPaneViewCX::TwoPaneViewCX()
 
 TwoPaneViewCX::~TwoPaneViewCX()
 {
-    Window::Current->SizeChanged -= m_windowSizeChangedToken;
+    if (Window::Current != nullptr)
+    {
+        Window::Current->SizeChanged -= m_windowSizeChangedToken;
+    }
 }
 
 void TwoPaneViewCX::OnApplyTemplate()
@@ -213,7 +216,7 @@ void TwoPaneViewCX::UpdateRowsColumns(ViewMode newMode, DisplayRegionHelperInfo 
         else
         {
             this->m_columnLeft->MinWidth = 0.0;
-            this->m_columnRight->MinWidth = 0.0; 
+            this->m_columnRight->MinWidth = 0.0;
             this->m_columnLeft->MaxWidth = std::numeric_limits<double>::max();
             this->m_columnRight->MaxWidth = std::numeric_limits<double>::max();
             this->m_columnLeft->Width = GridLengthHelper::FromValueAndType(1, GridUnitType::Star);
