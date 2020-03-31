@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="using:CalculatorApp.Controls"
              xmlns:common="using:CalculatorApp.Common"
-             xmlns:contract7NotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,7)"
-             xmlns:contract7Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)"
              xmlns:local="using:CalculatorApp">
 
     <Application.Resources>
@@ -165,7 +163,6 @@
                     <SolidColorBrush x:Key="EquationBrush12" Color="#FFF7630C"/>
                     <SolidColorBrush x:Key="EquationBrush13" Color="#FF8E562E"/>
                     <SolidColorBrush x:Key="EquationBrush14" Color="#FF000000"/>
-                    <SolidColorBrush x:Key="DividerBrush" Color="#33000000"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
                     <Thickness x:Key="HighContrastThicknessTop">0,1,0,0</Thickness>
@@ -200,7 +197,6 @@
                     <SolidColorBrush x:Key="EquationBrush2" Color="{ThemeResource SystemColorHighlightColor}"/>
                     <SolidColorBrush x:Key="EquationBrush3" Color="{ThemeResource SystemColorHotlightColor}"/>
                     <SolidColorBrush x:Key="EquationBrush4" Color="{ThemeResource SystemColorWindowTextColor}"/>
-                    <SolidColorBrush x:Key="DividerBrush" Color="Transparent"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
@@ -1763,125 +1759,6 @@
                                                   AutomationProperties.AccessibilityView="Raw"
                                                   Content="{TemplateBinding Description}"
                                                   x:Load="False"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-            <Style TargetType="Controls:TwoPaneViewCX">
-                <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                <Setter Property="VerticalAlignment" Value="Stretch"/>
-                <Setter Property="MinWideModeWidth" Value="641"/>
-                <Setter Property="MinTallModeHeight" Value="641"/>
-                <Setter Property="IsTabStop" Value="False"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Controls:TwoPaneViewCX">
-                            <Grid x:Name="RootGrid"
-                                  HorizontalAlignment="Stretch"
-                                  VerticalAlignment="Stretch"
-                                  Background="{TemplateBinding Background}">
-
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition x:Name="PART_ColumnLeft" Width="Auto"/>
-                                    <ColumnDefinition x:Name="PART_ColumnMiddle" Width="0"/>
-                                    <ColumnDefinition x:Name="PART_ColumnRight" Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Grid.RowDefinitions>
-                                    <RowDefinition x:Name="PART_RowTop" Height="*"/>
-                                    <RowDefinition x:Name="PART_RowMiddle" Height="0"/>
-                                    <RowDefinition x:Name="PART_RowBottom" Height="0"/>
-                                </Grid.RowDefinitions>
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="ModeStates">
-                                        <VisualState x:Name="ViewMode_LeftRight"/>
-
-                                        <VisualState x:Name="ViewMode_RightLeft">
-                                            <VisualState.Setters>
-                                                <contract7NotPresent:Setter Target="PART_Pane1.(Grid.Column)" Value="2"/>
-                                                <contract7NotPresent:Setter Target="PART_Pane2.(Grid.Column)" Value="0"/>
-
-                                                <contract7Present:Setter Target="PART_Pane1ScrollViewer.(Grid.Column)" Value="2"/>
-                                                <contract7Present:Setter Target="PART_Pane2ScrollViewer.(Grid.Column)" Value="0"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-
-                                        <VisualState x:Name="ViewMode_TopBottom">
-                                            <VisualState.Setters>
-                                                <contract7NotPresent:Setter Target="PART_Pane1.(Grid.Column)" Value="0"/>
-                                                <contract7NotPresent:Setter Target="PART_Pane1.(Grid.Row)" Value="0"/>
-
-                                                <contract7NotPresent:Setter Target="PART_Pane2.(Grid.Column)" Value="0"/>
-                                                <contract7NotPresent:Setter Target="PART_Pane2.(Grid.Row)" Value="2"/>
-
-                                                <contract7Present:Setter Target="PART_Pane1ScrollViewer.(Grid.Column)" Value="0"/>
-                                                <contract7Present:Setter Target="PART_Pane1ScrollViewer.(Grid.Row)" Value="0"/>
-
-                                                <contract7Present:Setter Target="PART_Pane2ScrollViewer.(Grid.Column)" Value="0"/>
-                                                <contract7Present:Setter Target="PART_Pane2ScrollViewer.(Grid.Row)" Value="2"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-
-                                        <VisualState x:Name="ViewMode_BottomTop">
-                                            <VisualState.Setters>
-                                                <contract7NotPresent:Setter Target="PART_Pane1.(Grid.Column)" Value="0"/>
-                                                <contract7NotPresent:Setter Target="PART_Pane1.(Grid.Row)" Value="2"/>
-
-                                                <contract7NotPresent:Setter Target="PART_Pane2.(Grid.Column)" Value="0"/>
-                                                <contract7NotPresent:Setter Target="PART_Pane2.(Grid.Row)" Value="0"/>
-
-                                                <contract7Present:Setter Target="PART_Pane1ScrollViewer.(Grid.Column)" Value="0"/>
-                                                <contract7Present:Setter Target="PART_Pane1ScrollViewer.(Grid.Row)" Value="2"/>
-
-                                                <contract7Present:Setter Target="PART_Pane2ScrollViewer.(Grid.Column)" Value="0"/>
-                                                <contract7Present:Setter Target="PART_Pane2ScrollViewer.(Grid.Row)" Value="0"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-
-                                        <VisualState x:Name="ViewMode_OneOnly">
-                                            <VisualState.Setters>
-                                                <contract7NotPresent:Setter Target="PART_Pane2.Visibility" Value="Collapsed"/>
-
-                                                <contract7Present:Setter Target="PART_Pane2ScrollViewer.Visibility" Value="Collapsed"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-
-                                        <VisualState x:Name="ViewMode_TwoOnly">
-                                            <VisualState.Setters>
-                                                <contract7NotPresent:Setter Target="PART_Pane1.Visibility" Value="Collapsed"/>
-                                                <contract7NotPresent:Setter Target="PART_Pane2.(Grid.Column)" Value="0"/>
-
-                                                <contract7Present:Setter Target="PART_Pane1ScrollViewer.Visibility" Value="Collapsed"/>
-                                                <contract7Present:Setter Target="PART_Pane2ScrollViewer.(Grid.Column)" Value="0"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-
-                                <contract7Present:ScrollViewer x:Name="PART_Pane1ScrollViewer"
-                                                               Grid.Column="0"
-                                                               IsTabStop="False"
-                                                               VerticalScrollBarVisibility="Auto">
-                                    <Border Child="{TemplateBinding Pane1}"/>
-                                </contract7Present:ScrollViewer>
-
-                                <contract7Present:ScrollViewer x:Name="PART_Pane2ScrollViewer"
-                                                               Grid.Column="2"
-                                                               IsTabStop="False"
-                                                               VerticalScrollBarVisibility="Auto">
-                                    <Border Child="{TemplateBinding Pane2}"/>
-                                </contract7Present:ScrollViewer>
-
-                                <contract7NotPresent:Border x:Name="PART_Pane1"
-                                                            Grid.Column="0"
-                                                            Child="{TemplateBinding Pane1}"/>
-
-                                <contract7NotPresent:Border x:Name="PART_Pane2"
-                                                            Grid.Column="2"
-                                                            Child="{TemplateBinding Pane2}"/>
-
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>

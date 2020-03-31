@@ -277,47 +277,36 @@
     <Grid x:Name="UnitConverterRootGrid"
           HorizontalAlignment="Stretch"
           AutomationProperties.LandmarkType="Main">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="RowTopNav" Height="{StaticResource HamburgerHeightGridLength}"/>
+            <RowDefinition x:Name="RowDisplay1"
+                           Height="56*"
+                           MinHeight="56"/>
+            <RowDefinition x:Name="RowUnit1"
+                           Height="32*"
+                           MinHeight="32"/>
+            <RowDefinition x:Name="RowDisplay2"
+                           Height="56*"
+                           MinHeight="56"/>
+            <RowDefinition x:Name="RowUnit2"
+                           Height="32*"
+                           MinHeight="32"/>
+            <RowDefinition x:Name="RowDltrUnits"
+                           Height="Auto"
+                           MinHeight="48"/>
+            <RowDefinition x:Name="RowNumPad" Height="272*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="GutterLeft" Width="0"/>
+            <ColumnDefinition x:Name="ColumnLeft" Width="1*"/>
+            <ColumnDefinition x:Name="ColumnRight" Width="0"/>
+            <ColumnDefinition x:Name="GutterRight" Width="0"/>
+        </Grid.ColumnDefinitions>
+        <!-- End ConverterNumPad -->
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="Layout">
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <triggers:ApplicationViewModeTrigger ViewMode="DoubleLandscape"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="Pane2Panel.Margin" Value="12"/>
-                        <Setter Target="Pane1Panel.Margin" Value="24,48,0,48"/>
-                        <Setter Target="SupplementaryResults.VerticalAlignment" Value="Top"/>
-                        <Setter Target="Value1.Style" Value="{ThemeResource ValueLargeStyle}"/>
-                        <Setter Target="Value2.Style" Value="{ThemeResource ValueLargeStyle}"/>
-                        <Setter Target="CurrencySymbol1Block.Style" Value="{ThemeResource CurrencySymbolLargeStyle}"/>
-                        <Setter Target="CurrencySymbol2Block.Style" Value="{ThemeResource CurrencySymbolLargeStyle}"/>
-                        <Setter Target="Units1.Height" Value="44"/>
-                        <Setter Target="Units2.Height" Value="44"/>
-                        <Setter Target="ConverterNegateButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
-                        <Setter Target="ClearEntryButtonPos0.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
-                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle34}"/>
-                        <Setter Target="SupplementaryResultsPanelInGrid.Padding" Value="12,0"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <triggers:ApplicationViewModeTrigger ViewMode="DoublePortrait"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="Pane2Panel.Margin" Value="12"/>
-                        <Setter Target="Pane1Panel.Margin" Value="24,48,0,0"/>
-                        <Setter Target="RowDisplay1.Height" Value="4*"/>
-                        <Setter Target="RowUnit1.Height" Value="2*"/>
-                        <Setter Target="RowDisplay2.Height" Value="4*"/>
-                        <Setter Target="RowUnit2.Height" Value="2*"/>
-                        <Setter Target="RowDltrUnits.Height" Value="2*"/>
-                        <Setter Target="ConverterNumPad.(Grid.Row)" Value="1"/>
-                        <Setter Target="ConverterNumPad.(Grid.RowSpan)" Value="5"/>
-                        <Setter Target="SupplementaryResults.VerticalAlignment" Value="Top"/>
-                        <Setter Target="Pane2RowTopNav.Height" Value="{StaticResource HamburgerHeightGridLength}"/>
-                    </VisualState.Setters>
-                </VisualState>
+                <VisualState x:Name="PortraitLayout"/>
                 <VisualState x:Name="LandscapeLayout">
                     <VisualState.StateTriggers>
                         <triggers:AspectRatioTrigger ActiveIfEqual="True"
@@ -326,21 +315,23 @@
                                                      Threshold="1"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="TwoPaneView.MinWideModeWidth" Value="0"/>
-                        <Setter Target="TwoPaneView.MinTallModeHeight" Value="Infinity"/>
-                        <Setter Target="TwoPaneView.Pane1Length" Value="*"/>
-                        <Setter Target="TwoPaneView.Pane1MinLength" Value="0"/>
-                        <Setter Target="TwoPaneView.Pane2Length" Value="*"/>
+                        <Setter Target="GutterLeft.Width" Value="48"/>
+                        <Setter Target="GutterRight.Width" Value="48"/>
+                        <Setter Target="ColumnLeft.Width" Value="1*"/>
+                        <Setter Target="ColumnRight.Width" Value="1*"/>
                         <Setter Target="RowDisplay1.Height" Value="4*"/>
                         <Setter Target="RowUnit1.Height" Value="2*"/>
                         <Setter Target="RowDisplay2.Height" Value="4*"/>
                         <Setter Target="RowUnit2.Height" Value="2*"/>
                         <Setter Target="RowDltrUnits.Height" Value="2*"/>
+                        <Setter Target="CurrencyLoadingGrid.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="ConverterNumPad.(Grid.Row)" Value="1"/>
                         <Setter Target="ConverterNumPad.(Grid.RowSpan)" Value="5"/>
+                        <Setter Target="ConverterNumPad.(Grid.Column)" Value="2"/>
+                        <Setter Target="ConverterNumPad.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="SupplementaryResults.VerticalAlignment" Value="Top"/>
-                        <Setter Target="Pane2RowTopNav.Height" Value="{StaticResource HamburgerHeightGridLength}"/>
-                        <Setter Target="Pane1Panel.Margin" Value="48,0,0,0"/>
+                        <Setter Target="RowNumPad.MinHeight" Value="0"/>
+                        <Setter Target="RowNumPad.Height" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -409,6 +400,7 @@
                         <Setter Target="ClearEntryButtonPos0.Margin" Value="1"/>
                         <Setter Target="BackSpaceButtonSmall.Margin" Value="1"/>
                         <Setter Target="ConverterNegateButton.Margin" Value="1"/>
+
                         <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle18}"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -445,8 +437,8 @@
                     <VisualState.Setters>
                         <Setter Target="CurrencySymbol1Block.Padding" Value="0,0,12,0"/>
                         <Setter Target="CurrencySymbol2Block.Padding" Value="0,0,12,0"/>
-                        <Setter Target="CurrencySymbol1Block.(Grid.Column)" Value="1"/>
-                        <Setter Target="CurrencySymbol2Block.(Grid.Column)" Value="1"/>
+                        <Setter Target="CurrencySymbol1Block.(Grid.Column)" Value="2"/>
+                        <Setter Target="CurrencySymbol2Block.(Grid.Column)" Value="2"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -514,287 +506,259 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <controls:TwoPaneViewCX x:Name="TwoPaneView"
-                                MinTallModeHeight="0"
-                                MinWideModeWidth="Infinity"
-                                Pane1Length="16*"
-                                Pane1MinLength="260"
-                                Pane2Length="18*">
-            <controls:TwoPaneViewCX.Pane1>
-                <Grid x:Name="Pane1Panel">
-                    <Grid.RowDefinitions>
-                        <RowDefinition x:Name="RowTopNav" Height="{StaticResource HamburgerHeightGridLength}"/>
-                        <RowDefinition x:Name="RowDisplay1"
-                                       Height="56*"
-                                       MinHeight="56"/>
-                        <RowDefinition x:Name="RowUnit1"
-                                       Height="32*"
-                                       MinHeight="32"/>
-                        <RowDefinition x:Name="RowDisplay2"
-                                       Height="56*"
-                                       MinHeight="56"/>
-                        <RowDefinition x:Name="RowUnit2"
-                                       Height="32*"
-                                       MinHeight="32"/>
-                        <RowDefinition x:Name="RowDltrUnits"
-                                       Height="Auto"
-                                       MinHeight="48"/>
-                    </Grid.RowDefinitions>
-                    <Grid x:Name="CurrencyLoadingGrid"
+        <Grid x:Name="CurrencyLoadingGrid"
+              Grid.Row="1"
+              Grid.RowSpan="5"
+              Grid.Column="0"
+              Grid.ColumnSpan="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+            <ProgressRing x:Name="CurrencyLoadingProgressRing"
                           Grid.Row="1"
-                          Grid.RowSpan="5"
-                          Visibility="Collapsed">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="10*"/>
-                            <RowDefinition Height="7*"/>
-                            <RowDefinition Height="10*"/>
-                        </Grid.RowDefinitions>
-                        <ProgressRing x:Name="CurrencyLoadingProgressRing"
-                                      Grid.Row="1"
-                                      Grid.Column="1"
-                                      MaxWidth="140"
-                                      MaxHeight="140"
-                                      HorizontalAlignment="Stretch"
-                                      VerticalAlignment="Stretch"
-                                      IsActive="False"/>
-                    </Grid>
+                          Grid.Column="1"
+                          MaxWidth="140"
+                          MaxHeight="140"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          IsActive="False"/>
+        </Grid>
 
-                    <Grid x:Name="Value1Container"
-                          Grid.Row="1"
-                          HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
-                          Style="{ThemeResource ValueContainerStyle}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="CurrencySymbol1Block"
-                                   Grid.Column="0"
-                                   Padding="12,0,0,0"
-                                   Style="{ThemeResource CurrencySymbolMediumStyle}"
-                                   AutomationProperties.AccessibilityView="Raw"
-                                   Text="{x:Bind Model.CurrencySymbol1, Mode=OneWay}"
-                                   Visibility="{x:Bind Model.CurrencySymbolVisibility, Mode=OneWay}"/>
-                        <controls:CalculationResult x:Name="Value1"
-                                                    Grid.Column="1"
-                                                    Style="{ThemeResource ValueMediumStyle}"
-                                                    AutomationProperties.AutomationId="Value1"
-                                                    AutomationProperties.Name="{x:Bind Model.Value1AutomationName, Mode=OneWay}"
-                                                    ContextCanceled="OnContextCanceled"
-                                                    ContextRequested="OnContextRequested"
-                                                    DisplayValue="{x:Bind Model.Value1, Mode=OneWay}"
-                                                    FlowDirection="{x:Bind LayoutDirection}"
-                                                    IsActive="{Binding Value1Active, Mode=TwoWay}"
-                                                    KeyDown="OnValueKeyDown"
-                                                    Selected="OnValueSelected"
-                                                    TabIndex="1"/>
-                    </Grid>
+        <Grid x:Name="Value1Container"
+              Grid.Row="1"
+              Grid.Column="1"
+              HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
+              Style="{ThemeResource ValueContainerStyle}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="CurrencySymbol1Block"
+                       Grid.Column="0"
+                       Padding="12,0,0,0"
+                       Style="{ThemeResource CurrencySymbolMediumStyle}"
+                       AutomationProperties.AccessibilityView="Raw"
+                       Text="{x:Bind Model.CurrencySymbol1, Mode=OneWay}"
+                       Visibility="{x:Bind Model.CurrencySymbolVisibility, Mode=OneWay}"/>
+            <controls:CalculationResult x:Name="Value1"
+                                        Grid.Column="1"
+                                        Style="{ThemeResource ValueMediumStyle}"
+                                        AutomationProperties.AutomationId="Value1"
+                                        AutomationProperties.Name="{x:Bind Model.Value1AutomationName, Mode=OneWay}"
+                                        ContextCanceled="OnContextCanceled"
+                                        ContextRequested="OnContextRequested"
+                                        DisplayValue="{x:Bind Model.Value1, Mode=OneWay}"
+                                        FlowDirection="{x:Bind LayoutDirection}"
+                                        IsActive="{Binding Value1Active, Mode=TwoWay}"
+                                        KeyDown="OnValueKeyDown"
+                                        Selected="OnValueSelected"
+                                        TabIndex="1"/>
+        </Grid>
 
-                    <ComboBox x:Name="Units1"
-                              Grid.Row="2"
-                              HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
-                              Style="{ThemeResource ComboStyle}"
-                              AutomationProperties.AutomationId="Units1"
-                              AutomationProperties.Name="{x:Bind Model.Unit1AutomationName, Mode=OneWay}"
-                              DropDownClosed="UpdateDropDownState"
-                              DropDownOpened="UpdateDropDownState"
-                              FlowDirection="{x:Bind LayoutDirection}"
-                              IsEnabledChanged="Units1_IsEnabledChanged"
-                              ItemTemplate="{StaticResource UnitTemplate}"
-                              ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
-                              SelectedItem="{Binding Unit1, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
-                              TabIndex="2"
-                              IsEnabled="{Binding IsDropDownEnabled}"/>
+        <ComboBox x:Name="Units1"
+                  Grid.Row="2"
+                  Grid.Column="1"
+                  HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
+                  Style="{ThemeResource ComboStyle}"
+                  AutomationProperties.AutomationId="Units1"
+                  AutomationProperties.Name="{x:Bind Model.Unit1AutomationName, Mode=OneWay}"
+                  DropDownClosed="UpdateDropDownState"
+                  DropDownOpened="UpdateDropDownState"
+                  FlowDirection="{x:Bind LayoutDirection}"
+                  IsEnabledChanged="Units1_IsEnabledChanged"
+                  ItemTemplate="{StaticResource UnitTemplate}"
+                  ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
+                  SelectedItem="{Binding Unit1, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
+                  TabIndex="2"
+                  IsEnabled="{Binding IsDropDownEnabled}"/>
 
-                    <Grid x:Name="Value2Container"
-                          Grid.Row="3"
-                          HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
-                          Style="{ThemeResource ValueContainerStyle}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="CurrencySymbol2Block"
-                                   Grid.Column="0"
-                                   Padding="12,0,0,0"
-                                   Style="{ThemeResource CurrencySymbolMediumStyle}"
-                                   AutomationProperties.AccessibilityView="Raw"
-                                   Text="{x:Bind Model.CurrencySymbol2, Mode=OneWay}"
-                                   Visibility="{x:Bind Model.CurrencySymbolVisibility, Mode=OneWay}"/>
-                        <controls:CalculationResult x:Name="Value2"
-                                                    Grid.Column="1"
-                                                    Style="{ThemeResource ValueMediumStyle}"
-                                                    AutomationProperties.AutomationId="Value2"
-                                                    AutomationProperties.LiveSetting="Polite"
-                                                    AutomationProperties.Name="{x:Bind Model.Value2AutomationName, Mode=OneWay}"
-                                                    ContextCanceled="OnContextCanceled"
-                                                    ContextRequested="OnContextRequested"
-                                                    DisplayValue="{x:Bind Model.Value2, Mode=OneWay}"
-                                                    FlowDirection="{x:Bind LayoutDirection}"
-                                                    IsActive="{Binding Value2Active, Mode=TwoWay}"
-                                                    KeyDown="OnValueKeyDown"
-                                                    Selected="OnValueSelected"
-                                                    TabIndex="3"/>
-                    </Grid>
+        <Grid x:Name="Value2Container"
+              Grid.Row="3"
+              Grid.Column="1"
+              HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
+              Style="{ThemeResource ValueContainerStyle}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="CurrencySymbol2Block"
+                       Grid.Column="0"
+                       Padding="12,0,0,0"
+                       Style="{ThemeResource CurrencySymbolMediumStyle}"
+                       AutomationProperties.AccessibilityView="Raw"
+                       Text="{x:Bind Model.CurrencySymbol2, Mode=OneWay}"
+                       Visibility="{x:Bind Model.CurrencySymbolVisibility, Mode=OneWay}"/>
+            <controls:CalculationResult x:Name="Value2"
+                                        Grid.Column="1"
+                                        Style="{ThemeResource ValueMediumStyle}"
+                                        AutomationProperties.AutomationId="Value2"
+                                        AutomationProperties.LiveSetting="Polite"
+                                        AutomationProperties.Name="{x:Bind Model.Value2AutomationName, Mode=OneWay}"
+                                        ContextCanceled="OnContextCanceled"
+                                        ContextRequested="OnContextRequested"
+                                        DisplayValue="{x:Bind Model.Value2, Mode=OneWay}"
+                                        FlowDirection="{x:Bind LayoutDirection}"
+                                        IsActive="{Binding Value2Active, Mode=TwoWay}"
+                                        KeyDown="OnValueKeyDown"
+                                        Selected="OnValueSelected"
+                                        TabIndex="3"/>
+        </Grid>
 
-                    <ComboBox x:Name="Units2"
-                              Grid.Row="4"
-                              HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
-                              Style="{ThemeResource ComboStyle}"
-                              AutomationProperties.AutomationId="Units2"
-                              AutomationProperties.Name="{x:Bind Model.Unit2AutomationName, Mode=OneWay}"
-                              DropDownClosed="UpdateDropDownState"
-                              DropDownOpened="UpdateDropDownState"
-                              FlowDirection="{x:Bind LayoutDirection}"
-                              ItemTemplate="{StaticResource UnitTemplate}"
-                              ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
-                              SelectedItem="{Binding Unit2, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
-                              TabIndex="4"
-                              IsEnabled="{Binding IsDropDownEnabled}"/>
+        <ComboBox x:Name="Units2"
+                  Grid.Row="4"
+                  Grid.Column="1"
+                  HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
+                  Style="{ThemeResource ComboStyle}"
+                  AutomationProperties.AutomationId="Units2"
+                  AutomationProperties.Name="{x:Bind Model.Unit2AutomationName, Mode=OneWay}"
+                  DropDownClosed="UpdateDropDownState"
+                  DropDownOpened="UpdateDropDownState"
+                  FlowDirection="{x:Bind LayoutDirection}"
+                  ItemTemplate="{StaticResource UnitTemplate}"
+                  ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
+                  SelectedItem="{Binding Unit2, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
+                  TabIndex="4"
+                  IsEnabled="{Binding IsDropDownEnabled}"/>
 
-                    <StackPanel x:Name="SupplementaryResultsPanelInGrid"
-                                Grid.Row="5"
-                                MinHeight="48"
-                                Padding="12,0,6,0"
-                                HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
-                                VerticalAlignment="Top"
-                                FlowDirection="{x:Bind LayoutDirection}"
-                                SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged">
-                        <local:SupplementaryResults x:Name="SupplementaryResults"
-                                                    HorizontalAlignment="Left"
-                                                    VerticalAlignment="Center"
-                                                    Results="{x:Bind Model.SupplementaryResults, Mode=OneWay}"
-                                                    Visibility="{x:Bind Model.SupplementaryVisibility, Mode=OneWay}"/>
-                        <StackPanel Visibility="{x:Bind Model.IsCurrencyCurrentCategory, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <!-- Currency Ratio Equality -->
-                            <TextBlock x:Name="CurrencyRatioEqualityBlock"
-                                       Style="{ThemeResource CaptionTextBlockStyle}"
-                                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                                       AutomationProperties.Name="{x:Bind Model.CurrencyRatioEqualityAutomationName, Mode=OneWay}"
-                                       Text="{x:Bind Model.CurrencyRatioEquality, Mode=OneWay}"/>
+        <StackPanel x:Name="SupplementaryResultsPanelInGrid"
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    MinHeight="48"
+                    Padding="12,0,6,0"
+                    HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
+                    VerticalAlignment="Top"
+                    FlowDirection="{x:Bind LayoutDirection}"
+                    SizeChanged="SupplementaryResultsPanelInGrid_SizeChanged">
+            <local:SupplementaryResults x:Name="SupplementaryResults"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Results="{x:Bind Model.SupplementaryResults, Mode=OneWay}"
+                                        Visibility="{x:Bind Model.SupplementaryVisibility, Mode=OneWay}"/>
+            <StackPanel Visibility="{x:Bind Model.IsCurrencyCurrentCategory, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <!-- Currency Ratio Equality -->
+                <TextBlock x:Name="CurrencyRatioEqualityBlock"
+                           Style="{ThemeResource CaptionTextBlockStyle}"
+                           Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                           AutomationProperties.Name="{x:Bind Model.CurrencyRatioEqualityAutomationName, Mode=OneWay}"
+                           Text="{x:Bind Model.CurrencyRatioEquality, Mode=OneWay}"/>
 
-                            <!-- Currency Timestamp -->
-                            <TextBlock x:Name="CurrencyTimestampTextBlock"
-                                       Style="{ThemeResource CaptionTextBlockStyle}"
-                                       Text="{x:Bind Model.CurrencyTimestamp, Mode=OneWay}"/>
+                <!-- Currency Timestamp -->
+                <TextBlock x:Name="CurrencyTimestampTextBlock"
+                           Style="{ThemeResource CaptionTextBlockStyle}"
+                           Text="{x:Bind Model.CurrencyTimestamp, Mode=OneWay}"/>
 
-                            <!-- Currency Refresh button and additional status text -->
-                            <ContentControl x:Name="CurrencyRefreshBlockControl"
-                                            IsTabStop="False"
-                                            TabIndex="5"
-                                            Visibility="Collapsed">
-                                <StackPanel Orientation="Horizontal">
-                                    <HyperlinkButton x:Name="CurrencyRefreshBlock"
-                                                     x:Uid="RefreshButtonText"
-                                                     Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
-                                                     Click="CurrencyRefreshButton_Click"/>
-                                    <TextBlock Margin="3,7,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
-                                        <Run x:Name="CurrencySecondaryStatus"
-                                             FontWeight="SemiBold"
-                                             Text=""/>
-                                    </TextBlock>
-                                </StackPanel>
-                            </ContentControl>
-
-                            <!-- Offline TextBlock -->
-                            <ContentControl x:Name="OfflineBlock"
-                                            IsTabStop="False"
-                                            TabIndex="5"
-                                            Visibility="Collapsed">
-                                <TextBlock Style="{ThemeResource CaptionTextBlockStyle}"
-                                           Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                                           AutomationProperties.AccessibilityView="Raw">
-                                    <Run x:Name="OfflineRunBeforeLink"/>
-                                    <Hyperlink NavigateUri="ms-settings:network-status">
-                                        <Run x:Name="OfflineRunLink"/>
-                                    </Hyperlink>
-                                    <Run x:Name="OfflineRunAfterLink"/>
-                                </TextBlock>
-                            </ContentControl>
-                        </StackPanel>
+                <!-- Currency Refresh button and additional status text -->
+                <ContentControl x:Name="CurrencyRefreshBlockControl"
+                                IsTabStop="False"
+                                TabIndex="5"
+                                Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                        <HyperlinkButton x:Name="CurrencyRefreshBlock"
+                                         x:Uid="RefreshButtonText"
+                                         Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
+                                         Click="CurrencyRefreshButton_Click"/>
+                        <TextBlock Margin="3,7,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
+                            <Run x:Name="CurrencySecondaryStatus"
+                                 FontWeight="SemiBold"
+                                 Text=""/>
+                        </TextBlock>
                     </StackPanel>
-                </Grid>
-            </controls:TwoPaneViewCX.Pane1>
-            <controls:TwoPaneViewCX.Pane2>
-                <Grid x:Name="Pane2Panel">
-                    <Grid.RowDefinitions>
-                        <RowDefinition x:Name="Pane2RowTopNav" Height="0"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid x:Name="ConverterNumPad"
-                          Grid.Row="1"
-                          Margin="3,0,3,3"
-                          FlowDirection="LeftToRight"
-                          RenderTransformOrigin="0.5,0.5"
-                          XYFocusKeyboardNavigation="Enabled">
-                        <Grid.RenderTransform>
-                            <CompositeTransform/>
-                        </Grid.RenderTransform>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid x:Uid="DisplayControls"
-                              Grid.Row="0"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              AutomationProperties.HeadingLevel="Level1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <controls:CalculatorButton x:Name="ClearEntryButtonPos0"
-                                                       x:Uid="clearEntryButton"
-                                                       HorizontalAlignment="Stretch"
-                                                       Style="{StaticResource OperatorButtonStyle}"
-                                                       FontSize="16"
-                                                       ButtonId="Clear"
-                                                       Content="CE"
-                                                       TabIndex="7"/>
-                            <controls:CalculatorButton x:Name="BackSpaceButtonSmall"
-                                                       x:Uid="backSpaceButton"
-                                                       Grid.Column="1"
-                                                       Style="{StaticResource SymbolOperatorButtonStyle}"
-                                                       FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                       FontSize="16"
-                                                       ButtonId="Backspace"
-                                                       Content="&#xE750;"
-                                                       TabIndex="8"/>
-                        </Grid>
+                </ContentControl>
 
-                        <local:NumberPad x:Name="NumberPad"
-                                         x:Uid="NumberPad"
-                                         Grid.Row="1"
-                                         Grid.RowSpan="4"
-                                         Grid.Column="0"
-                                         Grid.ColumnSpan="3"
-                                         VerticalAlignment="Stretch"
-                                         AutomationProperties.HeadingLevel="Level1"
-                                         ButtonStyle="{StaticResource NumericButtonStyle24}"
-                                         TabIndex="10"
-                                         TabNavigation="Local"/>
-                        <controls:CalculatorButton x:Name="ConverterNegateButton"
-                                                   x:Uid="converterNegateButton"
-                                                   Grid.Row="4"
-                                                   Grid.Column="0"
-                                                   Style="{StaticResource SymbolOperatorKeypadButtonStyle}"
-                                                   FontSize="16"
-                                                   ButtonId="Negate"
-                                                   Content="&#xF898;"
-                                                   TabIndex="6"
-                                                   Visibility="{x:Bind Model.CurrentCategory.NegateVisibility, Mode=OneWay}"/>
-                    </Grid>
-                </Grid>
-            </controls:TwoPaneViewCX.Pane2>
-        </controls:TwoPaneViewCX>
+                <!-- Offline TextBlock -->
+                <ContentControl x:Name="OfflineBlock"
+                                IsTabStop="False"
+                                TabIndex="5"
+                                Visibility="Collapsed">
+                    <TextBlock Style="{ThemeResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                               AutomationProperties.AccessibilityView="Raw">
+                        <Run x:Name="OfflineRunBeforeLink"/>
+                        <Hyperlink NavigateUri="ms-settings:network-status">
+                            <Run x:Name="OfflineRunLink"/>
+                        </Hyperlink>
+                        <Run x:Name="OfflineRunAfterLink"/>
+                    </TextBlock>
+                </ContentControl>
+            </StackPanel>
+        </StackPanel>
+
+        <Grid x:Name="ConverterNumPad"
+              Grid.Row="6"
+              Grid.Column="1"
+              Margin="3,0,3,3"
+              FlowDirection="LeftToRight"
+              RenderTransformOrigin="0.5,0.5"
+              XYFocusKeyboardNavigation="Enabled">
+            <Grid.RenderTransform>
+                <CompositeTransform/>
+            </Grid.RenderTransform>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid x:Uid="DisplayControls"
+                  Grid.Row="0"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="2"
+                  AutomationProperties.HeadingLevel="Level1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <controls:CalculatorButton x:Name="ClearEntryButtonPos0"
+                                           x:Uid="clearEntryButton"
+                                           HorizontalAlignment="Stretch"
+                                           Style="{StaticResource OperatorButtonStyle}"
+                                           FontSize="16"
+                                           ButtonId="Clear"
+                                           Content="CE"
+                                           TabIndex="7"/>
+                <controls:CalculatorButton x:Name="BackSpaceButtonSmall"
+                                           x:Uid="backSpaceButton"
+                                           Grid.Column="1"
+                                           Style="{StaticResource SymbolOperatorButtonStyle}"
+                                           FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                           FontSize="16"
+                                           ButtonId="Backspace"
+                                           Content="&#xE750;"
+                                           TabIndex="8"/>
+            </Grid>
+
+            <local:NumberPad x:Name="NumberPad"
+                             x:Uid="NumberPad"
+                             Grid.Row="1"
+                             Grid.RowSpan="4"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="3"
+                             VerticalAlignment="Stretch"
+                             AutomationProperties.HeadingLevel="Level1"
+                             ButtonStyle="{StaticResource NumericButtonStyle24}"
+                             TabIndex="10"
+                             TabNavigation="Local"/>
+            <controls:CalculatorButton x:Name="ConverterNegateButton"
+                                       x:Uid="converterNegateButton"
+                                       Grid.Row="4"
+                                       Grid.Column="0"
+                                       Style="{StaticResource SymbolOperatorKeypadButtonStyle}"
+                                       FontSize="16"
+                                       ButtonId="Negate"
+                                       Content="&#xF898;"
+                                       TabIndex="6"
+                                       Visibility="{x:Bind Model.CurrentCategory.NegateVisibility, Mode=OneWay}"/>
+        </Grid>
+        <!-- End ConverterNumPad -->
     </Grid>
 </UserControl>
