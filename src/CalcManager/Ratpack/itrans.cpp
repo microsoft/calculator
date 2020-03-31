@@ -17,17 +17,17 @@
 //-----------------------------------------------------------------------------
 #include "ratpak.h"
 
-void ascalerat(_Inout_ PRAT* pa, ANGLE_TYPE angletype, int32_t precision)
+void ascalerat(_Inout_ PRAT* pa, AngleType angletype, int32_t precision)
 {
     switch (angletype)
     {
-    case ANGLE_RAD:
+    case AngleType::Radians:
         break;
-    case ANGLE_DEG:
+    case AngleType::Degrees:
         divrat(pa, two_pi, precision);
         mulrat(pa, rat_360, precision);
         break;
-    case ANGLE_GRAD:
+    case AngleType::Gradians:
         divrat(pa, two_pi, precision);
         mulrat(pa, rat_400, precision);
         break;
@@ -76,7 +76,7 @@ void _asinrat(PRAT* px, int32_t precision)
     DESTROYTAYLOR();
 }
 
-void asinanglerat(_Inout_ PRAT* pa, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
+void asinanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision)
 
 {
     asinrat(pa, radix, precision);
@@ -164,7 +164,7 @@ void asinrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void acosanglerat(_Inout_ PRAT* pa, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
+void acosanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision)
 
 {
     acosrat(pa, radix, precision);
@@ -249,7 +249,7 @@ void acosrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 //
 //-----------------------------------------------------------------------------
 
-void atananglerat(_Inout_ PRAT* pa, ANGLE_TYPE angletype, uint32_t radix, int32_t precision)
+void atananglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision)
 
 {
     atanrat(pa, radix, precision);

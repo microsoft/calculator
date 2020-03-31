@@ -78,25 +78,25 @@ TEST_METHOD(TestModuloRational)
 {
     // Test with rational numbers
     auto res = Mod(Rational(Number(1, 0, { 250 }), Number(1, 0, { 100 })), Rational(89));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"2.5");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"2.5");
     res = Mod(Rational(Number(1, 0, { 3330 }), Number(1, 0, { 1332 })), Rational(1));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"0.5");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"0.5");
     res = Mod(Rational(Number(1, 0, { 12250 }), Number(1, 0, { 100 })), Rational(10));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"2.5");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"2.5");
     res = Mod(Rational(Number(-1, 0, { 12250 }), Number(1, 0, { 100 })), Rational(10));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"7.5");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"7.5");
     res = Mod(Rational(Number(-1, 0, { 12250 }), Number(1, 0, { 100 })), Rational(-10));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"-2.5");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"-2.5");
     res = Mod(Rational(Number(1, 0, { 12250 }), Number(1, 0, { 100 })), Rational(-10));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"-7.5");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"-7.5");
     res = Mod(Rational(Number(1, 0, { 1000 }), Number(1, 0, { 3 })), Rational(1));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"0.33333333");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"0.33333333");
     res = Mod(Rational(Number(1, 0, { 1000 }), Number(1, 0, { 3 })), Rational(-10));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"-6.6666667");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"-6.6666667");
     res = Mod(Rational(834345), Rational(Number(1, 0, { 103 }), Number(1, 0, { 100 })));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"0.71");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"0.71");
     res = Mod(Rational(834345), Rational(Number(-1, 0, { 103 }), Number(1, 0, { 100 })));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"-0.32");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"-0.32");
 }
 
 TEST_METHOD(TestRemainderOperandsNotModified)
@@ -192,29 +192,29 @@ TEST_METHOD(TestRemainderRational)
 {
     // Test with rational numbers
     auto res = Rational(Number(1, 0, { 250 }), Number(1, 0, { 100 })) % Rational(89);
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"2.5");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"2.5");
     res = Rational(Number(1, 0, { 3330 }), Number(1, 0, { 1332 })) % Rational(1);
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"0.5");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"0.5");
     res = Rational(Number(1, 0, { 12250 }), Number(1, 0, { 100 })) % Rational(10);
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"2.5");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"2.5");
     res = Rational(Number(-1, 0, { 12250 }), Number(1, 0, { 100 })) % Rational(10);
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"-2.5");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"-2.5");
     res = Rational(Number(-1, 0, { 12250 }), Number(1, 0, { 100 })) % Rational(-10);
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"-2.5");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"-2.5");
     res = Rational(Number(1, 0, { 12250 }), Number(1, 0, { 100 })) % Rational(-10);
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"2.5");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"2.5");
     res = Rational(Number(1, 0, { 1000 }), Number(1, 0, { 3 })) % Rational(1);
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"0.33333333");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"0.33333333");
     res = Rational(Number(1, 0, { 1000 }), Number(1, 0, { 3 })) % Rational(-10);
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"3.3333333");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"3.3333333");
     res = Rational(Number(-1, 0, { 1000 }), Number(1, 0, { 3 })) % Rational(-10);
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"-3.3333333");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"-3.3333333");
     res = Rational(834345) % Rational(Number(1, 0, { 103 }), Number(1, 0, { 100 }));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"0.71");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"0.71");
     res = Rational(834345) % Rational(Number(-1, 0, { 103 }), Number(1, 0, { 100 }));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"0.71");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"0.71");
     res = Rational(-834345) % Rational(Number(1, 0, { 103 }), Number(1, 0, { 100 }));
-    VERIFY_ARE_EQUAL(res.ToString(10, FMT_FLOAT, 8), L"-0.71");
+    VERIFY_ARE_EQUAL(res.ToString(10, NumberFormat::Float, 8), L"-0.71");
 }
 }
 ;
