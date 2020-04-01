@@ -3448,7 +3448,7 @@
     <comment>Name for the cube root function. Used by screen readers.</comment>
   </data>
   <data name="Logy" xml:space="preserve">
-    <value>Base Log</value>
+    <value>Log Base</value>
     <comment>Name for the logbasey function. Used by screen readers.</comment>
   </data>
   <data name="AbsoluteValue" xml:space="preserve">
@@ -3520,7 +3520,7 @@
     <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
   <data name="logBaseY.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Log base X</value>
+    <value>Log base Y</value>
     <comment>Screen reader prompt for the logBaseY button</comment>
   </data>
   <data name="logBaseY.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">

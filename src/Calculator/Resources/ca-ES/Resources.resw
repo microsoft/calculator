@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -697,9 +697,9 @@
     <value>Suprimeix</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
   </data>
-  <data name="CopyHistoryMenuItem.Text" xml:space="preserve"> 
-     <value>Copia</value> 
-     <comment>Text string for the Calculator Copy option in the History list context menu</comment> 
+  <data name="CopyHistoryMenuItem.Text" xml:space="preserve">
+    <value>Copia</value>
+    <comment>Text string for the Calculator Copy option in the History list context menu</comment>
   </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
     <value>Suprimeix</value>
@@ -2975,9 +2975,9 @@
     <value>Arrel cúbica</value>
     <comment>Name for the cube root function. Used by screen readers.</comment>
   </data>
-  <data name="Logy" xml:space="preserve">
+  <data name="Logx" xml:space="preserve">
     <value>Logaritme en base</value>
-    <comment>Name for the logbasey function. Used by screen readers.</comment>
+    <comment>Name for the logbasex function. Used by screen readers.</comment>
   </data>
   <data name="AbsoluteValue" xml:space="preserve">
     <value>Valor absolut</value>
@@ -3045,11 +3045,11 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>No s'ha pogut calcular</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>  
+    <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
-  <data name="logBaseY.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Logaritme en base X</value>
-    <comment>Screen reader prompt for the logBaseY button</comment>
+    <comment>Screen reader prompt for the logBaseX button</comment>
   </data>
   <data name="trigButton.Text" xml:space="preserve">
     <value>Trigonometria</value>
