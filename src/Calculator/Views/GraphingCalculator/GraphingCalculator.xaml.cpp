@@ -51,7 +51,6 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Popups;
 using namespace Windows::UI::ViewManagement;
-namespace MUXC = Microsoft::UI::Xaml::Controls;
 
 constexpr auto sc_ViewModelPropertyName = L"ViewModel";
 constexpr auto sc_IsGraphThemeMatchApp = L"IsGraphThemeMatchApp";
@@ -462,9 +461,9 @@ void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventAr
     ViewModel->SelectedEquation->GraphEquation->IsSelected = false;
 }
 
-MUXC::TwoPaneViewPriority GraphingCalculator::GetPanePriority(bool isEquationModeActivated)
+Visibility GraphingCalculator::ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel)
 {
-    return isEquationModeActivated ? MUXC::TwoPaneViewPriority::Pane2 : MUXC::TwoPaneViewPriority::Pane1;
+    return (!isSmallState || isEquationModeActivated ^ isGraphPanel) ? ::Visibility::Visible : ::Visibility::Collapsed;
 }
 
 Platform::String ^ GraphingCalculator::GetInfoForSwitchModeToggleButton(bool isChecked)
