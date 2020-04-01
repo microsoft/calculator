@@ -616,7 +616,6 @@ namespace GraphControl
         if (m_renderMain)
         {
             OnPointerMoved(e);
-            m_renderMain->DrawNearestPoint = true;
 
             e->Handled = true;
         }
@@ -639,6 +638,7 @@ namespace GraphControl
     {
         if (m_renderMain)
         {
+            m_renderMain->DrawNearestPoint = true;
             Point currPosition = e->GetCurrentPoint(/* relativeTo */ this)->Position;
 
             if (m_renderMain->ActiveTracing)

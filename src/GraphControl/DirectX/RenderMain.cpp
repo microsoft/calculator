@@ -86,12 +86,6 @@ namespace GraphControl::DX
             {
                 m_Tracing = false;
             }
-
-            bool wasPointRendered = m_Tracing;
-            if (CanRenderPoint() || wasPointRendered)
-            {
-                RunRenderPassAsync();
-            }
         }
     }
 
