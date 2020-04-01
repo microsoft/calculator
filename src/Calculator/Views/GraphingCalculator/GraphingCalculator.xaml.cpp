@@ -458,7 +458,7 @@ void GraphingCalculator::OnEquationKeyGraphFeaturesRequested(Object ^ sender, Eq
 void GraphingCalculator::OnKeyGraphFeaturesClosed(Object ^ sender, RoutedEventArgs ^ e)
 {
     IsKeyGraphFeaturesVisible = false;
-    ViewModel->SelectedEquation->GraphEquation->IsSelected = false;
+    EquationInputAreaControl->FocusEquationTextBox(ViewModel->SelectedEquation);
 }
 
 Visibility GraphingCalculator::ShouldDisplayPanel(bool isSmallState, bool isEquationModeActivated, bool isGraphPanel)
