@@ -197,12 +197,48 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
     GraphingControl->PlotGraph(false);
 }
 
+wstringstream GraphingCalculator::FormatTraceValue(double min, double max, float pointValue)
+{
+    wstringstream traceValueString;
+    auto roundingNumber = pow(10, floor(log10(max - min)) - 3);
+
+    if (roundingNumber <= 0.0000001 || roundingNumber >= 10000000)
+    { 
+        traceValueString << scientific;
+    }
+    else
+    {
+        traceValueString << fixed;
+    }
+
+    if (roundingNumber < 1)
+    {
+        auto roundingNumberStr = std::to_wstring(roundingNumber);
+        TrimTrailingZeros(roundingNumberStr);
+        auto precisionLength = roundingNumberStr.length() - 2;
+        traceValueString << setprecision(precisionLength) << pointValue;
+    }
+    else
+    {
+        if (roundingNumber > 1)
+        {
+            pointValue = static_cast<float>(round(pointValue / roundingNumber) * roundingNumber);
+        }
+
+        traceValueString << setprecision(0) << pointValue;
+    }
+
+    return traceValueString;
+}
+
 void GraphingCalculator::OnTracePointChanged(Point newPoint)
 {
     wstringstream traceValueString;
 
-    // TODO: The below precision should ideally be dynamic based on the current scale of the graph.
-    traceValueString << "(" << fixed << setprecision(1) << newPoint.X << ", " << fixed << setprecision(1) << newPoint.Y << ")";
+    double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
+    GraphingControl->GetDisplayRanges(&xAxisMin, &xAxisMax, &yAxisMin, &yAxisMax);
+
+    traceValueString << "(" << FormatTraceValue(xAxisMin, xAxisMax, newPoint.X).str() << ", " << FormatTraceValue(yAxisMin, yAxisMax, newPoint.Y).str() << ")";
 
     TraceValue->Text = ref new String(traceValueString.str().c_str());
 
