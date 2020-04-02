@@ -242,60 +242,6 @@ namespace CalculatorApp
                 }
             }
 
-            property int TokenPosition
-            {
-                int get()
-                {
-                    return m_tokenPosition;
-                }
-                void set(int value)
-                {
-                    m_tokenPosition = value;
-                }
-            }
-
-            property Platform::String^ SelectedExpressionLastData
-            {
-                Platform::String^ get() { return m_selectedExpressionLastData; }
-                void set(Platform::String^ value) { m_selectedExpressionLastData = value; }
-            }
-
-            property bool KeyPressed
-            {
-                bool get()
-                {
-                    return m_keyPressed;
-                }
-                void set(bool value)
-                {
-                    m_keyPressed = value;
-                }
-            }
-
-            property bool IsOperandUpdatedUsingViewModel
-            {
-                bool get()
-                {
-                    return m_operandUpdated;
-                }
-                void set(bool value)
-                {
-                    m_operandUpdated = value;
-                }
-            }
-
-            property bool IsOperandTextCompletelySelected
-            {
-                bool get()
-                {
-                    return m_completeTextSelection;
-                }
-                void set(bool value)
-                {
-                    m_completeTextSelection = value;
-                }
-            }
-
             // Used by unit tests
             void ResetCalcManager(bool clearMemory);
             void SendCommandToCalcManager(int command);

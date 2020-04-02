@@ -211,12 +211,8 @@ namespace CalculatorFunctionalTests
             m_historyViewModel->ReloadHistory(ViewMode::Scientific);
             auto itemAfterSerializeDeserialize = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(0));
             VERIFY_IS_TRUE(
-                (itemBeforeSerializeDeserialize->Expression == itemAfterSerializeDeserialize->Expression)
-                && (itemBeforeSerializeDeserialize->Result == itemAfterSerializeDeserialize->Result)
-                //                && (itemBeforeSerializeDeserialize->historyItemVector.spCommands ==
-                //                itemAfterSerializeDeserialize->historyItemVector.spCommands)
-                //              && (itemBeforeSerializeDeserialize->historyItemVector.spTokens == itemAfterSerializeDeserialize->historyItemVector.spTokens)
-            );
+                itemBeforeSerializeDeserialize->Expression == itemAfterSerializeDeserialize->Expression
+                && itemBeforeSerializeDeserialize->Result == itemAfterSerializeDeserialize->Result);
             Cleanup();
         }
 
