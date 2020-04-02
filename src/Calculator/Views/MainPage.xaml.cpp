@@ -427,7 +427,11 @@ void MainPage::OnNavPaneOpened(_In_ MUXC::NavigationView ^ sender, _In_ Object ^
 
 void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
-    KeyboardShortcutManager::HonorShortcuts(true);
+    if (Model->Mode != ViewMode::Graphing)
+    {
+        KeyboardShortcutManager::HonorShortcuts(true);
+    }
+
     this->SetDefaultFocus();
 }
 
