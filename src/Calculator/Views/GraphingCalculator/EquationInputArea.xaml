@@ -610,7 +610,7 @@
                                                     <MenuFlyoutSeparator/>
                                                     <MenuFlyoutItem x:Name="FunctionAnalysisMenuItem">
                                                         <MenuFlyoutItem.Icon>
-                                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE3B5;"/>
+                                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE945;"/>
                                                         </MenuFlyoutItem.Icon>
                                                     </MenuFlyoutItem>
                                                     <MenuFlyoutItem x:Name="ChangeFunctionStyleMenuItem">
@@ -636,7 +636,7 @@
                                                 Style="{ThemeResource ButtonRevealStyle}"
                                                 FontFamily="{StaticResource CalculatorFontFamily}"
                                                 AutomationProperties.AccessibilityView="Raw"
-                                                Content="&#xE3B5;"
+                                                Content="&#xE945;"
                                                 IsTabStop="False"
                                                 Visibility="Collapsed">
                                             <Button.Resources>
