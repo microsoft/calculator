@@ -3539,6 +3539,10 @@
     <value>Inequalities</value>
     <comment>Displayed on the button that contains a flyout for the inequality functions.</comment>
   </data>
+  <data name="inequalityButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Inequalities</value>
+    <comment>Screen reader prompt for the Inequalities button</comment>
+  </data>
   <data name="bitwiseButton.Text" xml:space="preserve">
     <value>Bitwise</value>
     <comment>Displayed on the button that contains a flyout for the bitwise functions in programmer mode.</comment>
@@ -3842,14 +3846,6 @@
   <data name="GraphingCalculatorModeText" xml:space="preserve">
     <value>Graphing</value>
     <comment>Name of the Graphing mode of the Calculator app. Displayed in the navigation menu.</comment>
-  </data>
-  <data name="graphingEqualButton.[using:CalculatorApp.Common]KeyboardShortcutManager.Character" xml:space="preserve">
-    <value>=</value>
-    <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
-  </data>
-  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Equals</value>
-    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
   </data>
   <data name="plotButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKey" xml:space="preserve">
     <value>Enter</value>
@@ -4613,5 +4609,41 @@
   <data name="KGFEquationTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Function Analysis Equation Box</value>
     <comment>This is the automation name text for the equation box in the function analsis panel</comment>
+  </data>
+  <data name="lessThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Less than</value>
+    <comment>Screen reader prompt for the Less than button</comment>
+  </data>
+  <data name="lessThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Less than or equal</value>
+    <comment>Screen reader prompt for the Less than or equal button</comment>
+  </data>
+  <data name="equalsFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Equal</value>
+    <comment>Screen reader prompt for the Equal button</comment>
+  </data>
+  <data name="greaterThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Greater than or equal</value>
+    <comment>Screen reader prompt for the Greater than or equal button</comment>
+  </data>
+  <data name="greaterThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Greater than</value>
+    <comment>Screen reader prompt for the Greater than button</comment>
+  </data>
+  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Equals</value>
+    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
+  </data>
+    <data name="xButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>X</value>
+    <comment>Screen reader prompt for the X button on the graphing calculator operator keypad</comment>
+  </data>
+    <data name="yButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Y</value>
+    <comment>Screen reader prompt for the Y button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="submitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Submit</value>
+    <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
   </data>
 </root>
