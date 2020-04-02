@@ -18,8 +18,8 @@ public
         Variable(double value)
             : m_Value{ value }
             , m_Step{ 0.1 }
-            , m_Min{ 0.0 }
-            , m_Max{ 2.0 }
+            , m_Min{ -5.0 }
+            , m_Max{ 5.0 }
         {
         }
     };
