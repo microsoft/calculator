@@ -1198,7 +1198,7 @@
                                        IsTabStop="false"/>
 
             <controls:CalculatorButton x:Name="EqualButton"
-                                       x:Uid="graphingEqualButton"
+                                       x:Uid="equalButton"
                                        Grid.Row="3"
                                        Grid.Column="3"
                                        Style="{StaticResource SymbolOperatorButtonStyle}"

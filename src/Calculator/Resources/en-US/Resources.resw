@@ -4630,11 +4630,7 @@
     <value>Greater than</value>
     <comment>Screen reader prompt for the Greater than button</comment>
   </data>
-  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Equals</value>
-    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
-  </data>
-    <data name="xButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="xButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>X</value>
     <comment>Screen reader prompt for the X button on the graphing calculator operator keypad</comment>
   </data>
