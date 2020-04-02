@@ -85,7 +85,7 @@ void CCalcEngine::DisplayNum(void)
     //  called.
     //
     if (m_bRecord || gldPrevious.value != m_currentVal || gldPrevious.precision != m_precision || gldPrevious.radix != m_radix || gldPrevious.nFE != (int)m_nFE
-        || gldPrevious.bUseSep != true || gldPrevious.numwidth != m_numwidth || gldPrevious.fIntMath != m_fIntegerMode || gldPrevious.bRecord != m_bRecord)
+        || !gldPrevious.bUseSep || gldPrevious.numwidth != m_numwidth || gldPrevious.fIntMath != m_fIntegerMode || gldPrevious.bRecord != m_bRecord)
     {
         gldPrevious.precision = m_precision;
         gldPrevious.radix = m_radix;
