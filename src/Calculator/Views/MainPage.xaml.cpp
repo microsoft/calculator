@@ -129,6 +129,8 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         ViewMode newValue = m_model->Mode;
         ViewMode previousMode = m_model->PreviousMode;
 
+        KeyboardShortcutManager::HonorShortcuts(true);
+
         if (newValue == ViewMode::Standard)
         {
             EnsureCalculator();
@@ -171,6 +173,7 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         else if (newValue == ViewMode::Graphing)
         {
             EnsureGraphingCalculator();
+            KeyboardShortcutManager::HonorShortcuts(false);
         }
         else if (NavCategory::IsConverterViewMode(newValue))
         {
