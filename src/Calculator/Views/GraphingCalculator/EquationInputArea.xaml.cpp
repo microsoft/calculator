@@ -167,24 +167,17 @@ void EquationInputArea::FocusEquationTextBox(EquationViewModel ^ equation)
     {
         return;
     }
-    auto container = EquationInputList->ContainerFromIndex(index);
-    if (container == nullptr)
+    auto container = static_cast<UIElement ^>(EquationInputList->ContainerFromIndex(index));
+    if (container != nullptr)
     {
-        return;
-    }
-    auto equationTextBox = dynamic_cast<EquationTextBox ^>(container);
-    if (equationTextBox != nullptr)
-    {
-        equationTextBox->FocusTextBox();
-    }
-    else
-    {
+        container->StartBringIntoView();  
+
         auto equationInput = VisualTree::FindDescendantByName(container, "EquationInputButton");
         if (equationInput == nullptr)
         {
             return;
         }
-        equationTextBox = dynamic_cast<EquationTextBox ^>(equationInput);
+        auto equationTextBox = dynamic_cast<EquationTextBox ^>(equationInput);
         if (equationTextBox != nullptr)
         {
             equationTextBox->FocusTextBox();

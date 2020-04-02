@@ -39,6 +39,8 @@ public
 
         static Windows::UI::Xaml::Media::SolidColorBrush
             ^ ToSolidColorBrush(Windows::UI::Color color) { return ref new Windows::UI::Xaml::Media::SolidColorBrush(color); }
+
+        void FocusEquationTextBox(ViewModel::EquationViewModel ^ equation);
     private:
         void OnPropertyChanged(Platform::String ^ propertyName);
         void OnEquationsPropertyChanged();
@@ -51,7 +53,6 @@ public
 
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void ReloadAvailableColors(bool isHighContrast, bool reassignColors);
-        void FocusEquationTextBox(ViewModel::EquationViewModel ^ equation);
         void OnColorValuesChanged(Windows::UI::ViewManagement::UISettings ^ sender, Platform::Object ^ args);
 
         void EquationTextBox_RemoveButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
