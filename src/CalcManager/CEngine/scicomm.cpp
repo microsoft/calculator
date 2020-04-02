@@ -177,7 +177,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             return;
         }
 
-        if (!m_input.TryAddDigit(iValue, m_radix, m_fIntegerMode, m_maxDecimalValueStrings[m_numwidth], m_dwWordBitWidth, m_cIntDigitsSav))
+        if (!m_input.TryAddDigit(iValue, m_radix, m_fIntegerMode, GetMaxDecimalValueString(), m_dwWordBitWidth, m_cIntDigitsSav))
         {
             HandleErrorCommand(wParam);
             HandleMaxDigitsReached();
@@ -619,7 +619,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     case IDM_OCT:
     case IDM_BIN:
     {
-        SetRadixTypeAndNumWidth((RADIX_TYPE)(wParam - IDM_HEX), (NUM_WIDTH)-1);
+        SetRadixTypeAndNumWidth((RadixType)(wParam - IDM_HEX), (NUM_WIDTH)-1);
         m_HistoryCollector.UpdateHistoryExpression(m_radix, m_precision);
         break;
     }
@@ -635,20 +635,20 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         }
 
         // Compat. mode BaseX: Qword, Dword, Word, Byte
-        SetRadixTypeAndNumWidth((RADIX_TYPE)-1, (NUM_WIDTH)(wParam - IDM_QWORD));
+        SetRadixTypeAndNumWidth((RadixType)-1, (NUM_WIDTH)(wParam - IDM_QWORD));
         break;
 
     case IDM_DEG:
     case IDM_RAD:
     case IDM_GRAD:
-        m_angletype = static_cast<ANGLE_TYPE>(wParam - IDM_DEG);
+        m_angletype = static_cast<AngleType>(wParam - IDM_DEG);
         break;
 
     case IDC_SIGN:
     {
         if (m_bRecord)
         {
-            if (m_input.TryToggleSign(m_fIntegerMode, m_maxDecimalValueStrings[m_numwidth]))
+            if (m_input.TryToggleSign(m_fIntegerMode, GetMaxDecimalValueString()))
             {
                 DisplayNum();
             }
@@ -766,7 +766,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         break;
     case IDC_FE:
         // Toggle exponential notation display.
-        m_nFE = NUMOBJ_FMT(!(int)m_nFE);
+        m_nFE = NumberFormat(!(int)m_nFE);
         DisplayNum();
         break;
 
@@ -961,7 +961,7 @@ static const std::unordered_map<int, FunctionNameElement> operatorStringTable =
     { IDC_MOD, { SIDS_MOD, L"", L"", L"", L"", L"", SIDS_PROGRAMMER_MOD } },
 };
 
-wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE angletype)
+wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, AngleType angletype)
 {
     // Try to lookup the ID in the UFNE table
     wstring ids = L"";
@@ -969,7 +969,7 @@ wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE
     if (auto pair = operatorStringTable.find(nOpCode); pair != operatorStringTable.end())
     {
         const FunctionNameElement& element = pair->second;
-        if (!element.hasAngleStrings || ANGLE_DEG == angletype)
+        if (!element.hasAngleStrings || AngleType::Degrees == angletype)
         {
             if (fInv)
             {
@@ -981,7 +981,7 @@ wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE
                 ids = element.degreeString;
             }
         }
-        else if (ANGLE_RAD == angletype)
+        else if (AngleType::Radians == angletype)
         {
             if (fInv)
             {
@@ -992,7 +992,7 @@ wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE
                 ids = element.radString;
             }
         }
-        else if (ANGLE_GRAD == angletype)
+        else if (AngleType::Gradians == angletype)
         {
             if (fInv)
             {
@@ -1094,7 +1094,7 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
             if ((radix == 10) && fMsb)
             {
                 // If high bit is set, then get the decimal number in negative 2's complement form.
-                tempRat = -((tempRat ^ m_chopNumbers[m_numwidth]) + 1);
+                tempRat = -((tempRat ^ GetChopNumber()) + 1);
             }
 
             result = tempRat.ToString(radix, m_nFE, m_precision);

@@ -7,12 +7,6 @@
 
 namespace CalculationManager
 {
-    enum CALCULATOR_MODE
-    {
-        CM_STD = 0,
-        CM_SCI,
-    };
-
     struct HISTORYITEMVECTOR
     {
         std::shared_ptr<std::vector<std::pair<std::wstring, int>>> spTokens;
