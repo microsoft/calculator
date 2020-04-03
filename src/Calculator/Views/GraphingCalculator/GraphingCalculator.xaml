@@ -293,6 +293,7 @@
             <Color x:Key="DarkThemeGridLinesColor">#4F4F4F</Color>
 
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
+            <converters:BooleanNegationConverter x:Name="BooleanNegationConverter"/>
 
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
@@ -505,7 +506,8 @@
                                   LostFocus="GraphingControl_LostFocus"
                                   RequestedTheme="Light"
                                   UseSystemFocusVisuals="True"
-                                  VariablesUpdated="GraphingControl_VariablesUpdated">
+                                  VariablesUpdated="GraphingControl_VariablesUpdated"
+                                  IsKeepCurrentView="{x:Bind IsAutoBestFit, Mode=OneWay, Converter={StaticResource BooleanNegationConverter}}">
                 <graphControl:Grapher.ContextFlyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem x:Uid="GraphCopyMenuItem"
@@ -610,19 +612,28 @@
                         </RepeatButton.KeyboardAccelerators>
                     </RepeatButton>
 
-                    <Button x:Uid="zoomResetButton"
+                    <ToggleButton x:Uid="graphViewButton"
                             MinHeight="40"
-                            Style="{ThemeResource ThemedGraphButtonStyle}"
+                            Style="{ThemeResource ThemedGraphToggleButtonStyle}"
                             contract7Present:CornerRadius="{ThemeResource BottomButtonCornerRadius}"
-                            AutomationProperties.AutomationId="zoomResetButton"
-                            Command="{x:Bind ZoomResetButtonPressed, Mode=OneTime}">
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
+                            AutomationProperties.AutomationId="graphViewButton"
+                            IsChecked="{x:Bind IsAutoBestFit, Mode=TwoWay}"
+                            Click="GraphViewButton_Click">
+                        <ToggleButton.Content>
+                            <Grid>
+                                <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                   FontSize="14"
-                                  Glyph="&#xE895;"/>
-                        <Button.KeyboardAccelerators>
+                                  Glyph="&#xE45E;"/>
+                                <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
+                                  FontSize="14"
+                                  Glyph="&#xE45D;"
+                                  Visibility="{x:Bind IsAutoBestFit, Mode=OneWay}"/>
+                            </Grid>
+                        </ToggleButton.Content>
+                        <ToggleButton.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
-                        </Button.KeyboardAccelerators>
-                    </Button>
+                        </ToggleButton.KeyboardAccelerators>
+                    </ToggleButton>
                 </StackPanel>
             </Border>
             <Border x:Name="TraceValuePopup"

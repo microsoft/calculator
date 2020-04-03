@@ -41,7 +41,7 @@ namespace CalculatorApp
         Share,
         ZoomIn,
         ZoomOut,
-        ZoomReset
+        GraphView
     };
 
     public enum class LineStyleType
@@ -70,7 +70,7 @@ namespace CalculatorApp
         void LogNavBarOpened();
         void LogError(CalculatorApp::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString);
         void LogShowHideButtonClicked(bool isHideButton);
-        void LogGraphButtonClicked(GraphButton buttonName);
+        void LogGraphButtonClicked(GraphButton buttonName, Platform::String ^ buttonValue);
         void LogGraphLineStyleChanged(LineStyleType style);
         void LogVariableChanged(Platform::String ^ inputChangedType, Platform::String ^ variableName);
         void LogVariableSettingsChanged(Platform::String ^ setting);

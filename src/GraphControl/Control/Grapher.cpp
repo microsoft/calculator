@@ -37,6 +37,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, AxesColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GraphBackground);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GridLinesColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, LineWidth);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, IsKeepCurrentView);
 
 namespace
 {
@@ -138,7 +139,7 @@ namespace GraphControl
             m_renderMain->BackgroundColor = GraphBackground;
         }
 
-        TryUpdateGraph(false);
+        TryUpdateGraph();
     }
 
     void Grapher::OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue)
@@ -174,7 +175,7 @@ namespace GraphControl
                 ref new EquationChangedEventHandler(this, &Grapher::OnEquationLineEnabledChanged);
         }
 
-        PlotGraph(false);
+        PlotGraph();
     }
 
     void Grapher::OnEquationChanged(Equation ^ equation)
@@ -183,7 +184,7 @@ namespace GraphControl
         equation->HasGraphError = false;
         equation->IsValidated = false;
 
-        TryPlotGraph(false, true);
+        TryPlotGraph(true);
     }
 
     void Grapher::OnEquationStyleChanged(Equation ^)
@@ -208,16 +209,7 @@ namespace GraphControl
             return;
         }
 
-        bool keepCurrentView = true;
-
-        // If the equation has changed, the IsLineEnabled state is reset.
-        // This checks if the equation has been reset and sets keepCurrentView to false in this case.
-        if (!equation->HasGraphError && !equation->IsValidated && equation->IsLineEnabled)
-        {
-            keepCurrentView = false;
-        }
-
-        PlotGraph(keepCurrentView);
+        PlotGraph();
     }
 
     KeyGraphFeaturesInfo ^ Grapher::AnalyzeEquation(Equation ^ equation)
@@ -252,14 +244,14 @@ namespace GraphControl
         return KeyGraphFeaturesInfo::Create(CalculatorApp::AnalysisErrorType::AnalysisCouldNotBePerformed);
     }
 
-    void Grapher::PlotGraph(bool keepCurrentView)
+    void Grapher::PlotGraph()
     {
-        TryPlotGraph(keepCurrentView, false);
+        TryPlotGraph(false);
     }
 
-    task<void> Grapher::TryPlotGraph(bool keepCurrentView, bool shouldRetry)
+    task<void> Grapher::TryPlotGraph(bool shouldRetry)
     {
-        if (co_await TryUpdateGraph(keepCurrentView))
+        if (co_await TryUpdateGraph())
         {
             SetEquationsAsValid();
         }
@@ -270,7 +262,7 @@ namespace GraphControl
             // If we failed to plot the graph, try again after the bad equations are flagged.
             if (shouldRetry)
             {
-                co_await TryUpdateGraph(keepCurrentView);
+                co_await TryUpdateGraph();
             }
         }
 
@@ -296,7 +288,7 @@ namespace GraphControl
         GraphPlottedEvent(this, ref new RoutedEventArgs());
     }
 
-    task<bool> Grapher::TryUpdateGraph(bool keepCurrentView)
+    task<bool> Grapher::TryUpdateGraph()
     {
         optional<vector<shared_ptr<IEquation>>> initResult = nullopt;
         bool successful = false;
@@ -363,7 +355,7 @@ namespace GraphControl
 
             if (graphExpression = m_solver->ParseInput(request, m_errorCode, m_errorType))
             {
-                initResult = TryInitializeGraph(keepCurrentView, graphExpression.get());
+                initResult = TryInitializeGraph(graphExpression.get());
 
                 if (initResult != nullopt)
                 {
@@ -594,7 +586,7 @@ namespace GraphControl
     void Grapher::OnForceProportionalAxesPropertyChanged(bool /*oldValue*/, bool newValue)
     {
         m_calculatedForceProportional = newValue;
-        TryUpdateGraph(false);
+        TryUpdateGraph();
     }
 
     void Grapher::OnUseCommaDecimalSeperatorPropertyChanged(bool oldValue, bool newValue)
@@ -1084,9 +1076,9 @@ void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
     }
 }
 
-optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bool keepCurrentView, const IExpression* graphingExp)
+optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(const IExpression* graphingExp)
 {
-    if (keepCurrentView)
+    if (IsKeepCurrentView)
     {
         double xMin, xMax, yMin, yMax;
         m_graph->GetRenderer()->GetDisplayRanges(xMin, xMax, yMin, yMax);

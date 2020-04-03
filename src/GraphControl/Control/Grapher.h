@@ -51,8 +51,9 @@ public
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, AxesColor, Windows::UI::Colors::Transparent);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, GraphBackground, Windows::UI::Colors::Transparent);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, GridLinesColor, Windows::UI::Colors::Transparent);
-
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, LineWidth, 2.0);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT(bool, IsKeepCurrentView, false);
+
         // Pass active tracing turned on or off down to the renderer
         property bool ActiveTracing
         {
@@ -116,8 +117,7 @@ public
         /// <summary>
         /// Draw the graph. Call this method if you add or modify an equation.
         /// </summary>
-        /// <param name="keepCurrentView">Force the graph control to not pan or zoom to adapt the view.</param>
-        void PlotGraph(bool keepCurrentView);
+        void PlotGraph();
 
         GraphControl::KeyGraphFeaturesInfo ^ AnalyzeEquation(GraphControl::Equation ^ equation);
 
@@ -131,7 +131,7 @@ public
                 {
                     m_solver->EvalOptions().SetTrigUnitMode((Graphing::EvalTrigUnitMode)value);
                     m_trigUnitsChanged = true;
-                    PlotGraph(true);
+                    PlotGraph();
                 }
             }
 
@@ -283,8 +283,8 @@ public
         void OnEquationChanged(Equation ^ equation);
         void OnEquationStyleChanged(Equation ^ equation);
         void OnEquationLineEnabledChanged(Equation ^ equation);
-        concurrency::task<bool> TryUpdateGraph(bool keepCurrentView);
-        concurrency::task<void> TryPlotGraph(bool keepCurrentView, bool shouldRetry);
+        concurrency::task<bool> TryUpdateGraph();
+        concurrency::task<void> TryPlotGraph(bool shouldRetry);
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetGraphableEquations();
         void SetGraphArgs(std::shared_ptr<Graphing::IGraph> graph);
@@ -302,7 +302,7 @@ public
 
         void SetEquationsAsValid();
         void SetEquationErrors();
-        std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitializeGraph(bool keepCurrentView, _In_ const Graphing::IExpression* graphingExp = nullptr);
+        std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitializeGraph(_In_ const Graphing::IExpression* graphingExp = nullptr);
 
     private:
         DX::RenderMain ^ m_renderMain = nullptr;

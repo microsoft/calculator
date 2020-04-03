@@ -25,11 +25,11 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         DEPENDENCY_PROPERTY_OWNER(GraphingCalculator);
         COMMAND_FOR_METHOD(ZoomOutButtonPressed, GraphingCalculator::OnZoomOutCommand);
         COMMAND_FOR_METHOD(ZoomInButtonPressed, GraphingCalculator::OnZoomInCommand);
-        COMMAND_FOR_METHOD(ZoomResetButtonPressed, GraphingCalculator::OnZoomResetCommand);
         OBSERVABLE_PROPERTY_R(bool, IsKeyGraphFeaturesVisible);
         DEPENDENCY_PROPERTY(bool, IsSmallState);
         DEPENDENCY_PROPERTY(Platform::String ^, GraphControlAutomationName);
         OBSERVABLE_PROPERTY_R(bool, IsMatchAppTheme);
+        OBSERVABLE_PROPERTY_RW(bool, IsAutoBestFit);
 
         property CalculatorApp::ViewModel::GraphingCalculatorViewModel^ ViewModel
         {
@@ -53,7 +53,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
 
         void OnZoomInCommand(Object ^ parameter);
         void OnZoomOutCommand(Object ^ parameter);
-        void OnZoomResetCommand(Object ^ parameter);
+        void OnGraphViewCommand(Object ^ parameter);
 
         void OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
@@ -105,6 +105,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void OnEquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);
         void GraphMenuFlyoutItem_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);
+        void GraphViewButton_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 
 }

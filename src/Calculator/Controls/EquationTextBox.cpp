@@ -272,7 +272,7 @@ void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e
         IsEquationLineDisabled = false;
     }
 
-    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::RemoveFunction);
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::RemoveFunction, L"");
 
     VisualStateManager::GoToState(this, "Normal", true);
 }
@@ -282,7 +282,7 @@ void EquationTextBox::OnColorChooserButtonClicked(Object ^ sender, RoutedEventAr
     if (ColorChooserFlyout != nullptr && m_richEditBox != nullptr)
     {
         ColorChooserFlyout->ShowAt(m_richEditBox);
-        TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::StylePicker);
+        TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::StylePicker, L"");
     }
 }
 

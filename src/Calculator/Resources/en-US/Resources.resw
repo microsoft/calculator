@@ -3871,17 +3871,25 @@
     <value>^</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
-  <data name="zoomResetButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
+  <data name="graphViewButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyControlChord" xml:space="preserve">
     <value>Home</value>
-    <comment>{Locked}This is the shortcut for the zoom reset button.</comment>
+    <comment>{Locked}This is the shortcut for the graph view button.</comment>
   </data>
-  <data name="zoomResetButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Reset View (Ctrl + 0)</value>
-    <comment>This is the tool tip automation name for the Calculator zoom reset button.</comment>
+  <data name="graphViewButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Refresh view automatically (Ctrl + 0)</value>
+    <comment>This is the tool tip automation name for the Calculator graph view button.</comment>
   </data>
-  <data name="zoomResetButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Reset View</value>
-    <comment>Screen reader prompt for the reset zoom button.</comment>
+  <data name="graphViewButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Graph View</value>
+    <comment>Screen reader prompt for the graph view button.</comment>
+  </data>
+  <data name="GraphViewAutomaticBestFitAnnouncement" xml:space="preserve">
+    <value>Automatic Best Fit</value>
+    <comment>Announcement used in Graphing Calculator when button is clicked and automatic best fit is set</comment>
+  </data>
+    <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
+    <value>Manual Adjustment</value>
+    <comment>Announcement used in Graphing Calculator when button is clicked and manual adjustment is set</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Zoom In (Ctrl + plus)</value>
