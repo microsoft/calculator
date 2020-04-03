@@ -56,19 +56,19 @@ void GraphingSettingsViewModel::InitRanges()
     m_YMaxValue = yMax;
     auto valueStr = to_wstring(m_XMinValue);
     TrimTrailingZeros(valueStr);
-    m_XMin = ref new String(valueStr.c_str());
+    XMin = ref new String(valueStr.c_str());
 
     valueStr = to_wstring(m_XMaxValue);
     TrimTrailingZeros(valueStr);
-    m_XMax = ref new String(valueStr.c_str());
+    XMax = ref new String(valueStr.c_str());
 
     valueStr = to_wstring(m_YMinValue);
     TrimTrailingZeros(valueStr);
-    m_YMin = ref new String(valueStr.c_str());
+    YMin = ref new String(valueStr.c_str());
 
     valueStr = to_wstring(m_YMaxValue);
     TrimTrailingZeros(valueStr);
-    m_YMax = ref new String(valueStr.c_str());
+    YMax = ref new String(valueStr.c_str());
 
     m_dontUpdateDisplayRange = false;
 }
