@@ -39,6 +39,8 @@ public
 
         static Windows::UI::Xaml::Media::SolidColorBrush
             ^ ToSolidColorBrush(Windows::UI::Color color) { return ref new Windows::UI::Xaml::Media::SolidColorBrush(color); }
+
+        void FocusEquationTextBox(ViewModel::EquationViewModel ^ equation);
     private:
         void OnPropertyChanged(Platform::String ^ propertyName);
         void OnEquationsPropertyChanged();
@@ -51,7 +53,6 @@ public
 
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void ReloadAvailableColors(bool isHighContrast, bool reassignColors);
-        void FocusEquationTextBox(ViewModel::EquationViewModel ^ equation);
         void OnColorValuesChanged(Windows::UI::ViewManagement::UISettings ^ sender, Platform::Object ^ args);
 
         void EquationTextBox_RemoveButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
@@ -66,11 +67,15 @@ public
         void TextBoxLosingFocus(Windows::UI::Xaml::Controls::TextBox ^ textbox, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
         void TextBoxKeyDown(Windows::UI::Xaml::Controls::TextBox ^ textbox, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
         void SubmitTextbox(Windows::UI::Xaml::Controls::TextBox ^ textbox);
+        void VariableAreaClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void VariableAreaButtonTapped(Platform::Object ^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void VariableAreaTapped(Platform::Object ^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^ e);
         void EquationTextBox_EquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);
         void Slider_ValueChanged(Platform::Object ^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs ^ e);
 
         CalculatorApp::ViewModel::EquationViewModel ^ GetViewModelFromEquationTextBox(Platform::Object ^ sender);
+
+        void ToggleVariableArea(CalculatorApp::ViewModel::VariableViewModel ^ selectedVariableViewModel);
 
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         Windows::UI::ViewManagement::UISettings ^ m_uiSettings;

@@ -460,7 +460,7 @@ namespace CalcEngine
         return !(lhs < rhs);
     }
 
-    wstring Rational::ToString(uint32_t radix, NUMOBJ_FMT fmt, int32_t precision) const
+    wstring Rational::ToString(uint32_t radix, NumberFormat fmt, int32_t precision) const
     {
         PRAT rat = this->ToPRAT();
         wstring result{};

@@ -31,14 +31,13 @@
 // The real exports follows later
 
 // This is expected to be in same order as IDM_QWORD, IDM_DWORD etc.
-enum eNUM_WIDTH
+enum class NUM_WIDTH
 {
     QWORD_WIDTH, // Number width of 64 bits mode (default)
     DWORD_WIDTH, // Number width of 32 bits mode
     WORD_WIDTH,  // Number width of 16 bits mode
     BYTE_WIDTH   // Number width of 16 bits mode
 };
-typedef enum eNUM_WIDTH NUM_WIDTH;
 static constexpr size_t NUM_WIDTH_LENGTH = 4;
 
 namespace CalculationManager
@@ -106,7 +105,7 @@ public:
     {
         return GetString(IdStrFromCmdId(nOpCode));
     }
-    static std::wstring_view OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE angletype);
+    static std::wstring_view OpCodeToUnaryString(int nOpCode, bool fInv, AngleType angletype);
     static std::wstring_view OpCodeToBinaryString(int nOpCode, bool isIntegerMode);
 
 private:
@@ -117,11 +116,11 @@ private:
     int m_nOpCode;     /* ID value of operation.                       */
     int m_nPrevOpCode; // opcode which computed the number in m_currentVal. 0 if it is already bracketed or plain number or
     // if it hasn't yet been computed
-    bool m_bChangeOp;              /* Flag for changing operation.       */
+    bool m_bChangeOp;              // Flag for changing operation
     bool m_bRecord;                // Global mode: recording or displaying
     bool m_bSetCalcState;          // Flag for setting the engine result state
     CalcEngine::CalcInput m_input; // Global calc input object for decimal strings
-    eNUMOBJ_FMT m_nFE;             /* Scientific notation conversion flag.       */
+    NumberFormat m_nFE;              // Scientific notation conversion flag
     CalcEngine::Rational m_maxTrigonometricNum;
     std::unique_ptr<CalcEngine::Rational> m_memoryValue; // Current memory value.
 
@@ -148,7 +147,7 @@ private:
     std::array<int, MAXPRECDEPTH> m_nPrecOp; /* Holding array for precedence  operations.    */
     size_t m_precedenceOpCount;              /* Current number of precedence ops in holding. */
     int m_nLastCom;                          // Last command entered.
-    ANGLE_TYPE m_angletype;                  // Current Angle type when in dec mode. one of deg, rad or grad
+    AngleType m_angletype;                  // Current Angle type when in dec mode. one of deg, rad or grad
     NUM_WIDTH m_numwidth;                    // one of qword, dword, word or byte mode.
     int32_t m_dwWordBitWidth;                // # of bits in currently selected word size
 
@@ -179,15 +178,17 @@ private:
     CalcEngine::Rational TruncateNumForIntMath(CalcEngine::Rational const& rat);
     CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op);
     CalcEngine::Rational DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs);
-    void SetRadixTypeAndNumWidth(RADIX_TYPE radixtype, NUM_WIDTH numwidth);
+    void SetRadixTypeAndNumWidth(RadixType radixtype, NUM_WIDTH numwidth);
     int32_t DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
-    uint32_t NRadixFromRadixType(RADIX_TYPE radixtype);
+    uint32_t NRadixFromRadixType(RadixType radixtype);
     double GenerateRandomNumber();
 
     bool TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno);
     void CheckAndAddLastBinOpToHistory(bool addToHistory = true);
 
     void InitChopNumbers();
+    CalcEngine::Rational GetChopNumber() const;
+    std::wstring GetMaxDecimalValueString() const;
 
     static void LoadEngineStrings(CalculationManager::IResourceProvider& resourceProvider);
     static int IdStrFromCmdId(int id)

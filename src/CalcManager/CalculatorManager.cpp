@@ -33,6 +33,7 @@ namespace CalculationManager
         , m_savedDegreeMode(Command::CommandDEG)
         , m_pStdHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
         , m_pSciHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
+        , m_pHistory(nullptr)
     {
         CCalcEngine::InitialOneTimeOnlySetup(*m_resourceProvider);
     }
@@ -551,9 +552,9 @@ namespace CalculationManager
         return m_pHistory->GetHistory();
     }
 
-    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems(_In_ CALCULATOR_MODE mode)
+    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems(_In_ CalculatorMode mode)
     {
-        return (mode == CM_STD) ? m_pStdHistory->GetHistory() : m_pSciHistory->GetHistory();
+        return (mode == CalculatorMode::Standard) ? m_pStdHistory->GetHistory() : m_pSciHistory->GetHistory();
     }
 
     shared_ptr<HISTORYITEM> const& CalculatorManager::GetHistoryItem(_In_ unsigned int uIdx)
@@ -576,20 +577,20 @@ namespace CalculationManager
         m_pHistory->ClearHistory();
     }
 
-    void CalculatorManager::SetRadix(RADIX_TYPE iRadixType)
+    void CalculatorManager::SetRadix(RadixType iRadixType)
     {
         switch (iRadixType)
         {
-        case RADIX_TYPE::HEX_RADIX:
+        case RadixType::Hex:
             m_currentCalculatorEngine->ProcessCommand(IDC_HEX);
             break;
-        case RADIX_TYPE::DEC_RADIX:
+        case RadixType::Decimal:
             m_currentCalculatorEngine->ProcessCommand(IDC_DEC);
             break;
-        case RADIX_TYPE::OCT_RADIX:
+        case RadixType::Octal:
             m_currentCalculatorEngine->ProcessCommand(IDC_OCT);
             break;
-        case RADIX_TYPE::BIN_RADIX:
+        case RadixType::Binary:
             m_currentCalculatorEngine->ProcessCommand(IDC_BIN);
             break;
         default:
@@ -623,16 +624,16 @@ namespace CalculationManager
         return m_currentDegreeMode;
     }
 
-    void CalculatorManager::SetHistory(_In_ CALCULATOR_MODE eMode, _In_ vector<shared_ptr<HISTORYITEM>> const& history)
+    void CalculatorManager::SetHistory(_In_ CalculatorMode eMode, _In_ vector<shared_ptr<HISTORYITEM>> const& history)
     {
         CalculatorHistory* pHistory = nullptr;
 
         switch (eMode)
         {
-        case CM_STD:
+        case CalculatorMode::Standard:
             pHistory = m_pStdHistory.get();
             break;
-        case CM_SCI:
+        case CalculatorMode::Scientific:
             pHistory = m_pSciHistory.get();
             break;
         }
@@ -669,7 +670,7 @@ namespace CalculationManager
 
     bool CalculatorManager::IsEngineRecording()
     {
-        return m_currentCalculatorEngine->FInRecordingState() ? true : false;
+        return m_currentCalculatorEngine->FInRecordingState();
     }
 
     bool CalculatorManager::IsInputEmpty()

@@ -65,7 +65,7 @@ namespace CalculatorFunctionalTests
             return !(localSettings->Containers->HasKey(historyContainerKey));
         }
 
-        String^ GetHistoryContainerKeyHelper(CalculationManager::CALCULATOR_MODE cMode)
+        String^ GetHistoryContainerKeyHelper(CalculationManager::CalculatorMode cMode)
         {
             ValueType^ modeValue = static_cast<int>(cMode);
             return String::Concat(modeValue->ToString(), L"_History");
@@ -204,8 +204,8 @@ namespace CalculatorFunctionalTests
             m_standardViewModel->m_standardCalculatorManager.SendCommand(Command::CommandEQU);
             m_historyViewModel->OnClearCommand(nullptr);
             VERIFY_ARE_EQUAL(0, m_historyViewModel->ItemSize);
-            VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CM_STD)));
-            VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CM_SCI)));
+            VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CalculatorMode::Standard)));
+            VERIFY_IS_TRUE(IsHistoryContainerEmpty(GetHistoryContainerKeyHelper(CalculatorMode::Scientific)));
             Cleanup();
         }
 

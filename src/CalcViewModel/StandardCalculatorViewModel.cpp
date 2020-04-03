@@ -679,18 +679,18 @@ void StandardCalculatorViewModel::OnButtonPressed(Object ^ parameter)
     }
 }
 
-RADIX_TYPE StandardCalculatorViewModel::GetRadixTypeFromNumberBase(NumberBase base)
+RadixType StandardCalculatorViewModel::GetRadixTypeFromNumberBase(NumberBase base)
 {
     switch (base)
     {
     case NumberBase::BinBase:
-        return RADIX_TYPE::BIN_RADIX;
+        return RadixType::Binary;
     case NumberBase::HexBase:
-        return RADIX_TYPE::HEX_RADIX;
+        return RadixType::Hex;
     case NumberBase::OctBase:
-        return RADIX_TYPE::OCT_RADIX;
+        return RadixType::Octal;
     default:
-        return RADIX_TYPE::DEC_RADIX;
+        return RadixType::Decimal;
     }
 }
 
@@ -1228,7 +1228,7 @@ void StandardCalculatorViewModel::ResetDisplay()
 {
     AreHEXButtonsEnabled = false;
     CurrentRadixType = NumberBase::DecBase;
-    m_standardCalculatorManager.SetRadix(DEC_RADIX);
+    m_standardCalculatorManager.SetRadix(RadixType::Decimal);
 }
 
 void StandardCalculatorViewModel::SetPrecision(int32_t precision)
@@ -1253,16 +1253,16 @@ void StandardCalculatorViewModel::SetMemorizedNumbersString()
     m_standardCalculatorManager.SetMemorizedNumbersString();
 }
 
-ANGLE_TYPE GetAngleTypeFromCommand(Command command)
+AngleType GetAngleTypeFromCommand(Command command)
 {
     switch (command)
     {
     case Command::CommandDEG:
-        return ANGLE_DEG;
+        return AngleType::Degrees;
     case Command::CommandRAD:
-        return ANGLE_RAD;
+        return AngleType::Radians;
     case Command::CommandGRAD:
-        return ANGLE_GRAD;
+        return AngleType::Gradians;
     default:
         throw ref new Exception(E_FAIL, L"Invalid command type");
     }
@@ -1279,7 +1279,7 @@ void StandardCalculatorViewModel::SaveEditedCommand(_In_ unsigned int tokenPosit
     if (IsUnaryOp(command) && command != Command::CommandSIGN)
     {
         int angleCmd = static_cast<int>(m_standardCalculatorManager.GetCurrentDegreeMode());
-        ANGLE_TYPE angleType = GetAngleTypeFromCommand(static_cast<Command>(angleCmd));
+        AngleType angleType = GetAngleTypeFromCommand(static_cast<Command>(angleCmd));
 
         if (IsTrigOp(command))
         {

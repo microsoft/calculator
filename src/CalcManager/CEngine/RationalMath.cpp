@@ -147,7 +147,7 @@ Rational RationalMath::Abs(Rational const& rat)
     return Rational{ Number{ 1, rat.P().Exp(), rat.P().Mantissa() }, Number{ 1, rat.Q().Exp(), rat.Q().Mantissa() } };
 }
 
-Rational RationalMath::Sin(Rational const& rat, ANGLE_TYPE angletype)
+Rational RationalMath::Sin(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
@@ -167,7 +167,7 @@ Rational RationalMath::Sin(Rational const& rat, ANGLE_TYPE angletype)
     return result;
 }
 
-Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype)
+Rational RationalMath::Cos(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
@@ -187,7 +187,7 @@ Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype)
     return result;
 }
 
-Rational RationalMath::Tan(Rational const& rat, ANGLE_TYPE angletype)
+Rational RationalMath::Tan(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
@@ -207,7 +207,7 @@ Rational RationalMath::Tan(Rational const& rat, ANGLE_TYPE angletype)
     return result;
 }
 
-Rational RationalMath::ASin(Rational const& rat, ANGLE_TYPE angletype)
+Rational RationalMath::ASin(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
@@ -227,7 +227,7 @@ Rational RationalMath::ASin(Rational const& rat, ANGLE_TYPE angletype)
     return result;
 }
 
-Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype)
+Rational RationalMath::ACos(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
@@ -247,7 +247,7 @@ Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype)
     return result;
 }
 
-Rational RationalMath::ATan(Rational const& rat, ANGLE_TYPE angletype)
+Rational RationalMath::ATan(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
