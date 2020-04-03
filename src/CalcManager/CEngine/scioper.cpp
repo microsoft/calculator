@@ -158,8 +158,8 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             result = Root(rhs, result);
             break;
 
-        case IDC_LOGBASEX:
-            result = (Log(result) / Log(rhs));
+        case IDC_LOGBASEY:
+            result = (Log(rhs) / Log(result));
             break;
         }
     }
