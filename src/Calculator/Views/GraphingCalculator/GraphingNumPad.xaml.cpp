@@ -22,7 +22,8 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-// Dictionary of the enum of the button clicked mapped to an object with the string to enter into the rich edit, and the start and end of the selection after text has been entered.
+// Dictionary of the enum of the button clicked mapped to an object with the string to enter into the rich edit, and the start and end of the selection after
+// text has been entered.
 static const std::unordered_map<NumbersAndOperatorsEnum, std::tuple<Platform::String ^, int, int>> buttonOutput = {
     { NumbersAndOperatorsEnum::Sin, { L"sin()", 4, 0 } },
     { NumbersAndOperatorsEnum::Cos, { L"cos()", 4, 0 } },
@@ -224,8 +225,15 @@ void GraphingNumPad::ClearButton_Clicked(Platform::Object ^ /*sender*/, RoutedEv
     auto mathRichEdit = GetActiveRichEdit();
     if (mathRichEdit != nullptr)
     {
-        mathRichEdit->MathText = L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"></math>";
-        mathRichEdit->SubmitEquation(CalculatorApp::Controls::EquationSubmissionSource::PROGRAMMATIC);
+        String ^ text;
+        mathRichEdit->TextDocument->GetText(Windows::UI::Text::TextGetOptions::NoHidden, &text);
+
+        if (!text->IsEmpty())
+        {
+            mathRichEdit->MathText = L"<math xmlns=\"http://www.w3.org/1998/Math/MathML\"></math>";
+            mathRichEdit->SubmitEquation(CalculatorApp::Controls::EquationSubmissionSource::PROGRAMMATIC);
+        }
+
         TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::Clear, CalculatorApp::Common::ViewMode::Graphing);
     }
 }
