@@ -169,6 +169,11 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
         {
             GraphingControl->Equations->RemoveAt(event->Index);
 
+            if (GraphingControl->Equations->Size == 1 && GraphingControl->Equations->GetAt(0)->Expression->IsEmpty())
+            {
+                IsManualAdjustment = false;
+            }
+
             return;
         }
     }
@@ -194,7 +199,7 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
         GraphingControl->Equations->Append(equationViewModel->GraphEquation);
     }
 
-    GraphingControl->PlotGraph();
+    GraphingControl->PlotGraph(false);
 }
 
 void GraphingCalculator::OnTracePointChanged(Point newPoint)
@@ -773,17 +778,19 @@ void GraphingCalculator::GraphViewButton_Click(Object ^ sender, RoutedEventArgs 
 {
     auto narratorNotifier = ref new NarratorNotifier();
     String ^ announcementText;
-    if (IsAutoBestFit)
+    if (IsManualAdjustment)
     {
-        announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphViewAutomaticBestFitAnnouncement");
+        announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphViewManualAdjustmentAnnouncement");
+
     }
     else
     {
-        announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphViewManualAdjustmentAnnouncement");
+        GraphingControl->ResetGrid();
+        announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphViewAutomaticBestFitAnnouncement");
     }
 
     auto announcement = CalculatorAnnouncement::GetGraphViewBestFitChangedAnnouncement(announcementText);
     narratorNotifier->Announce(announcement);
 
-    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::GraphView, IsAutoBestFit ? L"Automatic Best Fit" : L"Manual Adjustment");
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::GraphView, IsManualAdjustment ? L"Manual Adjustment" : L"Automatic Best Fit");
 }

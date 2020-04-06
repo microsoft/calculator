@@ -117,7 +117,8 @@ public
         /// <summary>
         /// Draw the graph. Call this method if you add or modify an equation.
         /// </summary>
-        void PlotGraph();
+        /// <param name="keepCurrentView">Force the graph control to not pan or zoom to adapt the view.</param>
+        void PlotGraph(bool keepCurrentView);
 
         GraphControl::KeyGraphFeaturesInfo ^ AnalyzeEquation(GraphControl::Equation ^ equation);
 
@@ -131,7 +132,7 @@ public
                 {
                     m_solver->EvalOptions().SetTrigUnitMode((Graphing::EvalTrigUnitMode)value);
                     m_trigUnitsChanged = true;
-                    PlotGraph();
+                    PlotGraph(true);
                 }
             }
 
@@ -283,8 +284,8 @@ public
         void OnEquationChanged(Equation ^ equation);
         void OnEquationStyleChanged(Equation ^ equation);
         void OnEquationLineEnabledChanged(Equation ^ equation);
-        concurrency::task<bool> TryUpdateGraph();
-        concurrency::task<void> TryPlotGraph(bool shouldRetry);
+        concurrency::task<bool> TryUpdateGraph(bool keepCurrentView);
+        concurrency::task<void> TryPlotGraph(bool keepCurrentView, bool shouldRetry);
         void UpdateGraphOptions(Graphing::IGraphingOptions& options, const std::vector<Equation ^>& validEqs);
         std::vector<Equation ^> GetGraphableEquations();
         void SetGraphArgs(std::shared_ptr<Graphing::IGraph> graph);
@@ -302,7 +303,8 @@ public
 
         void SetEquationsAsValid();
         void SetEquationErrors();
-        std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitializeGraph(_In_ const Graphing::IExpression* graphingExp = nullptr);
+        std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitializeGraph(bool keepCurrentView, _In_ const Graphing::IExpression* graphingExp = nullptr);
+
 
     private:
         DX::RenderMain ^ m_renderMain = nullptr;

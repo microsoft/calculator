@@ -29,7 +29,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         DEPENDENCY_PROPERTY(bool, IsSmallState);
         DEPENDENCY_PROPERTY(Platform::String ^, GraphControlAutomationName);
         OBSERVABLE_PROPERTY_R(bool, IsMatchAppTheme);
-        OBSERVABLE_PROPERTY_RW(bool, IsAutoBestFit);
+        OBSERVABLE_PROPERTY_RW(bool, IsManualAdjustment);
 
         property CalculatorApp::ViewModel::GraphingCalculatorViewModel^ ViewModel
         {
@@ -53,7 +53,6 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
 
         void OnZoomInCommand(Object ^ parameter);
         void OnZoomOutCommand(Object ^ parameter);
-        void OnGraphViewCommand(Object ^ parameter);
 
         void OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
