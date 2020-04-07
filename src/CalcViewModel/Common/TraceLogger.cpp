@@ -272,12 +272,12 @@ namespace CalculatorApp
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_SHOW_HIDE_BUTTON_CLICKED), fields);
     }
 
-    void TraceLogger::LogGraphButtonClicked(GraphButton buttonName, String ^ buttonValue)
+    void TraceLogger::LogGraphButtonClicked(GraphButton buttonName, GraphButtonValue buttonValue)
     {
         auto fields = ref new LoggingFields();
         fields->AddString(StringReference(CALC_MODE), StringReference(GRAPHING_MODE));
         fields->AddInt16(StringReference(L"ButtonName"), static_cast<int16>(buttonName));
-        fields->AddString(StringReference(L"ButtonValue"), buttonValue);
+        fields->AddInt16(StringReference(L"ButtonValue"), static_cast<int16>(buttonValue));
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_GRAPH_BUTTON_CLICKED), fields);
     }
 

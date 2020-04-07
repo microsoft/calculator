@@ -44,6 +44,13 @@ namespace CalculatorApp
         GraphView
     };
 
+    public enum class GraphButtonValue
+    {
+        None,
+        AutomaticBestFit,
+        ManualAdjustment
+    };
+
     public enum class LineStyleType
     {
         Color,
@@ -70,7 +77,7 @@ namespace CalculatorApp
         void LogNavBarOpened();
         void LogError(CalculatorApp::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString);
         void LogShowHideButtonClicked(bool isHideButton);
-        void LogGraphButtonClicked(GraphButton buttonName, Platform::String ^ buttonValue);
+        void LogGraphButtonClicked(GraphButton buttonName, GraphButtonValue buttonValue);
         void LogGraphLineStyleChanged(LineStyleType style);
         void LogVariableChanged(Platform::String ^ inputChangedType, Platform::String ^ variableName);
         void LogVariableSettingsChanged(Platform::String ^ setting);
