@@ -20,8 +20,10 @@ using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Controls::Primitives;
+using namespace Windows::UI::Xaml::Media;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationColor);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonForegroundColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, ColorChooserFlyout);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, HasError);
@@ -421,6 +423,8 @@ bool EquationTextBox::RichEditHasContent()
 
 void EquationTextBox::OnRichEditMenuOpened(Object ^ /*sender*/, Object ^ /*args*/)
 {
+    VisualStateManager::GoToState(m_richEditBox, "Focused", false);
+
     if (m_kgfEquationMenuItem != nullptr)
     {
         m_kgfEquationMenuItem->IsEnabled = m_HasFocus && !HasError && RichEditHasContent();

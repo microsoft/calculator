@@ -20,6 +20,7 @@ namespace CalculatorApp
 
             DEPENDENCY_PROPERTY_OWNER(EquationTextBox);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::SolidColorBrush ^, EquationColor);
+            DEPENDENCY_PROPERTY(Windows::UI::Xaml::Media::SolidColorBrush ^, EquationButtonForegroundColor);
             DEPENDENCY_PROPERTY(Windows::UI::Xaml::Controls::Flyout ^, ColorChooserFlyout);
             DEPENDENCY_PROPERTY(Platform::String ^, EquationButtonContentIndex);
             DEPENDENCY_PROPERTY(Platform::String ^, MathEquation);
