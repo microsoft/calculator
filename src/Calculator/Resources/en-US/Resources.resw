@@ -4562,4 +4562,8 @@
     <value>Match app theme</value>
     <comment>This is the automation name text for the Graph settings option to set graph to match the app theme</comment>
   </data>
+  <data name="FunctionRemovedAnnouncement" xml:space="preserve">
+    <value>Function removed</value>
+    <comment>Announcement used in Graphing Calculator when a function is removed from the function list</comment>
+  </data>
 </root>

@@ -25,6 +25,7 @@ namespace CalculatorApp::Common::Automation
         StringReference NoParenthesisAdded(L"NoParenthesisAdded");
         StringReference GraphModeChanged(L"GraphModeChanged");
         StringReference GraphViewChanged(L"GraphViewChanged");
+        StringReference FunctionRemoved(L"FunctionRemoved");
     }
 }
 
@@ -143,7 +144,7 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetNoRightParenthesisAddedAnnounc
         AutomationNotificationProcessing::ImportantMostRecent);
 }
 
-NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphModeChangedAnnouncement(Platform::String ^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphModeChangedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
         announcement,
@@ -152,11 +153,20 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphModeChangedAnnouncement(P
         AutomationNotificationProcessing::ImportantMostRecent);
 }
 
-NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphViewChangedAnnouncement(Platform::String ^ announcement)
+NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphViewChangedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
         announcement,
         CalculatorActivityIds::GraphViewChanged,
         AutomationNotificationKind::ActionCompleted,
+        AutomationNotificationProcessing::MostRecent);
+}
+
+NarratorAnnouncement ^ CalculatorAnnouncement::GetFunctionRemovedAnnouncement(String ^ announcement)
+{
+    return ref new NarratorAnnouncement(
+        announcement,
+        CalculatorActivityIds::FunctionRemoved,
+        AutomationNotificationKind::ItemRemoved,
         AutomationNotificationProcessing::MostRecent);
 }
