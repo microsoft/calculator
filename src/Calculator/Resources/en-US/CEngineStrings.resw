@@ -517,8 +517,8 @@
     <value>2^</value>
     <comment>{Locked}The string that represents the function</comment>
   </data>
-  <data name="LogBaseX" xml:space="preserve">
-    <value>base log</value>
+  <data name="LogBaseY" xml:space="preserve">
+    <value>log base</value>
     <comment>{Locked}The string that represents the function</comment>
   </data>
   <data name="Abs" xml:space="preserve">

@@ -109,7 +109,7 @@ public
         InvCoth = (int) CM::Command::CommandACOTH,
         CubeRoot = (int) CM::Command::CommandCUBEROOT,
         TwoPowerX = (int) CM::Command::CommandPOW2,
-        LogBaseX = (int) CM::Command::CommandLogBaseX,
+        LogBaseY = (int) CM::Command::CommandLogBaseY,
         Nand = (int) CM::Command::CommandNand,
         Nor = (int) CM::Command::CommandNor,
         Abs = (int) CM::Command::CommandAbs,

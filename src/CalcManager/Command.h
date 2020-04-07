@@ -172,7 +172,7 @@ namespace CalculationManager
         CommandCeil = 415,
         CommandROLC = 416,
         CommandRORC = 417,
-        CommandLogBaseX = 500,
+        CommandLogBaseY = 500,
         CommandNand = 501,
         CommandNor = 502,
 
