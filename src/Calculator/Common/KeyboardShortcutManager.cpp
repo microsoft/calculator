@@ -56,6 +56,8 @@ static map<int, Flyout ^> s_AboutFlyout;
 
 static reader_writer_lock s_keyboardShortcutMapLock;
 
+static bool s_shortcutsDisabled = false;
+
 namespace CalculatorApp
 {
     namespace Common
@@ -735,6 +737,11 @@ void KeyboardShortcutManager::UpdateDropDownState(Flyout ^ aboutPageFlyout)
 
 void KeyboardShortcutManager::HonorShortcuts(bool allow)
 {
+    if (s_shortcutsDisabled)
+    {
+        return;
+    }
+
     // Writer lock for the static maps
     reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
@@ -827,4 +834,10 @@ void KeyboardShortcutManager::OnWindowClosed(int viewId)
     s_keepIgnoringEscape.erase(viewId);
     s_fHonorShortcuts.erase(viewId);
     s_AboutFlyout.erase(viewId);
+}
+
+void KeyboardShortcutManager::DisableShortcuts(bool disable)
+{
+    s_shortcutsDisabled = disable;
+    HonorShortcuts(!disable);
 }
