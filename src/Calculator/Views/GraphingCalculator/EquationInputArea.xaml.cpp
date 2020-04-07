@@ -90,17 +90,29 @@ void EquationInputArea::AddNewEquation()
         return;
     }
 
-    m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
-
     int colorIndex;
 
     if (m_accessibilitySettings->HighContrast)
     {
+        m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
         colorIndex = m_lastLineColorIndex;
     }
     else
     {
-        colorIndex = colorAssignmentMapping[m_lastLineColorIndex];
+        std::array<bool, maxEquationSize> colorAssignmentUsed = { false, false, false, false, false, false, false,
+                                                                  false, false, false, false, false, false, false };
+        for (auto equation : Equations)
+        {
+            colorAssignmentUsed[equation->LineColorIndex] = true;
+        }
+
+        colorIndex = 0;
+        while (colorIndex < maxEquationSize - 1 && colorAssignmentUsed[colorAssignmentMapping[colorIndex]])
+        {
+            colorIndex++;
+        }
+
+        colorIndex = colorAssignmentMapping[colorIndex];
     }
 
     auto eq = ref new EquationViewModel(ref new Equation(), ++m_lastFunctionLabelIndex, AvailableColors->GetAt(colorIndex)->Color, colorIndex);
@@ -174,7 +186,7 @@ void EquationInputArea::FocusEquationTextBox(EquationViewModel ^ equation)
     auto container = static_cast<UIElement ^>(EquationInputList->ContainerFromIndex(index));
     if (container != nullptr)
     {
-        container->StartBringIntoView();  
+        container->StartBringIntoView();
 
         auto equationInput = VisualTree::FindDescendantByName(container, "EquationInputButton");
         if (equationInput == nullptr)
@@ -205,8 +217,8 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
         Equations->RemoveAt(index);
 
         auto narratorNotifier = ref new NarratorNotifier();
-        auto announcement = CalculatorAnnouncement::GetFunctionRemovedAnnouncement(
-            AppResourceProvider::GetInstance()->GetResourceString(L"FunctionRemovedAnnouncement"));
+        auto announcement =
+            CalculatorAnnouncement::GetFunctionRemovedAnnouncement(AppResourceProvider::GetInstance()->GetResourceString(L"FunctionRemovedAnnouncement"));
         narratorNotifier->Announce(announcement);
 
         int lastIndex = Equations->Size - 1;
@@ -253,7 +265,7 @@ void EquationInputArea::EquationTextBox_Loaded(Object ^ sender, RoutedEventArgs 
         unsigned int index;
         if (Equations->IndexOf(copyEquationToFocus, &index))
         {
-            auto container = static_cast<UIElement^>(EquationInputList->ContainerFromIndex(index));
+            auto container = static_cast<UIElement ^>(EquationInputList->ContainerFromIndex(index));
             if (container != nullptr)
             {
                 container->StartBringIntoView();
@@ -308,7 +320,6 @@ void EquationInputArea::OnColorValuesChanged(Windows::UI::ViewManagement::UISett
                                    }
                                }));
 }
-
 
 void EquationInputArea::ReloadAvailableColors(bool isHighContrast, bool reassignColors)
 {
@@ -461,7 +472,7 @@ void EquationInputArea::VariableAreaButtonTapped(Object ^ sender, TappedRoutedEv
 {
     e->Handled = true;
 }
-  
+
 void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
 {
     EquationFormatRequested(sender, e);
@@ -484,7 +495,6 @@ void EquationInputArea::ToggleVariableArea(VariableViewModel ^ selectedVariableV
             variableViewModel->SliderSettingsVisible = false;
         }
     }
-
 }
 
 void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChangedEventArgs ^ e)
