@@ -540,7 +540,7 @@ EquationViewModel ^ EquationInputArea::GetViewModelFromEquationTextBox(Object ^ 
 
      auto whiteLum = 0.2126 * Colors::White.R + 0.7152 * Colors::White.G + 0.0722 * Colors::White.B;
 
-     if ((whiteLum + 0.05) / (luminance + 0.05) >= 2)
+     if ((whiteLum + 0.05) / (luminance + 0.05) >= 2.5)
      {
          return ref new SolidColorBrush(Colors::White);
      }
