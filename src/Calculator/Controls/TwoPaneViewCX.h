@@ -13,6 +13,38 @@ public
         event Windows::Foundation::TypedEventHandler<TwoPaneViewCX ^, Object ^> ^ ModeChanged;
     };
 
+public
+    enum class TwoPaneViewCXWideModeConfiguration : int
+    {
+        SinglePane = 0,
+        LeftRight = 1,
+        RightLeft = 2,
+    };
+
+public
+    enum class TwoPaneViewCXTallModeConfiguration : int
+    {
+        SinglePane = 0,
+        TopBottom = 1,
+        BottomTop = 2,
+    };
+
+public
+    enum class TwoPaneViewCXPriority : int
+    {
+        Pane1 = 0,
+        Pane2 = 1,
+    };
+
+public
+    enum class TwoPaneViewCXMode: int
+    {
+        SinglePane = 0,
+        Wide = 1,
+        Tall = 2,
+    };
+
+
     // We can't use the TwoPaneView control from the SDK or from Microsoft.UI.Xaml because of a bug with C++ apps.
     // (see this issue: https://github.com/microsoft/microsoft-ui-xaml/pull/2045)
     // This class is a C++/CX port of the C++/WinRT version of Microsoft.UI.Xaml (commit b3a2e45) which include the patch to fix the crash.
@@ -33,7 +65,7 @@ public
 
         struct DisplayRegionHelperInfo
         {
-            Microsoft::UI::Xaml::Controls::TwoPaneViewMode Mode = Microsoft::UI::Xaml::Controls::TwoPaneViewMode::SinglePane;
+            TwoPaneViewCXMode Mode = TwoPaneViewCXMode::SinglePane;
             Platform::Array<Windows::Foundation::Rect> ^ Regions;
         };
 
@@ -54,18 +86,11 @@ public
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, Pane1MaxLength, std::numeric_limits<double>::max());
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, Pane2MaxLength, std::numeric_limits<double>::max());
 
-        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Microsoft::UI::Xaml::Controls::TwoPaneViewPriority,
-            PanePriority,
-            Microsoft::UI::Xaml::Controls::TwoPaneViewPriority::Pane1);
-        DEPENDENCY_PROPERTY(Microsoft::UI::Xaml::Controls::TwoPaneViewMode, Mode);
-        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(
-            Microsoft::UI::Xaml::Controls::TwoPaneViewWideModeConfiguration,
-            WideModeConfiguration,
-            Microsoft::UI::Xaml::Controls::TwoPaneViewWideModeConfiguration::LeftRight);
-        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(
-            Microsoft::UI::Xaml::Controls::TwoPaneViewTallModeConfiguration,
-            TallModeConfiguration,
-            Microsoft::UI::Xaml::Controls::TwoPaneViewTallModeConfiguration::TopBottom);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(TwoPaneViewCXPriority,
+            PanePriority, TwoPaneViewCXPriority::Pane1);
+        DEPENDENCY_PROPERTY(TwoPaneViewCXMode, Mode);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(TwoPaneViewCXWideModeConfiguration, WideModeConfiguration, TwoPaneViewCXWideModeConfiguration::LeftRight);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(TwoPaneViewCXTallModeConfiguration, TallModeConfiguration, TwoPaneViewCXTallModeConfiguration::TopBottom);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, MinWideModeWidth, 641);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, MinTallModeHeight, 641);
 
@@ -91,15 +116,11 @@ public
         void OnPane1MaxLengthPropertyChanged(double oldValue, double newValue);
         void OnPane2MaxLengthPropertyChanged(double oldValue, double newValue);
         void
-        OnPanePriorityPropertyChanged(Microsoft::UI::Xaml::Controls::TwoPaneViewPriority oldValue, Microsoft::UI::Xaml::Controls::TwoPaneViewPriority newValue);
+        OnPanePriorityPropertyChanged(TwoPaneViewCXPriority oldValue, TwoPaneViewCXPriority newValue);
         void OnMinTallModeHeightPropertyChanged(double oldValue, double newValue);
         void OnMinWideModeWidthPropertyChanged(double oldValue, double newValue);
-        void OnWideModeConfigurationPropertyChanged(
-            Microsoft::UI::Xaml::Controls::TwoPaneViewWideModeConfiguration oldValue,
-            Microsoft::UI::Xaml::Controls::TwoPaneViewWideModeConfiguration newValue);
-        void OnTallModeConfigurationPropertyChanged(
-            Microsoft::UI::Xaml::Controls::TwoPaneViewTallModeConfiguration oldValue,
-            Microsoft::UI::Xaml::Controls::TwoPaneViewTallModeConfiguration newValue);
+        void OnWideModeConfigurationPropertyChanged(TwoPaneViewCXWideModeConfiguration oldValue, TwoPaneViewCXWideModeConfiguration newValue);
+        void OnTallModeConfigurationPropertyChanged(TwoPaneViewCXTallModeConfiguration oldValue, TwoPaneViewCXTallModeConfiguration newValue);
         void OnScrollViewerLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
     private:

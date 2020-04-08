@@ -15,7 +15,6 @@ using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using Windows::Foundation::Metadata::ApiInformation;
-namespace MUXC = Microsoft::UI::Xaml::Controls;
 
 StringReference c_pane1ScrollViewerName(L"PART_Pane1ScrollViewer");
 StringReference c_pane2ScrollViewerName(L"PART_Pane2ScrollViewer");
@@ -95,7 +94,7 @@ void TwoPaneViewCX::UpdateMode()
     double controlWidth = this->ActualWidth;
     double controlHeight = this->ActualHeight;
 
-    ViewMode newMode = (this->PanePriority == MUXC::TwoPaneViewPriority::Pane1) ? ViewMode::Pane1Only : ViewMode::Pane2Only;
+    ViewMode newMode = (this->PanePriority == TwoPaneViewCXPriority::Pane1) ? ViewMode::Pane1Only : ViewMode::Pane2Only;
 
     // Calculate new mode
     Rect rcControl = GetControlRect();
@@ -104,35 +103,35 @@ void TwoPaneViewCX::UpdateMode()
 
     if (isInMultipleRegions)
     {
-        if (info.Mode == MUXC::TwoPaneViewMode::Wide)
+        if (info.Mode == TwoPaneViewCXMode::Wide)
         {
             // Regions are laid out horizontally
-            if (this->WideModeConfiguration != MUXC::TwoPaneViewWideModeConfiguration::SinglePane)
+            if (this->WideModeConfiguration != TwoPaneViewCXWideModeConfiguration::SinglePane)
             {
-                newMode = (this->WideModeConfiguration == MUXC::TwoPaneViewWideModeConfiguration::LeftRight) ? ViewMode::LeftRight : ViewMode::RightLeft;
+                newMode = (this->WideModeConfiguration == TwoPaneViewCXWideModeConfiguration::LeftRight) ? ViewMode::LeftRight : ViewMode::RightLeft;
             }
         }
-        else if (info.Mode == MUXC::TwoPaneViewMode::Tall)
+        else if (info.Mode == TwoPaneViewCXMode::Tall)
         {
             // Regions are laid out vertically
-            if (this->TallModeConfiguration != MUXC::TwoPaneViewTallModeConfiguration::SinglePane)
+            if (this->TallModeConfiguration != TwoPaneViewCXTallModeConfiguration::SinglePane)
             {
-                newMode = (this->TallModeConfiguration == MUXC::TwoPaneViewTallModeConfiguration::TopBottom) ? ViewMode::TopBottom : ViewMode::BottomTop;
+                newMode = (this->TallModeConfiguration == TwoPaneViewCXTallModeConfiguration::TopBottom) ? ViewMode::TopBottom : ViewMode::BottomTop;
             }
         }
     }
     else
     {
         // One region
-        if (controlWidth > this->MinWideModeWidth && this->WideModeConfiguration != MUXC::TwoPaneViewWideModeConfiguration::SinglePane)
+        if (controlWidth > this->MinWideModeWidth && this->WideModeConfiguration != TwoPaneViewCXWideModeConfiguration::SinglePane)
         {
             // Split horizontally
-            newMode = (this->WideModeConfiguration == MUXC::TwoPaneViewWideModeConfiguration::LeftRight) ? ViewMode::LeftRight : ViewMode::RightLeft;
+            newMode = (this->WideModeConfiguration == TwoPaneViewCXWideModeConfiguration::LeftRight) ? ViewMode::LeftRight : ViewMode::RightLeft;
         }
-        else if (controlHeight > this->MinTallModeHeight && this->TallModeConfiguration != MUXC::TwoPaneViewTallModeConfiguration::SinglePane)
+        else if (controlHeight > this->MinTallModeHeight && this->TallModeConfiguration != TwoPaneViewCXTallModeConfiguration::SinglePane)
         {
             // Split vertically
-            newMode = (this->TallModeConfiguration == MUXC::TwoPaneViewTallModeConfiguration::TopBottom) ? ViewMode::TopBottom : ViewMode::BottomTop;
+            newMode = (this->TallModeConfiguration == TwoPaneViewCXTallModeConfiguration::TopBottom) ? ViewMode::TopBottom : ViewMode::BottomTop;
         }
     }
 
@@ -144,7 +143,7 @@ void TwoPaneViewCX::UpdateMode()
     {
         m_currentMode = newMode;
 
-        auto newViewMode = MUXC::TwoPaneViewMode::SinglePane;
+        auto newViewMode = TwoPaneViewCXMode::SinglePane;
 
         switch (m_currentMode)
         {
@@ -156,19 +155,19 @@ void TwoPaneViewCX::UpdateMode()
             break;
         case ViewMode::LeftRight:
             VisualStateManager::GoToState(this, L"ViewMode_LeftRight", true);
-            newViewMode = MUXC::TwoPaneViewMode::Wide;
+            newViewMode = TwoPaneViewCXMode::Wide;
             break;
         case ViewMode::RightLeft:
             VisualStateManager::GoToState(this, L"ViewMode_RightLeft", true);
-            newViewMode = MUXC::TwoPaneViewMode::Wide;
+            newViewMode = TwoPaneViewCXMode::Wide;
             break;
         case ViewMode::TopBottom:
             VisualStateManager::GoToState(this, L"ViewMode_TopBottom", true);
-            newViewMode = MUXC::TwoPaneViewMode::Tall;
+            newViewMode = TwoPaneViewCXMode::Tall;
             break;
         case ViewMode::BottomTop:
             VisualStateManager::GoToState(this, L"ViewMode_BottomTop", true);
-            newViewMode = MUXC::TwoPaneViewMode::Tall;
+            newViewMode = TwoPaneViewCXMode::Tall;
             break;
         }
 
@@ -259,7 +258,7 @@ void TwoPaneViewCX::UpdateRowsColumns(ViewMode newMode, DisplayRegionHelperInfo 
             Rect rc2 = info.Regions[1];
             Rect rcWindow = Window::Current->Bounds;
 
-            if (info.Mode == MUXC::TwoPaneViewMode::Wide)
+            if (info.Mode == TwoPaneViewCXMode::Wide)
             {
                 this->m_columnMiddle->Width = GridLengthHelper::FromPixels(rc2.X - rc1.Width);
 
@@ -296,12 +295,12 @@ bool TwoPaneViewCX::IsInMultipleRegions(DisplayRegionHelperInfo info, Rect rcCon
 {
     bool isInMultipleRegions = false;
 
-    if (info.Mode != MUXC::TwoPaneViewMode::SinglePane)
+    if (info.Mode != TwoPaneViewCXMode::SinglePane)
     {
         Rect rc1 = info.Regions[0];
         Rect rc2 = info.Regions[1];
 
-        if (info.Mode == MUXC::TwoPaneViewMode::Wide)
+        if (info.Mode == TwoPaneViewCXMode::Wide)
         {
             // Check that the control is over the split
             if (rcControl.X < rc1.Width && rcControl.X + rcControl.Width > rc2.X)
@@ -309,7 +308,7 @@ bool TwoPaneViewCX::IsInMultipleRegions(DisplayRegionHelperInfo info, Rect rcCon
                 isInMultipleRegions = true;
             }
         }
-        else if (info.Mode == MUXC::TwoPaneViewMode::Tall)
+        else if (info.Mode == TwoPaneViewCXMode::Tall)
         {
             // Check that the control is over the split
             if (rcControl.Y < rc1.Height && rcControl.Y + rcControl.Height > rc2.Y)
@@ -385,20 +384,20 @@ void TwoPaneViewCX::OnMinWideModeWidthPropertyChanged(double /*oldValue*/, doubl
 }
 
 void TwoPaneViewCX::OnWideModeConfigurationPropertyChanged(
-    MUXC::TwoPaneViewWideModeConfiguration /*oldValue*/,
-    MUXC::TwoPaneViewWideModeConfiguration /*newValue*/)
+    TwoPaneViewCXWideModeConfiguration /*oldValue*/,
+    TwoPaneViewCXWideModeConfiguration /*newValue*/)
 {
     this->UpdateMode();
 }
 
 void TwoPaneViewCX::OnTallModeConfigurationPropertyChanged(
-    MUXC::TwoPaneViewTallModeConfiguration /*oldValue*/,
-    MUXC::TwoPaneViewTallModeConfiguration /*newValue*/)
+    TwoPaneViewCXTallModeConfiguration /*oldValue*/,
+    TwoPaneViewCXTallModeConfiguration /*newValue*/)
 {
     this->UpdateMode();
 }
 
-void TwoPaneViewCX::OnPanePriorityPropertyChanged(MUXC::TwoPaneViewPriority /*oldValue*/, MUXC::TwoPaneViewPriority /*newValue*/)
+void TwoPaneViewCX::OnPanePriorityPropertyChanged(TwoPaneViewCXPriority /*oldValue*/, TwoPaneViewCXPriority /*newValue*/)
 {
     this->UpdateMode();
 }
@@ -406,7 +405,7 @@ void TwoPaneViewCX::OnPanePriorityPropertyChanged(MUXC::TwoPaneViewPriority /*ol
 TwoPaneViewCX::DisplayRegionHelperInfo TwoPaneViewCX::GetDisplayRegionHelperInfo()
 {
     DisplayRegionHelperInfo info;
-    info.Mode = MUXC::TwoPaneViewMode::SinglePane;
+    info.Mode = TwoPaneViewCXMode::SinglePane;
 
     if (!Windows::Foundation::Metadata::ApiInformation::IsMethodPresent(L"Windows.UI.ViewManagement.ApplicationView", L"GetDisplayRegions"))
     {
@@ -440,12 +439,12 @@ TwoPaneViewCX::DisplayRegionHelperInfo TwoPaneViewCX::GetDisplayRegionHelperInfo
             if (info.Regions[0].X < info.Regions[1].X && info.Regions[0].Y == info.Regions[1].Y)
             {
                 // Double portrait
-                info.Mode = MUXC::TwoPaneViewMode::Wide;
+                info.Mode = TwoPaneViewCXMode::Wide;
             }
             else if (info.Regions[0].X == info.Regions[1].X && info.Regions[0].Y < info.Regions[1].Y)
             {
                 // Double landscape
-                info.Mode = MUXC::TwoPaneViewMode::Tall;
+                info.Mode = TwoPaneViewCXMode::Tall;
             }
         }
     }

@@ -39,7 +39,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
             void set(CalculatorApp::ViewModel::GraphingCalculatorViewModel^ vm);
         }
 
-        static Microsoft::UI::Xaml::Controls::TwoPaneViewPriority GetPanePriority(bool isEquationModeActivated);
+        static CalculatorApp::Controls::TwoPaneViewCXPriority GetPanePriority(bool isEquationModeActivated);
         static Platform::String ^ GetInfoForSwitchModeToggleButton(bool isChecked);
         static Windows::UI::Xaml::Visibility ManageEditVariablesButtonVisibility(unsigned int numberOfVariables);
         static Platform::String ^ GetTracingLegend(Platform::IBox<bool> ^ isTracing);
