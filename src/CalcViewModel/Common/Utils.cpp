@@ -324,8 +324,8 @@ SolidColorBrush ^ Utils::GetContrastColor(Color backgroundColor)
 
     if ((255 + 0.05) / (luminance + 0.05) >= 2.5)
     {
-        return ref new SolidColorBrush(Colors::White);
+        return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"WhiteBrush"));
     }
 
-    return ref new SolidColorBrush(Colors::Black);
+    return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"BlackBrush"));
 }
