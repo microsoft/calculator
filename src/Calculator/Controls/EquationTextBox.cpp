@@ -423,7 +423,10 @@ bool EquationTextBox::RichEditHasContent()
 
 void EquationTextBox::OnRichEditMenuOpened(Object ^ /*sender*/, Object ^ /*args*/)
 {
-    VisualStateManager::GoToState(m_richEditBox, "Focused", false);
+    if (m_richEditBox != nullptr)
+    {
+        VisualStateManager::GoToState(m_richEditBox, "Focused", false);
+    }
 
     if (m_kgfEquationMenuItem != nullptr)
     {
