@@ -27,6 +27,7 @@ public
         void OnLoaded(_In_ Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnUnloaded(_In_ Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
+        void SetTitleBarText(Platform::String ^ text);
         void SetTitleBarVisibility();
         void SetTitleBarHeight();
         void SetTitleBarPadding();

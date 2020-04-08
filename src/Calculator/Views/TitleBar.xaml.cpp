@@ -5,9 +5,11 @@
 #include "TitleBar.xaml.h"
 #include "CalcViewModel/Common/AppResourceProvider.h"
 #include "CalcViewModel/Common/Utils.h"
+#include "CalcViewModel/Utils/DeviceFamilyHelper.h"
 
 using namespace std;
 using namespace Platform;
+using namespace CalculatorApp::ViewModel::Utils;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Core;
 using namespace Windows::Foundation;
@@ -83,12 +85,25 @@ namespace CalculatorApp
 
     void TitleBar::SetTitleBarVisibility()
     {
-        this->LayoutRoot->Visibility = m_coreTitleBar->IsVisible || IsAlwaysOnTopMode ? ::Visibility::Visible : ::Visibility::Collapsed;
+        // CoreApplication::GetCurrentView()->TitleBar->IsVisible currently returns False instead of True on Windows 10X.
+        // This issue is already tracked and will be fixed in a future preview version of 10X.
+        this->LayoutRoot->Visibility = m_coreTitleBar->IsVisible || DeviceFamilyHelper::GetDeviceFamily() == DeviceFamily::WindowsCore || IsAlwaysOnTopMode
+                                           ? ::Visibility::Visible
+                                           : ::Visibility::Collapsed;
     }
 
     void TitleBar::SetTitleBarHeight()
     {
-        this->LayoutRoot->Height = m_coreTitleBar->Height;
+        if (m_coreTitleBar->Height == 0 && DeviceFamilyHelper::GetDeviceFamily() == DeviceFamily::WindowsCore)
+        {
+            // CoreApplication::GetCurrentView()->TitleBar doesn't return the correct height on Windows 10X.
+            // This issue is already tracked and will be fixed in a future preview version of 10X.
+            this->LayoutRoot->Height = 32;
+        }
+        else
+        {
+            this->LayoutRoot->Height = m_coreTitleBar->Height;
+        }
     }
 
     void TitleBar::SetTitleBarPadding()
