@@ -15,6 +15,8 @@ namespace CalculatorApp
 
     namespace ViewModel
     {
+        ref class StandardCalculatorViewModel;
+
     public
         delegate void HideHistoryClickedHandler();
     public
@@ -45,6 +47,7 @@ namespace CalculatorApp
             internal : HistoryViewModel(_In_ CalculationManager::CalculatorManager* calculatorManager);
             void SetCalculatorDisplay(CalculatorDisplay& calculatorDisplay);
             void ReloadHistory(_In_ CalculatorApp::Common::ViewMode currentMode);
+            unsigned long long GetMaxItemSize();
 
             void DeleteItem(_In_ CalculatorApp::ViewModel::HistoryItemViewModel ^ e);
 

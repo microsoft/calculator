@@ -237,6 +237,7 @@
     <ClCompile Include="CopyPasteManagerTest.cpp" />
     <ClCompile Include="CurrencyConverterUnitTests.cpp" />
     <ClCompile Include="DateCalculatorUnitTests.cpp" />
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="HistoryTests.cpp" />
     <ClCompile Include="LocalizationServiceUnitTests.cpp" />
     <ClCompile Include="LocalizationSettingsUnitTests.cpp" />

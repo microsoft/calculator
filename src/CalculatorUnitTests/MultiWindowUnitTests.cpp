@@ -369,7 +369,7 @@ TEST_METHOD(MultipleModesHistoryAddItemTest)
         ChangeMode(viewModels[i], i);
 
         // Validate that the history items list is initially empty
-        VERIFY_IS_TRUE(0 == viewModels[i]->m_standardCalculatorManager.GetHistoryItems().size());
+        VERIFY_IS_TRUE(0 == viewModels[i]->HistoryVM->ItemSize);
     }
 
     // Perform Calculations on both the instances and check that the History items work independently
@@ -390,24 +390,24 @@ TEST_METHOD(MultipleModesHistoryAddItemTest)
     ValidateViewModelByCommands(viewModels[1], scientificModeTestItems, true);
 
     // Assert for the history list items of 1st instance
-    VERIFY_IS_TRUE(1 == viewModels[0]->m_standardCalculatorManager.GetHistoryItems().size());
+    VERIFY_IS_TRUE(1 == viewModels[0]->HistoryVM->ItemSize);
 
-    auto item1 = viewModels[0]->m_standardCalculatorManager.GetHistoryItem(0);
+    auto item1 = static_cast<HistoryItemViewModel^>(viewModels[0]->HistoryVM->Items->GetAt(0));
     String ^ expression1 = UtfUtils::LRO + L"1   +   2 =" + UtfUtils::PDF;
     String ^ result1 = L"3";
 
-    VERIFY_ARE_EQUAL(expression1, StringReference(item1->historyItemVector.expression.c_str()));
-    VERIFY_ARE_EQUAL(result1, StringReference(item1->historyItemVector.result.c_str()));
+    VERIFY_ARE_EQUAL(expression1, item1->Expression);
+    VERIFY_ARE_EQUAL(result1, item1->Result);
 
     // Assert for the history list items of 2nd instance
-    VERIFY_IS_TRUE(1 == viewModels[1]->m_standardCalculatorManager.GetHistoryItems().size());
+    VERIFY_IS_TRUE(1 == viewModels[1]->HistoryVM->ItemSize);
 
-    auto item2 = viewModels[1]->m_standardCalculatorManager.GetHistoryItem(0);
+    auto item2 = static_cast<HistoryItemViewModel^>(viewModels[1]->HistoryVM->Items->GetAt(0));
     String ^ expression2 = UtfUtils::LRO + L"1   +   2   " + UtfUtils::MUL + L"   3 =" + UtfUtils::PDF;
     String ^ result2 = L"7";
 
-    VERIFY_ARE_EQUAL(expression2, StringReference(item2->historyItemVector.expression.c_str()));
-    VERIFY_ARE_EQUAL(result2, StringReference(item2->historyItemVector.result.c_str()));
+    VERIFY_ARE_EQUAL(expression2, item2->Expression);
+    VERIFY_ARE_EQUAL(result2, item2->Result);
 }
 
 // Perform calculations on 2 separate instances of Standard Modes and verify that their History list items are maintained separately
@@ -424,7 +424,7 @@ TEST_METHOD(MultipleStandardModesHistoryAddItemTest)
         ChangeMode(viewModels[i], 0);
 
         // Validate that the history items list is initially empty
-        VERIFY_IS_TRUE(0 == viewModels[i]->m_standardCalculatorManager.GetHistoryItems().size());
+        VERIFY_IS_TRUE(0 == viewModels[i]->HistoryVM->ItemSize);
     }
 
     // Perform Calculations on both the instances and check that the History items work independently
@@ -457,12 +457,12 @@ TEST_METHOD(MultipleStandardModesHistoryAddItemTest)
     // Assert for the history list items of the instances
     for (int i = 0; i < 2; i++)
     {
-        VERIFY_IS_TRUE(1 == viewModels[i]->m_standardCalculatorManager.GetHistoryItems().size());
+        VERIFY_IS_TRUE(1 == viewModels[i]->HistoryVM->ItemSize);
 
-        auto item = viewModels[i]->m_standardCalculatorManager.GetHistoryItem(0);
+        auto item = static_cast<HistoryItemViewModel ^>(viewModels[i]->HistoryVM->Items->GetAt(0));
 
-        VERIFY_ARE_EQUAL(expression[i], StringReference(item->historyItemVector.expression.c_str()));
-        VERIFY_ARE_EQUAL(result[i], StringReference(item->historyItemVector.result.c_str()));
+        VERIFY_ARE_EQUAL(expression[i], item->Expression);
+        VERIFY_ARE_EQUAL(result[i], item->Result);
     }
 }
 
@@ -480,7 +480,7 @@ TEST_METHOD(MultipleScientificModesHistoryAddItemTest)
         ChangeMode(viewModels[i], 1);
 
         // Validate that the history items list is initially empty
-        VERIFY_IS_TRUE(0 == viewModels[i]->m_standardCalculatorManager.GetHistoryItems().size());
+        VERIFY_IS_TRUE(0 == viewModels[i]->HistoryVM->ItemSize);
     }
 
     // Perform Calculations on both the instances and check that the History items work independently
@@ -513,12 +513,12 @@ TEST_METHOD(MultipleScientificModesHistoryAddItemTest)
     // Assert for the history list items of the instances
     for (int i = 0; i < 2; i++)
     {
-        VERIFY_IS_TRUE(1 == viewModels[i]->m_standardCalculatorManager.GetHistoryItems().size());
+        VERIFY_IS_TRUE(1 == viewModels[i]->HistoryVM->ItemSize);
 
-        auto item = viewModels[i]->m_standardCalculatorManager.GetHistoryItem(0);
+        auto item = static_cast<HistoryItemViewModel^>(viewModels[i]->HistoryVM->Items->GetAt(0));
 
-        VERIFY_ARE_EQUAL(expression[i], StringReference(item->historyItemVector.expression.c_str()));
-        VERIFY_ARE_EQUAL(result[i], StringReference(item->historyItemVector.result.c_str()));
+        VERIFY_ARE_EQUAL(expression[i], item->Expression);
+        VERIFY_ARE_EQUAL(result[i], item->Result);
     }
 }
 
