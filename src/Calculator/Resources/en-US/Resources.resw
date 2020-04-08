@@ -4507,7 +4507,7 @@
     <comment>The automation name for the Variable Min Value Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableStepTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Variable Step Textbox</value>
+    <value>Variable Step Value Textbox</value>
     <comment>The automation name for the Variable Step Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableMaxTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">

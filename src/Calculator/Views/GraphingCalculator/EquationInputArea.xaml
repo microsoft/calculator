@@ -18,7 +18,9 @@
             <converters:BooleanNegationConverter x:Name="BooleanNegationConverter"/>
 
             <DataTemplate x:Key="VariableDataTemplate" x:DataType="vm:VariableViewModel">
-                <Grid DataContext="{x:Bind}" Tapped="VariableAreaTapped" x:Uid="VariableListViewItem">
+                <Grid x:Uid="VariableListViewItem"
+                      DataContext="{x:Bind}"
+                      Tapped="VariableAreaTapped">
                     <Grid.Resources>
                         <ResourceDictionary>
 
@@ -110,7 +112,8 @@
                                            FontStyle="Italic"
                                            Text="="/>
 
-                                <TextBox x:Uid="VariableValueTextBox"
+                                <TextBox x:Name="ValueTextBox"
+                                         x:Uid="VariableValueTextBox"
                                          Grid.Column="2"
                                          Margin="6,0,0,0"
                                          Padding="0,10,0,0"
@@ -157,7 +160,8 @@
                                                Margin="0,12,4,0"
                                                VerticalAlignment="Center"
                                                FontSize="11"/>
-                                    <TextBox x:Uid="VariableMinTextBox"
+                                    <TextBox x:Name="MinTextBox"
+                                             x:Uid="VariableMinTextBox"
                                              Grid.Column="1"
                                              MaxWidth="18"
                                              Padding="2,16,2,2"
@@ -178,7 +182,8 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
                                                FontSize="11"/>
-                                    <TextBox x:Uid="VariableStepTextBox"
+                                    <TextBox x:Name="StepTextBox"
+                                             x:Uid="VariableStepTextBox"
                                              Grid.Column="1"
                                              MaxWidth="18"
                                              Padding="2,16,2,2"
@@ -198,7 +203,8 @@
                                                Margin="0,12,4,0"
                                                VerticalAlignment="Center"
                                                FontSize="11"/>
-                                    <TextBox x:Uid="VariableMaxTextBox"
+                                    <TextBox x:Name="MaxTextBox"
+                                             x:Uid="VariableMaxTextBox"
                                              Grid.Column="1"
                                              MaxWidth="18"
                                              Padding="2,16,2,2"
@@ -834,8 +840,8 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="vm:EquationViewModel">
-                        <controls:EquationTextBox
-                            x:Uid="EquationInputButton"
+                        <controls:EquationTextBox x:Name="EquationInputButton"
+                                                  x:Uid="EquationInputButton"
                                                   Margin="1,0,1,2"
                                                   Style="{StaticResource EquationTextBoxStyle}"
                                                   DataContext="{x:Bind Mode=OneWay}"
