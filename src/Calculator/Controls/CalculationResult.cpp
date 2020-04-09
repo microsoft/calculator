@@ -323,17 +323,38 @@ void CalculationResult::UpdateScrollButtons()
         return;
     }
 
+    bool shouldTryFocusScrollRight = false;
     if (m_scrollLeft != nullptr)
     {
-        m_scrollLeft->Visibility = m_textContainer->HorizontalOffset > SCROLL_BUTTONS_APPROXIMATION_RANGE ? ::Visibility::Visible : ::Visibility::Collapsed;
+        auto scrollLeftVisibility = m_textContainer->HorizontalOffset > SCROLL_BUTTONS_APPROXIMATION_RANGE ? ::Visibility::Visible : ::Visibility::Collapsed;
+
+        if (scrollLeftVisibility == ::Visibility::Collapsed)
+        {
+            shouldTryFocusScrollRight = m_scrollLeft->Equals(FocusManager::GetFocusedElement());
+        }
+
+        m_scrollLeft->Visibility = scrollLeftVisibility;
     }
 
     if (m_scrollRight != nullptr)
     {
-        m_scrollRight->Visibility =
+        auto scrollRightVisibility =
             m_textContainer->HorizontalOffset + m_textContainer->ViewportWidth + SCROLL_BUTTONS_APPROXIMATION_RANGE < m_textContainer->ExtentWidth
                 ? ::Visibility::Visible
                 : ::Visibility::Collapsed;
+
+        if (scrollRightVisibility == ::Visibility::Collapsed && m_scrollLeft != nullptr && m_scrollLeft->Visibility == ::Visibility::Visible
+            && m_scrollRight->Equals(FocusManager::GetFocusedElement()))
+        {
+            // ScrollRight had the focus and will be collapsed, ScrollLeft should get the focus
+            m_scrollLeft->Focus(::FocusState::Programmatic);
+        }
+        m_scrollRight->Visibility = scrollRightVisibility;
+
+        if (shouldTryFocusScrollRight && scrollRightVisibility == ::Visibility::Visible)
+        {
+            m_scrollRight->Focus(::FocusState::Programmatic);
+        }
     }
 }
 

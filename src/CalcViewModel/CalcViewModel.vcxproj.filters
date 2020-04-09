@@ -13,9 +13,6 @@
     <Filter Include="GraphingCalculator">
       <UniqueIdentifier>{cf7dca32-9727-4f98-83c3-1c0ca7dd1e0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{68bb415f-fcb1-4759-b0a7-c5caf9d72396}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -88,9 +85,6 @@
     </ClCompile>
     <ClCompile Include="GraphingCalculator\GraphingSettingsViewModel.cpp">
       <Filter>GraphingCalculator</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils\DeviceFamilyHelper.cpp">
-      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -204,9 +198,6 @@
     </ClInclude>
     <ClInclude Include="Common\DelegateCommand.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\DeviceFamilyHelper.h">
-      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

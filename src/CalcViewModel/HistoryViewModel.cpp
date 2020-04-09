@@ -6,6 +6,7 @@
 #include "Common/TraceLogger.h"
 #include "Common/LocalizationStringUtil.h"
 #include "Common/LocalizationSettings.h"
+#include "StandardCalculatorViewModel.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -256,6 +257,11 @@ void HistoryViewModel::ClearHistory()
 {
     ClearHistoryContainer(CalculationManager::CalculatorMode::Standard);
     ClearHistoryContainer(CalculationManager::CalculatorMode::Scientific);
+}
+
+unsigned long long HistoryViewModel::GetMaxItemSize()
+{
+    return static_cast<unsigned long long>(m_calculatorManager->MaxHistorySize());
 }
 
 void HistoryViewModel::SaveHistory()

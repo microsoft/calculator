@@ -3447,9 +3447,9 @@
     <value>Cube Root</value>
     <comment>Name for the cube root function. Used by screen readers.</comment>
   </data>
-  <data name="Logx" xml:space="preserve">
-    <value>Base Log</value>
-    <comment>Name for the logbasex function. Used by screen readers.</comment>
+  <data name="Logy" xml:space="preserve">
+    <value>Log Base</value>
+    <comment>Name for the logbasey function. Used by screen readers.</comment>
   </data>
   <data name="AbsoluteValue" xml:space="preserve">
     <value>Absolute Value</value>
@@ -3519,11 +3519,11 @@
     <value>Calculation failed</value>
     <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
-  <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Log base X</value>
-    <comment>Screen reader prompt for the logBaseX button</comment>
+  <data name="logBaseY.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Log base Y</value>
+    <comment>Screen reader prompt for the logBaseY button</comment>
   </data>
-  <data name="logBaseX.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+  <data name="logBaseY.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
     <value>L</value>
     <comment>{Locked}This is the character that should trigger this button. Note that it is a character and not a key, so it does not come from the Windows::System::VirtualKey enum.</comment>
   </data>
@@ -4418,6 +4418,10 @@
     <value>Graph Options</value>
     <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
   </data>
+  <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Variable options</value>
+    <comment>Screen reader prompt for the variable settings button</comment>
+  </data>
   <data name="LineThicknessBox.Header" xml:space="preserve">
     <value>Line Thickness</value>
     <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
@@ -4557,5 +4561,9 @@
     <data name="MatchAppTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Match app theme</value>
     <comment>This is the automation name text for the Graph settings option to set graph to match the app theme</comment>
+  </data>
+  <data name="FunctionRemovedAnnouncement" xml:space="preserve">
+    <value>Function removed</value>
+    <comment>Announcement used in Graphing Calculator when a function is removed from the function list</comment>
   </data>
 </root>

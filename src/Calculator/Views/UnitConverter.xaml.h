@@ -13,7 +13,6 @@
 #include "Converters/VisibilityNegationConverter.h"
 #include "CalcViewModel/UnitConverterViewModel.h"
 #include "Views/StateTriggers/AspectRatioTrigger.h"
-#include "Views/StateTriggers/ApplicationViewModeTrigger.h"
 
 namespace CalculatorApp
 {

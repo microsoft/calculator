@@ -4,9 +4,13 @@
 #include "pch.h"
 #include "EquationInputArea.xaml.h"
 #include "Utils/VisualTree.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "CalcViewModel/Common/Automation/NarratorAnnouncement.h"
+#include "CalcViewModel/Common/Automation/NarratorNotifier.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
+using namespace CalculatorApp::Common::Automation;
 using namespace GraphControl;
 using namespace CalculatorApp::ViewModel;
 using namespace CalculatorApp::Controls;
@@ -167,24 +171,17 @@ void EquationInputArea::FocusEquationTextBox(EquationViewModel ^ equation)
     {
         return;
     }
-    auto container = EquationInputList->ContainerFromIndex(index);
-    if (container == nullptr)
+    auto container = static_cast<UIElement ^>(EquationInputList->ContainerFromIndex(index));
+    if (container != nullptr)
     {
-        return;
-    }
-    auto equationTextBox = dynamic_cast<EquationTextBox ^>(container);
-    if (equationTextBox != nullptr)
-    {
-        equationTextBox->FocusTextBox();
-    }
-    else
-    {
+        container->StartBringIntoView();  
+
         auto equationInput = VisualTree::FindDescendantByName(container, "EquationInputButton");
         if (equationInput == nullptr)
         {
             return;
         }
-        equationTextBox = dynamic_cast<EquationTextBox ^>(equationInput);
+        auto equationTextBox = dynamic_cast<EquationTextBox ^>(equationInput);
         if (equationTextBox != nullptr)
         {
             equationTextBox->FocusTextBox();
@@ -206,6 +203,12 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
         }
 
         Equations->RemoveAt(index);
+
+        auto narratorNotifier = ref new NarratorNotifier();
+        auto announcement = CalculatorAnnouncement::GetFunctionRemovedAnnouncement(
+            AppResourceProvider::GetInstance()->GetResourceString(L"FunctionRemovedAnnouncement"));
+        narratorNotifier->Announce(announcement);
+
         int lastIndex = Equations->Size - 1;
 
         if (Equations->Size <= 1)
@@ -451,7 +454,26 @@ String ^ EquationInputArea::GetChevronIcon(bool isCollapsed)
 
 void EquationInputArea::VariableAreaTapped(Object ^ sender, TappedRoutedEventArgs ^ e)
 {
-    auto selectedVariableViewModel = static_cast<VariableViewModel ^>(static_cast<Grid ^>(sender)->DataContext);
+    ToggleVariableArea(static_cast<VariableViewModel ^>(static_cast<FrameworkElement ^>(sender)->DataContext));
+}
+
+void EquationInputArea::VariableAreaButtonTapped(Object ^ sender, TappedRoutedEventArgs ^ e)
+{
+    e->Handled = true;
+}
+  
+void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
+{
+    EquationFormatRequested(sender, e);
+}
+
+void EquationInputArea::VariableAreaClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    ToggleVariableArea(static_cast<VariableViewModel ^>(static_cast<Button ^>(sender)->DataContext));
+}
+
+void EquationInputArea::ToggleVariableArea(VariableViewModel ^ selectedVariableViewModel)
+{
     selectedVariableViewModel->SliderSettingsVisible = !selectedVariableViewModel->SliderSettingsVisible;
 
     // Collapse all other slider settings that are open
@@ -462,11 +484,7 @@ void EquationInputArea::VariableAreaTapped(Object ^ sender, TappedRoutedEventArg
             variableViewModel->SliderSettingsVisible = false;
         }
     }
-}
 
-void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ e)
-{
-    EquationFormatRequested(sender, e);
 }
 
 void EquationInputArea::Slider_ValueChanged(Object ^ sender, RangeBaseValueChangedEventArgs ^ e)

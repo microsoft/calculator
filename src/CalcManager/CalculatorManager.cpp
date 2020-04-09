@@ -670,7 +670,7 @@ namespace CalculationManager
 
     bool CalculatorManager::IsEngineRecording()
     {
-        return m_currentCalculatorEngine->FInRecordingState() ? true : false;
+        return m_currentCalculatorEngine->FInRecordingState();
     }
 
     bool CalculatorManager::IsInputEmpty()

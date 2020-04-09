@@ -162,11 +162,17 @@
                                              Text="{x:Bind Max, Mode=OneWay}"/>
                                 </Grid>
                             </Grid>
-                            <FontIcon Margin="0,6,0,0"
-                                      VerticalAlignment="Center"
-                                      FontFamily="{StaticResource CalculatorFontFamily}"
-                                      FontSize="9"
-                                      Glyph="{x:Bind local:EquationInputArea.GetChevronIcon(SliderSettingsVisible), Mode=OneWay}"/>
+                            <Button x:Uid="VariableAreaSettings"
+                                    Margin="0,6,0,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Background="Transparent"
+                                    Click="VariableAreaClicked"
+                                    Tapped="VariableAreaButtonTapped">
+                                <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
+                                          FontSize="9"
+                                          Glyph="{x:Bind local:EquationInputArea.GetChevronIcon(SliderSettingsVisible), Mode=OneWay}"/>
+                            </Button>
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -803,7 +809,7 @@
                                 <Flyout x:Uid="ColorChooserFlyout" Placement="Bottom">
                                     <local:EquationStylePanelControl EnableLineStylePicker="{x:Bind GraphEquation.IsInequality, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                                                                      SelectedColor="{x:Bind LineColor, Mode=TwoWay}"
-                                                                     SelectedColorIndex="{x:Bind LineColorIndex , Mode=TwoWay}"
+                                                                     SelectedColorIndex="{x:Bind LineColorIndex, Mode=TwoWay}"
                                                                      SelectedStyle="{x:Bind GraphEquation.EquationStyle, Mode=TwoWay}"/>
                                 </Flyout>
                             </controls:EquationTextBox.ColorChooserFlyout>

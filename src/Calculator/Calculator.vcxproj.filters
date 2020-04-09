@@ -329,12 +329,6 @@
     </ClCompile>
     <ClCompile Include="Common\ViewState.cpp" />
     <ClCompile Include="Utils\DispatcherTimerDelayer.cpp" />
-    <ClCompile Include="Controls\TwoPaneViewCX.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\StateTriggers\ApplicationViewModeTrigger.cpp">
-      <Filter>Views\StateTriggers</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -443,12 +437,6 @@
     </ClInclude>
     <ClInclude Include="Common\ViewState.h" />
     <ClInclude Include="Utils\DispatcherTimerDelayer.h" />
-    <ClInclude Include="Controls\TwoPaneViewCX.h">
-      <Filter>Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\StateTriggers\ApplicationViewModeTrigger.h">
-      <Filter>Views\StateTriggers</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -1591,8 +1579,6 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="$(GraphingImplDll)" />
-    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>
