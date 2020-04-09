@@ -72,10 +72,6 @@
                 <Setter Property="FontWeight" Value="Medium"/>
             </Style>
 
-            <Style x:Key="GraphSettingsVariableTextBoxStyle"
-                   BasedOn="{StaticResource ThemedVariableTextBoxStyle}"
-                   TargetType="TextBox"/>
-
             <DataTemplate x:Key="XYTextBoxHeaderTemplate" x:DataType="x:String">
                 <TextBlock FontSize="14" Text="{x:Bind}"/>
             </DataTemplate>

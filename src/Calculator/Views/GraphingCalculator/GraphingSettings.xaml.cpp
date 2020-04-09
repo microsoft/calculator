@@ -43,7 +43,7 @@ Style ^ GraphingSettings::SelectTextBoxStyle(bool incorrectRange, bool error)
     }
     else
     {
-        return static_cast<::Style ^>(this->Resources->Lookup(L"GraphSettingsVariableTextBoxStyle"));
+        return static_cast<::Style ^>(Application::Current->Resources->Lookup(L"ThemedVariableTextBoxStyle"));
     }
 }
 
