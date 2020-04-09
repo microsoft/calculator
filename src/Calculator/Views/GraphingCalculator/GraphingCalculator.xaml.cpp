@@ -200,8 +200,13 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
 wstringstream GraphingCalculator::FormatTraceValue(double min, double max, float pointValue)
 {
     wstringstream traceValueString;
+
+    // This formula will give us the precision to use for the pointValue based on the min/max. For example: 
+    // If we want to round to two decimal places, this will return 0.01
+    // If we want to round to the nearest 100th this will return 100
     auto roundingNumber = pow(10, floor(log10(max - min)) - 3);
 
+    // Determine if we want to show scientific notation instead
     if (roundingNumber <= 0.0000001 || roundingNumber >= 10000000)
     { 
         traceValueString << scientific;
@@ -211,6 +216,7 @@ wstringstream GraphingCalculator::FormatTraceValue(double min, double max, float
         traceValueString << fixed;
     }
 
+    // If we are rounding to a decimal place, set the precision
     if (roundingNumber < 1)
     {
         auto roundingNumberStr = std::to_wstring(roundingNumber);
@@ -220,6 +226,7 @@ wstringstream GraphingCalculator::FormatTraceValue(double min, double max, float
     }
     else
     {
+        // If we are rounding to a place larger than 1, do that rounding here
         if (roundingNumber > 1)
         {
             pointValue = static_cast<float>(round(pointValue / roundingNumber) * roundingNumber);
