@@ -88,7 +88,7 @@ namespace GraphControl
     void Grapher::ZoomFromCenter(double scale)
     {
         ScaleRange(0, 0, scale);
-        GraphViewChangedEvent(this, ref new RoutedEventArgs());
+        GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
     }
 
     void Grapher::ScaleRange(double centerX, double centerY, double scale)
@@ -104,7 +104,7 @@ namespace GraphControl
                     m_renderMain->GetCriticalSection().unlock();
 
                     m_renderMain->RunRenderPass();
-                    GraphViewChangedEvent(this, ref new RoutedEventArgs());
+                    GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
                 }
                 else
                 {
@@ -123,7 +123,7 @@ namespace GraphControl
                 if (SUCCEEDED(renderer->ResetRange()))
                 {
                     m_renderMain->RunRenderPass();
-                    GraphViewChangedEvent(this, ref new RoutedEventArgs());
+                    GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
                 }
             }
         }
@@ -405,7 +405,7 @@ namespace GraphControl
                 // Do not re-initialize the graph to empty if there are still valid equations graphed
                 if (!shouldKeepPreviousGraph)
                 {
-                    initResult = m_graph->TryInitialize();
+                    initResult = TryInitializeGraph(false, nullptr);
                     if (initResult != nullopt)
                     {
                         UpdateGraphOptions(m_graph->GetOptions(), vector<Equation ^>());
@@ -711,7 +711,7 @@ namespace GraphControl
         const auto [centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, ActualWidth, ActualHeight);
 
         ScaleRange(centerX, centerY, scale);
-        GraphViewChangedEvent(this, ref new RoutedEventArgs());
+        GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
 
         e->Handled = true;
     }
@@ -792,9 +792,8 @@ namespace GraphControl
 
                 if (needsRenderPass)
                 {
-                    IsKeepCurrentView = true;
                     m_renderMain->RunRenderPass();
-                    GraphViewChangedEvent(this, ref new RoutedEventArgs());
+                    GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
                 }
             }
         }

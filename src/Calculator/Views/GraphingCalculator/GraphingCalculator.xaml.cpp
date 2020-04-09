@@ -669,8 +669,17 @@ void GraphingCalculator::SetDefaultFocus()
     }
 }
 
-void GraphingCalculator::GraphingControl_GraphViewChangedEvent(Object ^ sender, RoutedEventArgs ^ e)
+void GraphingCalculator::GraphingControl_GraphViewChangedEvent(Object ^ sender, GraphViewChangedReason reason)
 {
+    if (reason == GraphViewChangedReason::Manipulation)
+    {
+        IsManualAdjustment = true;
+    }
+    else
+    {
+        IsManualAdjustment = false;
+    }
+
     UpdateGraphAutomationName();
 
     auto announcement = CalculatorAnnouncement::GetGraphViewChangedAnnouncement(GraphControlAutomationName);
@@ -781,7 +790,6 @@ void GraphingCalculator::GraphViewButton_Click(Object ^ sender, RoutedEventArgs 
     if (IsManualAdjustment)
     {
         announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphViewManualAdjustmentAnnouncement");
-
     }
     else
     {

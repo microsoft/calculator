@@ -67,7 +67,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void GraphingControl_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void GraphingControl_LosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
         void GraphingControl_VariablesUpdated(Platform::Object ^ sender, Object ^ args);
-        void GraphingControl_GraphViewChangedEvent(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void GraphingControl_GraphViewChangedEvent(Platform::Object ^ sender, GraphControl::GraphViewChangedReason reason);
         void GraphingControl_GraphPlottedEvent(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnEquationKeyGraphFeaturesRequested(Platform::Object ^ sender, CalculatorApp::ViewModel::EquationViewModel ^ e);
         void OnKeyGraphFeaturesClosed(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);

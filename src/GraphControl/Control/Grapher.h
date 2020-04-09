@@ -25,6 +25,12 @@ public
 public
     delegate void PointerValueChangedEventHandler(Windows::Foundation::Point value);
 
+public enum class GraphViewChangedReason
+{
+    Manipulation,
+    Reset
+};  
+
     [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed
         : public Windows::UI::Xaml::Controls::Control,
           public Windows::UI::Xaml::Data::INotifyPropertyChanged
@@ -33,7 +39,7 @@ public
         event TracingValueChangedEventHandler ^ TracingValueChangedEvent;
         event PointerValueChangedEventHandler ^ PointerValueChangedEvent;
         event TracingChangedEventHandler ^ TracingChangedEvent;
-        event Windows::UI::Xaml::RoutedEventHandler ^ GraphViewChangedEvent;
+        event Windows::Foundation::EventHandler<GraphViewChangedReason> ^ GraphViewChangedEvent;
         event Windows::UI::Xaml::RoutedEventHandler ^ GraphPlottedEvent;
         virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler ^ PropertyChanged;
 
@@ -250,6 +256,7 @@ public
                     if (m_renderMain)
                     {
                         m_renderMain->RunRenderPass();
+                        GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
                     }
                 }
             }
