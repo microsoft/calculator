@@ -366,14 +366,14 @@ void EquationInputArea::ReloadAvailableColors(bool isHighContrast, bool reassign
     }
 
     // Reassign colors for each equation
-    if (reassignColors)
+    if (isHighContrast || reassignColors)
     {
         m_lastLineColorIndex = -1;
     }
 
     for (auto equationViewModel : Equations)
     {
-        if (reassignColors)
+        if (isHighContrast || reassignColors)
         {
             m_lastLineColorIndex = (m_lastLineColorIndex + 1) % AvailableColors->Size;
             equationViewModel->LineColorIndex = m_lastLineColorIndex;
