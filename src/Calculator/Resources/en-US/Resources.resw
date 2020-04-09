@@ -4267,11 +4267,11 @@
     <comment>Error that occurs during graphing when complex numbers are used in inequalities.</comment>
   </data>
     <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Back</value>
+    <value>Back to function list</value>
     <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>
   </data>
   <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Back</value>
+    <value>Back to function list</value>
     <comment>This is the automation name for the back button in the equation analysis page in the graphing calculator</comment>
   </data>
   <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -4469,6 +4469,50 @@
   <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
     <value>Select All</value>
     <comment>Select all menu item from the Equation TextBox</comment>
+  </data>    
+  <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Function Input List Item</value>
+    <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Function Input List</value>
+    <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Function Input Panel</value>
+    <comment>The automation name for the Equation Input StackPanel that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableStackPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Variable Panel</value>
+    <comment>The automation name for the Variable StackPanel that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableListView.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Variable List</value>
+    <comment>The automation name for the Variable ListView that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableListViewItem" xml:space="preserve">
+    <value>Variable %1 List Item</value>
+    <comment>The automation name for the Variable ListViewItem that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableValueTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Variable Value Textbox</value>
+    <comment>The automation name for the Variable Value Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableValueSlider.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Variable Value Slider</value>
+    <comment>The automation name for the Variable Value Slider that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableMinTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Variable Minimum Value Textbox</value>
+    <comment>The automation name for the Variable Min Value Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableStepTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Variable Step Value Textbox</value>
+    <comment>The automation name for the Variable Step Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableMaxTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Variable Maximum Value Textbox</value>
+    <comment>The automation name for the Variable Max Value Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="solidLineStyleAutomationName" xml:space="preserve">
     <value>Solid line style</value>
@@ -4558,12 +4602,16 @@
     <value>Always light</value>
     <comment>This is the automation name text for the Graph settings option to set graph to light theme</comment>
   </data>
-    <data name="MatchAppTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="MatchAppTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Match app theme</value>
     <comment>This is the automation name text for the Graph settings option to set graph to match the app theme</comment>
   </data>
   <data name="FunctionRemovedAnnouncement" xml:space="preserve">
     <value>Function removed</value>
     <comment>Announcement used in Graphing Calculator when a function is removed from the function list</comment>
+  </data>
+  <data name="KGFEquationTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Function Analysis Equation Box</value>
+    <comment>This is the automation name text for the equation box in the function analsis panel</comment>
   </data>
 </root>
