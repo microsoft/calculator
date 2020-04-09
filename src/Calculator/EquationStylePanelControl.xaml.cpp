@@ -197,9 +197,14 @@ String ^ EquationStylePanelControl::GetColorAutomationName(Brush ^ brush)
     {
         return resourceLoader->GetResourceString("equationColor13AutomationName");
     }
+    else if (Application::Current->RequestedTheme == ApplicationTheme::Dark &&
+        color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush14")))
+    {
+        return resourceLoader->GetResourceString("equationColor14WhiteAutomationName");
+    }
     else
     {
-        return resourceLoader->GetResourceString("equationColor14AutomationName");
+        return resourceLoader->GetResourceString("equationColor14BlackAutomationName");
     }
 }
 
