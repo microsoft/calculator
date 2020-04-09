@@ -1812,3 +1812,13 @@ void StandardCalculatorViewModel::SelectHistoryItem(HistoryItemViewModel ^ item)
     SetPrimaryDisplay(item->Result, false);
     IsFToEEnabled = false;
 }
+
+void StandardCalculatorViewModel::ResetCalcManager(bool clearMemory)
+{
+    m_standardCalculatorManager.Reset(clearMemory);
+}
+
+void StandardCalculatorViewModel::SendCommandToCalcManager(int commandId)
+{
+    m_standardCalculatorManager.SendCommand(static_cast<Command>(commandId));
+}

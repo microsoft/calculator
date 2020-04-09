@@ -4,9 +4,13 @@
 #include "pch.h"
 #include "EquationInputArea.xaml.h"
 #include "Utils/VisualTree.h"
+#include "CalcViewModel/Common/AppResourceProvider.h"
+#include "CalcViewModel/Common/Automation/NarratorAnnouncement.h"
+#include "CalcViewModel/Common/Automation/NarratorNotifier.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
+using namespace CalculatorApp::Common::Automation;
 using namespace GraphControl;
 using namespace CalculatorApp::ViewModel;
 using namespace CalculatorApp::Controls;
@@ -199,6 +203,12 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
         }
 
         Equations->RemoveAt(index);
+
+        auto narratorNotifier = ref new NarratorNotifier();
+        auto announcement = CalculatorAnnouncement::GetFunctionRemovedAnnouncement(
+            AppResourceProvider::GetInstance()->GetResourceString(L"FunctionRemovedAnnouncement"));
+        narratorNotifier->Announce(announcement);
+
         int lastIndex = Equations->Size - 1;
 
         if (Equations->Size <= 1)

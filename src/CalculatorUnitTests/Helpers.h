@@ -108,3 +108,5 @@ void VERIFY_VECTORS_ARE_EQUAL(Windows::Foundation::Collections::IVector<T> ^ vec
         VERIFY_ARE_EQUAL(vecA->GetAt(i), vecB->GetAt(i), __VA_ARGS__);
     }
 };
+
+Platform::String ^ GetStringValue(Platform::String ^ input);

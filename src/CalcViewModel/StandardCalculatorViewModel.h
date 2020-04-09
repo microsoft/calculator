@@ -12,11 +12,6 @@
 #include "Common/BitLength.h"
 #include "Common/NumberBase.h"
 
-namespace CalculatorFunctionalTests
-{
-    class HistoryTests;
-}
-
 namespace CalculatorUnitTests
 {
     class MultiWindowUnitTests;
@@ -247,7 +242,11 @@ namespace CalculatorApp
                 }
             }
 
-        internal :
+            // Used by unit tests
+            void ResetCalcManager(bool clearMemory);
+            void SendCommandToCalcManager(int command);
+
+        internal:
             void OnPaste(Platform::String ^ pastedString);
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
@@ -373,7 +372,6 @@ namespace CalculatorApp
             CalculatorApp::Common::ViewMode GetCalculatorMode();
 
             friend class CalculatorDisplay;
-            friend class CalculatorFunctionalTests::HistoryTests;
             friend class CalculatorUnitTests::MultiWindowUnitTests;
         };
     }

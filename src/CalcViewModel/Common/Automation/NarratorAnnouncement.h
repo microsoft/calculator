@@ -70,5 +70,7 @@ public
         static NarratorAnnouncement ^ GetGraphModeChangedAnnouncement(Platform::String ^ announcement);
         static NarratorAnnouncement ^ GetGraphViewChangedAnnouncement(Platform::String ^ announcement);
 
+        static NarratorAnnouncement ^ GetFunctionRemovedAnnouncement(Platform::String ^ announcement);
+
     };
 }
