@@ -18,7 +18,9 @@
             <converters:BooleanNegationConverter x:Name="BooleanNegationConverter"/>
 
             <DataTemplate x:Key="VariableDataTemplate" x:DataType="vm:VariableViewModel">
-                <Grid DataContext="{x:Bind}" Tapped="VariableAreaTapped">
+                <Grid AutomationProperties.Name="{x:Bind VariableAutomationName}"
+                      DataContext="{x:Bind}"
+                      Tapped="VariableAreaTapped">
                     <Grid.Resources>
                         <ResourceDictionary>
 
@@ -111,6 +113,7 @@
                                            Text="="/>
 
                                 <TextBox x:Name="ValueTextBox"
+                                         x:Uid="VariableValueTextBox"
                                          Grid.Column="2"
                                          Margin="6,0,0,0"
                                          Padding="0,10,0,0"
@@ -128,7 +131,8 @@
                                 </TextBox>
                             </Grid>
 
-                            <Slider Grid.Column="1"
+                            <Slider x:Uid="VariableValueSlider"
+                                    Grid.Column="1"
                                     Margin="8,0,8,-6"
                                     VerticalAlignment="Center"
                                     DataContext="{x:Bind}"
@@ -157,6 +161,7 @@
                                                VerticalAlignment="Center"
                                                FontSize="11"/>
                                     <TextBox x:Name="MinTextBox"
+                                             x:Uid="VariableMinTextBox"
                                              Grid.Column="1"
                                              MaxWidth="18"
                                              Padding="2,16,2,2"
@@ -178,6 +183,7 @@
                                                VerticalAlignment="Center"
                                                FontSize="11"/>
                                     <TextBox x:Name="StepTextBox"
+                                             x:Uid="VariableStepTextBox"
                                              Grid.Column="1"
                                              MaxWidth="18"
                                              Padding="2,16,2,2"
@@ -198,6 +204,7 @@
                                                VerticalAlignment="Center"
                                                FontSize="11"/>
                                     <TextBox x:Name="MaxTextBox"
+                                             x:Uid="VariableMaxTextBox"
                                              Grid.Column="1"
                                              MaxWidth="18"
                                              Padding="2,16,2,2"
@@ -803,9 +810,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel>
+        <StackPanel x:Uid="EquationInputPanel">
             <!-- This ListView and the one below should be replacted by an ItemRepeater once https://github.com/microsoft/microsoft-ui-xaml/issues/2011 is fixed. -->
             <ListView x:Name="EquationInputList"
+                      x:Uid="EquationInputList"
                       IsItemClickEnabled="False"
                       ItemsSource="{x:Bind Equations}"
                       SelectionMode="None"
@@ -868,7 +876,8 @@
                 <Rectangle Height="1"
                            Margin="12"
                            Fill="{ThemeResource DividerBrush}"/>
-                <ListView IsItemClickEnabled="False"
+                <ListView x:Uid="VariableListView"
+                          IsItemClickEnabled="False"
                           ItemTemplate="{StaticResource VariableDataTemplate}"
                           ItemsSource="{x:Bind Variables, Mode=OneWay}"
                           SelectionMode="None"

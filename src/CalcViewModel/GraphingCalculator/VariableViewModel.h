@@ -4,6 +4,7 @@
 #pragma once
 
 #include "../Common/Utils.h"
+#include "CalcViewModel/Common/LocalizationStringUtil.h"
 #include "EquationViewModel.h"
 
 namespace CalculatorApp::ViewModel
@@ -104,6 +105,15 @@ public
                     VariableUpdated(this, VariableChangedEventArgs{ Name, value });
                     RaisePropertyChanged(L"Value");
                 }
+            }
+        }
+
+        property Platform::String ^ VariableAutomationName
+        {
+            Platform::String ^ get()
+            {
+                return CalculatorApp::Common::LocalizationStringUtil::GetLocalizedString(
+                           CalculatorApp::AppResourceProvider::GetInstance()->GetResourceString(L"VariableListViewItem"), Name);
             }
         }
 
