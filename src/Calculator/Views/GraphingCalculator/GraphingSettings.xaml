@@ -1,28 +1,14 @@
 <UserControl x:Class="CalculatorApp.GraphingSettings"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="using:CalculatorApp.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
-             xmlns:converters="using:CalculatorApp.Converters"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.ThemeDictionaries>
-                <ResourceDictionary x:Key="Default">
-                    <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="#33EB5757"/>
-                    <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="#FFEB5757"/>
-                </ResourceDictionary>
-                <ResourceDictionary x:Key="Light">
-                    <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="#33EB5757"/>
-                    <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="#FFEB5757"/>
-                </ResourceDictionary>
-                <ResourceDictionary x:Key="HighContrast">
-                    <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
-                    <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="Red"/>
-                </ResourceDictionary>
-            </ResourceDictionary.ThemeDictionaries>
             <Style x:Key="TrigUnitsRadioButtonStyle" TargetType="RadioButton">
                 <Setter Property="MinHeight" Value="38"/>
                 <Setter Property="MinWidth" Value="90"/>
@@ -86,15 +72,28 @@
                 <Setter Property="FontWeight" Value="Medium"/>
             </Style>
 
-            <Style x:Key="ErrorTextBoxStyle" TargetType="TextBox">
-                <Setter Property="BorderBrush" Value="{ThemeResource GraphSettingsErrorBorderBrush}"/>
-                <Setter Property="Background" Value="{ThemeResource GraphSettingsErrorBackgroundBrush}"/>
-            </Style>
             <DataTemplate x:Key="XYTextBoxHeaderTemplate" x:DataType="x:String">
                 <TextBlock FontSize="14" Text="{x:Bind}"/>
             </DataTemplate>
 
             <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="Black"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{StaticResource SystemColorButtonFaceColor}"/>
+                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{StaticResource SystemColorButtonFaceColor}"/>
+                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{StaticResource SystemColorButtonTextColor}"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -133,6 +132,7 @@
                 <TextBox x:Name="SettingsXMin"
                          x:Uid="GraphSettingsXMin"
                          MaxWidth="160"
+                         HorizontalAlignment="Left"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMinError), Mode=OneWay}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
@@ -141,6 +141,7 @@
                          x:Uid="GraphSettingsXMax"
                          Grid.Column="2"
                          MaxWidth="160"
+                         HorizontalAlignment="Left"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMaxError), Mode=OneWay}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
@@ -150,6 +151,7 @@
                          x:Uid="GraphSettingsYMin"
                          Grid.Row="2"
                          MaxWidth="160"
+                         HorizontalAlignment="Left"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMinError), Mode=OneWay}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
@@ -159,6 +161,7 @@
                          Grid.Row="2"
                          Grid.Column="2"
                          MaxWidth="160"
+                         HorizontalAlignment="Left"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMaxError), Mode=OneWay}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
@@ -223,8 +226,7 @@
                        AutomationProperties.HeadingLevel="Level2"/>
 
             <StackPanel Orientation="Vertical">
-                <RadioButton x:Uid="AlwaysLightTheme"
-                             IsChecked="{x:Bind IsMatchAppTheme, Mode=TwoWay, Converter={StaticResource BooleanNegationConverter}}"/>
+                <RadioButton x:Uid="AlwaysLightTheme" IsChecked="{x:Bind IsMatchAppTheme, Mode=TwoWay, Converter={StaticResource BooleanNegationConverter}}"/>
                 <RadioButton x:Uid="MatchAppTheme"
                              Margin="1,0"
                              IsChecked="{x:Bind IsMatchAppTheme, Mode=TwoWay}"/>
