@@ -33,6 +33,7 @@ using namespace Calculator::Utils;
 namespace
 {
     inline constexpr auto maxEquationSize = 14;
+    inline constexpr auto colorCount = 14;
     inline constexpr std::array<int, 14> colorAssignmentMapping = { 0, 3, 7, 10, 1, 4, 8, 11, 2, 5, 9, 12, 6, 13 };
 
     StringReference EquationsPropertyName(L"Equations");
@@ -99,15 +100,16 @@ void EquationInputArea::AddNewEquation()
     }
     else
     {
-        std::array<bool, maxEquationSize> colorAssignmentUsed = { false, false, false, false, false, false, false,
-                                                                  false, false, false, false, false, false, false };
+        std::array<bool, colorCount> colorAssignmentUsed{};
         for (auto equation : Equations)
         {
             colorAssignmentUsed[equation->LineColorIndex] = true;
         }
 
         colorIndex = 0;
-        while (colorIndex < maxEquationSize - 1 && colorAssignmentUsed[colorAssignmentMapping[colorIndex]])
+        // If for some reason all of the values in colorAssignmentUsed are true, the check for colorIndex < colorCount - 1 will
+        // set it to the last color in the list
+        while (colorIndex < colorCount - 1 && colorAssignmentUsed[colorAssignmentMapping[colorIndex]])
         {
             colorIndex++;
         }
