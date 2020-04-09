@@ -50,7 +50,10 @@ TwoPaneViewCX::TwoPaneViewCX()
 
 TwoPaneViewCX::~TwoPaneViewCX()
 {
-    Window::Current->SizeChanged -= m_windowSizeChangedToken;
+    if (Window::Current != nullptr)
+    {
+        Window::Current->SizeChanged -= m_windowSizeChangedToken;
+    }
 }
 
 void TwoPaneViewCX::OnApplyTemplate()
