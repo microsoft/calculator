@@ -4490,8 +4490,8 @@
     <value>Variable List</value>
     <comment>The automation name for the Variable ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
-  <data name="VariableListViewItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Variable List Item</value>
+  <data name="VariableListViewItem" xml:space="preserve">
+    <value>Variable %1 List Item</value>
     <comment>The automation name for the Variable ListViewItem that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableValueTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">

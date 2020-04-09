@@ -18,7 +18,7 @@
             <converters:BooleanNegationConverter x:Name="BooleanNegationConverter"/>
 
             <DataTemplate x:Key="VariableDataTemplate" x:DataType="vm:VariableViewModel">
-                <Grid x:Uid="VariableListViewItem"
+                <Grid AutomationProperties.Name="{x:Bind VariableAutomationName}"
                       DataContext="{x:Bind}"
                       Tapped="VariableAreaTapped">
                     <Grid.Resources>
