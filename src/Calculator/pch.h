@@ -28,6 +28,7 @@
 #include <regex>
 #include <string>
 #include <tuple>
+#include <cmath>
 #include <iomanip>
 #include <WindowsNumerics.h>
 
