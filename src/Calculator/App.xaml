@@ -1822,17 +1822,13 @@
                 <Setter Property="MinWidth" Value="30"/>
             </Style>
 
-            <Style x:Key="VariableTextErrorBoxStyle" TargetType="TextBox">
-                <Setter Property="Margin" Value="1,0,0,0"/>
-                <Setter Property="Padding" Value="2,6,2,2"/>
-                <Setter Property="TextAlignment" Value="Center"/>
+            <Style x:Key="VariableTextErrorBoxStyle"
+                   BasedOn="{StaticResource VariableTextBoxStyle}"
+                   TargetType="TextBox">
                 <Setter Property="BorderBrush" Value="{ThemeResource GraphSettingsErrorBorderBrush}"/>
                 <Setter Property="Background" Value="{ThemeResource GraphSettingsErrorBackgroundBrush}"/>
-                <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                <Setter Property="FontSize" Value="14"/>
-                <Setter Property="InputScope" Value="Number"/>
-                <Setter Property="MinWidth" Value="30"/>
             </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
