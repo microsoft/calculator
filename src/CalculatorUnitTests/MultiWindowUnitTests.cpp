@@ -132,14 +132,14 @@ TEST_METHOD(MultipleModesCalculationTest)
                                            { NumbersAndOperatorsEnum::F, L"F", L"" },
                                            { NumbersAndOperatorsEnum::None, L"", L"" } };
     ValidateViewModelByCommands(viewModels[2], programmerModeTestItems, false);
-    VERIFY_ARE_EQUAL(GetStringValue(viewModels[2]->HexDisplayValue), StringReference(L"F"));
-    VERIFY_ARE_EQUAL(GetStringValue(viewModels[2]->DecimalDisplayValue), StringReference(L"15"));
-    VERIFY_ARE_EQUAL(GetStringValue(viewModels[2]->OctalDisplayValue), StringReference(L"17"));
-    VERIFY_ARE_EQUAL(GetStringValue(viewModels[2]->BinaryDisplayValue), StringReference(L"1111"));
+    VERIFY_ARE_EQUAL(viewModels[2]->HexDisplayValue, StringReference(L"F"));
+    VERIFY_ARE_EQUAL(viewModels[2]->DecimalDisplayValue, StringReference(L"15"));
+    VERIFY_ARE_EQUAL(viewModels[2]->OctalDisplayValue, StringReference(L"17"));
+    VERIFY_ARE_EQUAL(viewModels[2]->BinaryDisplayValue, StringReference(L"1111"));
 
     // Assert that Standard and Scientific mode Display Values are unchanged
-    VERIFY_ARE_EQUAL(GetStringValue(viewModels[0]->DisplayValue), StringReference(L"3"));
-    VERIFY_ARE_EQUAL(GetStringValue(viewModels[1]->DisplayValue), StringReference(L"7"));
+    VERIFY_ARE_EQUAL(viewModels[0]->DisplayValue, StringReference(L"3"));
+    VERIFY_ARE_EQUAL(viewModels[1]->DisplayValue, StringReference(L"7"));
 }
 
 // Perform calculations on 2 instances of Calculator in Standard Mode and verify that they work independently
@@ -174,7 +174,7 @@ TEST_METHOD(MultipleStandardModeCalculationTest)
     ValidateViewModelByCommands(standardViewModel2, standardModeTestItems2, true);
 
     // Assert that the Display Value of 1st instance is unchanged
-    VERIFY_ARE_EQUAL(GetStringValue(standardViewModel1->DisplayValue), StringReference(L"1"));
+    VERIFY_ARE_EQUAL(standardViewModel1->DisplayValue, StringReference(L"1"));
 }
 
 // Perform calculations on 2 instances of Calculator in Scientific Mode and verify that they work independently
@@ -209,7 +209,7 @@ TEST_METHOD(MultipleScientificModeCalculationTest)
     ValidateViewModelByCommands(scientificViewModel2, scientificModeTestItems2, true);
 
     // Assert that the Display Value of 1st instance is unchanged
-    VERIFY_ARE_EQUAL(GetStringValue(scientificViewModel1->DisplayValue), StringReference(L"1"));
+    VERIFY_ARE_EQUAL(scientificViewModel1->DisplayValue, StringReference(L"1"));
 }
 
 // Perform calculations on 2 instances of Calculator in Scientific Mode
@@ -274,10 +274,10 @@ TEST_METHOD(MultipleProgrammerModeCalculationTest)
                                             { NumbersAndOperatorsEnum::None, L"", L"" } };
 
     ValidateViewModelByCommands(programmerViewModel1, programmerModeTestItems1, false);
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->HexDisplayValue), StringReference(L"F"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->DecimalDisplayValue), StringReference(L"15"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->OctalDisplayValue), StringReference(L"17"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->BinaryDisplayValue), StringReference(L"1111"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->HexDisplayValue, StringReference(L"F"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->DecimalDisplayValue, StringReference(L"15"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->OctalDisplayValue, StringReference(L"17"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->BinaryDisplayValue, StringReference(L"1111"));
 
     // Radix Type: Octal, Expression: 7
     TESTITEM programmerModeTestItems2[] = { { NumbersAndOperatorsEnum::OctButton, L"0", L"" },
@@ -285,17 +285,17 @@ TEST_METHOD(MultipleProgrammerModeCalculationTest)
                                             { NumbersAndOperatorsEnum::None, L"", L"" } };
 
     ValidateViewModelByCommands(programmerViewModel2, programmerModeTestItems2, false);
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel2->HexDisplayValue), StringReference(L"7"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel2->DecimalDisplayValue), StringReference(L"7"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel2->OctalDisplayValue), StringReference(L"7"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel2->BinaryDisplayValue), StringReference(L"0111"));
+    VERIFY_ARE_EQUAL(programmerViewModel2->HexDisplayValue, StringReference(L"7"));
+    VERIFY_ARE_EQUAL(programmerViewModel2->DecimalDisplayValue, StringReference(L"7"));
+    VERIFY_ARE_EQUAL(programmerViewModel2->OctalDisplayValue, StringReference(L"7"));
+    VERIFY_ARE_EQUAL(programmerViewModel2->BinaryDisplayValue, StringReference(L"0111"));
 
     // Assert that displayed values of 1st instance are unchanged
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->DisplayValue), StringReference(L"F"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->HexDisplayValue), StringReference(L"F"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->DecimalDisplayValue), StringReference(L"15"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->OctalDisplayValue), StringReference(L"17"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->BinaryDisplayValue), StringReference(L"1111"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->DisplayValue, StringReference(L"F"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->HexDisplayValue, StringReference(L"F"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->DecimalDisplayValue, StringReference(L"15"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->OctalDisplayValue, StringReference(L"17"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->BinaryDisplayValue, StringReference(L"1111"));
 }
 
 // Perform calculations on 2 instances of Calculator in Programmer Mode
@@ -335,10 +335,10 @@ TEST_METHOD(MultipleProgrammerModeWithDifferentSettingsTest)
                                             { NumbersAndOperatorsEnum::None, L"", L"" } };
 
     ValidateViewModelByCommands(programmerViewModel1, programmerModeTestItems1, false);
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->HexDisplayValue), StringReference(L"FF"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->DecimalDisplayValue), StringReference(L"-1"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->OctalDisplayValue), StringReference(L"377"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel1->BinaryDisplayValue), StringReference(L"1111 1111"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->HexDisplayValue, StringReference(L"FF"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->DecimalDisplayValue, StringReference(L"-1"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->OctalDisplayValue, StringReference(L"377"));
+    VERIFY_ARE_EQUAL(programmerViewModel1->BinaryDisplayValue, StringReference(L"1111 1111"));
 
     TESTITEM programmerModeTestItems2[] = { { NumbersAndOperatorsEnum::Seven, L"7", L"" },
                                             { NumbersAndOperatorsEnum::Seven, L"77", L"" },
@@ -350,10 +350,10 @@ TEST_METHOD(MultipleProgrammerModeWithDifferentSettingsTest)
                                             { NumbersAndOperatorsEnum::None, L"", L"" } };
 
     ValidateViewModelByCommands(programmerViewModel2, programmerModeTestItems2, false);
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel2->HexDisplayValue), StringReference(L"7FFF"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel2->DecimalDisplayValue), StringReference(L"32,767"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel2->OctalDisplayValue), StringReference(L"77 777"));
-    VERIFY_ARE_EQUAL(GetStringValue(programmerViewModel2->BinaryDisplayValue), StringReference(L"0111 1111 1111 1111"));
+    VERIFY_ARE_EQUAL(programmerViewModel2->HexDisplayValue, StringReference(L"7FFF"));
+    VERIFY_ARE_EQUAL(programmerViewModel2->DecimalDisplayValue, StringReference(L"32,767"));
+    VERIFY_ARE_EQUAL(programmerViewModel2->OctalDisplayValue, StringReference(L"77 777"));
+    VERIFY_ARE_EQUAL(programmerViewModel2->BinaryDisplayValue, StringReference(L"0111 1111 1111 1111"));
 }
 
 // Perform calculations on 2 separate instances of Calculator and verify that their History list items are maintained separately
@@ -392,8 +392,8 @@ TEST_METHOD(MultipleModesHistoryAddItemTest)
     // Assert for the history list items of 1st instance
     VERIFY_IS_TRUE(1 == viewModels[0]->HistoryVM->ItemSize);
 
-    auto item1 = static_cast<HistoryItemViewModel^>(viewModels[0]->HistoryVM->Items->GetAt(0));
-    String ^ expression1 = UtfUtils::LRO + L"1   +   2 =" + UtfUtils::PDF;
+    auto item1 = static_cast<HistoryItemViewModel ^>(viewModels[0]->HistoryVM->Items->GetAt(0));
+    String ^ expression1 = L"1   +   2 =";
     String ^ result1 = L"3";
 
     VERIFY_ARE_EQUAL(expression1, item1->Expression);
@@ -402,8 +402,8 @@ TEST_METHOD(MultipleModesHistoryAddItemTest)
     // Assert for the history list items of 2nd instance
     VERIFY_IS_TRUE(1 == viewModels[1]->HistoryVM->ItemSize);
 
-    auto item2 = static_cast<HistoryItemViewModel^>(viewModels[1]->HistoryVM->Items->GetAt(0));
-    String ^ expression2 = UtfUtils::LRO + L"1   +   2   " + UtfUtils::MUL + L"   3 =" + UtfUtils::PDF;
+    auto item2 = static_cast<HistoryItemViewModel ^>(viewModels[1]->HistoryVM->Items->GetAt(0));
+    String ^ expression2 = L"1   +   2   " + UtfUtils::MUL + L"   3 =";
     String ^ result2 = L"7";
 
     VERIFY_ARE_EQUAL(expression2, item2->Expression);
@@ -451,7 +451,7 @@ TEST_METHOD(MultipleStandardModesHistoryAddItemTest)
         ValidateViewModelByCommands(viewModels[i], standardModeTestItems[i], true);
     }
 
-    String ^ expression[] = { UtfUtils::LRO + L"1   +   2 =" + UtfUtils::PDF, UtfUtils::LRO + L"1   +   2   " + UtfUtils::MUL + L"   3 =" + UtfUtils::PDF };
+    String ^ expression[] = { L"1   +   2 =", L"1   +   2   " + UtfUtils::MUL + L"   3 =" };
     String ^ result[] = { L"3", L"7" };
 
     // Assert for the history list items of the instances
@@ -507,7 +507,7 @@ TEST_METHOD(MultipleScientificModesHistoryAddItemTest)
         ValidateViewModelByCommands(viewModels[i], standardModeTestItems[i], true);
     }
 
-    String ^ expression[] = { UtfUtils::LRO + L"1   +   2 =" + UtfUtils::PDF, UtfUtils::LRO + L"1   +   2   " + UtfUtils::MUL + L"   3 =" + UtfUtils::PDF };
+    String ^ expression[] = { L"1   +   2 =", L"1   +   2   " + UtfUtils::MUL + L"   3 =" };
     String ^ result[] = { L"3", L"9" };
 
     // Assert for the history list items of the instances
@@ -515,7 +515,7 @@ TEST_METHOD(MultipleScientificModesHistoryAddItemTest)
     {
         VERIFY_IS_TRUE(1 == viewModels[i]->HistoryVM->ItemSize);
 
-        auto item = static_cast<HistoryItemViewModel^>(viewModels[i]->HistoryVM->Items->GetAt(0));
+        auto item = static_cast<HistoryItemViewModel ^>(viewModels[i]->HistoryVM->Items->GetAt(0));
 
         VERIFY_ARE_EQUAL(expression[i], item->Expression);
         VERIFY_ARE_EQUAL(result[i], item->Result);
@@ -567,7 +567,7 @@ TEST_METHOD(MultipleModesMemoryAddItemTest)
         viewModels[i]->ButtonPressed->Execute(NumbersAndOperatorsEnum::Memory);
     }
 
-    String ^ expectedMemoryValues[] = { UtfUtils::LRO + L"3" + UtfUtils::PDF, UtfUtils::LRO + L"7" + UtfUtils::PDF, UtfUtils::LRO + L"F" + UtfUtils::PDF };
+    String ^ expectedMemoryValues[] = { L"3", L"7", L"F" };
 
     // Validate that only one item is present in the memory
     // Also assert for their value
@@ -781,7 +781,7 @@ TEST_METHOD(MultipleConverterModeCalculationTest)
         auto expectedValue1 = (i + 1).ToString();
         auto actualValue1 = viewModels[i]->Value1;
 
-        VERIFY_ARE_EQUAL(expectedValue1, GetStringValue(actualValue1));
+        VERIFY_ARE_EQUAL(expectedValue1, actualValue1);
 
         std::wstring unit1Name = viewModels[i]->Unit1->Name->Data();
         std::wstring unit2Name = viewModels[i]->Unit2->Name->Data();
@@ -789,7 +789,7 @@ TEST_METHOD(MultipleConverterModeCalculationTest)
         auto resKey = String::Concat(ref new String((unit1Name + L"-" + unit2Name + L"-").c_str()), expectedValue1);
         String ^ expectedResult = resLoader->GetString(resKey);
 
-        String ^ actualResult = GetStringValue(viewModels[i]->Value2);
+        String ^ actualResult = viewModels[i]->Value2;
 
         VERIFY_ARE_EQUAL(expectedResult, actualResult);
     }
@@ -860,11 +860,11 @@ TEST_METHOD(TestStandardUnitConverterAndDateViewModels)
     unitConverterViewModel->ButtonPressed->Execute(NumbersAndOperatorsEnum::Two);
 
     // Validate the Result
-    VERIFY_ARE_EQUAL(StringReference(L"2"), GetStringValue(unitConverterViewModel->Value1));
-    VERIFY_ARE_EQUAL(StringReference(L"0.002"), GetStringValue(unitConverterViewModel->Value2));
+    VERIFY_ARE_EQUAL(StringReference(L"2"), unitConverterViewModel->Value1);
+    VERIFY_ARE_EQUAL(StringReference(L"0.002"), unitConverterViewModel->Value2);
 
     // Assert that the Display Value of Standard Calc instance is unchanged
-    VERIFY_ARE_EQUAL(GetStringValue(standardViewModel->DisplayValue), StringReference(L"1"));
+    VERIFY_ARE_EQUAL(standardViewModel->DisplayValue, StringReference(L"1"));
 
     // Again perform calculations on Standard Calc instance and validate that the Converter remains unaffected
 
@@ -875,14 +875,14 @@ TEST_METHOD(TestStandardUnitConverterAndDateViewModels)
                                           { NumbersAndOperatorsEnum::Equals, L"3", L"" },
                                           { NumbersAndOperatorsEnum::None, L"", L"" } };
     ValidateViewModelByCommands(standardViewModel, standardModeTestItems2, true);
-    VERIFY_ARE_EQUAL(StringReference(L"3"), GetStringValue(standardViewModel->DisplayValue));
+    VERIFY_ARE_EQUAL(StringReference(L"3"), standardViewModel->DisplayValue);
 
     // Validate the Date Calculator
     VERIFY_ARE_EQUAL(DateUtils::GetLongDate(endDate), dateCalcViewModel->StrDateResult);
 
     // Validate the Unit Converter
-    VERIFY_ARE_EQUAL(StringReference(L"2"), GetStringValue(unitConverterViewModel->Value1));
-    VERIFY_ARE_EQUAL(StringReference(L"0.002"), GetStringValue(unitConverterViewModel->Value2));
+    VERIFY_ARE_EQUAL(StringReference(L"2"), unitConverterViewModel->Value1);
+    VERIFY_ARE_EQUAL(StringReference(L"0.002"), unitConverterViewModel->Value2);
 }
 
 // Change the radix in programmer mode and check that other modes are not affected
@@ -902,7 +902,7 @@ TEST_METHOD(MultipleModesWithChangeInProgrammerRadix)
                                            { NumbersAndOperatorsEnum::F, L"F", L"" },
                                            { NumbersAndOperatorsEnum::None, L"", L"" } };
     ValidateViewModelByCommands(viewModels[1], programmerModeTestItems, false /*doReset*/);
-    VERIFY_ARE_EQUAL(GetStringValue(viewModels[1]->HexDisplayValue), StringReference(L"F"));
+    VERIFY_ARE_EQUAL(viewModels[1]->HexDisplayValue, StringReference(L"F"));
 
     // Standard Mode: Expression 10+2=
     // Radix should be decimal, not hex
@@ -930,7 +930,7 @@ TEST_METHOD(MultipleModesWithChangeInProgrammerRadix)
                                               { NumbersAndOperatorsEnum::Equals, L"B", L"" },
                                               { NumbersAndOperatorsEnum::None, L"", L"" } };
     ValidateViewModelByCommands(viewModels[1], programmerModeTestItemsNew, true /*doReset*/);
-    VERIFY_ARE_EQUAL(GetStringValue(viewModels[1]->HexDisplayValue), StringReference(L"B"));
+    VERIFY_ARE_EQUAL(viewModels[1]->HexDisplayValue, StringReference(L"B"));
 }
 }
 ;
