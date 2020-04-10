@@ -219,10 +219,6 @@ namespace Utils
         };
     }
 
-    const wchar_t LRE = 0x202a; // Left-to-Right Embedding
-    const wchar_t PDF = 0x202c; // Pop Directional Formatting
-    const wchar_t LRO = 0x202d; // Left-to-Right Override
-
     // Regular DependencyProperty
     template <typename TOwner, typename TType>
     Windows::UI::Xaml::DependencyProperty^ RegisterDependencyProperty(

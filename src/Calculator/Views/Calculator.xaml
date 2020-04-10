@@ -41,7 +41,9 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:OverflowTextBlock">
-                        <Grid x:Name="TokenContainer" Background="{TemplateBinding Background}">
+                        <Grid x:Name="TokenContainer"
+                              Background="{TemplateBinding Background}"
+                              FlowDirection="LeftToRight">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="12"/>
                                 <ColumnDefinition/>
@@ -100,7 +102,9 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:OverflowTextBlock">
-                        <Grid x:Name="TokenContainer" Background="{TemplateBinding Background}">
+                        <Grid x:Name="TokenContainer"
+                              Background="{TemplateBinding Background}"
+                              FlowDirection="LeftToRight">
                             <Grid.Resources>
                                 <ResourceDictionary>
                                     <ResourceDictionary.ThemeDictionaries>

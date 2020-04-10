@@ -215,7 +215,7 @@ void CalculationResult::UpdateTextState()
 
     auto containerSize = m_textContainer->ActualWidth;
     String ^ oldText = m_textBlock->Text;
-    String ^ newText = Utils::LRO + DisplayValue + Utils::PDF;
+    String ^ newText = DisplayValue;
 
     // Initiate the scaling operation
     // UpdateLayout will keep calling us until we make it through the below 2 if-statements

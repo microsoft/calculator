@@ -507,7 +507,7 @@ TEST_METHOD(MultipleScientificModesHistoryAddItemTest)
         ValidateViewModelByCommands(viewModels[i], standardModeTestItems[i], true);
     }
 
-    String ^ expression[] = { UtfUtils::LRO + L"1   +   2 =" + Utils::PDF, UtfUtils::LRO + L"1   +   2   " + UtfUtils::MUL + L"   3 =" + Utils::PDF };
+    String ^ expression[] = { UtfUtils::LRO + L"1   +   2 =" + UtfUtils::PDF, UtfUtils::LRO + L"1   +   2   " + UtfUtils::MUL + L"   3 =" + UtfUtils::PDF };
     String ^ result[] = { L"3", L"9" };
 
     // Assert for the history list items of the instances

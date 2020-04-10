@@ -381,7 +381,6 @@ String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& st
         }
         result = L"-" + result;
     }
-    result = Utils::LRE + result + Utils::PDF;
     return result;
 }
 

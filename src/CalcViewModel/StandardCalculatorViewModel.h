@@ -341,9 +341,9 @@ namespace CalculatorApp
             Platform::String ^ m_selectedExpressionLastData;
             Common::DisplayExpressionToken ^ m_selectedExpressionToken;
 
-            Platform::String ^ LocalizeDisplayValue(_In_ std::wstring const& displayValue, _In_ bool isError);
+            Platform::String ^ LocalizeDisplayValue(_In_ std::wstring const& displayValue);
             Platform::String
-                ^ CalculateNarratorDisplayValue(_In_ std::wstring const& displayValue, _In_ Platform::String ^ localizedDisplayValue, _In_ bool isError);
+                ^ CalculateNarratorDisplayValue(_In_ std::wstring const& displayValue, _In_ Platform::String ^ localizedDisplayValue);
             CalculatorApp::Common::Automation::NarratorAnnouncement ^ GetDisplayUpdatedNarratorAnnouncement();
             Platform::String ^ GetCalculatorExpressionAutomationName();
             Platform::String ^ GetNarratorStringReadRawNumbers(_In_ Platform::String ^ localizedDisplayValue);
