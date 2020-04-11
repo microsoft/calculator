@@ -500,10 +500,8 @@
                         <Setter Target="KeyGraphFeaturesControl.(Grid.RowSpan)" Value="2"/>
                         <Setter Target="EquationInputAreaControl.(Grid.RowSpan)" Value="2"/>
                         <Setter Target="GraphingNumPad.(Grid.RowSpan)" Value="2"/>
-                        <Setter Target="KeyGraphFeaturesControl.(Grid.Column)" Value="1"/>
                         <Setter Target="EquationInputAreaControl.(Grid.Column)" Value="1"/>
                         <Setter Target="GraphingNumPad.(Grid.Column)" Value="0"/>
-                        <Setter Target="KeyGraphFeaturesControl.(Grid.ColumnSpan)" Value="1"/>
                         <Setter Target="EquationInputAreaControl.(Grid.ColumnSpan)" Value="1"/>
                         <Setter Target="GraphingNumPad.(Grid.ColumnSpan)" Value="1"/>
                         <Setter Target="RightGrid.Margin" Value="24"/>
