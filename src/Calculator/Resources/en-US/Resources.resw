@@ -4621,7 +4621,7 @@
   </data>
   <data name="KGFEquationTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Function Analysis Equation Box</value>
-    <comment>This is the automation name text for the equation box in the function analsis panel</comment>
+    <comment>This is the automation name text for the equation box in the function analysis panel</comment>
   </data>
   <data name="lessThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Less than</value>
