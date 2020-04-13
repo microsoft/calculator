@@ -800,6 +800,7 @@
                                                   DataContext="{x:Bind Mode=OneWay}"
                                                   DataContextChanged="EquationTextBox_DataContextChanged"
                                                   EquationButtonClicked="EquationTextBox_EquationButtonClicked"
+                                                  IsEquationLineDisabled="{x:Bind IsLineEnabled, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                                                   EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
                                                   EquationColor="{x:Bind local:EquationInputArea.ToSolidColorBrush(LineColor), Mode=OneWay}"
                                                   EquationFormatRequested="EquationTextBox_EquationFormatRequested"

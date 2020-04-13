@@ -157,7 +157,11 @@ void EquationInputArea::EquationTextBox_Submitted(Object ^ sender, MathRichEditB
         || (submission->Source == EquationSubmissionSource::FOCUS_LOST && submission->HasTextChanged && eq->Expression != nullptr
             && eq->Expression->Length() > 0))
     {
-        eq->IsLineEnabled = true;
+        if (submission->Source == EquationSubmissionSource::ENTER_KEY)
+        {
+            eq->IsLineEnabled = true;
+        }
+
         unsigned int index = 0;
         if (Equations->IndexOf(eq, &index))
         {
