@@ -1282,7 +1282,7 @@
                                        AutomationProperties.AutomationId="negateButton"
                                        ButtonId="Negate"
                                        Click="Button_Clicked"
-                                       Content="&#xF898;"
+                                       Content="&#xE3B5;"
                                        IsTabStop="false"/>
 
             <controls:CalculatorButton x:Name="Num0Button"

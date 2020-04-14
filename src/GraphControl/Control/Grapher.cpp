@@ -37,6 +37,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, AxesColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GraphBackground);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, GridLinesColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, LineWidth);
+DEPENDENCY_PROPERTY_INITIALIZATION(Grapher, IsKeepCurrentView);
 
 namespace
 {
@@ -87,7 +88,7 @@ namespace GraphControl
     void Grapher::ZoomFromCenter(double scale)
     {
         ScaleRange(0, 0, scale);
-        GraphViewChangedEvent(this, ref new RoutedEventArgs());
+        GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
     }
 
     void Grapher::ScaleRange(double centerX, double centerY, double scale)
@@ -103,7 +104,7 @@ namespace GraphControl
                     m_renderMain->GetCriticalSection().unlock();
 
                     m_renderMain->RunRenderPass();
-                    GraphViewChangedEvent(this, ref new RoutedEventArgs());
+                    GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
                 }
                 else
                 {
@@ -122,7 +123,7 @@ namespace GraphControl
                 if (SUCCEEDED(renderer->ResetRange()))
                 {
                     m_renderMain->RunRenderPass();
-                    GraphViewChangedEvent(this, ref new RoutedEventArgs());
+                    GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
                 }
             }
         }
@@ -207,7 +208,6 @@ namespace GraphControl
         {
             return;
         }
-
         bool keepCurrentView = true;
 
         // If the equation has changed, the IsLineEnabled state is reset.
@@ -254,7 +254,7 @@ namespace GraphControl
 
     void Grapher::PlotGraph(bool keepCurrentView)
     {
-        TryPlotGraph(keepCurrentView, false);
+        TryPlotGraph(keepCurrentView,false);
     }
 
     task<void> Grapher::TryPlotGraph(bool keepCurrentView, bool shouldRetry)
@@ -405,7 +405,7 @@ namespace GraphControl
                 // Do not re-initialize the graph to empty if there are still valid equations graphed
                 if (!shouldKeepPreviousGraph)
                 {
-                    initResult = m_graph->TryInitialize();
+                    initResult = TryInitializeGraph(false, nullptr);
                     if (initResult != nullopt)
                     {
                         UpdateGraphOptions(m_graph->GetOptions(), vector<Equation ^>());
@@ -711,7 +711,7 @@ namespace GraphControl
         const auto [centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, ActualWidth, ActualHeight);
 
         ScaleRange(centerX, centerY, scale);
-        GraphViewChangedEvent(this, ref new RoutedEventArgs());
+        GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
 
         e->Handled = true;
     }
@@ -793,7 +793,7 @@ namespace GraphControl
                 if (needsRenderPass)
                 {
                     m_renderMain->RunRenderPass();
-                    GraphViewChangedEvent(this, ref new RoutedEventArgs());
+                    GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
                 }
             }
         }
@@ -1086,7 +1086,7 @@ void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
 
 optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bool keepCurrentView, const IExpression* graphingExp)
 {
-    if (keepCurrentView)
+    if (keepCurrentView || IsKeepCurrentView)
     {
         double xMin, xMax, yMin, yMax;
         m_graph->GetRenderer()->GetDisplayRanges(xMin, xMax, yMin, yMax);
