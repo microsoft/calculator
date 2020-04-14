@@ -29,6 +29,7 @@
 #include <string>
 #include <tuple>
 #include <cmath>
+#include <algorithm>
 #include <iomanip>
 #include <WindowsNumerics.h>
 

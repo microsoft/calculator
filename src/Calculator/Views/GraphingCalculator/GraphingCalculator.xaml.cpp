@@ -201,14 +201,17 @@ wstringstream GraphingCalculator::FormatTraceValue(double min, double max, float
 {
     wstringstream traceValueString;
 
-    // This formula will give us the precision to use for the pointValue based on the min/max. For example: 
+    // Extract precision we will round to 
+    auto precision = static_cast<int>(floor(log10(max - min)) - 3);
+
+    // This formula will give us the precision to use for the pointValue based on the min/max. For example:
     // If we want to round to two decimal places, this will return 0.01
     // If we want to round to the nearest 100th this will return 100
-    auto roundingNumber = pow(10, floor(log10(max - min)) - 3);
+    auto roundingNumber = pow(10, precision);
 
-    // Determine if we want to show scientific notation instead
+        // Determine if we want to show scientific notation instead
     if (roundingNumber <= 0.0000001 || roundingNumber >= 10000000)
-    { 
+    {
         traceValueString << scientific;
     }
     else
@@ -216,13 +219,11 @@ wstringstream GraphingCalculator::FormatTraceValue(double min, double max, float
         traceValueString << fixed;
     }
 
+
     // If we are rounding to a decimal place, set the precision
     if (roundingNumber < 1)
     {
-        auto roundingNumberStr = std::to_wstring(roundingNumber);
-        TrimTrailingZeros(roundingNumberStr);
-        auto precisionLength = roundingNumberStr.length() - 2;
-        traceValueString << setprecision(precisionLength) << pointValue;
+        traceValueString << setprecision(::min(7, abs(precision))) << pointValue;
     }
     else
     {
