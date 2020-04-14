@@ -220,7 +220,7 @@ wstringstream GraphingCalculator::FormatTraceValue(double min, double max, float
     auto roundingNumber = pow(10, precision);
 
         // Determine if we want to show scientific notation instead
-    if (roundingNumber <= 0.0000001 || roundingNumber >= 10000000)
+    if (precision <= -7 || precision  >= 7)
     {
         traceValueString << scientific;
     }
