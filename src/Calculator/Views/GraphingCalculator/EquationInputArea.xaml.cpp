@@ -74,11 +74,11 @@ void EquationInputArea::OnEquationsPropertyChanged()
 {
     if (Equations != nullptr && Equations->Size == 0)
     {
-        AddNewEquation();
+        AddNewEquation(true);
     }
 }
 
-void EquationInputArea::AddNewEquation()
+void EquationInputArea::AddNewEquation(bool isNewEquationFocused)
 {
     if (Equations->Size > 0)
     {
@@ -119,7 +119,11 @@ void EquationInputArea::AddNewEquation()
 
     auto eq = ref new EquationViewModel(ref new Equation(), ++m_lastFunctionLabelIndex, AvailableColors->GetAt(colorIndex)->Color, colorIndex);
     eq->IsLastItemInList = true;
-    m_equationToFocus = eq;
+    if (isNewEquationFocused)
+    {
+        m_equationToFocus = eq;
+    }
+
     Equations->Append(eq);
 }
 
@@ -164,7 +168,7 @@ void EquationInputArea::EquationTextBox_Submitted(Object ^ sender, MathRichEditB
             if (index == Equations->Size - 1)
             {
                 // If it's the last equation of the list
-                AddNewEquation();
+                AddNewEquation(submission->Source != EquationSubmissionSource::FOCUS_LOST);
             }
             else
             {

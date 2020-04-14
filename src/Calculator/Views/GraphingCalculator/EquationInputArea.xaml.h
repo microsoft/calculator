@@ -45,7 +45,7 @@ public
         void OnPropertyChanged(Platform::String ^ propertyName);
         void OnEquationsPropertyChanged();
 
-        void AddNewEquation();
+        void AddNewEquation(bool isNewEquationFocused);
 
         void EquationTextBox_GotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void EquationTextBox_LostFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
