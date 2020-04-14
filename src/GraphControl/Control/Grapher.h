@@ -25,6 +25,12 @@ public
 public
     delegate void PointerValueChangedEventHandler(Windows::Foundation::Point value);
 
+public enum class GraphViewChangedReason
+{
+    Manipulation,
+    Reset
+};  
+
     [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed
         : public Windows::UI::Xaml::Controls::Control,
           public Windows::UI::Xaml::Data::INotifyPropertyChanged
@@ -33,7 +39,7 @@ public
         event TracingValueChangedEventHandler ^ TracingValueChangedEvent;
         event PointerValueChangedEventHandler ^ PointerValueChangedEvent;
         event TracingChangedEventHandler ^ TracingChangedEvent;
-        event Windows::UI::Xaml::RoutedEventHandler ^ GraphViewChangedEvent;
+        event Windows::Foundation::EventHandler<GraphViewChangedReason> ^ GraphViewChangedEvent;
         event Windows::UI::Xaml::RoutedEventHandler ^ GraphPlottedEvent;
         virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler ^ PropertyChanged;
 
@@ -51,8 +57,9 @@ public
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, AxesColor, Windows::UI::Colors::Transparent);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, GraphBackground, Windows::UI::Colors::Transparent);
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(Windows::UI::Color, GridLinesColor, Windows::UI::Colors::Transparent);
-
         DEPENDENCY_PROPERTY_WITH_DEFAULT_AND_CALLBACK(double, LineWidth, 2.0);
+        DEPENDENCY_PROPERTY_WITH_DEFAULT(bool, IsKeepCurrentView, false);
+
         // Pass active tracing turned on or off down to the renderer
         property bool ActiveTracing
         {
@@ -250,6 +257,7 @@ public
                     if (m_renderMain)
                     {
                         m_renderMain->RunRenderPass();
+                        GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
                     }
                 }
             }
@@ -304,6 +312,7 @@ public
         void SetEquationsAsValid();
         void SetEquationErrors();
         std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitializeGraph(bool keepCurrentView, _In_ const Graphing::IExpression* graphingExp = nullptr);
+
 
     private:
         DX::RenderMain ^ m_renderMain = nullptr;

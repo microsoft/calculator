@@ -91,6 +91,11 @@ GraphingCalculator::GraphingCalculator()
     virtualKey->Modifiers = VirtualKeyModifiers::Control;
     ZoomInButton->KeyboardAccelerators->Append(virtualKey);
 
+    if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent(L"Windows.UI.Xaml.Media.ThemeShadow"))
+    {
+        SharedShadow->Receivers->Append(GraphingControl);
+    }
+    
     m_accessibilitySettings->HighContrastChanged +=
         ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &GraphingCalculator::OnHighContrastChanged);
 
@@ -168,6 +173,11 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
         if (itemToRemove->Expression->IsEmpty())
         {
             GraphingControl->Equations->RemoveAt(event->Index);
+
+            if (GraphingControl->Equations->Size == 1 && GraphingControl->Equations->GetAt(0)->Expression->IsEmpty())
+            {
+                IsManualAdjustment = false;
+            }
 
             return;
         }
@@ -288,7 +298,7 @@ void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object ^ sender, 
 {
     // Ask the OS to start a share action.
     DataTransferManager::ShowShareUI();
-    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::Share);
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::Share, GraphButtonValue::None);
 }
 
 // When share is invoked (by the user or programmatically) the event handler we registered will be called to populate the data package with the
@@ -420,19 +430,13 @@ void GraphingCalculator::OnVariableChanged(Platform::Object ^ sender, VariableCh
 void GraphingCalculator::OnZoomInCommand(Object ^ /* parameter */)
 {
     GraphingControl->ZoomFromCenter(zoomInScale);
-    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ZoomIn);
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ZoomIn, GraphButtonValue::None);
 }
 
 void GraphingCalculator::OnZoomOutCommand(Object ^ /* parameter */)
 {
     GraphingControl->ZoomFromCenter(zoomOutScale);
-    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ZoomOut);
-}
-
-void GraphingCalculator::OnZoomResetCommand(Object ^ /* parameter */)
-{
-    GraphingControl->ResetGrid();
-    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ZoomReset);
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ZoomOut, GraphButtonValue::None);
 }
 
 String ^ GraphingCalculator::GetTracingLegend(Platform::IBox<bool> ^ isTracing)
@@ -597,7 +601,7 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^
     KeyboardShortcutManager::IgnoreEscape(false);
 
     TracePointer->Visibility = ::Visibility::Visible;
-    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ActiveTracingChecked);
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ActiveTracingChecked, GraphButtonValue::None);
 }
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_Unchecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
@@ -616,7 +620,7 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_Unchecked(Platform::Object
     KeyboardShortcutManager::HonorEscape();
 
     TracePointer->Visibility = ::Visibility::Collapsed;
-    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ActiveTracingUnchecked);
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::ActiveTracingUnchecked, GraphButtonValue::None);
 }
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args)
@@ -631,7 +635,7 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp(Windows::UI::Core::C
 void GraphingCalculator::GraphSettingsButton_Click(Object ^ sender, RoutedEventArgs ^ e)
 {
     DisplayGraphSettings();
-    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::GraphSettings);
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::GraphSettings, GraphButtonValue::None);
 }
 
 void GraphingCalculator::DisplayGraphSettings()
@@ -663,7 +667,7 @@ void CalculatorApp::GraphingCalculator::AddTracePointerShadow()
     dropShadow->Mask = CursorPath->GetAlphaMask();
 
     auto shadowSpriteVisual = compositor->CreateSpriteVisual();
-    shadowSpriteVisual->Size = ::Numerics::float2(static_cast<float>(CursorPath->ActualWidth), static_cast<float>(CursorPath->ActualHeight));
+    shadowSpriteVisual->Size = ::Numerics::float2(18, 18);
     shadowSpriteVisual->Shadow = dropShadow;
     ::Hosting::ElementCompositionPreview::SetElementChildVisual(CursorShadow, shadowSpriteVisual);
 }
@@ -714,8 +718,17 @@ void GraphingCalculator::SetDefaultFocus()
     }
 }
 
-void GraphingCalculator::GraphingControl_GraphViewChangedEvent(Object ^ sender, RoutedEventArgs ^ e)
+void GraphingCalculator::GraphingControl_GraphViewChangedEvent(Object ^ sender, GraphViewChangedReason reason)
 {
+    if (reason == GraphViewChangedReason::Manipulation)
+    {
+        IsManualAdjustment = true;
+    }
+    else
+    {
+        IsManualAdjustment = false;
+    }
+
     UpdateGraphAutomationName();
 
     auto announcement = CalculatorAnnouncement::GetGraphViewChangedAnnouncement(GraphControlAutomationName);
@@ -817,4 +830,24 @@ void GraphingCalculator::OnGraphThemeSettingChanged(Object ^ sender, bool isMatc
                                         refThis->UpdateGraphTheme();
                                     }
                                 }));
+}
+
+void GraphingCalculator::GraphViewButton_Click(Object ^ sender, RoutedEventArgs ^ e)
+{
+    auto narratorNotifier = ref new NarratorNotifier();
+    String ^ announcementText;
+    if (IsManualAdjustment)
+    {
+        announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphViewManualAdjustmentAnnouncement");
+    }
+    else
+    {
+        GraphingControl->ResetGrid();
+        announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphViewAutomaticBestFitAnnouncement");
+    }
+
+    auto announcement = CalculatorAnnouncement::GetGraphViewBestFitChangedAnnouncement(announcementText);
+    narratorNotifier->Announce(announcement);
+
+    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::GraphView, IsManualAdjustment ? GraphButtonValue::ManualAdjustment : GraphButtonValue::AutomaticBestFit);
 }

@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:contract7Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)"
+             xmlns:contract8Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
              xmlns:converters="using:CalculatorApp.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:graphControl="using:GraphControl"
@@ -12,6 +13,8 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
+            <contract8Present:ThemeShadow x:Name="SharedShadow"/>
+
             <Style x:Key="GraphToggleButtonStyle" TargetType="ToggleButton">
                 <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                 <Setter Property="Background" Value="Transparent"/>
@@ -283,6 +286,79 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Style x:Name="GraphViewToggleButtonStyle"
+                   BasedOn="{StaticResource GraphToggleButtonStyle}"
+                   TargetType="ToggleButton">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <ContentPresenter x:Name="ContentPresenter">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPointerOver}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushPointerOver}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundPointerOver}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPressed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushPressed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundPressed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Checked"/>
+                                        <VisualState x:Name="CheckedPointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPointerOver}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushPointerOver}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundPointerOver}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="CheckedPressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPressed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushPressed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundPressed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </ContentPresenter>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
             <!-- Graph Theme Colors -->
             <Color x:Key="LightThemeAxisColor">#000000</Color>
@@ -293,6 +369,7 @@
             <Color x:Key="DarkThemeGridLinesColor">#4F4F4F</Color>
 
             <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
+            <converters:BooleanNegationConverter x:Name="BooleanNegationConverter"/>
 
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
@@ -320,7 +397,11 @@
                            TargetType="ToggleButton">
                         <Setter Property="Foreground" Value="#FFFFFF"/>
                     </Style>
-
+                    <Style x:Key="ThemedGraphViewToggleButtonStyle"
+                           BasedOn="{StaticResource GraphViewToggleButtonStyle}"
+                           TargetType="ToggleButton">
+                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                    </Style>
                     <Style x:Key="GraphTooltipStyle" TargetType="Border">
                         <Setter Property="BorderBrush" Value="#e0e0e0"/>
                         <Setter Property="BorderThickness" Value="1"/>
@@ -353,6 +434,9 @@
                     <Style x:Key="ThemedGraphToggleButtonStyle"
                            BasedOn="{StaticResource GraphToggleButtonStyle}"
                            TargetType="ToggleButton"/>
+                    <Style x:Key="ThemedGraphViewToggleButtonStyle"
+                           BasedOn="{StaticResource GraphViewToggleButtonStyle}"
+                           TargetType="ToggleButton"/>
                     <Style x:Key="GraphTooltipStyle" TargetType="Border">
                         <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
                         <Setter Property="BorderBrush" Value="#e0e0e0"/>
@@ -376,6 +460,9 @@
                         <Setter Property="Margin" Value="1"/>
                     </Style>
                     <Style x:Key="ThemedGraphToggleButtonStyle" TargetType="ToggleButton">
+                        <Setter Property="Margin" Value="1"/>
+                    </Style>
+                    <Style x:Key="ThemedGraphViewToggleButtonStyle" TargetType="ToggleButton">
                         <Setter Property="Margin" Value="1"/>
                     </Style>
                     <Style x:Key="GraphTooltipStyle" TargetType="Border">
@@ -501,6 +588,7 @@
                                   ForceProportionalAxes="False"
                                   GraphPlottedEvent="GraphingControl_GraphPlottedEvent"
                                   GraphViewChangedEvent="GraphingControl_GraphViewChangedEvent"
+                                  IsKeepCurrentView="{x:Bind IsManualAdjustment, Mode=TwoWay}"
                                   LosingFocus="GraphingControl_LosingFocus"
                                   LostFocus="GraphingControl_LostFocus"
                                   RequestedTheme="Light"
@@ -610,19 +698,30 @@
                         </RepeatButton.KeyboardAccelerators>
                     </RepeatButton>
 
-                    <Button x:Uid="zoomResetButton"
-                            MinHeight="40"
-                            Style="{ThemeResource ThemedGraphButtonStyle}"
-                            contract7Present:CornerRadius="{ThemeResource BottomButtonCornerRadius}"
-                            AutomationProperties.AutomationId="zoomResetButton"
-                            Command="{x:Bind ZoomResetButtonPressed, Mode=OneTime}">
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                  FontSize="14"
-                                  Glyph="&#xE895;"/>
-                        <Button.KeyboardAccelerators>
+                    <ToggleButton x:Uid="graphViewButton"
+                                  MinHeight="40"
+                                  MinWidth="40"
+                                  Style="{ThemeResource ThemedGraphViewToggleButtonStyle}"
+                                  contract7Present:CornerRadius="{ThemeResource BottomButtonCornerRadius}"
+                                  AutomationProperties.AutomationId="graphViewButton"
+                                  Click="GraphViewButton_Click"
+                                  IsChecked="{x:Bind IsManualAdjustment, Mode=TwoWay}">
+                        <ToggleButton.Content>
+                            <Grid>
+                                <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
+                                          FontSize="14"
+                                          Glyph="&#xE45E;"/>
+                                <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
+                                          FontSize="14"
+                                          Glyph="&#xE45D;"
+                                          Visibility="{x:Bind IsManualAdjustment, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
+                            </Grid>
+                        </ToggleButton.Content>
+                        <ToggleButton.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
-                        </Button.KeyboardAccelerators>
-                    </Button>
+                        </ToggleButton.KeyboardAccelerators>
+
+                    </ToggleButton>
                 </StackPanel>
             </Border>
             <Border x:Name="TraceValuePopup"
@@ -630,6 +729,8 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Style="{ThemeResource GraphTooltipStyle}"
+                    contract8Present:Shadow="{StaticResource SharedShadow}"
+                    contract8Present:Translation="0,0,32"
                     IsHitTestVisible="False"
                     SizeChanged="TraceValuePopup_SizeChanged"
                     Visibility="Collapsed">

@@ -26,6 +26,7 @@ namespace CalculatorApp::Common::Automation
         StringReference GraphModeChanged(L"GraphModeChanged");
         StringReference GraphViewChanged(L"GraphViewChanged");
         StringReference FunctionRemoved(L"FunctionRemoved");
+        StringReference GraphViewBestFitChanged(L"GraphViewBestFitChanged");
     }
 }
 
@@ -168,5 +169,14 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetFunctionRemovedAnnouncement(St
         announcement,
         CalculatorActivityIds::FunctionRemoved,
         AutomationNotificationKind::ItemRemoved,
+        AutomationNotificationProcessing::MostRecent);
+}
+
+NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphViewBestFitChangedAnnouncement(Platform::String ^ announcement)
+{
+    return ref new NarratorAnnouncement(
+        announcement,
+        CalculatorActivityIds::GraphViewBestFitChanged,
+        AutomationNotificationKind::ActionCompleted,
         AutomationNotificationProcessing::MostRecent);
 }
