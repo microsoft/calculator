@@ -43,6 +43,7 @@ namespace CalculatorApp
             static void IgnoreEscape(bool onlyOnce);
             static void HonorEscape();
             static void HonorShortcuts(bool allow);
+            static void DisableShortcuts(bool disable);
             static void UpdateDropDownState(bool);
             static void ShiftButtonChecked(bool checked);
             static void UpdateDropDownState(Windows::UI::Xaml::Controls::Flyout ^ aboutPageFlyout);

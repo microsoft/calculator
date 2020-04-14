@@ -129,6 +129,8 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         ViewMode newValue = m_model->Mode;
         ViewMode previousMode = m_model->PreviousMode;
 
+        KeyboardShortcutManager::DisableShortcuts(false);
+
         if (newValue == ViewMode::Standard)
         {
             EnsureCalculator();
@@ -171,6 +173,7 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         else if (newValue == ViewMode::Graphing)
         {
             EnsureGraphingCalculator();
+            KeyboardShortcutManager::DisableShortcuts(true);
         }
         else if (NavCategory::IsConverterViewMode(newValue))
         {
@@ -424,7 +427,11 @@ void MainPage::OnNavPaneOpened(_In_ MUXC::NavigationView ^ sender, _In_ Object ^
 
 void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
-    KeyboardShortcutManager::HonorShortcuts(true);
+    if (Model->Mode != ViewMode::Graphing)
+    {
+        KeyboardShortcutManager::HonorShortcuts(true);
+    }
+
     this->SetDefaultFocus();
 }
 

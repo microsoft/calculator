@@ -125,8 +125,6 @@ void EquationInputArea::AddNewEquation()
 
 void EquationInputArea::EquationTextBox_GotFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
-    KeyboardShortcutManager::HonorShortcuts(false);
-
     auto eq = GetViewModelFromEquationTextBox(sender);
     if (eq != nullptr)
     {
@@ -136,8 +134,6 @@ void EquationInputArea::EquationTextBox_GotFocus(Object ^ sender, RoutedEventArg
 
 void EquationInputArea::EquationTextBox_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
 {
-    KeyboardShortcutManager::HonorShortcuts(true);
-
     auto eq = GetViewModelFromEquationTextBox(sender);
     if (eq != nullptr)
     {
