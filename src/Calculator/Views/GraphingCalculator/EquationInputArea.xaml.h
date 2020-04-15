@@ -81,6 +81,7 @@ public
         Windows::UI::ViewManagement::UISettings ^ m_uiSettings;
         int m_lastLineColorIndex;
         int m_lastFunctionLabelIndex;
+        bool m_isHighContrast;
         ViewModel::EquationViewModel ^ m_equationToFocus;
         Platform::Collections::Map<Platform::String ^, CalculatorApp::DispatcherTimerDelayer ^> ^ variableSliders;
     };

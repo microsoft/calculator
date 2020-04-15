@@ -48,6 +48,7 @@ EquationInputArea::EquationInputArea()
 {
     m_accessibilitySettings->HighContrastChanged +=
         ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &EquationInputArea::OnHighContrastChanged);
+    m_isHighContrast = m_accessibilitySettings->HighContrast;
 
     m_uiSettings = ref new UISettings();
     m_uiSettings->ColorValuesChanged += ref new TypedEventHandler<UISettings ^, Object ^>(this, &EquationInputArea::OnColorValuesChanged);
@@ -309,6 +310,7 @@ void EquationInputArea::FocusEquationIfNecessary(CalculatorApp::Controls::Equati
 void EquationInputArea::OnHighContrastChanged(AccessibilitySettings ^ sender, Object ^ args)
 {
     ReloadAvailableColors(sender->HighContrast, true);
+    m_isHighContrast = sender->HighContrast;
 }
 
 void EquationInputArea::OnColorValuesChanged(Windows::UI::ViewManagement::UISettings ^ sender, Platform::Object ^ args)
@@ -316,9 +318,9 @@ void EquationInputArea::OnColorValuesChanged(Windows::UI::ViewManagement::UISett
     WeakReference weakThis(this);
     this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([weakThis]() {
                                    auto refThis = weakThis.Resolve<EquationInputArea>();
-                                   if (refThis != nullptr)
+                                   if (refThis != nullptr && refThis->m_isHighContrast == refThis->m_accessibilitySettings->HighContrast)
                                    {
-                                       refThis->ReloadAvailableColors(refThis->m_accessibilitySettings->HighContrast, false);
+                                       refThis->ReloadAvailableColors(false, false);
                                    }
                                }));
 }
