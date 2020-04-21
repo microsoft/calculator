@@ -128,7 +128,9 @@ void CalculatorApp::Controls::MathRichEditBox::OnKeyUp(Platform::Object ^ sender
 void MathRichEditBox::OnMathTextPropertyChanged(Platform::String ^ oldValue, Platform::String ^ newValue)
 {
     SetMathTextProperty(newValue);
-    SetValue(MathTextProperty, newValue);
+
+    // Get the new math text directly from the TextBox since the textbox may have changed its formatting
+    SetValue(MathTextProperty, GetMathTextProperty());
 }
 
 void MathRichEditBox::InsertText(Platform::String ^ text, int cursorOffSet, int selectionLength)
