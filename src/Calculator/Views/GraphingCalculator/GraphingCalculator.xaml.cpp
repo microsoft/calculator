@@ -224,7 +224,6 @@ wstringstream GraphingCalculator::FormatTraceValue(double min, double max, float
         traceValueString << fixed;
     }
 
-
     // If we are rounding to a decimal place, set the precision
     if (precision < 0)
     {
