@@ -97,8 +97,8 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         bool m_cursorShadowInitialized;
         Windows::UI::ViewManagement::UISettings ^ m_uiSettings;
+        Windows::UI::Xaml::Controls::Flyout ^ m_graphFlyout;
         CalculatorApp::GraphingSettings ^ m_graphSettings;
-        void OnSettingsFlyout_Closing(Windows::UI::Xaml::Controls::Primitives::FlyoutBase ^ sender, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs ^ args);
         void Canvas_SizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void OnEquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);

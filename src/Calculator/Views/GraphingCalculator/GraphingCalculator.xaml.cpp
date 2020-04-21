@@ -95,7 +95,7 @@ GraphingCalculator::GraphingCalculator()
     {
         SharedShadow->Receivers->Append(GraphingControl);
     }
-    
+
     m_accessibilitySettings->HighContrastChanged +=
         ref new TypedEventHandler<AccessibilitySettings ^, Object ^>(this, &GraphingCalculator::OnHighContrastChanged);
 
@@ -600,17 +600,20 @@ void GraphingCalculator::DisplayGraphSettings()
     {
         m_graphSettings = ref new GraphingSettings();
         m_graphSettings->GraphThemeSettingChanged += ref new EventHandler<bool>(this, &GraphingCalculator::OnGraphThemeSettingChanged);
+        m_graphSettings->SetGrapher(this->GraphingControl);
+    }
+
+    if (m_graphFlyout == nullptr)
+    {
+        m_graphFlyout = ref new Flyout();
+        m_graphFlyout->Content = m_graphSettings;
     }
 
     m_graphSettings->IsMatchAppTheme = IsMatchAppTheme;
-    m_graphSettings->SetGrapher(this->GraphingControl);
-    auto flyoutGraphSettings = ref new Flyout();
-    flyoutGraphSettings->Content = m_graphSettings;
-    flyoutGraphSettings->Closing += ref new TypedEventHandler<FlyoutBase ^, FlyoutBaseClosingEventArgs ^>(this, &GraphingCalculator::OnSettingsFlyout_Closing);
 
     auto options = ref new FlyoutShowOptions();
     options->Placement = FlyoutPlacementMode::BottomEdgeAlignedRight;
-    flyoutGraphSettings->ShowAt(GraphSettingsButton, options);
+    m_graphFlyout->ShowAt(GraphSettingsButton, options);
 }
 
 void CalculatorApp::GraphingCalculator::AddTracePointerShadow()
@@ -626,12 +629,6 @@ void CalculatorApp::GraphingCalculator::AddTracePointerShadow()
     shadowSpriteVisual->Size = ::Numerics::float2(18, 18);
     shadowSpriteVisual->Shadow = dropShadow;
     ::Hosting::ElementCompositionPreview::SetElementChildVisual(CursorShadow, shadowSpriteVisual);
-}
-
-void GraphingCalculator::OnSettingsFlyout_Closing(FlyoutBase ^ sender, FlyoutBaseClosingEventArgs ^ args)
-{
-    auto flyout = static_cast<Flyout ^>(sender);
-    auto graphingSetting = static_cast<GraphingSettings ^>(flyout->Content);
 }
 
 void GraphingCalculator::Canvas_SizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ e)
@@ -780,12 +777,12 @@ void GraphingCalculator::OnGraphThemeSettingChanged(Object ^ sender, bool isMatc
     IsMatchAppTheme = isMatchAppTheme;
     WeakReference weakThis(this);
     this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new DispatchedHandler([weakThis]() {
-                                    auto refThis = weakThis.Resolve<GraphingCalculator>();
-                                    if (refThis != nullptr)
-                                    {
-                                        refThis->UpdateGraphTheme();
-                                    }
-                                }));
+                                   auto refThis = weakThis.Resolve<GraphingCalculator>();
+                                   if (refThis != nullptr)
+                                   {
+                                       refThis->UpdateGraphTheme();
+                                   }
+                               }));
 }
 
 void GraphingCalculator::GraphViewButton_Click(Object ^ sender, RoutedEventArgs ^ e)
@@ -805,5 +802,6 @@ void GraphingCalculator::GraphViewButton_Click(Object ^ sender, RoutedEventArgs 
     auto announcement = CalculatorAnnouncement::GetGraphViewBestFitChangedAnnouncement(announcementText);
     narratorNotifier->Announce(announcement);
 
-    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::GraphView, IsManualAdjustment ? GraphButtonValue::ManualAdjustment : GraphButtonValue::AutomaticBestFit);
+    TraceLogger::GetInstance()->LogGraphButtonClicked(
+        GraphButton::GraphView, IsManualAdjustment ? GraphButtonValue::ManualAdjustment : GraphButtonValue::AutomaticBestFit);
 }

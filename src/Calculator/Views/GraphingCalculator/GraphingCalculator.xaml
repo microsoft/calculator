@@ -296,8 +296,7 @@
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
-                                            <Storyboard>
-                                            </Storyboard>
+                                            <Storyboard/>
                                         </VisualState>
                                         <VisualState x:Name="PointerOver">
                                             <Storyboard>
@@ -699,8 +698,8 @@
                     </RepeatButton>
 
                     <ToggleButton x:Uid="graphViewButton"
-                                  MinHeight="40"
                                   MinWidth="40"
+                                  MinHeight="40"
                                   Style="{ThemeResource ThemedGraphViewToggleButtonStyle}"
                                   contract7Present:CornerRadius="{ThemeResource BottomButtonCornerRadius}"
                                   AutomationProperties.AutomationId="graphViewButton"
