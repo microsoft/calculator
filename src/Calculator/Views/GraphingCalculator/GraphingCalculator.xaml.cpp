@@ -600,7 +600,6 @@ void GraphingCalculator::DisplayGraphSettings()
     {
         m_graphSettings = ref new GraphingSettings();
         m_graphSettings->GraphThemeSettingChanged += ref new EventHandler<bool>(this, &GraphingCalculator::OnGraphThemeSettingChanged);
-        m_graphSettings->SetGrapher(this->GraphingControl);
     }
 
     if (m_graphFlyout == nullptr)
@@ -609,6 +608,7 @@ void GraphingCalculator::DisplayGraphSettings()
         m_graphFlyout->Content = m_graphSettings;
     }
 
+    m_graphSettings->SetGrapher(this->GraphingControl);
     m_graphSettings->IsMatchAppTheme = IsMatchAppTheme;
 
     auto options = ref new FlyoutShowOptions();
