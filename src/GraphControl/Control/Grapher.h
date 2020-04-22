@@ -232,10 +232,11 @@ public enum class GraphViewChangedReason
         {
             try
             {
-                if (m_graph != nullptr)
+                if (m_graph != nullptr && m_renderMain != nullptr)
                 {
                     if (auto render = m_graph->GetRenderer())
                     {
+                        Concurrency::critical_section::scoped_lock lock(m_renderMain->GetCriticalSection());
                         render->GetDisplayRanges(*xMin, *xMax, *yMin, *yMax);
                     }
                 }
