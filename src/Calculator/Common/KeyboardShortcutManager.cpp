@@ -52,11 +52,10 @@ static map<int, bool> s_IsDropDownOpen;
 static map<int, bool> s_ignoreNextEscape;
 static map<int, bool> s_keepIgnoringEscape;
 static map<int, bool> s_fHonorShortcuts;
+static map<int, bool> s_fDisableShortcuts;
 static map<int, Flyout ^> s_AboutFlyout;
 
 static reader_writer_lock s_keyboardShortcutMapLock;
-
-static bool s_shortcutsDisabled = false;
 
 namespace CalculatorApp
 {
@@ -737,11 +736,6 @@ void KeyboardShortcutManager::UpdateDropDownState(Flyout ^ aboutPageFlyout)
 
 void KeyboardShortcutManager::HonorShortcuts(bool allow)
 {
-    if (s_shortcutsDisabled)
-    {
-        return;
-    }
-
     // Writer lock for the static maps
     reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
@@ -749,6 +743,15 @@ void KeyboardShortcutManager::HonorShortcuts(bool allow)
 
     if (s_fHonorShortcuts.find(viewId) != s_fHonorShortcuts.end())
     {
+        if (s_fDisableShortcuts.find(viewId) != s_fDisableShortcuts.end())
+        {
+            if (s_fDisableShortcuts[viewId])
+            {
+                s_fHonorShortcuts[viewId] = false;
+                return;
+            }
+        }
+
         s_fHonorShortcuts[viewId] = allow;
     }
 }
@@ -808,6 +811,7 @@ void KeyboardShortcutManager::RegisterNewAppViewId()
     s_ignoreNextEscape[appViewId] = false;
     s_keepIgnoringEscape[appViewId] = false;
     s_fHonorShortcuts[appViewId] = true;
+    s_fDisableShortcuts[appViewId] = false;
     s_AboutFlyout[appViewId] = nullptr;
 }
 
@@ -833,11 +837,18 @@ void KeyboardShortcutManager::OnWindowClosed(int viewId)
     s_ignoreNextEscape.erase(viewId);
     s_keepIgnoringEscape.erase(viewId);
     s_fHonorShortcuts.erase(viewId);
+    s_fDisableShortcuts.erase(viewId);
     s_AboutFlyout.erase(viewId);
 }
 
 void KeyboardShortcutManager::DisableShortcuts(bool disable)
 {
-    s_shortcutsDisabled = disable;
+    int viewId = Utils::GetWindowId();
+
+    if (s_fDisableShortcuts.find(viewId) != s_fDisableShortcuts.end())
+    {
+        s_fDisableShortcuts[viewId] = disable;
+    }
+
     HonorShortcuts(!disable);
 }
