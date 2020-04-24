@@ -147,6 +147,7 @@ String ^ EquationStylePanelControl::GetColorAutomationName(Brush ^ brush)
 
     auto lightDictionary = static_cast<ResourceDictionary ^>(Application::Current->Resources->ThemeDictionaries->Lookup(L"Light"));
     auto darkDictionary = static_cast<ResourceDictionary ^>(Application::Current->Resources->ThemeDictionaries->Lookup(L"Default"));
+    auto highContrast = static_cast<ResourceDictionary ^>(Application::Current->Resources->ThemeDictionaries->Lookup(L"HighContrast"));
 
     if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush1"))
         || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush1")))
@@ -217,10 +218,27 @@ String ^ EquationStylePanelControl::GetColorAutomationName(Brush ^ brush)
     {
         return resourceLoader->GetResourceString("equationColor14WhiteAutomationName");
     }
-    else
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush14")))
     {
         return resourceLoader->GetResourceString("equationColor14BlackAutomationName");
     }
+    else if (color == safe_cast<SolidColorBrush ^>(highContrast->Lookup(L"EquationBrush1")))
+    {
+        return resourceLoader->GetResourceString("equationHighContrastColor1AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(highContrast->Lookup(L"EquationBrush2")))
+    {
+        return resourceLoader->GetResourceString("equationHighContrastColor2AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(highContrast->Lookup(L"EquationBrush3")))
+    {
+        return resourceLoader->GetResourceString("equationHighContrastColor3AutomationName");
+    }
+    else
+    {
+        return resourceLoader->GetResourceString("equationHighContrastColor4AutomationName");
+    }
+
 }
 
 String ^ EquationStylePanelControl::GetLineAutomationName(Object ^ line)

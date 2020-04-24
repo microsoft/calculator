@@ -4591,6 +4591,22 @@
     <value>White</value>
     <comment>Name of color in the color picker</comment>
   </data>
+    <data name="equationHighContrastColor1AutomationName" xml:space="preserve">
+    <value>Color 1</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationHighContrastColor2AutomationName" xml:space="preserve">
+    <value>Color 2</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationHighContrastColor3AutomationName" xml:space="preserve">
+    <value>Color 3</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationHighContrastColor4AutomationName" xml:space="preserve">
+    <value>Color 4</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
   <data name="GraphThemeHeading.Text" xml:space="preserve">
     <value>Theme</value>
     <comment>Graph settings heading for the theme options</comment>
