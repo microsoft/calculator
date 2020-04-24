@@ -745,7 +745,7 @@ void KeyboardShortcutManager::HonorShortcuts(bool allow)
     {
         if (s_fDisableShortcuts.find(viewId) != s_fDisableShortcuts.end())
         {
-            if (s_fHonorShortcuts[viewId] && s_fDisableShortcuts[viewId])
+            if (s_fDisableShortcuts[viewId])
             {
                 s_fHonorShortcuts[viewId] = false;
                 return;
