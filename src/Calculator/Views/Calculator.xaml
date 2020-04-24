@@ -17,21 +17,17 @@
         <DataTemplate x:Key="Operand" x:DataType="common:DisplayExpressionToken">
             <TextBlock Margin="2,0,0,0"
                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
-                       IsTextScaleFactorEnabled="False"
                        Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="Operator" x:DataType="common:DisplayExpressionToken">
             <TextBlock Margin="2,0,0,0"
                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
-                       IsTextScaleFactorEnabled="False"
                        Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="Separator" x:DataType="common:DisplayExpressionToken">
-            <TextBlock x:Name="MainText"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{x:Bind Token, Mode=OneWay}"/>
+            <TextBlock x:Name="MainText" Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
         <!-- TextBox Styles -->
