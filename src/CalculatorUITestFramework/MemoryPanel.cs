@@ -42,7 +42,7 @@ namespace CalculatorUITestFramework
         /// <summary>
         /// Gets all of the memory items listed in the Memory Pane.
         /// </summary>
-        /// <returns>A readonly collection of memory items.</returns>
+        /// <returns>A read-only collection of memory items.</returns>
         public ReadOnlyCollection<AppiumWebElement> GetAllMemoryListViewItems()
         {
             OpenMemoryPanel();
@@ -62,6 +62,10 @@ namespace CalculatorUITestFramework
                 {
                     this.PanelClearMemoryButton.Click();
                 }
+                else
+                {
+                    return;
+                }
             }
             catch (WebDriverException ex)
             {
@@ -70,7 +74,6 @@ namespace CalculatorUITestFramework
                     Assert.IsNotNull(this.MemoryPaneEmptyLabel);
                     return;
                 }
-
                 throw;
             }
         }
