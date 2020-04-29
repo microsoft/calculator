@@ -282,7 +282,7 @@ void GraphingCalculator::ViewModel::set(GraphingCalculatorViewModel ^ vm)
     }
 }
 
-void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+void GraphingCalculator::OnShareClick(Object ^ sender, RoutedEventArgs ^ e)
 {
     // Ask the OS to start a share action.
     try
@@ -290,9 +290,9 @@ void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object ^ sender, 
         DataTransferManager::ShowShareUI();
         TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::Share, GraphButtonValue::None);
     }
-    catch (Platform::Exception ^ ex)
+    catch (COMException ^ ex)
     {
-        if (ex->HResult == HRESULT_FROM_WIN32(RPC_E_SERVERCALL_RETRYLATER))
+        if (ex->HResult == RPC_E_SERVERCALL_RETRYLATER)
         {
             ShowShareError();
             TraceLogger::GetInstance()->LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
