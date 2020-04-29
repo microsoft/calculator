@@ -1029,7 +1029,9 @@ Unit^ UnitConverterViewModel::Unit2::get()
 void UnitConverterViewModel::Unit2::set(Unit^ value)
 {
     if (m_Unit2 == value)
+    {
         return;
+    }
 
     if (value == m_Unit1 && value != nullptr && m_Unit2 != nullptr)
     {

@@ -336,8 +336,6 @@ namespace CalculatorApp
             std::wstring m_valueFromUnlocalized;
             std::wstring m_valueToUnlocalized;
             bool m_relocalizeStringOnSwitch;
-            // in order to save the User Preferences only if the Unit converter ViewModel is initialised for the first time
-            bool m_IsFirstTime;
             Unit^ m_Unit1;
             Unit^ m_Unit2;
 
