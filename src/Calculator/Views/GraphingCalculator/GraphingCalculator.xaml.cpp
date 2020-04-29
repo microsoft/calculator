@@ -211,11 +211,11 @@ wstringstream GraphingCalculator::FormatTraceValue(double min, double max, float
 {
     wstringstream traceValueString;
 
-    // Extract precision we will round to 
+    // Extract precision we will round to
     auto precision = static_cast<int>(floor(log10(max - min)) - 3);
 
     // Determine if we want to show scientific notation instead
-    if (precision <= -7 || precision  >= 7)
+    if (precision <= -7 || precision >= 7)
     {
         traceValueString << scientific;
     }
@@ -285,8 +285,23 @@ void GraphingCalculator::ViewModel::set(GraphingCalculatorViewModel ^ vm)
 void CalculatorApp::GraphingCalculator::OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     // Ask the OS to start a share action.
-    DataTransferManager::ShowShareUI();
-    TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::Share, GraphButtonValue::None);
+    try
+    {
+        DataTransferManager::ShowShareUI();
+        TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::Share, GraphButtonValue::None);
+    }
+    catch (Platform::Exception ^ ex)
+    {
+        if (ex->HResult == HRESULT_FROM_WIN32(RPC_E_SERVERCALL_RETRYLATER))
+        {
+            ShowShareError();
+            TraceLogger::GetInstance()->LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
+        }
+        else
+        {
+            throw;
+        }
+    }
 }
 
 // When share is invoked (by the user or programmatically) the event handler we registered will be called to populate the data package with the
@@ -394,15 +409,19 @@ void GraphingCalculator::OnDataRequested(DataTransferManager ^ sender, DataReque
     }
     catch (Exception ^ ex)
     {
+        ShowShareError();
         TraceLogger::GetInstance()->LogPlatformException(ViewMode::Graphing, __FUNCTIONW__, ex);
-
-        // Something went wrong, notify the user.
-
-        auto errDialog = ref new ContentDialog();
-        errDialog->Content = resourceLoader->GetString(L"ShareActionErrorMessage");
-        errDialog->CloseButtonText = resourceLoader->GetString(L"ShareActionErrorOk");
-        errDialog->ShowAsync();
     }
+}
+
+void GraphingCalculator::ShowShareError()
+{
+    // Something went wrong, notify the user.
+    auto resourceLoader = ResourceLoader::GetForCurrentView();
+    auto errDialog = ref new ContentDialog();
+    errDialog->Content = resourceLoader->GetString(L"ShareActionErrorMessage");
+    errDialog->CloseButtonText = resourceLoader->GetString(L"ShareActionErrorOk");
+    errDialog->ShowAsync();
 }
 
 void GraphingCalculator::GraphingControl_VariablesUpdated(Object ^, Object ^)
