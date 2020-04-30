@@ -9,7 +9,7 @@ pr: none
 
 variables:
   versionMajor: 10
-  versionMinor: 2003
+  versionMinor: 2004
   versionBuild: $[counter('10.2003.*', 0)]
   versionPatch: 0
 
