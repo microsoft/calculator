@@ -22,9 +22,6 @@ namespace CalculatorUnitTests
 
     namespace UtfUtils
     {
-        constexpr wchar_t LRE = 0x202a; // Left-to-Right Embedding
-        constexpr wchar_t PDF = 0x202c; // Pop Directional Formatting
-        constexpr wchar_t LRO = 0x202d; // Left-to-Right Override
         constexpr wchar_t MUL = 0x00d7; // Multiplication Symbol
     }
 }
@@ -108,5 +105,3 @@ void VERIFY_VECTORS_ARE_EQUAL(Windows::Foundation::Collections::IVector<T> ^ vec
         VERIFY_ARE_EQUAL(vecA->GetAt(i), vecB->GetAt(i), __VA_ARGS__);
     }
 };
-
-Platform::String ^ GetStringValue(Platform::String ^ input);

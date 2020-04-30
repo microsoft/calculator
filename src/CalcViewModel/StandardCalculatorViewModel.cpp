@@ -134,23 +134,14 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     AreProgrammerRadixOperatorsEnabled = false;
 }
 
-String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue, _In_ bool isError)
+String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue)
 {
     wstring result(displayValue);
-
     LocalizationSettings::GetInstance().LocalizeDisplayValue(&result);
-
-    // WINBLUE: 440747 - In BiDi languages, error messages need to be wrapped in LRE/PDF
-    if (isError && m_isRtlLanguage)
-    {
-        result.insert(result.begin(), Utils::LRE);
-        result.push_back(Utils::PDF);
-    }
-
     return ref new Platform::String(result.c_str());
 }
 
-String ^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring const& displayValue, _In_ String ^ localizedDisplayValue, _In_ bool isError)
+String ^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring const& displayValue, _In_ String ^ localizedDisplayValue)
 {
     String ^ localizedValue = localizedDisplayValue;
     String ^ automationFormat = m_localizedCalculationResultAutomationFormat;
@@ -159,7 +150,7 @@ String ^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring
     if (Utils::IsLastCharacterTarget(displayValue, m_decimalSeparator))
     {
         // remove the decimal separator, to avoid a long pause between words
-        localizedValue = LocalizeDisplayValue(displayValue.substr(0, displayValue.length() - 1), isError);
+        localizedValue = LocalizeDisplayValue(displayValue.substr(0, displayValue.length() - 1));
 
         // Use a format which has a word in the decimal separator's place
         // "The Display is 10 point"
@@ -195,11 +186,11 @@ String ^ StandardCalculatorViewModel::GetNarratorStringReadRawNumbers(_In_ Strin
 
 void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ String ^ displayStringValue, _In_ bool isError)
 {
-    String ^ localizedDisplayStringValue = LocalizeDisplayValue(displayStringValue->Data(), isError);
+    String ^ localizedDisplayStringValue = LocalizeDisplayValue(displayStringValue->Data());
 
     // Set this variable before the DisplayValue is modified, Otherwise the DisplayValue will
     // not match what the narrator is saying
-    m_CalculationResultAutomationName = CalculateNarratorDisplayValue(displayStringValue->Data(), localizedDisplayStringValue, isError);
+    m_CalculationResultAutomationName = CalculateNarratorDisplayValue(displayStringValue->Data(), localizedDisplayStringValue);
 
     AreAlwaysOnTopResultsUpdated = false;
     if (DisplayValue != localizedDisplayStringValue)
@@ -418,7 +409,7 @@ void StandardCalculatorViewModel::SetMemorizedNumbers(const vector<wstring>& new
             MemoryItemViewModel ^ memorySlot = ref new MemoryItemViewModel(this);
             memorySlot->Position = 0;
             localizer.LocalizeDisplayValue(&stringValue);
-            memorySlot->Value = Utils::LRO + ref new String(stringValue.c_str()) + Utils::PDF;
+            memorySlot->Value = ref new String(stringValue.c_str());
 
             MemorizedNumbers->InsertAt(0, memorySlot);
             IsMemoryEmpty = IsAlwaysOnTop;
@@ -440,7 +431,7 @@ void StandardCalculatorViewModel::SetMemorizedNumbers(const vector<wstring>& new
             // If the value is different, update the value
             if (MemorizedNumbers->GetAt(i)->Value != StringReference(newStringValue.c_str()))
             {
-                MemorizedNumbers->GetAt(i)->Value = Utils::LRO + ref new String(newStringValue.c_str()) + Utils::PDF;
+                MemorizedNumbers->GetAt(i)->Value = ref new String(newStringValue.c_str());
             }
         }
     }
@@ -1576,10 +1567,10 @@ void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
     localizer.LocalizeDisplayValue(&octalDisplayString);
     localizer.LocalizeDisplayValue(&binaryDisplayString);
 
-    HexDisplayValue = Utils::LRO + ref new Platform::String(hexDisplayString.c_str()) + Utils::PDF;
-    DecimalDisplayValue = Utils::LRO + ref new Platform::String(decimalDisplayString.c_str()) + Utils::PDF;
-    OctalDisplayValue = Utils::LRO + ref new Platform::String(octalDisplayString.c_str()) + Utils::PDF;
-    BinaryDisplayValue = Utils::LRO + ref new Platform::String(binaryDisplayString.c_str()) + Utils::PDF;
+    HexDisplayValue = ref new Platform::String(hexDisplayString.c_str());
+    DecimalDisplayValue = ref new Platform::String(decimalDisplayString.c_str());
+    OctalDisplayValue = ref new Platform::String(octalDisplayString.c_str());
+    BinaryDisplayValue = ref new Platform::String(binaryDisplayString.c_str());
     HexDisplayValue_AutomationName = GetLocalizedStringFormat(m_localizedHexaDecimalAutomationFormat, GetNarratorStringReadRawNumbers(HexDisplayValue));
     DecDisplayValue_AutomationName = GetLocalizedStringFormat(m_localizedDecimalAutomationFormat, DecimalDisplayValue);
     OctDisplayValue_AutomationName = GetLocalizedStringFormat(m_localizedOctalAutomationFormat, GetNarratorStringReadRawNumbers(OctalDisplayValue));

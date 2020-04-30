@@ -163,7 +163,8 @@
     <Grid x:Name="ProgrammerOperators"
           x:Uid="RadixGroup"
           MaxHeight="244"
-          AutomationProperties.HeadingLevel="Level1">
+          AutomationProperties.HeadingLevel="Level1"
+          FlowDirection="LeftToRight">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" MinHeight="0"/>
             <RowDefinition Height="1*" MinHeight="0"/>

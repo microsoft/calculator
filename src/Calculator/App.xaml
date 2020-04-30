@@ -577,7 +577,9 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Controls:CalculationResult">
-                            <Grid x:Name="Border" Background="{TemplateBinding Background}">
+                            <Grid x:Name="Border"
+                                  Background="{TemplateBinding Background}"
+                                  FlowDirection="LeftToRight">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="12"/>
                                     <ColumnDefinition/>

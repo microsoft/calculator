@@ -45,12 +45,7 @@ unsigned int CalculatorHistory::AddToHistory(
 
     spHistoryItem->historyItemVector.spTokens = tokens;
     spHistoryItem->historyItemVector.spCommands = commands;
-
-    // to be changed when pszexp is back
-    wstring generatedExpression = GetGeneratedExpression(*tokens);
-    // Prefixing and suffixing the special Unicode markers to ensure that the expression
-    // in the history doesn't get broken for RTL languages
-    spHistoryItem->historyItemVector.expression = L'\u202d' + generatedExpression + L'\u202c';
+    spHistoryItem->historyItemVector.expression = GetGeneratedExpression(*tokens);
     spHistoryItem->historyItemVector.result = wstring(result);
     return AddItem(spHistoryItem);
 }
