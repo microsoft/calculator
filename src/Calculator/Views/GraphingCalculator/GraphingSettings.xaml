@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
              mc:Ignorable="d">
     <UserControl.Resources>
@@ -218,19 +219,21 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-
-            <TextBlock x:Name="GraphThemeHeading"
-                       x:Uid="GraphThemeHeading"
-                       Margin="0,16,0,6"
-                       Style="{StaticResource SubTitleTextBoxStyle}"
-                       AutomationProperties.HeadingLevel="Level2"/>
-
-            <StackPanel Orientation="Vertical">
+            <muxc:RadioButtons>
+                <muxc:RadioButtons.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock x:Name="GraphThemeHeading"
+                                   x:Uid="GraphThemeHeading"
+                                   Margin="0,16,0,6"
+                                   Style="{StaticResource SubTitleTextBoxStyle}"
+                                   AutomationProperties.HeadingLevel="Level2"/>
+                    </DataTemplate>
+                </muxc:RadioButtons.HeaderTemplate>
                 <RadioButton x:Uid="AlwaysLightTheme" IsChecked="{x:Bind IsMatchAppTheme, Mode=TwoWay, Converter={StaticResource BooleanNegationConverter}}"/>
                 <RadioButton x:Uid="MatchAppTheme"
                              Margin="1,0"
                              IsChecked="{x:Bind IsMatchAppTheme, Mode=TwoWay}"/>
-            </StackPanel>
+            </muxc:RadioButtons>
         </StackPanel>
     </Grid>
 </UserControl>
