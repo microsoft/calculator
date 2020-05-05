@@ -325,6 +325,7 @@
                                             <VisualState.Setters>
                                                 <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationTextBoxBorderBrushFocused}"/>
                                                 <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource TextBoxBackgroundThemeBrush}"/>
+                                                <Setter Target="MathRichEditBox.Foreground" Value="{ThemeResource TextControlForegroundFocused}"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="FocusedError">
@@ -385,12 +386,12 @@
                                                     <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="White"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrush" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForeground" Color="White"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForeground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationButtonForegroundColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationButtonForegroundColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrushPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationButtonForegroundColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrushPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="EquationButtonHideLineBackgroundBrush"/>
                                                     <StaticResource x:Key="ToggleButtonBorderBrushChecked" ResourceKey="EquationButtonHideLineBackgroundBrush"/>
@@ -408,12 +409,12 @@
                                                     <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="Black"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrush" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForeground" Color="White"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForeground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationButtonForegroundColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationButtonForegroundColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrushPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationButtonForegroundColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrushPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="EquationButtonHideLineBackgroundBrush"/>
                                                     <StaticResource x:Key="ToggleButtonBorderBrushChecked" ResourceKey="EquationButtonHideLineBackgroundBrush"/>
@@ -803,6 +804,7 @@
                                                   IsEquationLineDisabled="{x:Bind IsLineEnabled, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                                                   EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
                                                   EquationColor="{x:Bind local:EquationInputArea.ToSolidColorBrush(LineColor), Mode=OneWay}"
+                                                  EquationButtonForegroundColor ="{x:Bind local:EquationInputArea.GetForegroundColor(LineColor), Mode=OneWay}"
                                                   EquationFormatRequested="EquationTextBox_EquationFormatRequested"
                                                   EquationSubmitted="EquationTextBox_Submitted"
                                                   ErrorText="{x:Bind vm:EquationViewModel.EquationErrorText(GraphEquation.GraphErrorType, GraphEquation.GraphErrorCode), Mode=OneWay}"

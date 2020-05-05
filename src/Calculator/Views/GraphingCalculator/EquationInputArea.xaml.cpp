@@ -557,3 +557,8 @@ EquationViewModel ^ EquationInputArea::GetViewModelFromEquationTextBox(Object ^ 
 
     return eq;
 }
+
+ SolidColorBrush ^ EquationInputArea::GetForegroundColor(Color lineColor)
+ {
+     return Utils::GetContrastColor(lineColor);
+ }

@@ -293,6 +293,10 @@
             <x:Double x:Key="CalcOperatorCaptionSize">14</x:Double>
             <x:Double x:Key="CalcOperatorTextIconCaptionSize">16</x:Double>
 
+            <!-- White and black color brushes used for the Utils::GetContrastColor-->
+            <SolidColorBrush x:Key="WhiteBrush" Color="White"/>
+            <SolidColorBrush x:Key="BlackBrush" Color="Black"/>
+
             <!-- Base style for calc buttons -->
             <Style x:Key="CalcButtonStyle" TargetType="Controls:CalculatorButton">
                 <Setter Property="MinWidth" Value="24"/>

@@ -24,6 +24,7 @@ using namespace Windows::UI;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Media;
 using namespace Windows::Foundation;
 using namespace Windows::Storage;
 
@@ -301,4 +302,19 @@ bool operator==(const Color& color1, const Color& color2)
 bool operator!=(const Color& color1, const Color& color2)
 {
     return !(color1 == color2);
+}
+
+// This method calculates the luminance ratio between White and the given background color.
+// The luminance is calculate using the RGB values and does not use the A value.
+// White or Black is returned
+SolidColorBrush ^ Utils::GetContrastColor(Color backgroundColor)
+{
+    auto luminance = 0.2126 * backgroundColor.R + 0.7152 * backgroundColor.G + 0.0722 * backgroundColor.B;
+
+    if ((255 + 0.05) / (luminance + 0.05) >= 2.5)
+    {
+        return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"WhiteBrush"));
+    }
+
+    return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"BlackBrush"));
 }
