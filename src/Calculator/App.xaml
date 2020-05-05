@@ -1819,6 +1819,7 @@
                 <Setter Property="MinWideModeWidth" Value="641"/>
                 <Setter Property="MinTallModeHeight" Value="641"/>
                 <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Controls:TwoPaneViewCX">
