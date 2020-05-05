@@ -164,7 +164,7 @@ void DateCalculator::CloseCalendarFlyout()
 {
     if (DateDiff_FromDate->IsCalendarOpen)
     {
-        DateDiff_FromDate->IsCalendarOpen = false;
+        DateDiff_FromDate->IsCalendarOpen = false;        
     }
 
     if (DateDiff_ToDate->IsCalendarOpen)
@@ -186,7 +186,21 @@ void DateCalculator::SetDefaultFocus()
 void DateCalculator::DateCalcOption_Changed(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e)
 {
     FindName("AddSubtractDateGrid");
-    DateCalculationOption->SelectionChanged -= m_dateCalcOptionChangedEventToken;
+    auto dateCalcViewModel = safe_cast<DateCalculatorViewModel ^>(this->DataContext);
+
+    // https://github.com/microsoft/calculator/issues/254
+    // From Date Field needs to persist across Date Difference and Add Substract Date Mode.
+    // So when the mode dropdown changes, update the other datepicker with the latest date.
+    if (dateCalcViewModel->IsDateDiffMode)
+    {
+        IBox<DateTime> ^ addSubtractModeFromDate = ref new Box<DateTime>(AddSubtract_FromDate->Date->Value);
+        DateDiff_FromDate->Date = addSubtractModeFromDate;
+    }
+    else
+    {
+        IBox<DateTime> ^ dateDifferenceModeFromDate = ref new Box<DateTime>(DateDiff_FromDate->Date->Value);
+        AddSubtract_FromDate->Date = dateDifferenceModeFromDate;  
+    }
 }
 
 void CalculatorApp::DateCalculator::AddSubtractDateGrid_Loaded(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e)
