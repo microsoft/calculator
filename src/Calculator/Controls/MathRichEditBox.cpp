@@ -119,7 +119,7 @@ void CalculatorApp::Controls::MathRichEditBox::OnLosingFocus(Windows::UI::Xaml::
 
 void CalculatorApp::Controls::MathRichEditBox::OnKeyUp(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e)
 {
-    if (e->Key == VirtualKey::Enter)
+    if (!this->IsReadOnly && e->Key == VirtualKey::Enter)
     {
         SubmitEquation(EquationSubmissionSource::ENTER_KEY);
     }
