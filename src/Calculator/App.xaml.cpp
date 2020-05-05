@@ -226,10 +226,6 @@ void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
         appView->SetPreferredMinSize(minWindowSize);
         appView->TryResizeView(minWindowSize);
     }
-    else
-    {
-        appView->PreferredLaunchWindowingMode = ApplicationViewWindowingMode::Auto;
-    }
 
     // Do not repeat app initialization when the Window already has content,
     // just ensure that the window is active
