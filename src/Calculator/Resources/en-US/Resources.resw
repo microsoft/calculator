@@ -3171,6 +3171,18 @@
     <value>M</value>
     <comment>Access key for the Memory button. {StringCategory="Accelerator"}</comment>
   </data>
+  <data name="DummyNavViewButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Open Navigation</value>
+    <comment>Automation name for navigation view button.</comment>
+  </data>
+  <data name="DummyNavViewButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Open Navigation</value>
+    <comment>This is the tool tip automation name for the navigation button.</comment>
+  </data>
+  <data name="DummyNavViewButton.AccessKey" xml:space="preserve">
+    <value>H</value>
+    <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
+  </data>
   <data name="NavView.AccessKey" xml:space="preserve">
     <value>H</value>
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>

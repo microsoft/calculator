@@ -122,6 +122,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="DummyNavViewButton"
+                    x:Uid="DummyNavViewButton"
                     Grid.Column="0"
                     Width="{StaticResource HamburgerHeight}"
                     Height="{StaticResource HamburgerHeight}"
@@ -129,7 +130,7 @@
                     Background="Transparent"
                     BorderThickness="0"
                     FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                    AccessKey="H"
+                    AutomationProperties.LandmarkType="Navigation"
                     Click="DummyNavViewButton_Click"
                     Content="&#xE700;"/>
 

@@ -2699,10 +2699,6 @@
     <value>M</value>
     <comment>Access key for the Memory button. {StringCategory="Accelerator"}</comment>
   </data>
-  <data name="DummyNavViewButton.AccessKey" xml:space="preserve">
-    <value>HA</value>
-    <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
-  </data>
   <data name="NavView.AccessKey" xml:space="preserve">
     <value>H</value>
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
