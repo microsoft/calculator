@@ -409,6 +409,9 @@ void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
     }
     // Special case logic for Ctrl+E accelerator for Date Calculation Mode
     NavView->SetValue(Common::KeyboardShortcutManager::VirtualKeyControlChordProperty, Common::MyVirtualKey::E);
+
+    // If NavView was loaded on button cick we should open it by default
+    NavView->IsPaneOpen = m_openNavOnLoad;
 }
 
 void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
@@ -607,4 +610,12 @@ void MainPage::App_Suspending(Object ^ sender, Windows::ApplicationModel::Suspen
         localSettings->Values->Insert(ApplicationViewModel::WidthLocalSettings, this->ActualWidth);
         localSettings->Values->Insert(ApplicationViewModel::HeightLocalSettings, this->ActualHeight);
     }
+}
+
+void MainPage::DummyNavViewButton_Click(Object ^ sender, RoutedEventArgs ^ e)
+{
+    this->DummyNavViewButton->IsEnabled = false;
+    this->DummyNavViewButton->Visibility = ::Visibility::Collapsed;
+    m_openNavOnLoad = true;
+    this->FindName(L"NavView");
 }

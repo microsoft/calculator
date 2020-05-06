@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2698,6 +2698,10 @@
   <data name="MemoryButton.AccessKey" xml:space="preserve">
     <value>M</value>
     <comment>Access key for the Memory button. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="DummyNavViewButton.AccessKey" xml:space="preserve">
+    <value>HA</value>
+    <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="NavView.AccessKey" xml:space="preserve">
     <value>H</value>
