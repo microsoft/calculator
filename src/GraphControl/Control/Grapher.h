@@ -352,7 +352,11 @@ public enum class GraphViewChangedReason
         Windows::UI::Core::CoreCursor ^ m_cachedCursor;
         int m_errorType;
         int m_errorCode;
-        bool m_replot;
+        bool m_resetUsingInitialDisplayRange;
+        double m_initialDisplayRangeXMin;
+        double m_initialDisplayRangeXMax;
+        double m_initialDisplayRangeYMin;
+        double m_initialDisplayRangeYMax;
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();

@@ -118,16 +118,20 @@ namespace GraphControl
     {
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
-            if (auto renderer = m_graph->GetRenderer())
+            if(auto renderer = m_graph->GetRenderer())
             {
-                if (m_replot)
+                if (m_resetUsingInitialDisplayRange)
                 {
-                    IsKeepCurrentView = false;
-                    m_replot = false;
-                    TryPlotGraph(false, false);
-
+                    renderer->SetDisplayRanges(m_initialDisplayRangeXMin, m_initialDisplayRangeXMax, m_initialDisplayRangeYMin, m_initialDisplayRangeYMax);
+                    auto xCenter = (m_initialDisplayRangeXMax - m_initialDisplayRangeXMin) / 2;
+                    auto yCenter = (m_initialDisplayRangeYMax - m_initialDisplayRangeYMin) / 2;
+                    renderer->ScaleRange(xCenter, yCenter, 1);
+                    m_resetUsingInitialDisplayRange = false;
+                    m_renderMain->RunRenderPass();
+                    GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
+                    return;
                 }
-                else if (SUCCEEDED(renderer->ResetRange()))
+                if (SUCCEEDED(renderer->ResetRange()))
                 {
                     m_renderMain->RunRenderPass();
                 }
@@ -1100,6 +1104,12 @@ optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bo
         double xMin, xMax, yMin, yMax;
         m_graph->GetRenderer()->GetDisplayRanges(xMin, xMax, yMin, yMax);
         auto initResult = m_graph->TryInitialize(graphingExp);
+        if (IsKeepCurrentView)
+        {
+            m_graph->GetRenderer()->GetDisplayRanges(
+                m_initialDisplayRangeXMin, m_initialDisplayRangeXMax, m_initialDisplayRangeYMin, m_initialDisplayRangeYMax);
+            m_resetUsingInitialDisplayRange = true;
+        }
         m_graph->GetRenderer()->SetDisplayRanges(xMin, xMax, yMin, yMax);
 
         m_replot = true;
