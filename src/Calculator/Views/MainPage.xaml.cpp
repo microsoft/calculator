@@ -612,7 +612,7 @@ void MainPage::App_Suspending(Object ^ sender, Windows::ApplicationModel::Suspen
     }
 }
 
-void MainPage::DummyNavViewButton_Click(Object ^ sender, RoutedEventArgs ^ e)
+void MainPage::DummyNavViewButtonClick(Object ^ sender, RoutedEventArgs ^ e)
 {
     this->DummyNavViewButton->IsEnabled = false;
     this->DummyNavViewButton->Visibility = ::Visibility::Collapsed;

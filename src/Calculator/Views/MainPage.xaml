@@ -131,7 +131,7 @@
                     BorderThickness="0"
                     FontFamily="{ThemeResource SymbolThemeFontFamily}"
                     AutomationProperties.LandmarkType="Navigation"
-                    Click="DummyNavViewButton_Click"
+                    Click="DummyNavViewButtonClick"
                     Content="&#xE700;"/>
 
             <StackPanel Grid.Column="1"
