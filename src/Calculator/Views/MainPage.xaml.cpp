@@ -70,6 +70,13 @@ MainPage::MainPage()
 {
     InitializeComponent();
 
+    // Register these before calling KeyboardShortcutManager::Initialize() so that we can respond first and load NavView
+    // This is needed since KeyboardShorcutManager requires NavView to be loaded to correctly respond to shortcut keys (alt + 1, 2, etc)
+    auto coreWindow = Window::Current->CoreWindow;
+    m_keyDownToken = coreWindow->KeyDown += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &MainPage::OnKeyDownHandler);
+    m_acceleratorKeyToken = coreWindow->Dispatcher->AcceleratorKeyActivated +=
+        ref new TypedEventHandler<CoreDispatcher ^, AcceleratorKeyEventArgs ^>(this, &MainPage::OnAcceleratorKeyActivated);
+
     KeyboardShortcutManager::Initialize();
 
     Application::Current->Suspending += ref new SuspendingEventHandler(this, &MainPage::App_Suspending);
@@ -614,8 +621,34 @@ void MainPage::App_Suspending(Object ^ sender, Windows::ApplicationModel::Suspen
 
 void MainPage::DummyNavViewButtonClick(Object ^ sender, RoutedEventArgs ^ e)
 {
+    LoadNavView(true);
+}
+
+void MainPage::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs ^ args)
+{
+    LoadNavView(false);
+}
+
+void MainPage::OnAcceleratorKeyActivated(CoreDispatcher ^, AcceleratorKeyEventArgs ^ args)
+{
+    LoadNavView(false);
+}
+
+void MainPage::LoadNavView(bool openNavView)
+{
+    auto coreWindow = Window::Current->CoreWindow;
+    if (m_keyDownToken.Value != 0)
+    {
+        coreWindow->KeyDown -= m_keyDownToken;
+    }
+
+    if (m_acceleratorKeyToken.Value != 0)
+    {
+        coreWindow->Dispatcher->AcceleratorKeyActivated -= m_acceleratorKeyToken;
+    }
+
     this->DummyNavViewButton->IsEnabled = false;
     this->DummyNavViewButton->Visibility = ::Visibility::Collapsed;
-    m_openNavOnLoad = true;
+    m_openNavOnLoad = openNavView;
     this->FindName(L"NavView");
 }

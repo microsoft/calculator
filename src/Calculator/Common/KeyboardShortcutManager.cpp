@@ -513,6 +513,12 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs
             const auto& lookupMap = GetCurrentKeyDictionary(static_cast<MyVirtualKey>(key));
             auto buttons = lookupMap.equal_range(static_cast<MyVirtualKey>(key));
             auto navView = buttons.first->second.Resolve<MUXC::NavigationView>();
+
+            if (navView == nullptr)
+            {
+                return;
+            }
+
             auto appViewModel = safe_cast<ApplicationViewModel ^>(navView->DataContext);
             appViewModel->Mode = ViewMode::Date;
             auto categoryName = AppResourceProvider::GetInstance()->GetResourceString(L"DateCalculationModeText");
