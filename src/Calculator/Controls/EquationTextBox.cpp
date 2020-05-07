@@ -69,16 +69,6 @@ void EquationTextBox::OnApplyTemplate()
     if (m_equationButton != nullptr)
     {
         m_equationButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnEquationButtonClicked);
-
-        auto toolTip = ref new ToolTip();
-
-        auto equationButtonMessage = LocalizationStringUtil::GetLocalizedString(
-            IsEquationLineDisabled ? resProvider->GetResourceString(L"showEquationButtonToolTip")
-                                               : resProvider->GetResourceString(L"hideEquationButtonToolTip"), EquationButtonContentIndex);
-
-        toolTip->Content = equationButtonMessage;
-        ToolTipService::SetToolTip(m_equationButton, toolTip);
-        AutomationProperties::SetName(m_equationButton, equationButtonMessage);
     }
 
     if (m_richEditContextMenu != nullptr)
@@ -237,16 +227,7 @@ void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^
 {
     EquationButtonClicked(this, ref new RoutedEventArgs());
 
-    auto toolTip = ref new ToolTip();
-    auto resProvider = AppResourceProvider::GetInstance();
-
-    auto equationButtonMessage = LocalizationStringUtil::GetLocalizedString(
-        IsEquationLineDisabled ? resProvider->GetResourceString(L"showEquationButtonToolTip")
-                                           : resProvider->GetResourceString(L"hideEquationButtonToolTip"), EquationButtonContentIndex);
-
-    toolTip->Content = equationButtonMessage;
-    ToolTipService::SetToolTip(m_equationButton, toolTip);
-    AutomationProperties::SetName(m_equationButton, equationButtonMessage);
+    SetEquationButtonTooltipAndAutomationName();
 }
 
 void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
@@ -484,4 +465,27 @@ void EquationTextBox::OnEquationSubmitted(Platform::Object ^ sender, MathRichEdi
 void EquationTextBox::OnEquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ args)
 {
     EquationFormatRequested(this, args);
+}
+
+void EquationTextBox::SetEquationButtonTooltipAndAutomationName()
+{
+    auto toolTip = ref new ToolTip();
+    auto resProvider = AppResourceProvider::GetInstance();
+
+    auto equationButtonMessage = LocalizationStringUtil::GetLocalizedString(
+        IsEquationLineDisabled ? resProvider->GetResourceString(L"showEquationButtonAutomationName")
+                               : resProvider->GetResourceString(L"hideEquationButtonAutomationName"),
+        EquationButtonContentIndex);
+
+    auto equationButtonTooltip = LocalizationStringUtil::GetLocalizedString(
+        IsEquationLineDisabled ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip"));
+
+    toolTip->Content = equationButtonTooltip;
+    ToolTipService::SetToolTip(m_equationButton, toolTip);
+    AutomationProperties::SetName(m_equationButton, equationButtonMessage);
+}
+
+void EquationTextBox::OnEquationButtonContentIndexPropertyChanged(String ^ /*oldValue*/, String ^ newValue)
+{
+    SetEquationButtonTooltipAndAutomationName();
 }

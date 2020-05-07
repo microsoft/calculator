@@ -80,6 +80,7 @@
                              Fill="{x:Bind}"
                              StrokeThickness="0"
                              AutomationProperties.Name="{x:Bind local:EquationStylePanelControl.GetColorAutomationName((Brush))}"
+                             ToolTipService.ToolTip="{x:Bind local:EquationStylePanelControl.GetColorAutomationName((Brush))}"
                              UseLayoutRounding="false"/>
                 </DataTemplate>
             </GridView.ItemTemplate>
