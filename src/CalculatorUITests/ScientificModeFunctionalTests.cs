@@ -69,6 +69,7 @@ namespace CalculatorUITests
         public void SmokeTest_Cube()
         {
             page.StandardOperators.NumberPad.Input(3);
+            page.ScientificOperators.ShiftButton.Click();
             page.ScientificOperators.XPower3Button.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("27", page.CalculatorResults.GetCalculatorResultText());
