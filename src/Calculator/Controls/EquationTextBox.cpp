@@ -112,7 +112,7 @@ void EquationTextBox::OnApplyTemplate()
     if (m_kgfEquationMenuItem != nullptr)
     {
         m_kgfEquationMenuItem->Text = resProvider->GetResourceString(L"functionAnalysisMenuItem");
-        m_kgfEquationMenuItem->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnFunctionButtonClicked);
+        m_kgfEquationMenuItem->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnFunctionMenuButtonClicked);
     }
 
     if (ColorChooserFlyout != nullptr)
@@ -269,8 +269,25 @@ void EquationTextBox::OnColorChooserButtonClicked(Object ^ sender, RoutedEventAr
     }
 }
 
+void EquationTextBox::OnFunctionMenuButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    // Submit the equation before trying to analyze it if invoked from context menu
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->SubmitEquation(::EquationSubmissionSource::FOCUS_LOST);
+    }
+
+    KeyGraphFeaturesButtonClicked(this, ref new RoutedEventArgs());
+}
+
 void EquationTextBox::OnFunctionButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
+    // Submit the equation before trying to analyze it if invoked from context menu
+    if (e->OriginalSource == m_kgfEquationMenuItem && m_richEditBox != nullptr)
+    {
+        m_richEditBox->SubmitEquation(::EquationSubmissionSource::FOCUS_LOST);
+    }
+
     KeyGraphFeaturesButtonClicked(this, ref new RoutedEventArgs());
 }
 
@@ -404,6 +421,11 @@ bool EquationTextBox::RichEditHasContent()
 
 void EquationTextBox::OnRichEditMenuOpened(Object ^ /*sender*/, Object ^ /*args*/)
 {
+    if (m_removeMenuItem != nullptr)
+    {
+        m_removeMenuItem->IsEnabled = !IsAddEquationMode;
+    }
+
     if (m_kgfEquationMenuItem != nullptr)
     {
         m_kgfEquationMenuItem->IsEnabled = m_HasFocus && !HasError && RichEditHasContent();
