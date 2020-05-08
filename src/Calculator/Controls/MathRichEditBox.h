@@ -60,6 +60,9 @@ namespace CalculatorApp
             void SubmitEquation(EquationSubmissionSource source);
             void BackSpace();
 
+        protected:
+            void OnKeyDown(Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e) override;
+
         private:
             Platform::String ^ GetMathTextProperty();
             void SetMathTextProperty(Platform::String ^ newValue);

@@ -10,6 +10,7 @@ using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Controls;
 using namespace std;
 using namespace Windows::ApplicationModel;
+using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Text;
@@ -125,6 +126,16 @@ void CalculatorApp::Controls::MathRichEditBox::OnKeyUp(Platform::Object ^ sender
     }
 }
 
+void CalculatorApp::Controls::MathRichEditBox::OnKeyDown(Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e)
+{
+    // suppress control + B to prevent bold input from being entered
+    if ((Window::Current->CoreWindow->GetKeyState(VirtualKey::Control) & CoreVirtualKeyStates::Down) != CoreVirtualKeyStates::Down ||
+        e->Key != VirtualKey::B)
+    {
+        Windows::UI::Xaml::Controls::RichEditBox::OnKeyDown(e);
+    }
+}
+
 void MathRichEditBox::OnMathTextPropertyChanged(Platform::String ^ oldValue, Platform::String ^ newValue)
 {
     SetMathTextProperty(newValue);
@@ -189,7 +200,6 @@ void MathRichEditBox::SubmitEquation(EquationSubmissionSource source)
 
     if (range != nullptr)
     {
-        range->CharacterFormat->Bold = FormatEffect::Off;
         range->CharacterFormat->Underline = UnderlineType::None;
     }
 
