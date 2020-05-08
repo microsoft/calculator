@@ -92,7 +92,8 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         Windows::Foundation::EventRegistrationToken m_vectorChangedToken;
         Windows::Foundation::EventRegistrationToken m_variableUpdatedToken;
         Windows::Foundation::EventRegistrationToken m_activeTracingKeyUpToken;
-        Windows::Foundation::EventRegistrationToken m_ActiveTracingPointerCaptureLost;
+        Windows::Foundation::EventRegistrationToken m_ActiveTracingPointerCaptureLostToken;
+        Windows::Foundation::EventRegistrationToken m_GraphingControlLoadedToken;
         CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         bool m_cursorShadowInitialized;
@@ -107,6 +108,7 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         std::wstringstream FormatTraceValue(double min, double max, float pointValue);
         void GraphViewButton_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void ShowShareError();
+        void OnGraphingCalculatorLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 
 }
