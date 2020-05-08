@@ -85,19 +85,6 @@
                     <SolidColorBrush x:Key="EquationBrush13" Color="#B0896D"/>
                     <SolidColorBrush x:Key="EquationBrush14" Color="#FFFFFF"/>
                     <SolidColorBrush x:Key="DividerBrush" Color="#60FFFFFF"/>
-                    <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="#33EB5757"/>
-                    <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="#FFEB5757"/>
-                    <SolidColorBrush x:Key="SliderLegendBrush" Color="#B2ffffff"/>
-
-                    <Style x:Key="VariableContainerStyle" TargetType="Border">
-                        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltMediumLowBrush}"/>
-                    </Style>
-                    <Style x:Key="ThemedVariableTextBoxStyle"
-                           BasedOn="{StaticResource VariableTextBoxStyle}"
-                           TargetType="TextBox">
-                        <Setter Property="BorderBrush" Value="#50ffffff"/>
-                    </Style>
-
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
@@ -177,18 +164,6 @@
                     <SolidColorBrush x:Key="EquationBrush13" Color="#FF8E562E"/>
                     <SolidColorBrush x:Key="EquationBrush14" Color="#FF000000"/>
                     <SolidColorBrush x:Key="DividerBrush" Color="#33000000"/>
-                    <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="#33EB5757"/>
-                    <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="#FFEB5757"/>
-                    <SolidColorBrush x:Key="SliderLegendBrush" Color="#B2000000"/>
-
-                    <Style x:Key="VariableContainerStyle" TargetType="Border">
-                        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltMediumLowBrush}"/>
-                    </Style>
-                    <Style x:Key="ThemedVariableTextBoxStyle"
-                           BasedOn="{StaticResource VariableTextBoxStyle}"
-                           TargetType="TextBox">
-                        <Setter Property="BorderBrush" Value="#70000000"/>
-                    </Style>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
                     <Thickness x:Key="HighContrastThicknessTop">0,1,0,0</Thickness>
@@ -224,25 +199,6 @@
                     <SolidColorBrush x:Key="EquationBrush3" Color="{ThemeResource SystemColorHotlightColor}"/>
                     <SolidColorBrush x:Key="EquationBrush4" Color="{ThemeResource SystemColorWindowTextColor}"/>
                     <SolidColorBrush x:Key="DividerBrush" Color="Transparent"/>
-                    <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
-                    <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="Red"/>
-                    <SolidColorBrush x:Key="SliderLegendBrush" Color="{StaticResource SystemColorWindowTextColor}"/>
-
-                    <Style x:Key="VariableContainerStyle" TargetType="Border">
-                        <Setter Property="Background" Value="{StaticResource SystemColorWindowColor}"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="BorderBrush" Value="{StaticResource SystemColorWindowTextColor}"/>
-                    </Style>
-                    <Style x:Key="ThemedVariableTextBoxStyle" TargetType="TextBox">
-                        <Setter Property="Margin" Value="1,0,0,0"/>
-                        <Setter Property="Padding" Value="2,6,2,2"/>
-                        <Setter Property="TextAlignment" Value="Center"/>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                        <Setter Property="FontSize" Value="14"/>
-                        <Setter Property="InputScope" Value="Number"/>
-                        <Setter Property="MinWidth" Value="30"/>
-                    </Style>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
@@ -1815,24 +1771,6 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>
-
-            <Style x:Key="VariableTextBoxStyle" TargetType="TextBox">
-                <Setter Property="Margin" Value="1,0,0,0"/>
-                <Setter Property="Padding" Value="2,6,2,2"/>
-                <Setter Property="TextAlignment" Value="Center"/>
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                <Setter Property="FontSize" Value="14"/>
-                <Setter Property="InputScope" Value="Number"/>
-                <Setter Property="MinWidth" Value="30"/>
-            </Style>
-
-            <Style x:Key="VariableTextErrorBoxStyle"
-                   BasedOn="{StaticResource VariableTextBoxStyle}"
-                   TargetType="TextBox">
-                <Setter Property="BorderBrush" Value="{ThemeResource GraphSettingsErrorBorderBrush}"/>
-                <Setter Property="Background" Value="{ThemeResource GraphSettingsErrorBackgroundBrush}"/>
             </Style>
 
         </ResourceDictionary>
