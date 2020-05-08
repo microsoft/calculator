@@ -169,17 +169,51 @@
                                              Text="{x:Bind Max, Mode=OneWay}"/>
                                 </Grid>
                             </Grid>
-                            <Button x:Uid="VariableAreaSettings"
-                                    Margin="0,6,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Background="Transparent"
-                                    Click="VariableAreaClicked"
-                                    Tapped="VariableAreaButtonTapped">
+
+
+                            <ToggleButton Name="VariableAreaSettings"
+                                          x:Uid="VariableAreaSettings"
+                                          Margin="0,6,0,0"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Click="VariableAreaClicked"
+                                          IsChecked="{x:Bind SliderSettingsVisible, Mode=OneWay}"
+                                          Tapped="VariableAreaButtonTapped">
+                                <ToggleButton.Resources>
+                                    <ResourceDictionary>
+                                        <ResourceDictionary.ThemeDictionaries>
+                                            <ResourceDictionary x:Key="Default">
+                                                <SolidColorBrush x:Key="ToggleButtonBackground" Color="Transparent"/>
+                                                <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="Transparent"/>
+                                                <StaticResource x:Key="ToggleButtonBorderBrushChecked" ResourceKey="ToggleButtonBorderBrush"/>
+                                                <StaticResource x:Key="ToggleButtonForegroundChecked" ResourceKey="ToggleButtonForeground"/>
+                                                <StaticResource x:Key="ToggleButtonBackgroundCheckedPointerOver" ResourceKey="ToggleButtonBackgroundPointerOver"/>
+                                                <StaticResource x:Key="ToggleButtonBorderBrushCheckedPointerOver" ResourceKey="ToggleButtonBorderBrushPointerOver"/>
+                                                <StaticResource x:Key="ToggleButtonForegroundCheckedPointerOver" ResourceKey="ToggleButtonForegroundPointerOver"/>
+                                                <StaticResource x:Key="ToggleButtonBackgroundCheckedPressed" ResourceKey="ToggleButtonBackgroundPressed"/>
+                                                <StaticResource x:Key="ToggleButtonBorderBrushCheckedPressed" ResourceKey="ToggleButtonBorderBrushPressed"/>
+                                                <StaticResource x:Key="ToggleButtonForegroundCheckedPressed" ResourceKey="ToggleButtonForegroundPressed"/>
+                                            </ResourceDictionary>
+                                            <ResourceDictionary x:Key="Light">
+                                                <SolidColorBrush x:Key="ToggleButtonBackground" Color="Transparent"/>
+                                                <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="Transparent"/>
+                                                <StaticResource x:Key="ToggleButtonBorderBrushChecked" ResourceKey="ToggleButtonBorderBrush"/>
+                                                <StaticResource x:Key="ToggleButtonForegroundChecked" ResourceKey="ToggleButtonForeground"/>
+                                                <StaticResource x:Key="ToggleButtonBackgroundCheckedPointerOver" ResourceKey="ToggleButtonBackgroundPointerOver"/>
+                                                <StaticResource x:Key="ToggleButtonBorderBrushCheckedPointerOver" ResourceKey="ToggleButtonBorderBrushPointerOver"/>
+                                                <StaticResource x:Key="ToggleButtonForegroundCheckedPointerOver" ResourceKey="ToggleButtonForegroundPointerOver"/>
+                                                <StaticResource x:Key="ToggleButtonBackgroundCheckedPressed" ResourceKey="ToggleButtonBackgroundPressed"/>
+                                                <StaticResource x:Key="ToggleButtonBorderBrushCheckedPressed" ResourceKey="ToggleButtonBorderBrushPressed"/>
+                                                <StaticResource x:Key="ToggleButtonForegroundCheckedPressed" ResourceKey="ToggleButtonForegroundPressed"/>
+                                            </ResourceDictionary>
+                                            <ResourceDictionary x:Key="HighContrast"/>
+                                        </ResourceDictionary.ThemeDictionaries>
+                                    </ResourceDictionary>
+                                </ToggleButton.Resources>
                                 <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                           FontSize="9"
                                           Glyph="{x:Bind local:EquationInputArea.GetChevronIcon(SliderSettingsVisible), Mode=OneWay}"/>
-                            </Button>
+                            </ToggleButton>
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -801,16 +835,16 @@
                                                   DataContext="{x:Bind Mode=OneWay}"
                                                   DataContextChanged="EquationTextBox_DataContextChanged"
                                                   EquationButtonClicked="EquationTextBox_EquationButtonClicked"
-                                                  IsEquationLineDisabled="{x:Bind IsLineEnabled, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                                                   EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
+                                                  EquationButtonForegroundColor="{x:Bind local:EquationInputArea.GetForegroundColor(LineColor), Mode=OneWay}"
                                                   EquationColor="{x:Bind local:EquationInputArea.ToSolidColorBrush(LineColor), Mode=OneWay}"
-                                                  EquationButtonForegroundColor ="{x:Bind local:EquationInputArea.GetForegroundColor(LineColor), Mode=OneWay}"
                                                   EquationFormatRequested="EquationTextBox_EquationFormatRequested"
                                                   EquationSubmitted="EquationTextBox_Submitted"
                                                   ErrorText="{x:Bind vm:EquationViewModel.EquationErrorText(GraphEquation.GraphErrorType, GraphEquation.GraphErrorCode), Mode=OneWay}"
                                                   GotFocus="EquationTextBox_GotFocus"
                                                   HasError="{x:Bind GraphEquation.HasGraphError, Mode=OneWay}"
                                                   IsAddEquationMode="{x:Bind IsLastItemInList, Mode=OneWay}"
+                                                  IsEquationLineDisabled="{x:Bind IsLineEnabled, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                                                   KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked"
                                                   Loaded="EquationTextBox_Loaded"
                                                   LostFocus="EquationTextBox_LostFocus"
