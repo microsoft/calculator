@@ -4323,13 +4323,22 @@
     <comment>This is the text for the for the equation style context menu command</comment>
   </data>
   <data name="showEquationButtonToolTip" xml:space="preserve">
+    <value>Show equation</value>
+    <comment>This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator.</comment>
+  </data>
+  <data name="hideEquationButtonToolTip" xml:space="preserve">
+    <value>Hide equation</value>
+    <comment>This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator.</comment>
+  </data>
+<data name="showEquationButtonAutomationName" xml:space="preserve">
     <value>Show equation %1</value>
     <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
   </data>
-  <data name="hideEquationButtonToolTip" xml:space="preserve">
+  <data name="hideEquationButtonAutomationName" xml:space="preserve">
     <value>Hide equation %1</value>
     <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator. %1 is the equation number.</comment>
   </data>
+    
   <data name="disableTracingButtonToolTip" xml:space="preserve">
     <value>Stop tracing</value>
     <comment>This is the tooltip/automation name for the graphing calculator stop tracing button</comment>
@@ -4538,52 +4547,72 @@
     <value>Seafoam</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationColor3AutomationName" xml:space="preserve">
+  <data name="equationColor3AutomationName" xml:space="preserve">
     <value>Violet</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationColor4AutomationName" xml:space="preserve">
+  <data name="equationColor4AutomationName" xml:space="preserve">
     <value>Green</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationColor5AutomationName" xml:space="preserve">
+  <data name="equationColor5AutomationName" xml:space="preserve">
     <value>Mint Green</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationColor6AutomationName" xml:space="preserve">
+  <data name="equationColor6AutomationName" xml:space="preserve">
     <value>Dark Green</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationColor7AutomationName" xml:space="preserve">
+  <data name="equationColor7AutomationName" xml:space="preserve">
     <value>Charcoal</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationColor8AutomationName" xml:space="preserve">
+  <data name="equationColor8AutomationName" xml:space="preserve">
     <value>Red</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationColor9AutomationName" xml:space="preserve">
+  <data name="equationColor9AutomationName" xml:space="preserve">
     <value>Plum Light</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationColor10AutomationName" xml:space="preserve">
+  <data name="equationColor10AutomationName" xml:space="preserve">
     <value>Magenta</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationColor11AutomationName" xml:space="preserve">
+  <data name="equationColor11AutomationName" xml:space="preserve">
     <value>Yellow Gold</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationColor12AutomationName" xml:space="preserve">
+  <data name="equationColor12AutomationName" xml:space="preserve">
     <value>Orange Bright</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationColor13AutomationName" xml:space="preserve">
+  <data name="equationColor13AutomationName" xml:space="preserve">
     <value>Brown</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationColor14AutomationName" xml:space="preserve">
+  <data name="equationColor14BlackAutomationName" xml:space="preserve">
     <value>Black</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor14WhiteAutomationName" xml:space="preserve">
+    <value>White</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationHighContrastColor1AutomationName" xml:space="preserve">
+    <value>Color 1</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationHighContrastColor2AutomationName" xml:space="preserve">
+    <value>Color 2</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationHighContrastColor3AutomationName" xml:space="preserve">
+    <value>Color 3</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+    <data name="equationHighContrastColor4AutomationName" xml:space="preserve">
+    <value>Color 4</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="GraphThemeHeading.Text" xml:space="preserve">
@@ -4602,7 +4631,7 @@
     <value>Theme</value>
     <comment>This is the automation name text for the Graph settings heading for the theme options</comment>
   </data>
-    <data name="AlwaysLightTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="AlwaysLightTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Always light</value>
     <comment>This is the automation name text for the Graph settings option to set graph to light theme</comment>
   </data>
@@ -4616,7 +4645,43 @@
   </data>
   <data name="KGFEquationTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Function Analysis Equation Box</value>
-    <comment>This is the automation name text for the equation box in the function analsis panel</comment>
+    <comment>This is the automation name text for the equation box in the function analysis panel</comment>
+  </data>
+  <data name="lessThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Less than</value>
+    <comment>Screen reader prompt for the Less than button</comment>
+  </data>
+  <data name="lessThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Less than or equal</value>
+    <comment>Screen reader prompt for the Less than or equal button</comment>
+  </data>
+  <data name="equalsFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Equal</value>
+    <comment>Screen reader prompt for the Equal button</comment>
+  </data>
+  <data name="greaterThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Greater than or equal</value>
+    <comment>Screen reader prompt for the Greater than or equal button</comment>
+  </data>
+  <data name="greaterThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Greater than</value>
+    <comment>Screen reader prompt for the Greater than button</comment>
+  </data>
+  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Equals</value>
+    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
+  </data>
+    <data name="xButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>X</value>
+    <comment>Screen reader prompt for the X button on the graphing calculator operator keypad</comment>
+  </data>
+    <data name="yButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Y</value>
+    <comment>Screen reader prompt for the Y button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="submitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Submit</value>
+    <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
   </data>
   <data name="lessThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Less than</value>

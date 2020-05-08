@@ -145,62 +145,100 @@ String ^ EquationStylePanelControl::GetColorAutomationName(Brush ^ brush)
     auto resourceLoader = AppResourceProvider::GetInstance();
     auto color = static_cast<SolidColorBrush ^>(brush);
 
-    if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush1")))
+    auto lightDictionary = static_cast<ResourceDictionary ^>(Application::Current->Resources->ThemeDictionaries->Lookup(L"Light"));
+    auto darkDictionary = static_cast<ResourceDictionary ^>(Application::Current->Resources->ThemeDictionaries->Lookup(L"Default"));
+    auto highContrast = static_cast<ResourceDictionary ^>(Application::Current->Resources->ThemeDictionaries->Lookup(L"HighContrast"));
+
+    if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush1"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush1")))
     {
         return resourceLoader->GetResourceString("equationColor1AutomationName");
     }
-    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush2")))
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush2"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush2")))
     {
         return resourceLoader->GetResourceString("equationColor2AutomationName");
     }
-    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush3")))
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush3"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush3")))
     {
         return resourceLoader->GetResourceString("equationColor3AutomationName");
     }
-    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush4")))
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush4"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush4")))
     {
         return resourceLoader->GetResourceString("equationColor4AutomationName");
     }
-    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush5")))
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush5"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush5")))
     {
         return resourceLoader->GetResourceString("equationColor5AutomationName");
     }
-    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush6")))
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush6"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush6")))
     {
         return resourceLoader->GetResourceString("equationColor6AutomationName");
     }
-    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush7")))
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush7"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush7")))
     {
         return resourceLoader->GetResourceString("equationColor7AutomationName");
     }
-    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush8")))
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush8"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush8")))
     {
         return resourceLoader->GetResourceString("equationColor8AutomationName");
     }
-    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush9")))
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush9"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush9")))
     {
         return resourceLoader->GetResourceString("equationColor9AutomationName");
     }
-    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush10")))
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush10"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush10")))
     {
         return resourceLoader->GetResourceString("equationColor10AutomationName");
     }
-    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush11")))
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush11"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush11")))
     {
         return resourceLoader->GetResourceString("equationColor11AutomationName");
     }
-    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush12")))
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush12"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush12")))
     {
         return resourceLoader->GetResourceString("equationColor12AutomationName");
     }
-    else if (color == safe_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"EquationBrush13")))
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush13"))
+        || color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush13")))
     {
         return resourceLoader->GetResourceString("equationColor13AutomationName");
     }
+    else if (color == safe_cast<SolidColorBrush ^>(darkDictionary->Lookup(L"EquationBrush14")))
+    {
+        return resourceLoader->GetResourceString("equationColor14WhiteAutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(lightDictionary->Lookup(L"EquationBrush14")))
+    {
+        return resourceLoader->GetResourceString("equationColor14BlackAutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(highContrast->Lookup(L"EquationBrush1")))
+    {
+        return resourceLoader->GetResourceString("equationHighContrastColor1AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(highContrast->Lookup(L"EquationBrush2")))
+    {
+        return resourceLoader->GetResourceString("equationHighContrastColor2AutomationName");
+    }
+    else if (color == safe_cast<SolidColorBrush ^>(highContrast->Lookup(L"EquationBrush3")))
+    {
+        return resourceLoader->GetResourceString("equationHighContrastColor3AutomationName");
+    }
     else
     {
-        return resourceLoader->GetResourceString("equationColor14AutomationName");
+        return resourceLoader->GetResourceString("equationHighContrastColor4AutomationName");
     }
+
 }
 
 String ^ EquationStylePanelControl::GetLineAutomationName(Object ^ line)

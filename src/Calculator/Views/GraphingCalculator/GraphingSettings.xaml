@@ -174,7 +174,7 @@
                        Style="{StaticResource SubTitleTextBoxStyle}"
                        AutomationProperties.HeadingLevel="Level2"/>
 
-            <StackPanel Orientation="Horizontal">
+            <StackPanel AutomationProperties.LabeledBy="{Binding ElementName=UnitsHeading}" Orientation="Horizontal">
                 <RadioButton x:Name="Radians"
                              x:Uid="TrigModeRadians"
                              Style="{StaticResource TrigUnitsRadioButtonStyle}"
@@ -218,14 +218,13 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-
             <TextBlock x:Name="GraphThemeHeading"
                        x:Uid="GraphThemeHeading"
                        Margin="0,16,0,6"
                        Style="{StaticResource SubTitleTextBoxStyle}"
                        AutomationProperties.HeadingLevel="Level2"/>
 
-            <StackPanel Orientation="Vertical">
+            <StackPanel AutomationProperties.LabeledBy="{Binding ElementName=GraphThemeHeading}">
                 <RadioButton x:Uid="AlwaysLightTheme" IsChecked="{x:Bind IsMatchAppTheme, Mode=TwoWay, Converter={StaticResource BooleanNegationConverter}}"/>
                 <RadioButton x:Uid="MatchAppTheme"
                              Margin="1,0"
