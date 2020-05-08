@@ -282,12 +282,6 @@ void EquationTextBox::OnFunctionMenuButtonClicked(Object ^ sender, RoutedEventAr
 
 void EquationTextBox::OnFunctionButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
-    // Submit the equation before trying to analyze it if invoked from context menu
-    if (e->OriginalSource == m_kgfEquationMenuItem && m_richEditBox != nullptr)
-    {
-        m_richEditBox->SubmitEquation(::EquationSubmissionSource::FOCUS_LOST);
-    }
-
     KeyGraphFeaturesButtonClicked(this, ref new RoutedEventArgs());
 }
 

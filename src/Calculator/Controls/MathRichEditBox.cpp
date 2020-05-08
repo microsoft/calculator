@@ -113,7 +113,7 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
 
 void MathRichEditBox::OnLosingFocus(UIElement ^ sender, LosingFocusEventArgs ^ args)
 {
-    if (this->IsReadOnly || this->ContextFlyout->IsOpen)// || args->NewFocusedElement == static_cast<Windows::UI::Xaml::DependencyObject ^>(this->ContextFlyout.))
+    if (this->IsReadOnly || this->ContextFlyout->IsOpen)
     {
         return;
     }
