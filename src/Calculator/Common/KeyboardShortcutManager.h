@@ -26,13 +26,10 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(MyVirtualKey, VirtualKeyShiftChord);
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(MyVirtualKey, VirtualKeyAltChord);
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(MyVirtualKey, VirtualKeyControlShiftChord);
-            DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(MyVirtualKey, VirtualKeyInverseChord);
-            DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(MyVirtualKey, VirtualKeyControlInverseChord);
 
-            internal :
+        internal:
 
-                static void
-                Initialize();
+            static void Initialize();
 
             // Sometimes, like with popups, escape is treated as special and even
             // though it is handled we get it passed through to us. In those cases
@@ -45,8 +42,6 @@ namespace CalculatorApp
             static void HonorShortcuts(bool allow);
             static void DisableShortcuts(bool disable);
             static void UpdateDropDownState(bool);
-            static void ShiftButtonChecked(bool checked);
-            static void UpdateDropDownState(Windows::UI::Xaml::Controls::Flyout ^ aboutPageFlyout);
 
             static void RegisterNewAppViewId();
             static void OnWindowClosed(int viewId);
@@ -60,11 +55,6 @@ namespace CalculatorApp
 
             static void OnVirtualKeyShiftChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
-            static void OnVirtualKeyInverseChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
-
-            static void
-            OnVirtualKeyControlInverseChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
-
             static void OnVirtualKeyAltChordPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, MyVirtualKey oldValue, MyVirtualKey newValue);
 
             static void
@@ -72,7 +62,6 @@ namespace CalculatorApp
 
             static void OnCharacterReceivedHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::CharacterReceivedEventArgs ^ args);
             static void OnKeyDownHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args);
-            static void OnKeyUpHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args);
             static void OnAcceleratorKeyActivated(Windows::UI::Core::CoreDispatcher ^, Windows::UI::Core::AcceleratorKeyEventArgs ^ args);
         };
     }
