@@ -12,10 +12,13 @@ using namespace std;
 using namespace Windows::ApplicationModel;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Text;
+using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::System;
+using namespace Microsoft::WRL;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(MathRichEditBox, MathText);
 
@@ -62,16 +65,15 @@ MathRichEditBox::MathRichEditBox()
 
     // TODO when Windows 10 version 2004 SDK is adopted, replace with:
     // TextDocument->SetMathMode(Windows::UI::Text::RichEditMathMode::MathOnly);
-    Microsoft::WRL::ComPtr<Windows_2004_Prerelease::ITextDocument4> textDocument4;
+    ComPtr<Windows_2004_Prerelease::ITextDocument4> textDocument4;
     reinterpret_cast<IInspectable*>(this->TextDocument)->QueryInterface(IID_PPV_ARGS(&textDocument4));
     auto hr = textDocument4->SetMathMode(Windows_2004_Prerelease::RichEditMathMode::MathOnly);
     if (FAILED(hr))
     {
         throw Exception::CreateException(hr);
     }
-    this->LosingFocus += ref new Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::UIElement ^, Windows::UI::Xaml::Input::LosingFocusEventArgs ^>(
-        this, &CalculatorApp::Controls::MathRichEditBox::OnLosingFocus);
-    this->KeyUp += ref new Windows::UI::Xaml::Input::KeyEventHandler(this, &CalculatorApp::Controls::MathRichEditBox::OnKeyUp);
+    this->LosingFocus += ref new TypedEventHandler<UIElement ^,LosingFocusEventArgs ^>(this, &MathRichEditBox::OnLosingFocus);
+    this->KeyUp += ref new KeyEventHandler(this, &MathRichEditBox::OnKeyUp);
 }
 
 String ^ MathRichEditBox::GetMathTextProperty()
@@ -81,7 +83,7 @@ String ^ MathRichEditBox::GetMathTextProperty()
     // this->TextDocument->GetMath(&text);
     // return text;
 
-    Microsoft::WRL::ComPtr<Windows_2004_Prerelease::ITextDocument4> textDocument4;
+    ComPtr<Windows_2004_Prerelease::ITextDocument4> textDocument4;
     reinterpret_cast<IInspectable*>(this->TextDocument)->QueryInterface(IID_PPV_ARGS(&textDocument4));
     HSTRING math;
     auto hr = textDocument4->GetMath(&math);
@@ -110,15 +112,17 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
     this->IsReadOnly = readOnlyState;
 }
 
-void CalculatorApp::Controls::MathRichEditBox::OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args)
+void MathRichEditBox::OnLosingFocus(UIElement ^ sender, LosingFocusEventArgs ^ args)
 {
-    if (!this->IsReadOnly)
+    if (this->IsReadOnly || this->ContextFlyout->IsOpen)
     {
-        SubmitEquation(EquationSubmissionSource::FOCUS_LOST);
+        return;
     }
+
+    SubmitEquation(EquationSubmissionSource::FOCUS_LOST);
 }
 
-void CalculatorApp::Controls::MathRichEditBox::OnKeyUp(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e)
+void MathRichEditBox::OnKeyUp(Object ^ sender, KeyRoutedEventArgs ^ e)
 {
     if (!this->IsReadOnly && e->Key == VirtualKey::Enter)
     {
@@ -126,7 +130,7 @@ void CalculatorApp::Controls::MathRichEditBox::OnKeyUp(Platform::Object ^ sender
     }
 }
 
-void CalculatorApp::Controls::MathRichEditBox::OnKeyDown(Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e)
+void MathRichEditBox::OnKeyDown(KeyRoutedEventArgs ^ e)
 {
     // suppress control + B to prevent bold input from being entered
     if ((Window::Current->CoreWindow->GetKeyState(VirtualKey::Control) & CoreVirtualKeyStates::Down) != CoreVirtualKeyStates::Down ||
@@ -144,7 +148,7 @@ void MathRichEditBox::OnMathTextPropertyChanged(Platform::String ^ oldValue, Pla
     SetValue(MathTextProperty, GetMathTextProperty());
 }
 
-void MathRichEditBox::InsertText(Platform::String ^ text, int cursorOffSet, int selectionLength)
+void MathRichEditBox::InsertText(String ^ text, int cursorOffSet, int selectionLength)
 {
     // If the rich edit is empty, the math zone may not exist, and so selection (and thus the resulting text) will not be in a math zone.
     // If the rich edit has content already, then the mathzone will already be created due to mathonly mode being set and the selection will exist inside the

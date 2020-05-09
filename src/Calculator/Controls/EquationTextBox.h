@@ -62,6 +62,7 @@ namespace CalculatorApp
             void OnRemoveButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnColorChooserButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
             void OnFunctionButtonClicked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+            void OnFunctionMenuButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
             void OnRichEditMenuOpened(Platform::Object ^ sender, Platform::Object ^ args);
 
             void OnCutClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
