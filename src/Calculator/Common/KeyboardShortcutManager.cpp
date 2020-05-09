@@ -10,7 +10,7 @@
 using namespace Concurrency;
 using namespace Platform;
 using namespace std;
-using namespace std::chrono;
+using namespace chrono;
 using namespace Windows::ApplicationModel::Resources;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
@@ -33,21 +33,19 @@ DEPENDENCY_PROPERTY_INITIALIZATION(KeyboardShortcutManager, VirtualKeyShiftChord
 DEPENDENCY_PROPERTY_INITIALIZATION(KeyboardShortcutManager, VirtualKeyAltChord);
 DEPENDENCY_PROPERTY_INITIALIZATION(KeyboardShortcutManager, VirtualKeyControlShiftChord);
 
-static multimap<int, multimap<wchar_t, WeakReference>> s_CharacterForButtons;
-static multimap<int, multimap<MyVirtualKey, WeakReference>> s_VirtualKeysForButtons;
-static multimap<int, multimap<MyVirtualKey, WeakReference>> s_VirtualKeyControlChordsForButtons;
-static multimap<int, multimap<MyVirtualKey, WeakReference>> s_VirtualKeyShiftChordsForButtons;
-static multimap<int, multimap<MyVirtualKey, WeakReference>> s_VirtualKeyAltChordsForButtons;
-static multimap<int, multimap<MyVirtualKey, WeakReference>> s_VirtualKeyControlShiftChordsForButtons;
+map<int, multimap<wchar_t, WeakReference>> KeyboardShortcutManager::s_CharacterForButtons;
+map<int, multimap<MyVirtualKey, WeakReference>> KeyboardShortcutManager::s_VirtualKeysForButtons;
+map<int, multimap<MyVirtualKey, WeakReference>> KeyboardShortcutManager::s_VirtualKeyControlChordsForButtons;
+map<int, multimap<MyVirtualKey, WeakReference>> KeyboardShortcutManager::s_VirtualKeyShiftChordsForButtons;
+map<int, multimap<MyVirtualKey, WeakReference>> KeyboardShortcutManager::s_VirtualKeyAltChordsForButtons;
+map<int, multimap<MyVirtualKey, WeakReference>> KeyboardShortcutManager::s_VirtualKeyControlShiftChordsForButtons;
 
-static map<int, bool> s_IsDropDownOpen;
-
-static map<int, bool> s_ignoreNextEscape;
-static map<int, bool> s_keepIgnoringEscape;
-static map<int, bool> s_fHonorShortcuts;
-static map<int, bool> s_fDisableShortcuts;
-
-static reader_writer_lock s_keyboardShortcutMapLock;
+map<int, bool> KeyboardShortcutManager::s_IsDropDownOpen;
+map<int, bool> KeyboardShortcutManager::s_ignoreNextEscape;
+map<int, bool> KeyboardShortcutManager::s_keepIgnoringEscape;
+map<int, bool> KeyboardShortcutManager::s_fHonorShortcuts;
+map<int, bool> KeyboardShortcutManager::s_fDisableShortcuts;
+reader_writer_lock KeyboardShortcutManager::s_keyboardShortcutMapLock;
 
 namespace CalculatorApp
 {
@@ -214,26 +212,26 @@ void KeyboardShortcutManager::OnCharacterPropertyChanged(DependencyObject ^ targ
             if (newValue == L".")
             {
                 wchar_t decSep = LocalizationSettings::GetInstance().GetDecimalSeparator();
-                iterViewMap->second.insert(std::make_pair(decSep, WeakReference(button)));
+                iterViewMap->second.insert(make_pair(decSep, WeakReference(button)));
             }
             else
             {
-                iterViewMap->second.insert(std::make_pair(newValue->Data()[0], WeakReference(button)));
+                iterViewMap->second.insert(make_pair(newValue->Data()[0], WeakReference(button)));
             }
         }
     }
     else
     {
-        s_CharacterForButtons.insert(std::make_pair(viewId, std::multimap<wchar_t, WeakReference>()));
+        s_CharacterForButtons.insert(make_pair(viewId, multimap<wchar_t, WeakReference>()));
 
         if (newValue == L".")
         {
             wchar_t decSep = LocalizationSettings::GetInstance().GetDecimalSeparator();
-            s_CharacterForButtons.find(viewId)->second.insert(std::make_pair(decSep, WeakReference(button)));
+            s_CharacterForButtons.find(viewId)->second.insert(make_pair(decSep, WeakReference(button)));
         }
         else
         {
-            s_CharacterForButtons.find(viewId)->second.insert(std::make_pair(newValue->Data()[0], WeakReference(button)));
+            s_CharacterForButtons.find(viewId)->second.insert(make_pair(newValue->Data()[0], WeakReference(button)));
         }
     }
 }
@@ -251,13 +249,13 @@ void KeyboardShortcutManager::OnVirtualKeyPropertyChanged(DependencyObject ^ tar
     // Check if the View Id has already been registered
     if (iterViewMap != s_VirtualKeysForButtons.end())
     {
-        iterViewMap->second.insert(std::make_pair(newValue, WeakReference(button)));
+        iterViewMap->second.insert(make_pair(newValue, WeakReference(button)));
     }
     else
     {
         // If the View Id is not already registered, then register it and make the entry
-        s_VirtualKeysForButtons.insert(std::make_pair(viewId, std::multimap<MyVirtualKey, WeakReference>()));
-        s_VirtualKeysForButtons.find(viewId)->second.insert(std::make_pair(newValue, WeakReference(button)));
+        s_VirtualKeysForButtons.insert(make_pair(viewId, multimap<MyVirtualKey, WeakReference>()));
+        s_VirtualKeysForButtons.find(viewId)->second.insert(make_pair(newValue, WeakReference(button)));
     }
 }
 
@@ -280,13 +278,13 @@ void KeyboardShortcutManager::OnVirtualKeyControlChordPropertyChanged(Dependency
     // Check if the View Id has already been registered
     if (iterViewMap != s_VirtualKeyControlChordsForButtons.end())
     {
-        iterViewMap->second.insert(std::make_pair(newValue, WeakReference(control)));
+        iterViewMap->second.insert(make_pair(newValue, WeakReference(control)));
     }
     else
     {
         // If the View Id is not already registered, then register it and make the entry
-        s_VirtualKeyControlChordsForButtons.insert(std::make_pair(viewId, std::multimap<MyVirtualKey, WeakReference>()));
-        s_VirtualKeyControlChordsForButtons.find(viewId)->second.insert(std::make_pair(newValue, WeakReference(control)));
+        s_VirtualKeyControlChordsForButtons.insert(make_pair(viewId, multimap<MyVirtualKey, WeakReference>()));
+        s_VirtualKeyControlChordsForButtons.find(viewId)->second.insert(make_pair(newValue, WeakReference(control)));
     }
 }
 
@@ -303,13 +301,13 @@ void KeyboardShortcutManager::OnVirtualKeyShiftChordPropertyChanged(DependencyOb
     // Check if the View Id has already been registered
     if (iterViewMap != s_VirtualKeyShiftChordsForButtons.end())
     {
-        iterViewMap->second.insert(std::make_pair(newValue, WeakReference(button)));
+        iterViewMap->second.insert(make_pair(newValue, WeakReference(button)));
     }
     else
     {
         // If the View Id is not already registered, then register it and make the entry
-        s_VirtualKeyShiftChordsForButtons.insert(std::make_pair(viewId, std::multimap<MyVirtualKey, WeakReference>()));
-        s_VirtualKeyShiftChordsForButtons.find(viewId)->second.insert(std::make_pair(newValue, WeakReference(button)));
+        s_VirtualKeyShiftChordsForButtons.insert(make_pair(viewId, multimap<MyVirtualKey, WeakReference>()));
+        s_VirtualKeyShiftChordsForButtons.find(viewId)->second.insert(make_pair(newValue, WeakReference(button)));
     }
 }
 
@@ -326,13 +324,13 @@ void KeyboardShortcutManager::OnVirtualKeyAltChordPropertyChanged(DependencyObje
     // Check if the View Id has already been registered
     if (iterViewMap != s_VirtualKeyAltChordsForButtons.end())
     {
-        iterViewMap->second.insert(std::make_pair(newValue, WeakReference(navView)));
+        iterViewMap->second.insert(make_pair(newValue, WeakReference(navView)));
     }
     else
     {
         // If the View Id is not already registered, then register it and make the entry
-        s_VirtualKeyAltChordsForButtons.insert(std::make_pair(viewId, std::multimap<MyVirtualKey, WeakReference>()));
-        s_VirtualKeyAltChordsForButtons.find(viewId)->second.insert(std::make_pair(newValue, WeakReference(navView)));
+        s_VirtualKeyAltChordsForButtons.insert(make_pair(viewId, multimap<MyVirtualKey, WeakReference>()));
+        s_VirtualKeyAltChordsForButtons.find(viewId)->second.insert(make_pair(newValue, WeakReference(navView)));
     }
 }
 
@@ -349,13 +347,13 @@ void KeyboardShortcutManager::OnVirtualKeyControlShiftChordPropertyChanged(Depen
     // Check if the View Id has already been registered
     if (iterViewMap != s_VirtualKeyControlShiftChordsForButtons.end())
     {
-        iterViewMap->second.insert(std::make_pair(newValue, WeakReference(button)));
+        iterViewMap->second.insert(make_pair(newValue, WeakReference(button)));
     }
     else
     {
         // If the View Id is not already registered, then register it and make the entry
-        s_VirtualKeyControlShiftChordsForButtons.insert(std::make_pair(viewId, std::multimap<MyVirtualKey, WeakReference>()));
-        s_VirtualKeyControlShiftChordsForButtons.find(viewId)->second.insert(std::make_pair(newValue, WeakReference(button)));
+        s_VirtualKeyControlShiftChordsForButtons.insert(make_pair(viewId, multimap<MyVirtualKey, WeakReference>()));
+        s_VirtualKeyControlShiftChordsForButtons.find(viewId)->second.insert(make_pair(newValue, WeakReference(button)));
     }
 }
 
@@ -377,7 +375,7 @@ void KeyboardShortcutManager::OnCharacterReceivedHandler(CoreWindow ^ sender, Ch
     }
 }
 
-const std::multimap<MyVirtualKey, WeakReference>* GetCurrentKeyDictionary(bool altPressed = false)
+const multimap<MyVirtualKey, WeakReference>* KeyboardShortcutManager::GetCurrentKeyDictionary(bool altPressed)
 {
     int viewId = Utils::GetWindowId();
 
@@ -627,32 +625,32 @@ void KeyboardShortcutManager::RegisterNewAppViewId()
     // Check if the View Id has already been registered
     if (s_CharacterForButtons.find(appViewId) == s_CharacterForButtons.end())
     {
-        s_CharacterForButtons.insert(std::make_pair(appViewId, std::multimap<wchar_t, WeakReference>()));
+        s_CharacterForButtons.insert(make_pair(appViewId, multimap<wchar_t, WeakReference>()));
     }
 
     if (s_VirtualKeysForButtons.find(appViewId) == s_VirtualKeysForButtons.end())
     {
-        s_VirtualKeysForButtons.insert(std::make_pair(appViewId, std::multimap<MyVirtualKey, WeakReference>()));
+        s_VirtualKeysForButtons.insert(make_pair(appViewId, multimap<MyVirtualKey, WeakReference>()));
     }
 
     if (s_VirtualKeyControlChordsForButtons.find(appViewId) == s_VirtualKeyControlChordsForButtons.end())
     {
-        s_VirtualKeyControlChordsForButtons.insert(std::make_pair(appViewId, std::multimap<MyVirtualKey, WeakReference>()));
+        s_VirtualKeyControlChordsForButtons.insert(make_pair(appViewId, multimap<MyVirtualKey, WeakReference>()));
     }
 
     if (s_VirtualKeyShiftChordsForButtons.find(appViewId) == s_VirtualKeyShiftChordsForButtons.end())
     {
-        s_VirtualKeyShiftChordsForButtons.insert(std::make_pair(appViewId, std::multimap<MyVirtualKey, WeakReference>()));
+        s_VirtualKeyShiftChordsForButtons.insert(make_pair(appViewId, multimap<MyVirtualKey, WeakReference>()));
     }
 
     if (s_VirtualKeyAltChordsForButtons.find(appViewId) == s_VirtualKeyAltChordsForButtons.end())
     {
-        s_VirtualKeyAltChordsForButtons.insert(std::make_pair(appViewId, std::multimap<MyVirtualKey, WeakReference>()));
+        s_VirtualKeyAltChordsForButtons.insert(make_pair(appViewId, multimap<MyVirtualKey, WeakReference>()));
     }
 
     if (s_VirtualKeyControlShiftChordsForButtons.find(appViewId) == s_VirtualKeyControlShiftChordsForButtons.end())
     {
-        s_VirtualKeyControlShiftChordsForButtons.insert(std::make_pair(appViewId, std::multimap<MyVirtualKey, WeakReference>()));
+        s_VirtualKeyControlShiftChordsForButtons.insert(make_pair(appViewId, multimap<MyVirtualKey, WeakReference>()));
     }
 
     s_IsDropDownOpen[appViewId] = false;

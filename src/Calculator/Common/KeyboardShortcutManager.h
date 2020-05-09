@@ -63,6 +63,23 @@ namespace CalculatorApp
             static void OnCharacterReceivedHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::CharacterReceivedEventArgs ^ args);
             static void OnKeyDownHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args);
             static void OnAcceleratorKeyActivated(Windows::UI::Core::CoreDispatcher ^, Windows::UI::Core::AcceleratorKeyEventArgs ^ args);
+            static const std::multimap<MyVirtualKey, Platform::WeakReference>* KeyboardShortcutManager::GetCurrentKeyDictionary(bool altPressed = false);
+
+        private:
+            static std::map<int, std::multimap<wchar_t, Platform::WeakReference>> s_CharacterForButtons;
+            static std::map<int, std::multimap<MyVirtualKey, Platform::WeakReference>> s_VirtualKeysForButtons;
+            static std::map<int, std::multimap<MyVirtualKey, Platform::WeakReference>> s_VirtualKeyControlChordsForButtons;
+            static std::map<int, std::multimap<MyVirtualKey, Platform::WeakReference>> s_VirtualKeyShiftChordsForButtons;
+            static std::map<int, std::multimap<MyVirtualKey, Platform::WeakReference>> s_VirtualKeyAltChordsForButtons;
+            static std::map<int, std::multimap<MyVirtualKey, Platform::WeakReference>> s_VirtualKeyControlShiftChordsForButtons;
+
+            static std::map<int, bool> s_IsDropDownOpen;
+            static std::map<int, bool> s_ignoreNextEscape;
+            static std::map<int, bool> s_keepIgnoringEscape;
+            static std::map<int, bool> s_fHonorShortcuts;
+            static std::map<int, bool> s_fDisableShortcuts;
+
+            static Concurrency::reader_writer_lock s_keyboardShortcutMapLock;
         };
     }
 }
