@@ -4719,4 +4719,8 @@
     <value>Submit</value>
     <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
   </data>
+  <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Variable options</value>
+    <comment>This is the tooltip for the Variable Settings Button in the graphing calculator</comment>
+  </data>
 </root>
