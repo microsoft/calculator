@@ -170,7 +170,6 @@
                                 </Grid>
                             </Grid>
 
-
                             <ToggleButton Name="VariableAreaSettings"
                                           x:Uid="VariableAreaSettings"
                                           Margin="0,6,0,0"
