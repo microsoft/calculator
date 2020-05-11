@@ -664,7 +664,6 @@ void GraphingCalculator::DisplayGraphSettings()
 
     auto options = ref new FlyoutShowOptions();
     options->Placement = FlyoutPlacementMode::BottomEdgeAlignedRight;
-
     m_graphFlyout->ShowAt(GraphSettingsButton, options);
 }
 
