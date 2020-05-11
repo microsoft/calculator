@@ -4620,7 +4620,7 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="GraphThemeHeading.Text" xml:space="preserve">
-    <value>Theme</value>
+    <value>Graph Theme</value>
     <comment>Graph settings heading for the theme options</comment>
   </data>
   <data name="AlwaysLightTheme.Content" xml:space="preserve">
