@@ -33,6 +33,12 @@
             <Setter Property="KeyTipPlacementMode" Value="Right"/>
         </Style>
 
+        <Style x:Key="CategoryNameTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings"/>
+        </Style>
+
         <DataTemplate x:Key="NavMenuItemPreviewDataTemplate" x:DataType="x:String">
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="{x:Bind}"/>
@@ -169,12 +175,12 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Margin="52,0,0,0" Orientation="Horizontal">
+                <StackPanel Margin="48,0,0,0" Orientation="Horizontal">
                     <TextBlock x:Name="Header"
                                Margin="0,-3,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
-                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               Style="{StaticResource CategoryNameTextBlockStyle}"
                                Text="{x:Bind Model.CategoryName, Mode=OneWay}"
                                Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
                     <controls:PreviewTagControl Margin="10,0,0,0"
