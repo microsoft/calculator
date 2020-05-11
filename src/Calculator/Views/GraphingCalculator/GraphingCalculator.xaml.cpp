@@ -664,6 +664,7 @@ void GraphingCalculator::DisplayGraphSettings()
 
     auto options = ref new FlyoutShowOptions();
     options->Placement = FlyoutPlacementMode::BottomEdgeAlignedRight;
+
     m_graphFlyout->ShowAt(GraphSettingsButton, options);
 }
 
@@ -846,8 +847,9 @@ void GraphingCalculator::GraphViewButton_Click(Object ^ sender, RoutedEventArgs 
     }
     else
     {
-        GraphingControl->ResetGrid();
         announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphViewAutomaticBestFitAnnouncement");
+        announcementText += AppResourceProvider::GetInstance()->GetResourceString(L"GridResetAnnouncement");
+        GraphingControl->ResetGrid();
     }
 
     auto announcement = CalculatorAnnouncement::GetGraphViewBestFitChangedAnnouncement(announcementText);

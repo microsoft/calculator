@@ -160,7 +160,7 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphViewChangedAnnouncement(S
         announcement,
         CalculatorActivityIds::GraphViewChanged,
         AutomationNotificationKind::ActionCompleted,
-        AutomationNotificationProcessing::MostRecent);
+        AutomationNotificationProcessing::CurrentThenMostRecent);
 }
 
 NarratorAnnouncement ^ CalculatorAnnouncement::GetFunctionRemovedAnnouncement(String ^ announcement)
