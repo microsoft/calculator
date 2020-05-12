@@ -23,21 +23,67 @@
                       Tapped="VariableAreaTapped">
                     <Grid.Resources>
                         <ResourceDictionary>
+
+                            <Style x:Key="VariableTextBoxStyle" TargetType="TextBox">
+                                <Setter Property="Margin" Value="1,0,0,0"/>
+                                <Setter Property="Padding" Value="2,6,2,2"/>
+                                <Setter Property="TextAlignment" Value="Center"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="InputScope" Value="Number"/>
+                                <Setter Property="MinWidth" Value="30"/>
+                            </Style>
+
                             <ResourceDictionary.ThemeDictionaries>
                                 <ResourceDictionary x:Key="Default">
                                     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
                                     <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
                                     <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White"/>
+                                    <SolidColorBrush x:Key="SliderLegendBrush" Color="#B2ffffff"/>
+                                    <Style x:Key="VariableContainerStyle" TargetType="Border">
+                                        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltMediumLowBrush}"/>
+                                    </Style>
+                                    <Style x:Key="ThemedVariableTextBoxStyle"
+                                           BasedOn="{StaticResource VariableTextBoxStyle}"
+                                           TargetType="TextBox">
+                                        <Setter Property="BorderBrush" Value="#50ffffff"/>
+                                    </Style>
                                 </ResourceDictionary>
                                 <ResourceDictionary x:Key="Light">
                                     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
                                     <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
                                     <SolidColorBrush x:Key="TextControlForegroundFocused" Color="Black"/>
+                                    <SolidColorBrush x:Key="SliderLegendBrush" Color="#B2000000"/>
+                                    <Style x:Key="VariableContainerStyle" TargetType="Border">
+                                        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltMediumLowBrush}"/>
+                                    </Style>
+                                    <Style x:Key="ThemedVariableTextBoxStyle"
+                                           BasedOn="{StaticResource VariableTextBoxStyle}"
+                                           TargetType="TextBox">
+                                        <Setter Property="BorderBrush" Value="#70000000"/>
+                                    </Style>
                                 </ResourceDictionary>
                                 <ResourceDictionary x:Key="HighContrast">
                                     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{StaticResource SystemColorButtonFaceColor}"/>
                                     <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{StaticResource SystemColorButtonFaceColor}"/>
                                     <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{StaticResource SystemColorButtonTextColor}"/>
+                                    <SolidColorBrush x:Key="SliderLegendBrush" Color="{StaticResource SystemColorWindowTextColor}"/>
+                                    <Style x:Key="VariableContainerStyle" TargetType="Border">
+                                        <Setter Property="Background" Value="{StaticResource SystemColorWindowColor}"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Setter Property="BorderBrush" Value="{StaticResource SystemColorWindowTextColor}"/>
+                                    </Style>
+                                    <Style x:Key="ThemedVariableTextBoxStyle" TargetType="TextBox">
+                                        <Setter Property="Margin" Value="1,0,0,0"/>
+                                        <Setter Property="Padding" Value="2,6,2,2"/>
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="InputScope" Value="Number"/>
+                                        <Setter Property="MinWidth" Value="30"/>
+                                    </Style>
                                 </ResourceDictionary>
                             </ResourceDictionary.ThemeDictionaries>
                         </ResourceDictionary>
@@ -325,6 +371,7 @@
                                             <VisualState.Setters>
                                                 <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationTextBoxBorderBrushFocused}"/>
                                                 <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource TextBoxBackgroundThemeBrush}"/>
+                                                <Setter Target="MathRichEditBox.Foreground" Value="{ThemeResource TextControlForegroundFocused}"/>
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="FocusedError">
@@ -385,12 +432,12 @@
                                                     <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="White"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrush" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForeground" Color="White"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForeground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationButtonForegroundColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationButtonForegroundColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrushPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationButtonForegroundColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrushPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="EquationButtonHideLineBackgroundBrush"/>
                                                     <StaticResource x:Key="ToggleButtonBorderBrushChecked" ResourceKey="EquationButtonHideLineBackgroundBrush"/>
@@ -408,12 +455,12 @@
                                                     <SolidColorBrush x:Key="EquationButtonOverlayBackgroundBrush" Color="Black"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrush" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForeground" Color="White"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForeground" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationButtonForegroundColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationButtonForegroundColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrushPointerOver" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
-                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{ThemeResource SystemChromeWhiteColor}"/>
+                                                    <SolidColorBrush x:Key="ToggleButtonForegroundPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationButtonForegroundColor.Color}"/>
                                                     <SolidColorBrush x:Key="ToggleButtonBorderBrushPressed" Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EquationColor.Color}"/>
                                                     <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="EquationButtonHideLineBackgroundBrush"/>
                                                     <StaticResource x:Key="ToggleButtonBorderBrushChecked" ResourceKey="EquationButtonHideLineBackgroundBrush"/>
@@ -800,8 +847,8 @@
                                                   DataContext="{x:Bind Mode=OneWay}"
                                                   DataContextChanged="EquationTextBox_DataContextChanged"
                                                   EquationButtonClicked="EquationTextBox_EquationButtonClicked"
-                                                  IsEquationLineDisabled="{x:Bind IsLineEnabled, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                                                   EquationButtonContentIndex="{x:Bind FunctionLabelIndex, Mode=OneWay}"
+                                                  EquationButtonForegroundColor="{x:Bind local:EquationInputArea.GetForegroundColor(LineColor), Mode=OneWay}"
                                                   EquationColor="{x:Bind local:EquationInputArea.ToSolidColorBrush(LineColor), Mode=OneWay}"
                                                   EquationFormatRequested="EquationTextBox_EquationFormatRequested"
                                                   EquationSubmitted="EquationTextBox_Submitted"
@@ -809,6 +856,7 @@
                                                   GotFocus="EquationTextBox_GotFocus"
                                                   HasError="{x:Bind GraphEquation.HasGraphError, Mode=OneWay}"
                                                   IsAddEquationMode="{x:Bind IsLastItemInList, Mode=OneWay}"
+                                                  IsEquationLineDisabled="{x:Bind IsLineEnabled, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                                                   KeyGraphFeaturesButtonClicked="EquationTextBox_KeyGraphFeaturesButtonClicked"
                                                   Loaded="EquationTextBox_Loaded"
                                                   LostFocus="EquationTextBox_LostFocus"

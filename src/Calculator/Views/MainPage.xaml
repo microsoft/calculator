@@ -33,6 +33,12 @@
             <Setter Property="KeyTipPlacementMode" Value="Right"/>
         </Style>
 
+        <Style x:Key="CategoryNameTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings"/>
+        </Style>
+
         <DataTemplate x:Key="NavMenuItemPreviewDataTemplate" x:DataType="x:String">
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="{x:Bind}"/>

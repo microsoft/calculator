@@ -9,6 +9,21 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="#33EB5757"/>
+                    <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="#FFEB5757"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="#33EB5757"/>
+                    <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="#FFEB5757"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="GraphSettingsErrorBackgroundBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
+                    <SolidColorBrush x:Key="GraphSettingsErrorBorderBrush" Color="Red"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
             <Style x:Key="TrigUnitsRadioButtonStyle" TargetType="RadioButton">
                 <Setter Property="MinHeight" Value="38"/>
                 <Setter Property="MinWidth" Value="90"/>
@@ -72,28 +87,16 @@
                 <Setter Property="FontWeight" Value="Medium"/>
             </Style>
 
+            <Style x:Key="ErrorTextBoxStyle" TargetType="TextBox">
+                <Setter Property="BorderBrush" Value="{ThemeResource GraphSettingsErrorBorderBrush}"/>
+                <Setter Property="Background" Value="{ThemeResource GraphSettingsErrorBackgroundBrush}"/>
+            </Style>
+
             <DataTemplate x:Key="XYTextBoxHeaderTemplate" x:DataType="x:String">
                 <TextBlock FontSize="14" Text="{x:Bind}"/>
             </DataTemplate>
 
             <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
-            <ResourceDictionary.ThemeDictionaries>
-                <ResourceDictionary x:Key="Default">
-                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
-                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
-                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White"/>
-                </ResourceDictionary>
-                <ResourceDictionary x:Key="Light">
-                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/>
-                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/>
-                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="Black"/>
-                </ResourceDictionary>
-                <ResourceDictionary x:Key="HighContrast">
-                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{StaticResource SystemColorButtonFaceColor}"/>
-                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{StaticResource SystemColorButtonFaceColor}"/>
-                    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{StaticResource SystemColorButtonTextColor}"/>
-                </ResourceDictionary>
-            </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -132,7 +135,6 @@
                 <TextBox x:Name="SettingsXMin"
                          x:Uid="GraphSettingsXMin"
                          MaxWidth="160"
-                         HorizontalAlignment="Left"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMinError), Mode=OneWay}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
@@ -141,17 +143,14 @@
                          x:Uid="GraphSettingsXMax"
                          Grid.Column="2"
                          MaxWidth="160"
-                         HorizontalAlignment="Left"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMaxError), Mode=OneWay}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.XMax, Mode=TwoWay}"/>
-
                 <TextBox x:Name="SettingsYMin"
                          x:Uid="GraphSettingsYMin"
                          Grid.Row="2"
                          MaxWidth="160"
-                         HorizontalAlignment="Left"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMinError), Mode=OneWay}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
@@ -161,7 +160,6 @@
                          Grid.Row="2"
                          Grid.Column="2"
                          MaxWidth="160"
-                         HorizontalAlignment="Left"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMaxError), Mode=OneWay}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
@@ -174,7 +172,7 @@
                        Style="{StaticResource SubTitleTextBoxStyle}"
                        AutomationProperties.HeadingLevel="Level2"/>
 
-            <StackPanel Orientation="Horizontal">
+            <StackPanel AutomationProperties.LabeledBy="{Binding ElementName=UnitsHeading}" Orientation="Horizontal">
                 <RadioButton x:Name="Radians"
                              x:Uid="TrigModeRadians"
                              Style="{StaticResource TrigUnitsRadioButtonStyle}"
@@ -190,10 +188,12 @@
                              IsChecked="{x:Bind ViewModel.TrigModeGradians, Mode=TwoWay}"/>
             </StackPanel>
 
-            <ComboBox x:Name="LineThicknessBox"
-                      x:Uid="LineThicknessBox"
-                      MinWidth="200"
-                      Margin="0,12,0,0"
+            <TextBlock x:Uid="LineThicknessBoxHeading"
+                       Margin="0,16,0,6"
+                       Style="{StaticResource SubTitleTextBoxStyle}"
+                       AutomationProperties.HeadingLevel="Level2"/>
+            <ComboBox MinWidth="200"
+                      HorizontalAlignment="Stretch"
                       SelectedItem="{x:Bind ViewModel.Graph.LineWidth, Mode=TwoWay}">
                 <ComboBox.Items>
                     <x:Double>1.0</x:Double>
@@ -218,14 +218,13 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-
             <TextBlock x:Name="GraphThemeHeading"
                        x:Uid="GraphThemeHeading"
                        Margin="0,16,0,6"
                        Style="{StaticResource SubTitleTextBoxStyle}"
                        AutomationProperties.HeadingLevel="Level2"/>
 
-            <StackPanel Orientation="Vertical">
+            <StackPanel AutomationProperties.LabeledBy="{Binding ElementName=GraphThemeHeading}">
                 <RadioButton x:Uid="AlwaysLightTheme" IsChecked="{x:Bind IsMatchAppTheme, Mode=TwoWay, Converter={StaticResource BooleanNegationConverter}}"/>
                 <RadioButton x:Uid="MatchAppTheme"
                              Margin="1,0"

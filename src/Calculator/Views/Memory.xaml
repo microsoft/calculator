@@ -96,9 +96,10 @@
             </Grid.RowDefinitions>
             <TextBlock x:Name="MemoryPaneEmpty"
                        x:Uid="MemoryPaneEmpty"
-                       Margin="12,14,24,0"
+                       Margin="16,14,24,0"
                        Style="{ThemeResource BaseTextBlockStyle}"
                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                       FontWeight="SemiLight"
                        TextWrapping="Wrap"
                        Visibility="{Binding IsMemoryEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <ListView x:Name="MemoryListView"

@@ -186,7 +186,27 @@ void DateCalculator::SetDefaultFocus()
 void DateCalculator::DateCalcOption_Changed(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e)
 {
     FindName("AddSubtractDateGrid");
-    DateCalculationOption->SelectionChanged -= m_dateCalcOptionChangedEventToken;
+    auto dateCalcViewModel = safe_cast<DateCalculatorViewModel ^>(this->DataContext);
+
+    // From Date Field needs to persist across Date Difference and Add Substract Date Mode.
+    // So when the mode dropdown changes, update the other datepicker with the latest date.
+    if (dateCalcViewModel->IsDateDiffMode)
+    {
+        if (AddSubtract_FromDate->Date == nullptr)
+        {
+            return;
+        }
+        DateDiff_FromDate->Date = AddSubtract_FromDate->Date->Value;
+    }
+    else
+    {
+        if (DateDiff_FromDate->Date == nullptr)
+        {
+            // If no date has been picked, then this can be null.
+            return;
+        }
+        AddSubtract_FromDate->Date = DateDiff_FromDate->Date->Value;
+    }
 }
 
 void CalculatorApp::DateCalculator::AddSubtractDateGrid_Loaded(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e)

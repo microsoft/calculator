@@ -559,6 +559,7 @@ namespace CalculatorUITests
         [Priority(1)]
         public void Logical_Operator_Decimal_LeftShift()
         {
+            page.ProgrammerOperators.DecButton.Click();
             page.ProgrammerOperators.SetLogicalShift();
             page.StandardOperators.NumberPad.Input(7);
             page.ProgrammerOperators.LeftShiftLogicalButton.Click();
@@ -571,6 +572,7 @@ namespace CalculatorUITests
         [Priority(1)]
         public void Logical_Operator_Decimal_RightShift()
         {
+            page.ProgrammerOperators.DecButton.Click();
             page.ProgrammerOperators.SetLogicalShift();
             page.StandardOperators.NumberPad.Input(16);
             page.StandardOperators.NegateButton.Click();

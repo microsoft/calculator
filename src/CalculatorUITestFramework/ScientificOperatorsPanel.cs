@@ -83,6 +83,7 @@ namespace CalculatorUITestFramework
         public WindowsElement DegreesButton => this.session.TryFindElementByAccessibilityId("degreesButton");
         public WindowsElement FixedToExponentialButton => this.session.TryFindElementByAccessibilityId("ftoeButton");
         public WindowsElement NegateButton => this.session.TryFindElementByAccessibilityId("negateButton");
+        public WindowsElement ShiftButton => this.session.TryFindElementByAccessibilityId("shiftButton");
         public WindowsElement TrigFlyout => this.session.TryFindElementByAccessibilityId("Trigflyout");
         public WindowsElement LightDismiss => this.session.TryFindElementByAccessibilityId("Light Dismiss");
         private WindowsElement DegRadGradButton => GetAngleOperatorButton();

@@ -20,8 +20,10 @@ using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Controls::Primitives;
+using namespace Windows::UI::Xaml::Media;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationColor);
+DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonForegroundColor);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, ColorChooserFlyout);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, EquationButtonContentIndex);
 DEPENDENCY_PROPERTY_INITIALIZATION(EquationTextBox, HasError);
@@ -67,16 +69,6 @@ void EquationTextBox::OnApplyTemplate()
     if (m_equationButton != nullptr)
     {
         m_equationButton->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnEquationButtonClicked);
-
-        auto toolTip = ref new ToolTip();
-
-        auto equationButtonMessage = LocalizationStringUtil::GetLocalizedString(
-            IsEquationLineDisabled ? resProvider->GetResourceString(L"showEquationButtonToolTip")
-                                               : resProvider->GetResourceString(L"hideEquationButtonToolTip"), EquationButtonContentIndex);
-
-        toolTip->Content = equationButtonMessage;
-        ToolTipService::SetToolTip(m_equationButton, toolTip);
-        AutomationProperties::SetName(m_equationButton, equationButtonMessage);
     }
 
     if (m_richEditContextMenu != nullptr)
@@ -120,7 +112,7 @@ void EquationTextBox::OnApplyTemplate()
     if (m_kgfEquationMenuItem != nullptr)
     {
         m_kgfEquationMenuItem->Text = resProvider->GetResourceString(L"functionAnalysisMenuItem");
-        m_kgfEquationMenuItem->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnFunctionButtonClicked);
+        m_kgfEquationMenuItem->Click += ref new RoutedEventHandler(this, &EquationTextBox::OnFunctionMenuButtonClicked);
     }
 
     if (ColorChooserFlyout != nullptr)
@@ -235,16 +227,7 @@ void EquationTextBox::OnEquationButtonClicked(Object ^ sender, RoutedEventArgs ^
 {
     EquationButtonClicked(this, ref new RoutedEventArgs());
 
-    auto toolTip = ref new ToolTip();
-    auto resProvider = AppResourceProvider::GetInstance();
-
-    auto equationButtonMessage = LocalizationStringUtil::GetLocalizedString(
-        IsEquationLineDisabled ? resProvider->GetResourceString(L"showEquationButtonToolTip")
-                                           : resProvider->GetResourceString(L"hideEquationButtonToolTip"), EquationButtonContentIndex);
-
-    toolTip->Content = equationButtonMessage;
-    ToolTipService::SetToolTip(m_equationButton, toolTip);
-    AutomationProperties::SetName(m_equationButton, equationButtonMessage);
+    SetEquationButtonTooltipAndAutomationName();
 }
 
 void EquationTextBox::OnRemoveButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
@@ -284,6 +267,17 @@ void EquationTextBox::OnColorChooserButtonClicked(Object ^ sender, RoutedEventAr
         ColorChooserFlyout->ShowAt(m_richEditBox);
         TraceLogger::GetInstance()->LogGraphButtonClicked(GraphButton::StylePicker, GraphButtonValue::None);
     }
+}
+
+void EquationTextBox::OnFunctionMenuButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
+{
+    // Submit the equation before trying to analyze it if invoked from context menu
+    if (m_richEditBox != nullptr)
+    {
+        m_richEditBox->SubmitEquation(::EquationSubmissionSource::FOCUS_LOST);
+    }
+
+    KeyGraphFeaturesButtonClicked(this, ref new RoutedEventArgs());
 }
 
 void EquationTextBox::OnFunctionButtonClicked(Object ^ sender, RoutedEventArgs ^ e)
@@ -421,6 +415,11 @@ bool EquationTextBox::RichEditHasContent()
 
 void EquationTextBox::OnRichEditMenuOpened(Object ^ /*sender*/, Object ^ /*args*/)
 {
+    if (m_removeMenuItem != nullptr)
+    {
+        m_removeMenuItem->IsEnabled = !IsAddEquationMode;
+    }
+
     if (m_kgfEquationMenuItem != nullptr)
     {
         m_kgfEquationMenuItem->IsEnabled = m_HasFocus && !HasError && RichEditHasContent();
@@ -482,4 +481,27 @@ void EquationTextBox::OnEquationSubmitted(Platform::Object ^ sender, MathRichEdi
 void EquationTextBox::OnEquationFormatRequested(Object ^ sender, MathRichEditBoxFormatRequest ^ args)
 {
     EquationFormatRequested(this, args);
+}
+
+void EquationTextBox::SetEquationButtonTooltipAndAutomationName()
+{
+    auto toolTip = ref new ToolTip();
+    auto resProvider = AppResourceProvider::GetInstance();
+
+    auto equationButtonMessage = LocalizationStringUtil::GetLocalizedString(
+        IsEquationLineDisabled ? resProvider->GetResourceString(L"showEquationButtonAutomationName")
+                               : resProvider->GetResourceString(L"hideEquationButtonAutomationName"),
+        EquationButtonContentIndex);
+
+    auto equationButtonTooltip = LocalizationStringUtil::GetLocalizedString(
+        IsEquationLineDisabled ? resProvider->GetResourceString(L"showEquationButtonToolTip") : resProvider->GetResourceString(L"hideEquationButtonToolTip"));
+
+    toolTip->Content = equationButtonTooltip;
+    ToolTipService::SetToolTip(m_equationButton, toolTip);
+    AutomationProperties::SetName(m_equationButton, equationButtonMessage);
+}
+
+void EquationTextBox::OnEquationButtonContentIndexPropertyChanged(String ^ /*oldValue*/, String ^ newValue)
+{
+    SetEquationButtonTooltipAndAutomationName();
 }

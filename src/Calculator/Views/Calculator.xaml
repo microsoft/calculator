@@ -1124,6 +1124,7 @@
             </Border.Resources>
 
             <Pivot x:Name="DockPivot"
+                   Margin="0,-3,0,0"
                    TabIndex="5"
                    Tapped="DockPanelTapped"
                    Template="{StaticResource DockPanelTemplate}">
