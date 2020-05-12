@@ -128,8 +128,9 @@
                     Height="{StaticResource HamburgerHeight}"
                     Style="{StaticResource SquareIconButtonStyle}"
                     Background="Transparent"
-                    BorderThickness="0"
+                    BorderThickness="{ThemeResource SquareIconBorderThickness}"
                     FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                    AutomationProperties.AutomationId="TogglePaneButton"
                     AutomationProperties.LandmarkType="Navigation"
                     Click="DummyNavViewButtonClick"
                     Content="&#xE700;"/>
@@ -195,7 +196,7 @@
                                              Width="{StaticResource SplitViewOpenPaneLength}"
                                              IsItemClickEnabled="True"
                                              ItemClick="OnAboutButtonClick"
-                                             x:Load="false">
+                                             x:Load="False">
                         <muxc:NavigationViewList.ItemContainerTransitions>
                             <!-- Remove EntranceThemeTransition which is a default transition for NavigationViewList -->
                             <TransitionCollection/>

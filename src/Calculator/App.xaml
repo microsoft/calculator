@@ -13,6 +13,7 @@
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Default">
                     <Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
+                    <Thickness x:Key="SquareIconBorderThickness">0</Thickness>
                     <x:Double x:Key="HighContrastStrokeThickness">0</x:Double>
                     <Color x:Key="AltHighColor">#FF000000</Color>
                     <Color x:Key="ChromeMediumLowColor">#FF2B2B2B</Color>
@@ -101,6 +102,7 @@
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <Thickness x:Key="HighContrastThicknessTop">0,0,0,0</Thickness>
+                    <Thickness x:Key="SquareIconBorderThickness">0</Thickness>
                     <x:Double x:Key="HighContrastStrokeThickness">0</x:Double>
                     <Color x:Key="AltHighColor">#FFF2F2F2</Color>
                     <Color x:Key="ChromeMediumLowColor">#FFE0E0E0</Color>
@@ -192,6 +194,7 @@
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
                     <Thickness x:Key="HighContrastThicknessTop">0,1,0,0</Thickness>
+                    <Thickness x:Key="SquareIconBorderThickness">1</Thickness>
                     <x:Double x:Key="HighContrastStrokeThickness">2</x:Double>
                     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
                     <SolidColorBrush x:Key="SystemControlBackgroundChromeMediumLowBrush" Color="{ThemeResource SystemColorButtonFaceColor}"/>
