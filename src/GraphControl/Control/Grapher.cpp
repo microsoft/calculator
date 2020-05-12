@@ -124,13 +124,15 @@ namespace GraphControl
                 {
                     TryPlotGraph(false, false);
                     m_resetUsingInitialDisplayRange = false;
-                }
-                else if (SUCCEEDED(renderer->ResetRange()))
-                {
-                    m_renderMain->RunRenderPass();
+                    GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
+                    return;
                 }
 
-                GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
+                if (SUCCEEDED(renderer->ResetRange()))
+                {
+                    m_renderMain->RunRenderPass();
+                    GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
+                }
             }
         }
     }
