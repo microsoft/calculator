@@ -161,4 +161,3 @@ unsigned long long HistoryViewModel::GetMaxItemSize()
 {
     return static_cast<unsigned long long>(m_calculatorManager->MaxHistorySize());
 }
-
