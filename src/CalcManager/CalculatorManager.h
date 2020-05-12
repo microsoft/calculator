@@ -133,7 +133,6 @@ namespace CalculationManager
             return m_pHistory->MaxHistorySize();
         }
         CalculationManager::Command GetCurrentDegreeMode();
-        void SetHistory(_In_ CalculatorMode eMode, _In_ std::vector<std::shared_ptr<HISTORYITEM>> const& history);
         void SetInHistoryItemLoadMode(_In_ bool isHistoryItemLoadMode);
     };
 }

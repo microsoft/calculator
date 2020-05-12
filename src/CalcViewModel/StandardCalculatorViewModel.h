@@ -77,7 +77,6 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_R(CalculatorApp::Common::NumberBase, CurrentRadixType);
             OBSERVABLE_PROPERTY_R(bool, AreTokensUpdated);
             OBSERVABLE_PROPERTY_R(bool, AreAlwaysOnTopResultsUpdated);
-            OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
             OBSERVABLE_PROPERTY_R(bool, AreProgrammerRadixOperatorsEnabled);
             OBSERVABLE_PROPERTY_R(bool, IsInputEmpty);
             OBSERVABLE_PROPERTY_R(CalculatorApp::Common::Automation::NarratorAnnouncement ^, Announcement);

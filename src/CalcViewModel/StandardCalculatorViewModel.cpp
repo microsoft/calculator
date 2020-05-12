@@ -130,7 +130,6 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     IsOperandEnabled = true;
     IsNegateEnabled = true;
     IsDecimalEnabled = true;
-    AreHistoryShortcutsEnabled = true;
     AreProgrammerRadixOperatorsEnabled = false;
 }
 

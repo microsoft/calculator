@@ -232,7 +232,6 @@ task<void> ApplicationViewModel::HandleToggleAlwaysOnTop(float width, float heig
         localSettings->Values->Insert(HeightLocalSettings, height);
 
         bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::Default);
-        CalculatorViewModel->AreHistoryShortcutsEnabled = success;
         CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = success;
         CalculatorViewModel->IsAlwaysOnTop = !success;
         IsAlwaysOnTop = !success;
@@ -261,7 +260,6 @@ task<void> ApplicationViewModel::HandleToggleAlwaysOnTop(float width, float heig
         }
 
         bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::CompactOverlay, compactOptions);
-        CalculatorViewModel->AreHistoryShortcutsEnabled = !success;
         CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = !success;
         CalculatorViewModel->IsAlwaysOnTop = success;
         IsAlwaysOnTop = success;
