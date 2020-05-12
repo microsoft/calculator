@@ -21,7 +21,7 @@ using namespace Windows::Security::Cryptography;
 using namespace Windows::Foundation::Collections;
 
 static StringReference HistoryVectorLengthKey{ L"HistoryVectorLength" };
-static StringReference ItemsSizeKey{ L"ItemsSize" };
+static StringReference ItemsSizeKey{ L"ItemsCount" };
 
 namespace CalculatorApp::ViewModel::HistoryResourceKeys
 {
