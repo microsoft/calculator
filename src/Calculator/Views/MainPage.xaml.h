@@ -59,12 +59,6 @@ public
         void OnAboutFlyoutClosed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void TitleBarAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void DummyNavViewButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-
-        void OnKeyDownHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args);
-        void OnAcceleratorKeyActivated(Windows::UI::Core::CoreDispatcher ^, Windows::UI::Core::AcceleratorKeyEventArgs ^ args);
-
-        void LoadNavView(bool openNavView);
 
         Microsoft::UI::Xaml::Controls::NavigationViewItemHeader ^ CreateNavViewHeaderFromGroup(CalculatorApp::Common::NavCategoryGroup ^ group);
         Microsoft::UI::Xaml::Controls::NavigationViewItem ^ CreateNavViewItemFromCategory(CalculatorApp::Common::NavCategory ^ category);
@@ -93,8 +87,5 @@ public
         CalculatorApp::ViewModel::ApplicationViewModel ^ m_model;
         Windows::Foundation::EventRegistrationToken m_accessibilitySettingsToken;
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
-        bool m_openNavOnLoad;
-        Windows::Foundation::EventRegistrationToken m_keyDownToken;
-        Windows::Foundation::EventRegistrationToken m_acceleratorKeyToken;
     };
 }

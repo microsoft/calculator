@@ -127,19 +127,6 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="DummyNavViewButton"
-                    x:Uid="DummyNavViewButton"
-                    Grid.Column="0"
-                    Width="{StaticResource HamburgerHeight}"
-                    Height="{StaticResource HamburgerHeight}"
-                    Style="{StaticResource SquareIconButtonStyle}"
-                    Background="Transparent"
-                    BorderThickness="{ThemeResource SquareIconBorderThickness}"
-                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                    AutomationProperties.AutomationId="TogglePaneButton"
-                    AutomationProperties.LandmarkType="Navigation"
-                    Click="DummyNavViewButtonClick"
-                    Content="&#xE700;"/>
 
             <StackPanel Grid.Column="1"
                         Margin="10,0,0,0"

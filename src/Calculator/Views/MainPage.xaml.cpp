@@ -70,13 +70,6 @@ MainPage::MainPage()
 {
     InitializeComponent();
 
-    // Register these before calling KeyboardShortcutManager::Initialize() so that we can respond first and load NavView
-    // This is needed since KeyboardShorcutManager requires NavView to be loaded to correctly respond to shortcut keys (alt + 1, 2, etc)
-    auto coreWindow = Window::Current->CoreWindow;
-    m_keyDownToken = coreWindow->KeyDown += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &MainPage::OnKeyDownHandler);
-    m_acceleratorKeyToken = coreWindow->Dispatcher->AcceleratorKeyActivated +=
-        ref new TypedEventHandler<CoreDispatcher ^, AcceleratorKeyEventArgs ^>(this, &MainPage::OnAcceleratorKeyActivated);
-
     KeyboardShortcutManager::Initialize();
 
     Application::Current->Suspending += ref new SuspendingEventHandler(this, &MainPage::App_Suspending);
@@ -277,12 +270,14 @@ void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
 
     // Delay load things later when we get a chance.
     this->Dispatcher->RunAsync(
-        CoreDispatcherPriority::Normal, ref new DispatchedHandler([]() {
+        CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]() {
             if (TraceLogger::GetInstance()->IsWindowIdInLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
             {
                 AppLifecycleLogger::GetInstance().LaunchUIResponsive();
                 AppLifecycleLogger::GetInstance().LaunchVisibleComplete();
             }
+
+            this->FindName(L"NavView");
         }));
 }
 
@@ -416,9 +411,6 @@ void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
     }
     // Special case logic for Ctrl+E accelerator for Date Calculation Mode
     NavView->SetValue(Common::KeyboardShortcutManager::VirtualKeyControlChordProperty, Common::MyVirtualKey::E);
-
-    // If NavView was loaded on button cick we should open it by default
-    NavView->IsPaneOpen = m_openNavOnLoad;
 }
 
 void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
@@ -617,38 +609,4 @@ void MainPage::App_Suspending(Object ^ sender, Windows::ApplicationModel::Suspen
         localSettings->Values->Insert(ApplicationViewModel::WidthLocalSettings, this->ActualWidth);
         localSettings->Values->Insert(ApplicationViewModel::HeightLocalSettings, this->ActualHeight);
     }
-}
-
-void MainPage::DummyNavViewButtonClick(Object ^ sender, RoutedEventArgs ^ e)
-{
-    LoadNavView(true);
-}
-
-void MainPage::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs ^ args)
-{
-    LoadNavView(false);
-}
-
-void MainPage::OnAcceleratorKeyActivated(CoreDispatcher ^, AcceleratorKeyEventArgs ^ args)
-{
-    LoadNavView(false);
-}
-
-void MainPage::LoadNavView(bool openNavView)
-{
-    auto coreWindow = Window::Current->CoreWindow;
-    if (m_keyDownToken.Value != 0)
-    {
-        coreWindow->KeyDown -= m_keyDownToken;
-    }
-
-    if (m_acceleratorKeyToken.Value != 0)
-    {
-        coreWindow->Dispatcher->AcceleratorKeyActivated -= m_acceleratorKeyToken;
-    }
-
-    this->DummyNavViewButton->IsEnabled = false;
-    this->DummyNavViewButton->Visibility = ::Visibility::Collapsed;
-    m_openNavOnLoad = openNavView;
-    this->FindName(L"NavView");
 }
