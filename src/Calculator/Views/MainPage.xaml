@@ -148,7 +148,7 @@
                            Margin="0,-3,0,0"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"
-                           Style="{StaticResource SubtitleTextBlockStyle}"
+                           Style="{StaticResource CategoryNameTextBlockStyle}"
                            Text="{x:Bind Model.CategoryName, Mode=OneWay}"
                            Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
                 <controls:PreviewTagControl Margin="10,0,0,0"
