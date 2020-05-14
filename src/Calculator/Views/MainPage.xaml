@@ -129,7 +129,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="1"
-                        Margin="10,0,0,0"
+                        Margin="8,0,0,0"
                         Orientation="Horizontal">
                 <TextBlock x:Name="Header"
                            Margin="0,-3,0,0"
