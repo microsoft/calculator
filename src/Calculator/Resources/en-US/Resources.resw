@@ -4433,7 +4433,11 @@
   </data>
   <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Variable options</value>
-    <comment>Screen reader prompt for the variable settings button</comment>
+    <comment>Screen reader prompt for the variable settings toggle button</comment>
+  </data>
+  <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Toggle variable options</value>
+    <comment>Tool tip for the variable settings toggle button</comment>
   </data>
   <data name="LineThicknessBoxHeading.Text" xml:space="preserve">
     <value>Line Thickness</value>

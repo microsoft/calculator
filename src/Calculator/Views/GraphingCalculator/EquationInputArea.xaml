@@ -215,17 +215,50 @@
                                              Text="{x:Bind Max, Mode=OneWay}"/>
                                 </Grid>
                             </Grid>
-                            <Button x:Uid="VariableAreaSettings"
-                                    Margin="0,6,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Background="Transparent"
-                                    Click="VariableAreaClicked"
-                                    Tapped="VariableAreaButtonTapped">
+
+                            <ToggleButton Name="VariableAreaSettings"
+                                          x:Uid="VariableAreaSettings"
+                                          Margin="0,6,0,0"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Click="VariableAreaClicked"
+                                          IsChecked="{x:Bind SliderSettingsVisible, Mode=OneWay}"
+                                          Tapped="VariableAreaButtonTapped">
+                                <ToggleButton.Resources>
+                                    <ResourceDictionary>
+                                        <ResourceDictionary.ThemeDictionaries>
+                                            <ResourceDictionary x:Key="Default">
+                                                <SolidColorBrush x:Key="ToggleButtonBackground" Color="Transparent"/>
+                                                <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="Transparent"/>
+                                                <StaticResource x:Key="ToggleButtonBorderBrushChecked" ResourceKey="ToggleButtonBorderBrush"/>
+                                                <StaticResource x:Key="ToggleButtonForegroundChecked" ResourceKey="ToggleButtonForeground"/>
+                                                <StaticResource x:Key="ToggleButtonBackgroundCheckedPointerOver" ResourceKey="ToggleButtonBackgroundPointerOver"/>
+                                                <StaticResource x:Key="ToggleButtonBorderBrushCheckedPointerOver" ResourceKey="ToggleButtonBorderBrushPointerOver"/>
+                                                <StaticResource x:Key="ToggleButtonForegroundCheckedPointerOver" ResourceKey="ToggleButtonForegroundPointerOver"/>
+                                                <StaticResource x:Key="ToggleButtonBackgroundCheckedPressed" ResourceKey="ToggleButtonBackgroundPressed"/>
+                                                <StaticResource x:Key="ToggleButtonBorderBrushCheckedPressed" ResourceKey="ToggleButtonBorderBrushPressed"/>
+                                                <StaticResource x:Key="ToggleButtonForegroundCheckedPressed" ResourceKey="ToggleButtonForegroundPressed"/>
+                                            </ResourceDictionary>
+                                            <ResourceDictionary x:Key="Light">
+                                                <SolidColorBrush x:Key="ToggleButtonBackground" Color="Transparent"/>
+                                                <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="Transparent"/>
+                                                <StaticResource x:Key="ToggleButtonBorderBrushChecked" ResourceKey="ToggleButtonBorderBrush"/>
+                                                <StaticResource x:Key="ToggleButtonForegroundChecked" ResourceKey="ToggleButtonForeground"/>
+                                                <StaticResource x:Key="ToggleButtonBackgroundCheckedPointerOver" ResourceKey="ToggleButtonBackgroundPointerOver"/>
+                                                <StaticResource x:Key="ToggleButtonBorderBrushCheckedPointerOver" ResourceKey="ToggleButtonBorderBrushPointerOver"/>
+                                                <StaticResource x:Key="ToggleButtonForegroundCheckedPointerOver" ResourceKey="ToggleButtonForegroundPointerOver"/>
+                                                <StaticResource x:Key="ToggleButtonBackgroundCheckedPressed" ResourceKey="ToggleButtonBackgroundPressed"/>
+                                                <StaticResource x:Key="ToggleButtonBorderBrushCheckedPressed" ResourceKey="ToggleButtonBorderBrushPressed"/>
+                                                <StaticResource x:Key="ToggleButtonForegroundCheckedPressed" ResourceKey="ToggleButtonForegroundPressed"/>
+                                            </ResourceDictionary>
+                                            <ResourceDictionary x:Key="HighContrast"/>
+                                        </ResourceDictionary.ThemeDictionaries>
+                                    </ResourceDictionary>
+                                </ToggleButton.Resources>
                                 <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                           FontSize="9"
                                           Glyph="{x:Bind local:EquationInputArea.GetChevronIcon(SliderSettingsVisible), Mode=OneWay}"/>
-                            </Button>
+                            </ToggleButton>
                         </StackPanel>
                     </Border>
                 </Grid>

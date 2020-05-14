@@ -484,7 +484,7 @@ void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender,
 
 void EquationInputArea::VariableAreaClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
-    ToggleVariableArea(static_cast<VariableViewModel ^>(static_cast<Button ^>(sender)->DataContext));
+    ToggleVariableArea(static_cast<VariableViewModel ^>(static_cast<ToggleButton ^>(sender)->DataContext));
 }
 
 void EquationInputArea::ToggleVariableArea(VariableViewModel ^ selectedVariableViewModel)
