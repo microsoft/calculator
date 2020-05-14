@@ -1110,7 +1110,10 @@ optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bo
                 m_initialDisplayRangeXMin, m_initialDisplayRangeXMax, m_initialDisplayRangeYMin, m_initialDisplayRangeYMax);
             m_resetUsingInitialDisplayRange = true;
         }
-        renderer->SetDisplayRanges(xMin, xMax, yMin, yMax);
+        if (initResult != nullopt)
+        {
+            renderer->SetDisplayRanges(xMin, xMax, yMin, yMax);
+        }
 
         m_replot = true;
 
