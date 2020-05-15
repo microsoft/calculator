@@ -128,7 +128,9 @@ namespace GraphControl
                 }
                 else if (m_rangeUpdatedBySettings)
                 {
+                    IsKeepCurrentView = false;
                     TryPlotGraph(false, false);
+                    m_rangeUpdatedBySettings = false;
                     GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
                     return;
                 }
