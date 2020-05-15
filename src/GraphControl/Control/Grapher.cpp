@@ -126,6 +126,12 @@ namespace GraphControl
                     hr = renderer->SetDisplayRanges(m_initialDisplayRangeXMin, m_initialDisplayRangeXMax, m_initialDisplayRangeYMin, m_initialDisplayRangeYMax);
                     m_resetUsingInitialDisplayRange = false;
                 }
+                else if (m_rangeUpdatedBySettings)
+                {
+                    TryPlotGraph(false, false);
+                    GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
+                    return;
+                }
                 else
                 {
                     hr = renderer->ResetRange();
@@ -136,6 +142,7 @@ namespace GraphControl
                     m_renderMain->RunRenderPass();
                     GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
                 }
+
             }
         }
     }
@@ -1103,15 +1110,17 @@ optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bo
         double xMin, xMax, yMin, yMax;
         renderer->GetDisplayRanges(xMin, xMax, yMin, yMax);
         auto initResult = m_graph->TryInitialize(graphingExp);
-        if (IsKeepCurrentView)
-        {
-            renderer->PrepareGraph();
-            renderer->GetDisplayRanges(
-                m_initialDisplayRangeXMin, m_initialDisplayRangeXMax, m_initialDisplayRangeYMin, m_initialDisplayRangeYMax);
-            m_resetUsingInitialDisplayRange = true;
-        }
         if (initResult != nullopt)
         {
+            if (IsKeepCurrentView)
+            {
+                if (SUCCEEDED(renderer->PrepareGraph()))
+                {
+                    renderer->GetDisplayRanges(m_initialDisplayRangeXMin, m_initialDisplayRangeXMax, m_initialDisplayRangeYMin, m_initialDisplayRangeYMax);
+                    m_resetUsingInitialDisplayRange = true;
+                }
+            }
+
             renderer->SetDisplayRanges(xMin, xMax, yMin, yMax);
         }
 

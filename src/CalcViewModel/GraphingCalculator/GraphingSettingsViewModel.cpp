@@ -101,6 +101,7 @@ void GraphingSettingsViewModel::UpdateDisplayRange()
     }
 
     m_Graph->SetDisplayRanges(m_XMinValue, m_XMaxValue, m_YMinValue, m_YMaxValue);
+    m_Graph->RangeUpdatedBySettings = true;
 
     TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Grid, L"");
 }

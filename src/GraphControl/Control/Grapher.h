@@ -228,6 +228,19 @@ public enum class GraphViewChangedReason
             }
         }
 
+        property bool RangeUpdatedBySettings
+        {
+            bool get()
+            {
+                return m_rangeUpdatedBySettings;
+            }
+
+            void set(bool value)
+            {
+                m_rangeUpdatedBySettings = value;
+            }
+        }
+
         void GetDisplayRanges(double* xMin, double* xMax, double* yMin, double* yMax)
         {
             try
@@ -353,6 +366,7 @@ public enum class GraphViewChangedReason
         int m_errorType;
         int m_errorCode;
         bool m_resetUsingInitialDisplayRange;
+        bool m_rangeUpdatedBySettings;
         double m_initialDisplayRangeXMin;
         double m_initialDisplayRangeXMax;
         double m_initialDisplayRangeYMin;
