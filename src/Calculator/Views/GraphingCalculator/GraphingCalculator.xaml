@@ -590,7 +590,6 @@
                                   IsKeepCurrentView="{x:Bind IsManualAdjustment, Mode=TwoWay}"
                                   LosingFocus="GraphingControl_LosingFocus"
                                   LostFocus="GraphingControl_LostFocus"
-                                  RequestedTheme="Light"
                                   UseSystemFocusVisuals="True"
                                   VariablesUpdated="GraphingControl_VariablesUpdated">
                 <graphControl:Grapher.ContextFlyout>

@@ -78,6 +78,8 @@ GraphingCalculator::GraphingCalculator()
     // Update where the pointer value is (ie: where the user cursor from keyboard inputs moves the point to)
     GraphingControl->PointerValueChangedEvent += ref new PointerValueChangedEventHandler(this, &GraphingCalculator::OnPointerPointChanged);
 
+    m_GraphingControlLoadedToken = GraphingControl->Loaded += ref new RoutedEventHandler(this, &GraphingCalculator::OnGraphingCalculatorLoaded);
+
     GraphingControl->UseCommaDecimalSeperator = LocalizationSettings::GetInstance().GetDecimalSeparator() == ',';
 
     // OemMinus and OemAdd aren't declared in the VirtualKey enum, we can't add this accelerator XAML-side
@@ -118,8 +120,6 @@ GraphingCalculator::GraphingCalculator()
         IsMatchAppTheme = false;
         TraceLogger::GetInstance()->LogGraphTheme(L"IsAlwaysLightTheme");
     }
-
-    UpdateGraphTheme();
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -460,7 +460,7 @@ void GraphingCalculator::GraphingControl_LostFocus(Object ^ sender, RoutedEventA
     {
         if (ActiveTracing->Equals(FocusManager::GetFocusedElement()) && ActiveTracing->IsPressed)
         {
-            m_ActiveTracingPointerCaptureLost = ActiveTracing->PointerCaptureLost +=
+            m_ActiveTracingPointerCaptureLostToken = ActiveTracing->PointerCaptureLost +=
                 ref new Windows::UI::Xaml::Input::PointerEventHandler(this, &CalculatorApp::GraphingCalculator::ActiveTracing_PointerCaptureLost);
         }
         else
@@ -473,10 +473,10 @@ void GraphingCalculator::GraphingControl_LostFocus(Object ^ sender, RoutedEventA
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_PointerCaptureLost(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e)
 {
-    if (m_ActiveTracingPointerCaptureLost.Value != 0)
+    if (m_ActiveTracingPointerCaptureLostToken.Value != 0)
     {
-        ActiveTracing->PointerCaptureLost -= m_ActiveTracingPointerCaptureLost;
-        m_ActiveTracingPointerCaptureLost.Value = 0;
+        ActiveTracing->PointerCaptureLost -= m_ActiveTracingPointerCaptureLostToken;
+        m_ActiveTracingPointerCaptureLostToken.Value = 0;
     }
 
     if (GraphingControl->ActiveTracing)
@@ -613,10 +613,10 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_Unchecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
-    if (m_ActiveTracingPointerCaptureLost.Value != 0)
+    if (m_ActiveTracingPointerCaptureLostToken.Value != 0)
     {
-        ActiveTracing->PointerCaptureLost -= m_ActiveTracingPointerCaptureLost;
-        m_ActiveTracingPointerCaptureLost.Value = 0;
+        ActiveTracing->PointerCaptureLost -= m_ActiveTracingPointerCaptureLostToken;
+        m_ActiveTracingPointerCaptureLostToken.Value = 0;
     }
 
     if (m_activeTracingKeyUpToken.Value != 0)
@@ -855,4 +855,12 @@ void GraphingCalculator::GraphViewButton_Click(Object ^ sender, RoutedEventArgs 
 
     TraceLogger::GetInstance()->LogGraphButtonClicked(
         GraphButton::GraphView, IsManualAdjustment ? GraphButtonValue::ManualAdjustment : GraphButtonValue::AutomaticBestFit);
+}
+
+void CalculatorApp::GraphingCalculator::OnGraphingCalculatorLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    this->GraphingControl->Loaded -= m_GraphingControlLoadedToken;
+
+    // The control needs to be loaded, else the control will override GridLinesColor and ignore the value passed
+    UpdateGraphTheme();
 }
