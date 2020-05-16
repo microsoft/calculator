@@ -4687,10 +4687,6 @@
     <value>Y</value>
     <comment>Screen reader prompt for the Y button on the graphing calculator operator keypad</comment>
   </data>
-  <data name="submitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Submit</value>
-    <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
-  </data>
   <data name="lessThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Less than</value>
     <comment>Screen reader prompt for the Less than button</comment>
