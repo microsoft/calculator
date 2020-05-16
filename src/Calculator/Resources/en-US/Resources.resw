@@ -4655,37 +4655,9 @@
     <value>Function Analysis Equation Box</value>
     <comment>This is the automation name text for the equation box in the function analysis panel</comment>
   </data>
-  <data name="lessThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Less than</value>
-    <comment>Screen reader prompt for the Less than button</comment>
-  </data>
-  <data name="lessThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Less than or equal</value>
-    <comment>Screen reader prompt for the Less than or equal button</comment>
-  </data>
-  <data name="equalsFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Equal</value>
-    <comment>Screen reader prompt for the Equal button</comment>
-  </data>
-  <data name="greaterThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Greater than or equal</value>
-    <comment>Screen reader prompt for the Greater than or equal button</comment>
-  </data>
-  <data name="greaterThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Greater than</value>
-    <comment>Screen reader prompt for the Greater than button</comment>
-  </data>
   <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Equals</value>
     <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
-  </data>
-    <data name="xButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>X</value>
-    <comment>Screen reader prompt for the X button on the graphing calculator operator keypad</comment>
-  </data>
-    <data name="yButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Y</value>
-    <comment>Screen reader prompt for the Y button on the graphing calculator operator keypad</comment>
   </data>
   <data name="lessThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Less than</value>
