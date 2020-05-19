@@ -33,8 +33,8 @@ DEPENDENCY_PROPERTY_INITIALIZATION(KeyboardShortcutManager, VirtualKeyShiftChord
 DEPENDENCY_PROPERTY_INITIALIZATION(KeyboardShortcutManager, VirtualKeyAltChord);
 DEPENDENCY_PROPERTY_INITIALIZATION(KeyboardShortcutManager, VirtualKeyControlShiftChord);
 
-map<int, multimap<wchar_t, WeakReference>> KeyboardShortcutManager::s_CharacterForButtons;
-map<int, multimap<MyVirtualKey, WeakReference>> KeyboardShortcutManager::s_VirtualKeysForButtons;
+map<int, multimap<wchar_t, WeakReference>> KeyboardShortcutManager::s_characterForButtons;
+map<int, multimap<MyVirtualKey, WeakReference>> KeyboardShortcutManager::s_virtualKey;
 map<int, multimap<MyVirtualKey, WeakReference>> KeyboardShortcutManager::s_VirtualKeyControlChordsForButtons;
 map<int, multimap<MyVirtualKey, WeakReference>> KeyboardShortcutManager::s_VirtualKeyShiftChordsForButtons;
 map<int, multimap<MyVirtualKey, WeakReference>> KeyboardShortcutManager::s_VirtualKeyAltChordsForButtons;
@@ -198,9 +198,9 @@ void KeyboardShortcutManager::OnCharacterPropertyChanged(DependencyObject ^ targ
     auto button = safe_cast<ButtonBase ^>(target);
 
     int viewId = Utils::GetWindowId();
-    auto iterViewMap = s_CharacterForButtons.find(viewId);
+    auto iterViewMap = s_characterForButtons.find(viewId);
 
-    if (iterViewMap != s_CharacterForButtons.end())
+    if (iterViewMap != s_characterForButtons.end())
     {
         if (oldValue)
         {
@@ -222,16 +222,16 @@ void KeyboardShortcutManager::OnCharacterPropertyChanged(DependencyObject ^ targ
     }
     else
     {
-        s_CharacterForButtons.insert(make_pair(viewId, multimap<wchar_t, WeakReference>()));
+        s_characterForButtons.insert(make_pair(viewId, multimap<wchar_t, WeakReference>()));
 
         if (newValue == L".")
         {
             wchar_t decSep = LocalizationSettings::GetInstance().GetDecimalSeparator();
-            s_CharacterForButtons.find(viewId)->second.insert(make_pair(decSep, WeakReference(button)));
+            s_characterForButtons.find(viewId)->second.insert(make_pair(decSep, WeakReference(button)));
         }
         else
         {
-            s_CharacterForButtons.find(viewId)->second.insert(make_pair(newValue->Data()[0], WeakReference(button)));
+            s_characterForButtons.find(viewId)->second.insert(make_pair(newValue->Data()[0], WeakReference(button)));
         }
     }
 }
@@ -244,18 +244,18 @@ void KeyboardShortcutManager::OnVirtualKeyPropertyChanged(DependencyObject ^ tar
     auto button = static_cast<ButtonBase ^>(target);
 
     int viewId = Utils::GetWindowId();
-    auto iterViewMap = s_VirtualKeysForButtons.find(viewId);
+    auto iterViewMap = s_virtualKey.find(viewId);
 
     // Check if the View Id has already been registered
-    if (iterViewMap != s_VirtualKeysForButtons.end())
+    if (iterViewMap != s_virtualKey.end())
     {
         iterViewMap->second.insert(make_pair(newValue, WeakReference(button)));
     }
     else
     {
         // If the View Id is not already registered, then register it and make the entry
-        s_VirtualKeysForButtons.insert(make_pair(viewId, multimap<MyVirtualKey, WeakReference>()));
-        s_VirtualKeysForButtons.find(viewId)->second.insert(make_pair(newValue, WeakReference(button)));
+        s_virtualKey.insert(make_pair(viewId, multimap<MyVirtualKey, WeakReference>()));
+        s_virtualKey.find(viewId)->second.insert(make_pair(newValue, WeakReference(button)));
     }
 }
 
@@ -368,21 +368,18 @@ void KeyboardShortcutManager::OnCharacterReceivedHandler(CoreWindow ^ sender, Ch
     if (currentHonorShortcuts == s_fHonorShortcuts.end() || currentHonorShortcuts->second)
     {
         wchar_t character = static_cast<wchar_t>(args->KeyCode);
-        auto buttons = s_CharacterForButtons.find(viewId)->second.equal_range(character);
+        auto buttons = s_characterForButtons.find(viewId)->second.equal_range(character);
         RunFirstEnabledButtonCommand(buttons);
 
         LightUpButtons(buttons);
     }
 }
 
-const multimap<MyVirtualKey, WeakReference>* KeyboardShortcutManager::GetCurrentKeyDictionary(bool altPressed)
+const multimap<MyVirtualKey, WeakReference>* KeyboardShortcutManager::GetCurrentKeyDictionary(bool controlKeyPressed, bool shiftKeyPressed, bool altPressed)
 {
     int viewId = Utils::GetWindowId();
 
-    bool isControlKeyPressed = (Window::Current->CoreWindow->GetKeyState(VirtualKey::Control) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
-    bool isShiftKeyPressed = (Window::Current->CoreWindow->GetKeyState(VirtualKey::Shift) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
-
-    if (isControlKeyPressed)
+    if (controlKeyPressed)
     {
         if (altPressed)
         {
@@ -390,7 +387,7 @@ const multimap<MyVirtualKey, WeakReference>* KeyboardShortcutManager::GetCurrent
         }
         else
         {
-            if (isShiftKeyPressed)
+            if (shiftKeyPressed)
             {
                 return &s_VirtualKeyControlShiftChordsForButtons.find(viewId)->second;
             }
@@ -404,7 +401,7 @@ const multimap<MyVirtualKey, WeakReference>* KeyboardShortcutManager::GetCurrent
     {
         if (altPressed)
         {
-            if (!isShiftKeyPressed)
+            if (!shiftKeyPressed)
             {
                 return &s_VirtualKeyAltChordsForButtons.find(viewId)->second;
             }
@@ -415,13 +412,13 @@ const multimap<MyVirtualKey, WeakReference>* KeyboardShortcutManager::GetCurrent
         }
         else
         {
-            if (isShiftKeyPressed)
+            if (shiftKeyPressed)
             {
                 return &s_VirtualKeyShiftChordsForButtons.find(viewId)->second;
             }
             else
             {
-                return &s_VirtualKeysForButtons.find(viewId)->second;
+                return &s_virtualKey.find(viewId)->second;
             }
         }
     }
@@ -437,14 +434,14 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs
     auto key = args->VirtualKey;
     int viewId = Utils::GetWindowId();
 
-    bool isControlKeyPressed = (Window::Current->CoreWindow->GetKeyState(VirtualKey::Control) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
-    bool isShiftKeyPressed = (Window::Current->CoreWindow->GetKeyState(VirtualKey::Shift) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
-    bool isAltKeyPressed = (Window::Current->CoreWindow->GetKeyState(VirtualKey::Menu) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
+    const bool isControlKeyPressed = (Window::Current->CoreWindow->GetKeyState(VirtualKey::Control) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
+    const bool isShiftKeyPressed = (Window::Current->CoreWindow->GetKeyState(VirtualKey::Shift) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
+    const bool isAltKeyPressed = (Window::Current->CoreWindow->GetKeyState(VirtualKey::Menu) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
 
     // Handle Ctrl + E for DateCalculator
     if ((key == VirtualKey::E) && isControlKeyPressed && !isShiftKeyPressed && !isAltKeyPressed)
     {
-        const auto lookupMap = GetCurrentKeyDictionary(false);
+        const auto lookupMap = GetCurrentKeyDictionary(isControlKeyPressed, isShiftKeyPressed, false);
         if (lookupMap == nullptr)
         {
             return;
@@ -487,7 +484,7 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs
         if (currentHonorShortcuts->second)
         {
             const auto myVirtualKey = static_cast<MyVirtualKey>(key);
-            const auto lookupMap = GetCurrentKeyDictionary(isAltKeyPressed);
+            const auto lookupMap = GetCurrentKeyDictionary(isControlKeyPressed, isShiftKeyPressed, isAltKeyPressed);
             if (lookupMap == nullptr)
             {
                 return;
@@ -523,7 +520,7 @@ void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher ^, Accele
     if (args->KeyStatus.IsKeyReleased)
     {
         auto key = args->VirtualKey;
-        bool altPressed = args->KeyStatus.IsMenuKeyDown;
+        const bool altPressed = args->KeyStatus.IsMenuKeyDown;
 
         // If the Alt/Menu key is not pressed then we don't care about the key anymore
         if (!altPressed)
@@ -531,14 +528,15 @@ void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher ^, Accele
             return;
         }
 
+        const bool controlKeyPressed = (Window::Current->CoreWindow->GetKeyState(VirtualKey::Control) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
         // Ctrl is pressed in addition to alt, this means Alt Gr is intended.  do not navigate.
-        if ((static_cast<short>(Window::Current->CoreWindow->GetKeyState(VirtualKey::Control)) & static_cast<short>(CoreVirtualKeyStates::Down))
-            == static_cast<short>(CoreVirtualKeyStates::Down))
+        if (controlKeyPressed)
         {
             return;
         }
 
-        const auto lookupMap = GetCurrentKeyDictionary(altPressed);
+        const bool shiftKeyPressed = (Window::Current->CoreWindow->GetKeyState(VirtualKey::Shift) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
+        const auto lookupMap = GetCurrentKeyDictionary(controlKeyPressed, shiftKeyPressed, altPressed);
         if (lookupMap != nullptr)
         {
             auto listItems = lookupMap->equal_range(static_cast<MyVirtualKey>(key));
@@ -623,14 +621,14 @@ void KeyboardShortcutManager::RegisterNewAppViewId()
     int appViewId = Utils::GetWindowId();
 
     // Check if the View Id has already been registered
-    if (s_CharacterForButtons.find(appViewId) == s_CharacterForButtons.end())
+    if (s_characterForButtons.find(appViewId) == s_characterForButtons.end())
     {
-        s_CharacterForButtons.insert(make_pair(appViewId, multimap<wchar_t, WeakReference>()));
+        s_characterForButtons.insert(make_pair(appViewId, multimap<wchar_t, WeakReference>()));
     }
 
-    if (s_VirtualKeysForButtons.find(appViewId) == s_VirtualKeysForButtons.end())
+    if (s_virtualKey.find(appViewId) == s_virtualKey.end())
     {
-        s_VirtualKeysForButtons.insert(make_pair(appViewId, multimap<MyVirtualKey, WeakReference>()));
+        s_virtualKey.insert(make_pair(appViewId, multimap<MyVirtualKey, WeakReference>()));
     }
 
     if (s_VirtualKeyControlChordsForButtons.find(appViewId) == s_VirtualKeyControlChordsForButtons.end())
@@ -665,9 +663,9 @@ void KeyboardShortcutManager::OnWindowClosed(int viewId)
     // Writer lock for the static maps
     reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
 
-    s_CharacterForButtons.erase(viewId);
+    s_characterForButtons.erase(viewId);
 
-    s_VirtualKeysForButtons.erase(viewId);
+    s_virtualKey.erase(viewId);
     s_VirtualKeyControlChordsForButtons.erase(viewId);
     s_VirtualKeyShiftChordsForButtons.erase(viewId);
     s_VirtualKeyAltChordsForButtons.erase(viewId);

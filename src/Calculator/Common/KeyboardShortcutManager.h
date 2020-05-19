@@ -27,9 +27,10 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(MyVirtualKey, VirtualKeyAltChord);
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(MyVirtualKey, VirtualKeyControlShiftChord);
 
-        internal:
+            internal :
 
-            static void Initialize();
+                static void
+                Initialize();
 
             // Sometimes, like with popups, escape is treated as special and even
             // though it is handled we get it passed through to us. In those cases
@@ -63,11 +64,12 @@ namespace CalculatorApp
             static void OnCharacterReceivedHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::CharacterReceivedEventArgs ^ args);
             static void OnKeyDownHandler(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::KeyEventArgs ^ args);
             static void OnAcceleratorKeyActivated(Windows::UI::Core::CoreDispatcher ^, Windows::UI::Core::AcceleratorKeyEventArgs ^ args);
-            static const std::multimap<MyVirtualKey, Platform::WeakReference>* KeyboardShortcutManager::GetCurrentKeyDictionary(bool altPressed = false);
+            static const std::multimap<MyVirtualKey, Platform::WeakReference>*
+            KeyboardShortcutManager::GetCurrentKeyDictionary(bool controlKeyPressed, bool shiftKeyPressed, bool altPressed);
 
         private:
-            static std::map<int, std::multimap<wchar_t, Platform::WeakReference>> s_CharacterForButtons;
-            static std::map<int, std::multimap<MyVirtualKey, Platform::WeakReference>> s_VirtualKeysForButtons;
+            static std::map<int, std::multimap<wchar_t, Platform::WeakReference>> s_characterForButtons;
+            static std::map<int, std::multimap<MyVirtualKey, Platform::WeakReference>> s_virtualKey;
             static std::map<int, std::multimap<MyVirtualKey, Platform::WeakReference>> s_VirtualKeyControlChordsForButtons;
             static std::map<int, std::multimap<MyVirtualKey, Platform::WeakReference>> s_VirtualKeyShiftChordsForButtons;
             static std::map<int, std::multimap<MyVirtualKey, Platform::WeakReference>> s_VirtualKeyAltChordsForButtons;
