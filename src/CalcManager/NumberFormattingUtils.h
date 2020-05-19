@@ -10,6 +10,6 @@ namespace CalcManager::NumberFormattingUtils
     void TrimTrailingZeros(_Inout_ std::wstring& input);
     unsigned int GetNumberDigits(std::wstring value);
     unsigned int GetNumberDigitsWholeNumberPart(double value);
-    std::wstring RoundSignificantDigits(double value, int numberSignificantDigits);
+    std::wstring RoundSignificantDigits(double value, unsigned int numberSignificantDigits);
     std::wstring ToScientificNumber(double number);
 }
