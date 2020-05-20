@@ -2976,9 +2976,9 @@
     <value>جذر تكعيبي</value>
     <comment>Name for the cube root function. Used by screen readers.</comment>
   </data>
-  <data name="Logx" xml:space="preserve">
-    <value>السجل الأساسي</value>
-    <comment>Name for the logbasex function. Used by screen readers.</comment>
+  <data name="Logy" xml:space="preserve">
+    <value>قاعدة خوارزمية</value>
+    <comment>Name for the logbasey function. Used by screen readers.</comment>
   </data>
   <data name="AbsoluteValue" xml:space="preserve">
     <value>قيمة مطلقة</value>
@@ -3048,9 +3048,9 @@
     <value>فشل الحساب</value>
     <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
-  <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>أساس اللوغاريتم س</value>
-    <comment>Screen reader prompt for the logBaseX button</comment>
+  <data name="logBaseY.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>قاعدة خوارزمية للص</value>
+    <comment>Screen reader prompt for the logBaseY button</comment>
   </data>
   <data name="trigButton.Text" xml:space="preserve">
     <value>حساب المثلثات</value>
@@ -3063,6 +3063,10 @@
   <data name="inequalityButton.Text" xml:space="preserve">
     <value>المتباينات</value>
     <comment>Displayed on the button that contains a flyout for the inequality functions.</comment>
+  </data>
+  <data name="inequalityButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>المتباينات</value>
+    <comment>Screen reader prompt for the Inequalities button</comment>
   </data>
   <data name="bitwiseButton.Text" xml:space="preserve">
     <value>البت</value>
@@ -3244,21 +3248,25 @@
     <value>الرسوم البيانية</value>
     <comment>Name of the Graphing mode of the Calculator app. Displayed in the navigation menu.</comment>
   </data>
-  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>يساوي</value>
-    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
-  </data>
   <data name="plotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>رسم</value>
     <comment>Screen reader prompt for the plot button on the graphing calculator operator keypad</comment>
   </data>
-  <data name="zoomResetButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>إعادة تعيين طريقة العرض (Ctrl + 0)</value>
-    <comment>This is the tool tip automation name for the Calculator zoom reset button.</comment>
+  <data name="graphViewButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>تحديث طريقة العرض تلقائيًا (Ctrl + 0)</value>
+    <comment>This is the tool tip automation name for the Calculator graph view button.</comment>
   </data>
-  <data name="zoomResetButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>إعادة تعيين طريقة العرض</value>
-    <comment>Screen reader prompt for the reset zoom button.</comment>
+  <data name="graphViewButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>عرض الرسم البياني</value>
+    <comment>Screen reader prompt for the graph view button.</comment>
+  </data>
+  <data name="GraphViewAutomaticBestFitAnnouncement" xml:space="preserve">
+    <value>الاحتواء التلقائي الأفضل</value>
+    <comment>Announcement used in Graphing Calculator when button is clicked and automatic best fit is set</comment>
+  </data>
+  <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
+    <value>التعديل اليدوي</value>
+    <comment>Announcement used in Graphing Calculator when button is clicked and manual adjustment is set</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>تكبير (Ctrl + علامة الجمع)</value>
@@ -3321,8 +3329,12 @@
     <comment>Label text for the max text box</comment>
   </data>
   <data name="LineColorText.Text" xml:space="preserve">
-    <value>لون الخط</value>
+    <value>اللون</value>
     <comment>Label for the Line Color section of the style picker</comment>
+  </data>
+  <data name="StyleChooserBoxHeading.Text" xml:space="preserve">
+    <value>النمط</value>
+    <comment>Label for the Line Style section of the style picker</comment>
   </data>
   <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
     <value>تحليل الدالة</value>
@@ -3483,12 +3495,168 @@
     <value>يتعذر حساب النطاق لهذه الدالة.</value>
     <comment>Error displayed when Range is not returned from the analyzer.</comment>
   </data>
+  <data name="Overflow" xml:space="preserve">
+    <value>تجاوز الحد المسموح به (الرقم كبير جداً)</value>
+    <comment>Error that occurs during graphing when the number is too large. To see this error, assign a large number to variable a, then keep doing "a:=a*a" until it happens.</comment>
+  </data>
+  <data name="RequireRadiansMode" xml:space="preserve">
+    <value>وضع التقدير الدائري مطلوب لرسم هذه المعادلة.</value>
+    <comment>Error that occurs during graphing when radians is required.</comment>
+  </data>
+  <data name="TooComplexToSolve" xml:space="preserve">
+    <value>يتعذر رسم هذه الدالة لأنها معقدة</value>
+    <comment>Error that occurs during graphing when the equation is too complex.</comment>
+  </data>
+  <data name="RequireDegreesMode" xml:space="preserve">
+    <value>وضع الدرجات مطلوب لرسم هذه الدالة</value>
+    <comment>Error that occurs during graphing when degrees is required</comment>
+  </data>
+  <data name="FactorialInvalidArgument" xml:space="preserve">
+    <value>تتضمن دالة مضروب وسيطة غير صالحة</value>
+    <comment>Error that occurs during graphing when a factorial function has an invalid argument.</comment>
+  </data>
+  <data name="FactorialCannotPerformOnLargeNumber" xml:space="preserve">
+    <value>لدى دالة مضروب وسيطة يتعذر رسمها لأنها كبيرة جداً</value>
+    <comment>Error that occurs during graphing when a factorial has a large n</comment>
+  </data>
+  <data name="ModuloCannotPerformOnFloat" xml:space="preserve">
+    <value>يمكن حساب باقي القسمة فقط مع الأرقام الصحيحة</value>
+    <comment>Error that occurs during graphing when modulo is used with a float.</comment>
+  </data>
+  <data name="EquationHasNoSolution" xml:space="preserve">
+    <value>المعادلة بلا حل</value>
+    <comment>Error that occurs during graphing when the equation has no solution.</comment>
+  </data>
+  <data name="DivideByZero" xml:space="preserve">
+    <value>تتعذر القسمة على صفر</value>
+    <comment>Error that occurs during graphing when a divison by zero occurs.</comment>
+  </data>
+  <data name="MutuallyExclusiveConditions" xml:space="preserve">
+    <value>تتضمن المعادلة شروط منطقية متنافية</value>
+    <comment>Error that occurs during graphing when mutually exclusive conditions are used.</comment>
+  </data>
+  <data name="OutOfDomain" xml:space="preserve">
+    <value>المعادلة خارج المجال</value>
+    <comment>Error that occurs during graphing when the equation is out of domain.</comment>
+  </data>
+  <data name="GE_NotSupported" xml:space="preserve">
+    <value>رسم هذه المعادلة غير مدعم</value>
+    <comment>Error that occurs during graphing when the equation is not supported.</comment>
+  </data>
+  <data name="ParenthesisMismatch" xml:space="preserve">
+    <value>تفتقد المعادلة إلى قوس الفتح</value>
+    <comment>Error that occurs during graphing when the equation is missing a (</comment>
+  </data>
+  <data name="UnmatchedParenthesis" xml:space="preserve">
+    <value>تفتقد المعادلة إلى قوس الإغلاق</value>
+    <comment>Error that occurs during graphing when the equation is missing a )</comment>
+  </data>
+  <data name="TooManyDecimalPoints" xml:space="preserve">
+    <value>هناك نقاط عشرية كثيرة جداً في رقم</value>
+    <comment>Error that occurs during graphing when a number has too many decimals. Ex: 1.2.3</comment>
+  </data>
+  <data name="DecimalPointWithoutDigits" xml:space="preserve">
+    <value>تفتقد النقطة العشرية إلى أرقام</value>
+    <comment>Error that occurs during graphing with a decimal point without digits</comment>
+  </data>
+  <data name="UnexpectedEndOfExpression" xml:space="preserve">
+    <value>نهاية التعبير غير متوقعة</value>
+    <comment>Error that occurs during graphing when the expression ends unexpectedly. Ex: 3-4*</comment>
+  </data>
+  <data name="UnexpectedToken" xml:space="preserve">
+    <value>هناك أحرف غير متوقعة في هذا التعبير</value>
+    <comment>Error that occurs during graphing when there is an unexpected token.</comment>
+  </data>
+  <data name="InvalidToken" xml:space="preserve">
+    <value>هناك أحرف غير صالحة في هذا التعبير</value>
+    <comment>Error that occurs during graphing when there is an invalid token.</comment>
+  </data>
+  <data name="TooManyEquals" xml:space="preserve">
+    <value>يوجد عدد كبير جداً من علامات التساوي</value>
+    <comment>Error that occurs during graphing when there are too many equals.</comment>
+  </data>
+  <data name="EqualWithoutGraphVariable" xml:space="preserve">
+    <value>يجب أن تتضمن الدالة على الأقل س أو ص واحد صالح</value>
+    <comment>Error that occurs during graphing when the equation is missing x or y.</comment>
+  </data>
+  <data name="InvalidEquationSyntax" xml:space="preserve">
+    <value>التعبير غير صالح.</value>
+    <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
+    </data>
+  <data name="EmptyExpression" xml:space="preserve">
+    <value>هذا التعبير فارغ</value>
+    <comment>Error that occurs during graphing when the expression is empty</comment>
+  </data>
+  <data name="EqualWithoutEquation" xml:space="preserve">
+    <value>تم استخدام علامة التساوي دون معادلة</value>
+    <comment>Error that occurs during graphing when equal is used without an equation. Ex: sin(x=y)</comment>
+  </data>
+  <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
+    <value>أحد الأقواس مفقود بعد اسم الدالة</value>
+    <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
+    </data>
+  <data name="IncorrectNumParameter" xml:space="preserve">
+    <value>لدى العملية الحسابية عدد غير صحيح من المعلمات</value>
+    <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
+  </data>
+  <data name="InvalidVariableNameFormat" xml:space="preserve">
+    <value>اسم المتغير غير صالح</value>
+    <comment>Error that occurs during graphing when a variable name is invalid.</comment>
+  </data>
+  <data name="BracketMismatch" xml:space="preserve">
+    <value>تفتقد المعادلة إلى قوس الفتح المربع</value>
+    <comment>Error that occurs during graphing when a { is missing</comment>
+  </data>
+  <data name="UnmatchedBracket" xml:space="preserve">
+    <value>تفتقد المعادلة إلى قوس الإغلاق المربع</value>
+    <comment>Error that occurs during graphing when a } is missing.</comment>
+  </data>
+  <data name="CannotUseIInReal" xml:space="preserve">
+    <value>يتعذر استخدام "i" و"I" كأسماء متغّيرات</value>
+    <comment>Error that occurs during graphing when i or I is used.</comment>
+  </data>
+  <data name="GeneralError" xml:space="preserve">
+    <value>يتعذر رسم المعادلة</value>
+    <comment>General error that occurs during graphing.</comment>
+  </data>
+  <data name="InvalidNumberDigit" xml:space="preserve">
+    <value>يتعذر حل الرقم للقاعدة المعطاة</value>
+    <comment>Error that occurs during graphing when trying to use bases incorrect. Ex: base(2,1020).</comment>
+  </data>
+  <data name="InvalidNumberBase" xml:space="preserve">
+    <value>يجب أن تكون القاعدة أكبر من 2 وأقل من 36</value>
+    <comment>Error that occurs during graphing when the base is out of range.</comment>
+  </data>
+  <data name="InvalidVariableSpecification" xml:space="preserve">
+    <value>تتطلب العملية الحسابية وجود متغّير بأحد معلماتها</value>
+    <comment>Error that occurs during graphing when a function requires a variable in a particular position. Ex: 2nd argument of deriv.</comment>
+  </data>
+  <data name="ExpectingLogicalOperands" xml:space="preserve">
+    <value>تخلط المعادلة بين المُعامل المنطقية والرقمية</value>
+    <comment>Error that occurs during graphing when operands are mixed. Such as true and 1.</comment>
+  </data>
+  <data name="CannotUseIndexVarInOpLimits" xml:space="preserve">
+    <value>يتعذر استخدام س أو ص في الحدود السفلية</value>
+    <comment>Error that occurs during graphing when x or y is used in integral upper limits.</comment>
+  </data>
+  <data name="CannotUseIndexVarInLimPoint" xml:space="preserve">
+    <value>لا يمكن استخدام س أو ص في نقطة الحد</value>
+    <comment>Error that occurs during graphing when x or y is used in the limit point.</comment>
+  </data>
+  <data name="CannotUseComplexInfinityInReal" xml:space="preserve">
+    <value>يتعذر استخدام قيم لا نهاية معقدة</value>
+    <comment>Error that occurs during graphing when complex infinity is used</comment>
+  </data>
+  <data name="CannotUseIInInequalitySolving" xml:space="preserve">
+    <value>يتعذر استخدام الأعداد المركبة في المتباينات</value>
+    <comment>Error that occurs during graphing when complex numbers are used in inequalities.</comment>
+  </data>
   <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>الخلف</value>
+    <value>رجوع إلى قائمة الدالات</value>
     <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>
   </data>
   <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>الخلف</value>
+    <value>رجوع إلى قائمة الدالات</value>
     <comment>This is the automation name for the back button in the equation analysis page in the graphing calculator</comment>
   </data>
   <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -3536,10 +3704,18 @@
     <comment>This is the text for the for the equation style context menu command</comment>
   </data>
   <data name="showEquationButtonToolTip" xml:space="preserve">
+    <value>إظهار المعادلة</value>
+    <comment>This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator.</comment>
+  </data>
+  <data name="hideEquationButtonToolTip" xml:space="preserve">
+    <value>إخفاء المعادلة</value>
+    <comment>This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator.</comment>
+  </data>
+  <data name="showEquationButtonAutomationName" xml:space="preserve">
     <value>إظهار المعادلة %1</value>
     <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
   </data>
-  <data name="hideEquationButtonToolTip" xml:space="preserve">
+  <data name="hideEquationButtonAutomationName" xml:space="preserve">
     <value>إخفاء المعادلة %1</value>
     <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator. %1 is the equation number.</comment>
   </data>
@@ -3635,6 +3811,38 @@
     <value>خيارات الرسم البياني</value>
     <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
   </data>
+  <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>خيارات متغيرة</value>
+    <comment>Screen reader prompt for the variable settings toggle button</comment>
+  </data>
+  <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>زر تبديل الخيارات المتنوعة</value>
+    <comment>Tool tip for the variable settings toggle button</comment>
+  </data>
+  <data name="LineThicknessBoxHeading.Text" xml:space="preserve">
+    <value>سماكة الخط</value>
+    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+  </data>
+  <data name="LineOptionsHeading.Text" xml:space="preserve">
+    <value>خيارات الخطوط</value>
+    <comment>Heading for the equation style flyout in Graphing mode.</comment>
+  </data>
+  <data name="SmallLineWidthAutomationName" xml:space="preserve">
+    <value>عرض خط صغير</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="MediumLineWidthAutomationName" xml:space="preserve">
+    <value>عرض خط متوسط</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="LargeLineWidthAutomationName" xml:space="preserve">
+    <value>عرض خط كبير</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="ExtraLargeLineWidthAutomationName" xml:space="preserve">
+    <value>عرض خط خارجي كبير</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
   <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
     <value>إدخال تعبير</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
@@ -3662,5 +3870,205 @@
   <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
     <value>تحديد الكل</value>
     <comment>Select all menu item from the Equation TextBox</comment>
+  </data>
+  <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>عنصر بقائمة إدخال الدالات</value>
+    <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>قائمة إدخال الدالات</value>
+    <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>لوحة إدخال الدالات</value>
+    <comment>The automation name for the Equation Input StackPanel that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableStackPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>لوحة المتغيرات</value>
+    <comment>The automation name for the Variable StackPanel that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableListView.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>قائمة المتغيرات</value>
+    <comment>The automation name for the Variable ListView that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableListViewItem" xml:space="preserve">
+    <value>عنصر بقائمة %1 للمتغير</value>
+    <comment>The automation name for the Variable ListViewItem that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableValueTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مربع نص قيمة المتغير</value>
+    <comment>The automation name for the Variable Value Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableValueSlider.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>شريط تمرير قيمة المتغير</value>
+    <comment>The automation name for the Variable Value Slider that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableMinTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مربع نص الحد الأدنى لقيمة المتغير</value>
+    <comment>The automation name for the Variable Min Value Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableStepTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مربع نص قيمة خطوة المتغير</value>
+    <comment>The automation name for the Variable Step Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableMaxTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مربع نص الحد الأقصى لقيمة المتغير</value>
+    <comment>The automation name for the Variable Max Value Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="solidLineStyleAutomationName" xml:space="preserve">
+    <value>نمط خط الرسم متصل</value>
+    <comment>Name of the solid line style for a graphed equation</comment>
+  </data>
+  <data name="dotLineStyleAutomationName" xml:space="preserve">
+    <value>نمط خط الرسم مُنقط</value>
+    <comment>Name of the dotted line style for a graphed equation</comment>
+  </data>
+  <data name="dashLineStyleAutomationName" xml:space="preserve">
+    <value>نمط خط الرسم متقطع</value>
+    <comment>Name of the dashed line style for a graphed equation</comment>
+  </data>
+  <data name="equationColor1AutomationName" xml:space="preserve">
+    <value>أزرق داكن</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor2AutomationName" xml:space="preserve">
+    <value>رغوة البحر</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor3AutomationName" xml:space="preserve">
+    <value>بنفسجي</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor4AutomationName" xml:space="preserve">
+    <value>أخضر</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor5AutomationName" xml:space="preserve">
+    <value>فستقي فاتح</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor6AutomationName" xml:space="preserve">
+    <value>أخضر داكن</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor7AutomationName" xml:space="preserve">
+    <value>فحمي</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor8AutomationName" xml:space="preserve">
+    <value>أحمر</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor9AutomationName" xml:space="preserve">
+    <value>أرجواني فاتح مائل للزرقة</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor10AutomationName" xml:space="preserve">
+    <value>أحمر أرجواني</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor11AutomationName" xml:space="preserve">
+    <value>ذهبي مائل للصفرة</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor12AutomationName" xml:space="preserve">
+    <value>برتقالي فاتح</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor13AutomationName" xml:space="preserve">
+    <value>بني</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor14BlackAutomationName" xml:space="preserve">
+    <value>أسود</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor14WhiteAutomationName" xml:space="preserve">
+    <value>أبيض</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationHighContrastColor1AutomationName" xml:space="preserve">
+    <value>لون 1</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationHighContrastColor2AutomationName" xml:space="preserve">
+    <value>لون 2</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationHighContrastColor3AutomationName" xml:space="preserve">
+    <value>اللون 3</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationHighContrastColor4AutomationName" xml:space="preserve">
+    <value>اللون 4</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="GraphThemeHeading.Text" xml:space="preserve">
+    <value>نسق الرسم البياني</value>
+    <comment>Graph settings heading for the theme options</comment>
+  </data>
+  <data name="AlwaysLightTheme.Content" xml:space="preserve">
+    <value>فاتح دائماً</value>
+    <comment>Graph settings option to set graph to light theme</comment>
+  </data>
+  <data name="MatchAppTheme.Content" xml:space="preserve">
+    <value>مطابقة لون خلفية التطبيق</value>
+    <comment>Graph settings option to set graph to match the app theme</comment>
+  </data>
+  <data name="GraphThemeHeading.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>لون الخلفية</value>
+    <comment>This is the automation name text for the Graph settings heading for the theme options</comment>
+  </data>
+  <data name="AlwaysLightTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>فاتح دائماً</value>
+    <comment>This is the automation name text for the Graph settings option to set graph to light theme</comment>
+  </data>
+  <data name="MatchAppTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مطابقة لون خلفية التطبيق</value>
+    <comment>This is the automation name text for the Graph settings option to set graph to match the app theme</comment>
+  </data>
+  <data name="FunctionRemovedAnnouncement" xml:space="preserve">
+    <value>تمت إزالة الدالة</value>
+    <comment>Announcement used in Graphing Calculator when a function is removed from the function list</comment>
+  </data>
+  <data name="KGFEquationTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>مربع معادلة تحليل الدالات</value>
+    <comment>This is the automation name text for the equation box in the function analysis panel</comment>
+  </data>
+  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>يساوي</value>
+    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="lessThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>أقل من</value>
+    <comment>Screen reader prompt for the Less than button</comment>
+  </data>
+  <data name="lessThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>أصغر من أو يساوي</value>
+    <comment>Screen reader prompt for the Less than or equal button</comment>
+  </data>
+  <data name="equalsFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>يساوي</value>
+    <comment>Screen reader prompt for the Equal button</comment>
+  </data>
+  <data name="greaterThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>أكبر من أو يساوي</value>
+    <comment>Screen reader prompt for the Greater than or equal button</comment>
+  </data>
+  <data name="greaterThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>الأكبر من</value>
+    <comment>Screen reader prompt for the Greater than button</comment>
+  </data>
+  <data name="xButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>X</value>
+    <comment>Screen reader prompt for the X button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="yButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Y</value>
+    <comment>Screen reader prompt for the Y button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="submitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>إرسال</value>
+    <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
   </data>
 </root>
