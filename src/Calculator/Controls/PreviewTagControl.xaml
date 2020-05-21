@@ -50,8 +50,8 @@
         <Rectangle Style="{ThemeResource PreviewTagRectStyle}"
                    RadiusX="2"
                    RadiusY="2"/>
-        <TextBlock Style="{ThemeResource PreviewTagTextStyle}"
-                   FontWeight="SemiBold"
-                   Text="Preview"/>
+        <TextBlock x:Uid="PreviewTag"
+                   Style="{ThemeResource PreviewTagTextStyle}"
+                   FontWeight="SemiBold"/>
     </Grid>
 </UserControl>
