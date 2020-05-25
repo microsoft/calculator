@@ -21,6 +21,7 @@ using namespace Windows::Security::Cryptography;
 using namespace Windows::Foundation::Collections;
 
 static StringReference HistoryVectorLengthKey{ L"HistoryVectorLength" };
+static StringReference ItemsSizeKey{ L"ItemsCount" };
 
 namespace CalculatorApp::ViewModel::HistoryResourceKeys
 {
@@ -34,7 +35,6 @@ HistoryViewModel::HistoryViewModel(_In_ CalculationManager::CalculatorManager* c
     AreHistoryShortcutsEnabled = true;
 
     Items = ref new Platform::Collections::Vector<HistoryItemViewModel ^>();
-    ItemSize = 0;
 }
 
 // this will reload Items with the history list based on current mode
@@ -75,7 +75,7 @@ void HistoryViewModel::ReloadHistory(_In_ ViewMode currentMode)
     }
 
     Items = historyListVM;
-    UpdateItemSize();
+    RaisePropertyChanged(ItemsSizeKey);
 }
 
 void HistoryViewModel::OnHistoryItemAdded(_In_ unsigned int addedItemIndex)
@@ -101,8 +101,7 @@ void HistoryViewModel::OnHistoryItemAdded(_In_ unsigned int addedItemIndex)
 
     assert(addedItemIndex <= m_calculatorManager->MaxHistorySize() && addedItemIndex >= 0);
     Items->InsertAt(0, item);
-    UpdateItemSize();
-    SaveHistory();
+    RaisePropertyChanged(ItemsSizeKey);
 }
 
 void HistoryViewModel::SetCalculatorDisplay(CalculatorDisplay& calculatorDisplay)
@@ -115,7 +114,7 @@ void HistoryViewModel::ShowItem(_In_ HistoryItemViewModel ^ e)
 {
     unsigned int index;
     Items->IndexOf(e, &index);
-    TraceLogger::GetInstance()->LogHistoryItemLoad((ViewMode)m_currentMode, ItemSize, (int)(index));
+    TraceLogger::GetInstance()->LogHistoryItemLoad((ViewMode)m_currentMode, Items->Size, (int)(index));
     HistoryItemClicked(e);
 }
 
@@ -126,15 +125,8 @@ void HistoryViewModel::DeleteItem(_In_ HistoryItemViewModel ^ e)
     {
         if (m_calculatorManager->RemoveHistoryItem(itemIndex))
         {
-            // Keys for the history container are index based.
-            // SaveHistory() re-inserts the items anyway, so it's faster to just clear out the container.
-            CalculationManager::CalculatorMode currentMode = m_currentMode;
-            ApplicationDataContainer ^ historyContainer = GetHistoryContainer(currentMode);
-            historyContainer->Values->Clear();
-
             Items->RemoveAt(itemIndex);
-            UpdateItemSize();
-            SaveHistory();
+            RaisePropertyChanged(ItemsSizeKey);
         }
     }
 }
@@ -147,16 +139,14 @@ void HistoryViewModel::OnHideCommand(_In_ Platform::Object ^ e)
 
 void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
 {
-    if (AreHistoryShortcutsEnabled == true)
+    if (AreHistoryShortcutsEnabled)
     {
         m_calculatorManager->ClearHistory();
 
         if (Items->Size > 0)
         {
-            CalculationManager::CalculatorMode currentMode = m_currentMode;
-            ClearHistoryContainer(currentMode);
             Items->Clear();
-            UpdateItemSize();
+            RaisePropertyChanged(ItemsSizeKey);
         }
 
         if (m_localizedHistoryCleared == nullptr)
@@ -167,210 +157,7 @@ void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
     }
 }
 
-// this method restores history vector per mode
-void HistoryViewModel::RestoreHistory(_In_ CalculationManager::CalculatorMode cMode)
-{
-    ApplicationDataContainer ^ historyContainer = GetHistoryContainer(cMode);
-    std::shared_ptr<std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>> historyVector =
-        std::make_shared<std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>>();
-    auto historyVectorLength = static_cast<int>(historyContainer->Values->Lookup(HistoryVectorLengthKey));
-    bool failure = false;
-
-    if (historyVectorLength > 0)
-    {
-        for (int i = 0; i < historyVectorLength; ++i)
-        {
-            try
-            {
-                // deserialize each item
-                auto item = DeserializeHistoryItem(i.ToString(), historyContainer);
-                std::shared_ptr<CalculationManager::HISTORYITEM> Item = std::make_shared<CalculationManager::HISTORYITEM>(item);
-                historyVector->push_back(Item);
-            }
-            catch (Platform::Exception ^ e)
-            {
-                failure = true;
-                break;
-            }
-        }
-
-        if (!failure)
-        {
-            // if task has been cancelled set history to 0
-            m_calculatorManager->SetHistory(cMode, *historyVector);
-
-            // update length once again for consistency between stored number of items and length
-            UpdateHistoryVectorLength(static_cast<int>(historyVector->size()), cMode);
-        }
-        else
-        {
-            // in case of failure do not show any item
-            UpdateHistoryVectorLength(0, cMode);
-        }
-    }
-}
-
-Platform::String ^ HistoryViewModel::GetHistoryContainerKey(_In_ CalculationManager::CalculatorMode cMode)
-{
-    Platform::ValueType ^ modeValue = static_cast<int>(cMode);
-    return Platform::String::Concat(modeValue->ToString(), L"_History");
-}
-
-ApplicationDataContainer ^ HistoryViewModel::GetHistoryContainer(_In_ CalculationManager::CalculatorMode cMode)
-{
-    ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
-    ApplicationDataContainer ^ historyContainer;
-
-    // naming container based on mode
-    Platform::String ^ historyContainerKey = GetHistoryContainerKey(cMode);
-
-    if (localSettings->Containers->HasKey(historyContainerKey))
-    {
-        historyContainer = localSettings->Containers->Lookup(historyContainerKey);
-    }
-    else
-    {
-        // create container for adding data
-        historyContainer = localSettings->CreateContainer(historyContainerKey, ApplicationDataCreateDisposition::Always);
-        int initialHistoryVectorLength = 0;
-        historyContainer->Values->Insert(HistoryVectorLengthKey, initialHistoryVectorLength);
-    }
-
-    return historyContainer;
-}
-
-void HistoryViewModel::ClearHistoryContainer(_In_ CalculationManager::CalculatorMode cMode)
-{
-    ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
-    localSettings->DeleteContainer(GetHistoryContainerKey(cMode));
-}
-
-// this method will be used to update the history item length
-void HistoryViewModel::UpdateHistoryVectorLength(_In_ int newValue, _In_ CalculationManager::CalculatorMode cMode)
-{
-    ApplicationDataContainer ^ historyContainer = GetHistoryContainer(cMode);
-    historyContainer->Values->Remove(HistoryVectorLengthKey);
-    historyContainer->Values->Insert(HistoryVectorLengthKey, newValue);
-}
-
-void HistoryViewModel::ClearHistory()
-{
-    ClearHistoryContainer(CalculationManager::CalculatorMode::Standard);
-    ClearHistoryContainer(CalculationManager::CalculatorMode::Scientific);
-}
-
 unsigned long long HistoryViewModel::GetMaxItemSize()
 {
     return static_cast<unsigned long long>(m_calculatorManager->MaxHistorySize());
-}
-
-void HistoryViewModel::SaveHistory()
-{
-    ApplicationDataContainer ^ historyContainer = GetHistoryContainer(m_currentMode);
-    auto const& currentHistoryVector = m_calculatorManager->GetHistoryItems(m_currentMode);
-    bool failure = false;
-    int index = 0;
-    Platform::String ^ serializedHistoryItem;
-
-    for (auto const& item : currentHistoryVector)
-    {
-        try
-        {
-            serializedHistoryItem = SerializeHistoryItem(item);
-            historyContainer->Values->Insert(index.ToString(), serializedHistoryItem);
-        }
-        catch (Platform::Exception ^)
-        {
-            failure = true;
-            break;
-        }
-
-        ++index;
-    }
-
-    if (!failure)
-    {
-        // insertion is successful
-        UpdateHistoryVectorLength(static_cast<int>(currentHistoryVector.size()), m_currentMode);
-    }
-    else
-    {
-        UpdateHistoryVectorLength(0, m_currentMode);
-    }
-}
-
-// this serializes a history item into a base64 encoded string
-Platform::String ^ HistoryViewModel::SerializeHistoryItem(_In_ std::shared_ptr<CalculationManager::HISTORYITEM> const& item)
-{
-    DataWriter ^ writer = ref new DataWriter();
-    auto expr = item->historyItemVector.expression;
-    auto result = item->historyItemVector.result;
-    auto platformExpr = ref new Platform::String(expr.c_str());
-    writer->WriteUInt32(writer->MeasureString(platformExpr));
-    writer->WriteString(platformExpr);
-    auto platformResult = ref new Platform::String(result.c_str());
-    writer->WriteUInt32(writer->MeasureString(platformResult));
-    writer->WriteString(platformResult);
-
-    Utils::SerializeCommandsAndTokens(item->historyItemVector.spTokens, item->historyItemVector.spCommands, writer);
-
-    IBuffer ^ buffer = writer->DetachBuffer();
-    if (buffer == nullptr)
-    {
-        throw ref new Platform::Exception(E_POINTER, ref new Platform::String(L"History Item is NULL"));
-    }
-
-    return CryptographicBuffer::EncodeToBase64String(buffer);
-}
-
-CalculationManager::HISTORYITEM
-HistoryViewModel::DeserializeHistoryItem(_In_ Platform::String ^ historyItemKey, _In_ ApplicationDataContainer ^ historyContainer)
-{
-    CalculationManager::HISTORYITEM historyItem;
-    if (historyContainer->Values->HasKey(historyItemKey))
-    {
-        Object ^ historyItemValues = historyContainer->Values->Lookup(historyItemKey);
-
-        if (historyItemValues == nullptr)
-        {
-            throw ref new Platform::Exception(E_POINTER, ref new Platform::String(L"History Item is NULL"));
-        }
-
-        String ^ historyData = safe_cast<Platform::String ^>(historyItemValues);
-        IBuffer ^ buffer = CryptographicBuffer::DecodeFromBase64String(historyData);
-
-        if (buffer == nullptr)
-        {
-            throw ref new Platform::Exception(E_POINTER, ref new Platform::String(L"History Item is NULL"));
-        }
-
-        DataReader ^ reader = DataReader::FromBuffer(buffer);
-        auto exprLen = reader->ReadUInt32();
-        auto expression = reader->ReadString(exprLen);
-        historyItem.historyItemVector.expression = expression->Data();
-
-        auto resultLen = reader->ReadUInt32();
-        auto result = reader->ReadString(resultLen);
-        historyItem.historyItemVector.result = result->Data();
-
-        historyItem.historyItemVector.spCommands = Utils::DeserializeCommands(reader);
-        historyItem.historyItemVector.spTokens = Utils::DeserializeTokens(reader);
-    }
-    else
-    {
-        throw ref new Platform::Exception(E_ACCESSDENIED, ref new Platform::String(L"History Item not found"));
-    }
-    return historyItem;
-}
-
-bool HistoryViewModel::IsValid(_In_ CalculationManager::HISTORYITEM item)
-{
-    return (
-        !item.historyItemVector.expression.empty() && !item.historyItemVector.result.empty() && (bool)item.historyItemVector.spCommands
-        && (bool)item.historyItemVector.spTokens);
-}
-
-void HistoryViewModel::UpdateItemSize()
-{
-    ItemSize = Items->Size;
 }

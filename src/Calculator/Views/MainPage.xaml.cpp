@@ -89,11 +89,6 @@ MainPage::MainPage()
 
 void MainPage::OnNavigatedTo(NavigationEventArgs ^ e)
 {
-    if (m_model->CalculatorViewModel)
-    {
-        m_model->CalculatorViewModel->HistoryVM->ClearHistory();
-    }
-
     ViewMode initialMode = ViewMode::Standard;
     if (e->Parameter != nullptr)
     {
@@ -134,7 +129,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         if (newValue == ViewMode::Standard)
         {
             EnsureCalculator();
-            m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
             m_calculator->AnimateCalculator(NavCategory::IsConverterViewMode(previousMode));
             m_model->CalculatorViewModel->HistoryVM->ReloadHistory(newValue);
@@ -142,7 +136,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         else if (newValue == ViewMode::Scientific)
         {
             EnsureCalculator();
-            m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
             if (m_model->PreviousMode != ViewMode::Scientific)
             {
@@ -153,7 +146,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         }
         else if (newValue == ViewMode::Programmer)
         {
-            m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             EnsureCalculator();
             if (m_model->PreviousMode != ViewMode::Programmer)
@@ -165,7 +157,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         {
             if (m_model->CalculatorViewModel)
             {
-                m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
                 m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             }
             EnsureDateCalculator();
@@ -179,7 +170,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         {
             if (m_model->CalculatorViewModel)
             {
-                m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
                 m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             }
             EnsureConverter();

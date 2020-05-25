@@ -137,7 +137,7 @@
                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
                        FontWeight="SemiLight"
                        TextWrapping="Wrap"
-                       Visibility="{Binding ItemSize, Converter={StaticResource ItemSizeToVisibilityConverter}}"/>
+                       Visibility="{x:Bind Model.ItemsCount, Converter={StaticResource ItemSizeToVisibilityConverter}, Mode=OneWay}"/>
             <ListView x:Name="HistoryListView"
                       MinHeight="60"
                       Padding="0,12,0,0"
@@ -150,7 +150,7 @@
                       ItemsSource="{x:Bind Model.Items, Mode=OneWay}"
                       SelectionMode="None"
                       TabIndex="0"
-                      Visibility="{x:Bind Model.ItemSize, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}">
+                      Visibility="{x:Bind Model.ItemsCount, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}">
                 <ListView.ItemContainerTransitions>
                     <TransitionCollection>
                         <AddDeleteThemeTransition/>
@@ -166,7 +166,7 @@
                     AutomationProperties.AutomationId="ClearHistory"
                     Command="{x:Bind Model.ClearCommand, Mode=OneWay}"
                     Content="&#xE74D;"
-                    Visibility="{x:Bind Model.ItemSize, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}"/>
+                    Visibility="{x:Bind Model.ItemsCount, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}"/>
         </Grid>
     </Grid>
 </UserControl>

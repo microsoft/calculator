@@ -554,30 +554,6 @@ namespace CalculationManager
         return m_currentDegreeMode;
     }
 
-    void CalculatorManager::SetHistory(_In_ CalculatorMode eMode, _In_ vector<shared_ptr<HISTORYITEM>> const& history)
-    {
-        CalculatorHistory* pHistory = nullptr;
-
-        switch (eMode)
-        {
-        case CalculatorMode::Standard:
-            pHistory = m_pStdHistory.get();
-            break;
-        case CalculatorMode::Scientific:
-            pHistory = m_pSciHistory.get();
-            break;
-        }
-
-        if (pHistory)
-        {
-            pHistory->ClearHistory();
-            for (auto const& historyItem : history)
-            {
-                pHistory->AddItem(historyItem);
-            }
-        }
-    }
-
     wstring CalculatorManager::GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix)
     {
         return m_currentCalculatorEngine ? m_currentCalculatorEngine->GetCurrentResultForRadix(radix, precision, groupDigitsPerRadix) : L"";
