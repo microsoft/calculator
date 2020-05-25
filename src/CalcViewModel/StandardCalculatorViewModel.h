@@ -38,7 +38,6 @@ namespace CalculatorApp
         public:
             StandardCalculatorViewModel();
             void UpdateOperand(int pos, Platform::String ^ text);
-            void UpdateCommandsInRecordingMode();
 
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, DisplayValue);
