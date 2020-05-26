@@ -228,19 +228,6 @@ public enum class GraphViewChangedReason
             }
         }
 
-        property bool RangeUpdatedBySettings
-        {
-            bool get()
-            {
-                return m_rangeUpdatedBySettings;
-            }
-
-            void set(bool value)
-            {
-                m_rangeUpdatedBySettings = value;
-            }
-        }
-
         void GetDisplayRanges(double* xMin, double* xMax, double* yMin, double* yMax)
         {
             try
@@ -260,14 +247,14 @@ public enum class GraphViewChangedReason
             }
         }
 
-        void SetDisplayRanges(double xMin, double xMax, double yMin, double yMax)
+        void SetDisplayRanges(double xMin, double xMax, double yMin, double yMax, bool isSettings)
         {
             try
             {
                 if (auto render = m_graph->GetRenderer())
                 {
                     render->SetDisplayRanges(xMin, xMax, yMin, yMax);
-                    m_replot = true;
+                    m_rangeUpdatedBySettings = isSettings;
                     if (m_renderMain)
                     {
                         m_renderMain->RunRenderPass();
