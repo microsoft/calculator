@@ -157,19 +157,20 @@ namespace GraphControl::DX
             critical_section::scoped_lock lock(m_criticalSection);
 
             int formulaId = -1;
-            float nearestPointLocationX, nearestPointLocationY;
-            double nearestPointValueX, nearestPointValueY, rhoValueOut, thetaValueOut, tValueOut;
+            float nearestPointLocationX, nearestPointLocationY, nearestPointValueX, nearestPointValueY;                        
+            double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
+            m_graph->GetRenderer()->GetDisplayRanges(xAxisMin, xAxisMax, yAxisMin, yAxisMax);
+            double precision = this->GetPrecision(xAxisMax, xAxisMin);     
+
             m_Tracing = m_graph->GetRenderer()->GetClosePointData(
                             trackPoint.X,
                             trackPoint.Y,
+                            precision,
                             formulaId,
                             nearestPointLocationX,
                             nearestPointLocationY,
                             nearestPointValueX,
-                            nearestPointValueY,
-                            rhoValueOut,
-                            thetaValueOut,
-                            tValueOut)
+                            nearestPointValueY)
                         == S_OK;
             m_Tracing = m_Tracing && !isnan(nearestPointLocationX) && !isnan(nearestPointLocationY);
         }
@@ -180,6 +181,22 @@ namespace GraphControl::DX
 
         return m_Tracing;
     }
+
+    /// <summary>
+    /// Gets the precision value by computing the max and min
+    /// through this formula:
+    /// 10^(floor(log(max-min))-3)
+    /// https://github.com/microsoft/calculator/issues/998
+    /// </summary>
+    /// <param name="maxAxis">max axis</param>
+    /// <param name="minAxis">min axis</param>
+    /// <returns>the precision value</returns>
+    double RenderMain::GetPrecision(double maxAxis, double minAxis)
+    {
+        double exponent = static_cast<double>(floor(log10(maxAxis - minAxis)) - 3);
+        double precision = pow(10, exponent);
+        return precision;
+    }   
 
     void RenderMain::SetPointRadius(float radius)
     {
@@ -297,20 +314,19 @@ namespace GraphControl::DX
                         }
 
                         int formulaId = -1;
-                        float nearestPointLocationX, nearestPointLocationY;
-                        double nearestPointValueX, nearestPointValueY, rhoValueOut, thetaValueOut, tValueOut;
-
+                        float nearestPointLocationX, nearestPointLocationY, nearestPointValueX, nearestPointValueY;                                                                        
+                        double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
+                        renderer->GetDisplayRanges(xAxisMin, xAxisMax, yAxisMin, yAxisMax);
+                        double precision = this->GetPrecision(xAxisMax, xAxisMin);   
                         if (renderer->GetClosePointData(
                                 trackPoint.X,
                                 trackPoint.Y,
+                                precision,
                                 formulaId,
                                 nearestPointLocationX,
                                 nearestPointLocationY,
                                 nearestPointValueX,
-                                nearestPointValueY,
-                                rhoValueOut,
-                                thetaValueOut,
-                                tValueOut)
+                                nearestPointValueY)
                             == S_OK)
                         {
                             if (!isnan(nearestPointLocationX) && !isnan(nearestPointLocationY))

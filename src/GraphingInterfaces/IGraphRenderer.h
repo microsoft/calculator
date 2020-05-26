@@ -24,16 +24,14 @@ namespace Graphing::Renderer
 
 		virtual HRESULT DrawD2D1(ID2D1Factory* pDirect2dFactory, ID2D1RenderTarget* pRenderTarget, bool& hasSomeMissingDataOut) = 0;
         virtual HRESULT GetClosePointData(
-            double inScreenPointX,
-            double inScreenPointY,
+            float inScreenPointX,
+            float inScreenPointY,
+            double precision,
             int& formulaIdOut,
             float& xScreenPointOut,
             float& yScreenPointOut,
-            double& xValueOut,
-            double& yValueOut,
-            double& rhoValueOut,
-            double& thetaValueOut,
-            double& tValueOut) = 0;
+            float& xValueOut,
+            float& yValueOut) = 0;
 
 		virtual HRESULT ScaleRange(double centerX, double centerY, double scale) = 0;
 		virtual HRESULT ChangeRange(ChangeRangeAction action) = 0;
@@ -43,6 +41,6 @@ namespace Graphing::Renderer
 		virtual HRESULT SetDisplayRanges(double xMin, double xMax, double yMin, double yMax) = 0;
 
 		virtual HRESULT GetBitmap(std::shared_ptr<Graphing::IBitmap>& bitmapOut, bool& hasSomeMissingDataOut) = 0;
-
+        virtual HRESULT PrepareGraph() = 0;
 	};
 }
