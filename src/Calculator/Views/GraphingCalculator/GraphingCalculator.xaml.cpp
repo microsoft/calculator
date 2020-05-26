@@ -846,8 +846,9 @@ void GraphingCalculator::GraphViewButton_Click(Object ^ sender, RoutedEventArgs 
     }
     else
     {
-        GraphingControl->ResetGrid();
         announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphViewAutomaticBestFitAnnouncement");
+        announcementText += AppResourceProvider::GetInstance()->GetResourceString(L"GridResetAnnouncement");
+        GraphingControl->ResetGrid();
     }
 
     auto announcement = CalculatorAnnouncement::GetGraphViewBestFitChangedAnnouncement(announcementText);

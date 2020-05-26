@@ -172,7 +172,9 @@
                        Style="{StaticResource SubTitleTextBoxStyle}"
                        AutomationProperties.HeadingLevel="Level2"/>
 
-            <StackPanel AutomationProperties.LabeledBy="{Binding ElementName=UnitsHeading}" Orientation="Horizontal">
+            <StackPanel AutomationProperties.LabeledBy="{Binding ElementName=UnitsHeading}"
+                        CornerRadius="4"
+                        Orientation="Horizontal">
                 <RadioButton x:Name="Radians"
                              x:Uid="TrigModeRadians"
                              Style="{StaticResource TrigUnitsRadioButtonStyle}"

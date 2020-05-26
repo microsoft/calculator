@@ -486,9 +486,6 @@
       <Filter>Views</Filter>
     </Page>
     <Page Include="AboutFlyout.xaml" />
-    <Page Include="Views\CalculatorProgrammerDisplayPanel.xaml">
-      <Filter>Views</Filter>
-    </Page>
     <Page Include="Views\CalculatorProgrammerBitFlipPanel.xaml">
       <Filter>Views</Filter>
     </Page>
@@ -524,6 +521,9 @@
     </Page>
     <Page Include="Controls\PreviewTagControl.xaml" />
     <Page Include="EquationStylePanelControl.xaml" />
+    <Page Include="Views\CalculatorProgrammerDisplayPanel.xaml">
+      <Filter>Views\StateTriggers</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">
@@ -1579,6 +1579,8 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>
