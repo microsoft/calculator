@@ -4725,7 +4725,7 @@
   </data>
   <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Function Anaylsis</value>
-    <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
+    <comment>Screen reader prompt for the function analysis grid</comment>
   </data>
   <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Graph Options</value>
