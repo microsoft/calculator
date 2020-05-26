@@ -2305,6 +2305,10 @@
     <value>Microsoft సాఫ్ట్ వేర్ లైసెన్స్ షరతులు</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
+  <data name="PreviewTag.Text" xml:space="preserve">
+    <value>పరిదృశ్యం</value>
+    <comment>Label displayed next to upcoming features</comment>
+  </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Microsoft గోప్యతా ప్రకటన</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>

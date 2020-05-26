@@ -2305,6 +2305,10 @@
     <value>Лиценцни услови за софтверот на Microsoft</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
+  <data name="PreviewTag.Text" xml:space="preserve">
+    <value>Преглед</value>
+    <comment>Label displayed next to upcoming features</comment>
+  </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Изјава на Microsoft за заштита на личните податоци</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
