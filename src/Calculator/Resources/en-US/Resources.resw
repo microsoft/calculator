@@ -4729,6 +4729,6 @@
   </data>
   <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Graph Options</value>
-    <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
+    <comment>Screen reader prompt for the graph options panel</comment>
   </data>
 </root>
