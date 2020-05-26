@@ -2305,6 +2305,10 @@
     <value>Microsoft மென்பொருள் உரிம விதிமுறைகள்</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
+  <data name="PreviewTag.Text" xml:space="preserve">
+    <value>முன்னோட்டம்</value>
+    <comment>Label displayed next to upcoming features</comment>
+  </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Microsoft தனியுரிமை அறிக்கை</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>

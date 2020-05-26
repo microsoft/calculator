@@ -2305,6 +2305,10 @@
     <value>Licensvilkår for Microsoft-software</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
+  <data name="PreviewTag.Text" xml:space="preserve">
+    <value>Preview</value>
+    <comment>Label displayed next to upcoming features</comment>
+  </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Microsofts erklæring om beskyttelse af personlige oplysninger</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
