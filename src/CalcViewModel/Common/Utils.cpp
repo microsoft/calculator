@@ -72,67 +72,6 @@ bool Utils::IsLastCharacterTarget(_In_ wstring const& input, _In_ wchar_t target
     return !input.empty() && input.back() == target;
 }
 
-void Utils::SerializeCommandsAndTokens(
-    _In_ shared_ptr<vector<pair<wstring, int>>> const& tokens,
-    _In_ shared_ptr<vector<shared_ptr<IExpressionCommand>>> const& commands,
-    DataWriter ^ writer)
-{
-    // Save the size of the commands vector
-    writer->WriteUInt32(static_cast<unsigned int>(commands->size()));
-
-    SerializeCommandVisitor cmdVisitor(writer);
-    for (const auto& exprCmd : *commands)
-    {
-        CalculationManager::CommandType commandType = exprCmd->GetCommandType();
-        writer->WriteInt32(static_cast<int>(commandType));
-        exprCmd->Accept(cmdVisitor);
-    }
-
-    writer->WriteUInt32(static_cast<unsigned int>(tokens->size()));
-
-    for (const auto& eachToken : *tokens)
-    {
-        auto stringData = ref new Platform::String(eachToken.first.c_str());
-        auto intData = eachToken.second;
-        writer->WriteUInt32(writer->MeasureString(stringData));
-        writer->WriteString(stringData);
-        writer->WriteInt32(intData);
-    }
-}
-
-const shared_ptr<vector<shared_ptr<IExpressionCommand>>> Utils::DeserializeCommands(DataReader ^ reader)
-{
-    auto commandVector = make_shared<vector<shared_ptr<IExpressionCommand>>>();
-    auto commandVectorSize = reader->ReadUInt32();
-
-    CommandDeserializer cmdDeserializer(reader);
-    for (unsigned int i = 0; i < commandVectorSize; ++i)
-    {
-        auto commandTypeInt = reader->ReadInt32();
-        CalculationManager::CommandType commandType = static_cast<CalculationManager::CommandType>(commandTypeInt);
-        shared_ptr<IExpressionCommand> exprCmd = cmdDeserializer.Deserialize(commandType);
-        commandVector->push_back(exprCmd);
-    }
-
-    return commandVector;
-}
-
-const shared_ptr<vector<pair<wstring, int>>> Utils::DeserializeTokens(DataReader ^ reader)
-{
-    auto tokenVector = make_shared<vector<pair<wstring, int>>>();
-    auto tokensSize = reader->ReadUInt32();
-
-    for (unsigned int i = 0; i < tokensSize; ++i)
-    {
-        auto stringDataLen = reader->ReadUInt32();
-        auto stringData = reader->ReadString(stringDataLen);
-        auto intData = reader->ReadInt32();
-        tokenVector->emplace_back(stringData->Data(), intData);
-    }
-
-    return tokenVector;
-}
-
 DateTime Utils::GetUniversalSystemTime()
 {
     SYSTEMTIME sysTime = {};

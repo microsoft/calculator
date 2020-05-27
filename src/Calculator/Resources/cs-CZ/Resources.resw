@@ -2305,6 +2305,10 @@
     <value>Licenční podmínky pro software společnosti Microsoft</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
+  <data name="PreviewTag.Text" xml:space="preserve">
+    <value>Preview</value>
+    <comment>Label displayed next to upcoming features</comment>
+  </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Prohlášení společnosti Microsoft o zásadách ochrany osobních údajů</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>

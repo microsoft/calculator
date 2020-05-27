@@ -2305,6 +2305,10 @@
     <value>Умови ліцензії на програмний продукт Microsoft</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
+  <data name="PreviewTag.Text" xml:space="preserve">
+    <value>Попередній перегляд</value>
+    <comment>Label displayed next to upcoming features</comment>
+  </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Декларація корпорації Майкрософт про конфіденційність</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>

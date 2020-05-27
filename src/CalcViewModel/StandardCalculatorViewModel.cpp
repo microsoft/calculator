@@ -130,7 +130,6 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     IsOperandEnabled = true;
     IsNegateEnabled = true;
     IsDecimalEnabled = true;
-    AreHistoryShortcutsEnabled = true;
     AreProgrammerRadixOperatorsEnabled = false;
 }
 
@@ -1653,66 +1652,6 @@ void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)
         }
         operandCommand->SetCommands(commands);
     }
-}
-
-void StandardCalculatorViewModel::UpdateCommandsInRecordingMode()
-{
-    shared_ptr<vector<int>> commands = make_shared<vector<int>>();
-    bool isDecimal = false;
-    bool isNegative = false;
-    bool isExpMode = false;
-    bool ePlusMode = false;
-    bool eMinusMode = false;
-
-    for (const auto savedCommand : m_standardCalculatorManager.GetSavedCommands())
-    {
-        const Command val = static_cast<Command>(savedCommand);
-        if (val == Command::CommandSIGN)
-        {
-            isNegative = true;
-            continue;
-        }
-        else if ((val >= Command::Command0 && val <= Command::Command9))
-        {
-        }
-        else if (val == Command::CommandPNT)
-        {
-            isDecimal = true;
-        }
-        else if (val == Command::CommandEXP)
-        {
-            isExpMode = true;
-        }
-        else if (isExpMode && !ePlusMode && (val == Command::CommandMPLUS))
-        {
-            ePlusMode = true;
-            continue;
-        }
-        else if (isExpMode && !eMinusMode && (val == Command::CommandMMINUS))
-        {
-            eMinusMode = true;
-            continue;
-        }
-        else
-        {
-            // Reset all vars
-            isDecimal = false;
-            isNegative = false;
-            isExpMode = false;
-            ePlusMode = false;
-            eMinusMode = false;
-            commands->clear();
-            continue;
-        }
-        commands->push_back(static_cast<int>(val));
-    }
-
-    if (!commands->empty())
-    {
-        shared_ptr<IOpndCommand> sp = make_shared<COpndCommand>(commands, isNegative, isDecimal, isExpMode);
-        m_commands->push_back(sp);
-    }
-    Recalculate();
 }
 
 void StandardCalculatorViewModel::OnMaxDigitsReached()

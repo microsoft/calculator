@@ -2305,6 +2305,10 @@
     <value>Microsoft ಸಾಫ್ಟ್‌ವೇರ್ ಪರವಾನಗಿ ನಿಯಮಗಳು</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
+  <data name="PreviewTag.Text" xml:space="preserve">
+    <value>ಮುನ್ನೋಟ</value>
+    <comment>Label displayed next to upcoming features</comment>
+  </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Microsoft ಗೌಪ್ಯತೆ ಹೇಳಿಕೆ</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>

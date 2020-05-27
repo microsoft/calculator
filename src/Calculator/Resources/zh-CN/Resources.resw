@@ -2305,6 +2305,10 @@
     <value>Microsoft 软件许可条款</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
+  <data name="PreviewTag.Text" xml:space="preserve">
+    <value>预览</value>
+    <comment>Label displayed next to upcoming features</comment>
+  </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Microsoft 隐私声明</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>

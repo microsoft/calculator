@@ -10,15 +10,10 @@ using namespace std;
 using namespace CalcEngine;
 
 static constexpr size_t MAX_HISTORY_ITEMS = 20;
-static constexpr size_t SERIALIZED_NUMBER_MINSIZE = 3;
 
 #ifndef _MSC_VER
 #define __pragma(x)
 #endif
-
-// Converts Memory Command enum value to unsigned char,
-// while ignoring Warning C4309: 'conversion' : truncation of constant value
-#define MEMORY_COMMAND_TO_UNSIGNED_CHAR(c) __pragma(warning(push)) __pragma(warning(disable : 4309)) static_cast<unsigned char>(c) __pragma(warning(pop))
 
 namespace CalculationManager
 {
@@ -30,7 +25,6 @@ namespace CalculationManager
         , m_persistedPrimaryValue()
         , m_isExponentialFormat(false)
         , m_currentDegreeMode(Command::CommandNULL)
-        , m_savedDegreeMode(Command::CommandDEG)
         , m_pStdHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
         , m_pSciHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
         , m_pHistory(nullptr)
@@ -132,7 +126,6 @@ namespace CalculationManager
     /// </summary>
     void CalculatorManager::Reset(bool clearMemory /* = true*/)
     {
-        m_savedCommands.clear();
         SetStandardMode();
 
         if (m_scientificCalculatorEngine)
@@ -239,13 +232,6 @@ namespace CalculationManager
                 m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(command));
             }
 
-            m_savedCommands.clear(); // Clear the previous command history
-
-            if (command != Command::CommandEQU && command != Command::CommandCLEAR)
-            {
-                m_savedCommands.push_back(MapCommandForSerialize(command));
-            }
-            m_savedDegreeMode = m_currentDegreeMode;
             InputChanged();
             return;
         }
@@ -253,11 +239,6 @@ namespace CalculationManager
         if (command == Command::CommandDEG || command == Command::CommandRAD || command == Command::CommandGRAD)
         {
             m_currentDegreeMode = command;
-        }
-
-        if (command != Command::CommandFE)
-        {
-            m_savedCommands.push_back(MapCommandForSerialize(command)); // Save the commands in the m_savedCommands
         }
 
         switch (command)
@@ -326,37 +307,6 @@ namespace CalculationManager
     }
 
     /// <summary>
-    /// Convert Command to unsigned char.
-    /// Since some Commands are higher than 255, they are saved after subtracting 255
-    /// The smallest Command is CommandSIGN = 80, thus, subtracted value does not overlap with other values.
-    /// </summary>
-    /// <param name="command">Enum Command</command>
-    unsigned char CalculatorManager::MapCommandForSerialize(Command command)
-    {
-        unsigned int commandToSave = static_cast<unsigned int>(command);
-        if (commandToSave > UCHAR_MAX)
-        {
-            commandToSave -= UCHAR_MAX;
-        }
-        return static_cast<unsigned char>(commandToSave);
-    }
-
-    /// <summary>
-    /// Convert Command to unsigned int
-    /// The command that is smaller than 80, CommandSIGN, can be converted back to original value by adding 255.
-    /// </summary>
-    /// <param name="command">unsigned char value represent the saved command</command>
-    unsigned int CalculatorManager::MapCommandForDeSerialize(unsigned char command)
-    {
-        unsigned int commandToLoad = command;
-        if (command < static_cast<unsigned int>(Command::CommandSIGN))
-        {
-            commandToLoad += UCHAR_MAX;
-        }
-        return commandToLoad;
-    }
-
-    /// <summary>
     /// Load the persisted value that is saved in memory of CalcEngine
     /// </summary>
     void CalculatorManager::LoadPersistedPrimaryValue()
@@ -372,8 +322,6 @@ namespace CalculationManager
     /// </summary>
     void CalculatorManager::MemorizeNumber()
     {
-        m_savedCommands.push_back(MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizeNumber));
-
         if (m_currentCalculatorEngine->FInErrorState())
         {
             return;
@@ -401,8 +349,6 @@ namespace CalculationManager
     /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberLoad(_In_ unsigned int indexOfMemory)
     {
-        SaveMemoryCommand(MemoryCommand::MemorizedNumberLoad, indexOfMemory);
-
         if (m_currentCalculatorEngine->FInErrorState())
         {
             return;
@@ -421,8 +367,6 @@ namespace CalculationManager
     /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberAdd(_In_ unsigned int indexOfMemory)
     {
-        SaveMemoryCommand(MemoryCommand::MemorizedNumberAdd, indexOfMemory);
-
         if (m_currentCalculatorEngine->FInErrorState())
         {
             return;
@@ -449,7 +393,6 @@ namespace CalculationManager
     {
         if (indexOfMemory < m_memorizedNumbers.size())
         {
-            SaveMemoryCommand(MemoryCommand::MemorizedNumberClear, indexOfMemory);
             m_memorizedNumbers.erase(m_memorizedNumbers.begin() + indexOfMemory);
         }
     }
@@ -462,8 +405,6 @@ namespace CalculationManager
     /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberSubtract(_In_ unsigned int indexOfMemory)
     {
-        SaveMemoryCommand(MemoryCommand::MemorizedNumberSubtract, indexOfMemory);
-
         if (m_currentCalculatorEngine->FInErrorState())
         {
             return;
@@ -495,7 +436,6 @@ namespace CalculationManager
     /// </summary>
     void CalculatorManager::MemorizedNumberClearAll()
     {
-        m_savedCommands.push_back(MEMORY_COMMAND_TO_UNSIGNED_CHAR(MemoryCommand::MemorizedNumberClearAll));
         m_memorizedNumbers.clear();
 
         m_currentCalculatorEngine->ProcessCommand(IDC_MCLEAR);
@@ -535,16 +475,6 @@ namespace CalculationManager
         {
             m_memorizedNumbers.at(indexOfMemory) = *memoryObject;
         }
-    }
-
-    void CalculatorManager::SaveMemoryCommand(_In_ MemoryCommand command, _In_ unsigned int indexOfMemory)
-    {
-        m_savedCommands.push_back(MEMORY_COMMAND_TO_UNSIGNED_CHAR(command));
-        if (indexOfMemory > UCHAR_MAX)
-        {
-            throw invalid_argument("Unexpected value. IndexOfMemory is bigger than the biggest unsigned char");
-        }
-        m_savedCommands.push_back(static_cast<unsigned char>(indexOfMemory));
     }
 
     vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems()
@@ -622,30 +552,6 @@ namespace CalculationManager
             m_currentDegreeMode = Command::CommandDEG;
         }
         return m_currentDegreeMode;
-    }
-
-    void CalculatorManager::SetHistory(_In_ CalculatorMode eMode, _In_ vector<shared_ptr<HISTORYITEM>> const& history)
-    {
-        CalculatorHistory* pHistory = nullptr;
-
-        switch (eMode)
-        {
-        case CalculatorMode::Standard:
-            pHistory = m_pStdHistory.get();
-            break;
-        case CalculatorMode::Scientific:
-            pHistory = m_pSciHistory.get();
-            break;
-        }
-
-        if (pHistory)
-        {
-            pHistory->ClearHistory();
-            for (auto const& historyItem : history)
-            {
-                pHistory->AddItem(historyItem);
-            }
-        }
     }
 
     wstring CalculatorManager::GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix)

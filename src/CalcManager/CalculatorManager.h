@@ -44,6 +44,7 @@ namespace CalculationManager
     class CalculatorManager final : public ICalcDisplay
     {
     private:
+        static const unsigned int m_maximumMemorySize = 100;
         ICalcDisplay* const m_displayCallback;
         CCalcEngine* m_currentCalculatorEngine;
         std::unique_ptr<CCalcEngine> m_scientificCalculatorEngine;
@@ -54,21 +55,8 @@ namespace CalculationManager
 
         std::vector<CalcEngine::Rational> m_memorizedNumbers;
         CalcEngine::Rational m_persistedPrimaryValue;
-
         bool m_isExponentialFormat;
-
-        static const unsigned int m_maximumMemorySize = 100;
-
-        // For persistence
-        std::vector<unsigned char> m_savedCommands;
-        std::vector<long> m_savedPrimaryValue;
-        std::vector<long> m_currentSerializedMemory;
         Command m_currentDegreeMode;
-        Command m_savedDegreeMode;
-        unsigned char MapCommandForSerialize(Command command);
-        unsigned int MapCommandForDeSerialize(unsigned char command);
-
-        void SaveMemoryCommand(_In_ MemoryCommand command, _In_ unsigned int indexOfMemory);
 
         void MemorizedNumberSelect(_In_ unsigned int);
         void MemorizedNumberChanged(_In_ unsigned int);
@@ -112,10 +100,6 @@ namespace CalculationManager
 
         bool IsEngineRecording();
         bool IsInputEmpty();
-        const std::vector<unsigned char>& GetSavedCommands() const
-        {
-            return m_savedCommands;
-        }
         void SetRadix(RadixType iRadixType);
         void SetMemorizedNumbersString();
         std::wstring GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix);
@@ -133,7 +117,6 @@ namespace CalculationManager
             return m_pHistory->MaxHistorySize();
         }
         CalculationManager::Command GetCurrentDegreeMode();
-        void SetHistory(_In_ CalculatorMode eMode, _In_ std::vector<std::shared_ptr<HISTORYITEM>> const& history);
         void SetInHistoryItemLoadMode(_In_ bool isHistoryItemLoadMode);
     };
 }

@@ -386,13 +386,6 @@ namespace Utils
     double GetDoubleFromWstring(std::wstring input);
     int GetWindowId();
     void RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Windows::UI::Core::CoreDispatcher ^ currentDispatcher);
-    void SerializeCommandsAndTokens(
-        _In_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
-        _In_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands,
-        Windows::Storage::Streams::DataWriter ^ writer);
-
-    const std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> DeserializeCommands(Windows::Storage::Streams::DataReader ^ reader);
-    const std::shared_ptr<std::vector<std::pair<std::wstring, int>>> DeserializeTokens(Windows::Storage::Streams::DataReader ^ reader);
 
     Windows::Foundation::DateTime GetUniversalSystemTime();
     bool IsDateTimeOlderThan(Windows::Foundation::DateTime dateTime, const long long duration);
