@@ -143,7 +143,7 @@ namespace GraphControl::DX
         void OnCompositionScaleChanged(Windows::UI::Xaml::Controls::SwapChainPanel ^ sender, Object ^ args);
         void OnSizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
         
-        double GetPrecision(double maxAxis, double minAxis);
+        double GetPrecision(const double maxAxis, const double minAxis);
     private:
         DX::DeviceResources m_deviceResources;
         NearestPointRenderer m_nearestPointRenderer;

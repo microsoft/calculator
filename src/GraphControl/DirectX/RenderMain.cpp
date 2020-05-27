@@ -191,7 +191,7 @@ namespace GraphControl::DX
     /// <param name="maxAxis">max axis</param>
     /// <param name="minAxis">min axis</param>
     /// <returns>the precision value</returns>
-    double RenderMain::GetPrecision(double maxAxis, double minAxis)
+    double RenderMain::GetPrecision(const double maxAxis, const double minAxis)
     {
         double exponent = static_cast<double>(floor(log10(maxAxis - minAxis)) - 3);
         double precision = pow(10, exponent);
