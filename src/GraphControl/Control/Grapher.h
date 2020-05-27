@@ -247,13 +247,14 @@ public enum class GraphViewChangedReason
             }
         }
 
-        void SetDisplayRanges(double xMin, double xMax, double yMin, double yMax)
+        void SetDisplayRanges(double xMin, double xMax, double yMin, double yMax, bool shouldReplot)
         {
             try
             {
                 if (auto render = m_graph->GetRenderer())
                 {
                     render->SetDisplayRanges(xMin, xMax, yMin, yMax);
+                    m_replot = shouldReplot;
                     if (m_renderMain)
                     {
                         m_renderMain->RunRenderPass();
@@ -351,6 +352,7 @@ public enum class GraphViewChangedReason
         Windows::UI::Core::CoreCursor ^ m_cachedCursor;
         int m_errorType;
         int m_errorCode;
+        bool m_replot;
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();
