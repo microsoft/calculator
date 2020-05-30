@@ -896,7 +896,7 @@ void UnitConverter::Calculate()
             else
             {
                 const unsigned int currentNumberSignificantDigits = GetNumberDigits(m_currentDisplay);
-                unsigned int precision;
+                int precision;
                 if (abs(returnValue) < OPTIMALDECIMALALLOWED)
                 {
                     precision = MAXIMUMDIGITSALLOWED;

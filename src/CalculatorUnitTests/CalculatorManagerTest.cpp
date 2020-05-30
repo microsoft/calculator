@@ -970,6 +970,10 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(digitsCount, 15);
         digitsCount = GetNumberDigitsWholeNumberPart(324328412837382.232213214324234);
         VERIFY_ARE_EQUAL(digitsCount, 15);
+        digitsCount = GetNumberDigitsWholeNumberPart(0.032);
+        VERIFY_ARE_EQUAL(digitsCount, 1);
+        digitsCount = GetNumberDigitsWholeNumberPart(0.00000000000000000001);
+        VERIFY_ARE_EQUAL(digitsCount, 1);
     }
 
     void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_RoundSignificantDigits()
