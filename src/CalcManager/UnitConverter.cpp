@@ -24,7 +24,7 @@ static constexpr uint32_t OPTIMALDIGITSALLOWED = 7U;
 static constexpr wchar_t LEFTESCAPECHAR = L'{';
 static constexpr wchar_t RIGHTESCAPECHAR = L'}';
 
-static const double OPTIMALDECIMALALLOWED = 1e-6; // pow(10, -1 * (OPTIMALDIGITSALLOWED - 1));
+static const double OPTIMALDECIMALALLOWED = 1e-6;  // pow(10, -1 * (OPTIMALDIGITSALLOWED - 1));
 static const double MINIMUMDECIMALALLOWED = 1e-14; // pow(10, -1 * (MAXIMUMDIGITSALLOWED - 1));
 
 unordered_map<wchar_t, wstring> quoteConversions;
@@ -896,7 +896,7 @@ void UnitConverter::Calculate()
             else
             {
                 const unsigned int currentNumberSignificantDigits = GetNumberDigits(m_currentDisplay);
-                int precision;
+                unsigned int precision;
                 if (abs(returnValue) < OPTIMALDECIMALALLOWED)
                 {
                     precision = MAXIMUMDIGITSALLOWED;
@@ -905,7 +905,8 @@ void UnitConverter::Calculate()
                 {
                     // Fewer digits are needed following the decimal if the number is large,
                     // we calculate the number of decimals necessary based on the number of digits in the integer part.
-                    precision = max(0U, max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits)) - numPreDecimal);
+                    auto numberDigits = max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits));
+                    precision = numberDigits > numPreDecimal ? numberDigits - numPreDecimal : 0;
                 }
 
                 m_returnDisplay = RoundSignificantDigits(returnValue, precision);

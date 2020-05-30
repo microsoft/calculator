@@ -57,8 +57,8 @@ namespace CalcManager::NumberFormattingUtils
     /// Rounds the given double to the given number of significant digits
     /// </summary>
     /// <param name="num">input double</param>
-    /// <param name="numSignificant">int number of significant digits to round to</param>
-    wstring RoundSignificantDigits(double num, int numSignificant)
+    /// <param name="numSignificant">unsigned int number of significant digits to round to</param>
+    wstring RoundSignificantDigits(double num, unsigned int numSignificant)
     {
         wstringstream out(wstringstream::out);
         out << fixed;
