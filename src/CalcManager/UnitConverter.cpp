@@ -905,7 +905,8 @@ void UnitConverter::Calculate()
                 {
                     // Fewer digits are needed following the decimal if the number is large,
                     // we calculate the number of decimals necessary based on the number of digits in the integer part.
-                    precision = max(0U, max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits)) - numPreDecimal);
+                    auto numberDigits = max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits));
+                    precision = numberDigits > numPreDecimal ? numberDigits - numPreDecimal : 0;
                 }
 
                 m_returnDisplay = RoundSignificantDigits(returnValue, precision);
