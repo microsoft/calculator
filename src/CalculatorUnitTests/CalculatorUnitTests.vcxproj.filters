@@ -80,6 +80,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Calculator\WindowsDev_TemporaryKey.pfx" />
+    <None Include="WindowsDev_TemporaryKey.pfx" />
   </ItemGroup>
 </Project>
