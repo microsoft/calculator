@@ -3269,11 +3269,15 @@
   </data>
   <data name="GraphViewAutomaticBestFitAnnouncement" xml:space="preserve">
     <value>התאמה מיטבית אוטומטית</value>
-    <comment>Announcement used in Graphing Calculator when button is clicked and automatic best fit is set</comment>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set</comment>
   </data>
   <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
     <value>התאמה ידנית</value>
-    <comment>Announcement used in Graphing Calculator when button is clicked and manual adjustment is set</comment>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and manual adjustment is set</comment>
+  </data>
+  <data name="GridResetAnnouncement" xml:space="preserve">
+    <value>תצוגת גרף אופסה</value>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set, resetting the graph</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>הגדל תצוגה (מקש Ctrl + מקש חיבור ('+'))</value>
@@ -3807,12 +3811,12 @@
     <comment>Y minimum value header</comment>
   </data>
   <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>אפשרויות רשת</value>
-    <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
+    <value>אפשרויות גרף</value>
+    <comment>This is the tooltip text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>אפשרויות רשת</value>
-    <comment>This is the automation name text for the grid options button in Graphing Calculator</comment>
+    <value>אפשרויות גרף</value>
+    <comment>This is the automation name text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="GraphOptionsHeading.Text" xml:space="preserve">
     <value>אפשרויות גרף</value>
@@ -4077,5 +4081,13 @@
   <data name="submitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>שלח</value>
     <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ניתוח פונקציה</value>
+    <comment>Screen reader prompt for the function analysis grid</comment>
+  </data>
+  <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>אפשרויות גרף</value>
+    <comment>Screen reader prompt for the graph options panel</comment>
   </data>
 </root>
