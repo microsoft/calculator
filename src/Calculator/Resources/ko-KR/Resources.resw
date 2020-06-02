@@ -3265,11 +3265,15 @@
   </data>
   <data name="GraphViewAutomaticBestFitAnnouncement" xml:space="preserve">
     <value>자동 맞춤</value>
-    <comment>Announcement used in Graphing Calculator when button is clicked and automatic best fit is set</comment>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set</comment>
   </data>
   <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
     <value>수동 조정</value>
-    <comment>Announcement used in Graphing Calculator when button is clicked and manual adjustment is set</comment>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and manual adjustment is set</comment>
+  </data>
+  <data name="GridResetAnnouncement" xml:space="preserve">
+    <value>그래프 보기가 다시 설정되었습니다.</value>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set, resetting the graph</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>확대(Ctrl + 더하기)</value>
@@ -3563,15 +3567,15 @@
     <comment>Error that occurs during graphing with a decimal point without digits</comment>
   </data>
   <data name="UnexpectedEndOfExpression" xml:space="preserve">
-    <value>final</value>
+    <value>예기치 않은 식 종료</value>
     <comment>Error that occurs during graphing when the expression ends unexpectedly. Ex: 3-4*</comment>
   </data>
   <data name="UnexpectedToken" xml:space="preserve">
-    <value>final</value>
+    <value>식에 예기치 않은 문자가 있습니다</value>
     <comment>Error that occurs during graphing when there is an unexpected token.</comment>
   </data>
   <data name="InvalidToken" xml:space="preserve">
-    <value>final</value>
+    <value>식에 잘못된 문자가 있습니다.</value>
     <comment>Error that occurs during graphing when there is an invalid token.</comment>
   </data>
   <data name="TooManyEquals" xml:space="preserve">
@@ -3583,11 +3587,11 @@
     <comment>Error that occurs during graphing when the equation is missing x or y.</comment>
   </data>
   <data name="InvalidEquationSyntax" xml:space="preserve">
-    <value>final</value>
+    <value>잘못된 식</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
     </data>
   <data name="EmptyExpression" xml:space="preserve">
-    <value>final</value>
+    <value>식이 비어 있습니다</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
   </data>
   <data name="EqualWithoutEquation" xml:space="preserve">
@@ -3803,12 +3807,12 @@
     <comment>Y minimum value header</comment>
   </data>
   <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>눈금 옵션</value>
-    <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
+    <value>그래프 옵션</value>
+    <comment>This is the tooltip text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>눈금 옵션</value>
-    <comment>This is the automation name text for the grid options button in Graphing Calculator</comment>
+    <value>그래프 옵션</value>
+    <comment>This is the automation name text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="GraphOptionsHeading.Text" xml:space="preserve">
     <value>그래프 옵션</value>
@@ -4073,5 +4077,13 @@
   <data name="submitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>제출</value>
     <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>기능 분석</value>
+    <comment>Screen reader prompt for the function analysis grid</comment>
+  </data>
+  <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>그래프 옵션</value>
+    <comment>Screen reader prompt for the graph options panel</comment>
   </data>
 </root>
