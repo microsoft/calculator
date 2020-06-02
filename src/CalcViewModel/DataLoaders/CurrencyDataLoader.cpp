@@ -220,14 +220,13 @@ void CurrencyDataLoader::LoadData()
 };
 #pragma optimize("", on)
 
-vector<UCM::Category> CurrencyDataLoader::LoadOrderedCategories()
+vector<UCM::Category> CurrencyDataLoader::GetOrderedCategories()
 {
     // This function should not be called
     // The model will use the categories from UnitConverterDataLoader
     return vector<UCM::Category>();
 }
-
-vector<UCM::Unit> CurrencyDataLoader::LoadOrderedUnits(const UCM::Category& /*category*/)
+vector<UCM::Unit> CurrencyDataLoader::GetOrderedUnits(const UCM::Category& /*category*/)
 {
     lock_guard<mutex> lock(m_currencyUnitsMutex);
     return m_currencyUnits;

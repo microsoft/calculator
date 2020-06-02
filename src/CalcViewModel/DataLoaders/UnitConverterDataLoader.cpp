@@ -22,18 +22,18 @@ UnitConverterDataLoader::UnitConverterDataLoader(GeographicRegion ^ region)
     : m_currentRegionCode(region->CodeTwoLetter)
 {
     m_categoryList = make_shared<vector<UCM::Category>>();
-    m_categoryToUnits = make_shared<UCM::CategoryToUnitVectorMap>();
+    m_categoryIDToUnitCollectionMap = make_shared<UCM::CategoryToUnitVectorMap>();
     m_ratioMap = make_shared<UCM::UnitToUnitToConversionDataMap>();
 }
 
-vector<UCM::Category> UnitConverterDataLoader::LoadOrderedCategories()
+vector<UCM::Category> UnitConverterDataLoader::GetOrderedCategories()
 {
     return *m_categoryList;
 }
 
-vector<UCM::Unit> UnitConverterDataLoader::LoadOrderedUnits(const UCM::Category& category)
+vector<UCM::Unit> UnitConverterDataLoader::GetOrderedUnits(const UCM::Category& category)
 {
-    return m_categoryToUnits->at(category);
+    return this->m_categoryIDToUnitCollectionMap->at(category.id);
 }
 
 unordered_map<UCM::Unit, UCM::ConversionData, UCM::UnitHash> UnitConverterDataLoader::LoadOrderedRatios(const UCM::Unit& unit)
@@ -75,8 +75,8 @@ void UnitConverterDataLoader::LoadData()
     GetConversionData(categoryToUnitConversionDataMap);
     GetExplicitConversionData(explicitConversionData); // This is needed for temperature conversions
 
-    m_categoryToUnits->clear();
-    m_ratioMap->clear();
+    this->m_categoryIDToUnitCollectionMap->clear();
+    this->m_ratioMap->clear();
     for (UCM::Category objectCategory : *m_categoryList)
     {
         ViewMode categoryViewMode = NavCategory::Deserialize(objectCategory.id);
@@ -86,7 +86,7 @@ void UnitConverterDataLoader::LoadData()
             // Currency is an ordered category but we do not want to process it here
             // because this function is not thread-safe and currency data is asynchronously
             // loaded.
-            m_categoryToUnits->insert(pair<UCM::Category, std::vector<UCM::Unit>>(objectCategory, {}));
+            this->m_categoryIDToUnitCollectionMap->insert(pair<int, std::vector<UCM::Unit>>(objectCategory.id, {}));
             continue;
         }
 
@@ -103,7 +103,7 @@ void UnitConverterDataLoader::LoadData()
         }
 
         // Save units per category
-        m_categoryToUnits->insert(pair<UCM::Category, std::vector<UCM::Unit>>(objectCategory, unitList));
+        this->m_categoryIDToUnitCollectionMap->insert(pair<int, std::vector<UCM::Unit>>(objectCategory.id, unitList));
 
         // For each unit, populate the conversion data
         for (UCM::Unit unit : unitList)

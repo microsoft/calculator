@@ -32,7 +32,7 @@ namespace CalculatorApp
             int order;
         };
 
-        struct UnitData
+         struct UnitData
         {
             CalculatorApp::Common::ViewMode categoryId;
             int unitId;
@@ -71,8 +71,8 @@ namespace CalculatorApp
         private:
             // IConverterDataLoader
             void LoadData() override;
-            std::vector<UnitConversionManager::Category> LoadOrderedCategories() override;
-            std::vector<UnitConversionManager::Unit> LoadOrderedUnits(const UnitConversionManager::Category& c) override;
+            std::vector<UnitConversionManager::Category> GetOrderedCategories() override;
+            std::vector<UnitConversionManager::Unit> GetOrderedUnits(const UnitConversionManager::Category& c) override;
             std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>
             LoadOrderedRatios(const UnitConversionManager::Unit& unit) override;
             bool SupportsCategory(const UnitConversionManager::Category& target) override;
@@ -87,7 +87,7 @@ namespace CalculatorApp
             std::wstring GetLocalizedStringName(_In_ Platform::String ^ stringId);
 
             std::shared_ptr<std::vector<UnitConversionManager::Category>> m_categoryList;
-            std::shared_ptr<UnitConversionManager::CategoryToUnitVectorMap> m_categoryToUnits;
+            std::shared_ptr<UnitConversionManager::CategoryToUnitVectorMap> m_categoryIDToUnitCollectionMap;
             std::shared_ptr<UnitConversionManager::UnitToUnitToConversionDataMap> m_ratioMap;
             Platform::String ^ m_currentRegionCode;
         };
