@@ -16,7 +16,7 @@ steps:
     displayName: NuGet restore src/Calculator.sln
     inputs:
       command: custom
-      arguments: restore src/Calculator.sln -Verbosity Detailed -NonInteractive
+      arguments: restore src/Calculator.sln -Verbosity Detailed
 
   - task: PowerShell@2
     displayName: Set version number in AppxManifest
