@@ -120,11 +120,20 @@ namespace GraphControl
         {
             if (auto renderer = m_graph->GetRenderer())
             {
-                if (SUCCEEDED(renderer->ResetRange()))
+                if (m_replot)
+                {
+                    IsKeepCurrentView = false;
+                    m_replot = false;
+                    TryPlotGraph(false, false);
+
+                }
+                else if (SUCCEEDED(renderer->ResetRange()))
                 {
                     m_renderMain->RunRenderPass();
-                    GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
                 }
+
+                GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
+                return;
             }
         }
     }
@@ -1093,10 +1102,13 @@ optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bo
         auto initResult = m_graph->TryInitialize(graphingExp);
         m_graph->GetRenderer()->SetDisplayRanges(xMin, xMax, yMin, yMax);
 
+        m_replot = true;
+
         return initResult;
     }
     else
     {
+        m_replot = false;
         return m_graph->TryInitialize(graphingExp);
     }
 }

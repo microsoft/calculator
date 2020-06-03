@@ -3266,11 +3266,15 @@
   </data>
   <data name="GraphViewAutomaticBestFitAnnouncement" xml:space="preserve">
     <value>الاحتواء التلقائي الأفضل</value>
-    <comment>Announcement used in Graphing Calculator when button is clicked and automatic best fit is set</comment>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set</comment>
   </data>
   <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
     <value>التعديل اليدوي</value>
-    <comment>Announcement used in Graphing Calculator when button is clicked and manual adjustment is set</comment>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and manual adjustment is set</comment>
+  </data>
+  <data name="GridResetAnnouncement" xml:space="preserve">
+    <value>تمت إعادة ضبط طريقة عرض الرسم البياني</value>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set, resetting the graph</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>تكبير (Ctrl + علامة الجمع)</value>
@@ -3804,12 +3808,12 @@
     <comment>Y minimum value header</comment>
   </data>
   <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>خيارات الشبكة</value>
-    <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
+    <value>خيارات الرسم البياني</value>
+    <comment>This is the tooltip text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>خيارات الشبكة</value>
-    <comment>This is the automation name text for the grid options button in Graphing Calculator</comment>
+    <value>خيارات الرسم البياني</value>
+    <comment>This is the automation name text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="GraphOptionsHeading.Text" xml:space="preserve">
     <value>خيارات الرسم البياني</value>
@@ -4074,5 +4078,13 @@
   <data name="submitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>إرسال</value>
     <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>تحليل الدالة</value>
+    <comment>Screen reader prompt for the function analysis grid</comment>
+  </data>
+  <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>خيارات الرسم البياني</value>
+    <comment>Screen reader prompt for the graph options panel</comment>
   </data>
 </root>
