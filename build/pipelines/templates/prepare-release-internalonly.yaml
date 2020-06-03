@@ -39,7 +39,7 @@ jobs:
     env:
       XES_DISABLEPROV: true
 
-  - task: NuGetToolInstaller@0
+  - task: NuGetToolInstaller@1
     displayName: Use NuGet 5.x
     inputs:
       versionSpec: 5.x
