@@ -32,7 +32,7 @@ namespace CalculatorApp
             int order;
         };
 
-         struct UnitData
+        struct UnitData
         {
             CalculatorApp::Common::ViewMode categoryId;
             int unitId;
@@ -87,7 +87,7 @@ namespace CalculatorApp
             std::wstring GetLocalizedStringName(_In_ Platform::String ^ stringId);
 
             std::shared_ptr<std::vector<UnitConversionManager::Category>> m_categoryList;
-            std::shared_ptr<UnitConversionManager::CategoryToUnitVectorMap> m_categoryIDToUnitCollectionMap;
+            std::shared_ptr<UnitConversionManager::CategoryToUnitVectorMap> m_categoryIDToUnitsMap;
             std::shared_ptr<UnitConversionManager::UnitToUnitToConversionDataMap> m_ratioMap;
             Platform::String ^ m_currentRegionCode;
         };

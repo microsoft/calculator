@@ -116,15 +116,6 @@ namespace UnitConversionManager
         }
     };
 
-    class CategoryHash
-    {
-    public:
-        size_t operator()(const int id) const
-        {
-            return id;
-        }
-    };
-
     struct SuggestedValueIntermediate
     {
         double magnitude;
@@ -171,7 +162,7 @@ namespace UnitConversionManager
         std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>,
         UnitConversionManager::UnitHash>
         UnitToUnitToConversionDataMap;
-    typedef std::unordered_map<int, std::vector<UnitConversionManager::Unit>, UnitConversionManager::CategoryHash>
+    typedef std::unordered_map<int, std::vector<UnitConversionManager::Unit>>
         CategoryToUnitVectorMap;
 
     class IViewModelCurrencyCallback

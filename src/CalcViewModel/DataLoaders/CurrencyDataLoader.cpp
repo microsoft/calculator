@@ -226,6 +226,7 @@ vector<UCM::Category> CurrencyDataLoader::GetOrderedCategories()
     // The model will use the categories from UnitConverterDataLoader
     return vector<UCM::Category>();
 }
+
 vector<UCM::Unit> CurrencyDataLoader::GetOrderedUnits(const UCM::Category& /*category*/)
 {
     lock_guard<mutex> lock(m_currencyUnitsMutex);
