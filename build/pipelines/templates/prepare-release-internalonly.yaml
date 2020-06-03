@@ -40,10 +40,9 @@ jobs:
       XES_DISABLEPROV: true
 
   - task: NuGetToolInstaller@0
-    displayName: Use NuGet 4.7.1
+    displayName: Use NuGet 5.x
     inputs:
-      versionSpec: 4.7.1
-      checkLatest: true
+      versionSpec: 5.x
 
   - task: DownloadBuildArtifacts@0
     displayName: Download appxBundle artifact

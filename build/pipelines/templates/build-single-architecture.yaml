@@ -6,10 +6,9 @@ parameters:
 
 steps:
   - task: NuGetToolInstaller@0
-    displayName: Use NuGet 5.0.2
+    displayName: Use NuGet 5.x
     inputs:
-      versionSpec: 5.0.2
-      checkLatest: true
+      versionSpec: 5.x
 
   # In most accounts, you can just use 'NuGetCommand' instead of this GUID.
   # In the microsoft.visualstudio.com account, NuGetCommand is ambiguous so the GUID is needed.
