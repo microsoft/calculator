@@ -3176,11 +3176,11 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="rolCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Girar a la izquierda con llevar</value>
+    <value>Girar a la izquierda con acarreo</value>
     <comment>Screen reader prompt for the Calculator button rol with carry in the scientific flyout keypad</comment>
   </data>
   <data name="rorCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Girar a la derecha con llevar</value>
+    <value>Girar a la derecha con acarreo</value>
     <comment>Screen reader prompt for the Calculator button ror with carry in the scientific flyout keypad</comment>
   </data>
   <data name="lshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3212,7 +3212,7 @@
     <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
   </data>
   <data name="rotateCarryShiftButton.Content" xml:space="preserve">
-    <value>Girar a través de desplazamiento circular con llevar</value>
+    <value>Girar a través de desplazamiento circular con acarreo</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
   <data name="cubeRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
