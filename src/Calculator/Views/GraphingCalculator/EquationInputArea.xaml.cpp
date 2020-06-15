@@ -414,6 +414,13 @@ void EquationInputArea::SubmitTextbox(TextBox ^ sender)
     else if (sender->Name == "StepTextBox")
     {
         val = validateDouble(sender->Text, variableViewModel->Step);
+
+        // Don't allow a value less than or equal to 0 as the step
+        if (val <= 0)
+        {
+            val = variableViewModel->Step;
+        }
+
         variableViewModel->Step = val;
         TraceLogger::GetInstance()->LogVariableSettingsChanged(L"StepTextBox");
     }
