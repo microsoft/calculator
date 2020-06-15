@@ -236,6 +236,13 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
         }
 
         Equations->GetAt(lastIndex)->FunctionLabelIndex = m_lastFunctionLabelIndex;
+
+        // Focus the next equation after the one we just removed. There should always be at least one ghost equation,
+        // but check to make sure that there is an equation we can focus in the index where we just removed an equation.
+        if (index < Equations->Size)
+        {
+            FocusEquationTextBox(Equations->GetAt(index));
+        }
     }
 }
 
