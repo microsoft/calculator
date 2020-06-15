@@ -402,6 +402,7 @@ void EquationInputArea::SubmitTextbox(TextBox ^ sender)
     else if (sender->Name == "MinTextBox")
     {
         val = validateDouble(sender->Text, variableViewModel->Min);
+
         variableViewModel->Min = val;
         TraceLogger::GetInstance()->LogVariableSettingsChanged(L"MinTextBox");
     }
