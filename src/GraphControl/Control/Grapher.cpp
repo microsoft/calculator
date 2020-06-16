@@ -148,7 +148,6 @@ namespace GraphControl
                     m_renderMain->RunRenderPass();
                     GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
                 }
-
             }
         }
     }
@@ -1132,13 +1131,11 @@ optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bo
             renderer->SetDisplayRanges(xMin, xMax, yMin, yMax);
         }
 
-        m_replot = true;
-
         return initResult;
     }
     else
     {
-        m_replot = false;
+        m_resetUsingInitialDisplayRange = false;
         return m_graph->TryInitialize(graphingExp);
     }
 }

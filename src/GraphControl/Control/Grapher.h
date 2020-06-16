@@ -247,14 +247,14 @@ public enum class GraphViewChangedReason
             }
         }
 
-        void SetDisplayRanges(double xMin, double xMax, double yMin, double yMax, bool isSettings)
+        void SetDisplayRanges(double xMin, double xMax, double yMin, double yMax)
         {
             try
             {
                 if (auto render = m_graph->GetRenderer())
                 {
                     render->SetDisplayRanges(xMin, xMax, yMin, yMax);
-                    m_rangeUpdatedBySettings = isSettings;
+                    m_rangeUpdatedBySettings = true;
                     if (m_renderMain)
                     {
                         m_renderMain->RunRenderPass();
