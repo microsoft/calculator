@@ -497,17 +497,7 @@ MUXC::NavigationViewItem ^ MainPage::CreateNavViewItemFromCategory(NavCategory ^
     icon->Glyph = category->Glyph;
     item->Icon = icon;
 
-    if (category->IsPreview)
-    {
-        auto contentPresenter = ref new ContentPresenter();
-        contentPresenter->Content = category->Name;
-        contentPresenter->ContentTemplate = static_cast<DataTemplate ^>(Resources->Lookup(L"NavMenuItemPreviewDataTemplate"));
-        item->Content = contentPresenter;
-    }
-    else
-    {
-        item->Content = category->Name;
-    }
+    item->Content = category->Name;
     item->AccessKey = category->AccessKey;
     item->IsEnabled = category->IsEnabled;
     item->Style = static_cast<Windows::UI::Xaml::Style ^>(Resources->Lookup(L"NavViewItemStyle"));

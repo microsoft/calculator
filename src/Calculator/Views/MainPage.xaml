@@ -39,13 +39,6 @@
             <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings"/>
         </Style>
 
-        <DataTemplate x:Key="NavMenuItemPreviewDataTemplate" x:DataType="x:String">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="{x:Bind}"/>
-                <controls:PreviewTagControl Margin="10,0,0,0" VerticalAlignment="Center"/>
-            </StackPanel>
-        </DataTemplate>
-
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
     </Page.Resources>

@@ -58,7 +58,6 @@ void ApplicationViewModel::Mode::set(ViewMode value)
     {
         PreviousMode = m_mode;
         m_mode = value;
-        IsModePreview = NavCategory::IsViewModePreview(m_mode);
         SetDisplayNormalAlwaysOnTopOption();
         OnModeChanged();
         RaisePropertyChanged(ModePropertyName);
