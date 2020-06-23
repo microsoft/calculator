@@ -605,6 +605,7 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp(Windows::UI::Core::C
     if (args->VirtualKey == VirtualKey::Escape)
     {
         GraphingControl->ActiveTracing = false;
+        ActiveTracing->Focus(::FocusState::Programmatic);
         args->Handled = true;
     }
 }

@@ -39,13 +39,6 @@
             <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings"/>
         </Style>
 
-        <DataTemplate x:Key="NavMenuItemPreviewDataTemplate" x:DataType="x:String">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="{x:Bind}"/>
-                <controls:PreviewTagControl Margin="10,0,0,0" VerticalAlignment="Center"/>
-            </StackPanel>
-        </DataTemplate>
-
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
     </Page.Resources>
@@ -128,20 +121,15 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="1"
-                        Margin="8,0,0,0"
-                        Orientation="Horizontal">
-                <TextBlock x:Name="Header"
-                           Margin="0,-3,0,0"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center"
-                           Style="{StaticResource CategoryNameTextBlockStyle}"
-                           Text="{x:Bind Model.CategoryName, Mode=OneWay}"
-                           Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
-                <controls:PreviewTagControl Margin="10,0,0,0"
-                                            VerticalAlignment="Center"
-                                            Visibility="{x:Bind Model.IsModePreview, Mode=OneWay}"/>
-            </StackPanel>
+            <TextBlock x:Name="Header"
+                       Grid.Column="1"
+                       Margin="8,-3,0,0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource CategoryNameTextBlockStyle}"
+                       Text="{x:Bind Model.CategoryName, Mode=OneWay}"
+                       Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+
             <Button x:Name="NormalAlwaysOnTopButton"
                     x:Uid="EnterAlwaysOnTopButton"
                     Grid.Column="2"
@@ -168,7 +156,6 @@
                              DataContext="{x:Bind Model}"
                              ExpandedModeThresholdWidth="Infinity"
                              IsBackButtonVisible="Collapsed"
-                             IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                              IsPaneToggleButtonVisible="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                              IsSettingsVisible="False"
                              ItemInvoked="OnNavItemInvoked"
@@ -181,6 +168,7 @@
                              SelectionChanged="OnNavSelectionChanged"
                              TabIndex="1"
                              UseSystemFocusVisuals="True"
+                             IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                              x:Load="False">
 
             <muxc:NavigationView.PaneFooter>

@@ -443,7 +443,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="TemporaryKey.pfx" />
+    <None Include="WindowsDev_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Calculator.xaml">

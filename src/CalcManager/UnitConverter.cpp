@@ -109,7 +109,7 @@ CategorySelectionInitializer UnitConverter::SetCurrentCategory(const Category& i
     {
         if (m_currentCategory.id != input.id)
         {
-            for (auto& unit : m_categoryToUnits[m_currentCategory])
+            for (auto& unit : m_categoryToUnits[m_currentCategory.id])
             {
                 unit.isConversionSource = (unit.id == m_fromType.id);
                 unit.isConversionTarget = (unit.id == m_toType.id);
@@ -121,7 +121,7 @@ CategorySelectionInitializer UnitConverter::SetCurrentCategory(const Category& i
             }
         }
 
-        newUnitList = m_categoryToUnits[input];
+        newUnitList = m_categoryToUnits[input.id];
     }
 
     InitializeSelectedUnits();
@@ -283,7 +283,7 @@ void UnitConverter::RestoreUserPreferences(wstring_view userPreferences)
     m_currentCategory = StringToCategory(outerTokens[2]);
 
     // Only restore from the saved units if they are valid in the current available units.
-    auto itr = m_categoryToUnits.find(m_currentCategory);
+    auto itr = m_categoryToUnits.find(m_currentCategory.id);
     if (itr != m_categoryToUnits.end())
     {
         const auto& curUnits = itr->second;
@@ -713,10 +713,8 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
 /// </summary>
 void UnitConverter::ResetCategoriesAndRatios()
 {
-    m_categories = m_dataLoader->LoadOrderedCategories();
-
     m_switchedActive = false;
-
+    m_categories = m_dataLoader->GetOrderedCategories();
     if (m_categories.empty())
     {
         return;
@@ -738,8 +736,8 @@ void UnitConverter::ResetCategoriesAndRatios()
             continue;
         }
 
-        vector<Unit> units = activeDataLoader->LoadOrderedUnits(category);
-        m_categoryToUnits[category] = units;
+        vector<Unit> units = activeDataLoader->GetOrderedUnits(category);
+        m_categoryToUnits[category.id] = units;
 
         // Just because the units are empty, doesn't mean the user can't select this category,
         // we just want to make sure we don't let an unready category be the default.
@@ -789,7 +787,7 @@ void UnitConverter::InitializeSelectedUnits()
         return;
     }
 
-    auto itr = m_categoryToUnits.find(m_currentCategory);
+    auto itr = m_categoryToUnits.find(m_currentCategory.id);
     if (itr == m_categoryToUnits.end())
     {
         return;
@@ -905,7 +903,8 @@ void UnitConverter::Calculate()
                 {
                     // Fewer digits are needed following the decimal if the number is large,
                     // we calculate the number of decimals necessary based on the number of digits in the integer part.
-                    precision = max(0U, max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits)) - numPreDecimal);
+                    auto numberDigits = max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits));
+                    precision = numberDigits > numPreDecimal ? numberDigits - numPreDecimal : 0;
                 }
 
                 m_returnDisplay = RoundSignificantDigits(returnValue, precision);

@@ -118,9 +118,32 @@ namespace GraphControl
     {
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
-            if (auto renderer = m_graph->GetRenderer())
+            if(auto renderer = m_graph->GetRenderer())
             {
-                if (SUCCEEDED(renderer->ResetRange()))
+                HRESULT hr;
+
+                // Reset the Grid using the m_initialDisplayRange properties when the user was last in Manual Adjustment mode and an equation was added.
+                // Reset the Grid using the TryPlotGraph method when the range is updated via Graph Settings. Return out of this block so we don't render 2 times.
+                // Reset the Grid using the ResetRange() in all other cases.
+                if (m_resetUsingInitialDisplayRange)
+                {
+                    hr = renderer->SetDisplayRanges(m_initialDisplayRangeXMin, m_initialDisplayRangeXMax, m_initialDisplayRangeYMin, m_initialDisplayRangeYMax);
+                    m_resetUsingInitialDisplayRange = false;
+                }
+                else if (m_rangeUpdatedBySettings)
+                {
+                    IsKeepCurrentView = false;
+                    TryPlotGraph(false, false);
+                    m_rangeUpdatedBySettings = false;
+                    GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
+                    return;
+                }
+                else
+                {
+                    hr = renderer->ResetRange();
+                }
+
+                if (SUCCEEDED(hr))
                 {
                     m_renderMain->RunRenderPass();
                     GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
@@ -1088,15 +1111,31 @@ optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bo
 {
     if (keepCurrentView || IsKeepCurrentView)
     {
+        auto renderer = m_graph->GetRenderer();
         double xMin, xMax, yMin, yMax;
-        m_graph->GetRenderer()->GetDisplayRanges(xMin, xMax, yMin, yMax);
+        renderer->GetDisplayRanges(xMin, xMax, yMin, yMax);
         auto initResult = m_graph->TryInitialize(graphingExp);
-        m_graph->GetRenderer()->SetDisplayRanges(xMin, xMax, yMin, yMax);
+        if (initResult != nullopt)
+        {
+            if (IsKeepCurrentView)
+            {
+                // PrepareGraph() populates the values of the graph after TryInitialize but before rendering. This allows us to get the range of the graph to be rendered.
+                if (SUCCEEDED(renderer->PrepareGraph()))
+                {
+                    // Get the initial display ranges from the graph that was just initialized to be used in ResetGrid if they user clicks the GraphView button.
+                    renderer->GetDisplayRanges(m_initialDisplayRangeXMin, m_initialDisplayRangeXMax, m_initialDisplayRangeYMin, m_initialDisplayRangeYMax);
+                    m_resetUsingInitialDisplayRange = true;
+                }
+            }
+
+            renderer->SetDisplayRanges(xMin, xMax, yMin, yMax);
+        }
 
         return initResult;
     }
     else
     {
+        m_resetUsingInitialDisplayRange = false;
         return m_graph->TryInitialize(graphingExp);
     }
 }

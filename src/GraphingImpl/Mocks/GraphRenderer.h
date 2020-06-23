@@ -94,6 +94,11 @@ namespace MockGraphingImpl
             return S_OK;
         }
 
+        virtual HRESULT PrepareGraph()
+        {
+            return S_OK;
+        }
+
         virtual HRESULT GetBitmap(std::shared_ptr<Graphing::IBitmap>& bitmapOut, bool& hasSomeMissingDataOut)
         {
             bitmapOut = std::make_shared<Bitmap>();

@@ -3266,11 +3266,15 @@
   </data>
   <data name="GraphViewAutomaticBestFitAnnouncement" xml:space="preserve">
     <value>தானியங்கு சிறந்த பொருத்தம்</value>
-    <comment>Announcement used in Graphing Calculator when button is clicked and automatic best fit is set</comment>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set</comment>
   </data>
   <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
     <value>கைமுறையாகச் சீரமைத்தல்</value>
-    <comment>Announcement used in Graphing Calculator when button is clicked and manual adjustment is set</comment>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and manual adjustment is set</comment>
+  </data>
+  <data name="GridResetAnnouncement" xml:space="preserve">
+    <value>விளக்கப்படக் காட்சி மீட்டமைக்கப்பட்டுள்ளது</value>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set, resetting the graph</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>பெரிதாக்கு (Ctrl + கூட்டல் குறி)</value>
@@ -3804,12 +3808,12 @@
     <comment>Y minimum value header</comment>
   </data>
   <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>கட்ட விருப்பங்கள்</value>
-    <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
+    <value>விளக்கப்பட விருப்பங்கள்</value>
+    <comment>This is the tooltip text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>கட்ட விருப்பங்கள்</value>
-    <comment>This is the automation name text for the grid options button in Graphing Calculator</comment>
+    <value>விளக்கப்பட விருப்பங்கள்</value>
+    <comment>This is the automation name text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="GraphOptionsHeading.Text" xml:space="preserve">
     <value>வரைபட விருப்பங்கள்</value>
@@ -4074,5 +4078,13 @@
   <data name="submitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>சமர்ப்பி</value>
     <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>செயல்பாட்டு ஆய்வு</value>
+    <comment>Screen reader prompt for the function analysis grid</comment>
+  </data>
+  <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>விளக்கப்பட விருப்பங்கள்</value>
+    <comment>Screen reader prompt for the graph options panel</comment>
   </data>
 </root>

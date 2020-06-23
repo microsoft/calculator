@@ -50,7 +50,7 @@ namespace CalcManager::NumberFormattingUtils
     /// <param name="value">the number</param>
     unsigned int GetNumberDigitsWholeNumberPart(double value)
     {
-        return value == 0 ? 1 : (1 + static_cast<unsigned int>(log10(abs(value))));
+        return value == 0 ? 1u : static_cast<unsigned int>(1 + max(0.0, log10(abs(value))));
     }
 
     /// <summary>

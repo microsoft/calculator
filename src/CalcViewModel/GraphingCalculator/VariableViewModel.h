@@ -9,6 +9,9 @@
 
 namespace CalculatorApp::ViewModel
 {
+
+inline constexpr int DefaultMinMaxRange = 10;
+
 public
     value struct VariableChangedEventArgs sealed
     {
@@ -40,6 +43,12 @@ public
             {
                 if (m_variable->Min != value)
                 {
+                    if (value >= m_variable->Max)
+                    {
+                        m_variable->Max = value + DefaultMinMaxRange;
+                        RaisePropertyChanged("Max");
+                    }
+
                     m_variable->Min = value;
                     RaisePropertyChanged("Min");
                 }
@@ -72,6 +81,12 @@ public
             {
                 if (m_variable->Max != value)
                 {
+                    if (value <= m_variable->Min)
+                    {
+                        m_variable->Min = value - DefaultMinMaxRange;
+                        RaisePropertyChanged("Min");
+                    }
+
                     m_variable->Max = value;
                     RaisePropertyChanged("Max");
                 }
