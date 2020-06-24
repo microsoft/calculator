@@ -157,7 +157,10 @@ namespace GraphControl::DX
             critical_section::scoped_lock lock(m_criticalSection);
 
             int formulaId = -1;
-            float nearestPointLocationX, nearestPointLocationY, nearestPointValueX, nearestPointValueY;                        
+            double outNearestPointValueX, outNearestPointValueY;
+            float outNearestPointLocationX, outNearestPointLocationY;
+            double rhoValueOut, thetaValueOut, tValueOut;
+            
             double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
             m_graph->GetRenderer()->GetDisplayRanges(xAxisMin, xAxisMax, yAxisMin, yAxisMax);
             double precision = this->GetPrecision(xAxisMax, xAxisMin);     
@@ -167,12 +170,15 @@ namespace GraphControl::DX
                             trackPoint.Y,
                             precision,
                             formulaId,
-                            nearestPointLocationX,
-                            nearestPointLocationY,
-                            nearestPointValueX,
-                            nearestPointValueY)
+                            outNearestPointLocationX,
+                            outNearestPointLocationY,
+                            outNearestPointValueX,
+                            outNearestPointValueY,
+                            rhoValueOut,
+                            thetaValueOut,
+                            tValueOut)
                         == S_OK;
-            m_Tracing = m_Tracing && !isnan(nearestPointLocationX) && !isnan(nearestPointLocationY);
+            m_Tracing = m_Tracing && !isnan(outNearestPointLocationX) && !isnan(outNearestPointLocationY);
         }
         else
         {
@@ -314,7 +320,9 @@ namespace GraphControl::DX
                         }
 
                         int formulaId = -1;
-                        float nearestPointLocationX, nearestPointLocationY, nearestPointValueX, nearestPointValueY;                                                                        
+                        double outNearestPointValueX, outNearestPointValueY;                        
+                        double rhoValueOut, thetaValueOut, tValueOut;
+                        float outNearestPointLocationX, outNearestPointLocationY;
                         double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
                         renderer->GetDisplayRanges(xAxisMin, xAxisMax, yAxisMin, yAxisMax);
                         double precision = this->GetPrecision(xAxisMax, xAxisMin);   
@@ -323,13 +331,16 @@ namespace GraphControl::DX
                                 trackPoint.Y,
                                 precision,
                                 formulaId,
-                                nearestPointLocationX,
-                                nearestPointLocationY,
-                                nearestPointValueX,
-                                nearestPointValueY)
+                                outNearestPointLocationX,
+                                outNearestPointLocationY,
+                                outNearestPointValueX,
+                                outNearestPointValueY,
+                                rhoValueOut,
+                                thetaValueOut,
+                                tValueOut)
                             == S_OK)
                         {
-                            if (!isnan(nearestPointLocationX) && !isnan(nearestPointLocationY))
+                            if (!isnan(outNearestPointLocationX) && !isnan(outNearestPointLocationY))
                             {
                                 auto lineColors = m_graph->GetOptions().GetGraphColors();
 
@@ -339,11 +350,11 @@ namespace GraphControl::DX
                                     m_nearestPointRenderer.SetColor(D2D1::ColorF(dotColor.R * 65536 + dotColor.G * 256 + dotColor.B, 1.0));
                                 }
 
-                                m_TraceLocation = Point(nearestPointLocationX, nearestPointLocationY);
+                                m_TraceLocation = Point(outNearestPointLocationX, outNearestPointLocationY);
                                 m_nearestPointRenderer.Render(m_TraceLocation);
                                 m_Tracing = true;
-                                m_TraceLocation = Point(nearestPointLocationX, nearestPointLocationY);
-                                m_TraceValue = Point(nearestPointValueX, nearestPointValueY);
+                                m_TraceLocation = Point(outNearestPointLocationX, outNearestPointLocationY);
+                                m_TraceValue = Point(outNearestPointValueX, outNearestPointValueY);
                             }
                             else
                             {
