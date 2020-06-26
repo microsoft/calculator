@@ -16,6 +16,8 @@
 #include "Calculator/Views/GraphingCalculator/EquationInputArea.xaml.h"
 #include "CalcViewModel/Common/Utils.h"
 #include "GraphingSettings.xaml.h"
+#include <iomanip>
+#include <iostream>
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -207,14 +209,15 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
     GraphingControl->PlotGraph(false);
 }
 
-void GraphingCalculator::OnTracePointChanged(Point newPoint)
+void GraphingCalculator::OnTracePointChanged(double xPointValue, double yPointValue)
 {
     wstringstream traceValueString;
 
     double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
     GraphingControl->GetDisplayRanges(&xAxisMin, &xAxisMax, &yAxisMin, &yAxisMax);
-    
-    traceValueString << "(" << newPoint.X << ", " << newPoint.Y << ")";    
+
+    traceValueString << "(" << xPointValue << ", ";
+    traceValueString << setprecision(15) << yPointValue << ")";    
 
     TraceValue->Text = ref new String(traceValueString.str().c_str());
 

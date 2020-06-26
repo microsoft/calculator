@@ -33,8 +33,7 @@ namespace GraphControl::DX
         : m_deviceResources{ panel }
         , m_nearestPointRenderer{ &m_deviceResources }
         , m_backgroundColor{ {} }
-        , m_swapChainPanel{ panel }
-        , m_TraceValue(Point(0, 0))
+        , m_swapChainPanel{ panel }        
         , m_TraceLocation(Point(0, 0))
         , m_Tracing(false)
     {
@@ -353,8 +352,9 @@ namespace GraphControl::DX
                                 m_TraceLocation = Point(outNearestPointLocationX, outNearestPointLocationY);
                                 m_nearestPointRenderer.Render(m_TraceLocation);
                                 m_Tracing = true;
-                                m_TraceLocation = Point(outNearestPointLocationX, outNearestPointLocationY);
-                                m_TraceValue = Point(outNearestPointValueX, outNearestPointValueY);
+                                m_TraceLocation = Point(outNearestPointLocationX, outNearestPointLocationY);                                
+                                m_XTraceValue = outNearestPointValueX;
+                                m_YTraceValue = outNearestPointValueY;
                             }
                             else
                             {
