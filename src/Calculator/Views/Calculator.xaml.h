@@ -116,6 +116,8 @@ public
         Platform::String ^ m_closeMemoryFlyoutAutomationName;
         Platform::String ^ m_openHistoryFlyoutAutomationName;
         Platform::String ^ m_closeHistoryFlyoutAutomationName;
+        Platform::String ^ m_dockPanelHistoryMemoryLists;
+        Platform::String ^ m_dockPanelMemoryList;
 
         Windows::UI::Xaml::Controls::PivotItem ^ m_pivotItem;
         bool m_IsDigit = false;
