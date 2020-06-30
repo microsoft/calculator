@@ -71,8 +71,11 @@ void Calculator::LoadResourceStrings()
     m_closeMemoryFlyoutAutomationName = resProvider->GetResourceString(L"MemoryButton_Close");
     m_openHistoryFlyoutAutomationName = resProvider->GetResourceString(L"HistoryButton_Open");
     m_closeHistoryFlyoutAutomationName = resProvider->GetResourceString(L"HistoryButton_Close");
+    m_dockPanelHistoryMemoryLists = resProvider->GetResourceString(L"DockPanel_HistoryMemoryLists");
+    m_dockPanelMemoryList = resProvider->GetResourceString(L"DockPanel_MemoryList");
     AutomationProperties::SetName(MemoryButton, m_openMemoryFlyoutAutomationName);
     AutomationProperties::SetName(HistoryButton, m_openHistoryFlyoutAutomationName);
+    AutomationProperties::SetName(DockPanel, m_dockPanelHistoryMemoryLists);
 }
 
 void Calculator::InitializeHistoryView(_In_ HistoryViewModel ^ historyVM)
@@ -342,6 +345,14 @@ void Calculator::OnModeVisualStateCompleted(_In_ Object ^ sender, _In_ Object ^ 
         {
             AnimateWithoutResult->Begin();
         }
+    }
+    if (IsProgrammer)
+    {
+        AutomationProperties::SetName(DockPanel, m_dockPanelMemoryList);
+    }
+    else
+    {
+        AutomationProperties::SetName(DockPanel, m_dockPanelHistoryMemoryLists);
     }
 }
 

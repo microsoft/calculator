@@ -60,8 +60,8 @@ namespace UnitConverterUnitTests
             c2units.push_back(u3);
             c2units.push_back(u4);
 
-            m_units[c1] = c1units;
-            m_units[c2] = c2units;
+            m_units[c1.id] = c1units;
+            m_units[c2.id] = c2units;
 
             unordered_map<Unit, ConversionData, UnitHash> unit1Map = unordered_map<Unit, ConversionData, UnitHash>();
             unordered_map<Unit, ConversionData, UnitHash> unit2Map = unordered_map<Unit, ConversionData, UnitHash>();
@@ -99,14 +99,14 @@ namespace UnitConverterUnitTests
             m_loadDataCallCount++;
         }
 
-        vector<Category> LoadOrderedCategories()
+        vector<Category> GetOrderedCategories()
         {
             return m_categories;
         }
 
-        vector<Unit> LoadOrderedUnits(const Category& c)
+        vector<Unit> GetOrderedUnits(const Category& category)
         {
-            return m_units[c];
+            return m_units[category.id];
         }
 
         unordered_map<Unit, ConversionData, UnitHash> LoadOrderedRatios(const Unit& u)
