@@ -48,7 +48,7 @@ namespace MockGraphingImpl
             double& yValueOut,
             double& rhoValueOut,
             double& thetaValueOut,
-            double& tValueOutt)
+            double& tValueOut)
         {
             formulaIdOut = 0;
             xScreenPointOut = 0;

@@ -16,8 +16,6 @@
 #include "Calculator/Views/GraphingCalculator/EquationInputArea.xaml.h"
 #include "CalcViewModel/Common/Utils.h"
 #include "GraphingSettings.xaml.h"
-#include <iomanip>
-#include <iostream>
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
