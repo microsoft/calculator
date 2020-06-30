@@ -94,11 +94,19 @@ namespace GraphControl::DX
             }
         }
 
-        property Windows::Foundation::Point TraceValue
+        property double XTraceValue
         {
-            Windows::Foundation::Point get()
+            double get()
             {
-                return m_TraceValue;
+                return m_XTraceValue;
+            }
+        }
+
+        property double YTraceValue
+        {
+            double get()
+            {
+                return m_YTraceValue;
             }
         }
 
@@ -142,7 +150,8 @@ namespace GraphControl::DX
         // Other event handlers.
         void OnCompositionScaleChanged(Windows::UI::Xaml::Controls::SwapChainPanel ^ sender, Object ^ args);
         void OnSizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
-
+        
+        double GetPrecision(const double maxAxis, const double minAxis);
     private:
         DX::DeviceResources m_deviceResources;
         NearestPointRenderer m_nearestPointRenderer;
@@ -177,10 +186,11 @@ namespace GraphControl::DX
 
         // Track our independent input on a background worker thread.
         Windows::Foundation::IAsyncAction ^ m_inputLoopWorker = nullptr;
-        Windows::UI::Core::CoreIndependentInputSource ^ m_coreInput = nullptr;
+        Windows::UI::Core::CoreIndependentInputSource ^ m_coreInput = nullptr;       
 
-        // What is the current trace value
-        Windows::Foundation::Point m_TraceValue;
+        double m_XTraceValue;
+        double m_YTraceValue;
+
 
         // And where is it located on screen
         Windows::Foundation::Point m_TraceLocation;

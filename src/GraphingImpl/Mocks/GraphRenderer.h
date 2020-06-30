@@ -40,6 +40,7 @@ namespace MockGraphingImpl
         virtual HRESULT GetClosePointData(
             double inScreenPointX,
             double inScreenPointY,
+            double precision,
             int& formulaIdOut,
             float& xScreenPointOut,
             float& yScreenPointOut,
@@ -52,11 +53,9 @@ namespace MockGraphingImpl
             formulaIdOut = 0;
             xScreenPointOut = 0;
             yScreenPointOut = 0;
+            precision = 0;
             xValueOut = 0;
             yValueOut = 0;
-            rhoValueOut = 0;
-            thetaValueOut = 0;
-            tValueOut = 0;
             return S_OK;
         }
 
@@ -72,7 +71,7 @@ namespace MockGraphingImpl
         virtual HRESULT ChangeRange(Graphing::Renderer::ChangeRangeAction action)
         {
             return S_OK;
-        }
+        }       
         virtual HRESULT MoveRangeByRatio(double ratioX, double ratioY)
         {
             return S_OK;
@@ -109,6 +108,7 @@ namespace MockGraphingImpl
             hasSomeMissingDataOut = false;
             return S_OK;
         }
+
 
     private:
         double m_xMin;
