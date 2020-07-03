@@ -4723,4 +4723,8 @@
     <value>Calculator back to full view</value>
     <comment>Announcement to indicate calculator window is now back to full view.</comment>
   </data>
+    <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>History slot %1 cleared</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
 </root>

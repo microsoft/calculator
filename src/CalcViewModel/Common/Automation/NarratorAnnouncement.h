@@ -57,6 +57,7 @@ public
         static NarratorAnnouncement ^ GetMemoryItemAddedAnnouncement(Platform::String ^ announcement);
 
         static NarratorAnnouncement ^ GetHistoryClearedAnnouncement(Platform::String ^ announcement);
+        static NarratorAnnouncement ^ GetHistorySlotClearedAnnouncement(Platform::String ^ announcement);
 
         static NarratorAnnouncement ^ GetCategoryNameChangedAnnouncement(Platform::String ^ announcement);
 
