@@ -41,8 +41,6 @@ namespace
     StringReference DisplayValuePropertyName(L"DisplayValue");
     StringReference CalculationResultAutomationNamePropertyName(L"CalculationResultAutomationName");
     StringReference IsBitFlipCheckedPropertyName(L"IsBitFlipChecked");
-    StringReference CalcAlwaysOnTop(L"CalcAlwaysOnTop");
-    StringReference CalcBackToFullView(L"CalcBackToFullView");
 }
 
 namespace CalculatorResourceKeys
@@ -1163,19 +1161,6 @@ void StandardCalculatorViewModel::OnPropertyChanged(String ^ propertyname)
     {
         TraceLogger::GetInstance()->UpdateButtonUsage(
             IsBitFlipChecked ? NumbersAndOperatorsEnum::BitflipButton : NumbersAndOperatorsEnum::FullKeypadButton, ViewMode::Programmer);
-    }
-    else if (propertyname == IsAlwaysOnTopPropertyName)
-    {
-        String ^ announcement;
-        if (IsAlwaysOnTop)
-        {
-            announcement = AppResourceProvider::GetInstance()->GetResourceString(CalcAlwaysOnTop);
-        }
-        else
-        {
-            announcement = AppResourceProvider::GetInstance()->GetResourceString(CalcBackToFullView);
-        }
-        Announcement = CalculatorAnnouncement::GetAlwaysOnTopChangedAnnouncement(announcement);
     }
 }
 

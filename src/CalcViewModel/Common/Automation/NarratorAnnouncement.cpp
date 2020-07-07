@@ -28,7 +28,6 @@ namespace CalculatorApp::Common::Automation
         StringReference GraphViewChanged(L"GraphViewChanged");
         StringReference FunctionRemoved(L"FunctionRemoved");
         StringReference GraphViewBestFitChanged(L"GraphViewBestFitChanged");
-        StringReference AlwaysOnTop(L"AlwaysOnTop");
     }
 }
 
@@ -187,13 +186,4 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphViewBestFitChangedAnnounc
         CalculatorActivityIds::GraphViewBestFitChanged,
         AutomationNotificationKind::ActionCompleted,
         AutomationNotificationProcessing::MostRecent);
-}
-
-NarratorAnnouncement ^ CalculatorAnnouncement::GetAlwaysOnTopChangedAnnouncement(String ^ announcement)
-{
-    return ref new NarratorAnnouncement(
-        announcement,
-        CalculatorActivityIds::AlwaysOnTop,
-        AutomationNotificationKind::ActionCompleted,
-        AutomationNotificationProcessing::ImportantMostRecent);
 }

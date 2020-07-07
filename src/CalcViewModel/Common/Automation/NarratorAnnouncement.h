@@ -74,7 +74,5 @@ public
 
         static NarratorAnnouncement ^ GetFunctionRemovedAnnouncement(Platform::String ^ announcement);
 
-        static NarratorAnnouncement ^ GetAlwaysOnTopChangedAnnouncement(Platform::String ^ announcement);
-
     };
 }
