@@ -30,6 +30,8 @@ using namespace Windows::UI::Xaml::Navigation;
 FinanceCalculator::FinanceCalculator()
 {
 	InitializeComponent();
+
+    CopyMenuItem->Text = AppResourceProvider::GetInstance()->GetResourceString(L"copyMenuItem");
 }
 
 void FinanceCalculator::SetDefaultFocus()
