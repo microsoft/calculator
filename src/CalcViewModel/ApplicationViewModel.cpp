@@ -44,6 +44,7 @@ ApplicationViewModel::ApplicationViewModel()
     : m_CalculatorViewModel(nullptr)
     , m_DateCalcViewModel(nullptr)
 	, m_GraphingCalcViewModel(nullptr)
+    , m_FinanceCalcViewModel(nullptr)
     , m_ConverterViewModel(nullptr)
     , m_PreviousMode(ViewMode::None)
     , m_mode(ViewMode::None)
@@ -145,6 +146,13 @@ void ApplicationViewModel::OnModeChanged()
         if (!m_DateCalcViewModel)
         {
             m_DateCalcViewModel = ref new DateCalculatorViewModel();
+        }
+    }
+    else if (NavCategory::IsFinanceCalculatorViewMode(m_mode))
+    {
+        if (!m_FinanceCalcViewModel)
+        {
+            m_FinanceCalcViewModel = ref new FinanceCalculatorViewModel();
         }
     }
     else if (NavCategory::IsConverterViewMode(m_mode))

@@ -7,6 +7,7 @@
 #include "DateCalculatorViewModel.h"
 #include "GraphingCalculator/GraphingCalculatorViewModel.h"
 #include "UnitConverterViewModel.h"
+#include "FinanceCalculatorViewModel.h"
 
 namespace CalculatorApp
 {
@@ -23,6 +24,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(StandardCalculatorViewModel ^, CalculatorViewModel);
             OBSERVABLE_PROPERTY_RW(DateCalculatorViewModel ^, DateCalcViewModel);
             OBSERVABLE_PROPERTY_RW(GraphingCalculatorViewModel ^, GraphingCalcViewModel);
+            OBSERVABLE_PROPERTY_RW(FinanceCalculatorViewModel ^, FinanceCalcViewModel);
             OBSERVABLE_PROPERTY_RW(UnitConverterViewModel ^, ConverterViewModel);
             OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, PreviousMode);
             OBSERVABLE_PROPERTY_R(bool, IsAlwaysOnTop);

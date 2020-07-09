@@ -524,6 +524,9 @@
     <Page Include="Views\CalculatorProgrammerDisplayPanel.xaml">
       <Filter>Views\StateTriggers</Filter>
     </Page>
+    <Page Include="Views\FinanceCalculator.xaml">
+      <Filter>Views</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">

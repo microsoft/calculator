@@ -86,6 +86,7 @@
     <ClCompile Include="GraphingCalculator\GraphingSettingsViewModel.cpp">
       <Filter>GraphingCalculator</Filter>
     </ClCompile>
+    <ClCompile Include="FinanceCalculatorViewModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Common\DelegateCommand.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="FinanceCalculatorViewModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json">

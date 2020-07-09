@@ -42,6 +42,7 @@ static constexpr int PRESSURE_ID = 14;
 static constexpr int ANGLE_ID = 15;
 static constexpr int CURRENCY_ID = 16;
 static constexpr int GRAPHING_ID = 17;
+static constexpr int FINANCE_ID = 18;
 // ^^^ THESE CONSTANTS SHOULD NEVER CHANGE ^^^
 
 wchar_t* towchar_t(int number)
@@ -166,6 +167,16 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   L"\uE787",
                                   CategoryGroupType::Calculator,
                                   supportGraphingCalculator ? MyVirtualKey::Number5 : MyVirtualKey::Number4,
+                                  towchar_t(currentIndex++),
+                                  SUPPORTS_ALL,
+                                  true },
+          NavCategoryInitializer{ ViewMode::Finance,
+                                  FINANCE_ID,
+                                  L"Finance",
+                                  L"FinanceCalculationMode",
+                                  L"\uEB0D",
+                                  CategoryGroupType::Calculator,
+                                  supportGraphingCalculator ? MyVirtualKey::Number6 : MyVirtualKey::Number5,
                                   towchar_t(currentIndex++),
                                   SUPPORTS_ALL,
                                   true },
@@ -364,6 +375,11 @@ bool NavCategory::IsGraphingCalculatorViewMode(ViewMode mode)
 bool NavCategory::IsDateCalculatorViewMode(ViewMode mode)
 {
     return mode == ViewMode::Date;
+}
+
+bool NavCategory::IsFinanceCalculatorViewMode(ViewMode mode)
+{
+    return mode == ViewMode::Finance;
 }
 
 bool NavCategory::IsConverterViewMode(ViewMode mode)

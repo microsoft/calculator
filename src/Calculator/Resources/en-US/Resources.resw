@@ -2732,7 +2732,7 @@
   <data name="PreviewTag.Text" xml:space="preserve">
     <value>Preview</value>
     <comment>Label displayed next to upcoming features</comment>
-  </data>  
+  </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Microsoft Privacy Statement</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
@@ -2905,8 +2905,8 @@
     <value>Date Calculation</value>
   </data>
   <data name="DateCalculationOption.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Calculation mode</value>
-    <comment>Automation label for the Date Calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
+    <value>Date Calculation mode</value>
+    <comment>Automation label for the Date Calculation Mode combobox. Users will hear "Date Calculation mode combobox".</comment>
   </data>
   <data name="AddOption.Content" xml:space="preserve">
     <value>Add</value>
@@ -3887,11 +3887,11 @@
     <value>Automatic Best Fit</value>
     <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set</comment>
   </data>
-    <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
+  <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
     <value>Manual Adjustment</value>
     <comment>Announcement used in Graphing Calculator when graph view button is clicked and manual adjustment is set</comment>
   </data>
-    <data name="GridResetAnnouncement" xml:space="preserve">
+  <data name="GridResetAnnouncement" xml:space="preserve">
     <value>Graph view has been reset</value>
     <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set, resetting the graph</comment>
   </data>
@@ -4162,11 +4162,11 @@
     <value>The equation contains logical conditions that are mutually exclusive</value>
     <comment>Error that occurs during graphing when mutually exclusive conditions are used.</comment>
   </data>
-    <data name="OutOfDomain" xml:space="preserve">
+  <data name="OutOfDomain" xml:space="preserve">
     <value>Equation is out of domain</value>
     <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
-    <data name="GE_NotSupported" xml:space="preserve">
+  <data name="GE_NotSupported" xml:space="preserve">
     <value>Graphing this equation is not supported</value>
     <comment>Error that occurs during graphing when the equation is not supported.</comment>
   </data>
@@ -4209,19 +4209,19 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>Invalid expression</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
-    <data name="EmptyExpression" xml:space="preserve">
+  </data>
+  <data name="EmptyExpression" xml:space="preserve">
     <value>The expression is empty</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
   </data>
-    <data name="EqualWithoutEquation" xml:space="preserve">
+  <data name="EqualWithoutEquation" xml:space="preserve">
     <value>Equal was used without an equation</value>
     <comment>Error that occurs during graphing when equal is used without an equation. Ex: sin(x=y)</comment>
   </data>
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>Parenthesis missing after function name</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>A mathematical operation has the incorrect number of parameters</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -4278,7 +4278,7 @@
     <value>Cannot use complex numbers in inequalities</value>
     <comment>Error that occurs during graphing when complex numbers are used in inequalities.</comment>
   </data>
-    <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Back to function list</value>
     <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>
   </data>
@@ -4338,7 +4338,7 @@
     <value>Hide equation</value>
     <comment>This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator.</comment>
   </data>
-<data name="showEquationButtonAutomationName" xml:space="preserve">
+  <data name="showEquationButtonAutomationName" xml:space="preserve">
     <value>Show equation %1</value>
     <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
   </data>
@@ -4346,7 +4346,6 @@
     <value>Hide equation %1</value>
     <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator. %1 is the equation number.</comment>
   </data>
-    
   <data name="disableTracingButtonToolTip" xml:space="preserve">
     <value>Stop tracing</value>
     <comment>This is the tooltip/automation name for the graphing calculator stop tracing button</comment>
@@ -4358,7 +4357,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>Graph viewing window, x-axis bounded by %1 and %2, y-axis bounded by %3 and %4, displaying %5 equations</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Configure slider</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -4475,7 +4474,7 @@
     <value>Enter an expression</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>Copy</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -4498,7 +4497,7 @@
   <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
     <value>Select All</value>
     <comment>Select all menu item from the Equation TextBox</comment>
-  </data>    
+  </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Function Input List Item</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
@@ -4615,19 +4614,19 @@
     <value>White</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationHighContrastColor1AutomationName" xml:space="preserve">
+  <data name="equationHighContrastColor1AutomationName" xml:space="preserve">
     <value>Color 1</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationHighContrastColor2AutomationName" xml:space="preserve">
+  <data name="equationHighContrastColor2AutomationName" xml:space="preserve">
     <value>Color 2</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationHighContrastColor3AutomationName" xml:space="preserve">
+  <data name="equationHighContrastColor3AutomationName" xml:space="preserve">
     <value>Color 3</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationHighContrastColor4AutomationName" xml:space="preserve">
+  <data name="equationHighContrastColor4AutomationName" xml:space="preserve">
     <value>Color 4</value>
     <comment>Name of color in the color picker</comment>
   </data>
@@ -4691,7 +4690,7 @@
     <value>X</value>
     <comment>Screen reader prompt for the X button on the graphing calculator operator keypad</comment>
   </data>
-    <data name="yButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="yButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Y</value>
     <comment>Screen reader prompt for the Y button on the graphing calculator operator keypad</comment>
   </data>
@@ -4714,5 +4713,59 @@
   <data name="DockPanel_MemoryList" xml:space="preserve">
     <value>Memory list</value>
     <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
+  <data name="FinanceCalculationModeText" xml:space="preserve">
+    <value>Financial</value>
+    <comment>Name of the Financial Calculator mode. Displayed in the navigation menu.</comment>
+  </data>
+  <data name="FinanceCalculationOption.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Financial Calculation Mode</value>
+    <comment>Screen reader prompt for the financial option combobox.</comment>
+  </data>
+  <data name="Finance_CompoundOption.Content" xml:space="preserve">
+    <value>Compound Interest Calculation</value>
+    <comment>"Compound Interest Calculator" option for combobox.</comment>
+  </data>
+  <data name="Finance_TipOption.Content" xml:space="preserve">
+    <value>Tips Calculator</value>
+    <comment>"Tips Calculator" option for combobox.</comment>
+  </data>
+  <data name="BaseRateHeader.Header" xml:space="preserve">
+    <value>Base Rate ($)</value>
+  </data>
+  <data name="CalculateInterestButton.Content" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
+  <data name="CalculateInterestButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Calulate compound interest</value>
+  </data>
+  <data name="InterestRateHeader.Header" xml:space="preserve">
+    <value>Interest Rate (%)</value>
+  </data>
+  <data name="TermHeader.Header" xml:space="preserve">
+    <value>Term (Years)</value>
+  </data>
+  <data name="Finance_FutureValueLabel.Text" xml:space="preserve">
+    <value>Future Value</value>
+  </data>
+  <data name="BillAmoutHeader.Header" xml:space="preserve">
+    <value>Bill Amout ($)</value>
+  </data>
+  <data name="TipsAmoutHeader.Header" xml:space="preserve">
+    <value>Tips (%)</value>
+  </data>
+  <data name="CompoundedHeader.Header" xml:space="preserve">
+    <value>Compounded (per year)</value>
+  </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>$</value>
+    <comment>Currency symbol</comment>
+  </data>
+  <data name="Over" xml:space="preserve">
+    <value>Over</value>
+    <comment>Over. Context used: in financial calculator, "Over {years}"</comment>
+  </data>
+  <data name="TotalInterestEarned" xml:space="preserve">
+    <value>Total interest earned:</value>
   </data>
 </root>

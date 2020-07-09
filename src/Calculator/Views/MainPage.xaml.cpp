@@ -166,6 +166,11 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
             EnsureGraphingCalculator();
             KeyboardShortcutManager::DisableShortcuts(true);
         }
+        else if (newValue == ViewMode::Finance)
+        {
+            EnsureFinanceCalculator();
+            KeyboardShortcutManager::DisableShortcuts(true);
+        }
         else if (NavCategory::IsConverterViewMode(newValue))
         {
             if (m_model->CalculatorViewModel)
@@ -196,6 +201,7 @@ void MainPage::ShowHideControls(ViewMode mode)
     auto isCalcViewMode = NavCategory::IsCalculatorViewMode(mode);
     auto isDateCalcViewMode = NavCategory::IsDateCalculatorViewMode(mode);
     auto isGraphingCalcViewMode = NavCategory::IsGraphingCalculatorViewMode(mode);
+    auto isFinanceCalcViewMode = NavCategory::IsFinanceCalculatorViewMode(mode);
     auto isConverterViewMode = NavCategory::IsConverterViewMode(mode);
 
     if (m_calculator)
@@ -214,6 +220,12 @@ void MainPage::ShowHideControls(ViewMode mode)
     {
         m_graphingCalculator->Visibility = BooleanToVisibilityConverter::Convert(isGraphingCalcViewMode);
         m_graphingCalculator->IsEnabled = isGraphingCalcViewMode;
+    }
+
+    if (m_financeCalculator)
+    {
+        m_financeCalculator->Visibility = BooleanToVisibilityConverter::Convert(isFinanceCalcViewMode);
+        m_financeCalculator->IsEnabled = isFinanceCalcViewMode;
     }
 
     if (m_converter)
@@ -243,7 +255,7 @@ void MainPage::UpdatePanelViewState()
 
 void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
 {
-    if (!m_converter && !m_calculator && !m_dateCalculator && !m_graphingCalculator)
+    if (!m_converter && !m_calculator && !m_dateCalculator && !m_graphingCalculator && !m_financeCalculator)
     {
         // We have just launched into our default mode (standard calc) so ensure calc is loaded
         EnsureCalculator();
@@ -293,6 +305,10 @@ void MainPage::SetDefaultFocus()
     if (m_graphingCalculator != nullptr && m_graphingCalculator->Visibility == ::Visibility::Visible)
     {
         m_graphingCalculator->SetDefaultFocus();
+    }
+    if (m_financeCalculator != nullptr && m_financeCalculator->Visibility == ::Visibility::Visible)
+    {
+        m_financeCalculator->SetDefaultFocus();
     }
     if (m_converter != nullptr && m_converter->Visibility == ::Visibility::Visible)
     {
@@ -367,6 +383,17 @@ void MainPage::EnsureGraphingCalculator()
     }
 }
 
+void MainPage::EnsureFinanceCalculator()
+{
+    if (!m_financeCalculator)
+    {
+        m_financeCalculator = ref new FinanceCalculator();
+        m_financeCalculator->Name = L"FinanceCalculator";
+        m_financeCalculator->DataContext = m_model->GraphingCalcViewModel;
+
+        GraphingCalcHolder->Child = m_financeCalculator;
+    }
+}
 void MainPage::EnsureConverter()
 {
     if (!m_converter)

@@ -7,6 +7,7 @@
 #include "Views/MainPage.g.h"
 #include "Views/DateCalculator.xaml.h"
 #include "Views/GraphingCalculator/GraphingCalculator.xaml.h"
+#include "Views/FinanceCalculator.xaml.h"
 #include "Views/UnitConverter.xaml.h"
 #include "CalcViewModel/ApplicationViewModel.h"
 
@@ -74,6 +75,7 @@ public
         void EnsureCalculator();
         void EnsureDateCalculator();
         void EnsureGraphingCalculator();
+        void EnsureFinanceCalculator();
         void EnsureConverter();
         void ShowAboutPage();
 
@@ -83,6 +85,7 @@ public
 		GraphingCalculator^ m_graphingCalculator;
         CalculatorApp::UnitConverter ^ m_converter;
         CalculatorApp::DateCalculator ^ m_dateCalculator;
+        CalculatorApp::FinanceCalculator ^ m_financeCalculator;
         Windows::Foundation::EventRegistrationToken m_windowSizeEventToken;
         CalculatorApp::ViewModel::ApplicationViewModel ^ m_model;
         Windows::Foundation::EventRegistrationToken m_accessibilitySettingsToken;

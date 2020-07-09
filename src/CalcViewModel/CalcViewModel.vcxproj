@@ -322,6 +322,7 @@
     <ClInclude Include="DataLoaders\UnitConverterDataConstants.h" />
     <ClInclude Include="DataLoaders\UnitConverterDataLoader.h" />
     <ClInclude Include="DateCalculatorViewModel.h" />
+    <ClInclude Include="FinanceCalculatorViewModel.h" />
     <ClInclude Include="GraphingCalculatorEnums.h" />
     <ClInclude Include="GraphingCalculator\EquationViewModel.h" />
     <ClInclude Include="GraphingCalculator\GraphingCalculatorViewModel.h" />
@@ -356,6 +357,7 @@
     <ClCompile Include="DataLoaders\CurrencyHttpClient.cpp" />
     <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp" />
     <ClCompile Include="DateCalculatorViewModel.cpp" />
+    <ClCompile Include="FinanceCalculatorViewModel.cpp" />
     <ClCompile Include="GraphingCalculator\EquationViewModel.cpp" />
     <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp" />
     <ClCompile Include="GraphingCalculator\GraphingSettingsViewModel.cpp" />
@@ -405,6 +407,7 @@
   </Choose>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
