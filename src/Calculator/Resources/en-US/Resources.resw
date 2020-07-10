@@ -4715,4 +4715,12 @@
     <value>Memory list</value>
     <comment>Automation name for the group of controls for memory list.</comment>
   </data>
+  <data name="AboutMITLicense.Text" xml:space="preserve">
+    <value>Windows Calculator is made avaliable under the MIT License. To learn more and contribute, click on the GitHub link below:</value>
+    <comment>Notice of MIT license in about flyout. {Locked="GitHub"}</comment>
+  </data>
+  <data name="AboutFlyoutGithub.Text" xml:space="preserve">
+    <value>The repository on GitHub</value>
+    <comment>{Locked="GitHub"} Link text to GitHub repo</comment>
+  </data>
 </root>

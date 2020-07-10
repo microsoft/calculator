@@ -38,8 +38,20 @@
                     <Run x:Name="AboutFlyoutVersion"/>
                     <LineBreak/>
                     <Run x:Name="AboutControlCopyrightRun"/>
+                    <LineBreak/>
+                    <LineBreak/>
+                    <Run x:Uid="AboutMITLicense" FontSize="{ThemeResource BodyFontSize}"/>
                 </Paragraph>
             </RichTextBlock>
+
+            <HyperlinkButton x:Name="AboutFlyoutGitHub"
+                             Margin="12,0,12,6"
+                             NavigateUri="https://github.com/microsoft/calculator"
+                             ToolTipService.ToolTip="https://github.com/microsoft/calculator">
+                <TextBlock x:Uid="AboutFlyoutGithub"
+                           FontSize="{ThemeResource BodyFontSize}"
+                           TextWrapping="Wrap"/>
+            </HyperlinkButton>
             <HyperlinkButton x:Name="AboutFlyoutEULA"
                              Margin="12,0,12,6"
                              NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
