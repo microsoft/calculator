@@ -18,6 +18,7 @@ namespace CalculatorApp::Common::Automation
         StringReference MemoryItemChanged(L"MemorySlotChanged");
         StringReference MemoryItemAdded(L"MemorySlotAdded");
         StringReference HistoryCleared(L"HistoryCleared");
+        StringReference HistorySlotCleared(L"HistorySlotCleared");
         StringReference CategoryNameChanged(L"CategoryNameChanged");
         StringReference UpdateCurrencyRates(L"UpdateCurrencyRates");
         StringReference DisplayCopied(L"DisplayCopied");
@@ -102,6 +103,12 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetHistoryClearedAnnouncement(Str
 {
     return ref new NarratorAnnouncement(
         announcement, CalculatorActivityIds::HistoryCleared, AutomationNotificationKind::ItemRemoved, AutomationNotificationProcessing::MostRecent);
+}
+
+NarratorAnnouncement ^ CalculatorAnnouncement::GetHistorySlotClearedAnnouncement(String ^ announcement)
+{
+    return ref new NarratorAnnouncement(
+        announcement, CalculatorActivityIds::HistorySlotCleared, AutomationNotificationKind::ItemRemoved, AutomationNotificationProcessing::ImportantMostRecent);
 }
 
 NarratorAnnouncement ^ CalculatorAnnouncement::GetCategoryNameChangedAnnouncement(String ^ announcement)

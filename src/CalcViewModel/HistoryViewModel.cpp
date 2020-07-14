@@ -23,14 +23,16 @@ using namespace Windows::Foundation::Collections;
 static StringReference HistoryVectorLengthKey{ L"HistoryVectorLength" };
 static StringReference ItemsSizeKey{ L"ItemsCount" };
 
-namespace CalculatorApp::ViewModel::HistoryResourceKeys
+namespace HistoryResourceKeys
 {
     StringReference HistoryCleared(L"HistoryList_Cleared");
+    StringReference HistorySlotCleared(L"Format_HistorySlotCleared");
 }
 
 HistoryViewModel::HistoryViewModel(_In_ CalculationManager::CalculatorManager* calculatorManager)
     : m_calculatorManager(calculatorManager)
     , m_localizedHistoryCleared(nullptr)
+    , m_localizedHistorySlotCleared(nullptr)
 {
     AreHistoryShortcutsEnabled = true;
 
@@ -129,6 +131,12 @@ void HistoryViewModel::DeleteItem(_In_ HistoryItemViewModel ^ e)
             RaisePropertyChanged(ItemsSizeKey);
         }
     }
+    // Adding 1 to the history item index to provide 1-based numbering on announcements.
+    wstring localizedIndex = to_wstring(itemIndex + 1);
+    LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
+    m_localizedHistorySlotCleared = AppResourceProvider::GetInstance()->GetResourceString(HistoryResourceKeys::HistorySlotCleared);
+    String ^ announcement = LocalizationStringUtil::GetLocalizedString(m_localizedHistorySlotCleared, StringReference(localizedIndex.c_str()));
+    HistoryAnnouncement = CalculatorAnnouncement::GetHistorySlotClearedAnnouncement(announcement);
 }
 
 void HistoryViewModel::OnHideCommand(_In_ Platform::Object ^ e)

@@ -61,6 +61,7 @@ namespace CalculatorApp
             CalculatorDisplay m_calculatorDisplay;
             CalculationManager::CalculatorMode m_currentMode;
             Platform::String ^ m_localizedHistoryCleared;
+            Platform::String ^ m_localizedHistorySlotCleared;
         };
     }
 }
