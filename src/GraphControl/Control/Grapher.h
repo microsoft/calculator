@@ -21,7 +21,7 @@ public
     delegate void TracingChangedEventHandler(bool newValue);
 
 public
-    delegate void TracingValueChangedEventHandler(Windows::Foundation::Point value);
+    delegate void TracingValueChangedEventHandler(double xPointValue, double yPointValue);
 public
     delegate void PointerValueChangedEventHandler(Windows::Foundation::Point value);
 
@@ -82,13 +82,6 @@ public enum class GraphViewChangedReason
         void ZoomFromCenter(double scale);
         void ResetGrid();
 
-        property Windows::Foundation::Point TraceValue
-        {
-            Windows::Foundation::Point get()
-            {
-                return m_renderMain->TraceValue;
-            }
-        }
 
         property Windows::Foundation::Point TraceLocation
         {

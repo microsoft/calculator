@@ -649,7 +649,7 @@ namespace GraphControl
         if (m_renderMain->Tracing)
         {
             TracingChangedEvent(true);
-            TracingValueChangedEvent(m_renderMain->TraceValue);
+            TracingValueChangedEvent(m_renderMain->XTraceValue, m_renderMain->YTraceValue);
         }
         else
         {

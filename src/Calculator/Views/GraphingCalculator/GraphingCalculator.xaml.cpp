@@ -207,44 +207,15 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
     GraphingControl->PlotGraph(false);
 }
 
-wstringstream GraphingCalculator::FormatTraceValue(double min, double max, float pointValue)
-{
-    wstringstream traceValueString;
-
-    // Extract precision we will round to
-    auto precision = static_cast<int>(floor(log10(max - min)) - 3);
-
-    // Determine if we want to show scientific notation instead
-    if (precision <= -7 || precision >= 7)
-    {
-        traceValueString << scientific;
-    }
-    else
-    {
-        traceValueString << fixed;
-    }
-
-    // If we are rounding to a decimal place, set the precision
-    if (precision < 0)
-    {
-        traceValueString << setprecision(::min(7, abs(precision))) << pointValue;
-    }
-    else
-    {
-        traceValueString << setprecision(0) << pointValue;
-    }
-
-    return traceValueString;
-}
-
-void GraphingCalculator::OnTracePointChanged(Point newPoint)
+void GraphingCalculator::OnTracePointChanged(double xPointValue, double yPointValue)
 {
     wstringstream traceValueString;
 
     double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
     GraphingControl->GetDisplayRanges(&xAxisMin, &xAxisMax, &yAxisMin, &yAxisMax);
 
-    traceValueString << "(" << FormatTraceValue(xAxisMin, xAxisMax, newPoint.X).str() << ", " << FormatTraceValue(yAxisMin, yAxisMax, newPoint.Y).str() << ")";
+    traceValueString << "(" << xPointValue << ", ";
+    traceValueString << setprecision(15) << yPointValue << ")";    
 
     TraceValue->Text = ref new String(traceValueString.str().c_str());
 
