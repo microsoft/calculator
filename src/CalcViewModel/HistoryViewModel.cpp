@@ -131,6 +131,7 @@ void HistoryViewModel::DeleteItem(_In_ HistoryItemViewModel ^ e)
             RaisePropertyChanged(ItemsSizeKey);
         }
     }
+    // Adding 1 to the history item index to provide 1-based numbering on announcements.
     wstring localizedIndex = to_wstring(itemIndex + 1);
     LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
     m_localizedHistorySlotCleared = AppResourceProvider::GetInstance()->GetResourceString(HistoryResourceKeys::HistorySlotCleared);
