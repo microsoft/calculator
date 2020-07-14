@@ -4086,4 +4086,12 @@
     <value>ಗ್ರಾಫ್ ಆಯ್ಕೆಗಳು</value>
     <comment>Screen reader prompt for the graph options panel</comment>
   </data>
+  <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
+    <value>ಇತಿಹಾಸ ಮತ್ತು ಮೆಮೊರಿ ಪಟ್ಟಿಗಳು</value>
+    <comment>Automation name for the group of controls for history and memory lists.</comment>
+  </data>
+  <data name="DockPanel_MemoryList" xml:space="preserve">
+    <value>ಮೆಮೊರಿ ಪಟ್ಟಿ</value>
+    <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
 </root>

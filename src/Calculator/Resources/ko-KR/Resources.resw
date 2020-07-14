@@ -4086,4 +4086,12 @@
     <value>그래프 옵션</value>
     <comment>Screen reader prompt for the graph options panel</comment>
   </data>
+  <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
+    <value>기록 및 메모리 목록</value>
+    <comment>Automation name for the group of controls for history and memory lists.</comment>
+  </data>
+  <data name="DockPanel_MemoryList" xml:space="preserve">
+    <value>메모리 목록</value>
+    <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
 </root>

@@ -4019,7 +4019,7 @@
     <comment>Graph settings option to set graph to light theme</comment>
   </data>
   <data name="MatchAppTheme.Content" xml:space="preserve">
-    <value>Confronta il tema dell'app</value>
+    <value>Rispecchia tema del sistema</value>
     <comment>Graph settings option to set graph to match the app theme</comment>
   </data>
   <data name="GraphThemeHeading.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4031,7 +4031,7 @@
     <comment>This is the automation name text for the Graph settings option to set graph to light theme</comment>
   </data>
   <data name="MatchAppTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Confronta il tema dell'app</value>
+    <value>Rispecchia tema del sistema</value>
     <comment>This is the automation name text for the Graph settings option to set graph to match the app theme</comment>
   </data>
   <data name="FunctionRemovedAnnouncement" xml:space="preserve">
@@ -4085,5 +4085,13 @@
   <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Opzioni grafico</value>
     <comment>Screen reader prompt for the graph options panel</comment>
+  </data>
+  <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
+    <value>Cronologia ed elenchi di memoria</value>
+    <comment>Automation name for the group of controls for history and memory lists.</comment>
+  </data>
+  <data name="DockPanel_MemoryList" xml:space="preserve">
+    <value>Elenco di memoria</value>
+    <comment>Automation name for the group of controls for memory list.</comment>
   </data>
 </root>

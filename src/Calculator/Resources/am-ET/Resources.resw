@@ -4086,4 +4086,12 @@
     <value>የግራፍ አማራጮች</value>
     <comment>Screen reader prompt for the graph options panel</comment>
   </data>
+  <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
+    <value>ታሪክ እና የማህደረ ትውስታ ዝርዝሮች</value>
+    <comment>Automation name for the group of controls for history and memory lists.</comment>
+  </data>
+  <data name="DockPanel_MemoryList" xml:space="preserve">
+    <value>የማህደረ ትውስታ ዝርዝር</value>
+    <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
 </root>
