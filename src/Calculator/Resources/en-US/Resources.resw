@@ -4715,4 +4715,12 @@
     <value>Memory list</value>
     <comment>Automation name for the group of controls for memory list.</comment>
   </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>Calculator always on top</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>Calculator back to full view</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
 </root>
