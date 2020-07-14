@@ -4086,4 +4086,12 @@
     <value>Valkostir grafs</value>
     <comment>Screen reader prompt for the graph options panel</comment>
   </data>
+  <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
+    <value>Ferils- og minnislistar</value>
+    <comment>Automation name for the group of controls for history and memory lists.</comment>
+  </data>
+  <data name="DockPanel_MemoryList" xml:space="preserve">
+    <value>Minnislisti</value>
+    <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
 </root>

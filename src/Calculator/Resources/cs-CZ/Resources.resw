@@ -4086,4 +4086,12 @@
     <value>Možnosti grafu</value>
     <comment>Screen reader prompt for the graph options panel</comment>
   </data>
+  <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
+    <value>Seznamy historie a paměti</value>
+    <comment>Automation name for the group of controls for history and memory lists.</comment>
+  </data>
+  <data name="DockPanel_MemoryList" xml:space="preserve">
+    <value>Seznam paměti</value>
+    <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
 </root>

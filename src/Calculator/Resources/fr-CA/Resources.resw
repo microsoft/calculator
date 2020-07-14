@@ -4086,4 +4086,12 @@
     <value>Options de graphique</value>
     <comment>Screen reader prompt for the graph options panel</comment>
   </data>
+  <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
+    <value>Listes d'histoire et de mémoire</value>
+    <comment>Automation name for the group of controls for history and memory lists.</comment>
+  </data>
+  <data name="DockPanel_MemoryList" xml:space="preserve">
+    <value>Liste de mémoire</value>
+    <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
 </root>

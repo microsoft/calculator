@@ -4086,4 +4086,12 @@
     <value>Kaavion asetukset</value>
     <comment>Screen reader prompt for the graph options panel</comment>
   </data>
+  <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
+    <value>Historia- ja muistiluettelot</value>
+    <comment>Automation name for the group of controls for history and memory lists.</comment>
+  </data>
+  <data name="DockPanel_MemoryList" xml:space="preserve">
+    <value>Muistiluettelo</value>
+    <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
 </root>
