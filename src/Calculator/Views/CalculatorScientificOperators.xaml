@@ -956,7 +956,7 @@
                 <controls:CalculatorButton x:Name="SquareRootButton"
                                            x:Uid="squareRootButton"
                                            Grid.Row="1"
-                                           Style="{StaticResource EmphasizedCalcButtonStyle}"
+                                           Style="{StaticResource SymbolOperatorButtonStyle}"
                                            AutomationProperties.AutomationId="squareRootButton"
                                            ButtonId="Sqrt"
                                            Content="&#xF899;"/>
