@@ -29,6 +29,7 @@ namespace CalculatorApp::Common::Automation
         StringReference FunctionRemoved(L"FunctionRemoved");
         StringReference GraphViewBestFitChanged(L"GraphViewBestFitChanged");
         StringReference AlwaysOnTop(L"AlwaysOnTop");
+        StringReference BitShiftRadioButtonContent(L"BitShiftRadioButtonContent");
     }
 }
 
@@ -108,7 +109,10 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetHistoryClearedAnnouncement(Str
 NarratorAnnouncement ^ CalculatorAnnouncement::GetHistorySlotClearedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement, CalculatorActivityIds::HistorySlotCleared, AutomationNotificationKind::ItemRemoved, AutomationNotificationProcessing::ImportantMostRecent);
+        announcement,
+        CalculatorActivityIds::HistorySlotCleared,
+        AutomationNotificationKind::ItemRemoved,
+        AutomationNotificationProcessing::ImportantMostRecent);
 }
 
 NarratorAnnouncement ^ CalculatorAnnouncement::GetCategoryNameChangedAnnouncement(String ^ announcement)
@@ -174,10 +178,7 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphViewChangedAnnouncement(S
 NarratorAnnouncement ^ CalculatorAnnouncement::GetFunctionRemovedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement,
-        CalculatorActivityIds::FunctionRemoved,
-        AutomationNotificationKind::ItemRemoved,
-        AutomationNotificationProcessing::MostRecent);
+        announcement, CalculatorActivityIds::FunctionRemoved, AutomationNotificationKind::ItemRemoved, AutomationNotificationProcessing::MostRecent);
 }
 
 NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphViewBestFitChangedAnnouncement(Platform::String ^ announcement)
@@ -192,8 +193,14 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphViewBestFitChangedAnnounc
 NarratorAnnouncement ^ CalculatorAnnouncement::GetAlwaysOnTopChangedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
+        announcement, CalculatorActivityIds::AlwaysOnTop, AutomationNotificationKind::ActionCompleted, AutomationNotificationProcessing::ImportantMostRecent);
+}
+
+NarratorAnnouncement ^ CalculatorAnnouncement::GetBitShiftRadioButtonCheckedAnnouncement(String ^ announcement)
+{
+    return ref new NarratorAnnouncement(
         announcement,
-        CalculatorActivityIds::AlwaysOnTop,
+        CalculatorActivityIds::BitShiftRadioButtonContent,
         AutomationNotificationKind::ActionCompleted,
         AutomationNotificationProcessing::ImportantMostRecent);
 }

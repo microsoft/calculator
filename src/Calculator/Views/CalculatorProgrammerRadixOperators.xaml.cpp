@@ -11,6 +11,7 @@
 #include "Controls/CalculatorButton.h"
 #include "Converters/BooleanToVisibilityConverter.h"
 #include "Views/NumberPad.xaml.h"
+#include <CalcViewModel\Common\AppResourceProvider.h>
 
 using namespace std;
 using namespace CalculatorApp;
@@ -27,6 +28,16 @@ CalculatorProgrammerRadixOperators::CalculatorProgrammerRadixOperators()
     : m_isErrorVisualState(false)
 {
     InitializeComponent();
+    LoadResourceStrings();
+}
+
+void CalculatorProgrammerRadixOperators::LoadResourceStrings()
+{
+    auto resProvider = AppResourceProvider::GetInstance();
+    m_arithmeticShiftButtonContent = resProvider->GetResourceString(L"arithmeticShiftButtonSelected");
+    m_logicalShiftButtonContent = resProvider->GetResourceString(L"logicalShiftButtonSelected");
+    m_rotateCircularButtonContent = resProvider->GetResourceString(L"rotateCircularButtonSelected");
+    m_rotateCarryShiftButtonContent = resProvider->GetResourceString(L"rotateCarryShiftButtonSelected");
 }
 
 void CalculatorProgrammerRadixOperators::FlyoutButton_Clicked(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
@@ -63,6 +74,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
     CollapseBitshiftButtons();
 
     auto radioButton = static_cast<RadioButton ^>(sender);
+    Platform::String ^ announcementString = L"";
 
     if (radioButton == ArithmeticShiftButton)
     {
@@ -70,6 +82,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         RshButton->Visibility = ::Visibility::Visible;
         LshButton->IsEnabled = true;
         RshButton->IsEnabled = true;
+        announcementString = m_arithmeticShiftButtonContent;
     }
     else if (radioButton == LogicalShiftButton)
     {
@@ -77,6 +90,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         RshLogicalButton->Visibility = ::Visibility::Visible;
         LshLogicalButton->IsEnabled = true;
         RshLogicalButton->IsEnabled = true;
+        announcementString = m_logicalShiftButtonContent;
     }
     else if (radioButton == RotateCircularButton)
     {
@@ -84,6 +98,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         RorButton->Visibility = ::Visibility::Visible;
         RolButton->IsEnabled = true;
         RorButton->IsEnabled = true;
+        announcementString = m_rotateCircularButtonContent;
     }
     else if (radioButton == RotateCarryShiftButton)
     {
@@ -91,9 +106,11 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         RorCarryButton->Visibility = ::Visibility::Visible;
         RolCarryButton->IsEnabled = true;
         RorCarryButton->IsEnabled = true;
+        announcementString = m_rotateCarryShiftButtonContent;
     }
 
     this->BitShiftFlyout->Hide();
+    Model->SetBitshiftRadioButtonCheckedAnnouncement(announcementString);
 }
 
 void CalculatorProgrammerRadixOperators::CollapseBitshiftButtons()
