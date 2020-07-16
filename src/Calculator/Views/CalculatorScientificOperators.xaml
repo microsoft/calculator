@@ -1006,7 +1006,7 @@
                 </Grid.RowDefinitions>
                 <controls:CalculatorButton x:Name="XPower3Button"
                                            x:Uid="xpower3Button"
-                                           Style="{StaticResource SymbolOperatorButtonStyle}"
+                                           Style="{StaticResource EmphasizedCalcButtonStyle}"
                                            AutomationProperties.AutomationId="xpower3Button"
                                            ButtonId="Cube"
                                            Click="ShiftButton_Uncheck"
