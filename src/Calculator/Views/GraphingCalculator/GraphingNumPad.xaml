@@ -1001,7 +1001,7 @@
                     <controls:CalculatorButton x:Name="SquareRootButton"
                                                x:Uid="squareRootButton"
                                                Grid.Row="1"
-                                               Style="{StaticResource EmphasizedCalcButtonStyle}"
+                                               Style="{StaticResource SymbolOperatorButtonStyle}"
                                                AutomationProperties.AutomationId="squareRootButton"
                                                ButtonId="Sqrt"
                                                Click="Button_Clicked"
@@ -1062,7 +1062,7 @@
 
                     <controls:CalculatorButton x:Name="XPower3Button"
                                                x:Uid="xpower3Button"
-                                               Style="{StaticResource SymbolOperatorButtonStyle}"
+                                               Style="{StaticResource EmphasizedCalcButtonStyle}"
                                                AutomationProperties.AutomationId="xpower3Button"
                                                ButtonId="Cube"
                                                Click="ShiftButton_Uncheck"
