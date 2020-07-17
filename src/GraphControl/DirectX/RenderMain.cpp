@@ -137,7 +137,7 @@ namespace GraphControl::DX
 
     bool RenderMain::CanRenderPoint()
     {
-        if (m_drawNearestPoint || m_drawActiveTracing)
+        if (m_graph && (m_drawNearestPoint || m_drawActiveTracing))
         {
             Point trackPoint = m_pointerLocation;
 
