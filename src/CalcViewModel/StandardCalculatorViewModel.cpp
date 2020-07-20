@@ -252,8 +252,7 @@ void StandardCalculatorViewModel::SetNoParenAddedNarratorAnnouncement()
 {
     if (m_localizedNoRightParenthesisAddedFormat == nullptr)
     {
-        m_localizedNoRightParenthesisAddedFormat =
-            AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::NoParenthesisAdded);
+        m_localizedNoRightParenthesisAddedFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::NoParenthesisAdded);
     }
 
     Announcement = CalculatorAnnouncement::GetNoRightParenthesisAddedAnnouncement(m_localizedNoRightParenthesisAddedFormat);
@@ -1004,8 +1003,8 @@ ButtonInfo StandardCalculatorViewModel::MapCharacterToButtonId(char16 ch)
     {
         if (LocalizationSettings::GetInstance().IsLocalizedDigit(ch))
         {
-            result.buttonId = NumbersAndOperatorsEnum::Zero
-                              + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit('0'));
+            result.buttonId =
+                NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit('0'));
             result.canSendNegate = true;
         }
     }
@@ -1469,7 +1468,7 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
 bool StandardCalculatorViewModel::IsOpnd(Command command)
 {
     static constexpr Command opnd[] = { Command::Command0, Command::Command1, Command::Command2, Command::Command3, Command::Command4,  Command::Command5,
-                              Command::Command6, Command::Command7, Command::Command8, Command::Command9, Command::CommandPNT };
+                                        Command::Command6, Command::Command7, Command::Command8, Command::Command9, Command::CommandPNT };
 
     return find(begin(opnd), end(opnd), command) != end(opnd);
 }
@@ -1477,9 +1476,9 @@ bool StandardCalculatorViewModel::IsOpnd(Command command)
 bool StandardCalculatorViewModel::IsUnaryOp(Command command)
 {
     static constexpr Command unaryOp[] = { Command::CommandSQRT,  Command::CommandFAC,  Command::CommandSQR,   Command::CommandLOG,
-                                 Command::CommandPOW10, Command::CommandPOWE, Command::CommandLN,    Command::CommandREC,
-                                 Command::CommandSIGN,  Command::CommandSINH, Command::CommandASINH, Command::CommandCOSH,
-                                 Command::CommandACOSH, Command::CommandTANH, Command::CommandATANH, Command::CommandCUB };
+                                           Command::CommandPOW10, Command::CommandPOWE, Command::CommandLN,    Command::CommandREC,
+                                           Command::CommandSIGN,  Command::CommandSINH, Command::CommandASINH, Command::CommandCOSH,
+                                           Command::CommandACOSH, Command::CommandTANH, Command::CommandATANH, Command::CommandCUB };
 
     if (find(begin(unaryOp), end(unaryOp), command) != end(unaryOp))
     {
@@ -1496,9 +1495,8 @@ bool StandardCalculatorViewModel::IsUnaryOp(Command command)
 
 bool StandardCalculatorViewModel::IsTrigOp(Command command)
 {
-    static constexpr Command trigOp[] = {
-        Command::CommandSIN, Command::CommandCOS, Command::CommandTAN, Command::CommandASIN, Command::CommandACOS, Command::CommandATAN
-    };
+    static constexpr Command trigOp[] = { Command::CommandSIN,  Command::CommandCOS,  Command::CommandTAN,
+                                          Command::CommandASIN, Command::CommandACOS, Command::CommandATAN };
 
     return find(begin(trigOp), end(trigOp), command) != end(trigOp);
 }
@@ -1506,7 +1504,7 @@ bool StandardCalculatorViewModel::IsTrigOp(Command command)
 bool StandardCalculatorViewModel::IsBinOp(Command command)
 {
     static constexpr Command binOp[] = { Command::CommandADD, Command::CommandSUB,  Command::CommandMUL, Command::CommandDIV,
-                               Command::CommandEXP, Command::CommandROOT, Command::CommandMOD, Command::CommandPWR };
+                                         Command::CommandEXP, Command::CommandROOT, Command::CommandMOD, Command::CommandPWR };
 
     return find(begin(binOp), end(binOp), command) != end(binOp);
 }
@@ -1695,12 +1693,11 @@ NarratorAnnouncement ^ StandardCalculatorViewModel::GetDisplayUpdatedNarratorAnn
     {
         if (m_localizedButtonPressFeedbackAutomationFormat == nullptr)
         {
-            m_localizedButtonPressFeedbackAutomationFormat = AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::ButtonPressFeedbackFormat);
+            m_localizedButtonPressFeedbackAutomationFormat =
+                AppResourceProvider::GetInstance()->GetResourceString(CalculatorResourceKeys::ButtonPressFeedbackFormat);
         }
         announcement = LocalizationStringUtil::GetLocalizedString(
-            m_localizedButtonPressFeedbackAutomationFormat,
-            m_CalculationResultAutomationName,
-            m_feedbackForButtonPress);
+            m_localizedButtonPressFeedbackAutomationFormat, m_CalculationResultAutomationName, m_feedbackForButtonPress);
     }
 
     // Make sure we don't accidentally repeat an announcement.
@@ -1766,4 +1763,9 @@ void StandardCalculatorViewModel::ResetCalcManager(bool clearMemory)
 void StandardCalculatorViewModel::SendCommandToCalcManager(int commandId)
 {
     m_standardCalculatorManager.SendCommand(static_cast<Command>(commandId));
+}
+
+void StandardCalculatorViewModel::SetBitshiftRadioButtonCheckedAnnouncement(Platform::String ^ announcement)
+{
+    Announcement = CalculatorAnnouncement::GetBitShiftRadioButtonCheckedAnnouncement(announcement);
 }

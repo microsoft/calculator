@@ -267,6 +267,7 @@ namespace CalculatorApp
             void OnMaxDigitsReached();
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
+            void SetBitshiftRadioButtonCheckedAnnouncement(Platform::String ^ announcement);
 
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);
