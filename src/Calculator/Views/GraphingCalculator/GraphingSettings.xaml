@@ -140,6 +140,7 @@
                          x:Uid="GraphSettingsXMin"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMinError), Mode=OneWay}"
+                         contract7Present:CornerRadius="2"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.XMin, Mode=TwoWay}"/>
@@ -148,6 +149,7 @@
                          Grid.Column="2"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMaxError), Mode=OneWay}"
+                         contract7Present:CornerRadius="2"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.XMax, Mode=TwoWay}"/>
@@ -156,6 +158,7 @@
                          Grid.Row="2"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMinError), Mode=OneWay}"
+                         contract7Present:CornerRadius="2"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.YMin, Mode=TwoWay}"/>
@@ -165,6 +168,7 @@
                          Grid.Column="2"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMaxError), Mode=OneWay}"
+                         contract7Present:CornerRadius="2"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.YMax, Mode=TwoWay}"/>
