@@ -38,16 +38,12 @@ void CalculatorProgrammerRadixOperators::LoadResourceStrings()
     m_logicalShiftButtonContent = resProvider->GetResourceString(L"logicalShiftButtonSelected");
     m_rotateCircularButtonContent = resProvider->GetResourceString(L"rotateCircularButtonSelected");
     m_rotateCarryShiftButtonContent = resProvider->GetResourceString(L"rotateCarryShiftButtonSelected");
+    m_selectedShiftButtonContent = m_arithmeticShiftButtonContent;
 }
 
 void CalculatorProgrammerRadixOperators::FlyoutButton_Clicked(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
 {
     this->BitwiseFlyout->Hide();
-}
-
-void CalculatorProgrammerRadixOperators::checkDefaultBitShift()
-{
-    this->ArithmeticShiftButton->IsChecked = true;
 }
 
 void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
@@ -109,7 +105,12 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         announcementString = m_rotateCarryShiftButtonContent;
     }
 
-    this->BitShiftFlyout->Hide();
+    if (announcementString != m_selectedShiftButtonContent)
+    {
+        this->BitShiftFlyout->Hide();
+        m_selectedShiftButtonContent = announcementString;
+    }
+
     Model->SetBitshiftRadioButtonCheckedAnnouncement(announcementString);
 }
 
@@ -174,5 +175,25 @@ void CalculatorProgrammerRadixOperators::ClearButton_LostFocus(Object ^ sender, 
     if (ClearEntryButton->Visibility == ::Visibility::Visible && ClearButton->Visibility == ::Visibility::Collapsed)
     {
         ClearEntryButton->Focus(::FocusState::Programmatic);
+    }
+}
+
+void CalculatorApp::CalculatorProgrammerRadixOperators::BitShiftFlyout_Opened(Platform::Object ^ sender, Platform::Object ^ e)
+{
+    if (m_selectedShiftButtonContent == m_arithmeticShiftButtonContent)
+    {
+        ArithmeticShiftButton->IsChecked = true;
+    }
+    else if (m_selectedShiftButtonContent == m_logicalShiftButtonContent)
+    {
+        LogicalShiftButton->IsChecked = true;
+    }
+    else if (m_selectedShiftButtonContent == m_rotateCircularButtonContent)
+    {
+        RotateCircularButton->IsChecked = true;
+    }
+    else if (m_selectedShiftButtonContent == m_rotateCarryShiftButtonContent)
+    {
+        RotateCarryShiftButton->IsChecked = true;
     }
 }

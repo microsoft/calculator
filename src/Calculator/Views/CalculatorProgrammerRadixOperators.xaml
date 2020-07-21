@@ -346,13 +346,13 @@
                     <Flyout x:Name="BitShiftFlyout"
                             Windows10version1809:AreOpenCloseAnimationsEnabled="False"
                             FlyoutPresenterStyle="{ThemeResource OperatorPanelFlyoutStyle}"
-                            Placement="Bottom">
+                            Placement="Bottom"
+                            Opened="BitShiftFlyout_Opened">
                         <StackPanel MaxWidth="192" Padding="12">
                             <RadioButton x:Name="ArithmeticShiftButton"
                                          x:Uid="arithmeticShiftButton"
                                          AutomationProperties.AutomationId="arithmeticShiftButton"
-                                         Checked="BitshiftFlyout_Checked"
-                                         IsChecked="True"/>
+                                         Checked="BitshiftFlyout_Checked"/>
                             <RadioButton x:Name="LogicalShiftButton"
                                          x:Uid="logicalShiftButton"
                                          AutomationProperties.AutomationId="logicalShiftButton"
