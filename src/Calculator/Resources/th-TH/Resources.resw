@@ -3547,7 +3547,7 @@
     <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
   <data name="GE_NotSupported" xml:space="preserve">
-    <value>การเขียนกราฟสมการนี้ไม่ได้รับการสนับสนุน</value>
+    <value>การสร้างกราฟสมการนี้ไม่ได้รับการสนับสนุน</value>
     <comment>Error that occurs during graphing when the equation is not supported.</comment>
   </data>
   <data name="ParenthesisMismatch" xml:space="preserve">
@@ -4093,5 +4093,33 @@
   <data name="DockPanel_MemoryList" xml:space="preserve">
     <value>รายการหน่วยความจำ</value>
     <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>ล้างช่วงเวลาประวัติ %1 แล้ว</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>เครื่องคิดเลขอยู่ด้านบนเสมอ</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>เครื่องคิดเลขกลับไปเป็นมุมมองแบบเต็ม</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
+  <data name="arithmeticShiftButtonSelected" xml:space="preserve">
+    <value>เลือก การเลื่อนเชิงคำนวณ แล้ว</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButtonSelected" xml:space="preserve">
+    <value>เลือก การเลื่อนเชิงตรรกะ แล้ว</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButtonSelected" xml:space="preserve">
+    <value>เลือก หมุนการเลื่อนวน แล้ว</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
+    <value>เลือก หมุนผ่านการเลื่อนวน แล้ว</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
 </root>

@@ -4094,4 +4094,16 @@
     <value>മെമ്മറി ലിസ്റ്റ്</value>
     <comment>Automation name for the group of controls for memory list.</comment>
   </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>ചരിത്ര സ്ലോട്ട് %1 മായ്ച്ചു</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>എല്ലായ്പ്പോഴും മുകളിലുള്ള കാൽക്കുലേറ്റർ</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>കാൽക്കുലേറ്റർ പൂർണ്ണ കാഴ്ചയിലേക്ക് മടങ്ങുക</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
 </root>
