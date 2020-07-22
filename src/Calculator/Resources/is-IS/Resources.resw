@@ -4094,4 +4094,32 @@
     <value>Minnislisti</value>
     <comment>Automation name for the group of controls for memory list.</comment>
   </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>Ferilsrauf %1 hreinsuð</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>Reiknivél alltaf efst</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>Reiknivél aftur í fulla skjámynd</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
+  <data name="arithmeticShiftButtonSelected" xml:space="preserve">
+    <value>Reikningshliðrun valin</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButtonSelected" xml:space="preserve">
+    <value>Rökræn hliðrun valin</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButtonSelected" xml:space="preserve">
+    <value>„Snúa hringhliðrun“ valið</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
+    <value>„Hringhliðrun snúnings með geymd“ valið</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
 </root>

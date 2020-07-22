@@ -4094,4 +4094,16 @@
     <value>បញ្ជីអង្គចងចាំ</value>
     <comment>Automation name for the group of controls for memory list.</comment>
   </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>រន្ធអង្គចងចាំ %1 ត្រូវបានលុប</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>ម៉ាស៊ីនគិតលេខនៅខាងលើជានិច្ច</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>ម៉ាស៊ីនគិតលេខត្រឡប់​ទៅ​កា​របង្ហញ​ពេញ</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
 </root>

@@ -3547,7 +3547,7 @@
     <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
   <data name="GE_NotSupported" xml:space="preserve">
-    <value>Nie można stworzyć wykresu tego równania</value>
+    <value>Tworzenie wykresu tego równania nie jest obsługiwane</value>
     <comment>Error that occurs during graphing when the equation is not supported.</comment>
   </data>
   <data name="ParenthesisMismatch" xml:space="preserve">
@@ -4093,5 +4093,17 @@
   <data name="DockPanel_MemoryList" xml:space="preserve">
     <value>Lista pamięci</value>
     <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>Wyczyszczono miejsce historii %1</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>Kalkulator zawsze na wierzchu</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>Kalkulator powrócił do pełnego widoku</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
   </data>
 </root>

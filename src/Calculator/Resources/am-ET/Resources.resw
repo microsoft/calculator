@@ -4094,4 +4094,32 @@
     <value>የማህደረ ትውስታ ዝርዝር</value>
     <comment>Automation name for the group of controls for memory list.</comment>
   </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>የታሪክ ማስገቢያ %1 ጸድቷል</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>የስሌት ማሽን ሁልጊዜም ከአናት ላይ</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>የስሌት ማሽን ወደ ሙሉ ዕይታ ተመልሷል</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
+  <data name="arithmeticShiftButtonSelected" xml:space="preserve">
+    <value>የአርቲሜቲክ Shift ተመርጧል</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButtonSelected" xml:space="preserve">
+    <value>ምክንያታዊ Shift ተመርጧል</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButtonSelected" xml:space="preserve">
+    <value>በክበባዊ Shift ማሽከርከር ተመርጧል</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
+    <value>በተላላፊ ክበባዊ Shift ማሽከርከር ተመርጧል</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
 </root>

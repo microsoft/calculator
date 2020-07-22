@@ -4094,4 +4094,32 @@
     <value>మెమరీ జాబితా</value>
     <comment>Automation name for the group of controls for memory list.</comment>
   </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>చరిత్ర స్లాట్ %1 క్లియర్ చేయబడింది</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>ఎల్లప్పుడూ కాలిక్యులేటర్ ఎగువ భాగంలో</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>కాలిక్యులేటర్ తిరిగి పూర్తి వీక్షణ కోసం</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
+  <data name="arithmeticShiftButtonSelected" xml:space="preserve">
+    <value>అంకగణిత షిఫ్ట్ ఎంచుకోబడింది</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButtonSelected" xml:space="preserve">
+    <value>లాజికల్ షిఫ్ట్ ఎంచుకోబడింది</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButtonSelected" xml:space="preserve">
+    <value>వృత్తాకార షిఫ్ట్‌లో రొటేట్ చేయి ఎంచుకోబడింది</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
+    <value>క్యారీ చేసే దానితో వృత్తాకార షిఫ్ట్‌లో రొటేట్ చేయి ఎంచుకోబడింది</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
 </root>

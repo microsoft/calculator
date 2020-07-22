@@ -4094,4 +4094,16 @@
     <value>Lista de memoria</value>
     <comment>Automation name for the group of controls for memory list.</comment>
   </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>Se ha borrado la ranura de memoria %1</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>Calculadora siempre en la parte superior</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>Calculadora vuelta a vista completa</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
 </root>

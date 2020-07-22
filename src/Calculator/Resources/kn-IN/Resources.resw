@@ -4094,4 +4094,32 @@
     <value>ಮೆಮೊರಿ ಪಟ್ಟಿ</value>
     <comment>Automation name for the group of controls for memory list.</comment>
   </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>ಇತಿಹಾಸ ಸ್ಲಾಟ್ %1 ತೆರವುಗೊಳಿಸಲಾಗಿದೆ</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>ಯಾವಾಗಲೂ ಮೇಲ್ಭಾಗದಲ್ಲಿ ಕ್ಯಾಲ್ಕುಲೇಟರ್</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>ಕ್ಯಾಲ್ಕುಲೇಟರ್ ಮರಳಿ ಪೂರ್ಣ ವೀಕ್ಷಣೆಗೆ</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
+  <data name="arithmeticShiftButtonSelected" xml:space="preserve">
+    <value>ಆಯ್ಕೆಮಾಡಿದ ಅಂಕಗಣಿತ ಶಿಫ್ಟ್</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButtonSelected" xml:space="preserve">
+    <value>ಆಯ್ಕೆಮಾಡಿದ ತಾರ್ಕಿಕ ಶಿಫ್ಟ್</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButtonSelected" xml:space="preserve">
+    <value>ಆಯ್ಕೆ ಮಾಡಿದ ವೃತ್ತಾಕಾರದ ಶಿಫ್ಟ್ ತಿರುಗಿಸು</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
+    <value>ಆಯ್ಕೆ ಮಾಡಿದ ಕ್ಯಾರಿ ವೃತ್ತಾಕಾರದ ಶಿಫ್ಟ್ ಮೂಲಕ ತಿರುಗಿಸಿ</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
 </root>

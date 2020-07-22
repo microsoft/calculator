@@ -3547,7 +3547,7 @@
     <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
   <data name="GE_NotSupported" xml:space="preserve">
-    <value>Crtanje grafa za tu jednadžbu nije podržano</value>
+    <value>Izrada grafikona za tu jednadžbu nije podržana</value>
     <comment>Error that occurs during graphing when the equation is not supported.</comment>
   </data>
   <data name="ParenthesisMismatch" xml:space="preserve">
@@ -4093,5 +4093,17 @@
   <data name="DockPanel_MemoryList" xml:space="preserve">
     <value>Popis memorije</value>
     <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>Utor za povijest %1 je izbrisan</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>Kalkulator uvijek na vrhu</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>Kalkulator natrag na puni prikaz</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
   </data>
 </root>
