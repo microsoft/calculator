@@ -49,5 +49,7 @@ jobs:
     platform: x86
 
 - template: ./templates/package-appxbundle.yaml
+  parameters:
+    signBundle: true
 
 - template: ./templates/prepare-release-internalonly.yaml

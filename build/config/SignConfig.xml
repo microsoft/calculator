@@ -1,5 +1,0 @@
-<SignConfigXML>
-  <job platform="" configuration="" certSubject="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" jobname="EngFunSimpleSign" approvers="">
-   <file src="__INPATHROOT__\Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle" signType="FirstPartyWindowsStoreVNext" dest="__OUTPATHROOT__\Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle" /> 
-  </job>
-</SignConfigXML>

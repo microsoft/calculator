@@ -2,8 +2,6 @@
 # Windows using Microsoft-internal systems. It relies on Microsoft-internal resources and will not
 # work outside of Microsoft.
 # Specifically, this job:
-# - Signs the bundle using a secure system. If you want to build your own, use SignTool following
-#   the example in the continuous integration pipeline.
 # - Builds VPacks for including the app in the Windows OS build. Azure DevOps Universal Packages
 #   offers similar capabilities.
 # - Creates StoreBroker packages containing Microsoft Store assets. Although the Store assets for
@@ -45,29 +43,15 @@ jobs:
       versionSpec: 5.x
 
   - task: DownloadBuildArtifacts@0
-    displayName: Download appxBundle artifact
+    displayName: Download appxBundleSigned artifact
     inputs:
-      artifactName: appxBundle
-
-  - task: PkgESCodeSign@10
-    displayName: Send bundle to Package ES code signing service
-    env:
-      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-    inputs:
-      signConfigXml: build\config\SignConfig.xml
-      inPathRoot: $(Build.ArtifactStagingDirectory)\appxBundle
-      outPathRoot: $(Build.ArtifactStagingDirectory)\appxBundleSigned
-
-  - task: PublishBuildArtifacts@1
-    displayName: Publish AppxBundleSigned artifact
-    inputs:
-      pathtoPublish: $(Build.ArtifactStagingDirectory)\appxBundleSigned
-      artifactName: AppxBundleSigned
+      artifactName: appxBundleSigned
 
   - task: CopyFiles@2
     displayName: Copy signed AppxBundle to vpack staging folder
     inputs:
       sourceFolder: $(Build.ArtifactStagingDirectory)\appxBundleSigned
+      contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
       targetFolder: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
 
   - task: PkgESVPack@10
