@@ -38,12 +38,16 @@ void CalculatorProgrammerRadixOperators::LoadResourceStrings()
     m_logicalShiftButtonContent = resProvider->GetResourceString(L"logicalShiftButtonSelected");
     m_rotateCircularButtonContent = resProvider->GetResourceString(L"rotateCircularButtonSelected");
     m_rotateCarryShiftButtonContent = resProvider->GetResourceString(L"rotateCarryShiftButtonSelected");
-    m_selectedShiftButtonContent = m_arithmeticShiftButtonContent;
 }
 
 void CalculatorProgrammerRadixOperators::FlyoutButton_Clicked(_In_ Platform::Object ^ /*sender*/, _In_ Windows::UI::Xaml::RoutedEventArgs ^ /*e*/)
 {
     this->BitwiseFlyout->Hide();
+}
+
+void CalculatorProgrammerRadixOperators::checkDefaultBitShift()
+{
+    m_selectedShiftButtonMode = BitShiftMode::Arithmetic;
 }
 
 void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
@@ -71,6 +75,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
 
     auto radioButton = static_cast<RadioButton ^>(sender);
     Platform::String ^ announcementString = L"";
+    BitShiftMode selectedButtonMode = m_selectedShiftButtonMode;
 
     if (radioButton == ArithmeticShiftButton)
     {
@@ -79,6 +84,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         LshButton->IsEnabled = true;
         RshButton->IsEnabled = true;
         announcementString = m_arithmeticShiftButtonContent;
+        selectedButtonMode = BitShiftMode::Arithmetic;
     }
     else if (radioButton == LogicalShiftButton)
     {
@@ -87,6 +93,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         LshLogicalButton->IsEnabled = true;
         RshLogicalButton->IsEnabled = true;
         announcementString = m_logicalShiftButtonContent;
+        selectedButtonMode = BitShiftMode::LogicalShift;
     }
     else if (radioButton == RotateCircularButton)
     {
@@ -95,6 +102,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         RolButton->IsEnabled = true;
         RorButton->IsEnabled = true;
         announcementString = m_rotateCircularButtonContent;
+        selectedButtonMode = BitShiftMode::RotateCircular;
     }
     else if (radioButton == RotateCarryShiftButton)
     {
@@ -103,12 +111,13 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         RolCarryButton->IsEnabled = true;
         RorCarryButton->IsEnabled = true;
         announcementString = m_rotateCarryShiftButtonContent;
+        selectedButtonMode = BitShiftMode::RotateCarry;
     }
 
-    if (announcementString != m_selectedShiftButtonContent)
+    if (selectedButtonMode != m_selectedShiftButtonMode)
     {
         this->BitShiftFlyout->Hide();
-        m_selectedShiftButtonContent = announcementString;
+        m_selectedShiftButtonMode = selectedButtonMode;
     }
 
     Model->SetBitshiftRadioButtonCheckedAnnouncement(announcementString);
@@ -180,19 +189,19 @@ void CalculatorProgrammerRadixOperators::ClearButton_LostFocus(Object ^ sender, 
 
 void CalculatorApp::CalculatorProgrammerRadixOperators::BitShiftFlyout_Opened(Platform::Object ^ sender, Platform::Object ^ e)
 {
-    if (m_selectedShiftButtonContent == m_arithmeticShiftButtonContent)
+    if (m_selectedShiftButtonMode == BitShiftMode::Arithmetic)
     {
         ArithmeticShiftButton->IsChecked = true;
     }
-    else if (m_selectedShiftButtonContent == m_logicalShiftButtonContent)
+    else if (m_selectedShiftButtonMode == BitShiftMode::LogicalShift)
     {
         LogicalShiftButton->IsChecked = true;
     }
-    else if (m_selectedShiftButtonContent == m_rotateCircularButtonContent)
+    else if (m_selectedShiftButtonMode == BitShiftMode::RotateCircular)
     {
         RotateCircularButton->IsChecked = true;
     }
-    else if (m_selectedShiftButtonContent == m_rotateCarryShiftButtonContent)
+    else if (m_selectedShiftButtonMode == BitShiftMode::RotateCarry)
     {
         RotateCarryShiftButton->IsChecked = true;
     }
