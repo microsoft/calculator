@@ -9,10 +9,13 @@
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
+using namespace Concurrency;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace std;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::Management::Policies;
+using namespace Windows::System;
 
 namespace UCM = UnitConversionManager;
 
@@ -85,25 +88,12 @@ bool IsGraphingModeEnabled()
         return _isGraphingModeEnabledCached->Value;
     }
 
-    DWORD allowGraphingCalculator{ 0 };
-    DWORD bufferSize{ sizeof(allowGraphingCalculator) };
-    // Make sure to call RegGetValueW only on Windows 10 1903+
-    if (RegGetValueW(
-            HKEY_CURRENT_USER,
-            L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Calculator",
-            L"AllowGraphingCalculator",
-            RRF_RT_DWORD, // RRF_RT_DWORD == RRF_RT_REG_DWORD | RRF_RT_REG_BINARY
-            nullptr,
-            reinterpret_cast<LPBYTE>(&allowGraphingCalculator),
-            &bufferSize)
-        == ERROR_SUCCESS)
-    {
-        _isGraphingModeEnabledCached = allowGraphingCalculator != 0;
-    }
-    else
-    {
-        _isGraphingModeEnabledCached = true;
-    }
+    User ^ firstUser;
+    create_task(User::FindAllAsync(UserType::LocalUser)).then([&firstUser](IVectorView<User ^> ^ users) {
+        firstUser = users->GetAt(0); }).wait();
+        auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
+        _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
+
     return _isGraphingModeEnabledCached->Value;
 }
 
