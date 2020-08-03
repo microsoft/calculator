@@ -133,7 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
-      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 /Z7 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -153,7 +153,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
-      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 /Z7 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -173,7 +173,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
-      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 /Z7 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -193,7 +193,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
-      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 /Z7 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -213,7 +213,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
-      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 /Z7 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -233,7 +233,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
-      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 /Z7 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -253,7 +253,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
-      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 /Z7 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -273,7 +273,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
-      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 /Z7 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
