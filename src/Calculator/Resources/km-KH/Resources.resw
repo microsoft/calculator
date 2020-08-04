@@ -3248,7 +3248,7 @@
     <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
   </data>
   <data name="GraphingCalculatorModeText" xml:space="preserve">
-    <value>ការសង់ក្រាប</value>
+    <value>ការសង់ក្រាហ្វ</value>
     <comment>Name of the Graphing mode of the Calculator app. Displayed in the navigation menu.</comment>
   </data>
   <data name="plotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3547,7 +3547,7 @@
     <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
   <data name="GE_NotSupported" xml:space="preserve">
-    <value>ការសង់ក្រាហ្វសមីការ​នេះ​មិន​បាន​គាំ​ទ្រ​ទេ</value>
+    <value>មិនគាំទ្រការសង់ក្រាហ្វសមីការ​នេះ​ទេ</value>
     <comment>Error that occurs during graphing when the equation is not supported.</comment>
   </data>
   <data name="ParenthesisMismatch" xml:space="preserve">
@@ -4105,5 +4105,21 @@
   <data name="CalcBackToFullView" xml:space="preserve">
     <value>ម៉ាស៊ីនគិតលេខត្រឡប់​ទៅ​កា​របង្ហញ​ពេញ</value>
     <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
+  <data name="arithmeticShiftButtonSelected" xml:space="preserve">
+    <value>Arithmetic Shift ត្រូវបានជ្រើសរើស</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButtonSelected" xml:space="preserve">
+    <value>Logical Shift ត្រូវបានជ្រើសរើស</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButtonSelected" xml:space="preserve">
+    <value>បានជ្រើសរើសការបង្វិលរាងជារង្វង់</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
+    <value>បង្វិលតាមរង្វង់មូលដែលបានជ្រើសរើស</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
 </root>

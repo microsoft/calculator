@@ -4106,4 +4106,20 @@
     <value>Повернутися до повного подання калькулятора</value>
     <comment>Announcement to indicate calculator window is now back to full view.</comment>
   </data>
+  <data name="arithmeticShiftButtonSelected" xml:space="preserve">
+    <value>Вибрано арифметичний зсув</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButtonSelected" xml:space="preserve">
+    <value>Вибрано логічний зсув</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButtonSelected" xml:space="preserve">
+    <value>Вибрано циклічний зсув (поворот)</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
+    <value>Вибрано циклічний зсув (поворот через перенос)</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
 </root>

@@ -3551,7 +3551,7 @@
     <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
   <data name="GE_NotSupported" xml:space="preserve">
-    <value>יצירת גרף של משוואה זו אינה נתמכת</value>
+    <value>הצגת גרף של משוואה זו אינה נתמכת</value>
     <comment>Error that occurs during graphing when the equation is not supported.</comment>
   </data>
   <data name="ParenthesisMismatch" xml:space="preserve">

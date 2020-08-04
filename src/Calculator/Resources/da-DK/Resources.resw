@@ -4106,4 +4106,20 @@
     <value>Lommeregner tilbage til fuld visning</value>
     <comment>Announcement to indicate calculator window is now back to full view.</comment>
   </data>
+  <data name="arithmeticShiftButtonSelected" xml:space="preserve">
+    <value>Aritmetisk skift valgt</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButtonSelected" xml:space="preserve">
+    <value>Logisk skift er valgt</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButtonSelected" xml:space="preserve">
+    <value>Roter cirkulært skift valgt</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
+    <value>Roter gennem cirkulært menteskift valgt</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
 </root>
