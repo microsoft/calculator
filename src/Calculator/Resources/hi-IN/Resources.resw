@@ -3547,7 +3547,7 @@
     <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
   <data name="GE_NotSupported" xml:space="preserve">
-    <value>इस समीकरण को ग्राफ़ करना समर्थित नहीं है</value>
+    <value>इस समीकरण की ग्राफ़िंग समर्थित नहीं है</value>
     <comment>Error that occurs during graphing when the equation is not supported.</comment>
   </data>
   <data name="ParenthesisMismatch" xml:space="preserve">
@@ -4105,5 +4105,21 @@
   <data name="CalcBackToFullView" xml:space="preserve">
     <value>कैल्क्यूलेटर पूर्ण दृश्य पर वापस जाएँ</value>
     <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
+  <data name="arithmeticShiftButtonSelected" xml:space="preserve">
+    <value>अंकगणित शिफ़्ट चयनित</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButtonSelected" xml:space="preserve">
+    <value>लॉजिकल शिफ़्ट चयनित</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButtonSelected" xml:space="preserve">
+    <value>वृत्ताकार शिफ़्ट चयनित रोटेट करना</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
+    <value>कैर्री वृत्ताकार शिफ़्ट के माध्यम से रोटेट करना चयनित</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
 </root>

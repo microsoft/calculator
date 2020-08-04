@@ -3548,7 +3548,7 @@
     <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
   <data name="GE_NotSupported" xml:space="preserve">
-    <value>இந்தச் சமன்பாட்டை விளக்கப்படமாக்குவது ஆதரிக்கப்படவில்லை</value>
+    <value>இந்தச் சமன்பாட்டை வரைபடமாக்குவது ஆதரிக்கப்படவில்லை</value>
     <comment>Error that occurs during graphing when the equation is not supported.</comment>
   </data>
   <data name="ParenthesisMismatch" xml:space="preserve">
