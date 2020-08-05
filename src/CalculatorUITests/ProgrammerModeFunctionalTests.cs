@@ -4,9 +4,7 @@
 using CalculatorUITestFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Appium.Windows;
 using System;
-using System.Collections.Generic;
 
 namespace CalculatorUITests
 {
@@ -888,6 +886,96 @@ namespace CalculatorUITests
             page.ProgrammerOperators.RoRCarryButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("8 0 8", page.CalculatorResults.GetCalculatorResultText());
+        }
+        #endregion
+
+        /// <summary>
+        /// Copy and Paste the numbers into/from the calculator
+        /// </summary>
+        #region Copy-Paste operations
+        [TestMethod]
+        [Priority(1)]
+        public void Copy_And_Paste_Simple_Number()
+        {
+            page.ProgrammerOperators.BitFlip.Click();
+            page.ProgrammerOperators.Bit1.Click();
+            page.CalculatorResults.ContextMenuItemCopyClick();
+            page.ProgrammerOperators.FullKeypad.Click();
+            page.StandardOperators.ClearEntryButton.Click();
+            page.CalculatorResults.ContextMenuItemPasteClick();
+            Assert.AreEqual("2", page.CalculatorResults.GetCalculatorResultText());
+        }
+
+        [TestMethod]
+        [Priority(1)]
+        public void Copy_And_Paste_Invalid_Number()
+        {
+            page.ProgrammerOperators.BitFlip.Click();
+            page.ProgrammerOperators.Bit63.Click();
+            page.CalculatorResults.ContextMenuItemCopyClick();
+            page.ProgrammerOperators.FullKeypad.Click();
+            page.StandardOperators.ClearEntryButton.Click();
+            page.ProgrammerOperators.QWordButton.Click();
+            page.CalculatorResults.ContextMenuItemPasteClick();
+            Assert.AreEqual("Invalid input", page.CalculatorResults.GetCalculatorResultText());
+        }
+
+        [TestMethod]
+        [Priority(1)]
+        public void Copy_And_Paste_Big_QWord_Number()
+        {
+            page.ProgrammerOperators.BitFlip.Click();
+            page.ProgrammerOperators.Bit63.Click();
+            page.CalculatorResults.ContextMenuItemCopyClick();
+            page.ProgrammerOperators.FullKeypad.Click();
+            page.StandardOperators.ClearEntryButton.Click();
+            page.CalculatorResults.ContextMenuItemPasteClick();
+            Assert.AreEqual("-9,223,372,036,854,775,808", page.CalculatorResults.GetCalculatorResultText());
+        }
+
+        [TestMethod]
+        [Priority(1)]
+        public void Copy_And_Paste_Big_DWord_Number()
+        {
+            page.ProgrammerOperators.QWordButton.Click();
+            page.ProgrammerOperators.BitFlip.Click();
+            page.ProgrammerOperators.Bit31.Click();
+            page.CalculatorResults.ContextMenuItemCopyClick();
+            page.ProgrammerOperators.FullKeypad.Click();
+            page.StandardOperators.ClearEntryButton.Click();
+            page.CalculatorResults.ContextMenuItemPasteClick();
+            Assert.AreEqual("-2,147,483,648", page.CalculatorResults.GetCalculatorResultText());
+        }
+
+        [TestMethod]
+        [Priority(1)]
+        public void Copy_And_Paste_Big_Word_Number()
+        {
+            page.ProgrammerOperators.QWordButton.Click();
+            page.ProgrammerOperators.DWordButton.Click();
+            page.ProgrammerOperators.BitFlip.Click();
+            page.ProgrammerOperators.Bit15.Click();
+            page.CalculatorResults.ContextMenuItemCopyClick();
+            page.ProgrammerOperators.FullKeypad.Click();
+            page.StandardOperators.ClearEntryButton.Click();
+            page.CalculatorResults.ContextMenuItemPasteClick();
+            Assert.AreEqual("-32,768", page.CalculatorResults.GetCalculatorResultText());
+        }
+
+        [TestMethod]
+        [Priority(1)]
+        public void Copy_And_Paste_Big_Byte_Number()
+        {
+            page.ProgrammerOperators.QWordButton.Click();
+            page.ProgrammerOperators.DWordButton.Click();
+            page.ProgrammerOperators.WordButton.Click();
+            page.ProgrammerOperators.BitFlip.Click();
+            page.ProgrammerOperators.Bit7.Click();
+            page.CalculatorResults.ContextMenuItemCopyClick();
+            page.ProgrammerOperators.FullKeypad.Click();
+            page.StandardOperators.ClearEntryButton.Click();
+            page.CalculatorResults.ContextMenuItemPasteClick();
+            Assert.AreEqual("-128", page.CalculatorResults.GetCalculatorResultText());
         }
         #endregion
     }
