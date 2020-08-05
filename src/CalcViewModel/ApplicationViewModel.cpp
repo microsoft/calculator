@@ -125,6 +125,14 @@ bool ApplicationViewModel::TryRecoverFromNavigationModeFailure()
 void ApplicationViewModel::OnModeChanged()
 {
     assert(NavCategory::IsValidViewMode(m_mode));
+    if (NavCategory::IsValidViewMode(m_PreviousMode) && NavCategory::IsCalculatorViewMode(m_PreviousMode) && !NavCategory::IsCalculatorViewMode(m_mode))
+    {
+        if (m_CalculatorViewModel)
+        {
+            m_CalculatorViewModel->SetCalculatorType(m_mode);
+        }
+    }
+
     if (NavCategory::IsCalculatorViewMode(m_mode))
     {
         if (!m_CalculatorViewModel)
