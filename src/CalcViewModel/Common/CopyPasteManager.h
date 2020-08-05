@@ -15,13 +15,6 @@ namespace CalculatorUnitTests
 
 namespace CalculatorApp
 {
-public
-    value struct CopyPasteMaxOperandLengthAndValue
-    {
-        unsigned int maxLength;
-        unsigned long long maxValue;
-    };
-
     public ref class CopyPasteManager sealed
     {
     public:
@@ -97,7 +90,7 @@ public
                 CalculatorApp::Common::CategoryGroupType modeType,
                 CalculatorApp::Common::NumberBase programmerNumberBase,
                 CalculatorApp::Common::BitLength bitLengthType);
-        static CopyPasteMaxOperandLengthAndValue GetMaxOperandLengthAndValue(
+        static unsigned int GetMaxOperandLength(
             CalculatorApp::Common::ViewMode mode,
             CalculatorApp::Common::CategoryGroupType modeType,
             CalculatorApp::Common::NumberBase programmerNumberBase,
