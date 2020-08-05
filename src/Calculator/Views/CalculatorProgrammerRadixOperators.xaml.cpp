@@ -47,7 +47,12 @@ void CalculatorProgrammerRadixOperators::FlyoutButton_Clicked(_In_ Platform::Obj
 
 void CalculatorProgrammerRadixOperators::checkDefaultBitShift()
 {
+    CollapseBitshiftButtons();
     m_selectedShiftButtonMode = BitShiftMode::Arithmetic;
+    LshButton->Visibility = ::Visibility::Visible;
+    RshButton->Visibility = ::Visibility::Visible;
+    LshButton->IsEnabled = true;
+    RshButton->IsEnabled = true;
 }
 
 void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
