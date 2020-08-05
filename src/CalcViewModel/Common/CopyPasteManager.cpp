@@ -331,12 +331,6 @@ bool CopyPasteManager::ExpressionRegExMatch(
                     expMatched = false;
                     break;
                 }
-
-                if (operandAsULL->Value > maxOperandLengthAndValue.maxValue)
-                {
-                    expMatched = false;
-                    break;
-                }
             }
         }
 
