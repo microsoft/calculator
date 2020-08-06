@@ -63,6 +63,10 @@ namespace CalculatorApp::ViewModel
             {
                 AnalysisErrorString = m_resourceLoader->GetString(L"KGFAnalysisNotSupported");
             }
+            else if (graphEquation->AnalysisError == static_cast<int>(AnalysisErrorType::VariableIsNotX))
+            {
+                AnalysisErrorString = m_resourceLoader->GetString(L"KGFVariableIsNotX");
+            }
             return;
         }
 

@@ -254,16 +254,21 @@ namespace GraphControl
                 vector<Equation ^> equationVector;
                 equationVector.push_back(equation);
                 UpdateGraphOptions(graph->GetOptions(), equationVector);
-
-                if (analyzer->CanFunctionAnalysisBePerformed())
+                bool variableIsNotX;
+                if (analyzer->CanFunctionAnalysisBePerformed(variableIsNotX))
                 {
                     if (S_OK
                         == analyzer->PerformFunctionAnalysis(
-                            (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
+                            (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All)
+                        && !variableIsNotX)
                     {
                         Graphing::IGraphFunctionAnalysisData functionAnalysisData = m_solver->Analyze(analyzer.get());
                         return KeyGraphFeaturesInfo::Create(functionAnalysisData);
                     }
+                }
+                else if (variableIsNotX)
+                {
+                    return KeyGraphFeaturesInfo::Create(CalculatorApp::AnalysisErrorType::VariableIsNotX);
                 }
                 else
                 {
