@@ -261,6 +261,14 @@ namespace CalculatorUnitTests
                     NumberBase::DecBase,
                     BitLength::BitLengthQWord),
                 L"Verify operand values == max return true.");
+            VERIFY_IS_TRUE(
+                m_CopyPasteManager->ExpressionRegExMatch(
+                    ref new Vector<String ^>({ L"-9223372036854775808" }),
+                    ViewMode::Programmer,
+                    CategoryGroupType::Calculator,
+                    NumberBase::DecBase,
+                    BitLength::BitLengthQWord),
+                L"Verify operand values == max negative return true.");
 
             Logger::WriteMessage(L"Verify all operands must match patterns.");
             VERIFY_IS_TRUE(m_CopyPasteManager->ExpressionRegExMatch(
@@ -950,6 +958,7 @@ namespace CalculatorUnitTests
                                          L"aef",
                                          L"ABab",
                                          L"A1a3" /*within boundary*/,
+                                         L"FFFF" /*boundary condition: max allowed number*/,
                                          L"0x1234",
                                          L"0xab12",
                                          L"0X1234",
@@ -1046,7 +1055,7 @@ namespace CalculatorUnitTests
                                           L"123*4*-3",
                                           L"123*+4*-3",
                                           L"9223372036854775807",
-                                          L"-9223372036854775807" /*boundary condition: max/min allowed number*/,
+                                          L"-9223372036854775808" /*boundary condition: max/min allowed number*/,
                                           L"0n1234",
                                           L"0N1234",
                                           L"1234u",
@@ -1069,6 +1078,7 @@ namespace CalculatorUnitTests
                                           L"xyz",
                                           L"ABab",
                                           L"e+234",
+                                          L"9223372036854775808" /*boundary condition: greater than max allowed number 9223372036854775807*/,
                                           L"9223372036854775809" /*boundary condition: greater than max allowed number 9223372036854775807*/,
                                           L"SIN(2)",
                                           L"-0n123",
@@ -1145,7 +1155,8 @@ namespace CalculatorUnitTests
                                          L"123*4*-3",
                                          L"123*+4*-3",
                                          L"32767",
-                                         L"-32767" /*boundary condition: max/min allowed number*/,
+                                         L"-32767",
+                                         L"-32768" /*boundary condition: max/min allowed number*/,
                                          L"0n1234",
                                          L"0N1234",
                                          L"1234u",
