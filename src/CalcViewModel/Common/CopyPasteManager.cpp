@@ -296,7 +296,7 @@ bool CopyPasteManager::ExpressionRegExMatch(
         patterns.assign(unitConverterPatterns.begin(), unitConverterPatterns.end());
     }
 
-    auto maxOperandLength = GetMaxOperandLength(mode, modeType, programmerNumberBase, bitLengthType);
+    auto maxOperandLengthAndValue = GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType);
     bool expMatched = true;
 
     for (const auto& operand : operands)
@@ -315,18 +315,22 @@ bool CopyPasteManager::ExpressionRegExMatch(
             auto operandValue = SanitizeOperand(operand);
 
             // If an operand exceeds the maximum length allowed, break and return.
-            if (OperandLength(operandValue, mode, modeType, programmerNumberBase) > maxOperandLength)
+            if (OperandLength(operandValue, mode, modeType, programmerNumberBase) > maxOperandLengthAndValue.maxLength)
             {
                 expMatched = false;
                 break;
             }
 
-            // If an operand goes out of range or is empty, break and return.
-            if (TryOperandToULL(operandValue, programmerNumberBase) == nullptr)
+            // If maxOperandValue is set and the operandValue exceeds it, break and return.
+            if (maxOperandLengthAndValue.maxValue != 0)
             {
-                // Operand was empty, received invalid_argument, or received out_of_range. Input is invalid.
-                expMatched = false;
-                break;
+                auto operandAsULL = TryOperandToULL(operandValue, programmerNumberBase);
+                if (operandAsULL == nullptr)
+                {
+                    // Operand was empty, received invalid_argument, or received out_of_range. Input is invalid.
+                    expMatched = false;
+                    break;
+                }
             }
         }
 
@@ -336,18 +340,23 @@ bool CopyPasteManager::ExpressionRegExMatch(
     return expMatched;
 }
 
-unsigned int
-CopyPasteManager::GetMaxOperandLength(ViewMode mode, CategoryGroupType modeType, NumberBase programmerNumberBase, BitLength bitLengthType)
+CopyPasteMaxOperandLengthAndValue
+CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, NumberBase programmerNumberBase, BitLength bitLengthType)
 {
     constexpr size_t defaultMaxOperandLength = 0;
     constexpr uint64_t defaultMaxValue = 0;
+    CopyPasteMaxOperandLengthAndValue res;
     if (mode == ViewMode::Standard)
     {
-        return MaxStandardOperandLength;
+        res.maxLength = MaxStandardOperandLength;
+        res.maxValue = defaultMaxValue;
+        return res;
     }
     else if (mode == ViewMode::Scientific)
     {
-        return MaxScientificOperandLength;
+        res.maxLength = MaxScientificOperandLength;
+        res.maxValue = defaultMaxValue;
+        return res;
     }
     else if (mode == ViewMode::Programmer)
     {
@@ -387,14 +396,23 @@ CopyPasteManager::GetMaxOperandLength(ViewMode mode, CategoryGroupType modeType,
 
         unsigned int signBit = (programmerNumberBase == NumberBase::DecBase) ? 1 : 0;
 
-        return static_cast<unsigned int>(ceil((bitLength - signBit) / bitsPerDigit));
+        const auto maxLength = static_cast<unsigned int>(ceil((bitLength - signBit) / bitsPerDigit));
+        const uint64_t maxValue = UINT64_MAX >> (MaxProgrammerBitLength - (bitLength - signBit));
+
+        res.maxLength = maxLength;
+        res.maxValue = maxValue;
+        return res;
     }
     else if (modeType == CategoryGroupType::Converter)
     {
-        return MaxConverterInputLength;
+        res.maxLength = MaxConverterInputLength;
+        res.maxValue = defaultMaxValue;
+        return res;
     }
 
-    return defaultMaxOperandLength;
+    res.maxLength = defaultMaxOperandLength;
+    res.maxValue = defaultMaxValue;
+    return res;
 }
 
 Platform::String ^ CopyPasteManager::SanitizeOperand(Platform::String ^ operand)
