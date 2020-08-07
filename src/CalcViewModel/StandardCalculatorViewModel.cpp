@@ -1205,12 +1205,6 @@ void StandardCalculatorViewModel::SetCalculatorType(ViewMode targetState)
         ResetDisplay();
         SetPrecision(ProgrammerModePrecision);
         break;
-
-    default:
-        IsStandard = false;
-        IsScientific = false;
-        IsProgrammer = false;
-        ResetDisplay();
     }
 }
 
