@@ -1219,7 +1219,8 @@ namespace CalculatorUnitTests
     {
         String ^ qwordPositiveInput[] = { L"123",       L"123+456", L"1,234",       L"1 2 3",   L"1'2'3'4", L"1_2_3_4", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85",
                                           L"\n 1+\n2 ", L"1\"2",    L"(123)+(456)", L"0t1234",  L"0T1234",  L"0o1234",  L"0O1234",      L"1234u",
-                                          L"1234ul",    L"1234ULL", L"2+2=",        L"2+2=   ", L"127%71" };
+                                          L"1234ul",    L"1234ULL", L"2+2=",        L"2+2=   ",
+                                          L"127%71",    L"1777777777777777777777" /*boundary condition: the max allowed number*/ };
         String ^ qwordNegativeInput[] = { L"+123",
                                           L"1.23",
                                           L"1''2",
@@ -1237,6 +1238,7 @@ namespace CalculatorUnitTests
                                           L"ABab",
                                           L"e+234",
                                           L"12345678901234567890123" /*boundary condition: greater than max allowed digits 22*/,
+                                          L"2000000000000000000000" /*boundary condition: greater than max allowed number*/,
                                           L"SIN(2)",
                                           L"123+-234",
                                           L"0ot1234",
@@ -1271,6 +1273,7 @@ namespace CalculatorUnitTests
                                           L"ABab",
                                           L"e+234",
                                           L"377777777771" /*boundary condition: greater than max allowed number 37777777777*/,
+                                          L"40000000000" /*boundary condition: greater than max allowed number 37777777777*/,
                                           L"SIN(2)",
                                           L"123+-234",
                                           L"0ot1234",
@@ -1314,6 +1317,7 @@ namespace CalculatorUnitTests
                                          L"ABab",
                                          L"e+234",
                                          L"1777771" /*boundary condition: greater than max allowed number 177777*/,
+                                         L"200000" /*boundary condition: greater than max allowed number 177777*/,
                                          L"SIN(2)",
                                          L"123+-234",
                                          L"0ot1234",
@@ -1343,6 +1347,7 @@ namespace CalculatorUnitTests
                                          L"ABab",
                                          L"e+24",
                                          L"477" /*boundary condition: greater than max allowed number 377*/,
+                                         L"400" /*boundary condition: greater than max allowed number 377*/,
                                          L"SIN(2)",
                                          L"123+-34",
                                          L"0ot123",
@@ -1508,7 +1513,8 @@ namespace CalculatorUnitTests
         String
             ^ bytePositiveInput[] = { L"100",       L"100+101", L"1,001",      L"1 0 1",  L"1'0'0'1", L"1_0_0_1", L"\n\r1,010\n",
                                       L"\n 1+\n1 ", L"1\"1",    L"(101)+(10)", L"0b1001", L"0B1111",  L"0y1001",  L"0Y1001",
-                                      L"1100b",     L"1101B",   L"1111u",      L"1111ul", L"1111ULL", L"10100010" /*boundary condition: max allowed number*/ };
+                                      L"1100b",     L"1101B",   L"1111u",      L"1111ul", L"1111ULL", L"10100010",
+                                      L"11111111" /*boundary condition: max allowed number*/ };
         String ^ byteNegativeInput[] = { L"+10101",
                                          L"1.01",
                                          L"1''0",
@@ -1535,6 +1541,7 @@ namespace CalculatorUnitTests
                                          L"1111uu",
                                          L"1111ulll",
                                          L"101000101" /*boundary condition: greater than max allowed digits 8*/,
+                                         L"100000000" /*boundary condition: greater than max allowed value*/,
                                          L"SIN(01010)",
                                          L"10+-1010101" };
 

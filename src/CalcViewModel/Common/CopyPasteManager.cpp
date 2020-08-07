@@ -311,7 +311,7 @@ bool CopyPasteManager::ExpressionRegExMatch(
         if (operandMatched)
         {
             // Remember the sign of the operand
-            bool isNegativeValue = operand->Data()[0] == L'-' || programmerNumberBase != NumberBase::DecBase;
+            bool isNegativeValue = operand->Data()[0] == L'-';
 
             // Remove characters that are valid in the expression but we do not want to include in length calculations
             // or which will break conversion from string-to-ULL.
