@@ -178,6 +178,10 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
                 m_converter->AnimateConverter();
             }
         }
+        else if (newValue == ViewMode::Settings)
+        {
+            EnsureSettings();
+        }
 
         ShowHideControls(newValue);
 
@@ -197,6 +201,7 @@ void MainPage::ShowHideControls(ViewMode mode)
     auto isDateCalcViewMode = NavCategory::IsDateCalculatorViewMode(mode);
     auto isGraphingCalcViewMode = NavCategory::IsGraphingCalculatorViewMode(mode);
     auto isConverterViewMode = NavCategory::IsConverterViewMode(mode);
+    auto isSettingsViewMode = NavCategory::IsSettingsViewMode(mode);
 
     if (m_calculator)
     {
@@ -221,6 +226,12 @@ void MainPage::ShowHideControls(ViewMode mode)
         m_converter->Visibility = BooleanToVisibilityConverter::Convert(isConverterViewMode);
         m_converter->IsEnabled = isConverterViewMode;
     }
+
+    if (m_settings)
+    {
+        m_settings->Visibility = BooleanToVisibilityConverter::Convert(isSettingsViewMode);
+        m_settings->IsEnabled = isSettingsViewMode;
+    }
 }
 
 void MainPage::UpdateViewState()
@@ -243,7 +254,7 @@ void MainPage::UpdatePanelViewState()
 
 void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
 {
-    if (!m_converter && !m_calculator && !m_dateCalculator && !m_graphingCalculator)
+    if (!m_converter && !m_calculator && !m_dateCalculator && !m_graphingCalculator && !m_settings)
     {
         // We have just launched into our default mode (standard calc) so ensure calc is loaded
         EnsureCalculator();
@@ -380,6 +391,17 @@ void MainPage::EnsureConverter()
     }
 }
 
+void MainPage::EnsureSettings()
+{
+    if (!m_settings)
+    {
+        m_settings = ref new CalculatorApp::SettingsPage();
+        m_settings->Name = L"SettingsPage";
+
+        SettingsHolder->Child = m_settings;
+    }
+}
+
 void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
     if (NavView->SelectedItem == nullptr)
@@ -427,25 +449,9 @@ void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView ^ sender, _In_ Object ^
     this->SetDefaultFocus();
 }
 
-void MainPage::OnAboutButtonClick(Object ^ sender, ItemClickEventArgs ^ e)
+void MainPage::OnSettingsButtonClick(Object ^ sender, ItemClickEventArgs ^ e, ViewMode /*model*/)
 {
-    ShowAboutPage();
-}
-
-void MainPage::OnAboutFlyoutOpened(_In_ Object ^ sender, _In_ Object ^ e)
-{
-    // Keep Ignoring Escape till the About page flyout is opened
-    KeyboardShortcutManager::IgnoreEscape(false);
-
-    KeyboardShortcutManager::UpdateDropDownState(this->AboutPageFlyout);
-}
-
-void MainPage::OnAboutFlyoutClosed(_In_ Object ^ sender, _In_ Object ^ e)
-{
-    // Start Honoring Escape once the About page flyout is closed
-    KeyboardShortcutManager::HonorEscape();
-
-    KeyboardShortcutManager::UpdateDropDownState(nullptr);
+    Model->Mode = ViewMode::Settings;
 }
 
 void MainPage::OnNavSelectionChanged(_In_ Object ^ sender, _In_ MUXC::NavigationViewSelectionChangedEventArgs ^ e)
@@ -506,16 +512,6 @@ MUXC::NavigationViewItem ^ MainPage::CreateNavViewItemFromCategory(NavCategory ^
     AutomationProperties::SetAutomationId(item, category->AutomationId);
 
     return item;
-}
-
-void MainPage::ShowAboutPage()
-{
-    if (!AboutPage)
-    {
-        this->FindName(L"AboutPage");
-    }
-
-    FlyoutBase::ShowAttachedFlyout(AboutButton);
 }
 
 void MainPage::UnregisterEventHandlers()

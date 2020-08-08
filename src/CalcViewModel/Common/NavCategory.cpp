@@ -42,6 +42,7 @@ static constexpr int PRESSURE_ID = 14;
 static constexpr int ANGLE_ID = 15;
 static constexpr int CURRENCY_ID = 16;
 static constexpr int GRAPHING_ID = 17;
+static constexpr int SETTINGS_ID = 18;
 // ^^^ THESE CONSTANTS SHOULD NEVER CHANGE ^^^
 
 wchar_t* towchar_t(int number)
@@ -298,6 +299,16 @@ static const list<NavCategoryInitializer> s_categoryManifest = [] {
                                   MyVirtualKey::None,
                                   nullptr,
                                   SUPPORTS_NEGATIVE,
+                                  true },
+          NavCategoryInitializer{ ViewMode::Settings,
+                                  SETTINGS_ID,
+                                  L"Settings",
+                                  L"CategoryName_Settings",
+                                  L"\uE713",
+                                  CategoryGroupType::None,
+                                  MyVirtualKey::None,
+                                  nullptr,
+                                  false,
                                   true } });
     return res;
 }();
@@ -369,6 +380,11 @@ bool NavCategory::IsDateCalculatorViewMode(ViewMode mode)
 bool NavCategory::IsConverterViewMode(ViewMode mode)
 {
     return IsModeInCategoryGroup(mode, CategoryGroupType::Converter);
+}
+
+bool NavCategory::IsSettingsViewMode(ViewMode mode)
+{
+    return mode == ViewMode::Settings;
 }
 
 bool NavCategory::IsModeInCategoryGroup(ViewMode mode, CategoryGroupType type)

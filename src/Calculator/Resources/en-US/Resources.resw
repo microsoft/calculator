@@ -2717,33 +2717,9 @@
     <value>%1 %2</value>
     <comment>This string is what is read by Narrator, and other screen readers, for the supplementary value at the bottom of the converter view, %1 = the value of the supplementary unit (i.e. 0.5), %2 = the unit itself (i.e. inches, meters, etc)</comment>
   </data>
-  <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Back</value>
-    <comment>Screen reader prompt for the About panel back button</comment>
-  </data>
-  <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Back</value>
-    <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
-  </data>
-  <data name="AboutFlyoutEULA.Text" xml:space="preserve">
-    <value>Microsoft Software License Terms</value>
-    <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
-  </data>
   <data name="PreviewTag.Text" xml:space="preserve">
     <value>Preview</value>
     <comment>Label displayed next to upcoming features</comment>
-  </data>  
-  <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
-    <value>Microsoft Privacy Statement</value>
-    <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
-  </data>
-  <data name="AboutControlCopyright" xml:space="preserve">
-    <value>© %1 Microsoft. All rights reserved.</value>
-    <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
-  </data>
-  <data name="AboutButton.Content" xml:space="preserve">
-    <value>About</value>
-    <comment>The text that shows in the dropdown navigation control to open About panel</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
     <value>Send feedback</value>
@@ -3163,10 +3139,6 @@
     <value>Could not update rates</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
   </data>
-  <data name="AboutButton.AccessKey" xml:space="preserve">
-    <value>AB</value>
-    <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
-  </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
@@ -3494,10 +3466,6 @@
   <data name="NavCategoryHeader_AutomationNameFormat" xml:space="preserve">
     <value>%1 category</value>
     <comment>{Locked='%1'} Format string for the accessible name of a Calculator menu category header, used by screen readers. "%1" is the pluralized category name, e.g. Calculators, Converters. An example when formatted is "Calculators category".</comment>
-  </data>
-  <data name="AboutControlServicesAgreement.Text" xml:space="preserve">
-    <value>Microsoft Services Agreement</value>
-    <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
   </data>
   <data name="UnitAbbreviation_Pyeong" xml:space="preserve">
     <value>Pyeong</value>
@@ -4742,5 +4710,64 @@
   <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
     <value>Rotate Through Carry Circular Shift selected</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="SettingsButton.Content" xml:space="preserve">
+    <value>Settings</value>
+    <comment>The text that shows in the dropdown navigation control to open the Settings page.</comment>
+  </data>
+  <data name="SettingsButton.AccessKey" xml:space="preserve">
+    <value>AB</value>
+    <comment>AccessKey for the Settings button. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="CategoryName_SettingsText" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Settings category.</comment>
+  </data>
+  <data name="SettingsAppTheme.Text" xml:space="preserve">
+    <value>App theme</value>
+    <comment>Heading text for the "App theme" section in settings.</comment>
+  </data>
+  <data name="SettingsDarkTheme.Content" xml:space="preserve">
+    <value>Dark</value>
+    <comment>Content for "Dark theme"radio button in settings.</comment>
+  </data>
+  <data name="SettingsLightTheme.Content" xml:space="preserve">
+    <value>Light</value>
+    <comment>Content for "Light theme"radio button in settings.</comment>
+  </data>
+  <data name="SettingsSystemTheme.Content" xml:space="preserve">
+    <value>Use system setting</value>
+    <comment>Content for "System theme"radio button in settings.</comment>
+  </data>
+  <data name="ColorSettingsButton.Text" xml:space="preserve">
+    <value>Windows color Settings</value>
+  </data>
+  <data name="SettingsAboutLabel.Text" xml:space="preserve">
+    <value>About this app</value>
+    <comment>Heading text for the "about" section in settings</comment>
+  </data>
+  <data name="SettingsCopyright" xml:space="preserve">
+    <value>© %1 Microsoft. All rights reserved.</value>
+    <comment>{Locked="%1"}. Copyright statement, displayed on the Settings page. %1 = the current year (4 digits)</comment>
+  </data>
+  <data name="SettingsEULA.Text" xml:space="preserve">
+    <value>Microsoft Software License Terms</value>
+    <comment>Displayed on a link to the Microsoft Software License Terms on the Settings page</comment>
+  </data>
+  <data name="SettingsServicesAgreement.Text" xml:space="preserve">
+    <value>Microsoft Services Agreement</value>
+    <comment>Displayed on a link to the Microsoft Services Agreement on the Settings page.</comment>
+  </data>
+  <data name="SettingsFeedbackButton.Content" xml:space="preserve">
+    <value>Send feedback</value>
+    <comment>The text that shows in the button in settings to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
+  </data>
+  <data name="SettingsFeedbackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Send feedback with the feedback hub</value>
+    <comment>Tooltip for the "Send feedback" button</comment>
+  </data>
+  <data name="SettingsPrivacyStatment.Text" xml:space="preserve">
+    <value>Microsoft Privacy Statment</value>
+    <comment>Displayed on a link to the Microsoft Privacy Statement on the Settings page.</comment>
   </data>
 </root>

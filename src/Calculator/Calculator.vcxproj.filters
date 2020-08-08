@@ -485,7 +485,6 @@
     <Page Include="Views\UnitConverter.xaml">
       <Filter>Views</Filter>
     </Page>
-    <Page Include="AboutFlyout.xaml" />
     <Page Include="Views\CalculatorProgrammerBitFlipPanel.xaml">
       <Filter>Views</Filter>
     </Page>
@@ -524,6 +523,7 @@
     <Page Include="Views\CalculatorProgrammerDisplayPanel.xaml">
       <Filter>Views\StateTriggers</Filter>
     </Page>
+    <Page Include="SettingsPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">

@@ -9,6 +9,7 @@
 #include "Views/GraphingCalculator/GraphingCalculator.xaml.h"
 #include "Views/UnitConverter.xaml.h"
 #include "CalcViewModel/ApplicationViewModel.h"
+#include "SettingsPage.xaml.h"
 
 namespace CalculatorApp
 {
@@ -54,9 +55,7 @@ public
             Microsoft::UI::Xaml::Controls::NavigationView ^ /*sender*/,
             _In_ Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs ^ e);
 
-        void OnAboutButtonClick(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::ItemClickEventArgs ^ e);
-        void OnAboutFlyoutOpened(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
-        void OnAboutFlyoutClosed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
+        void OnSettingsButtonClick(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::ItemClickEventArgs ^ e, CalculatorApp::Common::ViewMode mode);
         void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void TitleBarAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
@@ -75,7 +74,7 @@ public
         void EnsureDateCalculator();
         void EnsureGraphingCalculator();
         void EnsureConverter();
-        void ShowAboutPage();
+        void EnsureSettings();
 
         void AnnounceCategoryName();
 
@@ -83,6 +82,7 @@ public
 		GraphingCalculator^ m_graphingCalculator;
         CalculatorApp::UnitConverter ^ m_converter;
         CalculatorApp::DateCalculator ^ m_dateCalculator;
+        CalculatorApp::SettingsPage ^ m_settings;
         Windows::Foundation::EventRegistrationToken m_windowSizeEventToken;
         CalculatorApp::ViewModel::ApplicationViewModel ^ m_model;
         Windows::Foundation::EventRegistrationToken m_accessibilitySettingsToken;

@@ -109,6 +109,9 @@
             <Border x:Name="ConverterHolder">
                 <!-- PLACEHOLDER!!!! This is where the converter goes when it is delay loaded -->
             </Border>
+            <Border x:Name="SettingsHolder">
+                <!-- PLACEHOLDER!!!! This is where the settings goes when it is delay loaded -->
+            </Border>
         </Grid>
 
         <Grid Grid.Row="1"
@@ -176,28 +179,19 @@
                     <muxc:NavigationViewList x:Name="NavFooter"
                                              Width="{StaticResource SplitViewOpenPaneLength}"
                                              IsItemClickEnabled="True"
-                                             ItemClick="OnAboutButtonClick"
+                                             ItemClick="OnSettingsButtonClick"
                                              x:Load="False">
                         <muxc:NavigationViewList.ItemContainerTransitions>
                             <!-- Remove EntranceThemeTransition which is a default transition for NavigationViewList -->
                             <TransitionCollection/>
                         </muxc:NavigationViewList.ItemContainerTransitions>
                         <muxc:NavigationViewList.Items>
-                            <muxc:NavigationViewItem x:Name="AboutButton"
-                                                     x:Uid="AboutButton"
+                            <muxc:NavigationViewItem x:Name="SettingsButton"
+                                                     x:Uid="SettingsButton"
                                                      Style="{StaticResource NavViewItemStyle}">
                                 <muxc:NavigationViewItem.Icon>
-                                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xe946;"/>
+                                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE713;"/>
                                 </muxc:NavigationViewItem.Icon>
-                                <FlyoutBase.AttachedFlyout>
-                                    <Flyout x:Name="AboutPageFlyout"
-                                            x:Uid="AboutPageFlyout"
-                                            Closed="OnAboutFlyoutClosed"
-                                            FlyoutPresenterStyle="{StaticResource AboutFlyoutPresenterStyle}"
-                                            Opened="OnAboutFlyoutOpened">
-                                        <local:AboutFlyout x:Name="AboutPage" x:Load="False"/>
-                                    </Flyout>
-                                </FlyoutBase.AttachedFlyout>
                             </muxc:NavigationViewItem>
                         </muxc:NavigationViewList.Items>
                     </muxc:NavigationViewList>
