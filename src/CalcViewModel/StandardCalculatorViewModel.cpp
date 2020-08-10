@@ -132,7 +132,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     IsOperandEnabled = true;
     IsNegateEnabled = true;
     IsDecimalEnabled = true;
-    AreProgrammerRadixOperatorsEnabled = false;
+    AreProgrammerRadixOperatorsVisible = false;
 }
 
 String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue)
