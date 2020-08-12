@@ -6,8 +6,10 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using OpenQA.Selenium.Interactions;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Linq;
 
 namespace CalculatorUITestFramework
 {
@@ -43,10 +45,10 @@ namespace CalculatorUITestFramework
         /// Gets all of the memory items listed in the Memory Pane.
         /// </summary>
         /// <returns>A read-only collection of memory items.</returns>
-        public ReadOnlyCollection<AppiumWebElement> GetAllMemoryListViewItems()
+        public List<MemoryItem> GetAllMemoryListViewItems()
         {
             OpenMemoryPanel();
-            return this.MemoryListView.FindElementsByClassName("ListViewItem");
+            return (from item in this.MemoryListView.FindElementsByClassName("ListViewItem") select new MemoryItem(item)).ToList();
         }
 
         /// <summary>
@@ -119,10 +121,10 @@ namespace CalculatorUITestFramework
         /// Gets all of the memory items listed in the Memory Flyout.
         /// </summary>
         /// <returns> A read only collection of memory items.</returns>
-        public ReadOnlyCollection<AppiumWebElement> GetAllMemoryFlyoutListViewItems()
+        public List<MemoryItem> GetAllMemoryFlyoutListViewItems()
         {
             OpenMemoryFlyout();
-            return this.MemoryListView.FindElementsByClassName("ListViewItem");
+            return (from item in this.MemoryListView.FindElementsByClassName("ListViewItem") select new MemoryItem(item)).ToList();
         }
 
         /// <summary>
