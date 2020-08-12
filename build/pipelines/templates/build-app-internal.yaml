@@ -27,7 +27,7 @@ jobs:
     inputs:
       command: download
       downloadDirectory: $(Build.SourcesDirectory)
-      vstsFeed: WindowsApps
+      vstsFeed: WindowsInboxApps
       vstsFeedPackage: calculator-internals
       vstsPackageVersion: 0.0.45
 
