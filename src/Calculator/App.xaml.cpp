@@ -70,6 +70,20 @@ App::App()
     this->HighContrastAdjustment = ApplicationHighContrastAdjustment::None;
 
     this->Suspending += ref new SuspendingEventHandler(this, &App::OnSuspending);
+    auto value = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"themeSetting");
+    if (value != nullptr)
+    {
+        String ^ colorS = safe_cast<String ^>(value);
+        // Apply theme choice.
+        if (colorS == L"Dark")
+        {
+            App::Current->RequestedTheme = ApplicationTheme::Dark;
+        }
+        else if (colorS == L"Light")
+        {
+            App::Current->RequestedTheme = ApplicationTheme::Light;
+        }
+    }
 
 #if _DEBUG
     this->DebugSettings->IsBindingTracingEnabled = true;

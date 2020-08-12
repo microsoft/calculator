@@ -4770,4 +4770,8 @@
     <value>Microsoft Privacy Statment</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the Settings page.</comment>
   </data>
+  <data name="SettingsRestartNotice" xml:space="preserve">
+    <value>You'll see your changes the next time you start the app.</value>
+    <comment>Notice when the user change the theme.</comment>
+  </data>
 </root>

@@ -32,10 +32,31 @@ SettingsPage::SettingsPage()
 
 	InitializeComponent();
 
+    SettingsRestartApp->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+
     Language = locService->GetLanguage();
 
     this->SetVersionString();
     this->SetCopyrightString();
+
+    auto value = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"themeSetting");
+    if (value != nullptr)
+    {
+        String ^ colorS = safe_cast<String ^>(value);
+        // Apply theme choice.
+        if (colorS == L"Dark")
+        {
+            SettingsDarkTheme->IsChecked = true;
+        }
+        else if (Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"isSytemTheme"))
+        {
+            SettingsSystemTheme->IsChecked = true;
+        }
+        else if (colorS == L"Light")
+        {
+            SettingsLightTheme->IsChecked = true;
+        }
+    }
 }
 
 void SettingsPage::SetVersionString()
@@ -66,4 +87,42 @@ void SettingsPage::SettingsFeedbackButtonClick(_In_ Object ^ sender, _In_ Routed
     versionNumber = versionNumber + version.Major + version.Minor + version.Build + version.Revision;
 
     Launcher::LaunchUriAsync(ref new Uri("windows-feedback:?contextid=130&metadata=%7B%22Metadata%22:[%7B%22AppBuild%22:%22" + versionNumber + "%22%7D]%7D"));
+}
+
+void SettingsPage::LightChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    auto resourceLoader = AppResourceProvider::GetInstance();
+
+    SettingsRestartApp->Visibility = Windows::UI::Xaml::Visibility::Visible;
+    SettingsRestartApp->Text = LocalizationStringUtil::GetLocalizedString(resourceLoader->GetResourceString("SettingsRestartNotice"));
+    Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Light.ToString());
+}
+
+void SettingsPage::DarkChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    auto resourceLoader = AppResourceProvider::GetInstance();
+
+    SettingsRestartApp->Visibility = Windows::UI::Xaml::Visibility::Visible;
+    SettingsRestartApp->Text = LocalizationStringUtil::GetLocalizedString(resourceLoader->GetResourceString("SettingsRestartNotice"));
+    Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Dark.ToString());
+}
+
+void SettingsPage::SystemChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    auto resourceLoader = AppResourceProvider::GetInstance();
+    auto DefaultTheme = ref new Windows::UI::ViewManagement::UISettings();
+    auto uiTheme = DefaultTheme->GetColorValue(Windows::UI::ViewManagement::UIColorType::Background).ToString();
+
+    SettingsRestartApp->Visibility = Windows::UI::Xaml::Visibility::Visible;
+    SettingsRestartApp->Text = LocalizationStringUtil::GetLocalizedString(resourceLoader->GetResourceString("SettingsRestartNotice"));
+    Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"isSytemTheme", true);
+
+    if (uiTheme == Windows::UI::Colors::Black.ToString())
+    {
+        Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Dark.ToString());
+    }
+    else if (uiTheme == Windows::UI::Colors::White.ToString())
+    {
+        Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Light.ToString());
+    }
 }

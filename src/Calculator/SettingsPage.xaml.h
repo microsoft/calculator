@@ -18,5 +18,8 @@ namespace CalculatorApp
         void SettingsFeedbackButtonClick(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SetVersionString();
         void SetCopyrightString();
+        void LightChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void DarkChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void SystemChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }

@@ -17,7 +17,7 @@
                            MinHeight="{StaticResource HamburgerHeight}"
                            MaxHeight="52"/>
             <RowDefinition Height="4*"/>
-            <RowDefinition Height="1*" MaxHeight="32"/>
+            <RowDefinition Height="Auto" MinHeight="32"/>
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
 
@@ -32,17 +32,22 @@
                        AutomationProperties.HeadingLevel="Level1"
                        TextTrimming="Clip"/>
 
+            <TextBlock x:Name="SettingsRestartApp" Style="{StaticResource BodyTextBlockStyle}"/>
+
             <RadioButton x:Name="SettingsLightTheme"
                          x:Uid="SettingsLightTheme"
-                         Grid.Row="2"/>
+                         Grid.Row="2"
+                         Checked="LightChecked"/>
 
             <RadioButton x:Name="SettingsDarkTheme"
                          x:Uid="SettingsDarkTheme"
-                         Grid.Row="3"/>
+                         Grid.Row="3"
+                         Checked="DarkChecked"/>
 
             <RadioButton x:Name="SettingsSystemTheme"
                          x:Uid="SettingsSystemTheme"
-                         Grid.Row="4"/>
+                         Grid.Row="4"
+                         Checked="SystemChecked"/>
 
             <HyperlinkButton x:Name="ColorSettingsButton"
                              Margin="0,-2"
