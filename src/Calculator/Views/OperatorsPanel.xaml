@@ -27,8 +27,8 @@
 
         <local:CalculatorProgrammerRadixOperators x:Name="ProgrammerRadixOperators"
                                                   TabIndex="16"
-                                                  Visibility="{x:Bind Model.AreProgrammerRadixOperatorsEnabled, Mode=OneWay}"
-                                                  IsEnabled="{x:Bind Model.AreProgrammerRadixOperatorsEnabled, Mode=OneWay}"
+                                                  Visibility="{x:Bind Model.AreProgrammerRadixOperatorsVisible, Mode=OneWay}"
+                                                  IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
                                                   x:Load="False"/>
 
     </Grid>
