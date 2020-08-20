@@ -44,6 +44,8 @@ namespace CalculatorApp
         void FlyoutButton_Clicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
         void CollapseBitshiftButtons();
         void LoadResourceStrings();
+        void LoadDeferredLoadButtons();
+        bool IsButtonLoaded();
 
         bool m_isErrorVisualState;
         void OpenParenthesisButton_GotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);

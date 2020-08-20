@@ -47,7 +47,15 @@ void CalculatorProgrammerRadixOperators::FlyoutButton_Clicked(_In_ Platform::Obj
 
 void CalculatorProgrammerRadixOperators::checkDefaultBitShift()
 {
+    LoadDeferredLoadButtons();
+
+    if (IsButtonLoaded())
+    {
+        return;
+    }
+
     CollapseBitshiftButtons();
+
     m_selectedShiftButtonMode = BitShiftMode::Arithmetic;
     LshButton->Visibility = ::Visibility::Visible;
     RshButton->Visibility = ::Visibility::Visible;
@@ -55,7 +63,15 @@ void CalculatorProgrammerRadixOperators::checkDefaultBitShift()
     RshButton->IsEnabled = true;
 }
 
-void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+bool CalculatorApp::CalculatorProgrammerRadixOperators::IsButtonLoaded()
+{
+    // Since arithmeticShiftButton defaults to IsChecked = true, this event an fire before we can load the deferred loaded controls. If that is the case, just
+    // return and do nothing.
+    return RolButton == nullptr || RorButton == nullptr || RolCarryButton == nullptr || RorCarryButton == nullptr || LshLogicalButton == nullptr
+           || RshLogicalButton == nullptr;
+}
+
+void CalculatorApp::CalculatorProgrammerRadixOperators::LoadDeferredLoadButtons()
 {
     // Load deferred load buttons
     if (RolButton == nullptr)
@@ -67,11 +83,14 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         FindName("LshLogicalButton");
         FindName("RshLogicalButton");
     }
+}
 
-    // Since arithmeticShiftButton defaults to IsChecked = true, this event an fire before we can load the deferred loaded controls. If that is the case, just
-    // return and do nothing.
-    if (RolButton == nullptr || RorButton == nullptr || RolCarryButton == nullptr || RorCarryButton == nullptr || LshLogicalButton == nullptr
-        || RshLogicalButton == nullptr)
+void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    // Load deferred load buttons
+    LoadDeferredLoadButtons();
+
+    if (IsButtonLoaded())
     {
         return;
     }
