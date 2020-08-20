@@ -255,12 +255,11 @@ namespace GraphControl
                 equationVector.push_back(equation);
                 UpdateGraphOptions(graph->GetOptions(), equationVector);
                 bool variableIsNotX;
-                if (analyzer->CanFunctionAnalysisBePerformed(variableIsNotX))
+                if (analyzer->CanFunctionAnalysisBePerformed(variableIsNotX) && !variableIsNotX)
                 {
                     if (S_OK
                         == analyzer->PerformFunctionAnalysis(
-                            (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All)
-                        && !variableIsNotX)
+                            (Graphing::Analyzer::NativeAnalysisType)Graphing::Analyzer::PerformAnalysisType::PerformAnalysisType_All))
                     {
                         Graphing::IGraphFunctionAnalysisData functionAnalysisData = m_solver->Analyze(analyzer.get());
                         return KeyGraphFeaturesInfo::Create(functionAnalysisData);
