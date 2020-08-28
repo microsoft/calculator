@@ -145,6 +145,7 @@
                     AutomationProperties.AutomationId="NormalAlwaysOnTopButton"
                     Click="AlwaysOnTopButtonClick"
                     Content="&#xEE49;"
+                    TabIndex="3"
                     Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Key="Up" Modifiers="Menu"/>

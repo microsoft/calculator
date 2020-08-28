@@ -361,6 +361,14 @@ bool NavCategory::IsValidViewMode(ViewMode mode)
     return iter != s_categoryManifest.end();
 }
 
+bool NavCategory::IsViewModeEnabled(ViewMode mode)
+{
+    auto iter =
+        find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode](const NavCategoryInitializer& initializer) { return initializer.viewMode == mode && initializer.isEnabled; });
+
+    return iter != s_categoryManifest.end();
+}
+
 bool NavCategory::IsCalculatorViewMode(ViewMode mode)
 {
     // Historically, Calculator modes are Standard, Scientific, and Programmer.

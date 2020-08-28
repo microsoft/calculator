@@ -47,10 +47,31 @@ void CalculatorProgrammerRadixOperators::FlyoutButton_Clicked(_In_ Platform::Obj
 
 void CalculatorProgrammerRadixOperators::checkDefaultBitShift()
 {
-    this->ArithmeticShiftButton->IsChecked = true;
+    LoadDeferredLoadButtons();
+
+    if (IsButtonLoaded())
+    {
+        return;
+    }
+
+    CollapseBitshiftButtons();
+
+    m_selectedShiftButtonMode = BitShiftMode::Arithmetic;
+    LshButton->Visibility = ::Visibility::Visible;
+    RshButton->Visibility = ::Visibility::Visible;
+    LshButton->IsEnabled = true;
+    RshButton->IsEnabled = true;
 }
 
-void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+bool CalculatorApp::CalculatorProgrammerRadixOperators::IsButtonLoaded()
+{
+    // Since arithmeticShiftButton defaults to IsChecked = true, this event an fire before we can load the deferred loaded controls. If that is the case, just
+    // return and do nothing.
+    return RolButton == nullptr || RorButton == nullptr || RolCarryButton == nullptr || RorCarryButton == nullptr || LshLogicalButton == nullptr
+           || RshLogicalButton == nullptr;
+}
+
+void CalculatorApp::CalculatorProgrammerRadixOperators::LoadDeferredLoadButtons()
 {
     // Load deferred load buttons
     if (RolButton == nullptr)
@@ -62,11 +83,14 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         FindName("LshLogicalButton");
         FindName("RshLogicalButton");
     }
+}
 
-    // Since arithmeticShiftButton defaults to IsChecked = true, this event an fire before we can load the deferred loaded controls. If that is the case, just
-    // return and do nothing.
-    if (RolButton == nullptr || RorButton == nullptr || RolCarryButton == nullptr || RorCarryButton == nullptr || LshLogicalButton == nullptr
-        || RshLogicalButton == nullptr)
+void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    // Load deferred load buttons
+    LoadDeferredLoadButtons();
+
+    if (IsButtonLoaded())
     {
         return;
     }
@@ -75,6 +99,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
 
     auto radioButton = static_cast<RadioButton ^>(sender);
     Platform::String ^ announcementString = L"";
+    BitShiftMode selectedButtonMode = m_selectedShiftButtonMode;
 
     if (radioButton == ArithmeticShiftButton)
     {
@@ -83,6 +108,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         LshButton->IsEnabled = true;
         RshButton->IsEnabled = true;
         announcementString = m_arithmeticShiftButtonContent;
+        selectedButtonMode = BitShiftMode::Arithmetic;
     }
     else if (radioButton == LogicalShiftButton)
     {
@@ -91,6 +117,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         LshLogicalButton->IsEnabled = true;
         RshLogicalButton->IsEnabled = true;
         announcementString = m_logicalShiftButtonContent;
+        selectedButtonMode = BitShiftMode::LogicalShift;
     }
     else if (radioButton == RotateCircularButton)
     {
@@ -99,6 +126,7 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         RolButton->IsEnabled = true;
         RorButton->IsEnabled = true;
         announcementString = m_rotateCircularButtonContent;
+        selectedButtonMode = BitShiftMode::RotateCircular;
     }
     else if (radioButton == RotateCarryShiftButton)
     {
@@ -107,9 +135,15 @@ void CalculatorProgrammerRadixOperators::BitshiftFlyout_Checked(Platform::Object
         RolCarryButton->IsEnabled = true;
         RorCarryButton->IsEnabled = true;
         announcementString = m_rotateCarryShiftButtonContent;
+        selectedButtonMode = BitShiftMode::RotateCarry;
     }
 
-    this->BitShiftFlyout->Hide();
+    if (selectedButtonMode != m_selectedShiftButtonMode)
+    {
+        this->BitShiftFlyout->Hide();
+        m_selectedShiftButtonMode = selectedButtonMode;
+    }
+
     Model->SetBitshiftRadioButtonCheckedAnnouncement(announcementString);
 }
 
@@ -174,5 +208,25 @@ void CalculatorProgrammerRadixOperators::ClearButton_LostFocus(Object ^ sender, 
     if (ClearEntryButton->Visibility == ::Visibility::Visible && ClearButton->Visibility == ::Visibility::Collapsed)
     {
         ClearEntryButton->Focus(::FocusState::Programmatic);
+    }
+}
+
+void CalculatorApp::CalculatorProgrammerRadixOperators::BitShiftFlyout_Opened(Platform::Object ^ sender, Platform::Object ^ e)
+{
+    if (m_selectedShiftButtonMode == BitShiftMode::Arithmetic)
+    {
+        ArithmeticShiftButton->IsChecked = true;
+    }
+    else if (m_selectedShiftButtonMode == BitShiftMode::LogicalShift)
+    {
+        LogicalShiftButton->IsChecked = true;
+    }
+    else if (m_selectedShiftButtonMode == BitShiftMode::RotateCircular)
+    {
+        RotateCircularButton->IsChecked = true;
+    }
+    else if (m_selectedShiftButtonMode == BitShiftMode::RotateCarry)
+    {
+        RotateCarryShiftButton->IsChecked = true;
     }
 }

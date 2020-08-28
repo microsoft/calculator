@@ -135,6 +135,7 @@ namespace CalculatorApp
             static ViewMode GetViewModeForFriendlyName(Platform::String ^ name);
 
             static bool IsValidViewMode(ViewMode mode);
+            static bool IsViewModeEnabled(ViewMode mode);
             static bool IsCalculatorViewMode(ViewMode mode);
             static bool IsGraphingCalculatorViewMode(ViewMode mode);
             static bool IsDateCalculatorViewMode(ViewMode mode);

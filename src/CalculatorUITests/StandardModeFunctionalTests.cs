@@ -171,10 +171,12 @@ namespace CalculatorUITests
             page.HistoryPanel.ResizeWindowToDisplayHistoryButton();
             page.HistoryPanel.HistoryButton.Click();
             var historyFlyoutItems = page.HistoryPanel.GetAllHistoryFlyoutListViewItems();
-            Assert.IsTrue(historyFlyoutItems[0].Text.Equals("4 × 5 ÷ 6= 3.333333333333333", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
+            Assert.IsTrue(historyFlyoutItems[0].GetValue().Equals("3.333333333333333", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
+            Assert.IsTrue(historyFlyoutItems[0].GetExpression().Equals("4   ×   5   ÷   6 =", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
             page.HistoryPanel.ResizeWindowToDisplayHistoryLabel();
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("4 × 5 ÷ 6= 3.333333333333333", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].GetValue().Equals("3.333333333333333", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].GetExpression().Equals("4   ×   5   ÷   6 =", StringComparison.InvariantCultureIgnoreCase));
             page.HistoryPanel.ClearHistoryButton.Click();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty")); //verifies the History panel's clear history button
         }
@@ -187,16 +189,16 @@ namespace CalculatorUITests
             page.StandardOperators.NumberPad.Num1Button.Click();
             page.MemoryPanel.NumberpadMSButton.Click();
             var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
-            Assert.IsTrue(memoryItems[0].Text.Equals("1", StringComparison.InvariantCultureIgnoreCase)); //verifies memory button
+            Assert.IsTrue(memoryItems[0].GetValue().Equals("1", StringComparison.InvariantCultureIgnoreCase)); //verifies memory button
             page.MemoryPanel.NumberpadMPlusButton.Click();
-            Assert.IsTrue(memoryItems[0].Text.Equals("2", StringComparison.InvariantCultureIgnoreCase)); //verifies memory plus button
+            Assert.IsTrue(memoryItems[0].GetValue().Equals("2", StringComparison.InvariantCultureIgnoreCase)); //verifies memory plus button
             page.MemoryPanel.NumberpadMRButton.Click();
             Assert.AreEqual("2", page.CalculatorResults.GetCalculatorResultText()); //verifies memory recall button
             page.StandardOperators.MinusButton.Click();
             page.StandardOperators.NumberPad.Num1Button.Click();
             page.StandardOperators.EqualButton.Click();
             page.MemoryPanel.NumberpadMMinusButton.Click();
-            Assert.IsTrue(memoryItems[0].Text.Equals("1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(memoryItems[0].GetValue().Equals("1", StringComparison.InvariantCultureIgnoreCase));
             Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText()); //verifies MemMinus button
             page.MemoryPanel.NumberpadMCButton.Click();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty")); //verifies the Memory panel's memory clear button
@@ -344,9 +346,9 @@ namespace CalculatorUITests
             CalculatorApp.Window.SendKeys("1");
             CalculatorApp.Window.SendKeys(Keys.Control + "m" + Keys.Control);
             var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
-            Assert.IsTrue(memoryItems[0].Text.Equals("1", StringComparison.InvariantCultureIgnoreCase)); //verifies memory hotkey
+            Assert.IsTrue(memoryItems[0].GetValue().Equals("1", StringComparison.InvariantCultureIgnoreCase)); //verifies memory hotkey
             CalculatorApp.Window.SendKeys(Keys.Control + "p" + Keys.Control);
-            Assert.IsTrue(memoryItems[0].Text.Equals("2", StringComparison.InvariantCultureIgnoreCase)); //verifies memory plus hotkey
+            Assert.IsTrue(memoryItems[0].GetValue().Equals("2", StringComparison.InvariantCultureIgnoreCase)); //verifies memory plus hotkey
             CalculatorApp.Window.SendKeys(Keys.Control + "r" + Keys.Control);
             Assert.AreEqual("2", page.CalculatorResults.GetCalculatorResultText()); //verifies memory recall hotkey
             CalculatorApp.Window.SendKeys(Keys.Subtract);
@@ -354,7 +356,7 @@ namespace CalculatorUITests
             CalculatorApp.Window.SendKeys(Keys.Equal);
             CalculatorApp.Window.SendKeys(Keys.Subtract);
             CalculatorApp.Window.SendKeys(Keys.Control + "q" + Keys.Control);
-            Assert.IsTrue(memoryItems[0].Text.Equals("1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(memoryItems[0].GetValue().Equals("1", StringComparison.InvariantCultureIgnoreCase));
             Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText()); //verifies MemMinus hotkey
             CalculatorApp.Window.SendKeys(Keys.Control + "l" + Keys.Control);
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty")); //verifies the Memory panel's memory clear button hotkey
@@ -536,8 +538,10 @@ namespace CalculatorUITests
             CalculatorApp.Window.SendKeys(Keys.Equal);
             Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].Text.Equals("0= 0", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].Text.Equals("0= 0", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].GetValue().Equals("0", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].GetExpression().Equals("0 =", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].GetValue().Equals("0", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].GetExpression().Equals("0 =", StringComparison.InvariantCultureIgnoreCase));
             CalculatorApp.Window.SendKeys(Keys.Escape);
         }
 
@@ -670,7 +674,8 @@ namespace CalculatorUITests
             {
                 page.StandardAoTCalculatorPage.NavigateToStandardMode();
                 var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-                Assert.IsTrue(historyItems[0].Text.Equals("3 + 3= 6", StringComparison.InvariantCultureIgnoreCase));
+                Assert.IsTrue(historyItems[0].GetValue().Equals("6", StringComparison.InvariantCultureIgnoreCase));
+                Assert.IsTrue(historyItems[0].GetExpression().Equals("3   +   3 =", StringComparison.InvariantCultureIgnoreCase));
             }
         }
 

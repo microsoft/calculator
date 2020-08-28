@@ -9,7 +9,7 @@ namespace CalculatorApp
 {
     namespace ViewModel
     {
-        [Windows::UI::Xaml::Data::Bindable] public ref class HistoryItemViewModel sealed : Windows::UI::Xaml::Data::ICustomPropertyProvider
+        [Windows::UI::Xaml::Data::Bindable] public ref class HistoryItemViewModel sealed
         {
             internal :
 
@@ -41,23 +41,6 @@ namespace CalculatorApp
 
                 property Platform::String
                 ^ AccResult { Platform::String ^ get() { return m_accResult; } }
-
-                virtual Windows::UI::Xaml::Data::ICustomProperty
-                ^ GetCustomProperty(Platform::String ^ name) { return nullptr; }
-
-                virtual Windows::UI::Xaml::Data::ICustomProperty
-                ^ GetIndexedProperty(Platform::String ^ name, Windows::UI::Xaml::Interop::TypeName type) { return nullptr; }
-
-                virtual property Windows::UI::Xaml::Interop::TypeName Type
-            {
-                Windows::UI::Xaml::Interop::TypeName get()
-                {
-                    return this->GetType();
-                }
-            }
-
-            virtual Platform::String
-                ^ GetStringRepresentation() { return m_accExpression + " " + m_accResult; }
 
                 private : static Platform::String
                           ^ GetAccessibleExpressionFromTokens(
