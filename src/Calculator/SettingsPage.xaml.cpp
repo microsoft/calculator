@@ -24,11 +24,11 @@ using namespace Windows::UI::Xaml::Data;
 #define BUILD_YEAR 2020
 #endif
 
+auto resourceLoader = AppResourceProvider::GetInstance();
 
 SettingsPage::SettingsPage()
 {
     auto locService = LocalizationService::GetInstance();
-    auto resourceLoader = AppResourceProvider::GetInstance();
 
 	InitializeComponent();
 
@@ -42,19 +42,18 @@ SettingsPage::SettingsPage()
     auto value = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"themeSetting");
     if (value != nullptr)
     {
-        String ^ colorS = safe_cast<String ^>(value);
-        // Apply theme choice.
-        if (colorS == L"Dark")
+        String ^ colorSetting = safe_cast<String ^>(value);
+        if (colorSetting == L"Dark")
         {
             SettingsDarkTheme->IsChecked = true;
         }
-        else if (Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"isSytemTheme"))
-        {
-            SettingsSystemTheme->IsChecked = true;
-        }
-        else if (colorS == L"Light")
+        else if (colorSetting == L"Light")
         {
             SettingsLightTheme->IsChecked = true;
+        }
+        else if (colorSetting == L"System")
+        {
+            SettingsSystemTheme->IsChecked = true;
         }
     }
 }
@@ -69,7 +68,6 @@ void SettingsPage::SetVersionString()
 
 void SettingsPage::SetCopyrightString()
 {
-    auto resourceLoader = AppResourceProvider::GetInstance();
     auto copyrightText = LocalizationStringUtil::GetLocalizedString(resourceLoader->GetResourceString("SettingsCopyright"), StringReference(to_wstring(BUILD_YEAR).c_str()));
 
     SettingsCopyright->Text = copyrightText;
@@ -91,8 +89,6 @@ void SettingsPage::SettingsFeedbackButtonClick(_In_ Object ^ sender, _In_ Routed
 
 void SettingsPage::LightChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
-    auto resourceLoader = AppResourceProvider::GetInstance();
-
     SettingsRestartApp->Visibility = Windows::UI::Xaml::Visibility::Visible;
     SettingsRestartApp->Text = LocalizationStringUtil::GetLocalizedString(resourceLoader->GetResourceString("SettingsRestartNotice"));
     Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Light.ToString());
@@ -100,8 +96,6 @@ void SettingsPage::LightChecked(Platform::Object ^ sender, Windows::UI::Xaml::Ro
 
 void SettingsPage::DarkChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
-    auto resourceLoader = AppResourceProvider::GetInstance();
-
     SettingsRestartApp->Visibility = Windows::UI::Xaml::Visibility::Visible;
     SettingsRestartApp->Text = LocalizationStringUtil::GetLocalizedString(resourceLoader->GetResourceString("SettingsRestartNotice"));
     Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Dark.ToString());
@@ -109,20 +103,7 @@ void SettingsPage::DarkChecked(Platform::Object ^ sender, Windows::UI::Xaml::Rou
 
 void SettingsPage::SystemChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
-    auto resourceLoader = AppResourceProvider::GetInstance();
-    auto DefaultTheme = ref new Windows::UI::ViewManagement::UISettings();
-    auto uiTheme = DefaultTheme->GetColorValue(Windows::UI::ViewManagement::UIColorType::Background).ToString();
-
     SettingsRestartApp->Visibility = Windows::UI::Xaml::Visibility::Visible;
     SettingsRestartApp->Text = LocalizationStringUtil::GetLocalizedString(resourceLoader->GetResourceString("SettingsRestartNotice"));
-    Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"isSytemTheme", true);
-
-    if (uiTheme == Windows::UI::Colors::Black.ToString())
-    {
-        Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Dark.ToString());
-    }
-    else if (uiTheme == Windows::UI::Colors::White.ToString())
-    {
-        Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Light.ToString());
-    }
+    Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", L"System");
 }

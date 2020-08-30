@@ -71,17 +71,30 @@ App::App()
 
     this->Suspending += ref new SuspendingEventHandler(this, &App::OnSuspending);
     auto value = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"themeSetting");
+    auto DefaultTheme = ref new Windows::UI::ViewManagement::UISettings();
+    auto uiTheme = DefaultTheme->GetColorValue(Windows::UI::ViewManagement::UIColorType::Background).ToString();
     if (value != nullptr)
     {
-        String ^ colorS = safe_cast<String ^>(value);
+        String ^ colorSetting = safe_cast<String ^>(value);
         // Apply theme choice.
-        if (colorS == L"Dark")
+        if (colorSetting == L"Dark")
         {
             App::Current->RequestedTheme = ApplicationTheme::Dark;
         }
-        else if (colorS == L"Light")
+        else if (colorSetting == L"Light")
         {
             App::Current->RequestedTheme = ApplicationTheme::Light;
+        }
+        else if (colorSetting == L"System")
+        {
+            if (uiTheme == "#FF000000")
+            {
+                App::Current->RequestedTheme = ApplicationTheme::Dark;
+            }
+            else if (uiTheme == "#FFFFFFFF")
+            {
+                App::Current->RequestedTheme = ApplicationTheme::Light;
+            }
         }
     }
 
