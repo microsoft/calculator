@@ -10,7 +10,6 @@
 
 #include "App.g.h"
 #include "WindowFrameService.h"
-#include "SettingsPage.g.h"
 
 namespace CalculatorApp
 {
