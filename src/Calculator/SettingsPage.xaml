@@ -16,97 +16,95 @@
             <RowDefinition Height="1*"
                            MinHeight="{StaticResource HamburgerHeight}"
                            MaxHeight="52"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="Auto" MaxHeight="32"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel x:Name="SettingsStack"
-                    Grid.Row="1"
-                    AutomationProperties.LabeledBy="{Binding ElementName=SettingsAppTheme}"
-                    Orientation="Vertical">
+        <StackPanel Grid.Row="1">
+            <StackPanel x:Name="SettingsStack"
+                        AutomationProperties.LabeledBy="{Binding ElementName=SettingsAppTheme}"
+                        Orientation="Vertical">
 
-            <TextBlock x:Name="SettingsAppTheme"
-                       x:Uid="SettingsAppTheme"
-                       Style="{StaticResource SubtitleTextBlockStyle}"
-                       AutomationProperties.HeadingLevel="Level1"
-                       TextTrimming="Clip"/>
+                <TextBlock x:Name="SettingsAppTheme"
+                           x:Uid="SettingsAppTheme"
+                           Style="{StaticResource SubtitleTextBlockStyle}"
+                           AutomationProperties.HeadingLevel="Level1"
+                           TextTrimming="Clip"/>
 
-            <TextBlock x:Name="SettingsRestartApp" Style="{StaticResource BodyTextBlockStyle}"/>
+                <TextBlock x:Name="SettingsRestartApp"
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           Foreground="{StaticResource SystemColorGrayTextColor}"/>
 
-            <RadioButton x:Name="SettingsDarkTheme"
-                         x:Uid="SettingsDarkTheme"
-                         Grid.Row="2"
-                         Checked="DarkChecked"/>
+                <RadioButton x:Name="SettingsDarkTheme"
+                             x:Uid="SettingsDarkTheme"
+                             Grid.Row="2"
+                             Checked="DarkChecked"/>
 
-            <RadioButton x:Name="SettingsLightTheme"
-                         x:Uid="SettingsLightTheme"
-                         Grid.Row="3"
-                         Checked="LightChecked"/>
+                <RadioButton x:Name="SettingsLightTheme"
+                             x:Uid="SettingsLightTheme"
+                             Grid.Row="3"
+                             Checked="LightChecked"/>
 
-            <RadioButton x:Name="SettingsSystemTheme"
-                         x:Uid="SettingsSystemTheme"
-                         Grid.Row="4"
-                         Checked="SystemChecked"/>
+                <RadioButton x:Name="SettingsSystemTheme"
+                             x:Uid="SettingsSystemTheme"
+                             Grid.Row="4"
+                             Checked="SystemChecked"/>
 
-            <HyperlinkButton x:Name="ColorSettingsButton"
-                             Margin="0,-2"
-                             HorizontalAlignment="Left"
-                             Click="ColorSettingsButtonClicked">
-                <TextBlock x:Uid="ColorSettingsButton" TextWrapping="Wrap"/>
-            </HyperlinkButton>
+                <HyperlinkButton x:Name="ColorSettingsButton"
+                                 Margin="0,-2"
+                                 HorizontalAlignment="Left"
+                                 Click="ColorSettingsButtonClicked">
+                    <TextBlock x:Uid="ColorSettingsButton" TextWrapping="Wrap"/>
+                </HyperlinkButton>
+            </StackPanel>
 
+            <StackPanel x:Name="AboutStack"
+                        Margin="0,32,0,0"
+                        AutomationProperties.LabeledBy="{Binding ElementName=SettingsAboutLabel}"
+                        Orientation="Vertical">
+
+                <TextBlock x:Name="SettingsAboutLabel"
+                           x:Uid="SettingsAboutLabel"
+                           Style="{StaticResource SubtitleTextBlockStyle}"
+                           AutomationProperties.HeadingLevel="Level2"
+                           TextTrimming="Clip"/>
+
+                <TextBlock Margin="0,0,0,4"
+                           Style="{StaticResource BodyTextBlockStyle}"
+                           IsTextSelectionEnabled="True">
+                    <Run x:Name="SettingsVersion"/>
+                    <LineBreak/>
+                    <Run x:Name="SettingsCopyright"/>
+                </TextBlock>
+
+                <HyperlinkButton Margin="0,-2"
+                                 HorizontalAlignment="Left"
+                                 NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
+                                 ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
+                    <TextBlock x:Uid="SettingsEULA" TextWrapping="Wrap"/>
+                </HyperlinkButton>
+
+                <HyperlinkButton Margin="0,-2"
+                                 HorizontalAlignment="Left"
+                                 NavigateUri="https://go.microsoft.com/fwlink/?LinkID=822631"
+                                 ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=822631">
+                    <TextBlock x:Uid="SettingsServicesAgreement" TextWrapping="Wrap"/>
+                </HyperlinkButton>
+
+                <HyperlinkButton Margin="0,-2"
+                                 HorizontalAlignment="Left"
+                                 NavigateUri="https://go.microsoft.com/fwlink/?LinkID=521839"
+                                 ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=521839">
+                    <TextBlock x:Uid="SettingsPrivacyStatment" TextWrapping="Wrap"/>
+                </HyperlinkButton>
+
+                <Button x:Name="SettingsFeedbackButton"
+                        x:Uid="SettingsFeedbackButton"
+                        Margin="0,24"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Style="{StaticResource ButtonRevealStyle}"
+                        Click="SettingsFeedbackButtonClick"/>
+            </StackPanel>
         </StackPanel>
-
-        <StackPanel x:Name="AboutStack"
-                    Grid.Row="3"
-                    AutomationProperties.LabeledBy="{Binding ElementName=SettingsAboutLabel}"
-                    Orientation="Vertical">
-
-            <TextBlock x:Name="SettingsAboutLabel"
-                       x:Uid="SettingsAboutLabel"
-                       Style="{StaticResource SubtitleTextBlockStyle}"
-                       AutomationProperties.HeadingLevel="Level2"
-                       TextTrimming="Clip"/>
-
-            <TextBlock Margin="0,0,0,4"
-                       Style="{StaticResource BodyTextBlockStyle}"
-                       IsTextSelectionEnabled="True">
-                <Run x:Name="SettingsVersion"/>
-                <LineBreak/>
-                <Run x:Name="SettingsCopyright"/>
-            </TextBlock>
-
-            <HyperlinkButton Margin="0,-2"
-                             HorizontalAlignment="Left"
-                             NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
-                             ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
-                <TextBlock x:Uid="SettingsEULA" TextWrapping="Wrap"/>
-            </HyperlinkButton>
-
-            <HyperlinkButton Margin="0,-2"
-                             HorizontalAlignment="Left"
-                             NavigateUri="https://go.microsoft.com/fwlink/?LinkID=822631"
-                             ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=822631">
-                <TextBlock x:Uid="SettingsServicesAgreement" TextWrapping="Wrap"/>
-            </HyperlinkButton>
-
-            <HyperlinkButton Margin="0,-2"
-                             HorizontalAlignment="Left"
-                             NavigateUri="https://go.microsoft.com/fwlink/?LinkID=521839"
-                             ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=521839">
-                <TextBlock x:Uid="SettingsPrivacyStatment" TextWrapping="Wrap"/>
-            </HyperlinkButton>
-
-            <Button x:Name="SettingsFeedbackButton"
-                    x:Uid="SettingsFeedbackButton"
-                    Margin="0,24"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Style="{StaticResource ButtonRevealStyle}"
-                    Click="SettingsFeedbackButtonClick"/>
-
-        </StackPanel>
-
     </Grid>
 </UserControl>
