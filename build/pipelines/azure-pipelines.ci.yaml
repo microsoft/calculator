@@ -6,11 +6,11 @@
 
 trigger:
 - master
-- servicing/*
+- release/*
 - feature/*
 pr:
 - master
-- servicing/*
+- release/*
 - feature/*
 
 name: 0.$(Date:yyMM).$(DayOfMonth)$(Rev:rr).0

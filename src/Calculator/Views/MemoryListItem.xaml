@@ -54,6 +54,7 @@
                        HorizontalAlignment="Right"
                        Style="{ThemeResource TitleTextBlockStyle}"
                        FontWeight="SemiBold"
+                       AutomationProperties.AutomationId="MemoryItemValue"
                        FlowDirection="LeftToRight"
                        IsTextSelectionEnabled="True"
                        Text="{x:Bind Model.Value, Mode=OneWay}"
