@@ -3473,7 +3473,7 @@
     <comment>Title for KeyGraphFeatures Parity Property</comment>
   </data>
   <data name="Periodicity" xml:space="preserve">
-    <value>المسافة</value>
+    <value>الدورة</value>
     <comment>Title for KeyGraphFeatures Periodicity Property</comment>
   </data>
   <data name="Range" xml:space="preserve">

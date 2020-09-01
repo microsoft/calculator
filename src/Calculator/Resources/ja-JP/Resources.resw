@@ -3472,7 +3472,7 @@
     <comment>Title for KeyGraphFeatures Parity Property</comment>
   </data>
   <data name="Periodicity" xml:space="preserve">
-    <value>期間</value>
+    <value>周期</value>
     <comment>Title for KeyGraphFeatures Periodicity Property</comment>
   </data>
   <data name="Range" xml:space="preserve">
