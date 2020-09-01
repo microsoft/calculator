@@ -413,7 +413,7 @@
                                             <VisualState.Setters>
                                                 <Setter Target="EquationBoxBorder.BorderBrush" Value="{ThemeResource EquationBoxErrorBorderBrush}"/>
                                                 <Setter Target="EquationBoxBorder.BorderThickness" Value="1"/>
-                                                <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource TextBoxBackgroundThemeBrush}"/>
+                                                <Setter Target="EquationBoxBorder.Background" Value="{ThemeResource TextControlBackgroundFocused}"/>
                                                 <Setter Target="ErrorIcon.Visibility" Value="Collapsed"/>
                                             </VisualState.Setters>
                                         </VisualState>
