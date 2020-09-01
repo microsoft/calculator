@@ -405,9 +405,9 @@ void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 
 void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
-    if (!NavFooter)
+    if (!AboutButton)
     {
-        this->FindName(L"NavFooter");
+        this->FindName(L"AboutButton");
     }
 }
 
