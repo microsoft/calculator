@@ -4767,7 +4767,7 @@
     <comment>Tooltip for the "Send feedback" button</comment>
   </data>
   <data name="SettingsPrivacyStatment.Text" xml:space="preserve">
-    <value>Microsoft Privacy Statment</value>
+    <value>Microsoft Privacy Statement</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the Settings page.</comment>
   </data>
   <data name="SettingsRestartNotice" xml:space="preserve">
