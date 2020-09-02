@@ -176,27 +176,14 @@
                              x:Load="False">
 
             <muxc:NavigationView.PaneFooter>
-                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
-                    <muxc:NavigationViewList x:Name="NavFooter"
-                                             Width="{StaticResource SplitViewOpenPaneLength}"
-                                             IsItemClickEnabled="True"
-                                             ItemClick="OnSettingsButtonClick"
-                                             x:Load="False">
-                        <muxc:NavigationViewList.ItemContainerTransitions>
-                            <!-- Remove EntranceThemeTransition which is a default transition for NavigationViewList -->
-                            <TransitionCollection/>
-                        </muxc:NavigationViewList.ItemContainerTransitions>
-                        <muxc:NavigationViewList.Items>
-                            <muxc:NavigationViewItem x:Name="SettingsButton"
-                                                     x:Uid="SettingsButton"
-                                                     Style="{StaticResource NavViewItemStyle}">
-                                <muxc:NavigationViewItem.Icon>
-                                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE713;"/>
-                                </muxc:NavigationViewItem.Icon>
-                            </muxc:NavigationViewItem>
-                        </muxc:NavigationViewList.Items>
-                    </muxc:NavigationViewList>
-                </StackPanel>
+                <muxc:NavigationViewItem x:Name="SettingsButton"
+                                         x:Uid="SettingsButton"
+                                         Style="{StaticResource NavViewItemStyle}"
+                                         Tapped="OnSettingsButtonClick">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xe713;"/>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
             </muxc:NavigationView.PaneFooter>
         </muxc:NavigationView>
     </Grid>
