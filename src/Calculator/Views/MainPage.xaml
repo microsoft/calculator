@@ -173,36 +173,23 @@
                              x:Load="False">
 
             <muxc:NavigationView.PaneFooter>
-                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
-                    <muxc:NavigationViewList x:Name="NavFooter"
-                                             Width="{StaticResource SplitViewOpenPaneLength}"
-                                             IsItemClickEnabled="True"
-                                             ItemClick="OnAboutButtonClick"
-                                             x:Load="False">
-                        <muxc:NavigationViewList.ItemContainerTransitions>
-                            <!-- Remove EntranceThemeTransition which is a default transition for NavigationViewList -->
-                            <TransitionCollection/>
-                        </muxc:NavigationViewList.ItemContainerTransitions>
-                        <muxc:NavigationViewList.Items>
-                            <muxc:NavigationViewItem x:Name="AboutButton"
+                <muxc:NavigationViewItem x:Name="AboutButton"
                                                      x:Uid="AboutButton"
-                                                     Style="{StaticResource NavViewItemStyle}">
-                                <muxc:NavigationViewItem.Icon>
-                                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xe946;"/>
-                                </muxc:NavigationViewItem.Icon>
-                                <FlyoutBase.AttachedFlyout>
-                                    <Flyout x:Name="AboutPageFlyout"
+                                                     Style="{StaticResource NavViewItemStyle}"
+                                             Tapped="OnAboutButtonClick">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xe946;"/>
+                    </muxc:NavigationViewItem.Icon>
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout x:Name="AboutPageFlyout"
                                             x:Uid="AboutPageFlyout"
                                             Closed="OnAboutFlyoutClosed"
                                             FlyoutPresenterStyle="{StaticResource AboutFlyoutPresenterStyle}"
                                             Opened="OnAboutFlyoutOpened">
-                                        <local:AboutFlyout x:Name="AboutPage" x:Load="False"/>
-                                    </Flyout>
-                                </FlyoutBase.AttachedFlyout>
-                            </muxc:NavigationViewItem>
-                        </muxc:NavigationViewList.Items>
-                    </muxc:NavigationViewList>
-                </StackPanel>
+                            <local:AboutFlyout x:Name="AboutPage" x:Load="False"/>
+                        </Flyout>
+                    </FlyoutBase.AttachedFlyout>
+                </muxc:NavigationViewItem>
             </muxc:NavigationView.PaneFooter>
         </muxc:NavigationView>
     </Grid>
