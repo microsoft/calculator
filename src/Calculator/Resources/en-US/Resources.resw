@@ -4740,7 +4740,7 @@
     <comment>Content for "System theme"radio button in settings.</comment>
   </data>
   <data name="ColorSettingsButton.Text" xml:space="preserve">
-    <value>Windows color Settings</value>
+    <value>Windows color settings</value>
   </data>
   <data name="SettingsAboutLabel.Text" xml:space="preserve">
     <value>About this app</value>
