@@ -495,12 +495,38 @@ const std::multimap<MyVirtualKey, WeakReference>& GetCurrentKeyDictionary(MyVirt
 
 void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs ^ args)
 {
+    auto key = args->VirtualKey;
+    int viewId = Utils::GetWindowId();
+    //Handle Control and Shift first 
+    if (key == VirtualKey::Control)
+    {
+        // Writer lock for the static maps
+        reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
+
+        auto currControlKeyPressed = s_ControlKeyPressed.find(viewId);
+
+        if (currControlKeyPressed != s_ControlKeyPressed.end())
+        {
+            s_ControlKeyPressed[viewId] = true;
+        }
+        return;
+    }
+    else if (key == VirtualKey::Shift)
+    {
+        // Writer lock for the static maps
+        reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
+
+        auto currShiftKeyPressed = s_ShiftKeyPressed.find(viewId);
+
+        if (currShiftKeyPressed != s_ShiftKeyPressed.end())
+        {
+            s_ShiftKeyPressed[viewId] = true;
+        }
+        return;
+    }
     // If keyboard shortcuts like Ctrl+C or Ctrl+V are not handled
     if (!args->Handled)
     {
-        auto key = args->VirtualKey;
-        int viewId = Utils::GetWindowId();
-
         auto currentControlKeyPressed = s_ControlKeyPressed.find(viewId);
         auto currentShiftKeyPressed = s_ShiftKeyPressed.find(viewId);
 
@@ -549,33 +575,6 @@ void KeyboardShortcutManager::OnKeyDownHandler(CoreWindow ^ sender, KeyEventArgs
                     return;
                 }
             }
-        }
-
-        if (key == VirtualKey::Control)
-        {
-            // Writer lock for the static maps
-            reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
-
-            auto currControlKeyPressed = s_ControlKeyPressed.find(viewId);
-
-            if (currControlKeyPressed != s_ControlKeyPressed.end())
-            {
-                s_ControlKeyPressed[viewId] = true;
-            }
-            return;
-        }
-        else if (key == VirtualKey::Shift)
-        {
-            // Writer lock for the static maps
-            reader_writer_lock::scoped_lock lock(s_keyboardShortcutMapLock);
-
-            auto currShiftKeyPressed = s_ShiftKeyPressed.find(viewId);
-
-            if (currShiftKeyPressed != s_ShiftKeyPressed.end())
-            {
-                s_ShiftKeyPressed[viewId] = true;
-            }
-            return;
         }
 
         if (currentHonorShortcuts != s_fHonorShortcuts.end())
