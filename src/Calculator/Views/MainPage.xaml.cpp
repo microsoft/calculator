@@ -436,16 +436,14 @@ void MainPage::OnAboutFlyoutOpened(_In_ Object ^ sender, _In_ Object ^ e)
 {
     // Keep Ignoring Escape till the About page flyout is opened
     KeyboardShortcutManager::IgnoreEscape(false);
-
-    KeyboardShortcutManager::UpdateDropDownState(this->AboutPageFlyout);
+    KeyboardShortcutManager::HonorShortcuts(false);
 }
 
 void MainPage::OnAboutFlyoutClosed(_In_ Object ^ sender, _In_ Object ^ e)
 {
     // Start Honoring Escape once the About page flyout is closed
     KeyboardShortcutManager::HonorEscape();
-
-    KeyboardShortcutManager::UpdateDropDownState(nullptr);
+    KeyboardShortcutManager::HonorShortcuts(!NavView->IsPaneOpen);
 }
 
 void MainPage::OnNavSelectionChanged(_In_ Object ^ sender, _In_ MUXC::NavigationViewSelectionChangedEventArgs ^ e)
