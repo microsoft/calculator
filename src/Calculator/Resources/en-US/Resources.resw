@@ -4019,6 +4019,10 @@
     <value>Analysis is not supported for this function.</value>
     <comment>Error displayed when graph analysis is not supported or had an error.</comment>
   </data>
+  <data name="KGFVariableIsNotX" xml:space="preserve">
+    <value>Analysis is only supported for functions in the f(x) format. Example: y=x</value>
+    <comment>Error displayed when graph analysis detects the function format is not f(x).</comment>
+  </data>
   <data name="Maxima" xml:space="preserve">
     <value>Maxima</value>
     <comment>Title for KeyGraphFeatures Maxima Property</comment>
