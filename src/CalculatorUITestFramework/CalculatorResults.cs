@@ -13,8 +13,8 @@ namespace CalculatorUITestFramework
         private WindowsElement CalculatorAlwaysOnTopResults => this.session.TryFindElementByAccessibilityId("CalculatorAlwaysOnTopResults");
         private WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
         private WindowsElement CalculatorExpression => this.session.TryFindElementByAccessibilityId("CalculatorExpression");
-        private WindowsElement MenuItemCopy => this.session.TryFindElementByAccessibilityId("CopyMenuItem");
-        private WindowsElement MenuItemPaste => this.session.TryFindElementByAccessibilityId("PasteMenuItem");
+        private WindowsElement MenuItemCopy => this.session.WaitForElementByAccessibilityId("CopyMenuItem");
+        private WindowsElement MenuItemPaste => this.session.WaitForElementByAccessibilityId("PasteMenuItem");
 
         /// <summary>
         /// Gets the text from the display control in AoT mode and removes the narrator text that is not displayed in the UI.
