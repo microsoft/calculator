@@ -6,6 +6,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d">
     <StackPanel>
+        <TextBlock x:Uid="LineOptionsHeading"
+                   Margin="8,0,0,16"
+                   FontSize="20"
+                   FontWeight="Medium"
+                   AutomationProperties.HeadingLevel="Level2"/>
         <GridView x:Name="ColorChooser"
                   ItemsSource="{x:Bind AvailableColors}"
                   Loaded="ColorChooserLoaded"
@@ -92,14 +97,17 @@
         </GridView>
 
         <ComboBox x:Name="StyleChooserBox"
-                  x:Uid="StyleChooserBox"
                   MinWidth="200"
                   Margin="8,0"
+                  Foreground="{ThemeResource AppControlPageTextBaseHighColorBrush}"
                   Loaded="StyleChooserBox_Loaded"
                   SelectedItem="{x:Bind SelectedStyle}"
                   SelectionChanged="StyleChooserBox_SelectionChanged"
                   Visibility="Visible"
-                  IsEnabled="{x:Bind EnableLineStylePicker}">
+                  IsEnabled="{x:Bind EnableLineStylePicker, Mode=OneWay}">
+            <ComboBox.Header>
+                <TextBlock x:Uid="StyleChooserBoxHeading" Margin="0,0,8,8"/>
+            </ComboBox.Header>
             <ComboBox.ItemTemplate>
                 <!-- Set x:DataType to be Platform::Object so that we can pass it to the x:Bind function directly since we cannot pass an enum in c++/cx -->
                 <DataTemplate x:DataType="x:Object">
@@ -107,8 +115,10 @@
                           Height="20"
                           MaxWidth="200"
                           AutomationProperties.Name="{x:Bind local:EquationStylePanelControl.GetLineAutomationName((x:Object))}">
-                        <Line VerticalAlignment="Center"
-                              Stroke="{ThemeResource AppControlPageTextBaseHighColorBrush}"
+
+                        <Line x:Name="LineItem"
+                              VerticalAlignment="Center"
+                              Stroke="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"
                               StrokeThickness="2.5"
                               StrokeDashArray="{x:Bind local:EquationStylePanelControl.GetLinePattern((x:Object))}"
                               X1="0"

@@ -50,15 +50,15 @@ namespace CalcManager::NumberFormattingUtils
     /// <param name="value">the number</param>
     unsigned int GetNumberDigitsWholeNumberPart(double value)
     {
-        return value == 0 ? 1 : (1 + (int)log10(abs(value)));
+        return value == 0 ? 1u : static_cast<unsigned int>(1 + max(0.0, log10(abs(value))));
     }
 
     /// <summary>
     /// Rounds the given double to the given number of significant digits
     /// </summary>
     /// <param name="num">input double</param>
-    /// <param name="numSignificant">int number of significant digits to round to</param>
-    wstring RoundSignificantDigits(double num, int numSignificant)
+    /// <param name="numSignificant">unsigned int number of significant digits to round to</param>
+    wstring RoundSignificantDigits(double num, unsigned int numSignificant)
     {
         wstringstream out(wstringstream::out);
         out << fixed;

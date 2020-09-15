@@ -5,8 +5,10 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using OpenQA.Selenium.Interactions;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Linq;
 
 namespace CalculatorUITestFramework
 {
@@ -34,10 +36,10 @@ namespace CalculatorUITestFramework
         /// Gets all of the history items listed in the History Pane.
         /// </summary>
         /// <returns>A readonly collection of history items.</returns>
-        public ReadOnlyCollection<AppiumWebElement> GetAllHistoryListViewItems()
+        public List<HistoryItem> GetAllHistoryListViewItems()
         {
             OpenHistoryPanel();
-            return this.HistoryListView.FindElementsByClassName("ListViewItem");
+            return (from item in this.HistoryListView.FindElementsByClassName("ListViewItem") select new HistoryItem(item)).ToList();
         }
 
         /// <summary>
@@ -92,10 +94,10 @@ namespace CalculatorUITestFramework
         /// Gets all of the History items listed in the History Flyout.
         /// </summary>
         /// <returns> A read only collection of History items.</returns>
-        public ReadOnlyCollection<AppiumWebElement> GetAllHistoryFlyoutListViewItems()
+        public List<HistoryItem> GetAllHistoryFlyoutListViewItems()
         {
             OpenHistoryFlyout();
-            return this.HistoryListView.FindElementsByClassName("ListViewItem");
+            return (from item in this.HistoryListView.FindElementsByClassName("ListViewItem") select new HistoryItem(item)).ToList();
         }
 
         /// <summary>

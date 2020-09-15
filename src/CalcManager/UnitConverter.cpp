@@ -13,19 +13,19 @@ using namespace std;
 using namespace UnitConversionManager;
 using namespace CalcManager::NumberFormattingUtils;
 
-static constexpr uint32_t EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT = 3;
-static constexpr uint32_t EXPECTEDSERIALIZEDUNITTOKENCOUNT = 6;
-static constexpr uint32_t EXPECTEDSTATEDATATOKENCOUNT = 5;
-static constexpr uint32_t EXPECTEDMAPCOMPONENTTOKENCOUNT = 2;
+static constexpr uint32_t EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT = 3U;
+static constexpr uint32_t EXPECTEDSERIALIZEDUNITTOKENCOUNT = 6U;
+static constexpr uint32_t EXPECTEDSTATEDATATOKENCOUNT = 5U;
+static constexpr uint32_t EXPECTEDMAPCOMPONENTTOKENCOUNT = 2U;
 
-static constexpr int32_t MAXIMUMDIGITSALLOWED = 15;
-static constexpr int32_t OPTIMALDIGITSALLOWED = 7;
+static constexpr uint32_t MAXIMUMDIGITSALLOWED = 15U;
+static constexpr uint32_t OPTIMALDIGITSALLOWED = 7U;
 
 static constexpr wchar_t LEFTESCAPECHAR = L'{';
 static constexpr wchar_t RIGHTESCAPECHAR = L'}';
 
-static const double OPTIMALDECIMALALLOWED = pow(10, -1 * (OPTIMALDIGITSALLOWED - 1));
-static const double MINIMUMDECIMALALLOWED = pow(10, -1 * (MAXIMUMDIGITSALLOWED - 1));
+static const double OPTIMALDECIMALALLOWED = 1e-6; // pow(10, -1 * (OPTIMALDIGITSALLOWED - 1));
+static const double MINIMUMDECIMALALLOWED = 1e-14; // pow(10, -1 * (MAXIMUMDIGITSALLOWED - 1));
 
 unordered_map<wchar_t, wstring> quoteConversions;
 unordered_map<wstring, wchar_t> unquoteConversions;
@@ -109,7 +109,7 @@ CategorySelectionInitializer UnitConverter::SetCurrentCategory(const Category& i
     {
         if (m_currentCategory.id != input.id)
         {
-            for (auto& unit : m_categoryToUnits[m_currentCategory])
+            for (auto& unit : m_categoryToUnits[m_currentCategory.id])
             {
                 unit.isConversionSource = (unit.id == m_fromType.id);
                 unit.isConversionTarget = (unit.id == m_toType.id);
@@ -121,7 +121,7 @@ CategorySelectionInitializer UnitConverter::SetCurrentCategory(const Category& i
             }
         }
 
-        newUnitList = m_categoryToUnits[input];
+        newUnitList = m_categoryToUnits[input.id];
     }
 
     InitializeSelectedUnits();
@@ -283,7 +283,7 @@ void UnitConverter::RestoreUserPreferences(wstring_view userPreferences)
     m_currentCategory = StringToCategory(outerTokens[2]);
 
     // Only restore from the saved units if they are valid in the current available units.
-    auto itr = m_categoryToUnits.find(m_currentCategory);
+    auto itr = m_categoryToUnits.find(m_currentCategory.id);
     if (itr != m_categoryToUnits.end())
     {
         const auto& curUnits = itr->second;
@@ -643,15 +643,15 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         wstring roundedString;
         if (abs(entry.value) < 100)
         {
-            roundedString = RoundSignificantDigits(entry.value, 2);
+            roundedString = RoundSignificantDigits(entry.value, 2U);
         }
         else if (abs(entry.value) < 1000)
         {
-            roundedString = RoundSignificantDigits(entry.value, 1);
+            roundedString = RoundSignificantDigits(entry.value, 1U);
         }
         else
         {
-            roundedString = RoundSignificantDigits(entry.value, 0);
+            roundedString = RoundSignificantDigits(entry.value, 0U);
         }
         if (stod(roundedString) != 0.0 || m_currentCategory.supportsNegative)
         {
@@ -681,15 +681,15 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
         wstring roundedString;
         if (abs(entry.value) < 100)
         {
-            roundedString = RoundSignificantDigits(entry.value, 2);
+            roundedString = RoundSignificantDigits(entry.value, 2U);
         }
         else if (abs(entry.value) < 1000)
         {
-            roundedString = RoundSignificantDigits(entry.value, 1);
+            roundedString = RoundSignificantDigits(entry.value, 1U);
         }
         else
         {
-            roundedString = RoundSignificantDigits(entry.value, 0);
+            roundedString = RoundSignificantDigits(entry.value, 0U);
         }
 
         // How to work out which is the best whimsical value to add to the vector?
@@ -713,10 +713,8 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
 /// </summary>
 void UnitConverter::ResetCategoriesAndRatios()
 {
-    m_categories = m_dataLoader->LoadOrderedCategories();
-
     m_switchedActive = false;
-
+    m_categories = m_dataLoader->GetOrderedCategories();
     if (m_categories.empty())
     {
         return;
@@ -738,8 +736,8 @@ void UnitConverter::ResetCategoriesAndRatios()
             continue;
         }
 
-        vector<Unit> units = activeDataLoader->LoadOrderedUnits(category);
-        m_categoryToUnits[category] = units;
+        vector<Unit> units = activeDataLoader->GetOrderedUnits(category);
+        m_categoryToUnits[category.id] = units;
 
         // Just because the units are empty, doesn't mean the user can't select this category,
         // we just want to make sure we don't let an unready category be the default.
@@ -789,7 +787,7 @@ void UnitConverter::InitializeSelectedUnits()
         return;
     }
 
-    auto itr = m_categoryToUnits.find(m_currentCategory);
+    auto itr = m_categoryToUnits.find(m_currentCategory.id);
     if (itr == m_categoryToUnits.end())
     {
         return;
@@ -800,8 +798,8 @@ void UnitConverter::InitializeSelectedUnits()
     {
         // Units may already have been initialized through UnitConverter::RestoreUserPreferences().
         // Check if they have been, and if so, do not override restored units.
-        bool isFromUnitValid = m_fromType != EMPTY_UNIT && find(curUnits.begin(), curUnits.end(), m_fromType) != curUnits.end();
-        bool isToUnitValid = m_toType != EMPTY_UNIT && find(curUnits.begin(), curUnits.end(), m_toType) != curUnits.end();
+        const bool isFromUnitValid = m_fromType != EMPTY_UNIT && find(curUnits.begin(), curUnits.end(), m_fromType) != curUnits.end();
+        const bool isToUnitValid = m_toType != EMPTY_UNIT && find(curUnits.begin(), curUnits.end(), m_toType) != curUnits.end();
 
         if (isFromUnitValid && isToUnitValid)
         {
@@ -877,9 +875,9 @@ void UnitConverter::Calculate()
     else
     {
         double currentValue = stod(m_currentDisplay);
-        double returnValue = Convert(currentValue, conversionTable[m_toType]);
+        const double returnValue = Convert(currentValue, conversionTable[m_toType]);
 
-        auto isCurrencyConverter = m_currencyDataLoader != nullptr && m_currencyDataLoader->SupportsCategory(this->m_currentCategory);
+        const auto isCurrencyConverter = m_currencyDataLoader != nullptr && m_currencyDataLoader->SupportsCategory(this->m_currentCategory);
         if (isCurrencyConverter)
         {
             // We don't need to trim the value when it's a currency.
@@ -888,15 +886,15 @@ void UnitConverter::Calculate()
         }
         else
         {
-            int numPreDecimal = GetNumberDigitsWholeNumberPart(returnValue);
+            const unsigned int numPreDecimal = GetNumberDigitsWholeNumberPart(returnValue);
             if (numPreDecimal > MAXIMUMDIGITSALLOWED || (returnValue != 0 && abs(returnValue) < MINIMUMDECIMALALLOWED))
             {
                 m_returnDisplay = ToScientificNumber(returnValue);
             }
             else
             {
-                int currentNumberSignificantDigits = GetNumberDigits(m_currentDisplay);
-                int precision;
+                const unsigned int currentNumberSignificantDigits = GetNumberDigits(m_currentDisplay);
+                unsigned int precision;
                 if (abs(returnValue) < OPTIMALDECIMALALLOWED)
                 {
                     precision = MAXIMUMDIGITSALLOWED;
@@ -905,7 +903,8 @@ void UnitConverter::Calculate()
                 {
                     // Fewer digits are needed following the decimal if the number is large,
                     // we calculate the number of decimals necessary based on the number of digits in the integer part.
-                    precision = max(0, max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits)) - numPreDecimal);
+                    auto numberDigits = max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits));
+                    precision = numberDigits > numPreDecimal ? numberDigits - numPreDecimal : 0;
                 }
 
                 m_returnDisplay = RoundSignificantDigits(returnValue, precision);

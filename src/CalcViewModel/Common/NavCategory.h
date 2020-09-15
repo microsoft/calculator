@@ -69,8 +69,7 @@ namespace CalculatorApp
                 MyVirtualKey vKey,
                 wchar_t const* aKey,
                 bool categorySupportsNegative,
-                bool enabled,
-                bool isPreview)
+                bool enabled)
                 : viewMode(mode)
                 , serializationId(id)
                 , friendlyName(name)
@@ -81,7 +80,6 @@ namespace CalculatorApp
                 , accessKey(aKey)
                 , supportsNegative(categorySupportsNegative)
                 , isEnabled(enabled)
-                , isPreview(isPreview)
             {
             }
 
@@ -95,7 +93,6 @@ namespace CalculatorApp
             const wchar_t* const accessKey;
             const bool supportsNegative;
             const bool isEnabled;
-            const bool isPreview;
         };
 
     private
@@ -126,7 +123,6 @@ namespace CalculatorApp
             PROPERTY_R(Platform::String ^, AccessKey);
             PROPERTY_R(bool, SupportsNegative);
             PROPERTY_R(bool, IsEnabled);
-            PROPERTY_R(bool, IsPreview);
 
             property Platform::String
                 ^ AutomationId { Platform::String ^ get() { return m_Mode.ToString(); } }
@@ -138,11 +134,12 @@ namespace CalculatorApp
             static ViewMode GetViewModeForFriendlyName(Platform::String ^ name);
 
             static bool IsValidViewMode(ViewMode mode);
+            static bool IsViewModeEnabled(ViewMode mode);
             static bool IsCalculatorViewMode(ViewMode mode);
             static bool IsGraphingCalculatorViewMode(ViewMode mode);
             static bool IsDateCalculatorViewMode(ViewMode mode);
             static bool IsConverterViewMode(ViewMode mode);
-            static bool IsViewModePreview(ViewMode mode);
+
             static Platform::String ^ GetFriendlyName(ViewMode mode);
             static Platform::String ^ GetNameResourceKey(ViewMode mode);
             static CategoryGroupType GetGroupType(ViewMode mode);
@@ -163,8 +160,7 @@ namespace CalculatorApp
                            Platform::String ^ mode,
                            ViewMode viewMode,
                            bool supportsNegative,
-                           bool isEnabled,
-                           bool isPreview)
+                           bool isEnabled)
                 : m_Name(name)
                 , m_AutomationName(automationName)
                 , m_Glyph(glyph)
@@ -173,7 +169,6 @@ namespace CalculatorApp
                 , m_Mode(viewMode)
                 , m_SupportsNegative(supportsNegative)
                 , m_IsEnabled(isEnabled)
-                , m_IsPreview(isPreview)
             {
             }
 

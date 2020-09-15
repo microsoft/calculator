@@ -236,6 +236,13 @@ void EquationInputArea::EquationTextBox_RemoveButtonClicked(Object ^ sender, Rou
         }
 
         Equations->GetAt(lastIndex)->FunctionLabelIndex = m_lastFunctionLabelIndex;
+
+        // Focus the next equation after the one we just removed. There should always be at least one ghost equation,
+        // but check to make sure that there is an equation we can focus in the index where we just removed an equation.
+        if (index < Equations->Size)
+        {
+            FocusEquationTextBox(Equations->GetAt(index));
+        }
     }
 }
 
@@ -402,6 +409,7 @@ void EquationInputArea::SubmitTextbox(TextBox ^ sender)
     else if (sender->Name == "MinTextBox")
     {
         val = validateDouble(sender->Text, variableViewModel->Min);
+
         variableViewModel->Min = val;
         TraceLogger::GetInstance()->LogVariableSettingsChanged(L"MinTextBox");
     }
@@ -414,6 +422,13 @@ void EquationInputArea::SubmitTextbox(TextBox ^ sender)
     else if (sender->Name == "StepTextBox")
     {
         val = validateDouble(sender->Text, variableViewModel->Step);
+
+        // Don't allow a value less than or equal to 0 as the step
+        if (val <= 0)
+        {
+            val = variableViewModel->Step;
+        }
+
         variableViewModel->Step = val;
         TraceLogger::GetInstance()->LogVariableSettingsChanged(L"StepTextBox");
     }
@@ -484,7 +499,7 @@ void EquationInputArea::EquationTextBox_EquationFormatRequested(Object ^ sender,
 
 void EquationInputArea::VariableAreaClicked(Object ^ sender, RoutedEventArgs ^ e)
 {
-    ToggleVariableArea(static_cast<VariableViewModel ^>(static_cast<Button ^>(sender)->DataContext));
+    ToggleVariableArea(static_cast<VariableViewModel ^>(static_cast<ToggleButton ^>(sender)->DataContext));
 }
 
 void EquationInputArea::ToggleVariableArea(VariableViewModel ^ selectedVariableViewModel)

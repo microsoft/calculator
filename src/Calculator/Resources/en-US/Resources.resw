@@ -2705,6 +2705,10 @@
     <value>Microsoft Software License Terms</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
+  <data name="PreviewTag.Text" xml:space="preserve">
+    <value>Preview</value>
+    <comment>Label displayed next to upcoming features</comment>
+  </data>  
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Microsoft Privacy Statement</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
@@ -3829,11 +3833,15 @@
   </data>
   <data name="GraphViewAutomaticBestFitAnnouncement" xml:space="preserve">
     <value>Automatic Best Fit</value>
-    <comment>Announcement used in Graphing Calculator when button is clicked and automatic best fit is set</comment>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set</comment>
   </data>
     <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
     <value>Manual Adjustment</value>
-    <comment>Announcement used in Graphing Calculator when button is clicked and manual adjustment is set</comment>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and manual adjustment is set</comment>
+  </data>
+    <data name="GridResetAnnouncement" xml:space="preserve">
+    <value>Graph view has been reset</value>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set, resetting the graph</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Zoom In (Ctrl + plus)</value>
@@ -3899,7 +3907,7 @@
     <value>Color</value>
     <comment>Label for the Line Color section of the style picker</comment>
   </data>
-  <data name="StyleChooserBox.Header" xml:space="preserve">
+  <data name="StyleChooserBoxHeading.Text" xml:space="preserve">
     <value>Style</value>
     <comment>Label for the Line Style section of the style picker</comment>
   </data>
@@ -4368,12 +4376,12 @@
     <comment>Y minimum value header</comment>
   </data>
   <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Grid options</value>
-    <comment>This is the tooltip text for the grid options button in Graphing Calculator</comment>
+    <value>Graph options</value>
+    <comment>This is the tooltip text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Grid options</value>
-    <comment>This is the automation name text for the grid options button in Graphing Calculator</comment>
+    <value>Graph options</value>
+    <comment>This is the automation name text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="GraphOptionsHeading.Text" xml:space="preserve">
     <value>Graph Options</value>
@@ -4381,11 +4389,19 @@
   </data>
   <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Variable options</value>
-    <comment>Screen reader prompt for the variable settings button</comment>
+    <comment>Screen reader prompt for the variable settings toggle button</comment>
   </data>
-  <data name="LineThicknessBox.Header" xml:space="preserve">
+  <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Toggle variable options</value>
+    <comment>Tool tip for the variable settings toggle button</comment>
+  </data>
+  <data name="LineThicknessBoxHeading.Text" xml:space="preserve">
     <value>Line Thickness</value>
     <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+  </data>
+  <data name="LineOptionsHeading.Text" xml:space="preserve">
+    <value>Line Options</value>
+    <comment>Heading for the equation style flyout in Graphing mode.</comment>
   </data>
   <data name="SmallLineWidthAutomationName" xml:space="preserve">
     <value>Small Line Width</value>
@@ -4564,7 +4580,7 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="GraphThemeHeading.Text" xml:space="preserve">
-    <value>Theme</value>
+    <value>Graph Theme</value>
     <comment>Graph settings heading for the theme options</comment>
   </data>
   <data name="AlwaysLightTheme.Content" xml:space="preserve">
@@ -4595,41 +4611,9 @@
     <value>Function Analysis Equation Box</value>
     <comment>This is the automation name text for the equation box in the function analysis panel</comment>
   </data>
-  <data name="lessThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Less than</value>
-    <comment>Screen reader prompt for the Less than button</comment>
-  </data>
-  <data name="lessThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Less than or equal</value>
-    <comment>Screen reader prompt for the Less than or equal button</comment>
-  </data>
-  <data name="equalsFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Equal</value>
-    <comment>Screen reader prompt for the Equal button</comment>
-  </data>
-  <data name="greaterThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Greater than or equal</value>
-    <comment>Screen reader prompt for the Greater than or equal button</comment>
-  </data>
-  <data name="greaterThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Greater than</value>
-    <comment>Screen reader prompt for the Greater than button</comment>
-  </data>
   <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Equals</value>
     <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
-  </data>
-    <data name="xButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>X</value>
-    <comment>Screen reader prompt for the X button on the graphing calculator operator keypad</comment>
-  </data>
-    <data name="yButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Y</value>
-    <comment>Screen reader prompt for the Y button on the graphing calculator operator keypad</comment>
-  </data>
-  <data name="submitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Submit</value>
-    <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
   </data>
   <data name="lessThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Less than</value>
@@ -4662,5 +4646,49 @@
   <data name="submitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Submit</value>
     <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Function Anaylsis</value>
+    <comment>Screen reader prompt for the function analysis grid</comment>
+  </data>
+  <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Graph Options</value>
+    <comment>Screen reader prompt for the graph options panel</comment>
+  </data>
+  <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
+    <value>History and Memory lists</value>
+    <comment>Automation name for the group of controls for history and memory lists.</comment>
+  </data>
+  <data name="DockPanel_MemoryList" xml:space="preserve">
+    <value>Memory list</value>
+    <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>History slot %1 cleared</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>Calculator always on top</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>Calculator back to full view</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
+  <data name="arithmeticShiftButtonSelected" xml:space="preserve">
+    <value>Arithmetic Shift selected</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButtonSelected" xml:space="preserve">
+    <value>Logical Shift selected</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButtonSelected" xml:space="preserve">
+    <value>Rotate Circular Shift selected</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
+    <value>Rotate Through Carry Circular Shift selected</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
 </root>

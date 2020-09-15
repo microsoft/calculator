@@ -16,7 +16,7 @@
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <AppxDefaultResourceQualifierUAP_Contrast>black</AppxDefaultResourceQualifierUAP_Contrast>
     <AppxBundle>Always</AppxBundle>
-    <PackageCertificateKeyFile>TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>WindowsDev_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
@@ -135,7 +135,7 @@
   </ImportGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -144,7 +144,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -177,7 +177,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -198,7 +198,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -247,9 +247,6 @@
     <ClInclude Include="Controls\CalculatorButton.h" />
     <ClInclude Include="Controls\FlipButtons.h" />
     <ClInclude Include="Controls\OverflowTextBlock.h" />
-    <ClInclude Include="Controls\PreviewTagControl.xaml.h">
-      <DependentUpon>Controls\PreviewTagControl.xaml</DependentUpon>
-    </ClInclude>
     <ClInclude Include="Controls\RadixButton.h" />
     <ClInclude Include="Controls\SupplementaryItemsControl.h" />
     <ClInclude Include="Converters\BooleanNegationConverter.h" />
@@ -350,9 +347,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AboutFlyout.xaml" />
-    <Page Include="Controls\PreviewTagControl.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="EquationStylePanelControl.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -396,9 +390,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="TemporaryKey.pfx" />
+    <None Include="WindowsDev_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AboutFlyout.xaml.cpp">
@@ -417,9 +409,6 @@
     <ClCompile Include="Controls\CalculatorButton.cpp" />
     <ClCompile Include="Controls\FlipButtons.cpp" />
     <ClCompile Include="Controls\OverflowTextBlock.cpp" />
-    <ClCompile Include="Controls\PreviewTagControl.xaml.cpp">
-      <DependentUpon>Controls\PreviewTagControl.xaml</DependentUpon>
-    </ClCompile>
     <ClCompile Include="Controls\RadixButton.cpp" />
     <ClCompile Include="Controls\SupplementaryItemsControl.cpp" />
     <ClCompile Include="Converters\BooleanNegationConverter.cpp" />
@@ -530,12 +519,8 @@
     <PRIResource Include="Resources\ar-sa\Resources.resw" />
     <PRIResource Include="Resources\az-Latn-AZ\CEngineStrings.resw" />
     <PRIResource Include="Resources\az-Latn-AZ\Resources.resw" />
-    <PRIResource Include="Resources\be-BY\CEngineStrings.resw" />
-    <PRIResource Include="Resources\be-BY\Resources.resw" />
     <PRIResource Include="Resources\bg-BG\CEngineStrings.resw" />
     <PRIResource Include="Resources\bg-BG\Resources.resw" />
-    <PRIResource Include="Resources\bn-BD\CEngineStrings.resw" />
-    <PRIResource Include="Resources\bn-BD\Resources.resw" />
     <PRIResource Include="Resources\ca-es\CEngineStrings.resw" />
     <PRIResource Include="Resources\ca-es\Resources.resw" />
     <PRIResource Include="Resources\cs-cz\CEngineStrings.resw" />
@@ -572,8 +557,6 @@
     <PRIResource Include="Resources\fr-fr\Resources.resw" />
     <PRIResource Include="Resources\gl-ES\CEngineStrings.resw" />
     <PRIResource Include="Resources\gl-ES\Resources.resw" />
-    <PRIResource Include="Resources\ha-Latn-NG\CEngineStrings.resw" />
-    <PRIResource Include="Resources\ha-Latn-NG\Resources.resw" />
     <PRIResource Include="Resources\he-IL\CEngineStrings.resw" />
     <PRIResource Include="Resources\he-IL\Resources.resw" />
     <PRIResource Include="Resources\hi-in\CEngineStrings.resw" />
@@ -634,8 +617,6 @@
     <PRIResource Include="Resources\sr-Latn-RS\Resources.resw" />
     <PRIResource Include="Resources\sv-se\CEngineStrings.resw" />
     <PRIResource Include="Resources\sv-se\Resources.resw" />
-    <PRIResource Include="Resources\sw-KE\CEngineStrings.resw" />
-    <PRIResource Include="Resources\sw-KE\Resources.resw" />
     <PRIResource Include="Resources\ta-IN\CEngineStrings.resw" />
     <PRIResource Include="Resources\ta-IN\Resources.resw" />
     <PRIResource Include="Resources\te-IN\CEngineStrings.resw" />
@@ -646,8 +627,6 @@
     <PRIResource Include="Resources\tr-tr\Resources.resw" />
     <PRIResource Include="Resources\uk-UA\CEngineStrings.resw" />
     <PRIResource Include="Resources\uk-UA\Resources.resw" />
-    <PRIResource Include="Resources\uz-Latn-UZ\CEngineStrings.resw" />
-    <PRIResource Include="Resources\uz-Latn-UZ\Resources.resw" />
     <PRIResource Include="Resources\vi-vn\CEngineStrings.resw" />
     <PRIResource Include="Resources\vi-vn\Resources.resw" />
     <PRIResource Include="Resources\zh-cn\CEngineStrings.resw" />
@@ -976,7 +955,7 @@
   </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets" Condition="Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" />
-    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.3.200213001\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.3.200213001\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="..\..\packages\Microsoft.UI.Xaml.2.4.3\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\..\packages\Microsoft.UI.Xaml.2.4.3\build\native\Microsoft.UI.Xaml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -984,6 +963,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.props'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.WindowsCalculator.PGO.1.0.2\build\native\Microsoft.WindowsCalculator.PGO.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.3.200213001\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.3.200213001\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.UI.Xaml.2.4.3\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.UI.Xaml.2.4.3\build\native\Microsoft.UI.Xaml.targets'))" />
   </Target>
 </Project>

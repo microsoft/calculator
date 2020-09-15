@@ -69,10 +69,6 @@ namespace CalculationManager
 
         CommandNULL = 0,
 
-        // No new command should not be added before CommandSign, 80
-        // If it is needed, the following two functions need to be revised too.
-        // CalculatorManager::MapCommandForSerialize(Command command);
-        // CalculatorManager::MapCommandForDeSerialize(unsigned char command);
         CommandSIGN = 80,
         CommandCLEAR = 81,
         CommandCENTR = 82,

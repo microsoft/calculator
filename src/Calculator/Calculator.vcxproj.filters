@@ -443,7 +443,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="TemporaryKey.pfx" />
+    <None Include="WindowsDev_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Calculator.xaml">
@@ -486,9 +486,6 @@
       <Filter>Views</Filter>
     </Page>
     <Page Include="AboutFlyout.xaml" />
-    <Page Include="Views\CalculatorProgrammerDisplayPanel.xaml">
-      <Filter>Views</Filter>
-    </Page>
     <Page Include="Views\CalculatorProgrammerBitFlipPanel.xaml">
       <Filter>Views</Filter>
     </Page>
@@ -522,8 +519,10 @@
     <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml">
       <Filter>Views\GraphingCalculator</Filter>
     </Page>
-    <Page Include="Controls\PreviewTagControl.xaml" />
     <Page Include="EquationStylePanelControl.xaml" />
+    <Page Include="Views\CalculatorProgrammerDisplayPanel.xaml">
+      <Filter>Views\StateTriggers</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">
@@ -534,9 +533,6 @@
     </PRIResource>
     <PRIResource Include="Resources\az-Latn-AZ\CEngineStrings.resw">
       <Filter>Resources\az-Latn-az</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\uz-Latn-UZ\CEngineStrings.resw">
-      <Filter>Resources\uz-latn-uz</Filter>
     </PRIResource>
     <PRIResource Include="Resources\af-ZA\CEngineStrings.resw">
       <Filter>Resources\af-za</Filter>
@@ -549,9 +545,6 @@
     </PRIResource>
     <PRIResource Include="Resources\vi-vn\CEngineStrings.resw">
       <Filter>Resources\vi-vn</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\be-BY\CEngineStrings.resw">
-      <Filter>Resources\be-by</Filter>
     </PRIResource>
     <PRIResource Include="Resources\am-et\CEngineStrings.resw">
       <Filter>Resources\am-et</Filter>
@@ -576,12 +569,6 @@
     </PRIResource>
     <PRIResource Include="Resources\zh-cn\CEngineStrings.resw">
       <Filter>Resources\zh-cn</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\sw-KE\CEngineStrings.resw">
-      <Filter>Resources\sw-ke</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\bn-BD\CEngineStrings.resw">
-      <Filter>Resources\bn-bd</Filter>
     </PRIResource>
     <PRIResource Include="Resources\ta-IN\CEngineStrings.resw">
       <Filter>Resources\ta-in</Filter>
@@ -672,9 +659,6 @@
     </PRIResource>
     <PRIResource Include="Resources\pt-br\CEngineStrings.resw">
       <Filter>Resources\pt-br</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\ha-Latn-NG\CEngineStrings.resw">
-      <Filter>Resources\ha-latn-ng</Filter>
     </PRIResource>
     <PRIResource Include="Resources\lt-LT\CEngineStrings.resw">
       <Filter>Resources\lt-lt</Filter>
@@ -808,9 +792,6 @@
     <PRIResource Include="Resources\ru-ru\Resources.resw">
       <Filter>Resources\ru-ru</Filter>
     </PRIResource>
-    <PRIResource Include="Resources\ha-Latn-NG\Resources.resw">
-      <Filter>Resources\ha-latn-ng</Filter>
-    </PRIResource>
     <PRIResource Include="Resources\lo-LA\Resources.resw">
       <Filter>Resources\lo-la</Filter>
     </PRIResource>
@@ -853,9 +834,6 @@
     <PRIResource Include="Resources\el-GR\Resources.resw">
       <Filter>Resources\el-gr</Filter>
     </PRIResource>
-    <PRIResource Include="Resources\sw-KE\Resources.resw">
-      <Filter>Resources\sw-ke</Filter>
-    </PRIResource>
     <PRIResource Include="Resources\uk-UA\Resources.resw">
       <Filter>Resources\uk-ua</Filter>
     </PRIResource>
@@ -865,9 +843,6 @@
     <PRIResource Include="Resources\vi-vn\Resources.resw">
       <Filter>Resources\vi-vn</Filter>
     </PRIResource>
-    <PRIResource Include="Resources\uz-Latn-UZ\Resources.resw">
-      <Filter>Resources\uz-latn-uz</Filter>
-    </PRIResource>
     <PRIResource Include="Resources\tr-tr\Resources.resw">
       <Filter>Resources\tr-tr</Filter>
     </PRIResource>
@@ -876,9 +851,6 @@
     </PRIResource>
     <PRIResource Include="Resources\zh-tw\Resources.resw">
       <Filter>Resources\zh-tw</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\bn-BD\Resources.resw">
-      <Filter>Resources\bn-bd</Filter>
     </PRIResource>
     <PRIResource Include="Resources\cs-cz\Resources.resw">
       <Filter>Resources\cs-cz</Filter>
@@ -900,9 +872,6 @@
     </PRIResource>
     <PRIResource Include="Resources\ar-sa\Resources.resw">
       <Filter>Resources\ar-sa</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\be-BY\Resources.resw">
-      <Filter>Resources\be-by</Filter>
     </PRIResource>
     <PRIResource Include="Resources\kk-KZ\Resources.resw">
       <Filter>Resources\kk-kz</Filter>
@@ -1579,6 +1548,10 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>

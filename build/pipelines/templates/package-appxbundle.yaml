@@ -1,6 +1,9 @@
 # This template contains a job which takes .appx packages which were built separately for each
 # architecture (arm, x86, etc.) and combines them into a single .appxbundle.
 
+parameters:
+  signBundle: false
+
 jobs:
 - job: Package
   dependsOn:
@@ -58,3 +61,43 @@ jobs:
     inputs:
       artifactName: appxBundle
       pathToPublish: $(Build.ArtifactStagingDirectory)\appxBundle
+
+  - ${{ if eq(parameters.signBundle, true) }}:
+    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+      displayName: Send appxbundle to code signing service
+      inputs:
+        ConnectedServiceName: Essential Experiences Codesign
+        FolderPath: $(Build.ArtifactStagingDirectory)\appxBundle
+        Pattern: Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
+        signConfigType: inlineSignParams
+        inlineOperation: |
+          [
+            {
+              "CertTemplateName": "WINMSAPP1ST",
+              "CertSubjectName": "CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+              "KeyCode": "Dynamic",
+              "OperationCode": "SigntoolvNextSign",
+              "Parameters": {
+                "OpusName": "Microsoft",
+                "OpusInfo": "http://www.microsoft.com",
+                "FileDigest": "/fd \"SHA256\"",
+                "TimeStamp": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+              },
+              "ToolName": "sign",
+              "ToolVersion": "1.0"
+            },
+            {
+              "CertTemplateName": "WINMSAPP1ST",
+              "CertSubjectName": "CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+              "KeyCode": "Dynamic",
+              "OperationCode": "SigntoolvNextVerify",
+              "Parameters": {},
+              "ToolName": "sign",
+              "ToolVersion": "1.0"
+            }
+          ]
+    - task: PublishBuildArtifacts@1
+      displayName: Publish AppxBundleSigned artifact
+      inputs:
+        pathtoPublish: $(Build.ArtifactStagingDirectory)\appxBundle
+        artifactName: appxBundleSigned

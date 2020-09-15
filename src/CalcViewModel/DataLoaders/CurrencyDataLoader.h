@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -63,8 +63,8 @@ namespace CalculatorApp
 
             // IConverterDataLoader
             void LoadData() override;
-            std::vector<UCM::Category> LoadOrderedCategories() override;
-            std::vector<UCM::Unit> LoadOrderedUnits(const UCM::Category& category) override;
+            std::vector<UCM::Category> GetOrderedCategories() override;
+            std::vector<UCM::Unit> GetOrderedUnits(const UCM::Category& category) override;
             std::unordered_map<UCM::Unit, UCM::ConversionData, UCM::UnitHash> LoadOrderedRatios(const UCM::Unit& unit) override;
             bool SupportsCategory(const UnitConversionManager::Category& target) override;
             // IConverterDataLoader

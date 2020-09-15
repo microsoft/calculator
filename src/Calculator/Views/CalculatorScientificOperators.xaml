@@ -953,13 +953,13 @@
                                            ButtonId="XPower2"
                                            Content="&#xf7c8;"/>
 
-                <controls:CalculatorButton x:Name="XPower3Button"
-                                           x:Uid="xpower3Button"
+                <controls:CalculatorButton x:Name="SquareRootButton"
+                                           x:Uid="squareRootButton"
                                            Grid.Row="1"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
-                                           AutomationProperties.AutomationId="xpower3Button"
-                                           ButtonId="Cube"
-                                           Content="&#xf7cb;"/>
+                                           AutomationProperties.AutomationId="squareRootButton"
+                                           ButtonId="Sqrt"
+                                           Content="&#xF899;"/>
 
                 <controls:CalculatorButton x:Name="PowerButton"
                                            x:Uid="powerButton"
@@ -1004,13 +1004,13 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <controls:CalculatorButton x:Name="SquareRootButton"
-                                           x:Uid="squareRootButton"
+                <controls:CalculatorButton x:Name="XPower3Button"
+                                           x:Uid="xpower3Button"
                                            Style="{StaticResource EmphasizedCalcButtonStyle}"
-                                           AutomationProperties.AutomationId="squareRootButton"
-                                           ButtonId="Sqrt"
+                                           AutomationProperties.AutomationId="xpower3Button"
+                                           ButtonId="Cube"
                                            Click="ShiftButton_Uncheck"
-                                           Content="&#xF899;"/>
+                                           Content="&#xf7cb;"/>
 
                 <controls:CalculatorButton x:Name="CubeRootButton"
                                            x:Uid="cubeRootButton"

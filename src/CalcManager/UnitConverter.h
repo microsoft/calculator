@@ -116,15 +116,6 @@ namespace UnitConversionManager
         }
     };
 
-    class CategoryHash
-    {
-    public:
-        size_t operator()(const Category& x) const
-        {
-            return x.id;
-        }
-    };
-
     struct SuggestedValueIntermediate
     {
         double magnitude;
@@ -171,7 +162,7 @@ namespace UnitConversionManager
         std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>,
         UnitConversionManager::UnitHash>
         UnitToUnitToConversionDataMap;
-    typedef std::unordered_map<UnitConversionManager::Category, std::vector<UnitConversionManager::Unit>, UnitConversionManager::CategoryHash>
+    typedef std::unordered_map<int, std::vector<UnitConversionManager::Unit>>
         CategoryToUnitVectorMap;
 
     class IViewModelCurrencyCallback
@@ -190,8 +181,8 @@ namespace UnitConversionManager
     public:
         virtual ~IConverterDataLoader(){};
         virtual void LoadData() = 0; // prepare data if necessary before calling other functions
-        virtual std::vector<Category> LoadOrderedCategories() = 0;
-        virtual std::vector<Unit> LoadOrderedUnits(const Category& c) = 0;
+        virtual std::vector<Category> GetOrderedCategories() = 0;
+        virtual std::vector<Unit> GetOrderedUnits(const Category& c) = 0;
         virtual std::unordered_map<Unit, ConversionData, UnitHash> LoadOrderedRatios(const Unit& u) = 0;
         virtual bool SupportsCategory(const Category& target) = 0;
     };

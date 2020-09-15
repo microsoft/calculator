@@ -55,9 +55,9 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void OnZoomOutCommand(Object ^ parameter);
 
         void OnShareClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-
+        
         void OnShowTracePopupChanged(bool newValue);
-        void OnTracePointChanged(Windows::Foundation::Point newPoint);
+        void OnTracePointChanged(double xPointValue, double yPointValue);
         void OnPointerPointChanged(Windows::Foundation::Point newPoint);
     private:
         void OnDataRequested(
@@ -92,7 +92,8 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         Windows::Foundation::EventRegistrationToken m_vectorChangedToken;
         Windows::Foundation::EventRegistrationToken m_variableUpdatedToken;
         Windows::Foundation::EventRegistrationToken m_activeTracingKeyUpToken;
-        Windows::Foundation::EventRegistrationToken m_ActiveTracingPointerCaptureLost;
+        Windows::Foundation::EventRegistrationToken m_ActiveTracingPointerCaptureLostToken;
+        Windows::Foundation::EventRegistrationToken m_GraphingControlLoadedToken;
         CalculatorApp::ViewModel::GraphingCalculatorViewModel ^ m_viewModel;
         Windows::UI::ViewManagement::AccessibilitySettings ^ m_accessibilitySettings;
         bool m_cursorShadowInitialized;
@@ -103,10 +104,10 @@ public ref class GraphingCalculator sealed : public Windows::UI::Xaml::Data::INo
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
         void OnEquationFormatRequested(Platform::Object ^ sender, CalculatorApp::Controls::MathRichEditBoxFormatRequest ^ e);
         void GraphMenuFlyoutItem_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);
-        std::wstringstream FormatTraceValue(double min, double max, float pointValue);
+        void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);        
         void GraphViewButton_Click(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void ShowShareError();
+        void OnGraphingCalculatorLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 
 }

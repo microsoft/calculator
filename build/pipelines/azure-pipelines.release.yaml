@@ -9,8 +9,8 @@ pr: none
 
 variables:
   versionMajor: 10
-  versionMinor: 2004
-  versionBuild: $[counter('10.2004.*', 0)]
+  versionMinor: 2009
+  versionBuild: $[counter('10.2009.*', 0)]
   versionPatch: 0
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
@@ -49,5 +49,7 @@ jobs:
     platform: x86
 
 - template: ./templates/package-appxbundle.yaml
+  parameters:
+    signBundle: true
 
 - template: ./templates/prepare-release-internalonly.yaml

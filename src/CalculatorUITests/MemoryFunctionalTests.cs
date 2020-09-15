@@ -77,20 +77,20 @@ namespace CalculatorUITests
 
             Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
             var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
-            moveToListView.MoveToElement(memoryItems[0]);
-            moveToListView.ContextClick(memoryItems[0]);
+            moveToListView.MoveToElement(memoryItems[0].Item);
+            moveToListView.ContextClick(memoryItems[0].Item);
             moveToListView.Perform();
             CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
-            Assert.IsTrue(memoryItems[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(memoryItems[0].GetValue().Equals("0", StringComparison.InvariantCultureIgnoreCase));
 
             moveToListView.Perform();
             CalculatorApp.Window.SendKeys(Keys.ArrowUp + Keys.ArrowUp + Keys.Enter);
-            Assert.IsTrue(memoryItems[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(memoryItems[0].GetValue().Equals("3", StringComparison.InvariantCultureIgnoreCase));
 
             moveToListView.Perform();
             CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
             var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
-            Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(memoryItems2[0].GetValue().Equals("3", StringComparison.InvariantCultureIgnoreCase));
 
             page.MemoryPanel.PanelClearMemoryButton.Click();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
@@ -108,22 +108,22 @@ namespace CalculatorUITests
             page.MemoryPanel.OpenMemoryFlyout();
             var memoryItems = page.MemoryPanel.GetAllMemoryFlyoutListViewItems();
             Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
-            moveToListView.MoveToElement(memoryItems[0]);
-            moveToListView.ContextClick(memoryItems[0]);
+            moveToListView.MoveToElement(memoryItems[0].Item);
+            moveToListView.ContextClick(memoryItems[0].Item);
             moveToListView.Perform();
             CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
-            Assert.IsTrue(memoryItems[0].Text.Equals("0", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(memoryItems[0].GetValue().Equals("0", StringComparison.InvariantCultureIgnoreCase));
 
             page.MemoryPanel.OpenMemoryFlyout();
             moveToListView.Perform();
             CalculatorApp.Window.SendKeys(Keys.ArrowUp + Keys.ArrowUp + Keys.Enter);
-            Assert.IsTrue(memoryItems[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(memoryItems[0].GetValue().Equals("3", StringComparison.InvariantCultureIgnoreCase));
 
             page.MemoryPanel.OpenMemoryFlyout();
             moveToListView.Perform();
             CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
             var memoryItems2 = page.MemoryPanel.GetAllMemoryListViewItems();
-            Assert.IsTrue(memoryItems2[0].Text.Equals("3", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(memoryItems2[0].GetValue().Equals("3", StringComparison.InvariantCultureIgnoreCase));
 
             page.MemoryPanel.OpenMemoryFlyout();
             page.MemoryPanel.PanelClearMemoryButton.Click();

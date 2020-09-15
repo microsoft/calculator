@@ -998,14 +998,14 @@
                                                Content="&#xf7c8;"
                                                IsTabStop="false"/>
 
-                    <controls:CalculatorButton x:Name="XPower3Button"
-                                               x:Uid="xpower3Button"
+                    <controls:CalculatorButton x:Name="SquareRootButton"
+                                               x:Uid="squareRootButton"
                                                Grid.Row="1"
                                                Style="{StaticResource SymbolOperatorButtonStyle}"
-                                               AutomationProperties.AutomationId="xpower3Button"
-                                               ButtonId="Cube"
+                                               AutomationProperties.AutomationId="squareRootButton"
+                                               ButtonId="Sqrt"
                                                Click="Button_Clicked"
-                                               Content="&#xf7cb;"
+                                               Content="&#xF899;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="PowerButton"
@@ -1059,13 +1059,14 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <controls:CalculatorButton x:Name="SquareRootButton"
-                                               x:Uid="squareRootButton"
+
+                    <controls:CalculatorButton x:Name="XPower3Button"
+                                               x:Uid="xpower3Button"
                                                Style="{StaticResource EmphasizedCalcButtonStyle}"
-                                               AutomationProperties.AutomationId="squareRootButton"
-                                               ButtonId="Sqrt"
+                                               AutomationProperties.AutomationId="xpower3Button"
+                                               ButtonId="Cube"
                                                Click="ShiftButton_Uncheck"
-                                               Content="&#xF899;"
+                                               Content="&#xf7cb;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="CubeRootButton"

@@ -89,11 +89,6 @@ MainPage::MainPage()
 
 void MainPage::OnNavigatedTo(NavigationEventArgs ^ e)
 {
-    if (m_model->CalculatorViewModel)
-    {
-        m_model->CalculatorViewModel->HistoryVM->ClearHistory();
-    }
-
     ViewMode initialMode = ViewMode::Standard;
     if (e->Parameter != nullptr)
     {
@@ -134,7 +129,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         if (newValue == ViewMode::Standard)
         {
             EnsureCalculator();
-            m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
             m_calculator->AnimateCalculator(NavCategory::IsConverterViewMode(previousMode));
             m_model->CalculatorViewModel->HistoryVM->ReloadHistory(newValue);
@@ -142,7 +136,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         else if (newValue == ViewMode::Scientific)
         {
             EnsureCalculator();
-            m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
             if (m_model->PreviousMode != ViewMode::Scientific)
             {
@@ -153,7 +146,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         }
         else if (newValue == ViewMode::Programmer)
         {
-            m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             EnsureCalculator();
             if (m_model->PreviousMode != ViewMode::Programmer)
@@ -165,7 +157,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         {
             if (m_model->CalculatorViewModel)
             {
-                m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
                 m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             }
             EnsureDateCalculator();
@@ -179,7 +170,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         {
             if (m_model->CalculatorViewModel)
             {
-                m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
                 m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             }
             EnsureConverter();
@@ -270,12 +260,14 @@ void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
 
     // Delay load things later when we get a chance.
     this->Dispatcher->RunAsync(
-        CoreDispatcherPriority::Normal, ref new DispatchedHandler([]() {
+        CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]() {
             if (TraceLogger::GetInstance()->IsWindowIdInLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
             {
                 AppLifecycleLogger::GetInstance().LaunchUIResponsive();
                 AppLifecycleLogger::GetInstance().LaunchVisibleComplete();
             }
+
+            this->FindName(L"NavView");
         }));
 }
 
@@ -413,9 +405,9 @@ void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 
 void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
-    if (!NavFooter)
+    if (!AboutButton)
     {
-        this->FindName(L"NavFooter");
+        this->FindName(L"AboutButton");
     }
 }
 
@@ -503,17 +495,7 @@ MUXC::NavigationViewItem ^ MainPage::CreateNavViewItemFromCategory(NavCategory ^
     icon->Glyph = category->Glyph;
     item->Icon = icon;
 
-    if (category->IsPreview)
-    {
-        auto contentPresenter = ref new ContentPresenter();
-        contentPresenter->Content = category->Name;
-        contentPresenter->ContentTemplate = static_cast<DataTemplate ^>(Resources->Lookup(L"NavMenuItemPreviewDataTemplate"));
-        item->Content = contentPresenter;
-    }
-    else
-    {
-        item->Content = category->Name;
-    }
+    item->Content = category->Name;
     item->AccessKey = category->AccessKey;
     item->IsEnabled = category->IsEnabled;
     item->Style = static_cast<Windows::UI::Xaml::Style ^>(Resources->Lookup(L"NavViewItemStyle"));

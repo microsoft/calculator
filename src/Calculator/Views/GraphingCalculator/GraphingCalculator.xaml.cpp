@@ -78,6 +78,8 @@ GraphingCalculator::GraphingCalculator()
     // Update where the pointer value is (ie: where the user cursor from keyboard inputs moves the point to)
     GraphingControl->PointerValueChangedEvent += ref new PointerValueChangedEventHandler(this, &GraphingCalculator::OnPointerPointChanged);
 
+    m_GraphingControlLoadedToken = GraphingControl->Loaded += ref new RoutedEventHandler(this, &GraphingCalculator::OnGraphingCalculatorLoaded);
+
     GraphingControl->UseCommaDecimalSeperator = LocalizationSettings::GetInstance().GetDecimalSeparator() == ',';
 
     // OemMinus and OemAdd aren't declared in the VirtualKey enum, we can't add this accelerator XAML-side
@@ -118,8 +120,6 @@ GraphingCalculator::GraphingCalculator()
         IsMatchAppTheme = false;
         TraceLogger::GetInstance()->LogGraphTheme(L"IsAlwaysLightTheme");
     }
-
-    UpdateGraphTheme();
 }
 
 void GraphingCalculator::OnShowTracePopupChanged(bool newValue)
@@ -207,44 +207,15 @@ void GraphingCalculator::OnEquationsVectorChanged(IObservableVector<EquationView
     GraphingControl->PlotGraph(false);
 }
 
-wstringstream GraphingCalculator::FormatTraceValue(double min, double max, float pointValue)
-{
-    wstringstream traceValueString;
-
-    // Extract precision we will round to
-    auto precision = static_cast<int>(floor(log10(max - min)) - 3);
-
-    // Determine if we want to show scientific notation instead
-    if (precision <= -7 || precision >= 7)
-    {
-        traceValueString << scientific;
-    }
-    else
-    {
-        traceValueString << fixed;
-    }
-
-    // If we are rounding to a decimal place, set the precision
-    if (precision < 0)
-    {
-        traceValueString << setprecision(::min(7, abs(precision))) << pointValue;
-    }
-    else
-    {
-        traceValueString << setprecision(0) << pointValue;
-    }
-
-    return traceValueString;
-}
-
-void GraphingCalculator::OnTracePointChanged(Point newPoint)
+void GraphingCalculator::OnTracePointChanged(double xPointValue, double yPointValue)
 {
     wstringstream traceValueString;
 
     double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
     GraphingControl->GetDisplayRanges(&xAxisMin, &xAxisMax, &yAxisMin, &yAxisMax);
 
-    traceValueString << "(" << FormatTraceValue(xAxisMin, xAxisMax, newPoint.X).str() << ", " << FormatTraceValue(yAxisMin, yAxisMax, newPoint.Y).str() << ")";
+    traceValueString << "(" << xPointValue << ", ";
+    traceValueString << setprecision(15) << yPointValue << ")";    
 
     TraceValue->Text = ref new String(traceValueString.str().c_str());
 
@@ -460,7 +431,7 @@ void GraphingCalculator::GraphingControl_LostFocus(Object ^ sender, RoutedEventA
     {
         if (ActiveTracing->Equals(FocusManager::GetFocusedElement()) && ActiveTracing->IsPressed)
         {
-            m_ActiveTracingPointerCaptureLost = ActiveTracing->PointerCaptureLost +=
+            m_ActiveTracingPointerCaptureLostToken = ActiveTracing->PointerCaptureLost +=
                 ref new Windows::UI::Xaml::Input::PointerEventHandler(this, &CalculatorApp::GraphingCalculator::ActiveTracing_PointerCaptureLost);
         }
         else
@@ -473,10 +444,10 @@ void GraphingCalculator::GraphingControl_LostFocus(Object ^ sender, RoutedEventA
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_PointerCaptureLost(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e)
 {
-    if (m_ActiveTracingPointerCaptureLost.Value != 0)
+    if (m_ActiveTracingPointerCaptureLostToken.Value != 0)
     {
-        ActiveTracing->PointerCaptureLost -= m_ActiveTracingPointerCaptureLost;
-        m_ActiveTracingPointerCaptureLost.Value = 0;
+        ActiveTracing->PointerCaptureLost -= m_ActiveTracingPointerCaptureLostToken;
+        m_ActiveTracingPointerCaptureLostToken.Value = 0;
     }
 
     if (GraphingControl->ActiveTracing)
@@ -613,10 +584,10 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_Checked(Platform::Object ^
 
 void CalculatorApp::GraphingCalculator::ActiveTracing_Unchecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
-    if (m_ActiveTracingPointerCaptureLost.Value != 0)
+    if (m_ActiveTracingPointerCaptureLostToken.Value != 0)
     {
-        ActiveTracing->PointerCaptureLost -= m_ActiveTracingPointerCaptureLost;
-        m_ActiveTracingPointerCaptureLost.Value = 0;
+        ActiveTracing->PointerCaptureLost -= m_ActiveTracingPointerCaptureLostToken;
+        m_ActiveTracingPointerCaptureLostToken.Value = 0;
     }
 
     if (m_activeTracingKeyUpToken.Value != 0)
@@ -635,6 +606,7 @@ void CalculatorApp::GraphingCalculator::ActiveTracing_KeyUp(Windows::UI::Core::C
     if (args->VirtualKey == VirtualKey::Escape)
     {
         GraphingControl->ActiveTracing = false;
+        ActiveTracing->Focus(::FocusState::Programmatic);
         args->Handled = true;
     }
 }
@@ -846,8 +818,9 @@ void GraphingCalculator::GraphViewButton_Click(Object ^ sender, RoutedEventArgs 
     }
     else
     {
-        GraphingControl->ResetGrid();
         announcementText = AppResourceProvider::GetInstance()->GetResourceString(L"GraphViewAutomaticBestFitAnnouncement");
+        announcementText += AppResourceProvider::GetInstance()->GetResourceString(L"GridResetAnnouncement");
+        GraphingControl->ResetGrid();
     }
 
     auto announcement = CalculatorAnnouncement::GetGraphViewBestFitChangedAnnouncement(announcementText);
@@ -855,4 +828,12 @@ void GraphingCalculator::GraphViewButton_Click(Object ^ sender, RoutedEventArgs 
 
     TraceLogger::GetInstance()->LogGraphButtonClicked(
         GraphButton::GraphView, IsManualAdjustment ? GraphButtonValue::ManualAdjustment : GraphButtonValue::AutomaticBestFit);
+}
+
+void CalculatorApp::GraphingCalculator::OnGraphingCalculatorLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    this->GraphingControl->Loaded -= m_GraphingControlLoadedToken;
+
+    // The control needs to be loaded, else the control will override GridLinesColor and ignore the value passed
+    UpdateGraphTheme();
 }

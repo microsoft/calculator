@@ -21,7 +21,7 @@ public
     delegate void TracingChangedEventHandler(bool newValue);
 
 public
-    delegate void TracingValueChangedEventHandler(Windows::Foundation::Point value);
+    delegate void TracingValueChangedEventHandler(double xPointValue, double yPointValue);
 public
     delegate void PointerValueChangedEventHandler(Windows::Foundation::Point value);
 
@@ -82,13 +82,6 @@ public enum class GraphViewChangedReason
         void ZoomFromCenter(double scale);
         void ResetGrid();
 
-        property Windows::Foundation::Point TraceValue
-        {
-            Windows::Foundation::Point get()
-            {
-                return m_renderMain->TraceValue;
-            }
-        }
 
         property Windows::Foundation::Point TraceLocation
         {
@@ -254,6 +247,7 @@ public enum class GraphViewChangedReason
                 if (auto render = m_graph->GetRenderer())
                 {
                     render->SetDisplayRanges(xMin, xMax, yMin, yMax);
+                    m_rangeUpdatedBySettings = true;
                     if (m_renderMain)
                     {
                         m_renderMain->RunRenderPass();
@@ -351,6 +345,12 @@ public enum class GraphViewChangedReason
         Windows::UI::Core::CoreCursor ^ m_cachedCursor;
         int m_errorType;
         int m_errorCode;
+        bool m_resetUsingInitialDisplayRange;
+        bool m_rangeUpdatedBySettings;
+        double m_initialDisplayRangeXMin;
+        double m_initialDisplayRangeXMax;
+        double m_initialDisplayRangeYMin;
+        double m_initialDisplayRangeYMax;
 
     public:
         Windows::Storage::Streams::RandomAccessStreamReference ^ GetGraphBitmapStream();

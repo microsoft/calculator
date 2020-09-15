@@ -553,7 +553,7 @@
         <Grid x:Name="LeftGrid"
               Grid.Row="1"
               Padding="0,4,0,0"
-              Visibility="{x:Bind ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsOn, x:True), Mode=OneWay}">
+              Visibility="{x:Bind local:GraphingCalculator.ShouldDisplayPanel(IsSmallState, SwitchModeToggleButton.IsOn, x:True), Mode=OneWay}">
             <Grid.Resources>
                 <ResourceDictionary>
                     <ResourceDictionary.ThemeDictionaries>
@@ -590,7 +590,6 @@
                                   IsKeepCurrentView="{x:Bind IsManualAdjustment, Mode=TwoWay}"
                                   LosingFocus="GraphingControl_LosingFocus"
                                   LostFocus="GraphingControl_LostFocus"
-                                  RequestedTheme="Light"
                                   UseSystemFocusVisuals="True"
                                   VariablesUpdated="GraphingControl_VariablesUpdated">
                 <graphControl:Grapher.ContextFlyout>
