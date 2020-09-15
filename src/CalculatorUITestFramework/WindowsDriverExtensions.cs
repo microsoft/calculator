@@ -102,8 +102,6 @@ namespace CalculatorUITestFramework
                         throw;
                     }
                 }
-
-                Logger.LogMessage("Waiting for 10ms in WaitForElementByAccessibilityId");
                 Thread.Sleep(10);
             }
             timer.Stop();
