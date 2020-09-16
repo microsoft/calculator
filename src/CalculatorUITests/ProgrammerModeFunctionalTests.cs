@@ -899,10 +899,10 @@ namespace CalculatorUITests
         {
             page.ProgrammerOperators.BitFlip.Click();
             page.ProgrammerOperators.Bit1.Click();
-            page.CalculatorResults.ContextMenuItemCopyClick();
+            CalculatorApp.Window.SendKeys(Keys.Control + "c" + Keys.Control);
             page.ProgrammerOperators.FullKeypad.Click();
             page.StandardOperators.ClearEntryButton.Click();
-            page.CalculatorResults.ContextMenuItemPasteClick();
+            CalculatorApp.Window.SendKeys(Keys.Control + "v" + Keys.Control);
             Assert.AreEqual("2", page.CalculatorResults.GetCalculatorResultText());
         }
 
@@ -912,11 +912,11 @@ namespace CalculatorUITests
         {
             page.ProgrammerOperators.BitFlip.Click();
             page.ProgrammerOperators.Bit63.Click();
-            page.CalculatorResults.ContextMenuItemCopyClick();
+            CalculatorApp.Window.SendKeys(Keys.Control + "c" + Keys.Control);
             page.ProgrammerOperators.FullKeypad.Click();
             page.StandardOperators.ClearEntryButton.Click();
             page.ProgrammerOperators.QWordButton.Click();
-            page.CalculatorResults.ContextMenuItemPasteClick();
+            CalculatorApp.Window.SendKeys(Keys.Control + "v" + Keys.Control);
             Assert.AreEqual("Invalid input", page.CalculatorResults.GetCalculatorResultText());
         }
 
@@ -926,10 +926,10 @@ namespace CalculatorUITests
         {
             page.ProgrammerOperators.BitFlip.Click();
             page.ProgrammerOperators.Bit63.Click();
-            page.CalculatorResults.ContextMenuItemCopyClick();
+            CalculatorApp.Window.SendKeys(Keys.Control + "c" + Keys.Control);
             page.ProgrammerOperators.FullKeypad.Click();
             page.StandardOperators.ClearEntryButton.Click();
-            page.CalculatorResults.ContextMenuItemPasteClick();
+            CalculatorApp.Window.SendKeys(Keys.Control + "v" + Keys.Control);
             Assert.AreEqual("-9,223,372,036,854,775,808", page.CalculatorResults.GetCalculatorResultText());
         }
 
@@ -940,10 +940,10 @@ namespace CalculatorUITests
             page.ProgrammerOperators.QWordButton.Click();
             page.ProgrammerOperators.BitFlip.Click();
             page.ProgrammerOperators.Bit31.Click();
-            page.CalculatorResults.ContextMenuItemCopyClick();
+            CalculatorApp.Window.SendKeys(Keys.Control + "c" + Keys.Control);
             page.ProgrammerOperators.FullKeypad.Click();
             page.StandardOperators.ClearEntryButton.Click();
-            page.CalculatorResults.ContextMenuItemPasteClick();
+            CalculatorApp.Window.SendKeys(Keys.Control + "v" + Keys.Control);
             Assert.AreEqual("-2,147,483,648", page.CalculatorResults.GetCalculatorResultText());
         }
 
@@ -955,10 +955,10 @@ namespace CalculatorUITests
             page.ProgrammerOperators.DWordButton.Click();
             page.ProgrammerOperators.BitFlip.Click();
             page.ProgrammerOperators.Bit15.Click();
-            page.CalculatorResults.ContextMenuItemCopyClick();
+            CalculatorApp.Window.SendKeys(Keys.Control + "c" + Keys.Control);
             page.ProgrammerOperators.FullKeypad.Click();
             page.StandardOperators.ClearEntryButton.Click();
-            page.CalculatorResults.ContextMenuItemPasteClick();
+            CalculatorApp.Window.SendKeys(Keys.Control + "v" + Keys.Control);
             Assert.AreEqual("-32,768", page.CalculatorResults.GetCalculatorResultText());
         }
 
@@ -971,10 +971,10 @@ namespace CalculatorUITests
             page.ProgrammerOperators.WordButton.Click();
             page.ProgrammerOperators.BitFlip.Click();
             page.ProgrammerOperators.Bit7.Click();
-            page.CalculatorResults.ContextMenuItemCopyClick();
+            CalculatorApp.Window.SendKeys(Keys.Control + "c" + Keys.Control);
             page.ProgrammerOperators.FullKeypad.Click();
             page.StandardOperators.ClearEntryButton.Click();
-            page.CalculatorResults.ContextMenuItemPasteClick();
+            CalculatorApp.Window.SendKeys(Keys.Control + "v" + Keys.Control);
             Assert.AreEqual("-128", page.CalculatorResults.GetCalculatorResultText());
         }
         #endregion
