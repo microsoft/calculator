@@ -3324,7 +3324,7 @@
     <comment>Header text for variables area</comment>
   </data>
   <data name="StepTextBlock.Text" xml:space="preserve">
-    <value>Étape</value>
+    <value>Pas</value>
     <comment>Label text for the step text box</comment>
   </data>
   <data name="MinTextBlock.Text" xml:space="preserve">
