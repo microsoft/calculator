@@ -1538,6 +1538,21 @@
     <Image Include="Assets\Graphing.targetsize-64_contrast-white.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-100.altform-colorful.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-125.altform-colorful.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-150.altform-colorful.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-200.altform-colorful.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-400.altform-colorful.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\CalcMDL2.ttf">
@@ -1548,10 +1563,6 @@
     <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="$(GraphingImplDll)" />
-    <CopyFileToFolders Include="$(GraphingEngineDll)" />
-    <CopyFileToFolders Include="$(GraphingImplDll)" />
-    <CopyFileToFolders Include="$(GraphingEngineDll)" />
     <CopyFileToFolders Include="$(GraphingImplDll)" />
     <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>
