@@ -23,6 +23,7 @@ namespace CalculatorApp
     {
         NoError,
         AnalysisCouldNotBePerformed,
-        AnalysisNotSupported
+        AnalysisNotSupported,
+        VariableIsNotX
     };
 }

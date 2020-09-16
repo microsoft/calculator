@@ -3,6 +3,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium.Windows;
 using System;
+using OpenQA.Selenium.Interactions;
 
 namespace CalculatorUITestFramework
 {
@@ -12,6 +13,8 @@ namespace CalculatorUITestFramework
         private WindowsElement CalculatorAlwaysOnTopResults => this.session.TryFindElementByAccessibilityId("CalculatorAlwaysOnTopResults");
         private WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
         private WindowsElement CalculatorExpression => this.session.TryFindElementByAccessibilityId("CalculatorExpression");
+        private WindowsElement MenuItemCopy => this.session.WaitForElementByAccessibilityId("CopyMenuItem");
+        private WindowsElement MenuItemPaste => this.session.WaitForElementByAccessibilityId("PasteMenuItem");
 
         /// <summary>
         /// Gets the text from the display control in AoT mode and removes the narrator text that is not displayed in the UI.
@@ -60,6 +63,34 @@ namespace CalculatorUITestFramework
             {
                 throw new Exception("The Calculator Expression is not clear");
             }
+        }
+
+        /// <summary>
+        /// Opens the context menu in order to be able to click its items
+        /// </summary>
+        private void OpenContextMenu()
+        {
+            Actions actions = new Actions(CalculatorResult.WrappedDriver);
+            // It is important to move not to the centre in order to avoid click on the text
+            actions.MoveToElement(CalculatorResult, 1,1).ContextClick().Perform();
+        }
+
+        /// <summary>
+        /// Opens the context menu and clicks the "Copy" item there
+        /// </summary>
+        public void ContextMenuItemCopyClick()
+        {
+            OpenContextMenu();
+            MenuItemCopy.Click();
+        }
+
+        /// <summary>
+        /// Opens the context menu and clicks the "Paste" item there
+        /// </summary>
+        public void ContextMenuItemPasteClick()
+        {
+            OpenContextMenu();
+            MenuItemPaste.Click();
         }
     }
 }
