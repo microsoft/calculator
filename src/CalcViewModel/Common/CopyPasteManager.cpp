@@ -310,6 +310,9 @@ bool CopyPasteManager::ExpressionRegExMatch(
 
         if (operandMatched)
         {
+            // Remember the sign of the operand
+            bool isNegativeValue = operand->Data()[0] == L'-';
+
             // Remove characters that are valid in the expression but we do not want to include in length calculations
             // or which will break conversion from string-to-ULL.
             auto operandValue = SanitizeOperand(operand);
@@ -332,7 +335,11 @@ bool CopyPasteManager::ExpressionRegExMatch(
                     break;
                 }
 
-                if (operandAsULL->Value > maxOperandLengthAndValue.maxValue)
+                // Calculate how much we exceed the maxValue.
+                // In case we exceed it for 1 only, and working with negative number - that's a corner case for max signed values (e.g. -32768)
+                bool isOverflow = operandAsULL->Value > maxOperandLengthAndValue.maxValue;
+                bool isMaxNegativeValue = operandAsULL->Value - 1 == maxOperandLengthAndValue.maxValue;
+                if (isOverflow && !(isNegativeValue && isMaxNegativeValue))
                 {
                     expMatched = false;
                     break;

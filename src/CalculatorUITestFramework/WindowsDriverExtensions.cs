@@ -1,8 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Windows;
+using System.Diagnostics;
+using System.Threading;
 
 namespace CalculatorUITestFramework
 {
@@ -67,6 +70,44 @@ namespace CalculatorUITestFramework
             // switch the session to that window as follows. You can repeat this logic with any top window with the same
             // process id (any entry of allWindowHandles)
             driver.SwitchTo().Window(allWindowHandles[0]);
+        }
+
+        /// <summary>
+        /// Waits for an element to be created.
+        /// </summary>
+        /// <param name="driver">this</param>
+        /// <param name="id">the automation id</param>
+        /// <param name="timeout">optional timeout in ms</param>
+        /// <returns>the element with the matching automation id</returns>
+        public static WindowsElement WaitForElementByAccessibilityId(this WindowsDriver<WindowsElement> driver, string id, int timeout = 1000)
+        {
+            Stopwatch timer = new Stopwatch();
+            timer.Reset();
+            timer.Start();
+            while (timer.ElapsedMilliseconds < timeout)
+            {
+                try
+                {
+                    var element  = driver.TryFindElementByAccessibilityId(id);
+                    return element;
+                }
+                catch(WebDriverException ex)
+                {
+                    if (ex.Message.Contains("An element could not be located on the page using the given search parameters"))
+                    {
+                        Logger.LogMessage("Element not found. Waiting for 10ms in WaitForElementByAccessibilityId");
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                Thread.Sleep(10);
+            }
+            timer.Stop();
+
+            // one last attempt. Throws the not found exception if this fails
+            return driver.TryFindElementByAccessibilityId(id);
         }
     }
 }

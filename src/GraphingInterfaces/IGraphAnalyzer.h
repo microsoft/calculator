@@ -15,10 +15,10 @@ namespace Graphing::Analyzer
 
 	struct IGraphAnalyzer : public NonCopyable, public NonMoveable
 	{
-		virtual ~IGraphAnalyzer() = default;
-		virtual bool CanFunctionAnalysisBePerformed() = 0;
-		virtual HRESULT PerformFunctionAnalysis(NativeAnalysisType analysisType) = 0;
-		virtual HRESULT GetAnalysisTypeCaption(const AnalysisType type, std::wstring& captionOut) const = 0;
-		virtual HRESULT GetMessage(const GraphAnalyzerMessage msg, std::wstring& msgOut) const = 0;
+        virtual ~IGraphAnalyzer() = default;
+        virtual bool CanFunctionAnalysisBePerformed(bool& variableIsNotX) = 0;
+        virtual HRESULT PerformFunctionAnalysis(NativeAnalysisType analysisType) = 0;
+        virtual HRESULT GetAnalysisTypeCaption(const AnalysisType type, std::wstring& captionOut) const = 0;
+        virtual HRESULT GetMessage(const GraphAnalyzerMessage msg, std::wstring& msgOut) const = 0;
 	};
 }
