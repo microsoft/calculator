@@ -31,10 +31,6 @@
                            AutomationProperties.HeadingLevel="Level1"
                            TextTrimming="Clip"/>
 
-                <TextBlock x:Name="SettingsRestartApp"
-                           Style="{StaticResource CaptionTextBlockStyle}"
-                           Foreground="{StaticResource SystemColorGrayTextColor}"/>
-
                 <RadioButton x:Name="SettingsDarkTheme"
                              x:Uid="SettingsDarkTheme"
                              Grid.Row="2"
@@ -49,6 +45,11 @@
                              x:Uid="SettingsSystemTheme"
                              Grid.Row="4"
                              Checked="SystemChecked"/>
+
+
+                <TextBlock x:Name="SettingsRestartApp"
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           Foreground="{StaticResource SystemColorGrayTextColor}"/>
 
                 <HyperlinkButton x:Name="ColorSettingsButton"
                                  Margin="0,-2"
