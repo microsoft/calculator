@@ -3827,7 +3827,7 @@
     <comment>Tool tip for the variable settings toggle button</comment>
   </data>
   <data name="LineThicknessBoxHeading.Text" xml:space="preserve">
-    <value>줄 두께</value>
+    <value>선 굵기</value>
     <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
   </data>
   <data name="LineOptionsHeading.Text" xml:space="preserve">
