@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -26,28 +26,27 @@ namespace CalculatorApp
     {
     public:
         App();
-        virtual void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ args) override;
-        virtual void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs^ args) override;
+        virtual void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs ^ args) override;
+        virtual void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs ^ args) override;
 
     internal:
-        static bool IsAnimationEnabled();
-        static Platform::String^ GetAppViewState();
-        static float GetAppWindowHeight();
-        void RemoveWindow(_In_ WindowFrameService^ frameService);
-        void RemoveSecondaryWindow(_In_ WindowFrameService^ frameService);
+        void RemoveWindow(_In_ WindowFrameService ^ frameService);
+        void RemoveSecondaryWindow(_In_ WindowFrameService ^ frameService);
 
     private:
-        static Windows::UI::Xaml::Controls::Frame^ CreateFrame();
-        static void SetMinWindowSizeAndActivate(Windows::UI::Xaml::Controls::Frame^ rootFrame, Windows::Foundation::Size minWindowSize);
+        static Windows::UI::Xaml::Controls::Frame ^ CreateFrame();
+        static void SetMinWindowSizeAndActivate(Windows::UI::Xaml::Controls::Frame ^ rootFrame, Windows::Foundation::Size minWindowSize);
 
-        void OnAppLaunch(Windows::ApplicationModel::Activation::IActivatedEventArgs^ args, Platform::String^ argument);
-        void DismissedEventHandler(Windows::ApplicationModel::Activation::SplashScreen^ sender, Platform::Object^ e);
+        void OnAppLaunch(Windows::ApplicationModel::Activation::IActivatedEventArgs ^ args, Platform::String ^ argument);
+        void DismissedEventHandler(Windows::ApplicationModel::Activation::SplashScreen ^ sender, Platform::Object ^ e);
         void RegisterDependencyProperties();
+        void OnSuspending(Platform::Object ^ sender, Windows::ApplicationModel::SuspendingEventArgs ^ args);
+
 
         class SafeFrameWindowCreation final
         {
         public:
-            SafeFrameWindowCreation(_In_ WindowFrameService^ frameService, App^ parent)
+            SafeFrameWindowCreation(_In_ WindowFrameService ^ frameService, App ^ parent)
                 : m_frameService(frameService)
                 , m_frameOpenedInWindow(false)
                 , m_parent(parent)
@@ -70,25 +69,23 @@ namespace CalculatorApp
             }
 
         private:
-            WindowFrameService^ m_frameService;
+            WindowFrameService ^ m_frameService;
             bool m_frameOpenedInWindow;
-            App^ m_parent;
+            App ^ m_parent;
         };
 
     private:
         concurrency::reader_writer_lock m_windowsMapLock;
-        std::unordered_map<int, WindowFrameService^> m_secondaryWindows;
+        std::unordered_map<int, WindowFrameService ^> m_secondaryWindows;
 
         concurrency::task<void> SetupJumpList();
-        concurrency::task<void> HandleViewReleaseAndRemoveWindowFromMap(_In_ WindowFrameService^ frameService);
-        void AddWindowToMap(_In_ WindowFrameService^ frameService);
-        WindowFrameService^ GetWindowFromMap(int viewId);
+        concurrency::task<void> HandleViewReleaseAndRemoveWindowFromMap(_In_ WindowFrameService ^ frameService);
+        void AddWindowToMap(_In_ WindowFrameService ^ frameService);
+        WindowFrameService ^ GetWindowFromMap(int viewId);
         void RemoveWindowFromMap(int viewId);
         int m_mainViewId;
         bool m_preLaunched;
 
-        Windows::UI::Xaml::Controls::Primitives::Popup^ m_aboutPopup;
-
-        static bool m_isAnimationEnabled;
+        Windows::UI::Xaml::Controls::Primitives::Popup ^ m_aboutPopup;
     };
 }

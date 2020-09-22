@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="DirectX">
+      <UniqueIdentifier>{0d550f5f-db67-4160-8648-397c9bdc0307}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Themes">
+      <UniqueIdentifier>{3d424f3b-ba30-440b-ac2b-8a2740506153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Control">
+      <UniqueIdentifier>{e8d91a71-6933-4fd8-b333-421085d13896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{0f768477-7ceb-42c4-a32a-cb024320dbc3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="DirectX\DeviceResources.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX\RenderMain.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\Grapher.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX\NearestPointRenderer.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\KeyGraphFeaturesInfo.cpp" />
+    <ClCompile Include="Models\Equation.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger\TraceLogger.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="DirectX\DeviceResources.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX\DirectXHelper.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX\RenderMain.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="winrtHeaders.h" />
+    <ClInclude Include="Control\Grapher.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX\NearestPointRenderer.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="Models\KeyGraphFeaturesInfo.h" />
+    <ClInclude Include="Models\Equation.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\EquationCollection.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Variable.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger\TraceLogger.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\generic.xaml">
+      <Filter>Themes</Filter>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
+  </ItemGroup>
+</Project>

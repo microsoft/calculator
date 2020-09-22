@@ -1,0 +1,52 @@
+# This template contains jobs to run UI tests using WinAppDriver.
+
+parameters:
+  platform: ''
+  runsettingsFileName: ''
+
+jobs:
+- job: UITests${{ parameters.platform }}
+  displayName: UITests ${{ parameters.platform }}
+  dependsOn: Build${{ parameters.platform }}
+  condition: succeeded()
+  pool:
+    vmImage: windows-2019
+  variables:
+    skipComponentGovernanceDetection: true
+  steps:
+  - checkout: none
+
+  - powershell: Set-DisplayResolution -Width 1920 -Height 1080 -Force	
+    displayName: Set resolution to 1920x1080	
+    continueOnError: true	
+
+  - task: DownloadBuildArtifacts@0
+    displayName: Download AppxBundle and CalculatorUITests
+    inputs:
+      artifactName: drop
+      itemPattern: |
+        drop/Release/${{ parameters.platform }}/Calculator/AppPackages/**
+        drop/Release/${{ parameters.platform }}/publish/**
+
+  - task: PowerShell@2
+    displayName: Install certificate
+    inputs:
+      filePath: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
+      arguments: -CertificatePath $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Calculator_$(Build.BuildNumber)_${{ parameters.platform }}.cer -Force
+
+  - task: PowerShell@2
+    displayName: Install app
+    inputs:
+      filePath: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
+      arguments: -Force
+
+  - task: VSTest@2
+    displayName: Run CalculatorUITests
+    inputs:
+      testAssemblyVer2: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/CalculatorUITests.dll
+      vsTestVersion: 16.0
+      runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/${{ parameters.runsettingsFileName }}
+      platform: ${{ parameters.platform }}
+      configuration: Release
+      ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+        testFiltercriteria: Priority=0 

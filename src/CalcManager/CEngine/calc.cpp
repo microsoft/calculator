@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
+#include <cassert>
 #include "Header Files/CalcEngine.h"
-
 #include "CalculatorResource.h"
 
 using namespace std;
@@ -15,7 +14,7 @@ using namespace CalcEngine;
 
 static constexpr int DEFAULT_MAX_DIGITS = 32;
 static constexpr int DEFAULT_PRECISION = 32;
-static constexpr long DEFAULT_RADIX = 10;
+static constexpr int32_t DEFAULT_RADIX = 10;
 
 static constexpr wchar_t DEFAULT_DEC_SEPARATOR = L'.';
 static constexpr wchar_t DEFAULT_GRP_SEPARATOR = L',';
@@ -25,13 +24,17 @@ static constexpr wstring_view DEFAULT_NUMBER_STR = L"0";
 // Read strings for keys, errors, trig types, etc.
 // These will be copied from the resources to local memory.
 
-array<wstring, CSTRINGSENGMAX> CCalcEngine::s_engineStrings;
+unordered_map<wstring_view, wstring> CCalcEngine::s_engineStrings;
 
 void CCalcEngine::LoadEngineStrings(CalculationManager::IResourceProvider& resourceProvider)
 {
-    for (size_t i = 0; i < s_engineStrings.size(); i++)
+    for (const auto& sid : g_sids)
     {
-        s_engineStrings[i] = resourceProvider.GetCEngineString(g_sids[i]);
+        auto locString = resourceProvider.GetCEngineString(sid);
+        if (!locString.empty())
+        {
+            s_engineStrings[sid] = locString;
+        }
     }
 }
 
@@ -54,42 +57,47 @@ void CCalcEngine::InitialOneTimeOnlySetup(CalculationManager::IResourceProvider&
 // CCalcEngine::CCalcEngine
 //
 //////////////////////////////////////////////////
-CCalcEngine::CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager::IResourceProvider* const pResourceProvider, __in_opt ICalcDisplay *pCalcDisplay, __in_opt shared_ptr<IHistoryDisplay> pHistoryDisplay) :
-    m_fPrecedence(fPrecedence),
-    m_fIntegerMode(fIntegerMode),
-    m_pCalcDisplay(pCalcDisplay),
-    m_resourceProvider(pResourceProvider),
-    m_nOpCode(0),
-    m_nPrevOpCode(0),
-    m_bChangeOp(false),
-    m_bRecord(false),
-    m_bSetCalcState(false),
-    m_input(DEFAULT_DEC_SEPARATOR),
-    m_nFE(FMT_FLOAT),
-    m_memoryValue{ make_unique<Rational>() },
-    m_holdVal{},
-    m_currentVal{},
-    m_lastVal{},
-    m_parenVals{},
-    m_precedenceVals{},
-    m_bError(false),
-    m_bInv(false),
-    m_bNoPrevEqu(true),
-    m_radix(DEFAULT_RADIX),
-    m_precision(DEFAULT_PRECISION),
-    m_cIntDigitsSav(DEFAULT_MAX_DIGITS),
-    m_decGrouping(),
-    m_numberString(DEFAULT_NUMBER_STR),
-    m_nTempCom(0),
-    m_openParenCount(0),
-    m_nOp(),
-    m_nPrecOp(),
-    m_precedenceOpCount(0),
-    m_nLastCom(0),
-    m_angletype(ANGLE_DEG),
-    m_numwidth(QWORD_WIDTH),
-    m_HistoryCollector(pCalcDisplay, pHistoryDisplay, DEFAULT_DEC_SEPARATOR),
-    m_groupSeparator(DEFAULT_GRP_SEPARATOR)
+CCalcEngine::CCalcEngine(
+    bool fPrecedence,
+    bool fIntegerMode,
+    CalculationManager::IResourceProvider* const pResourceProvider,
+    __in_opt ICalcDisplay* pCalcDisplay,
+    __in_opt shared_ptr<IHistoryDisplay> pHistoryDisplay)
+    : m_fPrecedence(fPrecedence)
+    , m_fIntegerMode(fIntegerMode)
+    , m_pCalcDisplay(pCalcDisplay)
+    , m_resourceProvider(pResourceProvider)
+    , m_nOpCode(0)
+    , m_nPrevOpCode(0)
+    , m_bChangeOp(false)
+    , m_bRecord(false)
+    , m_bSetCalcState(false)
+    , m_input(DEFAULT_DEC_SEPARATOR)
+    , m_nFE(NumberFormat::Float)
+    , m_memoryValue{ make_unique<Rational>() }
+    , m_holdVal{}
+    , m_currentVal{}
+    , m_lastVal{}
+    , m_parenVals{}
+    , m_precedenceVals{}
+    , m_bError(false)
+    , m_bInv(false)
+    , m_bNoPrevEqu(true)
+    , m_radix(DEFAULT_RADIX)
+    , m_precision(DEFAULT_PRECISION)
+    , m_cIntDigitsSav(DEFAULT_MAX_DIGITS)
+    , m_decGrouping()
+    , m_numberString(DEFAULT_NUMBER_STR)
+    , m_nTempCom(0)
+    , m_openParenCount(0)
+    , m_nOp()
+    , m_nPrecOp()
+    , m_precedenceOpCount(0)
+    , m_nLastCom(0)
+    , m_angletype(AngleType::Degrees)
+    , m_numwidth(NUM_WIDTH::QWORD_WIDTH)
+    , m_HistoryCollector(pCalcDisplay, pHistoryDisplay, DEFAULT_DEC_SEPARATOR)
+    , m_groupSeparator(DEFAULT_GRP_SEPARATOR)
 {
     InitChopNumbers();
 
@@ -97,7 +105,7 @@ CCalcEngine::CCalcEngine(bool fPrecedence, bool fIntegerMode, CalculationManager
 
     m_maxTrigonometricNum = RationalMath::Pow(10, 100);
 
-    SetRadixTypeAndNumWidth(DEC_RADIX, m_numwidth);
+    SetRadixTypeAndNumWidth(RadixType::Decimal, m_numwidth);
     SettingsChanged();
     DisplayNum();
 }
@@ -120,8 +128,18 @@ void CCalcEngine::InitChopNumbers()
         auto maxVal = m_chopNumbers[i] / 2;
         maxVal = RationalMath::Integer(maxVal);
 
-        m_maxDecimalValueStrings[i] = maxVal.ToString(10, FMT_FLOAT, m_precision);
+        m_maxDecimalValueStrings[i] = maxVal.ToString(10, NumberFormat::Float, m_precision);
     }
+}
+
+CalcEngine::Rational CCalcEngine::GetChopNumber() const
+{
+    return m_chopNumbers[static_cast<int>(m_numwidth)];
+}
+
+std::wstring CCalcEngine::GetMaxDecimalValueString() const
+{
+    return m_maxDecimalValueStrings[static_cast<int>(m_numwidth)];
 }
 
 // Gets the number in memory for UI to keep it persisted and set it again to a different instance
@@ -168,7 +186,7 @@ void CCalcEngine::SettingsChanged()
         m_HistoryCollector.SetDecimalSymbol(m_decimalSeparator);
 
         // put the new decimal symbol into the table used to draw the decimal key
-        s_engineStrings[IDS_DECIMAL] = m_decimalSeparator;
+        s_engineStrings[SIDS_DECIMAL_SEPARATOR] = m_decimalSeparator;
 
         // we need to redraw to update the decimal point button
         numChanged = true;

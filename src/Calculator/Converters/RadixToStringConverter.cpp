@@ -15,47 +15,44 @@ namespace CalculatorApp
 {
     namespace Converters
     {
-        Object^ RadixToStringConverter::Convert(Object^ value, TypeName targetType, Object^ parameter, String^ language)
+        Object ^ RadixToStringConverter::Convert(Object ^ value, TypeName targetType, Object ^ parameter, String ^ language)
         {
-            (void)targetType;    // Unused parameter
-            (void)parameter;    // Unused parameter
-            (void)language;    // Unused parameter
+            (void)targetType; // Unused parameter
+            (void)parameter;  // Unused parameter
+            (void)language;   // Unused parameter
 
-            auto boxedInt = dynamic_cast<Box<int>^>(value);
-            Platform::String^ convertedValue;
+            auto boxedInt = dynamic_cast<Box<int> ^>(value);
+            Platform::String ^ convertedValue;
             auto resourceLoader = AppResourceProvider::GetInstance();
             switch (boxedInt->Value)
             {
-            case RADIX_TYPE::BIN_RADIX:
+            case RadixType::Binary:
             {
-                convertedValue = resourceLoader.GetResourceString("Bin");
+                convertedValue = resourceLoader->GetResourceString("Bin");
                 break;
             }
-            case RADIX_TYPE::OCT_RADIX:
+            case RadixType::Octal:
             {
-                convertedValue = resourceLoader.GetResourceString("Oct");
+                convertedValue = resourceLoader->GetResourceString("Oct");
                 break;
             }
-            case RADIX_TYPE::DEC_RADIX:
+            case RadixType::Decimal:
             {
-                convertedValue = resourceLoader.GetResourceString("Dec");
+                convertedValue = resourceLoader->GetResourceString("Dec");
                 break;
             }
-            case RADIX_TYPE::HEX_RADIX:
+            case RadixType::Hex:
             {
-                convertedValue = resourceLoader.GetResourceString("Hex");
+                convertedValue = resourceLoader->GetResourceString("Hex");
                 break;
             }
             default:
                 break;
-
             };
             return convertedValue;
-
-
         }
 
-        Object^ RadixToStringConverter::ConvertBack(Object^ value, TypeName targetType, Object^ parameter, String^ language)
+        Object ^ RadixToStringConverter::ConvertBack(Object ^ value, TypeName targetType, Object ^ parameter, String ^ language)
         {
             throw ref new NotImplementedException();
         }

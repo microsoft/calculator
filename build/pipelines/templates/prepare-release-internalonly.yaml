@@ -1,9 +1,7 @@
 # This template contains a job which builds artifacts needed to release the app to the store and to
-# Windows using Microsoft-internal systems. It relies Microsoft-internal resources and will not
+# Windows using Microsoft-internal systems. It relies on Microsoft-internal resources and will not
 # work outside of Microsoft.
 # Specifically, this job:
-# - Signs the bundle using a secure system. If you want to build your own, use SignTool following
-#   the example in the continuous integration pipeline.
 # - Builds VPacks for including the app in the Windows OS build. Azure DevOps Universal Packages
 #   offers similar capabilities.
 # - Creates StoreBroker packages containing Microsoft Store assets. Although the Store assets for
@@ -17,6 +15,14 @@ jobs:
     name: Package ES Lab E
   workspace:
     clean: outputs
+  variables:
+    skipComponentGovernanceDetection: true
+    SBMediaRootPath: '$(TEMP)\SBMedia'
+    SBPackagePath: '$(Build.ArtifactStagingDirectory)\storeBrokerPayload'
+    SBLogPath: '$(SBPackagePath)\StoreBroker.log'
+    FlightId: '161f0975-cb5f-475b-8ef6-26383c37621f'
+    AppId: '9WZDNCRFHVN5'
+    ProductId: '00009007199266248474'
   steps:
   - checkout: self
     clean: true
@@ -26,120 +32,120 @@ jobs:
   - task: PkgESSetupBuild@10
     displayName: Initialize Package ES
     inputs:
-        productName: Calculator
-        disableWorkspace: true
+      productName: Calculator
+      disableWorkspace: true
     env:
       XES_DISABLEPROV: true
 
-  - task: NuGetToolInstaller@0
-    displayName: Use NuGet 4.7.1
+  - task: NuGetToolInstaller@1
+    displayName: Use NuGet 5.x
     inputs:
-      versionSpec: 4.7.1
-      checkLatest: true
+      versionSpec: 5.x
 
   - task: DownloadBuildArtifacts@0
-    displayName: Download appxBundle artifact
+    displayName: Download appxBundleSigned artifact
     inputs:
-      artifactName: appxBundle
-
-  - task: PkgESCodeSign@10
-    displayName: Send bundle to Package ES code signing service
-    inputs:
-      signConfigXml: build\config\SignConfig.xml
-      inPathRoot: $(Build.ArtifactStagingDirectory)\appxBundle
-      outPathRoot: $(Build.ArtifactStagingDirectory)\appxBundleSigned
-
-  - task: PublishBuildArtifacts@1
-    displayName: Publish AppxBundleSigned artifact
-    inputs:
-      pathtoPublish: $(Build.ArtifactStagingDirectory)\appxBundleSigned
-      artifactName: AppxBundleSigned
+      artifactName: appxBundleSigned
 
   - task: CopyFiles@2
     displayName: Copy signed AppxBundle to vpack staging folder
     inputs:
-        sourceFolder: $(Build.ArtifactStagingDirectory)\appxBundleSigned
-        targetFolder: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
+      sourceFolder: $(Build.ArtifactStagingDirectory)\appxBundleSigned
+      contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
+      targetFolder: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
 
   - task: PkgESVPack@10
     displayName: Create and push vpack for app
     env:
-        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     inputs:
-        sourceDirectory: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
-        description: VPack for the Calculator Application
-        pushPkgName: calculator.app
-        version: $(versionMajor).$(versionMinor).$(versionBuild)
-        owner: paxeeapps
+      sourceDirectory: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
+      description: VPack for the Calculator Application
+      pushPkgName: calculator.app
+      version: $(versionMajor).$(versionMinor).$(versionBuild)
+      owner: paxeeapps
+      provData: false
+
 
   - task: PublishBuildArtifacts@1
     displayName: Publish vpack\app artifact with vpack manifest
     inputs:
-        pathtoPublish: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
-        artifactName: vpack\app
-
-    # TODO (macool): create and push internal test packages and test config
+      pathtoPublish: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
+      artifactName: vpack\app
 
   - task: UniversalPackages@0
     displayName: Download internals package
     inputs:
       command: download
       downloadDirectory: $(Build.SourcesDirectory)
-      vstsFeed: WindowsApps
+      vstsFeed: WindowsInboxApps
       vstsFeedPackage: calculator-internals
-      vstsPackageVersion: 0.0.7
+      vstsPackageVersion: 0.0.50
 
-  - task: PkgESStoreBrokerPackage@10
-    displayName: Create StoreBroker Packages
-    env:
-      XES_SERIALPOSTBUILDREADY: True
+  - powershell: |
+      # Just modify this line to indicate where your en-us PDP file is. Leave the other lines alone.
+      $enUSPdpFilePath = "$(Build.SourcesDirectory)\PDP\en-US\PDP.xml"
+
+      # This is going to save the release value from the PDP file to $(SBMediaReleaseVersion)
+      # which you can then refer to in the UniversalPackages task.
+      $release = ([xml](Get-Content $enUSPdpFilePath)).ProductDescription.Release.Trim()
+      Write-Host "##vso[task.setvariable variable=SBMediaReleaseVersion;]$release"
+    displayName: Determine the PDP Media release version from the en-us PDP file
+
+  - task: UniversalPackages@0
+    displayName: Download PDP media (screenshots, trailers) universal package
     inputs:
-      addToFlight: false
-      configPath: tools/Build/StoreBroker/SBCalculatorConfig.json
-      PDPRootPath: $(Build.SourcesDirectory)\PDP
-      imagesRootPath: $(Build.SourcesDirectory)\PDPMediaRoot
-      appxPath: $(Build.ArtifactStagingDirectory)\appxBundleSigned\Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
-      useArtifactServiceForMedia: true
-      outPath: $(Build.ArtifactStagingDirectory)\StoreBrokerPayload
-      paToken: $(System.AccessToken)
-      logRootPath: $(Build.ArtifactStagingDirectory)/StoreBrokerLogs
+      command: download
+      downloadDirectory: $(SBMediaRootPath)/$(SBMediaReleaseVersion)
+      vstsFeed: WindowsInboxApps
+      vstsFeedPackage: calculator-pdp-media
+      vstsPackageVersion: $(SBMediaReleaseVersion)
+
+  - task: MS-RDX-MRO.windows-store-publish-dev.package-task.store-package@2
+    displayName: Create StoreBroker Payload
+    inputs:
+      serviceEndpoint: StoreBrokerProxy
+      sbConfigPath: Tools/Build/StoreBroker/SBCalculatorConfig.json
+      sourceFolder: $(Build.ArtifactStagingDirectory)/appxBundleSigned
+      contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
+      pdpPath: '$(Build.SourcesDirectory)\PDP'
+      pdpInclude: PDP.xml
+      pdpMediaPath: '$(SBMediaRootPath)'
+      outSBPackagePath: '$(SBPackagePath)'
+      outSBName: SBCalculator
 
   - task: PublishBuildArtifacts@1
-    displayName: Publish StoreBrokerPayload artifact
+    displayName: Publish StoreBroker Payload artifact
     inputs:
+      pathtoPublish: '$(SBPackagePath)'
       artifactName: storeBrokerPayload
-      pathToPublish: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload
 
-  - task: PkgESStoreBrokerFlight@10
+  - task: MS-RDX-MRO.windows-store-publish-dev.flight-task.store-flight@2
+    displayName: 'Flight StoreBroker Payload to team ring'
     name: StoreBrokerFlight
-    displayName: Flight package with StoreBroker
-    env:
-      XES_SERIALPOSTBUILDREADY: True
     inputs:
-      packageToFlight: Custom
-      appId: 9WZDNCRFHVN5
-      flightId: 161f0975-cb5f-475b-8ef6-26383c37621f
-      submissionDataPath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.json
-      packagePath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.zip
-      updatePackageAction: AddPackages
-      logRootPath: $(Build.ArtifactStagingDirectory)/StoreBrokerLogs
-
-  - task: PublishBuildArtifacts@1
-    displayName: Publish StoreBrokerLogs artifact
-    inputs:
-      artifactName: storeBrokerLogs
-      pathToPublish: $(Build.ArtifactStagingDirectory)/StoreBrokerLogs
+      serviceEndpoint: StoreBrokerProxy
+      appId: '$(AppId)'
+      flightId: '$(FlightId)'
+      inputMethod: JsonAndZip
+      jsonPath: '$(SBPackagePath)\SBCalculator.json'
+      zipPath: '$(SBPackagePath)\SBCalculator.zip'
+      force: true
+      skipPolling: true
+      targetPublishMode: Immediate
+      logPath: '$(SBLogPath)'
 
   - task: PkgESStoreBrokerAeroUpload@10
     displayName: Upload to Aero flighting dashboard
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     inputs:
-      productId: 00009007199266248474
-      flightId: 161f0975-cb5f-475b-8ef6-26383c37621f
-      submissionId: $(StoreBrokerFlight.WS_SubmissionId)
-      submissionDataPath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.json
-      packagePath: $(Build.ArtifactStagingDirectory)/StoreBrokerPayload/SBCalculator.zip
+      ProductId: '$(ProductId)'
+      FlightId: '$(FlightId)'
+      SubmissionId: '$(StoreBrokerFlight.WS_SubmissionId)'
+      SubmissionDataPath: '$(SBPackagePath)\SBCalculator.json'
+      PackagePath: '$(SBPackagePath)\SBCalculator.zip'
+      AeroEnvironment: Production
 
   - task: PkgESLateTasks@10
     displayName: Run PackageES LateTasks

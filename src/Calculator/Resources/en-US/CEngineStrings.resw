@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -198,7 +198,7 @@
     <comment>{Locked}The string that represents the function</comment>
   </data>
   <data name="21" xml:space="preserve">
-    <value>Not</value>
+    <value>NOT</value>
     <comment>{Locked}The string that represents the function</comment>
   </data>
   <data name="22" xml:space="preserve">
@@ -274,7 +274,7 @@
     <comment>{Locked}The string that represents the function</comment>
   </data>
   <data name="6" xml:space="preserve">
-    <value>And</value>
+    <value>AND</value>
     <comment>{Locked}The string that represents the function</comment>
   </data>
   <data name="66" xml:space="preserve">
@@ -338,7 +338,7 @@
     <comment>{Locked}The string that represents the function</comment>
   </data>
   <data name="8" xml:space="preserve">
-    <value>Xor</value>
+    <value>XOR</value>
     <comment>{Locked}The string that represents the function</comment>
   </data>
   <data name="80" xml:space="preserve">
@@ -416,5 +416,137 @@
   <data name="99" xml:space="preserve">
     <value>Cannot divide by zero</value>
     <comment>Error string shown when a divide by zero condition happens during the calculation</comment>
+  </data>
+  <data name="SecDeg" xml:space="preserve">
+    <value>sec₀</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="SecRad" xml:space="preserve">
+    <value>secᵣ</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="SecGrad" xml:space="preserve">
+    <value>sec₉</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="InverseSecDeg" xml:space="preserve">
+    <value>sec₀⁻¹</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="InverseSecRad" xml:space="preserve">
+    <value>secᵣ⁻¹</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="InverseSecGrad" xml:space="preserve">
+    <value>sec₉⁻¹</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="CscDeg" xml:space="preserve">
+    <value>csc₀</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="CscRad" xml:space="preserve">
+    <value>cscᵣ</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="CscGrad" xml:space="preserve">
+    <value>csc₉</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="InverseCscDeg" xml:space="preserve">
+    <value>csc₀⁻¹</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="InverseCscRad" xml:space="preserve">
+    <value>cscᵣ⁻¹</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="InverseCscGrad" xml:space="preserve">
+    <value>csc₉⁻¹</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="CotDeg" xml:space="preserve">
+    <value>cot₀</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="CotRad" xml:space="preserve">
+    <value>cotᵣ</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="CotGrad" xml:space="preserve">
+    <value>cot₉</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="InverseCotDeg" xml:space="preserve">
+    <value>cot₀⁻¹</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="InverseCotRad" xml:space="preserve">
+    <value>cotᵣ⁻¹</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="InverseCotGrad" xml:space="preserve">
+    <value>cot₉⁻¹</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="Sech" xml:space="preserve">
+    <value>sech</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="InverseSech" xml:space="preserve">
+    <value>sech⁻¹</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="Csch" xml:space="preserve">
+    <value>csch</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="InverseCsch" xml:space="preserve">
+    <value>csch⁻¹</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="Coth" xml:space="preserve">
+    <value>coth</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="InverseCoth" xml:space="preserve">
+    <value>coth⁻¹</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="TwoPowX" xml:space="preserve">
+    <value>2^</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="LogBaseY" xml:space="preserve">
+    <value>log base</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="Abs" xml:space="preserve">
+    <value>abs</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="Ceil" xml:space="preserve">
+    <value>ceil</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="Floor" xml:space="preserve">
+    <value>floor</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="Nand" xml:space="preserve">
+    <value>NAND</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="Nor" xml:space="preserve">
+    <value>NOR</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="CubeRoot" xml:space="preserve">
+    <value>cuberoot</value>
+    <comment>{Locked}The string that represents the function</comment>
+  </data>
+  <data name="ProgrammerMod" xml:space="preserve">
+    <value>%</value>
+    <comment>{Locked}The string that represents the function</comment>
   </data>
 </root>

@@ -358,7 +358,7 @@
         </Grid.RowDefinitions>
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+            <VisualStateGroup CurrentStateChanged="OnVisualStateChanged">
                 <VisualState x:Name="LeftAlignedLayout">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="480"/>
@@ -404,10 +404,8 @@
               Visibility="{Binding IsDateDiffMode, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" MaxHeight="17"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto" MinHeight="32"/>
                 <RowDefinition Height="1*" MaxHeight="24"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto" MinHeight="32"/>
                 <RowDefinition Height="1*" MaxHeight="24"/>
                 <RowDefinition Height="Auto"/>
@@ -417,43 +415,31 @@
             </Grid.RowDefinitions>
 
             <!-- From Date -->
-            <TextBlock x:Name="Date_FromLabel"
-                       x:Uid="Date_FromLabel"
-                       Grid.Row="1"
-                       Margin="0,0,0,2"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       TextWrapping="Wrap"/>
             <CalendarDatePicker x:Name="DateDiff_FromDate"
-                                Grid.Row="2"
+                                x:Uid="DateDiff_FromHeader"
+                                Grid.Row="1"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
-                                AutomationProperties.LabeledBy="{x:Bind Date_FromLabel}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
                                 Closed="CalendarFlyoutClosed"
                                 DateChanged="FromDate_DateChanged"/>
 
             <!-- To Date -->
-            <TextBlock x:Name="Date_ToLabel"
-                       x:Uid="Date_ToLabel"
-                       Grid.Row="4"
-                       Margin="0,0,0,2"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       TextWrapping="Wrap"/>
             <CalendarDatePicker x:Name="DateDiff_ToDate"
-                                Grid.Row="5"
+                                x:Uid="DateDiff_ToHeader"
+                                Grid.Row="3"
                                 Margin="0,0,0,0"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
-                                AutomationProperties.LabeledBy="{x:Bind Date_ToLabel}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
                                 Closed="CalendarFlyoutClosed"
                                 DateChanged="ToDate_DateChanged"/>
 
             <!-- Difference Result -->
             <TextBlock x:Uid="Date_DifferenceLabel"
-                       Grid.Row="7"
+                       Grid.Row="5"
                        Margin="0,0,0,0"
                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
             <TextBlock x:Name="DateDiffAllUnitsResultLabel"
-                       Grid.Row="8"
+                       Grid.Row="6"
                        Style="{ThemeResource SubtitleTextBlockStyle}"
                        FontWeight="SemiBold"
                        AutomationProperties.LiveSetting="Polite"
@@ -461,7 +447,7 @@
                        ContextFlyout="{StaticResource ResultsContextMenu}"
                        IsTextSelectionEnabled="True"
                        Text="{Binding StrDateDiffResult}"/>
-            <TextBlock Grid.Row="10"
+            <TextBlock Grid.Row="8"
                        Style="{ThemeResource BaseTextBlockStyle}"
                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
                        ContextFlyout="{StaticResource ResultsContextMenu}"
@@ -479,7 +465,6 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" MaxHeight="17"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto" MinHeight="32"/>
                 <RowDefinition Height="1*" MaxHeight="23"/>
                 <RowDefinition Height="Auto"/>
@@ -491,23 +476,16 @@
             </Grid.RowDefinitions>
 
             <!-- From Date -->
-            <TextBlock x:Name="AddSubtract_Date_FromLabel"
-                       x:Uid="Date_FromLabel"
-                       Grid.Row="1"
-                       Margin="0,0,0,2"
-                       Style="{ThemeResource BodyTextBlockStyle}"
-                       Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
-                       TextWrapping="Wrap"/>
             <CalendarDatePicker x:Name="AddSubtract_FromDate"
-                                Grid.Row="2"
+                                x:Uid="AddSubtract_Date_FromHeader"
+                                Grid.Row="1"
                                 Margin="0,0,0,0"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
-                                AutomationProperties.LabeledBy="{x:Bind AddSubtract_Date_FromLabel}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
                                 Closed="CalendarFlyoutClosed"
                                 DateChanged="AddSubtract_DateChanged"/>
 
-            <Grid Grid.Row="4">
+            <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -533,7 +511,7 @@
             </Grid>
 
             <!-- Date Offset to be Added/Subtracted -->
-            <Grid x:Name="DateOffsetGrid" Grid.Row="6">
+            <Grid x:Name="DateOffsetGrid" Grid.Row="5">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -594,11 +572,11 @@
 
             <!-- Resulting Date -->
             <TextBlock x:Uid="DateLabel"
-                       Grid.Row="8"
+                       Grid.Row="7"
                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
 
             <TextBlock x:Name="DateResultLabel"
-                       Grid.Row="9"
+                       Grid.Row="8"
                        Style="{ThemeResource SubtitleTextBlockStyle}"
                        FontWeight="SemiBold"
                        AutomationProperties.LiveSetting="Polite"

@@ -10,8 +10,6 @@
              xmlns:model="using:CalculatorApp.ViewModel"
              x:Name="MemoryList"
              FlowDirection="LeftToRight"
-             Loaded="MemoryList_Loaded"
-             Unloaded="MemoryList_Unloaded"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -19,7 +17,7 @@
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
 
-        <MenuFlyout x:Key="MemoryContextMenu">
+        <MenuFlyout x:Name="MemoryContextMenu">
             <MenuFlyoutItem x:Uid="ClearMemoryMenuItem" Click="OnClearMenuItemClicked">
                 <MenuFlyoutItem.Icon>
                     <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xf754;"/>
@@ -44,12 +42,12 @@
                BasedOn="{StaticResource HistoryMemoryItemContainerStyle}"
                TargetType="ListViewItem">
             <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="ContextFlyout" Value="{StaticResource MemoryContextMenu}"/>
         </Style>
     </UserControl.Resources>
 
     <Grid x:Name="LayoutGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="{Binding RowHeight, ElementName=MemoryList, Mode=OneWay}"/>
         </Grid.RowDefinitions>
@@ -69,11 +67,10 @@
                         <AdaptiveTrigger MinWindowWidth="560"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="MemoryPanel.(Grid.Row)" Value="1"/>
+                        <Setter Target="MemoryPanel.(Grid.Row)" Value="0"/>
                         <Setter Target="MemoryPanel.(Grid.RowSpan)" Value="2"/>
                         <Setter Target="MemoryListView.Padding" Value="0"/>
-                        <Setter Target="BackgroundShade.Opacity" Value="0"/>
-                        <Setter Target="CustomTitleBar.Height" Value="0"/>
+                        <Setter Target="BackgroundShade.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DefaultLayout">
@@ -84,7 +81,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Border x:Name="BackgroundShade"
-                Grid.Row="2"
+                Grid.Row="1"
                 Margin="0,-1,0,0"
                 Padding="0"
                 HorizontalAlignment="Stretch"
@@ -92,23 +89,22 @@
                 Background="{ThemeResource SystemControlChromeMediumLowAcrylicElementMediumBrush}"
                 BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
                 BorderThickness="{ThemeResource HighContrastThicknessTop}"/>
-        <Grid x:Name="MemoryPanel" Grid.Row="2">
+        <Grid x:Name="MemoryPanel" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock x:Name="MemoryPaneEmpty"
                        x:Uid="MemoryPaneEmpty"
-                       Margin="12,14,24,0"
+                       Margin="16,14,24,0"
                        Style="{ThemeResource BaseTextBlockStyle}"
                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                       FontWeight="SemiLight"
                        TextWrapping="Wrap"
                        Visibility="{Binding IsMemoryEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <ListView x:Name="MemoryListView"
                       Padding="0,12,0,0"
                       HorizontalAlignment="Stretch"
-                      ContextCanceled="OnContextCanceled"
-                      ContextRequested="OnContextRequested"
                       IsItemClickEnabled="true"
                       ItemClick="MemoryListItemClick"
                       ItemContainerStyle="{ThemeResource MemoryItemContainerStyle}"
@@ -135,9 +131,5 @@
                     Visibility="{x:Bind Model.IsMemoryEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
         </Grid>
 
-        <Border x:Name="CustomTitleBar"
-                Height="32"
-                HorizontalAlignment="Stretch"
-                Background="{ThemeResource TitleBarBackgroundTransparentBrush}"/>
     </Grid>
 </UserControl>

@@ -8,7 +8,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:model="using:CalculatorApp.ViewModel"
              Loaded="OnLoaded"
              mc:Ignorable="d">
 
@@ -18,285 +17,206 @@
         <DataTemplate x:Key="Operand" x:DataType="common:DisplayExpressionToken">
             <TextBlock Margin="2,0,0,0"
                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{Binding Token, Mode=OneWay}"/>
+                       Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="Operator" x:DataType="common:DisplayExpressionToken">
             <TextBlock Margin="2,0,0,0"
                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{Binding Token, Mode=OneWay}"/>
+                       Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="Separator" x:DataType="common:DisplayExpressionToken">
-            <TextBlock x:Name="MainText"
-                       IsTextScaleFactorEnabled="False"
-                       Text="{Binding Token, Mode=OneWay}"/>
+            <TextBlock x:Name="MainText" Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
         <!-- TextBox Styles -->
 
-        <Style x:Key="OperandTextBoxStyle" TargetType="controls:OperandTextBox">
-            <Setter Property="MinWidth" Value="32"/>
-            <Setter Property="MinHeight" Value="20"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="SelectionHighlightColor" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
-            <Setter Property="FontSize" Value="{ThemeResource BodyFontSize}"/>
-            <Setter Property="IsTextScaleFactorEnabled" Value="False"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="2,0,3,0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="controls:OperandTextBox">
-                        <Grid x:Name="BackgroundElement" Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Disabled"/>
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Target="ContentElement.Foreground" Value="{ThemeResource SystemControlForegroundAccentBrush}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Target="BackgroundElement.Background" Value="{ThemeResource SystemControlHighlightListAccentLowBrush}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Focused">
-                                        <VisualState.Setters>
-                                            <Setter Target="BackgroundElement.Background" Value="{ThemeResource SystemControlForegroundChromeWhiteBrush}"/>
-                                            <Setter Target="ContentElement.Foreground" Value="{ThemeResource SystemControlBackgroundChromeBlackHighBrush}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <ScrollViewer x:Name="ContentElement"
-                                          Padding="{TemplateBinding Padding}"
-                                          VerticalAlignment="Center"
-                                          AutomationProperties.AccessibilityView="Raw"
-                                          HorizontalScrollBarVisibility="Hidden"
-                                          HorizontalScrollMode="Disabled"
-                                          IsDeferredScrollingEnabled="False"
-                                          IsHorizontalRailEnabled="True"
-                                          IsTabStop="False"
-                                          IsVerticalRailEnabled="False"
-                                          VerticalScrollBarVisibility="Disabled"
-                                          VerticalScrollMode="Disabled"
-                                          ZoomMode="Disabled"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="OperatorTextBoxStyle" TargetType="controls:OperatorTextBox">
-            <Setter Property="MinWidth" Value="4"/>
-            <Setter Property="MinHeight" Value="20"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="controls:OperatorTextBox">
-                        <Grid x:Name="BackgroundElement" Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Disabled"/>
-                                    <VisualState x:Name="Normal">
-                                        <VisualState.Setters>
-                                            <Setter Target="textElement.Foreground" Value="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Target="BackgroundElement.Background" Value="{ThemeResource SystemControlHighlightListAccentLowBrush}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Focused">
-                                        <VisualState.Setters>
-                                            <Setter Target="BackgroundElement.Background" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
-                                            <Setter Target="textElement.Foreground" Value="{ThemeResource SystemControlForegroundChromeWhiteBrush}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <TextBlock x:Name="textElement"
-                                       Margin="0,-2,0,2"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Foreground="{TemplateBinding Foreground}"
-                                       FontSize="16"
-                                       IsHitTestVisible="True"
-                                       IsTextScaleFactorEnabled="False"
-                                       Text="{Binding Token}"
-                                       TextAlignment="Center"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="controls:OverflowTextBlock">
+        <Style x:Key="NormalStyle" TargetType="controls:OverflowTextBlock">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:OverflowTextBlock">
-                        <Border x:Name="expressionborder" Background="Transparent">
-                            <Grid x:Name="tokenContainer" Background="{TemplateBinding Background}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="12"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="12"/>
-                                </Grid.ColumnDefinitions>
-                                <ScrollViewer x:Name="expressionContainer"
-                                              Grid.Column="1"
-                                              Padding="0,0,0,0"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              Style="{StaticResource ResultsScrollerSnapped}"
-                                              AutomationProperties.AccessibilityView="Raw"
-                                              LayoutUpdated="expressionContainer_LayoutUpdated">
-                                    <ListView x:Name="TokenList"
-                                              Padding="0"
-                                              VerticalAlignment="Stretch"
-                                              HorizontalContentAlignment="Right"
-                                              VerticalContentAlignment="Stretch"
-                                              IsTabStop="False"
-                                              ItemContainerStyleSelector="{StaticResource ExpressionItemContainerStyle}"
-                                              ItemTemplateSelector="{StaticResource ExpressionItemTemplateSelector}"
-                                              ItemsSource="{Binding ExpressionTokens}"
-                                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                              ScrollViewer.HorizontalScrollMode="Enabled"
-                                              ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                              ScrollViewer.VerticalScrollMode="Disabled"
-                                              SelectionMode="None">
-                                        <ListView.ItemsPanel>
+                        <Grid x:Name="TokenContainer"
+                              Background="{TemplateBinding Background}"
+                              FlowDirection="LeftToRight">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="12"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="12"/>
+                            </Grid.ColumnDefinitions>
+                            <ScrollViewer x:Name="ExpressionContainer"
+                                          Grid.Column="1"
+                                          Padding="0,0,0,0"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Style="{StaticResource ResultsScrollerSnapped}"
+                                          AutomationProperties.AccessibilityView="Raw">
+                                <Grid x:Name="ExpressionContent">
+                                    <ItemsControl x:Name="TokenList"
+                                                  VerticalAlignment="Stretch"
+                                                  HorizontalContentAlignment="Right"
+                                                  VerticalContentAlignment="Stretch"
+                                                  IsTabStop="False"
+                                                  ItemTemplateSelector="{StaticResource ExpressionItemTemplateSelector}"
+                                                  ItemsSource="{Binding ExpressionTokens}">
+                                        <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <StackPanel HorizontalAlignment="Right"
-                                                            VerticalAlignment="Stretch"
-                                                            Orientation="Horizontal"/>
+                                                <ItemsStackPanel HorizontalAlignment="Right"
+                                                                 VerticalAlignment="Stretch"
+                                                                 Orientation="Horizontal"/>
                                             </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                        <ListView.ItemContainerTransitions>
-                                            <TransitionCollection/>
-                                        </ListView.ItemContainerTransitions>
-                                    </ListView>
-                                </ScrollViewer>
-                                <Button x:Name="scrollLeft"
-                                        x:Uid="scrollLeft"
-                                        Grid.Column="0"
-                                        Margin="-4,3,-4,0"
-                                        Style="{StaticResource ScrollButtonStyle}">
-                                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                              FontSize="12"
-                                              Glyph="&#xE26C;"/>
-                                </Button>
-                                <Button x:Name="scrollRight"
-                                        x:Uid="scrollRight"
-                                        Grid.Column="2"
-                                        Margin="0,3,-9,0"
-                                        Style="{StaticResource ScrollButtonStyle}">
-                                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                              FontSize="12"
-                                              Glyph="&#xE26B;"/>
-                                </Button>
-                            </Grid>
-                        </Border>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </Grid>
+                            </ScrollViewer>
+                            <Button x:Name="ScrollLeft"
+                                    x:Uid="scrollLeft"
+                                    Grid.Column="0"
+                                    Margin="-4,3,-4,0"
+                                    Style="{StaticResource ScrollButtonStyle}">
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                          FontSize="12"
+                                          Glyph="&#xE26C;"/>
+                            </Button>
+                            <Button x:Name="ScrollRight"
+                                    x:Uid="scrollRight"
+                                    Grid.Column="2"
+                                    Margin="0,3,-9,0"
+                                    Style="{StaticResource ScrollButtonStyle}">
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                          FontSize="12"
+                                          Glyph="&#xE26B;"/>
+                            </Button>
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <!-- ListViewItem Styles -->
-
-        <Style x:Key="ExpressionBaseContainerStyle" TargetType="ListViewItem">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="MinWidth" Value="0"/>
-            <Setter Property="MinHeight" Value="0"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Style x:Key="AOTResultsStyle" TargetType="controls:OverflowTextBlock">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <ListViewItemPresenter Padding="0"
-                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                               ContentMargin="0"
-                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-                                               PointerOverBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
-                                               PointerOverBackgroundMargin="0"
-                                               SelectedBackground="{ThemeResource SystemControlBackgroundAccentBrush}"
-                                               SelectedBorderThickness="0"
-                                               SelectedForeground="{ThemeResource SystemControlForegroundChromeWhiteBrush}"
-                                               SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
-                                               SelectedPointerOverBorderBrush="Transparent"
-                                               SelectionCheckMarkVisualEnabled="False"/>
+                    <ControlTemplate TargetType="controls:OverflowTextBlock">
+                        <Grid x:Name="TokenContainer"
+                              Background="{TemplateBinding Background}"
+                              FlowDirection="LeftToRight">
+                            <Grid.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.ThemeDictionaries>
+                                        <ResourceDictionary x:Key="Light">
+                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonForeground" Color="#99000000"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver"
+                                                             Opacity="0.8"
+                                                             Color="{ThemeResource SystemAccentColor}"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed"
+                                                             Opacity="1.0"
+                                                             Color="{ThemeResource SystemAccentColor}"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="#33000000"/>
+                                        </ResourceDictionary>
+                                        <ResourceDictionary x:Key="HighContrast">
+                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonForeground"
+                                                             Opacity="0.6"
+                                                             Color="{ThemeResource SystemColorWindowTextColor}"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver"
+                                                             Opacity="0.8"
+                                                             Color="{ThemeResource SystemColorHighlightColor}"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed"
+                                                             Opacity="1.0"
+                                                             Color="{ThemeResource SystemColorHighlightColor}"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundDisabled"
+                                                             Opacity="0.2"
+                                                             Color="{ThemeResource SystemColorGrayTextColor}"/>
+                                        </ResourceDictionary>
+                                        <ResourceDictionary x:Key="Dark">
+                                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent"/>
+                                            <SolidColorBrush x:Key="ButtonForeground" Color="#99FFFFFF"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPointerOver"
+                                                             Opacity="0.8"
+                                                             Color="{ThemeResource SystemAccentColorLight1}"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundPressed"
+                                                             Opacity="1.0"
+                                                             Color="{ThemeResource SystemAccentColorLight1}"/>
+                                            <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="#33FFFFFF"/>
+                                        </ResourceDictionary>
+                                    </ResourceDictionary.ThemeDictionaries>
+                                </ResourceDictionary>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ScrollViewer x:Name="ExpressionContainer"
+                                          Grid.Column="0"
+                                          Grid.ColumnSpan="3"
+                                          Padding="0,0,0,0"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Style="{StaticResource ResultsScrollerSnapped}"
+                                          AutomationProperties.AccessibilityView="Control">
+                                <Grid x:Name="ExpressionContent">
+                                    <TextBlock x:Name="EditableToken"
+                                               Grid.Row="2"
+                                               Margin="4,0,4,0"
+                                               Padding="0"
+                                               HorizontalAlignment="Right"
+                                               VerticalAlignment="Stretch"
+                                               FontWeight="SemiBold"
+                                               AutomationProperties.AccessibilityView="Raw"
+                                               Text="{Binding DisplayValue, Mode=OneWay}"/>
+                                </Grid>
+                            </ScrollViewer>
+
+                            <Button x:Name="ScrollLeft"
+                                    x:Uid="scrollLeft"
+                                    Grid.Column="0"
+                                    Width="{TemplateBinding ScrollButtonsWidth}"
+                                    Margin="0,3,0,0"
+                                    VerticalAlignment="Stretch"
+                                    Style="{StaticResource AlwaysOnTopScrollButtonStyleS}"
+                                    Background="Transparent">
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                          FontSize="{TemplateBinding ScrollButtonsFontSize}"
+                                          Glyph="&#xE26C;"/>
+                            </Button>
+                            <Button x:Name="ScrollRight"
+                                    x:Uid="scrollRight"
+                                    Grid.Column="2"
+                                    Width="{TemplateBinding ScrollButtonsWidth}"
+                                    Margin="0,3,0,0"
+                                    VerticalAlignment="Stretch"
+                                    Style="{StaticResource AlwaysOnTopScrollButtonStyleS}"
+                                    Background="Transparent">
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                          FontSize="{TemplateBinding ScrollButtonsFontSize}"
+                                          Glyph="&#xE26B;"/>
+                            </Button>
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-
-        <Style x:Key="NonEditableOperatorContainerStyle"
-               BasedOn="{StaticResource ExpressionBaseContainerStyle}"
-               TargetType="ListViewItem">
-            <Setter Property="IsHitTestVisible" Value="False"/>
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="MinWidth" Value="4"/>
-        </Style>
-
-        <Style x:Key="EditableOperatorContainerStyle"
-               BasedOn="{StaticResource ExpressionBaseContainerStyle}"
-               TargetType="ListViewItem">
-            <Setter Property="IsHitTestVisible" Value="True"/>
-            <Setter Property="MinWidth" Value="32"/>
         </Style>
 
         <!-- Calculation Result Styles -->
-
-        <Style x:Key="ResultsStyleL"
-               x:Name="ResultsStyleL"
-               BasedOn="{StaticResource CalculationResultStyleL}"
+        <Style x:Key="ResultsStyle"
+               BasedOn="{StaticResource CalculationResultStyle}"
                TargetType="controls:CalculationResult">
             <Setter Property="HorizontalContentAlignment" Value="Right"/>
             <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <Setter Property="FontSize" Value="{StaticResource CalcResultFontSizeL}"/>
-            <Setter Property="MinFontSize" Value="12"/>
-            <Setter Property="IsActive" Value="True"/>
             <Setter Property="DisplayMargin" Value="0,0,0,0"/>
-            <Setter Property="MaxExpressionHistoryCharacters" Value="51"/>
-        </Style>
-
-        <Style x:Key="ResultsStyleM"
-               x:Name="ResultsStyleM"
-               BasedOn="{StaticResource CalculationResultStyleM}"
-               TargetType="controls:CalculationResult">
-            <Setter Property="HorizontalContentAlignment" Value="Right"/>
-            <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <Setter Property="FontSize" Value="{StaticResource CalcResultFontSizeM}"/>
-            <Setter Property="MinFontSize" Value="12"/>
             <Setter Property="IsActive" Value="True"/>
-            <Setter Property="DisplayMargin" Value="0,0,0,0"/>
-            <Setter Property="MaxExpressionHistoryCharacters" Value="30"/>
-        </Style>
-
-        <Style x:Key="ResultsStyleS"
-               x:Name="ResultsStyleS"
-               BasedOn="{StaticResource CalculationResultStyleS}"
-               TargetType="controls:CalculationResult">
-            <Setter Property="HorizontalContentAlignment" Value="Right"/>
-            <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <Setter Property="FontSize" Value="{StaticResource CalcResultFontSizeS}"/>
             <Setter Property="MinFontSize" Value="12"/>
-            <Setter Property="IsActive" Value="True"/>
-            <Setter Property="DisplayMargin" Value="0,0,0,0"/>
-            <Setter Property="MaxExpressionHistoryCharacters" Value="30"/>
         </Style>
 
         <!-- Button Styles -->
-
         <Style x:Key="ScrollButtonStyle" TargetType="Button">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="0,0,0,0"/>
@@ -308,6 +228,13 @@
             <Setter Property="MinHeight" Value="24"/>
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundAccentBrush}"/>
             <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Visibility" Value="Collapsed"/>
+        </Style>
+
+        <Style x:Key="AlwaysOnTopScrollButtonStyleS" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Visibility" Value="Collapsed"/>
         </Style>
 
@@ -363,11 +290,6 @@
                                               Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               ContentTransitions="{TemplateBinding ContentTransitions}"/>
-
-                            <Border x:Name="CustomTitleBar"
-                                    Height="32"
-                                    HorizontalAlignment="Stretch"
-                                    Background="{ThemeResource TitleBarBackgroundTransparentBrush}"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -433,7 +355,6 @@
         <!-- Value Converters -->
 
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
-
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
 
         <!-- DataTemplate Selectors and Style Selectors -->
@@ -442,12 +363,6 @@
                                                    OperandTemplate="{StaticResource Operand}"
                                                    OperatorTemplate="{StaticResource Operator}"
                                                    SeparatorTemplate="{StaticResource Separator}"/>
-
-        <converters:ExpressionItemContainerStyle x:Key="ExpressionItemContainerStyle"
-                                                 EditableOperatorStyle="{StaticResource NonEditableOperatorContainerStyle}"
-                                                 NonEditableOperatorStyle="{StaticResource NonEditableOperatorContainerStyle}"
-                                                 OperandStyle="{StaticResource NonEditableOperatorContainerStyle}"
-                                                 SeparatorStyle="{StaticResource NonEditableOperatorContainerStyle}"/>
 
         <!-- Miscellaneous Resources -->
 
@@ -486,15 +401,39 @@
                         <Setter Target="MemRecall.IsEnabled" Value="False"/>
                         <Setter Target="MemPlus.IsEnabled" Value="False"/>
                         <Setter Target="MemMinus.IsEnabled" Value="False"/>
-                        <Setter Target="memButton.IsEnabled" Value="False"/>
+                        <Setter Target="MemButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnErrorLayoutCompleted"/>
+                    <Storyboard Completed="OnErrorVisualStateCompleted"/>
+                </VisualState>
+            </VisualStateGroup>
+            <!-- Always-on-Top specific -->
+            <VisualStateGroup x:Name="DisplayModeVisualStates">
+                <VisualState x:Name="DisplayModeAlwaysOnTop">
+                    <VisualState.Setters>
+                        <Setter Target="ClearMemoryButton.IsEnabled" Value="False"/>
+                        <Setter Target="MemRecall.IsEnabled" Value="False"/>
+                        <Setter Target="MemPlus.IsEnabled" Value="False"/>
+                        <Setter Target="MemMinus.IsEnabled" Value="False"/>
+                        <Setter Target="MemButton.IsEnabled" Value="False"/>
+                        <Setter Target="RowExpression.Height" Value="0*"/>
+                        <Setter Target="RowHamburger.Height" Value="0"/>
+                        <Setter Target="RowMemoryControls.Height" Value="0*"/>
+                    </VisualState.Setters>
+                    <Storyboard Completed="OnDisplayVisualStateCompleted"/>
+                </VisualState>
+                <VisualState x:Name="DisplayModeNormal">
+                    <VisualState.Setters>
+                        <Setter Target="RowExpression.Height" Value="20*"/>
+                        <Setter Target="RowHamburger.Height" Value="{StaticResource HamburgerHeightGridLength}"/>
+                        <Setter Target="RowMemoryControls.Height" Value="32*"/>
+                    </VisualState.Setters>
+                    <Storyboard Completed="OnDisplayVisualStateCompleted"/>
                 </VisualState>
             </VisualStateGroup>
             <!-- Mode specific -->
-            <VisualStateGroup x:Name="Mode">
+            <VisualStateGroup x:Name="ModeVisualStates">
                 <VisualState x:Name="Standard">
-                    <Storyboard Completed="OnStoryboardCompleted"/>
+                    <Storyboard Completed="OnModeVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="Scientific">
                     <VisualState.Setters>
@@ -502,7 +441,7 @@
                         <Setter Target="RowDisplayControls.MinHeight" Value="32"/>
                         <Setter Target="RowNumPad.Height" Value="276*"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnStoryboardCompleted"/>
+                    <Storyboard Completed="OnModeVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="Programmer">
                     <VisualState.Setters>
@@ -513,14 +452,14 @@
                         <Setter Target="M4.MaxWidth" Value="99999"/>
                         <Setter Target="M5.Width" Value="1*"/>
                         <Setter Target="M5.MaxWidth" Value="80"/>
-                        <Setter Target="memButton.(Grid.Column)" Value="5"/>
+                        <Setter Target="MemButton.(Grid.Column)" Value="5"/>
                         <Setter Target="MemoryButton.(Grid.Column)" Value="6"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnStoryboardCompleted"/>
+                    <Storyboard Completed="OnModeVisualStateCompleted"/>
                 </VisualState>
             </VisualStateGroup>
             <!-- Layout specific -->
-            <VisualStateGroup>
+            <VisualStateGroup x:Name="LayoutVisualStates" CurrentStateChanged="OnVisualStateChanged">
                 <VisualState x:Name="Portrait768x1366">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="1366" MinWindowWidth="768"/>
@@ -530,7 +469,7 @@
                         <Setter Target="DockPanel.Visibility" Value="Visible"/>
                         <Setter Target="M6.Width" Value="0"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="LargeWideView">
                     <VisualState.StateTriggers>
@@ -541,7 +480,7 @@
                         <Setter Target="DockPanel.Visibility" Value="Visible"/>
                         <Setter Target="M6.Width" Value="0"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="DockVisible">
                     <VisualState.StateTriggers>
@@ -553,56 +492,84 @@
                         <Setter Target="DockPanel.Visibility" Value="Visible"/>
                         <Setter Target="M6.Width" Value="0"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="MinSizeLayout">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}" MinWindowWidth="{StaticResource AppMinWindowWidth}"/>
                     </VisualState.StateTriggers>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
                 <VisualState x:Name="DefaultLayout">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="RowMemoryControls.MinHeight" Value="24"/>
-
+                        <Setter Target="RowMemoryControls.MinHeight" Value="0"/>
                         <Setter Target="ClearMemoryButton.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemRecall.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemPlus.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemMinus.Style" Value="{StaticResource CaptionButtonStyle}"/>
-                        <Setter Target="memButton.Style" Value="{StaticResource CaptionButtonStyle}"/>
+                        <Setter Target="MemButton.Style" Value="{StaticResource CaptionButtonStyle}"/>
                         <Setter Target="MemoryButton.MinHeight" Value="0"/>
                     </VisualState.Setters>
-                    <Storyboard Completed="OnLayoutStateChanged"/>
+                    <Storyboard Completed="OnLayoutVisualStateCompleted"/>
                 </VisualState>
             </VisualStateGroup>
             <!-- Results display specific -->
+            <VisualStateGroup>
+                <VisualState x:Name="RegularAlwaysOnTop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="260"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RowResult.MinHeight" Value="54"/>
+                        <Setter Target="RowResult.Height" Value="72*"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="MinAlwaysOnTop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RowResult.MinHeight" Value="20"/>
+                        <Setter Target="RowResult.Height" Value="72*"/>
+                        <Setter Target="AlwaysOnTopResults.FontSize" Value="18"/>
+                        <Setter Target="AlwaysOnTopResults.ScrollButtonsWidth" Value="14"/>
+                        <Setter Target="AlwaysOnTopResults.ScrollButtonsFontSize" Value="12"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
             <VisualStateGroup>
                 <VisualState x:Name="ResultsL">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="800"/>
                     </VisualState.StateTriggers>
-                    <Storyboard Completed="OnResultsLayoutChanged"/>
+                    <VisualState.Setters>
+                        <Setter Target="Results.MaxFontSize" Value="72"/>
+                        <Setter Target="RowResult.MinHeight" Value="108"/>
+                        <Setter Target="RowResult.Height" Value="72*"/>
+                    </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="ResultsProgM">
+                <VisualState x:Name="ResultsM">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="640"/>
+                        <AdaptiveTrigger x:Name="ResultsMVisualStateTrigger" MinWindowHeight="640"/>
                     </VisualState.StateTriggers>
-                    <Storyboard Completed="OnResultsLayoutChanged"/>
-                </VisualState>
-                <VisualState x:Name="ResultsSciM">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="544"/>
-                    </VisualState.StateTriggers>
-                    <Storyboard Completed="OnResultsLayoutChanged"/>
+                    <VisualState.Setters>
+                        <Setter Target="Results.MaxFontSize" Value="46"/>
+                        <Setter Target="RowResult.MinHeight" Value="72"/>
+                        <Setter Target="RowResult.Height" Value="72*"/>
+                    </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="ResultsS">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="0"/>
                     </VisualState.StateTriggers>
-                    <Storyboard Completed="OnResultsLayoutChanged"/>
+                    <VisualState.Setters>
+                        <Setter Target="Results.MaxFontSize" Value="26"/>
+                        <Setter Target="RowResult.MinHeight" Value="42"/>
+                        <Setter Target="RowResult.Height" Value="42*"/>
+                    </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
@@ -612,58 +579,76 @@
                 <RowDefinition x:Name="RowHamburger" Height="{StaticResource HamburgerHeightGridLength}"/>
                 <RowDefinition x:Name="RowExpression"
                                Height="20*"
-                               MinHeight="20"/>
+                               MinHeight="0"/>
                 <RowDefinition x:Name="RowResult"
                                Height="72*"
-                               MinHeight="72"/>
+                               MinHeight="20"/>
                 <RowDefinition x:Name="RowDisplayControls" Height="0"/>
                 <RowDefinition x:Name="RowMemoryControls"
                                Height="32*"
-                               MinHeight="32"/>
+                               MinHeight="0"/>
                 <RowDefinition x:Name="RowNumPad"
                                Height="308*"
                                MinHeight="0"/>
             </Grid.RowDefinitions>
 
+            <controls:OverflowTextBlock x:Name="ExpressionText"
+                                        Grid.Row="1"
+                                        Margin="6,0,6,0"
+                                        VerticalAlignment="Bottom"
+                                        Style="{StaticResource NormalStyle}"
+                                        AutomationProperties.AutomationId="CalculatorExpression"
+                                        AutomationProperties.Name="{x:Bind Model.CalculationExpressionAutomationName, Mode=OneWay}"
+                                        IsTabStop="False"
+                                        TokensUpdated="{x:Bind Model.AreTokensUpdated, Mode=OneWay}"
+                                        Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
             <controls:CalculationResult x:Name="Results"
                                         x:Uid="CalculatorResults"
                                         Grid.Row="2"
                                         Margin="0,0,0,0"
-                                        Style="{ThemeResource ResultsStyleM}"
+                                        Style="{StaticResource ResultsStyle}"
                                         AutomationProperties.AutomationId="CalculatorResults"
                                         AutomationProperties.HeadingLevel="Level1"
                                         AutomationProperties.Name="{x:Bind Model.CalculationResultAutomationName, Mode=OneWay}"
                                         ContextCanceled="OnContextCanceled"
                                         ContextRequested="OnContextRequested"
-                                        DisplayStringExpression="{x:Bind Model.DisplayStringExpression, Mode=OneWay}"
                                         DisplayValue="{x:Bind Model.DisplayValue, Mode=OneWay}"
-                                        ExpressionVisibility="Visible"
                                         IsInError="{x:Bind Model.IsInError, Mode=OneWay}"
                                         IsOperatorCommand="{x:Bind Model.IsOperatorCommand, Mode=OneWay}"
-                                        TabIndex="1"/>
-            <controls:OverflowTextBlock x:Name="expressionText"
-                                        Grid.Row="1"
+                                        TabIndex="1"
+                                        Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+            <controls:OverflowTextBlock x:Name="AlwaysOnTopResults"
+                                        x:Uid="CalculatorAlwaysOnTopResults"
+                                        Grid.Row="2"
                                         Margin="6,0,6,0"
-                                        VerticalAlignment="Bottom"
-                                        AutomationProperties.AutomationId="CalculatorExpression"
-                                        AutomationProperties.Name="{x:Bind Model.CalculationExpressionAutomationName, Mode=OneWay}"
-                                        IsTabStop="False"
-                                        TokensUpdated="{Binding AreTokensUpdated, Mode=OneWay}"/>
+                                        HorizontalContentAlignment="Right"
+                                        Style="{StaticResource AOTResultsStyle}"
+                                        FontSize="40"
+                                        AutomationProperties.AutomationId="CalculatorAlwaysOnTopResults"
+                                        AutomationProperties.HeadingLevel="Level1"
+                                        AutomationProperties.Name="{x:Bind Model.CalculationResultAutomationName, Mode=OneWay}"
+                                        IsActive="True"
+                                        ScrollButtonsFontSize="28"
+                                        ScrollButtonsPlacement="Above"
+                                        ScrollButtonsWidth="28"
+                                        TokensUpdated="{x:Bind Model.AreAlwaysOnTopResultsUpdated, Mode=OneWay}"
+                                        UseSystemFocusVisuals="True"
+                                        Visibility="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
 
             <!-- Programmer display panel controls -->
             <local:CalculatorProgrammerOperators x:Name="ProgrammerOperators"
                                                  Grid.Row="3"
-                                                 x:Load="False"
-                                                 IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
                                                  TabIndex="6"
-                                                 Visibility="{x:Bind Model.IsProgrammer, Mode=OneWay}"/>
+                                                 Visibility="{x:Bind Model.IsProgrammer, Mode=OneWay}"
+                                                 IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
+                                                 x:Load="False"/>
 
             <local:CalculatorProgrammerDisplayPanel x:Name="ProgrammerDisplayPanel"
                                                     Grid.Row="4"
-                                                    x:Load="False"
-                                                    IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
                                                     TabIndex="7"
-                                                    Visibility="{x:Bind Model.IsProgrammer, Mode=OneWay}"/>
+                                                    Visibility="{x:Bind Model.IsProgrammer, Mode=OneWay}"
+                                                    IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
+                                                    x:Load="False"/>
 
             <Button x:Name="HistoryButton"
                     x:Uid="HistoryButton"
@@ -673,12 +658,14 @@
                     Command="{x:Bind HistoryButtonPressed, Mode=OneTime}"
                     Content="&#xe81c;"
                     ExitDisplayModeOnAccessKeyInvoked="False"
-                    TabIndex="2">
+                    TabIndex="2"
+                    Visibility="{x:Bind local:Calculator.ShouldDisplayHistoryButton(Model.IsAlwaysOnTop, Model.IsProgrammer, DockPanel.Visibility), Mode=OneWay}"
+                    IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
                 <FlyoutBase.AttachedFlyout>
                     <Flyout x:Name="HistoryFlyout"
                             AutomationProperties.AutomationId="HistoryFlyout"
                             Closed="HistoryFlyout_Closed"
-                            FlyoutPresenterStyle="{ThemeResource HistoryFlyoutStyle}"
+                            FlyoutPresenterStyle="{StaticResource HistoryFlyoutStyle}"
                             Opened="HistoryFlyout_Opened"
                             Placement="Full"/>
                 </FlyoutBase.AttachedFlyout>
@@ -687,17 +674,18 @@
             <!-- Scientific angle buttons -->
             <local:CalculatorScientificAngleButtons x:Name="ScientificAngleButtons"
                                                     Grid.Row="3"
-                                                    x:Load="False"
-                                                    IsEnabled="{x:Bind Model.IsScientific, Mode=OneWay}"
                                                     TabIndex="6"
-                                                    Visibility="{x:Bind Model.IsScientific, Mode=OneWay}"/>
+                                                    Visibility="{x:Bind Model.IsScientific, Mode=OneWay}"
+                                                    IsEnabled="{x:Bind Model.IsScientific, Mode=OneWay}"
+                                                    x:Load="False"/>
 
             <!-- Memory panel controls -->
             <Grid x:Name="MemoryPanel"
                   x:Uid="MemoryPanel"
                   Grid.Row="4"
                   Margin="3,0,3,0"
-                  AutomationProperties.HeadingLevel="Level1">
+                  AutomationProperties.HeadingLevel="Level1"
+                  Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" MaxWidth="80"/>
                     <ColumnDefinition Width="1*" MaxWidth="80"/>
@@ -750,7 +738,7 @@
                                            Content="M-"
                                            TabIndex="13"
                                            Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
-                <controls:CalculatorButton x:Name="memButton"
+                <controls:CalculatorButton x:Name="MemButton"
                                            x:Uid="memButton"
                                            Grid.Column="4"
                                            Style="{StaticResource CaptionButtonStyle}"
@@ -768,14 +756,14 @@
                         Click="ToggleMemoryFlyout"
                         Content="M0,9.46968e-006L1.96199,9.46968e-006L4.17099,5.59502C4.33899,6.02501 4.44899,6.34502 4.5,6.55602L4.52899,6.55602C4.67299,6.11501 4.791,5.78701 4.87999,5.57201L7.12999,9.46968e-006L9.023,9.46968e-006L9.023,8.402L7.64,8.402L7.64,2.96501C7.64,2.519 7.668,1.97401 7.722,1.33L7.69899,1.33C7.613,1.697 7.53699,1.96101 7.46999,2.12102L4.96199,8.402L4.002,8.402L1.48799,2.16801C1.418,1.98399 1.34299,1.705 1.265,1.33L1.24199,1.33C1.273,1.666 1.28899,2.21501 1.28899,2.976L1.28899,8.402L0,8.402zM10.5,0L15.5,0L12.99,2.5z"
                         ExitDisplayModeOnAccessKeyInvoked="False"
-                        IsEnabled="{x:Bind Model.IsMemoryEmpty, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
-                        TabIndex="15">
+                        TabIndex="15"
+                        IsEnabled="{x:Bind Model.IsMemoryEmpty, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
                     <FlyoutBase.AttachedFlyout>
                         <Flyout x:Name="MemoryFlyout"
                                 x:Uid="MemoryFlyout"
                                 AutomationProperties.AutomationId="MemoryFlyout"
                                 Closed="OnMemoryFlyoutClosed"
-                                FlyoutPresenterStyle="{ThemeResource MemoryFlyoutStyle}"
+                                FlyoutPresenterStyle="{StaticResource MemoryFlyoutStyle}"
                                 Opened="OnMemoryFlyoutOpened"
                                 Placement="Full"/>
                     </FlyoutBase.AttachedFlyout>
@@ -1094,10 +1082,10 @@
                                                 VerticalAlignment="Top"
                                                 Background="Transparent"
                                                 Opacity="0"
-                                                IsEnabled="False"
                                                 IsTabStop="False"
                                                 Template="{StaticResource PreviousTemplate}"
-                                                UseSystemFocusVisuals="False"/>
+                                                UseSystemFocusVisuals="False"
+                                                IsEnabled="False"/>
                                         <Button x:Name="NextButton"
                                                 Grid.Column="1"
                                                 Width="20"
@@ -1107,10 +1095,10 @@
                                                 VerticalAlignment="Top"
                                                 Background="Transparent"
                                                 Opacity="0"
-                                                IsEnabled="False"
                                                 IsTabStop="False"
                                                 Template="{StaticResource NextTemplate}"
-                                                UseSystemFocusVisuals="False"/>
+                                                UseSystemFocusVisuals="False"
+                                                IsEnabled="False"/>
                                         <ContentPresenter x:Name="RightHeaderPresenter"
                                                           Grid.Column="2"
                                                           HorizontalAlignment="Stretch"
@@ -1136,7 +1124,7 @@
             </Border.Resources>
 
             <Pivot x:Name="DockPivot"
-                   SelectionChanged="DockPivot_SelectionChanged"
+                   Margin="0,-3,0,0"
                    TabIndex="5"
                    Tapped="DockPanelTapped"
                    Template="{StaticResource DockPanelTemplate}">

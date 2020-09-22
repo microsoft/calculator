@@ -289,5 +289,11 @@ __pycache__/
 
 # Calculator specific
 Generated Files/
-!/build/config/TRexDefs/**
-!src/CalculatorUnitTests/CalculatorUnitTests_TemporaryKey.pfx
+src/GraphControl/GraphingImplOverrides.props
+src/CalcViewModel/DataLoaders/DataLoaderConstants.h
+!src/Calculator/WindowsDev_TemporaryKey.pfx
+!src/CalculatorUnitTests/WindowsDev_TemporaryKey.pfx
+!src/x64
+!src/x86
+!src/out
+!src/ARM

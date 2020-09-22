@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "Header Files/RationalMath.h"
 
 using namespace std;
@@ -14,7 +13,7 @@ Rational RationalMath::Frac(Rational const& rat)
     {
         fracrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -33,7 +32,7 @@ Rational RationalMath::Integer(Rational const& rat)
     {
         intrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -55,7 +54,7 @@ Rational RationalMath::Pow(Rational const& base, Rational const& pow)
         powrat(&baseRat, powRat, RATIONAL_BASE, RATIONAL_PRECISION);
         destroyrat(powRat);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(baseRat);
         destroyrat(powRat);
@@ -81,7 +80,7 @@ Rational RationalMath::Fact(Rational const& rat)
     {
         factrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -101,7 +100,7 @@ Rational RationalMath::Exp(Rational const& rat)
     {
         exprat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -121,7 +120,7 @@ Rational RationalMath::Log(Rational const& rat)
     {
         lograt(&prat, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -148,7 +147,7 @@ Rational RationalMath::Abs(Rational const& rat)
     return Rational{ Number{ 1, rat.P().Exp(), rat.P().Mantissa() }, Number{ 1, rat.Q().Exp(), rat.Q().Mantissa() } };
 }
 
-Rational RationalMath::Sin(Rational const& rat, ANGLE_TYPE angletype)
+Rational RationalMath::Sin(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
@@ -156,7 +155,7 @@ Rational RationalMath::Sin(Rational const& rat, ANGLE_TYPE angletype)
     {
         sinanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -168,7 +167,7 @@ Rational RationalMath::Sin(Rational const& rat, ANGLE_TYPE angletype)
     return result;
 }
 
-Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype)
+Rational RationalMath::Cos(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
@@ -176,7 +175,7 @@ Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype)
     {
         cosanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -188,7 +187,7 @@ Rational RationalMath::Cos(Rational const& rat, ANGLE_TYPE angletype)
     return result;
 }
 
-Rational RationalMath::Tan(Rational const& rat, ANGLE_TYPE angletype)
+Rational RationalMath::Tan(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
@@ -196,7 +195,7 @@ Rational RationalMath::Tan(Rational const& rat, ANGLE_TYPE angletype)
     {
         tananglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -208,7 +207,7 @@ Rational RationalMath::Tan(Rational const& rat, ANGLE_TYPE angletype)
     return result;
 }
 
-Rational RationalMath::ASin(Rational const& rat, ANGLE_TYPE angletype)
+Rational RationalMath::ASin(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
@@ -216,7 +215,7 @@ Rational RationalMath::ASin(Rational const& rat, ANGLE_TYPE angletype)
     {
         asinanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -228,7 +227,7 @@ Rational RationalMath::ASin(Rational const& rat, ANGLE_TYPE angletype)
     return result;
 }
 
-Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype)
+Rational RationalMath::ACos(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
@@ -236,7 +235,7 @@ Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype)
     {
         acosanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -248,7 +247,7 @@ Rational RationalMath::ACos(Rational const& rat, ANGLE_TYPE angletype)
     return result;
 }
 
-Rational RationalMath::ATan(Rational const& rat, ANGLE_TYPE angletype)
+Rational RationalMath::ATan(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
@@ -256,7 +255,7 @@ Rational RationalMath::ATan(Rational const& rat, ANGLE_TYPE angletype)
     {
         atananglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -276,7 +275,7 @@ Rational RationalMath::Sinh(Rational const& rat)
     {
         sinhrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -296,7 +295,7 @@ Rational RationalMath::Cosh(Rational const& rat)
     {
         coshrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -316,7 +315,7 @@ Rational RationalMath::Tanh(Rational const& rat)
     {
         tanhrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -336,7 +335,7 @@ Rational RationalMath::ASinh(Rational const& rat)
     {
         asinhrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -356,7 +355,7 @@ Rational RationalMath::ACosh(Rational const& rat)
     {
         acoshrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -376,7 +375,7 @@ Rational RationalMath::ATanh(Rational const& rat)
     {
         atanhrat(&prat, RATIONAL_PRECISION);
     }
-    catch (DWORD error)
+    catch (uint32_t error)
     {
         destroyrat(prat);
         throw(error);
@@ -386,4 +385,34 @@ Rational RationalMath::ATanh(Rational const& rat)
     destroyrat(prat);
 
     return result;
+}
+
+/// <summary>
+/// Calculate the modulus after division, the sign of the result will match the sign of b.
+/// </summary>
+/// <remarks>
+/// When one of the operand is negative
+/// the result will differ from the C/C++ operator '%'
+/// use <see cref="Rational::operator%"/> instead to calculate the remainder after division.
+/// </remarks>
+Rational RationalMath::Mod(Rational const& a, Rational const& b)
+{
+    PRAT prat = a.ToPRAT();
+    PRAT pn = b.ToPRAT();
+
+    try
+    {
+        modrat(&prat, pn);
+        destroyrat(pn);
+    }
+    catch (uint32_t error)
+    {
+        destroyrat(prat);
+        destroyrat(pn);
+        throw(error);
+    }
+
+    auto res = Rational{ prat };
+    destroyrat(prat);
+    return res;
 }

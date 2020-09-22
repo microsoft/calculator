@@ -13,6 +13,7 @@ namespace CalcEngine::RationalMath
     Rational Pow(Rational const& base, Rational const& pow);
     Rational Root(Rational const& base, Rational const& root);
     Rational Fact(Rational const& rat);
+    Rational Mod(Rational const& a, Rational const& b);
 
     Rational Exp(Rational const& rat);
     Rational Log(Rational const& rat);
@@ -21,12 +22,12 @@ namespace CalcEngine::RationalMath
     Rational Invert(Rational const& rat);
     Rational Abs(Rational const& rat);
 
-    Rational Sin(Rational const& rat, ANGLE_TYPE angletype);
-    Rational Cos(Rational const& rat, ANGLE_TYPE angletype);
-    Rational Tan(Rational const& rat, ANGLE_TYPE angletype);
-    Rational ASin(Rational const& rat, ANGLE_TYPE angletype);
-    Rational ACos(Rational const& rat, ANGLE_TYPE angletype);
-    Rational ATan(Rational const& rat, ANGLE_TYPE angletype);
+    Rational Sin(Rational const& rat, AngleType angletype);
+    Rational Cos(Rational const& rat, AngleType angletype);
+    Rational Tan(Rational const& rat, AngleType angletype);
+    Rational ASin(Rational const& rat, AngleType angletype);
+    Rational ACos(Rational const& rat, AngleType angletype);
+    Rational ATan(Rational const& rat, AngleType angletype);
 
     Rational Sinh(Rational const& rat);
     Rational Cosh(Rational const& rat);

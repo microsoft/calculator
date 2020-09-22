@@ -13,18 +13,17 @@ namespace CalculatorApp
 {
     namespace Common
     {
-        Object^ VisibilityNegationConverter::Convert(Object^ value, TypeName /*targetType*/, Object^ /*parameter*/, String^ /*language*/)
+        Object ^ VisibilityNegationConverter::Convert(Object ^ value, TypeName /*targetType*/, Object ^ /*parameter*/, String ^ /*language*/)
         {
-            auto boxedVisibility = dynamic_cast<Box<Visibility>^>(value);
-            Visibility visibility = Visibility::Collapsed;
+            auto boxedVisibility = dynamic_cast<Box<Visibility> ^>(value);
             if (boxedVisibility != nullptr && boxedVisibility->Value == Visibility::Collapsed)
             {
-                visibility = Visibility::Visible;
+                return Visibility::Visible;
             }
-            return visibility;
+            return Visibility::Collapsed;
         }
 
-        Object^ VisibilityNegationConverter::ConvertBack(Object^ value, TypeName targetType, Object^ parameter, String^ language)
+        Object ^ VisibilityNegationConverter::ConvertBack(Object ^ value, TypeName targetType, Object ^ parameter, String ^ language)
         {
             return Convert(value, targetType, parameter, language);
         }

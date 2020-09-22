@@ -33,67 +33,67 @@ CalculatorProgrammerOperators::CalculatorProgrammerOperators()
 {
     InitializeComponent();
 
-    CopyMenuItem->Text = AppResourceProvider::GetInstance().GetResourceString(L"copyMenuItem");
+    CopyMenuItem->Text = AppResourceProvider::GetInstance()->GetResourceString(L"copyMenuItem");
 }
 
-void CalculatorProgrammerOperators::HexButtonChecked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void CalculatorProgrammerOperators::HexButtonChecked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    TraceLogger::GetInstance().LogRadixButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+    TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::HexButton, ViewMode::Programmer);
     if (Model)
     {
-        Model->SwitchProgrammerModeBase(RADIX_TYPE::HEX_RADIX);
+        Model->SwitchProgrammerModeBase(NumberBase::HexBase);
     }
 }
 
-void CalculatorProgrammerOperators::DecButtonChecked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void CalculatorProgrammerOperators::DecButtonChecked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    TraceLogger::GetInstance().LogRadixButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+    TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::DecButton, ViewMode::Programmer);
     if (Model)
     {
-        Model->SwitchProgrammerModeBase(RADIX_TYPE::DEC_RADIX);
+        Model->SwitchProgrammerModeBase(NumberBase::DecBase);
     }
 }
 
-void CalculatorProgrammerOperators::OctButtonChecked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void CalculatorProgrammerOperators::OctButtonChecked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    TraceLogger::GetInstance().LogRadixButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+    TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::OctButton, ViewMode::Programmer);
     if (Model)
     {
-        Model->SwitchProgrammerModeBase(RADIX_TYPE::OCT_RADIX);
+        Model->SwitchProgrammerModeBase(NumberBase::OctBase);
     }
 }
 
-void CalculatorProgrammerOperators::BinButtonChecked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void CalculatorProgrammerOperators::BinButtonChecked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    TraceLogger::GetInstance().LogRadixButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+    TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::BinButton, ViewMode::Programmer);
     if (Model)
     {
-        Model->SwitchProgrammerModeBase(RADIX_TYPE::BIN_RADIX);
+        Model->SwitchProgrammerModeBase(NumberBase::BinBase);
     }
 }
 
-void CalculatorProgrammerOperators::SetRadixButton(RADIX_TYPE radixType)
+void CalculatorProgrammerOperators::SetRadixButton(NumberBase numberBase)
 {
-    switch (radixType)
+    switch (numberBase)
     {
-    case RADIX_TYPE::DEC_RADIX:
+    case NumberBase::DecBase:
     {
-        decimalButton->IsChecked = true;
+        DecimalButton->IsChecked = true;
         break;
     }
-    case RADIX_TYPE::HEX_RADIX:
+    case NumberBase::HexBase:
     {
-        hexButton->IsChecked = true;
+        HexButton->IsChecked = true;
         break;
     }
-    case RADIX_TYPE::OCT_RADIX:
+    case NumberBase::OctBase:
     {
-        octButton->IsChecked = true;
+        OctButton->IsChecked = true;
         break;
     }
-    case RADIX_TYPE::BIN_RADIX:
+    case NumberBase::BinBase:
     {
-        binaryButton->IsChecked = true;
+        BinaryButton->IsChecked = true;
         break;
     }
     default:
@@ -101,9 +101,9 @@ void CalculatorProgrammerOperators::SetRadixButton(RADIX_TYPE radixType)
     }
 }
 
-void CalculatorProgrammerOperators::OnCopyMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void CalculatorProgrammerOperators::OnCopyMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    auto source = safe_cast<RadixButton^>(ProgrammerOperatorsContextMenu->Target);
+    auto source = safe_cast<RadixButton ^>(ProgrammerOperatorsContextMenu->Target);
 
     CopyPasteManager::CopyToClipboard(source->GetRawDisplayValue());
 }

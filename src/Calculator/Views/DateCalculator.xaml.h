@@ -21,8 +21,7 @@ const int c_minYear = 1601;
 
 namespace CalculatorApp
 {
-    [Windows::Foundation::Metadata::WebHostHidden]
-    public ref class DateCalculator sealed
+    [Windows::Foundation::Metadata::WebHostHidden] public ref class DateCalculator sealed
     {
     public:
         DateCalculator();
@@ -30,20 +29,28 @@ namespace CalculatorApp
         void SetDefaultFocus();
 
     private:
-        void FromDate_DateChanged(_In_ Windows::UI::Xaml::Controls::CalendarDatePicker^ sender, _In_ Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs^ e);
-        void ToDate_DateChanged(_In_ Windows::UI::Xaml::Controls::CalendarDatePicker^ sender, _In_ Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs^ e);
-        void AddSubtract_DateChanged(_In_ Windows::UI::Xaml::Controls::CalendarDatePicker^ sender, _In_ Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs^ e);
-        void OffsetValue_Changed(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);
-        void OnCopyMenuItemClicked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnLoaded(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void DateCalcOption_Changed(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e);
-        void AddSubtractDateGrid_Loaded(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void AddSubtractOption_Checked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void ReselectCalendarDate(_In_ Windows::UI::Xaml::Controls::CalendarDatePicker^ calendarDatePicker, Windows::Foundation::DateTime dateTime);
-        void OffsetDropDownClosed(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
-        void CalendarFlyoutClosed(_In_ Platform::Object^ sender, _In_ Platform::Object^ e);
+        void FromDate_DateChanged(
+            _In_ Windows::UI::Xaml::Controls::CalendarDatePicker ^ sender,
+            _In_ Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs ^ e);
+        void ToDate_DateChanged(
+            _In_ Windows::UI::Xaml::Controls::CalendarDatePicker ^ sender,
+            _In_ Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs ^ e);
+        void AddSubtract_DateChanged(
+            _In_ Windows::UI::Xaml::Controls::CalendarDatePicker ^ sender,
+            _In_ Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs ^ e);
+        void OffsetValue_Changed(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e);
+        void OnCopyMenuItemClicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnLoaded(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void DateCalcOption_Changed(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ e);
+        void AddSubtractDateGrid_Loaded(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void AddSubtractOption_Checked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ReselectCalendarDate(_In_ Windows::UI::Xaml::Controls::CalendarDatePicker ^ calendarDatePicker, Windows::Foundation::DateTime dateTime);
+        void OffsetDropDownClosed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
+        void CalendarFlyoutClosed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void RaiseLiveRegionChangedAutomationEvent(_In_ bool isDateDiffMode);
+        void OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e);
 
         Windows::Foundation::EventRegistrationToken m_dateCalcOptionChangedEventToken;
+
     };
 }

@@ -35,18 +35,17 @@ using namespace Windows::UI::ViewManagement;
 
 DEPENDENCY_PROPERTY_INITIALIZATION(Memory, RowHeight);
 
-Memory::Memory() :
-    m_isErrorVisualState(false)
+Memory::Memory()
+    : m_isErrorVisualState(false)
 {
     InitializeComponent();
-    m_memoryItemFlyout = safe_cast<MenuFlyout^>(Resources->Lookup("MemoryContextMenu"));
 
     MemoryPaneEmpty->FlowDirection = LocalizationService::GetInstance()->GetFlowDirection();
 }
 
-void Memory::MemoryListItemClick(_In_ Object^ sender, _In_ ItemClickEventArgs^ e)
+void Memory::MemoryListItemClick(_In_ Object ^ sender, _In_ ItemClickEventArgs ^ e)
 {
-    MemoryItemViewModel^ memorySlot = safe_cast<MemoryItemViewModel^>(e->ClickedItem);
+    MemoryItemViewModel ^ memorySlot = safe_cast<MemoryItemViewModel ^>(e->ClickedItem);
 
     // In case the memory list is clicked and enter is pressed,
     // On Item clicked event gets fired and e->ClickedItem is Null.
@@ -56,53 +55,31 @@ void Memory::MemoryListItemClick(_In_ Object^ sender, _In_ ItemClickEventArgs^ e
     }
 }
 
-void Memory::OnContextRequested(Windows::UI::Xaml::UIElement^ sender, Windows::UI::Xaml::Input::ContextRequestedEventArgs^ e)
+void Memory::OnClearMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    // Walk up the tree to find the ListViewItem.
-    // There may not be one if the click wasn't on an item.
-    auto requestedElement = safe_cast<FrameworkElement^>(e->OriginalSource);
-    while ((requestedElement != sender) && !dynamic_cast<ListViewItem^>(requestedElement))
+    auto memoryItem = GetMemoryItemForCurrentFlyout();
+    if (memoryItem != nullptr)
     {
-        requestedElement = safe_cast<FrameworkElement^>(VisualTreeHelper::GetParent(requestedElement));
-    }
-
-    if (requestedElement != sender)
-    {
-        // The context menu request was for a ListViewItem.
-        auto memorySlot = safe_cast<MemoryItemViewModel^>(MemoryListView->ItemFromContainer(requestedElement));
-        Point point;
-        if (e->TryGetPosition(requestedElement, &point))
-        {
-            m_memoryItemFlyout->ShowAt(requestedElement, point);
-        }
-        else
-        {
-            // Not invoked via pointer, so let XAML choose a default location.
-            m_memoryItemFlyout->ShowAt(requestedElement);
-        }
-
-        e->Handled = true;
+        memoryItem->Clear();
     }
 }
 
-void Memory::OnContextCanceled(Windows::UI::Xaml::UIElement^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void Memory::OnMemoryAddMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    m_memoryItemFlyout->Hide();
+    auto memoryItem = GetMemoryItemForCurrentFlyout();
+    if (memoryItem != nullptr)
+    {
+        memoryItem->MemoryAdd();
+    }
 }
 
-void Memory::OnClearMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void Memory::OnMemorySubtractMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    GetMemoryItemForCurrentFlyout()->Clear();
-}
-
-void Memory::OnMemoryAddMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
-{
-    GetMemoryItemForCurrentFlyout()->MemoryAdd();
-}
-
-void Memory::OnMemorySubtractMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
-{
-    GetMemoryItemForCurrentFlyout()->MemorySubtract();
+    auto memoryItem = GetMemoryItemForCurrentFlyout();
+    if (memoryItem != nullptr)
+    {
+        memoryItem->MemorySubtract();
+    }
 }
 
 bool Memory::IsErrorVisualState::get()
@@ -115,27 +92,13 @@ void Memory::IsErrorVisualState::set(bool value)
     if (m_isErrorVisualState != value)
     {
         m_isErrorVisualState = value;
-        String^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
+        String ^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
         VisualStateManager::GoToState(this, newState, false);
     }
 }
 
-void Memory::MemoryList_Loaded(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+MemoryItemViewModel ^ Memory::GetMemoryItemForCurrentFlyout()
 {
-    // When transitioning between docked and undocked view states, the memory list is
-    // unloaded and then loaded, so we attempt to create the titlebarhelper every time
-    // we are loaded, letting the util function check if we are docked or not.
-    m_titleBarHelper = TitleBarHelper::CreateTitleBarHelperIfNotDocked(CustomTitleBar);
-}
-
-void Memory::MemoryList_Unloaded(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
-{
-    m_titleBarHelper = nullptr;
-}
-
-MemoryItemViewModel^ Memory::GetMemoryItemForCurrentFlyout()
-{
-    auto listViewItem = m_memoryItemFlyout->Target;
-
-    return safe_cast<MemoryItemViewModel^>(MemoryListView->ItemFromContainer(listViewItem));
+    auto listViewItem = MemoryContextMenu->Target;
+    return dynamic_cast<MemoryItemViewModel ^>(MemoryListView->ItemFromContainer(listViewItem));
 }

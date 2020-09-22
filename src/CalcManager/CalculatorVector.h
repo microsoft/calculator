@@ -1,63 +1,66 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
+
+#include <string>
+#include <vector>
+#include "winerror_cross_platform.h"
+#include "Ratpack/CalcErr.h"
+#include <stdexcept> // for std::out_of_range
+#include "sal_cross_platform.h"     // for SAL
 
 template <typename TType>
 class CalculatorVector
 {
 public:
-    HRESULT GetAt(_In_opt_ unsigned int index, _Out_ TType *item)
+    ResultCode GetAt(_In_opt_ unsigned int index, _Out_ TType* item)
     {
-        HRESULT hr = S_OK;
         try
         {
             *item = m_vector.at(index);
         }
         catch (const std::out_of_range& /*ex*/)
         {
-            hr = E_BOUNDS;
+            return E_BOUNDS;
         }
-        return hr;
+        return S_OK;
     }
 
-    HRESULT GetSize(_Out_ unsigned int *size)
+    ResultCode GetSize(_Out_ unsigned int* size)
     {
         *size = static_cast<unsigned>(m_vector.size());
         return S_OK;
     }
 
-    HRESULT SetAt(_In_ unsigned int index, _In_opt_ TType item)
+    ResultCode SetAt(_In_ unsigned int index, _In_opt_ TType item)
     {
-        HRESULT hr = S_OK;
         try
         {
             m_vector[index] = item;
         }
         catch (const std::out_of_range& /*ex*/)
         {
-            hr = E_BOUNDS;
+            return E_BOUNDS;
         }
-        return hr;
+        return S_OK;
     }
 
-    HRESULT RemoveAt(_In_ unsigned int index)
+    ResultCode RemoveAt(_In_ unsigned int index)
     {
-        HRESULT hr = S_OK;
         if (index < m_vector.size())
         {
             m_vector.erase(m_vector.begin() + index);
         }
         else
         {
-            hr = E_BOUNDS;
+            return E_BOUNDS;
         }
-        return hr;
+        return S_OK;
     }
 
-    HRESULT InsertAt(_In_ unsigned int index, _In_ TType item)
+    ResultCode InsertAt(_In_ unsigned int index, _In_ TType item)
     {
-        HRESULT hr = S_OK;
         try
         {
             auto iter = m_vector.begin() + index;
@@ -65,14 +68,13 @@ public:
         }
         catch (const std::bad_alloc& /*ex*/)
         {
-            hr = E_OUTOFMEMORY;
+            return E_OUTOFMEMORY;
         }
-        return hr;
+        return S_OK;
     }
 
-    HRESULT Truncate(_In_ unsigned int index)
+    ResultCode Truncate(_In_ unsigned int index)
     {
-        HRESULT hr = S_OK;
         if (index < m_vector.size())
         {
             auto startIter = m_vector.begin() + index;
@@ -80,45 +82,44 @@ public:
         }
         else
         {
-            hr = E_BOUNDS;
+            return E_BOUNDS;
         }
-        return hr;
+        return S_OK;
     }
 
-    HRESULT Append(_In_opt_ TType item)
+    ResultCode Append(_In_opt_ TType item)
     {
-        HRESULT hr = S_OK;
         try
         {
             m_vector.push_back(item);
         }
         catch (const std::bad_alloc& /*ex*/)
         {
-            hr = E_OUTOFMEMORY;
+            return E_OUTOFMEMORY;
         }
-        return hr;
+        return S_OK;
     }
 
-    HRESULT RemoveAtEnd()
+    ResultCode RemoveAtEnd()
     {
         m_vector.erase(--(m_vector.end()));
         return S_OK;
     }
 
-    HRESULT Clear()
+    ResultCode Clear()
     {
         m_vector.clear();
         return S_OK;
     }
 
-    HRESULT GetString(_Out_ std::wstring* expression)
+    ResultCode GetString(_Out_ std::wstring* expression)
     {
-        HRESULT hr = S_OK;
         unsigned int nTokens = 0;
-        std::pair <std::wstring, int> currentPair;
-        hr = this->GetSize(&nTokens);
+        ResultCode hr = this->GetSize(&nTokens);
         if (SUCCEEDED(hr))
         {
+
+            std::pair<std::wstring, int> currentPair;
             for (unsigned int i = 0; i < nTokens; i++)
             {
                 hr = this->GetAt(i, &currentPair);
@@ -144,7 +145,7 @@ public:
         return hr;
     }
 
-    HRESULT GetExpressionSuffix(_Out_ std::wstring* suffix)
+    ResultCode GetExpressionSuffix(_Out_ std::wstring* suffix)
     {
         *suffix = L" =";
         return S_OK;

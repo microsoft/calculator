@@ -15,63 +15,53 @@ namespace CalculatorApp
 
     namespace ViewModel
     {
-        public delegate void HideHistoryClickedHandler();
-        public delegate void HistoryItemClickedHandler(CalculatorApp::ViewModel::HistoryItemViewModel^ e);
+        ref class StandardCalculatorViewModel;
 
-        [Windows::UI::Xaml::Data::Bindable]
-        public ref class HistoryViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+    public
+        delegate void HideHistoryClickedHandler();
+    public
+        delegate void HistoryItemClickedHandler(CalculatorApp::ViewModel::HistoryItemViewModel ^ e);
+
+        [Windows::UI::Xaml::Data::Bindable] public ref class HistoryViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
-
         public:
             OBSERVABLE_OBJECT();
-            OBSERVABLE_PROPERTY_RW(int, ItemSize);
-            OBSERVABLE_PROPERTY_RW(Windows::UI::Xaml::Interop::IBindableObservableVector^, Items);
+            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<HistoryItemViewModel ^> ^, Items);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
-            OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement^, HistoryAnnouncement);
+            OBSERVABLE_PROPERTY_R(CalculatorApp::Common::Automation::NarratorAnnouncement ^, HistoryAnnouncement);
+            property int ItemsCount
+            {
+                int get()
+                {
+                    return Items->Size;
+                }
+            }
 
             void OnHistoryItemAdded(_In_ unsigned int addedItemIndex);
 
             COMMAND_FOR_METHOD(HideCommand, HistoryViewModel::OnHideCommand);
-            void OnHideCommand(_In_ Platform::Object^ e);
+            void OnHideCommand(_In_ Platform::Object ^ e);
             COMMAND_FOR_METHOD(ClearCommand, HistoryViewModel::OnClearCommand);
-            void OnClearCommand(_In_ Platform::Object^ e);
+            void OnClearCommand(_In_ Platform::Object ^ e);
 
             // events that are created
-            event HideHistoryClickedHandler^ HideHistoryClicked;
-            event HistoryItemClickedHandler^ HistoryItemClicked;
-            void ShowItem(_In_ CalculatorApp::ViewModel::HistoryItemViewModel^ e);
-            void ClearHistory();
-            void RestoreCompleteHistory();
+            event HideHistoryClickedHandler ^ HideHistoryClicked;
+            event HistoryItemClickedHandler ^ HistoryItemClicked;
+            void ShowItem(_In_ CalculatorApp::ViewModel::HistoryItemViewModel ^ e);
 
-        internal:
-            HistoryViewModel(_In_ CalculationManager::CalculatorManager* calculatorManager);
-            void SetCalculatorDisplay(CalculatorDisplay &calculatorDisplay);
+            internal : HistoryViewModel(_In_ CalculationManager::CalculatorManager* calculatorManager);
+            void SetCalculatorDisplay(CalculatorDisplay& calculatorDisplay);
             void ReloadHistory(_In_ CalculatorApp::Common::ViewMode currentMode);
+            unsigned long long GetMaxItemSize();
 
-            void DeleteItem(_In_ CalculatorApp::ViewModel::HistoryItemViewModel^ e);
-
-            // store history in app data functions
-            Platform::String^ SerializeHistoryItem(_In_ std::shared_ptr<CalculationManager::HISTORYITEM> const &item);
-            void SaveHistory();
+            void DeleteItem(_In_ CalculatorApp::ViewModel::HistoryItemViewModel ^ e);
 
         private:
             CalculationManager::CalculatorManager* const m_calculatorManager;
             CalculatorDisplay m_calculatorDisplay;
-            CalculationManager::CALCULATOR_MODE m_currentMode;
-            Platform::String^ m_localizedHistoryCleared;
-
-            void RestoreHistory(_In_ CalculationManager::CALCULATOR_MODE cMode);
-            CalculationManager::HISTORYITEM DeserializeHistoryItem(_In_ Platform::String^ historyItemKey, _In_ Windows::Storage::ApplicationDataContainer^ historyContainer);
-            Windows::Storage::ApplicationDataContainer^ GetHistoryContainer(_In_ CalculationManager::CALCULATOR_MODE cMode);
-            Platform::String^ GetHistoryContainerKey(_In_ CalculationManager::CALCULATOR_MODE cMode);
-            void ClearHistoryContainer(_In_ CalculationManager::CALCULATOR_MODE cMode);
-            void UpdateHistoryVectorLength(_In_ int newValue, _In_ CalculationManager::CALCULATOR_MODE cMode);
-            bool IsValid(_In_ CalculationManager::HISTORYITEM item);
-
-            void MakeHistoryClearedNarratorAnnouncement(Platform::String^ resourceKey, Platform::String^& formatVariable);
-
-            friend class CalculatorDisplay;
-            void UpdateItemSize();
+            CalculationManager::CalculatorMode m_currentMode;
+            Platform::String ^ m_localizedHistoryCleared;
+            Platform::String ^ m_localizedHistorySlotCleared;
         };
     }
 }

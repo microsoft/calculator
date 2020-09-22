@@ -1,1 +1,0 @@
-This directory contains projects that have dependencies on internal Microsoft tools and that are not necessary to build Calculator.

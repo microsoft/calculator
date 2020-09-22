@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma once
+
 // CalcErr.h
 //
 // Defines the error codes thrown by ratpak and caught by Calculator
@@ -24,7 +26,7 @@
 //      R - Reserved - not currently used for anything
 //
 //      r - reserved portion of the facility code. Reserved for internal
-//              use. Used to indicate HRESULT values that are not status
+//              use. Used to indicate int32_t values that are not status
 //              values, but are instead message ids for display strings.
 //
 //      Facility - is the facility code
@@ -34,49 +36,50 @@
 // This format is based loosely on an OLE HRESULT and is compatible with the
 // SUCCEEDED and FAILED macros as well as the HRESULT_CODE macro
 
+typedef int32_t ResultCode;
+
 // CALC_E_DIVIDEBYZERO
 //
 // The current operation would require a divide by zero to complete
-#define CALC_E_DIVIDEBYZERO     ((DWORD)0x80000000)
+static constexpr uint32_t CALC_E_DIVIDEBYZERO = (uint32_t)0x80000000;
 
 // CALC_E_DOMAIN
 //
 // The given input is not within the domain of this function
-#define CALC_E_DOMAIN           ((DWORD)0x80000001)
+static constexpr uint32_t CALC_E_DOMAIN = (uint32_t)0x80000001;
 
 // CALC_E_INDEFINITE
 //
 // The result of this function is undefined
-#define CALC_E_INDEFINITE        ((DWORD)0x80000002)
+static constexpr uint32_t CALC_E_INDEFINITE = (uint32_t)0x80000002;
 
 // CALC_E_POSINFINITY
 //
 // The result of this function is Positive Infinity.
-#define CALC_E_POSINFINITY      ((DWORD)0x80000003)
+static constexpr uint32_t CALC_E_POSINFINITY = (uint32_t)0x80000003;
 
 // CALC_E_NEGINFINITY
 //
 // The result of this function is Negative Infinity
-#define CALC_E_NEGINFINITY      ((DWORD)0x80000004)
+static constexpr uint32_t CALC_E_NEGINFINITY = (uint32_t)0x80000004;
 
 // CALC_E_INVALIDRANGE
 //
 // The given input is within the domain of the function but is beyond
 // the range for which calc can successfully compute the answer
-#define CALC_E_INVALIDRANGE     ((DWORD)0x80000006)
+static constexpr uint32_t CALC_E_INVALIDRANGE = (uint32_t)0x80000006;
 
 // CALC_E_OUTOFMEMORY
 //
 // There is not enough free memory to complete the requested function
-#define CALC_E_OUTOFMEMORY      ((DWORD)0x80000007)
+static constexpr uint32_t CALC_E_OUTOFMEMORY = (uint32_t)0x80000007;
 
 // CALC_E_OVERFLOW
 //
 // The result of this operation is an overflow
-#define CALC_E_OVERFLOW         ((DWORD)0x80000008)
+static constexpr uint32_t CALC_E_OVERFLOW = (uint32_t)0x80000008;
 
 // CALC_E_NORESULT
 //
 // The result of this operation is undefined
-#define CALC_E_NORESULT         ((DWORD)0x80000009)
-
+static constexpr uint32_t CALC_E_NORESULT = (uint32_t)0x80000009;

@@ -12,7 +12,9 @@
 *
 * Author:
 \****************************************************************************/
-#include "pch.h"
+
+#include <sstream>
+#include <regex>
 #include "Header Files/CalcEngine.h"
 
 using namespace std;
@@ -22,7 +24,6 @@ constexpr int MAX_EXPONENT = 4;
 constexpr uint32_t MAX_GROUPING_SIZE = 16;
 constexpr wstring_view c_decPreSepStr = L"[+-]?(\\d*)[";
 constexpr wstring_view c_decPostSepStr = L"]?(\\d*)(?:e[+-]?(\\d*))?$";
-
 
 /****************************************************************************\
 * void DisplayNum(void)
@@ -35,18 +36,19 @@ constexpr wstring_view c_decPostSepStr = L"]?(\\d*)(?:e[+-]?(\\d*))?$";
 //
 // State of calc last time DisplayNum was called
 //
-typedef struct {
+typedef struct
+{
     Rational value;
     int32_t precision;
     uint32_t radix;
-    INT         nFE;
-    NUM_WIDTH   numwidth;
-    bool        fIntMath;
-    bool        bRecord;
-    bool        bUseSep;
+    int nFE;
+    NUM_WIDTH numwidth;
+    bool fIntMath;
+    bool bRecord;
+    bool bUseSep;
 } LASTDISP;
 
-LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
+static LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
 
 // Truncates if too big, makes it a non negative - the number in rat. Doesn't do anything if not in INT mode
 CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational const& rat)
@@ -64,11 +66,11 @@ CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational con
     if (result < 0)
     {
         // if negative make positive by doing a twos complement
-        result = -(result) - 1;
-        result ^= m_chopNumbers[m_numwidth];
+        result = -(result)-1;
+        result ^= GetChopNumber();
     }
 
-    result &= m_chopNumbers[m_numwidth];
+    result &= GetChopNumber();
 
     return result;
 }
@@ -82,15 +84,8 @@ void CCalcEngine::DisplayNum(void)
     //  something important has changed since the last time DisplayNum was
     //  called.
     //
-    if (m_bRecord ||
-        gldPrevious.value != m_currentVal ||
-        gldPrevious.precision != m_precision ||
-        gldPrevious.radix != m_radix ||
-        gldPrevious.nFE != (int)m_nFE ||
-        gldPrevious.bUseSep != true ||
-        gldPrevious.numwidth != m_numwidth ||
-        gldPrevious.fIntMath != m_fIntegerMode ||
-        gldPrevious.bRecord != m_bRecord)
+    if (m_bRecord || gldPrevious.value != m_currentVal || gldPrevious.precision != m_precision || gldPrevious.radix != m_radix || gldPrevious.nFE != (int)m_nFE
+        || !gldPrevious.bUseSep || gldPrevious.numwidth != m_numwidth || gldPrevious.fIntMath != m_fIntegerMode || gldPrevious.bRecord != m_bRecord)
     {
         gldPrevious.precision = m_precision;
         gldPrevious.radix = m_radix;
@@ -220,10 +215,12 @@ int CCalcEngine::IsNumberInvalid(const wstring& numberString, int iMaxExp, int i
 \****************************************************************************/
 vector<uint32_t> CCalcEngine::DigitGroupingStringToGroupingVector(wstring_view groupingString)
 {
-    vector<uint32_t> grouping{};
+    vector<uint32_t> grouping;
     uint32_t currentGroup = 0;
     wchar_t* next = nullptr;
-    for (const wchar_t* itr = groupingString.data(); *itr != L'\0'; ++itr)
+    const wchar_t* begin = groupingString.data();
+    const wchar_t* end = begin + groupingString.length();
+    for (auto itr = begin; itr != end; ++itr)
     {
         // Try to parse a grouping number from the string
         currentGroup = wcstoul(itr, &next, 10);
@@ -237,7 +234,7 @@ vector<uint32_t> CCalcEngine::DigitGroupingStringToGroupingVector(wstring_view g
         // If we found a grouping and aren't at the end of the string yet,
         // jump to the next position in the string (the ';').
         // The loop will then increment us to the next character, which should be a number.
-        if (next && (static_cast<size_t>(next - groupingString.data()) < groupingString.length()))
+        if (next && (static_cast<size_t>(next - begin) < groupingString.length()))
         {
             itr = next;
         }
@@ -317,7 +314,7 @@ wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const&
         ritr = displayString.rbegin();
     }
 
-    wstringstream groupedStream{};
+    wstring result;
     uint32_t groupingSize = 0;
 
     auto groupItr = grouping.begin();
@@ -328,7 +325,7 @@ wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const&
     auto reverse_end = displayString.rend() - (isNumNegative ? 1 : 0);
     while (ritr != reverse_end)
     {
-        groupedStream << *ritr++;
+        result += *ritr++;
         groupingSize++;
 
         // If a group is complete, add a separator
@@ -337,7 +334,7 @@ wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const&
         // - we are at the end of the digit string
         if (currGrouping != 0 && (groupingSize % currGrouping) == 0 && ritr != reverse_end)
         {
-            groupedStream << wstring{ delimiter };
+            result += delimiter;
             groupingSize = 0; // reset for a new group
 
             // Shift the grouping to next values if they exist
@@ -369,11 +366,10 @@ wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const&
     // now copy the negative sign if it is there
     if (isNumNegative)
     {
-        groupedStream << displayString[0];
+        result += displayString[0];
     }
 
-    auto groupedString = groupedStream.str();
-    wstring result(groupedString.rbegin(), groupedString.rend());
+    reverse(result.begin(), result.end());
     // Add the right (fractional or exponential) part of the number to the final string.
     if (hasDecimal)
     {

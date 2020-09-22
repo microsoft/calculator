@@ -1,14 +1,18 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
+
+#include <string_view>
 
 namespace CalculationManager
 {
     class IResourceProvider
     {
     public:
-        virtual ~IResourceProvider() { }
+        virtual ~IResourceProvider()
+        {
+        }
 
         // Should return a string from the resource table for strings used
         // by the calculation engine. The strings that must be defined
@@ -17,6 +21,6 @@ namespace CalculationManager
         // ids "sDecimal", "sThousand" and "sGrouping". See
         // https://technet.microsoft.com/en-us/library/cc782655(v=ws.10).aspx
         // for what these values refer to.
-        virtual std::wstring GetCEngineString(const std::wstring& id) = 0;
+        virtual std::wstring GetCEngineString(std::wstring_view id) = 0;
     };
 }

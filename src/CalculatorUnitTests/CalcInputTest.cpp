@@ -8,7 +8,7 @@ using namespace std;
 using namespace CalculationManager;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace CalculatorUnitTests
+namespace CalculatorEngineTests
 {
     TEST_CLASS(CalcInputTest)
     {
@@ -173,7 +173,8 @@ namespace CalculatorUnitTests
             m_calcInput.Backspace();
             m_calcInput.TryToggleSign(true, L"127");
             VERIFY_IS_FALSE(m_calcInput.TryAddDigit(9, 10, true, L"127", 8, 2), L"Negative value: verify we cannot add a digit if digit exceeds max value.");
-            VERIFY_IS_TRUE(m_calcInput.TryAddDigit(8, 10, true, L"127", 8, 2), L"Negative value: verify we can add a digit if digit does not exceed max value.");
+            VERIFY_IS_TRUE(
+                m_calcInput.TryAddDigit(8, 10, true, L"127", 8, 2), L"Negative value: verify we can add a digit if digit does not exceed max value.");
         }
 
         TEST_METHOD(TryAddDecimalPtEmpty)
@@ -251,6 +252,16 @@ namespace CalculatorUnitTests
             m_calcInput.Backspace();
             VERIFY_ARE_EQUAL(L"1.2", m_calcInput.ToString(10), L"Verify input after backspace.");
         }
+        // Issue #817: Prefixed multiple zeros
+        TEST_METHOD(BackspaceZeroDecimalWithoutPrefixZeros)
+        {
+            m_calcInput.TryAddDigit(0, 10, false, L"999", 64, 32);
+            m_calcInput.TryAddDecimalPt();
+            VERIFY_ARE_EQUAL(L"0.", m_calcInput.ToString(10), L"Verify input before backspace.")
+            m_calcInput.Backspace();
+            m_calcInput.TryAddDigit(0, 10, false, L"999", 64, 32);
+            VERIFY_ARE_EQUAL(L"0", m_calcInput.ToString(10), L"Verify input after backspace.")
+        }
 
         TEST_METHOD(SetDecimalSymbol)
         {
@@ -308,7 +319,7 @@ namespace CalculatorUnitTests
             wstring maxStr{};
             for (size_t i = 0; i < MAX_STRLEN + 1; i++)
             {
-                maxStr += L"1";
+                maxStr += L'1';
                 m_calcInput.TryAddDigit(1, 10, false, maxStr, 64, 100);
             }
             auto result = m_calcInput.ToString(10);
@@ -322,7 +333,7 @@ namespace CalculatorUnitTests
             bool exponentCapped = false;
             for (size_t i = 0; i < MAX_STRLEN + 1; i++)
             {
-                maxStr += L"1";
+                maxStr += L'1';
                 if (!m_calcInput.TryAddDigit(1, 10, false, maxStr, 64, MAX_STRLEN + 25))
                 {
                     exponentCapped = true;

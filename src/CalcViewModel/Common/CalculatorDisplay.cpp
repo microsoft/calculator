@@ -9,6 +9,7 @@
 
 using namespace CalculatorApp;
 using namespace CalculationManager;
+using namespace Platform;
 using namespace std;
 
 CalculatorDisplay::CalculatorDisplay()
@@ -31,12 +32,12 @@ void CalculatorDisplay::SetPrimaryDisplay(_In_ const wstring& displayStringValue
     {
         if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
         {
-            calcVM->SetPrimaryDisplay(displayStringValue, isError);
+            calcVM->SetPrimaryDisplay(StringReference(displayStringValue.c_str()), isError);
         }
     }
 }
 
-void CalculatorDisplay::SetParenDisplayText(_In_ const std::wstring& parenthesisCount)
+void CalculatorDisplay::SetParenthesisNumber(_In_ unsigned int parenthesisCount)
 {
     if (m_callbackReference != nullptr)
     {
@@ -69,11 +70,13 @@ void CalculatorDisplay::SetIsInError(bool isError)
     }
 }
 
-void CalculatorDisplay::SetExpressionDisplay(_Inout_ std::shared_ptr<CalculatorVector<std::pair<std::wstring, int>>> const &tokens, _Inout_ std::shared_ptr<CalculatorVector <std::shared_ptr<IExpressionCommand>>> const &commands)
+void CalculatorDisplay::SetExpressionDisplay(
+    _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
+    _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands)
 {
     if (m_callbackReference != nullptr)
     {
-        if(auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+        if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
         {
             calcVM->SetExpressionDisplay(tokens, commands);
         }
@@ -131,6 +134,17 @@ void CalculatorDisplay::MemoryItemChanged(unsigned int indexOfMemory)
         if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
         {
             calcVM->OnMemoryItemChanged(indexOfMemory);
+        }
+    }
+}
+
+void CalculatorDisplay::InputChanged()
+{
+    if (m_callbackReference != nullptr)
+    {
+        if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+        {
+            calcVM->OnInputChanged();
         }
     }
 }

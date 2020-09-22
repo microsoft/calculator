@@ -10,6 +10,9 @@
     <Filter Include="DataLoaders">
       <UniqueIdentifier>{0184f727-b8aa-4af8-a699-63f1b56e7853}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GraphingCalculator">
+      <UniqueIdentifier>{cf7dca32-9727-4f98-83c3-1c0ca7dd1e0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -20,20 +23,13 @@
     <ClCompile Include="MemoryItemViewModel.cpp" />
     <ClCompile Include="StandardCalculatorViewModel.cpp" />
     <ClCompile Include="UnitConverterViewModel.cpp" />
-    <ClCompile Include="ViewState.cpp" />
     <ClCompile Include="Common\AppResourceProvider.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\BindableBase.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\CalculatorButtonPressedEventArgs.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\CalculatorDisplay.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\ConversionResultTaskHelper.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\CopyPasteManager.cpp">
@@ -51,9 +47,6 @@
     <ClCompile Include="Common\ExpressionCommandSerializer.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\KeyboardShortcutManager.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Common\LocalizationService.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -69,19 +62,7 @@
     <ClCompile Include="Common\Utils.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Automation\LiveRegionHost.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Automation\NarratorAnnouncementHostFactory.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
     <ClCompile Include="Common\Automation\NarratorNotifier.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Automation\NotificationHost.cpp">
       <Filter>Common\Automation</Filter>
     </ClCompile>
     <ClCompile Include="DataLoaders\CurrencyDataLoader.cpp">
@@ -92,6 +73,18 @@
     </ClCompile>
     <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp">
       <Filter>DataLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphingCalculator\EquationViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
+      <Filter>Common\Automation</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphingCalculator\GraphingSettingsViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,14 +97,7 @@
     <ClInclude Include="MemoryItemViewModel.h" />
     <ClInclude Include="StandardCalculatorViewModel.h" />
     <ClInclude Include="UnitConverterViewModel.h" />
-    <ClInclude Include="ViewState.h" />
-    <ClInclude Include="Common\AlwaysSelectedCollectionView.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\AppResourceProvider.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\BindableBase.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\CalculatorButtonPressedEventArgs.h">
@@ -123,16 +109,10 @@
     <ClInclude Include="Common\CalculatorDisplay.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\ConversionResultTaskHelper.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\CopyPasteManager.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\DateCalculator.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\DelegateCommand.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\DisplayExpressionToken.h">
@@ -145,9 +125,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\ExpressionCommandSerializer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\KeyboardShortcutManager.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\LocalizationService.h">
@@ -174,25 +151,7 @@
     <ClInclude Include="Common\Utils.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\ValidatingConverters.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\INarratorAnnouncementHost.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\LiveRegionHost.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\NarratorAnnouncement.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\NarratorAnnouncementHostFactory.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
     <ClInclude Include="Common\Automation\NarratorNotifier.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\NotificationHost.h">
       <Filter>Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="DataLoaders\CurrencyDataLoader.h">
@@ -210,7 +169,34 @@
     <ClInclude Include="DataLoaders\UnitConverterDataLoader.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
-    <ClInclude Include="Common\TraceActivity.h">
+    <ClInclude Include="DataLoaders\DataLoaderMockConstants.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Automation\NarratorAnnouncement.h">
+      <Filter>Common\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\BitLength.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\NumberBase.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\EquationViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\GraphingCalculatorViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculatorEnums.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\VariableViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphingCalculator\GraphingSettingsViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\DelegateCommand.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
@@ -218,6 +204,8 @@
     <None Include="DataLoaders\DefaultFromToCurrency.json">
       <Filter>DataLoaders</Filter>
     </None>
-    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)DensityStyles\Compact.xaml" />
   </ItemGroup>
 </Project>

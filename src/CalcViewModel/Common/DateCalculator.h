@@ -1,16 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
 
-const ULONGLONG c_millisecond = 10000;
-const ULONGLONG c_second = 1000 * c_millisecond;
-const ULONGLONG c_minute = 60 * c_second;
-const ULONGLONG c_hour = 60 * c_minute;
-const ULONGLONG c_day = 24 * c_hour;
+const uint64_t c_millisecond = 10000;
+const uint64_t c_second = 1000 * c_millisecond;
+const uint64_t c_minute = 60 * c_second;
+const uint64_t c_hour = 60 * c_minute;
+const uint64_t c_day = 24 * c_hour;
 
-const int c_unitsOfDate = 4;                 // Units Year,Month,Week,Day
-const int c_unitsGreaterThanDays = 3;        // Units Greater than Days (Year/Month/Week) 3
+const int c_unitsOfDate = 4;          // Units Year,Month,Week,Day
+const int c_unitsGreaterThanDays = 3; // Units Greater than Days (Year/Month/Week) 3
 const int c_daysInWeek = 7;
 
 namespace CalculatorApp
@@ -19,7 +19,8 @@ namespace CalculatorApp
     {
         namespace DateCalculation
         {
-            public enum class _Enum_is_bitflag_ DateUnit
+        public
+            enum class _Enum_is_bitflag_ DateUnit
             {
                 Year = 0x01,
                 Month = 0x02,
@@ -28,28 +29,34 @@ namespace CalculatorApp
             };
 
             // Struct to store the difference between two Dates in the form of Years, Months , Weeks
-            struct DateDifference
+        public
+            value struct DateDifference
             {
-                int year = 0;
-                int month = 0;
-                int week = 0;
-                int day = 0;
+                int year;
+                int month;
+                int week;
+                int day;
             };
 
-            class DateCalculationEngine
+            const DateDifference DateDifferenceUnknown{ INT_MIN, INT_MIN, INT_MIN, INT_MIN };
+
+        public
+            ref class DateCalculationEngine sealed
             {
             public:
                 // Constructor
-                DateCalculationEngine(_In_ Platform::String^ calendarIdentifier);
+                DateCalculationEngine(_In_ Platform::String ^ calendarIdentifier);
 
                 // Public Methods
-                bool __nothrow AddDuration(_In_ Windows::Foundation::DateTime startDate, _In_ const DateDifference& duration, _Out_ Windows::Foundation::DateTime *endDate);
-                bool __nothrow SubtractDuration(_In_ Windows::Foundation::DateTime startDate, _In_ const DateDifference& duration, _Out_ Windows::Foundation::DateTime *endDate);
-                void __nothrow GetDateDifference(_In_ Windows::Foundation::DateTime date1, _In_ Windows::Foundation::DateTime date2, _In_ DateUnit outputFormat, _Out_ DateDifference *difference);
+
+                Platform::IBox<Windows::Foundation::DateTime> ^ AddDuration(_In_ Windows::Foundation::DateTime startDate, _In_ DateDifference duration);
+                Platform::IBox<Windows::Foundation::DateTime> ^ SubtractDuration(_In_ Windows::Foundation::DateTime startDate, _In_ DateDifference duration);
+                Platform::IBox<
+                    DateDifference> ^ TryGetDateDifference(_In_ Windows::Foundation::DateTime date1, _In_ Windows::Foundation::DateTime date2, _In_ DateUnit outputFormat);
 
             private:
                 // Private Variables
-                Windows::Globalization::Calendar^ m_calendar;
+                Windows::Globalization::Calendar ^ m_calendar;
 
                 // Private Methods
                 int GetDifferenceInDays(Windows::Foundation::DateTime date1, Windows::Foundation::DateTime date2);
@@ -60,3 +67,5 @@ namespace CalculatorApp
         }
     }
 }
+
+bool operator==(const CalculatorApp::Common::DateCalculation::DateDifference& l, const CalculatorApp::Common::DateCalculation::DateDifference& r);

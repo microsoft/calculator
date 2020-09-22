@@ -11,23 +11,28 @@ using namespace concurrency;
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace Platform;
+using namespace Platform::Collections;
 using namespace Windows::Foundation;
 using namespace Windows::System;
 using namespace Windows::ApplicationModel::DataTransfer;
+using namespace Windows::Foundation::Collections;
 
-unsigned long long maxOperandNumber;
+StringReference PasteErrorString(L"NoOp");
 
-String^ CopyPasteManager::supportedFormats[] =
-{
-    StandardDataFormats::Text
-};
+static const wstring c_validBasicCharacterSet = L"0123456789+-.e";
+static const wstring c_validStandardCharacterSet = c_validBasicCharacterSet + L"*/";
+static const wstring c_validScientificCharacterSet = c_validStandardCharacterSet + L"()^%";
+static const wstring c_validProgrammerCharacterSet = c_validStandardCharacterSet + L"()%abcdfABCDEF";
 
-constexpr wstring_view c_validCharacterSet{ L"0123456789()+-*/.abcdefABCDEF" };
+// The below values can not be "constexpr"-ed,
+// as both wstring_view and wchar[] can not be concatenated
 // [\s\x85] means white-space characters
 static const wstring c_wspc = L"[\\s\\x85]*";
 static const wstring c_wspcLParens = c_wspc + L"[(]*" + c_wspc;
+static const wstring c_wspcLParenSigned = c_wspc + L"([-+]?[(])*" + c_wspc;
 static const wstring c_wspcRParens = c_wspc + L"[)]*" + c_wspc;
-static const wstring c_signedDecFloat = L"[-+]?\\d*(\\d|[.])\\d*";
+static const wstring c_signedDecFloat = L"(?:[-+]?(?:\\d+(\\.\\d*)?|\\.\\d+))";
+static const wstring c_optionalENotation = L"(?:e[+-]?\\d+)?";
 
 // Programmer Mode Integer patterns
 // Support digit separators ` (WinDbg/MASM), ' (C++), and _ (C# and other languages)
@@ -38,43 +43,25 @@ static const wstring c_binProgrammerChars = L"[0-1]+((_|'|`)[0-1]+)*";
 static const wstring c_uIntSuffixes = L"[uU]?[lL]{0,2}";
 
 // RegEx Patterns used by various modes
-static const array<wregex, 1> standardModePatterns =
-{
-    wregex(c_wspc + c_signedDecFloat + c_wspc)
+static const array<wregex, 1> standardModePatterns = { wregex(c_wspc + c_signedDecFloat + c_optionalENotation + c_wspc) };
+static const array<wregex, 1> scientificModePatterns = { wregex(
+    L"(" + c_wspc + L"[-+]?)|(" + c_wspcLParenSigned + L")" + c_signedDecFloat + c_optionalENotation + c_wspcRParens) };
+static const array<array<wregex, 5>, 4> programmerModePatterns = {
+    { // Hex numbers like 5F, 4A0C, 0xa9, 0xFFull, 47CDh
+      { wregex(c_wspcLParens + L"(0[xX])?" + c_hexProgrammerChars + c_uIntSuffixes + c_wspcRParens),
+        wregex(c_wspcLParens + c_hexProgrammerChars + L"[hH]?" + c_wspcRParens) },
+      // Decimal numbers like -145, 145, 0n145, 123ull etc
+      { wregex(c_wspcLParens + L"[-+]?" + c_decProgrammerChars + L"[lL]{0,2}" + c_wspcRParens),
+        wregex(c_wspcLParens + L"(0[nN])?" + c_decProgrammerChars + c_uIntSuffixes + c_wspcRParens) },
+      // Octal numbers like 06, 010, 0t77, 0o77, 077ull etc
+      { wregex(c_wspcLParens + L"(0[otOT])?" + c_octProgrammerChars + c_uIntSuffixes + c_wspcRParens) },
+      // Binary numbers like 011010110, 0010110, 10101001, 1001b, 0b1001, 0y1001, 0b1001ull
+      { wregex(c_wspcLParens + L"(0[byBY])?" + c_binProgrammerChars + c_uIntSuffixes + c_wspcRParens),
+        wregex(c_wspcLParens + c_binProgrammerChars + L"[bB]?" + c_wspcRParens) } }
 };
-static const array<wregex, 2> scientificModePatterns =
-{
-    wregex(c_wspcLParens + c_signedDecFloat + c_wspcRParens),
-    wregex(c_wspcLParens + c_signedDecFloat + L"[e]([+]|[-])+\\d+" + c_wspcRParens)
-};
-static const array<array<wregex, 5>, 4> programmerModePatterns =
-{ {
-    // Hex numbers like 5F, 4A0C, 0xa9, 0xFFull, 47CDh
-    {
-        wregex(c_wspcLParens + L"(0[xX])?" + c_hexProgrammerChars + c_uIntSuffixes + c_wspcRParens),
-        wregex(c_wspcLParens + c_hexProgrammerChars + L"[hH]?" + c_wspcRParens)
-    },
-    // Decimal numbers like -145, 145, 0n145, 123ull etc
-    {
-        wregex(c_wspcLParens + L"[-+]?" + c_decProgrammerChars + L"[lL]{0,2}" +c_wspcRParens),
-        wregex(c_wspcLParens + L"(0[nN])?" + c_decProgrammerChars + c_uIntSuffixes + c_wspcRParens)
-    },
-    // Octal numbers like 06, 010, 0t77, 0o77, 077ull etc
-    {
-        wregex(c_wspcLParens + L"(0[otOT])?" + c_octProgrammerChars + c_uIntSuffixes + c_wspcRParens)
-    },
-    // Binary numbers like 011010110, 0010110, 10101001, 1001b, 0b1001, 0y1001, 0b1001ull
-    {
-        wregex(c_wspcLParens + L"(0[byBY])?" + c_binProgrammerChars + c_uIntSuffixes + c_wspcRParens),
-        wregex(c_wspcLParens + c_binProgrammerChars + L"[bB]?" + c_wspcRParens)
-    }
-    } };
-static const array<wregex, 1> unitConverterPatterns =
-{
-    wregex(c_wspc + L"[-+]?\\d*[.]?\\d*" + c_wspc)
-};
+static const array<wregex, 1> unitConverterPatterns = { wregex(c_wspc + c_signedDecFloat + c_wspc) };
 
-void CopyPasteManager::CopyToClipboard(String^ stringToCopy)
+void CopyPasteManager::CopyToClipboard(String ^ stringToCopy)
 {
     // Copy the string to the clipboard
     auto dataPackage = ref new DataPackage();
@@ -82,7 +69,7 @@ void CopyPasteManager::CopyToClipboard(String^ stringToCopy)
     Clipboard::SetContent(dataPackage);
 }
 
-task<String^> CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
+IAsyncOperation<String ^> ^ CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, NumberBase programmerNumberBase, BitLength bitLengthType)
 {
     // Retrieve the text in the clipboard
     auto dataPackageView = Clipboard::GetContent();
@@ -92,54 +79,47 @@ task<String^> CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupTyp
     //-- add support to allow pasting for expressions like .2 , -.2
     //-- add support to allow pasting for expressions like 1.3e12(as of now we allow 1.3e+12)
 
-    return create_task((dataPackageView->GetTextAsync(::StandardDataFormats::Text)))
-        .then([mode, modeType, programmerNumberBase, bitLengthType](String^ pastedText)
-    {
-        return ValidatePasteExpression(pastedText, mode, modeType, programmerNumberBase, bitLengthType);
-    }
-    , task_continuation_context::use_arbitrary());
+    return create_async([dataPackageView, mode, modeType, programmerNumberBase, bitLengthType] {
+        return create_task(dataPackageView->GetTextAsync(::StandardDataFormats::Text))
+            .then(
+                [mode, modeType, programmerNumberBase, bitLengthType](String ^ pastedText) {
+                    return ValidatePasteExpression(pastedText, mode, modeType, programmerNumberBase, bitLengthType);
+                },
+                task_continuation_context::use_arbitrary());
+    });
 }
 
-int CopyPasteManager::ClipboardTextFormat()
+bool CopyPasteManager::HasStringToPaste()
 {
-    int result = -1;
-
-    auto dataPackageView = Clipboard::GetContent();
-
-    for (int i = 0; i < RTL_NUMBER_OF(supportedFormats); i++)
-    {
-        if (dataPackageView->Contains(supportedFormats[i]))
-        {
-            result = i;
-            break;
-        }
-    }
-    return result;
+    return Clipboard::GetContent()->Contains(StandardDataFormats::Text);
 }
 
-String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode mode, int programmerNumberBase, int bitLengthType)
+String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, NumberBase programmerNumberBase, BitLength bitLengthType)
 {
-    return CopyPasteManager::ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType);
+    return ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType);
 }
 
 // return "NoOp" if pastedText is invalid else return pastedText
-
-String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
+String
+    ^ CopyPasteManager::ValidatePasteExpression(
+        String ^ pastedText,
+        ViewMode mode,
+        CategoryGroupType modeType,
+        NumberBase programmerNumberBase,
+        BitLength bitLengthType)
 {
     if (pastedText->Length() > MaxPasteableLength)
     {
         // return NoOp to indicate don't paste anything.
-        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"PastedExpressionSizeGreaterThanMaxAllowed", mode, programmerNumberBase, bitLengthType);
-        return StringReference(PasteErrorString);
+        TraceLogger::GetInstance()->LogError(mode, L"CopyPasteManager::ValidatePasteExpression", L"PastedExpressionSizeGreaterThanMaxAllowed");
+        return PasteErrorString;
     }
 
-    wstring pasteExpression = pastedText->Data();
-
     // Get english translated expression
-    String^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pasteExpression);
+    String ^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pastedText);
 
     // Removing the spaces, comma separator from the pasteExpression to allow pasting of expressions like 1  +     2+1,333
-    pasteExpression = Utils::RemoveUnwantedCharsFromWstring(englishString->Data());
+    auto pasteExpression = wstring(RemoveUnwantedCharsFromString(englishString)->Data());
 
     // If the last character is an = sign, remove it from the pasteExpression to allow evaluating the result on paste.
     if (!pasteExpression.empty() && pasteExpression.back() == L'=')
@@ -149,31 +129,32 @@ String^ CopyPasteManager::ValidatePasteExpression(String^ pastedText, ViewMode m
 
     // Extract operands from the expression to make regex comparison easy and quick. For whole expression it was taking too much of time.
     // Operands vector will have the list of operands in the pasteExpression
-    vector<wstring> operands = ExtractOperands(pasteExpression, mode, programmerNumberBase, bitLengthType);
-    if (operands.empty())
+    auto operands = ExtractOperands(StringReference(pasteExpression.c_str()), mode);
+    if (operands->Size == 0)
     {
         // return NoOp to indicate don't paste anything.
-        return StringReference(PasteErrorString);
+        return PasteErrorString;
     }
 
     if (modeType == CategoryGroupType::Converter)
     {
-        operands = { pasteExpression };
+        operands->Clear();
+        operands->Append(ref new String(pasteExpression.c_str()));
     }
 
     // validate each operand with patterns for different modes
     if (!ExpressionRegExMatch(operands, mode, modeType, programmerNumberBase, bitLengthType))
     {
-        TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"InvalidExpressionForPresentMode", mode, programmerNumberBase, bitLengthType);
-        return StringReference(PasteErrorString);
+        TraceLogger::GetInstance()->LogError(mode, L"CopyPasteManager::ValidatePasteExpression", L"InvalidExpressionForPresentMode");
+        return PasteErrorString;
     }
 
-    return ref new String(pastedText->Data());
+    return pastedText;
 }
 
-vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression, ViewMode mode, int programmerNumberBase, int bitLengthType)
+IVector<Platform::String ^> ^ CopyPasteManager::ExtractOperands(Platform::String ^ pasteExpression, ViewMode mode)
 {
-    vector<wstring> operands{};
+    auto operands = ref new Vector<Platform::String ^>();
     size_t lastIndex = 0;
     bool haveOperator = false;
     bool startExpCounting = false;
@@ -181,50 +162,72 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
     bool isPreviousOpenParen = false;
     bool isPreviousOperator = false;
 
+    wstring validCharacterSet;
+    switch (mode)
+    {
+    case ViewMode::Standard:
+        validCharacterSet = c_validStandardCharacterSet;
+        break;
+    case ViewMode::Scientific:
+        validCharacterSet = c_validScientificCharacterSet;
+        break;
+    case ViewMode::Programmer:
+        validCharacterSet = c_validProgrammerCharacterSet;
+        break;
+    default:
+        validCharacterSet = c_validBasicCharacterSet;
+    }
+
     // This will have the exponent length
     size_t expLength = 0;
-    for (size_t i = 0; i < pasteExpression.length(); i++)
+    int i = -1;
+    for (auto currentChar : pasteExpression)
     {
+        ++i;
         // if the current character is not a valid one don't process it
-        if (c_validCharacterSet.find(pasteExpression.at(i)) == wstring_view::npos)
+        if (validCharacterSet.find(currentChar) == wstring_view::npos)
         {
             continue;
         }
 
-        if (operands.size() >= MaxOperandCount)
+        if (operands->Size >= MaxOperandCount)
         {
-            TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"OperandCountGreaterThanMaxCount", mode, programmerNumberBase, bitLengthType);
-            operands.clear();
+            TraceLogger::GetInstance()->LogError(mode, L"CopyPasteManager::ExtractOperands", L"OperandCountGreaterThanMaxCount");
+            operands->Clear();
             return operands;
         }
 
-        if (startExpCounting)
+        if (currentChar >= L'0' && currentChar <= L'9')
         {
-            if ((pasteExpression.at(i) >= L'0') && (pasteExpression.at(i) <= L'9'))
+            if (startExpCounting)
             {
                 expLength++;
 
                 // to disallow pasting of 1e+12345 as 1e+1234, max exponent that can be pasted is 9999.
                 if (expLength > MaxExponentLength)
                 {
-                    TraceLogger::GetInstance().LogInvalidPastedInputOccurred(L"ExponentLengthGreaterThanMaxLength", mode, programmerNumberBase, bitLengthType);
-                    operands.clear();
+                    TraceLogger::GetInstance()->LogError(mode, L"CopyPasteManager::ExtractOperands", L"ExponentLengthGreaterThanMaxLength");
+                    operands->Clear();
                     return operands;
                 }
             }
+            isPreviousOperator = false;
         }
-
-        if ((mode != ViewMode::Programmer) && (pasteExpression.at(i) == L'e'))
+        else if (currentChar == L'e')
         {
-            startExpCounting = true;
+            if (mode != ViewMode::Programmer)
+            {
+                startExpCounting = true;
+            }
+            isPreviousOperator = false;
         }
-
-        if (((pasteExpression.at(i) == L'+') || (pasteExpression.at(i) == L'-') || (pasteExpression.at(i) == L'*') || (pasteExpression.at(i) == L'/')))
+        else if (currentChar == L'+' || currentChar == L'-' || currentChar == L'*' || currentChar == L'/' || currentChar == L'^' || currentChar == L'%')
         {
-            if ((pasteExpression.at(i) == L'+') || (pasteExpression.at(i) == L'-'))
+            if (currentChar == L'+' || currentChar == L'-')
             {
                 // don't break the expression into operands if the encountered character corresponds to sign command(+-)
-                if (isPreviousOpenParen || startOfExpression || isPreviousOperator || ((mode != ViewMode::Programmer) && !((i != 0) && (pasteExpression.at(i - 1) != L'e'))))
+                if (isPreviousOpenParen || startOfExpression || isPreviousOperator
+                    || ((mode != ViewMode::Programmer) && !((i != 0) && pasteExpression->Data()[i - 1] != L'e')))
                 {
                     isPreviousOperator = false;
                     continue;
@@ -235,7 +238,7 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
             expLength = 0;
             haveOperator = true;
             isPreviousOperator = true;
-            operands.push_back(pasteExpression.substr(lastIndex, i - lastIndex));
+            operands->Append(ref new String(wstring(pasteExpression->Data()).substr(lastIndex, i - lastIndex).c_str()));
             lastIndex = i + 1;
         }
         else
@@ -243,36 +246,36 @@ vector<wstring> CopyPasteManager::ExtractOperands(const wstring& pasteExpression
             isPreviousOperator = false;
         }
 
-        isPreviousOpenParen = (pasteExpression.at(i) == L'(');
+        isPreviousOpenParen = (currentChar == L'(');
         startOfExpression = false;
     }
 
     if (!haveOperator)
     {
-        operands.clear();
-        operands.push_back(pasteExpression);
+        operands->Clear();
+        operands->Append(pasteExpression);
     }
     else
     {
-        operands.push_back(pasteExpression.substr(lastIndex, pasteExpression.length() - 1));
+        operands->Append(ref new String(wstring(pasteExpression->Data()).substr(lastIndex, pasteExpression->Length() - 1).c_str()));
     }
 
     return operands;
 }
 
-bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
+bool CopyPasteManager::ExpressionRegExMatch(
+    IVector<String ^> ^ operands,
+    ViewMode mode,
+    CategoryGroupType modeType,
+    NumberBase programmerNumberBase,
+    BitLength bitLengthType)
 {
-    if (operands.empty())
+    if (operands->Size == 0)
     {
         return false;
     }
 
-    bool expMatched = true;
     vector<wregex> patterns{};
-
-    pair<size_t, uint64_t> operandLimits = GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType);
-    size_t maxOperandLength = operandLimits.first;
-    uint64_t maxOperandValue = operandLimits.second;
 
     if (mode == ViewMode::Standard)
     {
@@ -284,47 +287,59 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
     }
     else if (mode == ViewMode::Programmer)
     {
-        patterns.assign(programmerModePatterns[programmerNumberBase - HexBase].begin(), programmerModePatterns[programmerNumberBase - HexBase].end());
+        patterns.assign(
+            programmerModePatterns[(int)programmerNumberBase - (int)NumberBase::HexBase].begin(),
+            programmerModePatterns[(int)programmerNumberBase - (int)NumberBase::HexBase].end());
     }
     else if (modeType == CategoryGroupType::Converter)
     {
         patterns.assign(unitConverterPatterns.begin(), unitConverterPatterns.end());
     }
 
-    for (const wstring& operand : operands)
+    auto maxOperandLengthAndValue = GetMaxOperandLengthAndValue(mode, modeType, programmerNumberBase, bitLengthType);
+    bool expMatched = true;
+
+    for (const auto& operand : operands)
     {
         // Each operand only needs to match one of the available patterns.
         bool operandMatched = false;
-        for (const wregex& pattern : patterns)
+        for (const auto& pattern : patterns)
         {
-            operandMatched = operandMatched || regex_match(operand, pattern);
+            operandMatched = operandMatched || regex_match(operand->Data(), pattern);
         }
 
         if (operandMatched)
         {
+            // Remember the sign of the operand
+            bool isNegativeValue = operand->Data()[0] == L'-';
+
             // Remove characters that are valid in the expression but we do not want to include in length calculations
             // or which will break conversion from string-to-ULL.
-            wstring operandValue = SanitizeOperand(operand);
+            auto operandValue = SanitizeOperand(operand);
 
             // If an operand exceeds the maximum length allowed, break and return.
-            if (OperandLength(operandValue, mode, modeType, programmerNumberBase) > maxOperandLength)
+            if (OperandLength(operandValue, mode, modeType, programmerNumberBase) > maxOperandLengthAndValue.maxLength)
             {
                 expMatched = false;
                 break;
             }
 
             // If maxOperandValue is set and the operandValue exceeds it, break and return.
-            if (maxOperandValue != 0)
+            if (maxOperandLengthAndValue.maxValue != 0)
             {
-                unsigned long long int operandAsULL = 0;
-                if (!TryOperandToULL(operandValue, programmerNumberBase, operandAsULL))
+                auto operandAsULL = TryOperandToULL(operandValue, programmerNumberBase);
+                if (operandAsULL == nullptr)
                 {
                     // Operand was empty, received invalid_argument, or received out_of_range. Input is invalid.
                     expMatched = false;
                     break;
                 }
 
-                if (operandAsULL > maxOperandValue)
+                // Calculate how much we exceed the maxValue.
+                // In case we exceed it for 1 only, and working with negative number - that's a corner case for max signed values (e.g. -32768)
+                bool isOverflow = operandAsULL->Value > maxOperandLengthAndValue.maxValue;
+                bool isMaxNegativeValue = operandAsULL->Value - 1 == maxOperandLengthAndValue.maxValue;
+                if (isOverflow && !(isNegativeValue && isMaxNegativeValue))
                 {
                     expMatched = false;
                     break;
@@ -338,34 +353,39 @@ bool CopyPasteManager::ExpressionRegExMatch(vector<wstring> operands, ViewMode m
     return expMatched;
 }
 
-pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, int programmerNumberBase, int bitLengthType)
+CopyPasteMaxOperandLengthAndValue
+CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mode, CategoryGroupType modeType, NumberBase programmerNumberBase, BitLength bitLengthType)
 {
-    size_t maxLength = 0;
-    uint64_t maxValue = 0;
-
+    constexpr size_t defaultMaxOperandLength = 0;
+    constexpr uint64_t defaultMaxValue = 0;
+    CopyPasteMaxOperandLengthAndValue res;
     if (mode == ViewMode::Standard)
     {
-        maxLength = MaxStandardOperandLength;
+        res.maxLength = MaxStandardOperandLength;
+        res.maxValue = defaultMaxValue;
+        return res;
     }
     else if (mode == ViewMode::Scientific)
     {
-        maxLength = MaxScientificOperandLength;
+        res.maxLength = MaxScientificOperandLength;
+        res.maxValue = defaultMaxValue;
+        return res;
     }
     else if (mode == ViewMode::Programmer)
     {
         unsigned int bitLength = 0;
         switch (bitLengthType)
         {
-        case QwordType:
+        case BitLength::BitLengthQWord:
             bitLength = 64;
             break;
-        case DwordType:
+        case BitLength::BitLengthDWord:
             bitLength = 32;
             break;
-        case WordType:
+        case BitLength::BitLengthWord:
             bitLength = 16;
             break;
-        case ByteType:
+        case BitLength::BitLengthByte:
             bitLength = 8;
             break;
         }
@@ -373,63 +393,69 @@ pair<size_t, uint64_t> CopyPasteManager::GetMaxOperandLengthAndValue(ViewMode mo
         double bitsPerDigit = 0;
         switch (programmerNumberBase)
         {
-        case BinBase:
+        case NumberBase::BinBase:
             bitsPerDigit = log2(2);
             break;
-        case OctBase:
+        case NumberBase::OctBase:
             bitsPerDigit = log2(8);
             break;
-        case DecBase:
+        case NumberBase::DecBase:
             bitsPerDigit = log2(10);
             break;
-        case HexBase:
+        case NumberBase::HexBase:
             bitsPerDigit = log2(16);
             break;
         }
 
-        unsigned int signBit = (programmerNumberBase == DecBase) ? 1 : 0;
+        unsigned int signBit = (programmerNumberBase == NumberBase::DecBase) ? 1 : 0;
 
-        maxLength = (size_t)ceil((bitLength - signBit) / bitsPerDigit);
-        maxValue = UINT64_MAX >> (MaxProgrammerBitLength - (bitLength - signBit));
+        const auto maxLength = static_cast<unsigned int>(ceil((bitLength - signBit) / bitsPerDigit));
+        const uint64_t maxValue = UINT64_MAX >> (MaxProgrammerBitLength - (bitLength - signBit));
+
+        res.maxLength = maxLength;
+        res.maxValue = maxValue;
+        return res;
     }
     else if (modeType == CategoryGroupType::Converter)
     {
-        maxLength = MaxConverterInputLength;
+        res.maxLength = MaxConverterInputLength;
+        res.maxValue = defaultMaxValue;
+        return res;
     }
 
-    return make_pair(maxLength, maxValue);
+    res.maxLength = defaultMaxOperandLength;
+    res.maxValue = defaultMaxValue;
+    return res;
 }
 
-wstring CopyPasteManager::SanitizeOperand(const wstring& operand)
+Platform::String ^ CopyPasteManager::SanitizeOperand(Platform::String ^ operand)
 {
-    wchar_t unWantedChars[] = { L'\'', L'_', L'`', L'(', L')', L'-' };
+    constexpr wchar_t unWantedChars[] = { L'\'', L'_', L'`', L'(', L')', L'-', L'+' };
 
-    return Utils::RemoveUnwantedCharsFromWstring(operand, unWantedChars, static_cast<int>(size(unWantedChars)));
+    return ref new String(Utils::RemoveUnwantedCharsFromString(operand->Data(), unWantedChars).c_str());
 }
 
-bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, unsigned long long int& result)
+IBox<unsigned long long int> ^ CopyPasteManager::TryOperandToULL(String ^ operand, NumberBase numberBase)
 {
-    result = 0;
-
-    if (operand.length() == 0 || operand.front() == L'-')
+    if (operand->Length() == 0 || operand->Data()[0] == L'-')
     {
-        return false;
+        return nullptr;
     }
 
-    // Default to base10
-    int intBase = 10;
+    int intBase;
     switch (numberBase)
     {
-    case HexBase:
+    case NumberBase::HexBase:
         intBase = 16;
         break;
-    case OctBase:
+    case NumberBase::OctBase:
         intBase = 8;
         break;
-    case BinBase:
+    case NumberBase::BinBase:
         intBase = 2;
         break;
-    case DecBase:
+    default:
+    case NumberBase::DecBase:
         intBase = 10;
         break;
     }
@@ -437,106 +463,101 @@ bool CopyPasteManager::TryOperandToULL(const wstring& operand, int numberBase, u
     wstring::size_type size = 0;
     try
     {
-        result = stoull(operand, &size, intBase);
-        return true;
+        return stoull(operand->Data(), &size, intBase);
     }
-    catch (invalid_argument)
+    catch (const invalid_argument&)
     {
         // Do nothing
     }
-    catch (out_of_range)
+    catch (const out_of_range&)
     {
         // Do nothing
     }
 
-    return false;
+    return nullptr;
 }
 
-size_t CopyPasteManager::OperandLength(wstring operand, ViewMode mode, CategoryGroupType modeType, int programmerNumberBase)
+ULONG32 CopyPasteManager::OperandLength(Platform::String ^ operand, ViewMode mode, CategoryGroupType modeType, NumberBase programmerNumberBase)
 {
-    size_t len = 0;
-    if (mode == ViewMode::Standard || mode == ViewMode::Scientific)
+    if (modeType == CategoryGroupType::Converter)
     {
-        len = StandardScientificOperandLength(operand);
-    }
-    else if (mode == ViewMode::Programmer)
-    {
-        len = ProgrammerOperandLength(operand, programmerNumberBase);
-    }
-    else if (modeType == CategoryGroupType::Converter)
-    {
-        len = operand.length();
+        return operand->Length();
     }
 
-    return len;
+    switch (mode)
+    {
+    case ViewMode::Standard:
+    case ViewMode::Scientific:
+        return StandardScientificOperandLength(operand);
+
+    case ViewMode::Programmer:
+        return ProgrammerOperandLength(operand, programmerNumberBase);
+
+    default:
+        return 0;
+    }
 }
 
-size_t CopyPasteManager::StandardScientificOperandLength(wstring operand)
+ULONG32 CopyPasteManager::StandardScientificOperandLength(Platform::String ^ operand)
 {
-    bool hasDecimal = false;
-    for (size_t i = 0; i < operand.length(); i++)
-    {
-        if (operand[i] == L'.')
-        {
-            hasDecimal = true;
-        }
-    }
+    auto operandWstring = wstring(operand->Data());
+    const bool hasDecimal = operandWstring.find('.') != wstring::npos;
 
     if (hasDecimal)
     {
-        if (operand.length() >= 2)
+        if (operandWstring.length() >= 2)
         {
-            if ((operand[0] == L'0') && (operand[1] == L'.'))
+            if ((operandWstring[0] == L'0') && (operandWstring[1] == L'.'))
             {
-                return operand.length() - 2;
+                return static_cast<ULONG32>(operandWstring.length() - 2);
             }
             else
             {
-                return operand.length() - 1;
+                return static_cast<ULONG32>(operandWstring.length() - 1);
             }
         }
     }
 
-    return operand.length();
+    return static_cast<ULONG32>(operandWstring.length());
 }
 
-size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int numberBase)
+ULONG32 CopyPasteManager::ProgrammerOperandLength(Platform::String ^ operand, NumberBase numberBase)
 {
-    size_t len = operand.length();
-
     vector<wstring> prefixes{};
     vector<wstring> suffixes{};
     switch (numberBase)
     {
-    case BinBase:
+    case NumberBase::BinBase:
         prefixes = { L"0B", L"0Y" };
         suffixes = { L"B" };
         break;
-    case DecBase:
+    case NumberBase::DecBase:
         prefixes = { L"-", L"0N" };
         break;
-    case OctBase:
+    case NumberBase::OctBase:
         prefixes = { L"0T", L"0O" };
         break;
-    case HexBase:
+    case NumberBase::HexBase:
         prefixes = { L"0X" };
         suffixes = { L"H" };
         break;
     default:
         // No defined prefixes/suffixes
-        break;
+        return 0;
     }
 
     // UInt suffixes are common across all modes
     const array<wstring, 5> uintSuffixes = { L"ULL", L"UL", L"LL", L"U", L"L" };
     suffixes.insert(suffixes.end(), uintSuffixes.begin(), uintSuffixes.end());
 
-    wstring operandUpper = operand;
+    wstring operandUpper = wstring(operand->Data());
     transform(operandUpper.begin(), operandUpper.end(), operandUpper.begin(), towupper);
+
+    size_t len = operand->Length();
 
     // Detect if there is a suffix and subtract its length
     // Check suffixes first to allow e.g. "0b" to result in length 1 (value 0), rather than length 0 (no value).
-    for (const wstring& suffix : suffixes)
+    for (const auto& suffix : suffixes)
     {
         if (len < suffix.length())
         {
@@ -551,7 +572,7 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
     }
 
     // Detect if there is a prefix and subtract its length
-    for (const wstring& prefix : prefixes)
+    for (const auto& prefix : prefixes)
     {
         if (len < prefix.length())
         {
@@ -565,5 +586,30 @@ size_t CopyPasteManager::ProgrammerOperandLength(const wstring& operand, int num
         }
     }
 
-    return len;
+    return static_cast<ULONG32>(len);
+}
+
+// return wstring after removing characters like space, comma, double quotes, and monetary prefix currency symbols supported by the Windows keyboard:
+// yen or yuan(¥) - 165
+// unspecified currency sign(¤) - 164
+// Ghanaian cedi(₵) - 8373
+// dollar or peso($) - 36
+// colón(₡) - 8353
+// won(₩) - 8361
+// shekel(₪) - 8362
+// naira(₦) - 8358
+// Indian rupee(₹) - 8377
+// pound(£) - 163
+// euro(€) - 8364
+// non-breaking whitespace - 160
+Platform::String ^ CopyPasteManager::RemoveUnwantedCharsFromString(Platform::String ^ input)
+{
+    constexpr wchar_t unWantedChars[] = { L' ', L',', L'"', 165, 164, 8373, 36, 8353, 8361, 8362, 8358, 8377, 163, 8364, 8234, 8235, 8236, 8237, 160 };
+    input = CalculatorApp::Common::LocalizationSettings::GetInstance().RemoveGroupSeparators(input);
+    return ref new String(Utils::RemoveUnwantedCharsFromString(input->Data(), unWantedChars).c_str());
+}
+
+bool CopyPasteManager::IsErrorMessage(Platform::String ^ message)
+{
+    return message == PasteErrorString;
 }

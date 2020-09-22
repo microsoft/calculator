@@ -29,49 +29,43 @@ using namespace Windows::UI::Core;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-CalculatorScientificAngleButtons::CalculatorScientificAngleButtons() :
-    m_isErrorVisualState(false)
+CalculatorScientificAngleButtons::CalculatorScientificAngleButtons()
+    : m_isErrorVisualState(false)
 {
     InitializeComponent();
 }
 
-void CalculatorScientificAngleButtons::HypButton_Toggled(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void CalculatorScientificAngleButtons::FToEButton_Toggled(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    TraceLogger::GetInstance().LogHypButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
-}
-
-void CalculatorScientificAngleButtons::FToEButton_Toggled(_In_ Object^ sender,_In_ RoutedEventArgs^ e)
-{
-    auto viewModel = safe_cast<StandardCalculatorViewModel^>(this->DataContext);
+    auto viewModel = safe_cast<StandardCalculatorViewModel ^>(this->DataContext);
     viewModel->FtoEButtonToggled();
 }
 
-void CalculatorApp::CalculatorScientificAngleButtons::OnAngleButtonPressed(_In_ Object^ commandParameter)
+void CalculatorApp::CalculatorScientificAngleButtons::OnAngleButtonPressed(_In_ Object ^ commandParameter)
 {
-    TraceLogger::GetInstance().LogAngleButtonUsed(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
-    String^ buttonId = static_cast<String^>(commandParameter);
+    String ^ buttonId = static_cast<String ^>(commandParameter);
 
-    degreeButton->Visibility = ::Visibility::Collapsed;
-    radianButton->Visibility = ::Visibility::Collapsed;
-    gradsButton->Visibility = ::Visibility::Collapsed;
+    DegreeButton->Visibility = ::Visibility::Collapsed;
+    RadianButton->Visibility = ::Visibility::Collapsed;
+    GradsButton->Visibility = ::Visibility::Collapsed;
 
     if (buttonId == L"0")
     {
         Model->SwitchAngleType(NumbersAndOperatorsEnum::Radians);
-        radianButton->Visibility = ::Visibility::Visible;
-        radianButton->Focus(::FocusState::Programmatic);
+        RadianButton->Visibility = ::Visibility::Visible;
+        RadianButton->Focus(::FocusState::Programmatic);
     }
     else if (buttonId == L"1")
     {
         Model->SwitchAngleType(NumbersAndOperatorsEnum::Grads);
-        gradsButton->Visibility = ::Visibility::Visible;
-        gradsButton->Focus(::FocusState::Programmatic);
+        GradsButton->Visibility = ::Visibility::Visible;
+        GradsButton->Focus(::FocusState::Programmatic);
     }
     else if (buttonId == L"2")
     {
         Model->SwitchAngleType(NumbersAndOperatorsEnum::Degree);
-        degreeButton->Visibility = ::Visibility::Visible;
-        degreeButton->Focus(::FocusState::Programmatic);
+        DegreeButton->Visibility = ::Visibility::Visible;
+        DegreeButton->Focus(::FocusState::Programmatic);
     }
 }
 
@@ -85,7 +79,7 @@ void CalculatorScientificAngleButtons::IsErrorVisualState::set(bool value)
     if (m_isErrorVisualState != value)
     {
         m_isErrorVisualState = value;
-        String^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
+        String ^ newState = m_isErrorVisualState ? L"ErrorLayout" : L"NoErrorLayout";
         VisualStateManager::GoToState(this, newState, false);
     }
 }

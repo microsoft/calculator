@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -8,6 +8,7 @@
 
 #include "pch.h"
 #include "HistoryList.xaml.h"
+#include "CalcViewModel/Common/CopyPasteManager.h"
 #include "CalcViewModel/Common/LocalizationService.h"
 
 using namespace CalculatorApp;
@@ -40,43 +41,45 @@ HistoryList::HistoryList()
     HistoryEmpty->FlowDirection = LocalizationService::GetInstance()->GetFlowDirection();
 }
 
-void HistoryList::HistoryList_Loaded(Object^ sender, RoutedEventArgs^ e)
+void HistoryList::ListView_ItemClick(_In_ Object ^ sender, _In_ ItemClickEventArgs ^ e)
 {
-    // When transitioning between docked and undocked view states, the history list is
-    // unloaded and then loaded, so we attempt to create the titlebarhelper every time
-    // we are loaded, letting the util function check if we are docked or not.
-    m_titleBarHelper = TitleBarHelper::CreateTitleBarHelperIfNotDocked(CustomTitleBar);
-}
-
-void HistoryList::HistoryList_Unloaded(Object^ sender, RoutedEventArgs^ e)
-{
-    m_titleBarHelper = nullptr;
-}
-
-void HistoryList::ListView_ItemClick(_In_ Object^ sender, _In_ ItemClickEventArgs^ e)
-{
-    HistoryViewModel^ historyVM = static_cast<HistoryViewModel^>(this->DataContext);
-    HistoryItemViewModel^ clickedItem = safe_cast<HistoryItemViewModel^>(e->ClickedItem);
+    HistoryViewModel^ historyVM = dynamic_cast<HistoryViewModel ^>(this->DataContext);
+    HistoryItemViewModel^ clickedItem = dynamic_cast<HistoryItemViewModel ^>(e->ClickedItem);
 
     // When the user clears the history list in the overlay view and presses enter, the clickedItem is nullptr
-    if (clickedItem != nullptr)
+    if (clickedItem != nullptr && historyVM != nullptr)
     {
         historyVM->ShowItem(clickedItem);
     }
 }
 
-void HistoryList::OnDeleteMenuItemClicked(_In_ Object^ sender, _In_ RoutedEventArgs^ e)
+void HistoryList::OnCopyMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    auto clickedItem = safe_cast<HistoryItemViewModel^>(safe_cast<FrameworkElement^>(sender)->DataContext);
-
-    Model->DeleteItem(clickedItem);
+    auto listViewItem = HistoryContextMenu->Target;
+    auto itemViewModel = dynamic_cast<HistoryItemViewModel ^>(HistoryListView->ItemFromContainer(listViewItem));
+    if (itemViewModel != nullptr)
+    {
+        CopyPasteManager::CopyToClipboard(itemViewModel->Result);
+    }
 }
 
-void HistoryList::OnDeleteSwipeInvoked(_In_ MUXC::SwipeItem^ sender, _In_ MUXC::SwipeItemInvokedEventArgs^ e)
+void HistoryList::OnDeleteMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
-    auto swipedItem = safe_cast<HistoryItemViewModel^>(e->SwipeControl->DataContext);
+    auto listViewItem = HistoryContextMenu->Target;
+    auto itemViewModel = dynamic_cast<HistoryItemViewModel ^>(HistoryListView->ItemFromContainer(listViewItem));
+    if (itemViewModel != nullptr)
+    {
+        Model->DeleteItem(itemViewModel);
+    }
+}
 
-    Model->DeleteItem(swipedItem);
+void HistoryList::OnDeleteSwipeInvoked(_In_ MUXC::SwipeItem ^ sender, _In_ MUXC::SwipeItemInvokedEventArgs ^ e)
+{
+    auto swipedItem = dynamic_cast<HistoryItemViewModel ^>(e->SwipeControl->DataContext);
+    if (swipedItem != nullptr)
+    {
+        Model->DeleteItem(swipedItem);
+    }
 }
 
 void HistoryList::ScrollToBottom()

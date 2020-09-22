@@ -11,7 +11,8 @@ namespace CalculatorApp
 {
     namespace ViewModel
     {
-        public enum class CurrencyLoadStatus
+    public
+        enum class CurrencyLoadStatus
         {
             NotLoaded = 0,
             FailedToLoad = 1,
@@ -42,16 +43,18 @@ namespace CalculatorApp
 
         struct CurrencyUnitMetadata
         {
-            CurrencyUnitMetadata(const std::wstring& s) : symbol(s) {}
+            CurrencyUnitMetadata(const std::wstring& s)
+                : symbol(s)
+            {
+            }
 
             const std::wstring symbol;
         };
 
-        class CurrencyDataLoader : public UCM::IConverterDataLoader,
-            public UCM::ICurrencyConverterDataLoader
+        class CurrencyDataLoader : public UCM::IConverterDataLoader, public UCM::ICurrencyConverterDataLoader
         {
         public:
-            CurrencyDataLoader(_In_ std::unique_ptr<CalculatorApp::DataLoaders::ICurrencyHttpClient> client);
+            CurrencyDataLoader(_In_ std::unique_ptr<CalculatorApp::DataLoaders::ICurrencyHttpClient> client, const wchar_t* overrideLanguage = nullptr);
             ~CurrencyDataLoader();
 
             bool LoadFinished();
@@ -60,8 +63,8 @@ namespace CalculatorApp
 
             // IConverterDataLoader
             void LoadData() override;
-            std::vector<UCM::Category> LoadOrderedCategories() override;
-            std::vector<UCM::Unit> LoadOrderedUnits(const UCM::Category& category) override;
+            std::vector<UCM::Category> GetOrderedCategories() override;
+            std::vector<UCM::Unit> GetOrderedUnits(const UCM::Category& category) override;
             std::unordered_map<UCM::Unit, UCM::ConversionData, UCM::UnitHash> LoadOrderedRatios(const UCM::Unit& unit) override;
             bool SupportsCategory(const UnitConversionManager::Category& target) override;
             // IConverterDataLoader
@@ -69,12 +72,14 @@ namespace CalculatorApp
             // ICurrencyConverterDataLoader
             void SetViewModelCallback(const std::shared_ptr<UCM::IViewModelCurrencyCallback>& callback) override;
             std::pair<std::wstring, std::wstring> GetCurrencySymbols(const UCM::Unit& unit1, const UCM::Unit& unit2) override;
-            std::pair<std::wstring, std::wstring> GetCurrencyRatioEquality(_In_ const UnitConversionManager::Unit& unit1, _In_ const UnitConversionManager::Unit& unit2) override;
+            std::pair<std::wstring, std::wstring>
+            GetCurrencyRatioEquality(_In_ const UnitConversionManager::Unit& unit1, _In_ const UnitConversionManager::Unit& unit2) override;
             std::wstring GetCurrencyTimestamp() override;
+            static double RoundCurrencyRatio(double ratio);
 
-            concurrency::task<bool> TryLoadDataFromCacheAsync() override;
-            concurrency::task<bool> TryLoadDataFromWebAsync() override;
-            concurrency::task<bool> TryLoadDataFromWebOverrideAsync() override;
+            std::future<bool> TryLoadDataFromCacheAsync() override;
+            std::future<bool> TryLoadDataFromWebAsync() override;
+            std::future<bool> TryLoadDataFromWebOverrideAsync() override;
             // ICurrencyConverterDataLoader
 
             void OnNetworkBehaviorChanged(CalculatorApp::NetworkAccessBehavior newBehavior);
@@ -83,15 +88,15 @@ namespace CalculatorApp
             void ResetLoadStatus();
             void NotifyDataLoadFinished(bool didLoad);
 
-            concurrency::task<bool> TryFinishLoadFromCacheAsync();
+            std::future<bool> TryFinishLoadFromCacheAsync();
 
             bool TryParseWebResponses(
-                _In_ Platform::String^ staticDataJson,
-                _In_ Platform::String^ allRatiosJson,
+                _In_ Platform::String ^ staticDataJson,
+                _In_ Platform::String ^ allRatiosJson,
                 _Inout_ std::vector<UCM::CurrencyStaticData>& staticData,
                 _Inout_ CurrencyRatioMap& allRatiosData);
-            bool TryParseStaticData(_In_ Platform::String^ rawJson, _Inout_ std::vector<UCM::CurrencyStaticData>& staticData);
-            bool TryParseAllRatiosData(_In_ Platform::String^ rawJson, _Inout_ CurrencyRatioMap& allRatiosData);
+            bool TryParseStaticData(_In_ Platform::String ^ rawJson, _Inout_ std::vector<UCM::CurrencyStaticData>& staticData);
+            bool TryParseAllRatiosData(_In_ Platform::String ^ rawJson, _Inout_ CurrencyRatioMap& allRatiosData);
             concurrency::task<void> FinalizeUnits(_In_ const std::vector<UCM::CurrencyStaticData>& staticData, _In_ const CurrencyRatioMap& ratioMap);
             void GuaranteeSelectedUnits();
 
@@ -106,7 +111,7 @@ namespace CalculatorApp
             void SaveSelectedUnitsToLocalSettings(_In_ const SelectedUnits& selectedUnits);
 
         private:
-            Platform::String^ m_responseLanguage;
+            Platform::String ^ m_responseLanguage;
             std::unique_ptr<CalculatorApp::DataLoaders::ICurrencyHttpClient> m_client;
 
             bool m_isRtlLanguage;
@@ -118,14 +123,14 @@ namespace CalculatorApp
 
             std::shared_ptr<UCM::IViewModelCurrencyCallback> m_vmCallback;
 
-            Windows::Globalization::NumberFormatting::DecimalFormatter^ m_ratioFormatter;
-            std::wstring m_ratioFormat;
+            Windows::Globalization::NumberFormatting::DecimalFormatter ^ m_ratioFormatter;
+            Platform::String ^ m_ratioFormat;
             Windows::Foundation::DateTime m_cacheTimestamp;
-            std::wstring m_timestampFormat;
+            Platform::String ^ m_timestampFormat;
 
             CurrencyLoadStatus m_loadStatus;
 
-            CalculatorApp::NetworkManager^ m_networkManager;
+            CalculatorApp::NetworkManager ^ m_networkManager;
             CalculatorApp::NetworkAccessBehavior m_networkAccessBehavior;
             Windows::Foundation::EventRegistrationToken m_networkBehaviorToken;
             bool m_meteredOverrideSet;

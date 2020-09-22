@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
+#include <sstream>
 #include "Header Files/CalcEngine.h"
 
 using namespace std;
@@ -56,7 +56,7 @@ bool CalcInput::TryToggleSign(bool isIntegerMode, wstring_view maxNumStr)
     return true;
 }
 
-bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, wstring_view maxNumStr, long wordBitWidth, int maxDigits)
+bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, wstring_view maxNumStr, int32_t wordBitWidth, int maxDigits)
 {
     // Convert from an integer into a character
     // This includes both normal digits and alpha 'digits' for radixes > 10
@@ -124,15 +124,15 @@ bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMo
         else if (radix == 10)
         {
             // If value length is at least the max, we know we can't add another digit.
-            if(pNumSec->value.size() < maxNumStr.size())
+            if (pNumSec->value.size() < maxNumStr.size())
             {
                 // Compare value to substring of maxNumStr of value.size() length.
                 // If cmpResult > 0:
-                // eg. max is "127", and the current number is "20". first digit itself says we are out. 
+                // eg. max is "127", and the current number is "20". first digit itself says we are out.
                 // Additional digit is not possible
 
                 // If cmpResult < 0:
-                // Success case. eg. max is "127", and current number is say "11". The second digit '1' being < 
+                // Success case. eg. max is "127", and current number is say "11". The second digit '1' being <
                 // corresponding digit '2', means all digits are possible to append, like 119 will still be < 127
 
                 // If cmpResult == 0:
@@ -151,7 +151,7 @@ bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMo
                     }
                     else if (pNumSec->IsNegative() && chDigit <= lastChar + 1)
                     {
-                        // Negative value case, eg. max is "127", and current number is "-12". Then 8 is also valid, as the range 
+                        // Negative value case, eg. max is "127", and current number is "-12". Then 8 is also valid, as the range
                         // is always from -(max+1)...max in signed mode
                         allowExtraDigit = true;
                     }
@@ -179,7 +179,7 @@ bool CalcInput::TryAddDecimalPt()
 
     if (m_base.IsEmpty())
     {
-        m_base.value += L"0"; // Add a leading zero
+        m_base.value += L'0'; // Add a leading zero
     }
 
     m_decPtIndex = m_base.value.size();
@@ -231,6 +231,10 @@ void CalcInput::Backspace()
         if (!m_base.IsEmpty())
         {
             m_base.value.pop_back();
+            if (m_base.value == L"0")
+            {
+                m_base.value.pop_back();
+            }
         }
 
         if (m_base.value.size() <= m_decPtIndex)
@@ -261,37 +265,55 @@ void CalcInput::SetDecimalSymbol(wchar_t decSymbol)
     }
 }
 
+bool CalcInput::IsEmpty()
+{
+    return m_base.IsEmpty() && !m_hasExponent && m_exponent.IsEmpty() && !m_hasDecimal;
+}
+
 wstring CalcInput::ToString(uint32_t radix)
 {
     // In theory both the base and exponent could be C_NUM_MAX_DIGITS long.
-    wstringstream resStream;
-
     if ((m_base.value.size() > MAX_STRLEN) || (m_hasExponent && m_exponent.value.size() > MAX_STRLEN))
     {
         return wstring();
     }
 
+    wstring result;
+
     if (m_base.IsNegative())
     {
-        resStream << L'-';
+        result = L'-';
     }
 
-    resStream << (m_base.IsEmpty() ? L"0" : m_base.value);
+    if (m_base.IsEmpty())
+    {
+        result += L'0';
+    }
+    else
+    {
+        result += m_base.value;
+    }
 
     if (m_hasExponent)
     {
         // Add a decimal point if it is not already there
         if (!m_hasDecimal)
         {
-            resStream << m_decSymbol;
+            result += m_decSymbol;
         }
 
-        resStream << ((radix == 10) ? L'e' : L'^');
-        resStream << (m_exponent.IsNegative() ? L'-' : L'+');
-        resStream << (m_exponent.IsEmpty() ? L"0" : m_exponent.value);
-    }
+        result += ((radix == 10) ? L'e' : L'^');
+        result += (m_exponent.IsNegative() ? L'-' : L'+');
 
-    auto result = resStream.str();
+        if (m_exponent.IsEmpty())
+        {
+            result += L'0';
+        }
+        else
+        {
+            result += m_exponent.value;
+        }
+    }
 
     // Base and Exp can each be up to C_NUM_MAX_DIGITS in length, plus 4 characters for sign, dec, exp, and expSign.
     if (result.size() > C_NUM_MAX_DIGITS * 2 + 4)

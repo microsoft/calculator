@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -7,7 +7,8 @@
 
 namespace CalculatorApp
 {
-    public ref class AboutFlyout sealed
+public
+    ref class AboutFlyout sealed
     {
     public:
         AboutFlyout();
@@ -15,8 +16,7 @@ namespace CalculatorApp
         void SetDefaultFocus();
 
     private:
-        void FeedbackButton_Click(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
+        void FeedbackButton_Click(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SetVersionString();
-        void UserControl_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
     };
 } /* namespace CalculatorApp */

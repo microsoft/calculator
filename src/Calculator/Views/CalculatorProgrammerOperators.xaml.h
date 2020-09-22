@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -6,11 +6,11 @@
 #include "Views/CalculatorProgrammerOperators.g.h"
 #include "Controls/RadixButton.h"
 #include "CalcViewModel/StandardCalculatorViewModel.h"
+#include "CalcViewModel/Common/NumberBase.h"
 
 namespace CalculatorApp
 {
-    [Windows::Foundation::Metadata::WebHostHidden]
-    public ref class CalculatorProgrammerOperators sealed
+    [Windows::Foundation::Metadata::WebHostHidden] public ref class CalculatorProgrammerOperators sealed
     {
     public:
         CalculatorProgrammerOperators();
@@ -23,16 +23,15 @@ namespace CalculatorApp
 
         DEPENDENCY_PROPERTY_OWNER(CalculatorProgrammerOperators);
 
-        DEPENDENCY_PROPERTY(_In_ Windows::UI::Xaml::Style^, SymbolButtonStyle);
+        DEPENDENCY_PROPERTY(_In_ Windows::UI::Xaml::Style ^, SymbolButtonStyle);
 
-    internal:
-        void SetRadixButton(RADIX_TYPE radixType);
+        internal : void SetRadixButton(CalculatorApp::Common::NumberBase radixType);
 
     private:
-        void DecButtonChecked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void HexButtonChecked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void BinButtonChecked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OctButtonChecked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
-        void OnCopyMenuItemClicked(_In_ Platform::Object^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs^ e);
+        void DecButtonChecked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void HexButtonChecked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void BinButtonChecked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OctButtonChecked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void OnCopyMenuItemClicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }

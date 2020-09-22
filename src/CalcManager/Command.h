@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -7,9 +7,19 @@ namespace UnitConversionManager
 {
     enum class Command
     {
-        Zero, One, Two, Three, Four, Five, Six, Seven, Eight, Nine,
+        Zero,
+        One,
+        Two,
+        Three,
+        Four,
+        Five,
+        Six,
+        Seven,
+        Eight,
+        Nine,
         Decimal,
-        Negate, Backspace,
+        Negate,
+        Backspace,
         Clear,
         Reset,
         None
@@ -20,9 +30,19 @@ namespace CurrencyConversionManager
 {
     enum class Command
     {
-        Zero, One, Two, Three, Four, Five, Six, Seven, Eight, Nine,
+        Zero,
+        One,
+        Two,
+        Three,
+        Four,
+        Five,
+        Six,
+        Seven,
+        Eight,
+        Nine,
         Decimal,
-        Negate, Backspace,
+        Negate,
+        Backspace,
         Clear,
         None
     };
@@ -49,10 +69,6 @@ namespace CalculationManager
 
         CommandNULL = 0,
 
-        // No new command should not be added before CommandSign, 80
-        // If it is needed, the following two functions need to be revised too.
-        // CalculatorManager::MapCommandForSerialize(Command command);
-        // CalculatorManager::MapCommandForDeSerialize(unsigned char command);
         CommandSIGN = 80,
         CommandCLEAR = 81,
         CommandCENTR = 82,
@@ -73,10 +89,11 @@ namespace CalculationManager
         CommandROOT = 96,
         CommandPWR = 97,
 
-        CommandCHOP = 98,     // Unary operators must be between CommandCHOP and CommandEQU
+        CommandCHOP = 98, // Unary operators must be between CommandCHOP and CommandEQU
         CommandROL = 99,
         CommandROR = 100,
         CommandCOM = 101,
+
         CommandSIN = 102,
         CommandCOS = 103,
         CommandTAN = 104,
@@ -84,7 +101,6 @@ namespace CalculationManager
         CommandSINH = 105,
         CommandCOSH = 106,
         CommandTANH = 107,
-
 
         CommandLN = 108,
         CommandLOG = 109,
@@ -94,8 +110,8 @@ namespace CalculationManager
         CommandFAC = 113,
         CommandREC = 114,
         CommandDMS = 115,
-        CommandCUBEROOT = 116,  // x ^ 1/3
-        CommandPOW10 = 117,  // 10 ^ x
+        CommandCUBEROOT = 116, // x ^ 1/3
+        CommandPOW10 = 117,    // 10 ^ x
         CommandPERCENT = 118,
 
         CommandFE = 119,
@@ -113,7 +129,7 @@ namespace CalculationManager
         CommandOPENP = 128,
         CommandCLOSEP = 129,
 
-        Command0 = 130,    // The controls for 0 through F must be consecutive and in order
+        Command0 = 130, // The controls for 0 through F must be consecutive and in order
         Command1 = 131,
         Command2 = 132,
         Command3 = 133,
@@ -128,9 +144,37 @@ namespace CalculationManager
         CommandC = 142,
         CommandD = 143,
         CommandE = 144,
-        CommandF = 145,     // this is last control ID which must match the string table
+        CommandF = 145, // this is last control ID which must match the string table
         CommandINV = 146,
         CommandSET_RESULT = 147,
+
+        CommandSEC = 400,
+        CommandASEC = 401,
+        CommandCSC = 402,
+        CommandACSC = 403,
+        CommandCOT = 404,
+        CommandACOT = 405,
+
+        CommandSECH = 406,
+        CommandASECH = 407,
+        CommandCSCH = 408,
+        CommandACSCH = 409,
+        CommandCOTH = 410,
+        CommandACOTH = 411,
+
+        CommandPOW2 = 412,  // 2 ^ x
+        CommandAbs = 413,
+        CommandFloor = 414,
+        CommandCeil = 415,
+        CommandROLC = 416,
+        CommandRORC = 417,
+        CommandLogBaseY = 500,
+        CommandNand = 501,
+        CommandNor = 502,
+
+        CommandRSHFL = 505,
+        CommandRand = 600,
+        CommandEuler = 601,
 
         CommandAnd = 86,
         CommandOR = 87,

@@ -31,24 +31,23 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
+using namespace Windows::Foundation;
+using namespace Concurrency;
 
-namespace CalculatorApp::ViewModel::ApplicationViewModelProperties
+namespace
 {
-    StringReference Mode(L"Mode");
-    StringReference PreviousMode(L"PreviousMode");
-    StringReference ClearMemoryVisibility(L"ClearMemoryVisibility");
-    StringReference AppBarVisibility(L"AppBarVisibility");
-    StringReference CategoryName(L"CategoryName");
-    StringReference Categories(L"Categories");
+    StringReference CategoriesPropertyName(L"Categories");
+    StringReference ClearMemoryVisibilityPropertyName(L"ClearMemoryVisibility");
 }
 
-ApplicationViewModel::ApplicationViewModel() :
-    m_CalculatorViewModel(nullptr),
-    m_DateCalcViewModel(nullptr),
-    m_ConverterViewModel(nullptr),
-    m_PreviousMode(ViewMode::None),
-    m_mode(ViewMode::None),
-    m_categories(nullptr)
+ApplicationViewModel::ApplicationViewModel()
+    : m_CalculatorViewModel(nullptr)
+    , m_DateCalcViewModel(nullptr)
+	, m_GraphingCalcViewModel(nullptr)
+    , m_ConverterViewModel(nullptr)
+    , m_PreviousMode(ViewMode::None)
+    , m_mode(ViewMode::None)
+    , m_categories(nullptr)
 {
     SetMenuCategories();
 }
@@ -59,23 +58,24 @@ void ApplicationViewModel::Mode::set(ViewMode value)
     {
         PreviousMode = m_mode;
         m_mode = value;
+        SetDisplayNormalAlwaysOnTopOption();
         OnModeChanged();
-        RaisePropertyChanged(ApplicationViewModelProperties::Mode);
+        RaisePropertyChanged(ModePropertyName);
     }
 }
 
-void ApplicationViewModel::Categories::set(IObservableVector<NavCategoryGroup^>^ value)
+void ApplicationViewModel::Categories::set(IObservableVector<NavCategoryGroup ^> ^ value)
 {
     if (m_categories != value)
     {
         m_categories = value;
-        RaisePropertyChanged(ApplicationViewModelProperties::Categories);
+        RaisePropertyChanged(CategoriesPropertyName);
     }
 }
 
 void ApplicationViewModel::Initialize(ViewMode mode)
 {
-    if (!NavCategory::IsValidViewMode(mode))
+    if (!NavCategory::IsValidViewMode(mode) || !NavCategory::IsViewModeEnabled(mode))
     {
         mode = ViewMode::Standard;
     }
@@ -86,7 +86,7 @@ void ApplicationViewModel::Initialize(ViewMode mode)
     }
     catch (const std::exception& e)
     {
-        TraceLogger::GetInstance().LogStandardException(__FUNCTIONW__, e);
+        TraceLogger::GetInstance()->LogStandardException(mode, __FUNCTIONW__, e);
         if (!TryRecoverFromNavigationModeFailure())
         {
             // Could not navigate to standard mode either.
@@ -94,9 +94,9 @@ void ApplicationViewModel::Initialize(ViewMode mode)
             throw;
         }
     }
-    catch (Exception^ e)
+    catch (Exception ^ e)
     {
-        TraceLogger::GetInstance().LogPlatformException(__FUNCTIONW__, e);
+        TraceLogger::GetInstance()->LogPlatformException(mode, __FUNCTIONW__, e);
         if (!TryRecoverFromNavigationModeFailure())
         {
             // Could not navigate to standard mode either.
@@ -125,19 +125,23 @@ bool ApplicationViewModel::TryRecoverFromNavigationModeFailure()
 void ApplicationViewModel::OnModeChanged()
 {
     assert(NavCategory::IsValidViewMode(m_mode));
-    TraceLogger::GetInstance().LogModeChangeBegin(m_PreviousMode, m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
     if (NavCategory::IsCalculatorViewMode(m_mode))
     {
-        TraceLogger::GetInstance().LogCalculatorModeViewed(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
         if (!m_CalculatorViewModel)
         {
             m_CalculatorViewModel = ref new StandardCalculatorViewModel();
         }
         m_CalculatorViewModel->SetCalculatorType(m_mode);
     }
+    else if (NavCategory::IsGraphingCalculatorViewMode(m_mode))
+    {
+        if (!m_GraphingCalcViewModel)
+        {
+            m_GraphingCalcViewModel = ref new GraphingCalculatorViewModel();
+        }
+    }
     else if (NavCategory::IsDateCalculatorViewMode(m_mode))
     {
-        TraceLogger::GetInstance().LogDateCalculatorModeViewed(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
         if (!m_DateCalcViewModel)
         {
             m_DateCalcViewModel = ref new DateCalculatorViewModel();
@@ -145,7 +149,6 @@ void ApplicationViewModel::OnModeChanged()
     }
     else if (NavCategory::IsConverterViewMode(m_mode))
     {
-        TraceLogger::GetInstance().LogConverterModeViewed(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
         if (!m_ConverterViewModel)
         {
             auto dataLoader = make_shared<UnitConverterDataLoader>(ref new GeographicRegion());
@@ -157,20 +160,27 @@ void ApplicationViewModel::OnModeChanged()
     }
 
     auto resProvider = AppResourceProvider::GetInstance();
-    CategoryName = resProvider.GetResourceString(NavCategory::GetNameResourceKey(m_mode));
+    CategoryName = resProvider->GetResourceString(NavCategory::GetNameResourceKey(m_mode));
 
-    // This is the only place where a ViewMode enum should be cast to an int.
-    //
+    // Cast mode to an int in order to save it to app data.
     // Save the changed mode, so that the new window launches in this mode.
     // Don't save until after we have adjusted to the new mode, so we don't save a mode that fails to load.
-    ApplicationData::Current->LocalSettings->Values->Insert(ApplicationViewModelProperties::Mode, NavCategory::Serialize(m_mode));
+    ApplicationData::Current->LocalSettings->Values->Insert(ModePropertyName, NavCategory::Serialize(m_mode));
 
-    TraceLogger::GetInstance().LogModeChangeEnd(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
-    RaisePropertyChanged(ApplicationViewModelProperties::ClearMemoryVisibility);
-    RaisePropertyChanged(ApplicationViewModelProperties::AppBarVisibility);
+    // Log ModeChange event when not first launch, log WindowCreated on first launch
+    if (NavCategory::IsValidViewMode(m_PreviousMode))
+    {
+        TraceLogger::GetInstance()->LogModeChange(m_mode);
+    }
+    else
+    {
+        TraceLogger::GetInstance()->LogWindowCreated(m_mode, ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread()));
+    }
+
+    RaisePropertyChanged(ClearMemoryVisibilityPropertyName);
 }
 
-void ApplicationViewModel::OnCopyCommand(Object^ parameter)
+void ApplicationViewModel::OnCopyCommand(Object ^ parameter)
 {
     if (NavCategory::IsConverterViewMode(m_mode))
     {
@@ -180,19 +190,19 @@ void ApplicationViewModel::OnCopyCommand(Object^ parameter)
     {
         DateCalcViewModel->OnCopyCommand(parameter);
     }
-    else
+    else if (NavCategory::IsCalculatorViewMode(m_mode))
     {
         CalculatorViewModel->OnCopyCommand(parameter);
     }
 }
 
-void ApplicationViewModel::OnPasteCommand(Object^ parameter)
+void ApplicationViewModel::OnPasteCommand(Object ^ parameter)
 {
     if (NavCategory::IsConverterViewMode(m_mode))
     {
         ConverterViewModel->OnPasteCommand(parameter);
     }
-    else
+    else if (NavCategory::IsCalculatorViewMode(m_mode))
     {
         CalculatorViewModel->OnPasteCommand(parameter);
     }
@@ -204,4 +214,61 @@ void ApplicationViewModel::SetMenuCategories()
     // because we want to take advantage of binding updates and
     // property setter logic.
     Categories = NavCategoryGroup::CreateMenuOptions();
+}
+
+void ApplicationViewModel::ToggleAlwaysOnTop(float width, float height)
+{
+    HandleToggleAlwaysOnTop(width, height);
+}
+
+#pragma optimize("", off)
+task<void> ApplicationViewModel::HandleToggleAlwaysOnTop(float width, float height)
+{
+    if (ApplicationView::GetForCurrentView()->ViewMode == ApplicationViewMode::CompactOverlay)
+    {
+        ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
+        localSettings->Values->Insert(WidthLocalSettings, width);
+        localSettings->Values->Insert(HeightLocalSettings, height);
+
+        bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::Default);
+        CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = success;
+        CalculatorViewModel->IsAlwaysOnTop = !success;
+        IsAlwaysOnTop = !success;
+    }
+    else
+    {
+        ApplicationDataContainer ^ localSettings = ApplicationData::Current->LocalSettings;
+        ViewModePreferences ^ compactOptions = ViewModePreferences::CreateDefault(ApplicationViewMode::CompactOverlay);
+        if (!localSettings->Values->GetView()->HasKey(LaunchedLocalSettings))
+        {
+            compactOptions->CustomSize = Size(320, 394);
+            localSettings->Values->Insert(LaunchedLocalSettings, true);
+        }
+        else
+        {
+            if (localSettings->Values->GetView()->HasKey(WidthLocalSettings) && localSettings->Values->GetView()->HasKey(HeightLocalSettings))
+            {
+                float oldWidth = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup(WidthLocalSettings))->GetSingle();
+                float oldHeight = safe_cast<IPropertyValue ^>(localSettings->Values->GetView()->Lookup(HeightLocalSettings))->GetSingle();
+                compactOptions->CustomSize = Size(oldWidth, oldHeight);
+            }
+            else
+            {
+                compactOptions->CustomSize = Size(320, 394);
+            }
+        }
+
+        bool success = co_await ApplicationView::GetForCurrentView()->TryEnterViewModeAsync(ApplicationViewMode::CompactOverlay, compactOptions);
+        CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = !success;
+        CalculatorViewModel->IsAlwaysOnTop = success;
+        IsAlwaysOnTop = success;
+    }
+    SetDisplayNormalAlwaysOnTopOption();
+};
+#pragma optimize("", on)
+
+void ApplicationViewModel::SetDisplayNormalAlwaysOnTopOption()
+{
+    DisplayNormalAlwaysOnTopOption =
+        m_mode == ViewMode::Standard && ApplicationView::GetForCurrentView()->IsViewModeSupported(ApplicationViewMode::CompactOverlay) && !IsAlwaysOnTop;
 }

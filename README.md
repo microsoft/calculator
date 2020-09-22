@@ -12,9 +12,13 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 - Standard Calculator functionality which offers basic operations and evaluates commands immediately as they are entered.
 - Scientific Calculator functionality which offers expanded operations and evaluates commands using order of operations.
 - Programmer Calculator functionality which offers common mathematical operations for developers including conversion between common bases.
+- Date Calculation functionality which offers the difference between two dates, as well as the ability to add/subtract years, months and/or days to/from a given input date.
 - Calculation history and memory capabilities.
 - Conversion between many units of measurement.
 - Currency conversion based on data retrieved from [Bing](https://www.bing.com).
+- [Infinite precision](https://en.wikipedia.org/wiki/Arbitrary-precision_arithmetic) for basic
+  arithmetic operations (addition, subtraction, multiplication, division) so that calculations
+  never lose precision.
 
 ## Getting started
 Prerequisites:
@@ -34,6 +38,9 @@ Prerequisites:
 
 - Open [src\Calculator.sln](/src/Calculator.sln) in Visual Studio to build and run the Calculator app.
 - For a general description of the Calculator project architecture see [ApplicationArchitecture.md](docs/ApplicationArchitecture.md).
+- To run the UI Tests, you need to make sure that
+  [Windows Application Driver (WinAppDriver)](https://github.com/microsoft/WinAppDriver/releases/latest)
+  is installed.
 
 ## Contributing
 Want to contribute? The team encourages community feedback and contributions. Please follow our [contributing guidelines](CONTRIBUTING.md).
@@ -44,19 +51,24 @@ We also welcome [issues submitted on GitHub](https://github.com/Microsoft/calcul
 ## Roadmap
 For information regarding Windows Calculator plans and release schedule, please see the [Windows Calculator Roadmap](docs/Roadmap.md).
 
-## Data / Telemetry
+### Graphing Mode
+Adding graphing calculator functionality [is on the project roadmap](https://github.com/Microsoft/calculator/issues/338) and we hope that this project can create a great end-user experience around graphing. To that end, the UI from the official in-box Windows Calculator is currently part of this repository, although the proprietary Microsoft-built graphing engine, which also drives graphing in Microsoft Mathematics and OneNote, is not. Community members can still be involved in the creation of the UI, however developer builds will not have graphing functionality due to the use of a [mock implementation of the engine](/src/GraphingImpl/Mocks) built on top of a
+[common graphing API](/src/GraphingInterfaces).
+
+## Diagnostic Data
 This project collects usage data and sends it to Microsoft to help improve our products and services.
 Read our [privacy statement](https://go.microsoft.com/fwlink/?LinkId=521839) to learn more.
-Telemetry is disabled in development builds by default, and can be enabled with the `SEND_TELEMETRY`
+Diagnostic data is disabled in development builds by default, and can be enabled with the `SEND_DIAGNOSTICS`
 build flag.
 
+## Currency Converter
+Windows Calculator includes a currency converter feature that uses mock data in developer builds. The data that
+Microsoft uses for the currency converter feature (e.g., in the retail version of the application) is not licensed
+for your use. The mock data will be clearly identifiable as it references planets instead of countries,
+and remains static regardless of selected inputs.
+
 ## Reporting Security Issues
-Security issues and bugs should be reported privately, via email, to the
-Microsoft Security Response Center (MSRC) at <[secure@microsoft.com](mailto:secure@microsoft.com)>.
-You should receive a response within 24 hours. If for some reason you do not, please follow up via
-email to ensure we received your original message. Further information, including the
-[MSRC PGP](https://technet.microsoft.com/en-us/security/dn606155) key, can be found in the
-[Security TechCenter](https://technet.microsoft.com/en-us/security/default).
+Please refer to [SECURITY.md](./SECURITY.md).
 
 ## License
 Copyright (c) Microsoft Corporation. All rights reserved.

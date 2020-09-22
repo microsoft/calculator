@@ -1,28 +1,27 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "Header Files/CalcEngine.h"
 #include "Header Files/CalcUtils.h"
 
-bool IsOpInRange(WPARAM op, uint32_t x, uint32_t y)
+bool IsOpInRange(OpCode op, uint32_t x, uint32_t y)
 {
     return ((op >= x) && (op <= y));
 }
 
-bool IsBinOpCode(WPARAM opCode)
+bool IsBinOpCode(OpCode opCode)
 {
-    return IsOpInRange(opCode, IDC_AND, IDC_PWR);
+    return IsOpInRange(opCode, IDC_AND, IDC_PWR) || IsOpInRange(opCode, IDC_BINARYEXTENDEDFIRST, IDC_BINARYEXTENDEDLAST);
 }
 
 // WARNING: IDC_SIGN is a special unary op but still this doesn't catch this. Caller has to be aware
 // of it and catch it themselves or not needing this
-bool IsUnaryOpCode(WPARAM opCode)
+bool IsUnaryOpCode(OpCode opCode)
 {
-    return IsOpInRange(opCode, IDC_UNARYFIRST, IDC_UNARYLAST);
+    return (IsOpInRange(opCode, IDC_UNARYFIRST, IDC_UNARYLAST) || IsOpInRange(opCode, IDC_UNARYEXTENDEDFIRST, IDC_UNARYEXTENDEDLAST));
 }
 
-bool IsDigitOpCode(WPARAM opCode)
+bool IsDigitOpCode(OpCode opCode)
 {
     return IsOpInRange(opCode, IDC_0, IDC_F);
 }
@@ -32,11 +31,9 @@ bool IsDigitOpCode(WPARAM opCode)
 // so we abstract this as a separate routine. Note: There is another side to this. Some commands are not
 // gui mode setting to begin with, but once it is discovered it is invalid and we want to behave as though it
 // was never inout, we need to revert the state changes made as a result of this test
-bool IsGuiSettingOpCode(WPARAM opCode)
+bool IsGuiSettingOpCode(OpCode opCode)
 {
-    if (IsOpInRange(opCode, IDM_HEX, IDM_BIN) ||
-        IsOpInRange(opCode, IDM_QWORD, IDM_BYTE) ||
-        IsOpInRange(opCode, IDM_DEG, IDM_GRAD))
+    if (IsOpInRange(opCode, IDM_HEX, IDM_BIN) || IsOpInRange(opCode, IDM_QWORD, IDM_BYTE) || IsOpInRange(opCode, IDM_DEG, IDM_GRAD))
     {
         return true;
     }

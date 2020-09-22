@@ -119,15 +119,27 @@
   </resheader>
   <data name="AppName" xml:space="preserve">
     <value>Hesap Makinesi</value>
-    <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"}</comment>
+    <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
+  </data>
+  <data name="DevAppName" xml:space="preserve">
+    <value>Hesap Makinesi [Dev]</value>
+    <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the name of the application when built by a user via GitHub. We use a different name to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="AppStoreName" xml:space="preserve">
     <value>Windows Hesap Makinesi</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
   </data>
+  <data name="DevAppStoreName" xml:space="preserve">
+    <value>Windows Hesap Makinesi [Dev]</value>
+    <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps. This is the the version of the name used when the app is built by a user via GitHub.</comment>
+  </data>
   <data name="AppDescription" xml:space="preserve">
     <value>Hesap Makinesi</value>
-    <comment>{@Appx_Description@}</comment>
+    <comment>{@Appx_Description@} This description is used for the official application when published through Windows Store.</comment>
+  </data>
+  <data name="DevAppDescription" xml:space="preserve">
+    <value>Hesap Makinesi [Dev]</value>
+    <comment>{@Appx_Description@} This is the description of the application when built by a user via GitHub. We use a different description to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="copyMenuItem" xml:space="preserve">
     <value>Kopyala</value>
@@ -141,277 +153,269 @@
     <value>Yaklaşık eşittir</value>
     <comment>The text that shows at the bottom of the converter to head the supplementary results. Indicates that the main result is approximately equal to the supplementary results.</comment>
   </data>
-  <data name="BitAutomationName" xml:space="preserve">
-    <value>Bit </value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitFlipItemAutomationName" xml:space="preserve">
+    <value>%1, değer %2</value>
+    <comment>{Locked="%1","%2"}. String used in automation name for each bit in bit flip. %1 will be replaced by the position of the bit (1st bit, 3rd bit), %2 by a binary value (1 or 0)</comment>
   </data>
-  <data name="ValueAutomationName" xml:space="preserve">
-    <value>Değer </value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryZeroValueAutomationName" xml:space="preserve">
-    <value>Sıfır</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
-  </data>
-  <data name="BinaryOneValueAutomationName" xml:space="preserve">
-    <value>Bir</value>
-    <comment>Sub-string used in automation name for each bit in bit flip</comment>
+  <data name="BitPosition" xml:space="preserve">
+    <value>%1 bit</value>
+    <comment>{Locked="%1"}. Sub-string used to indicate the position of a bit (e.g. 1st bit, 2nd bit...)</comment>
   </data>
   <data name="63" xml:space="preserve">
-    <value>63. </value>
+    <value>63.</value>
     <comment>Sub-string used in automation name for 63 bit in bit flip</comment>
   </data>
   <data name="62" xml:space="preserve">
-    <value>62. </value>
+    <value>62.</value>
     <comment>Sub-string used in automation name for 62 bit in bit flip</comment>
   </data>
   <data name="61" xml:space="preserve">
-    <value>61. </value>
+    <value>61.</value>
     <comment>Sub-string used in automation name for 61 bit in bit flip</comment>
   </data>
   <data name="60" xml:space="preserve">
-    <value>60. </value>
+    <value>60.</value>
     <comment>Sub-string used in automation name for 60 bit in bit flip</comment>
   </data>
   <data name="59" xml:space="preserve">
-    <value>59. </value>
+    <value>59.</value>
     <comment>Sub-string used in automation name for 59 bit in bit flip</comment>
   </data>
   <data name="58" xml:space="preserve">
-    <value>58. </value>
+    <value>58.</value>
     <comment>Sub-string used in automation name for 58 bit in bit flip</comment>
   </data>
   <data name="57" xml:space="preserve">
-    <value>57. </value>
+    <value>57.</value>
     <comment>Sub-string used in automation name for 57 bit in bit flip</comment>
   </data>
   <data name="56" xml:space="preserve">
-    <value>56. </value>
+    <value>56.</value>
     <comment>Sub-string used in automation name for 56 bit in bit flip</comment>
   </data>
   <data name="55" xml:space="preserve">
-    <value>55. </value>
+    <value>55.</value>
     <comment>Sub-string used in automation name for 55 bit in bit flip</comment>
   </data>
   <data name="54" xml:space="preserve">
-    <value>54. </value>
+    <value>54.</value>
     <comment>Sub-string used in automation name for 54 bit in bit flip</comment>
   </data>
   <data name="53" xml:space="preserve">
-    <value>53. </value>
+    <value>53.</value>
     <comment>Sub-string used in automation name for 53 bit in bit flip</comment>
   </data>
   <data name="52" xml:space="preserve">
-    <value>52. </value>
+    <value>52.</value>
     <comment>Sub-string used in automation name for 52 bit in bit flip</comment>
   </data>
   <data name="51" xml:space="preserve">
-    <value>51. </value>
+    <value>51.</value>
     <comment>Sub-string used in automation name for 51 bit in bit flip</comment>
   </data>
   <data name="50" xml:space="preserve">
-    <value>50. </value>
+    <value>50.</value>
     <comment>Sub-string used in automation name for 50 bit in bit flip</comment>
   </data>
   <data name="49" xml:space="preserve">
-    <value>49. </value>
+    <value>49.</value>
     <comment>Sub-string used in automation name for 49 bit in bit flip</comment>
   </data>
   <data name="48" xml:space="preserve">
-    <value>48. </value>
+    <value>48.</value>
     <comment>Sub-string used in automation name for 48 bit in bit flip</comment>
   </data>
   <data name="47" xml:space="preserve">
-    <value>47. </value>
+    <value>47.</value>
     <comment>Sub-string used in automation name for 47 bit in bit flip</comment>
   </data>
   <data name="46" xml:space="preserve">
-    <value>46. </value>
+    <value>46.</value>
     <comment>Sub-string used in automation name for 46 bit in bit flip</comment>
   </data>
   <data name="45" xml:space="preserve">
-    <value>45. </value>
+    <value>45.</value>
     <comment>Sub-string used in automation name for 45 bit in bit flip</comment>
   </data>
   <data name="44" xml:space="preserve">
-    <value>44. </value>
+    <value>44.</value>
     <comment>Sub-string used in automation name for 44 bit in bit flip</comment>
   </data>
   <data name="43" xml:space="preserve">
-    <value>43. </value>
+    <value>43.</value>
     <comment>Sub-string used in automation name for 43 bit in bit flip</comment>
   </data>
   <data name="42" xml:space="preserve">
-    <value>42. </value>
+    <value>42.</value>
     <comment>Sub-string used in automation name for 42 bit in bit flip</comment>
   </data>
   <data name="41" xml:space="preserve">
-    <value>41. </value>
+    <value>41.</value>
     <comment>Sub-string used in automation name for 41 bit in bit flip</comment>
   </data>
   <data name="40" xml:space="preserve">
-    <value>40. </value>
+    <value>40.</value>
     <comment>Sub-string used in automation name for 40 bit in bit flip</comment>
   </data>
   <data name="39" xml:space="preserve">
-    <value>39. </value>
+    <value>39.</value>
     <comment>Sub-string used in automation name for 39 bit in bit flip</comment>
   </data>
   <data name="38" xml:space="preserve">
-    <value>38. </value>
+    <value>38.</value>
     <comment>Sub-string used in automation name for 38 bit in bit flip</comment>
   </data>
   <data name="37" xml:space="preserve">
-    <value>37. </value>
+    <value>37.</value>
     <comment>Sub-string used in automation name for 37 bit in bit flip</comment>
   </data>
   <data name="36" xml:space="preserve">
-    <value>36. </value>
+    <value>36.</value>
     <comment>Sub-string used in automation name for 36 bit in bit flip</comment>
   </data>
   <data name="35" xml:space="preserve">
-    <value>35. </value>
+    <value>35.</value>
     <comment>Sub-string used in automation name for 35 bit in bit flip</comment>
   </data>
   <data name="34" xml:space="preserve">
-    <value>34. </value>
+    <value>34.</value>
     <comment>Sub-string used in automation name for 34 bit in bit flip</comment>
   </data>
   <data name="33" xml:space="preserve">
-    <value>33. </value>
+    <value>33.</value>
     <comment>Sub-string used in automation name for 33 bit in bit flip</comment>
   </data>
   <data name="32" xml:space="preserve">
-    <value>32. </value>
+    <value>32.</value>
     <comment>Sub-string used in automation name for 32 bit in bit flip</comment>
   </data>
   <data name="31" xml:space="preserve">
-    <value>31. </value>
+    <value>31.</value>
     <comment>Sub-string used in automation name for 31 bit in bit flip</comment>
   </data>
   <data name="30" xml:space="preserve">
-    <value>30. </value>
+    <value>30.</value>
     <comment>Sub-string used in automation name for 30 bit in bit flip</comment>
   </data>
   <data name="29" xml:space="preserve">
-    <value>29. </value>
+    <value>29.</value>
     <comment>Sub-string used in automation name for 29 bit in bit flip</comment>
   </data>
   <data name="28" xml:space="preserve">
-    <value>28. </value>
+    <value>28.</value>
     <comment>Sub-string used in automation name for 28 bit in bit flip</comment>
   </data>
   <data name="27" xml:space="preserve">
-    <value>27. </value>
+    <value>27.</value>
     <comment>Sub-string used in automation name for 27 bit in bit flip</comment>
   </data>
   <data name="26" xml:space="preserve">
-    <value>26. </value>
+    <value>26.</value>
     <comment>Sub-string used in automation name for 26 bit in bit flip</comment>
   </data>
   <data name="25" xml:space="preserve">
-    <value>25. </value>
+    <value>25.</value>
     <comment>Sub-string used in automation name for 25 bit in bit flip</comment>
   </data>
   <data name="24" xml:space="preserve">
-    <value>24. </value>
+    <value>24.</value>
     <comment>Sub-string used in automation name for 24 bit in bit flip</comment>
   </data>
   <data name="23" xml:space="preserve">
-    <value>23. </value>
+    <value>23.</value>
     <comment>Sub-string used in automation name for 23 bit in bit flip</comment>
   </data>
   <data name="22" xml:space="preserve">
-    <value>22. </value>
+    <value>22.</value>
     <comment>Sub-string used in automation name for 22 bit in bit flip</comment>
   </data>
   <data name="21" xml:space="preserve">
-    <value>21. </value>
+    <value>21.</value>
     <comment>Sub-string used in automation name for 21 bit in bit flip</comment>
   </data>
   <data name="20" xml:space="preserve">
-    <value>20. </value>
+    <value>20.</value>
     <comment>Sub-string used in automation name for 20 bit in bit flip</comment>
   </data>
   <data name="19" xml:space="preserve">
-    <value>19. </value>
+    <value>19.</value>
     <comment>Sub-string used in automation name for 19 bit in bit flip</comment>
   </data>
   <data name="18" xml:space="preserve">
-    <value>18. </value>
+    <value>18.</value>
     <comment>Sub-string used in automation name for 18 bit in bit flip</comment>
   </data>
   <data name="17" xml:space="preserve">
-    <value>17. </value>
+    <value>17.</value>
     <comment>Sub-string used in automation name for 17 bit in bit flip</comment>
   </data>
   <data name="16" xml:space="preserve">
-    <value>16. </value>
+    <value>16.</value>
     <comment>Sub-string used in automation name for 16 bit in bit flip</comment>
   </data>
   <data name="15" xml:space="preserve">
-    <value>15. </value>
+    <value>15.</value>
     <comment>Sub-string used in automation name for 15 bit in bit flip</comment>
   </data>
   <data name="14" xml:space="preserve">
-    <value>14. </value>
+    <value>14.</value>
     <comment>Sub-string used in automation name for 14 bit in bit flip</comment>
   </data>
   <data name="13" xml:space="preserve">
-    <value>13. </value>
+    <value>13.</value>
     <comment>Sub-string used in automation name for 13 bit in bit flip</comment>
   </data>
   <data name="12" xml:space="preserve">
-    <value>12. </value>
+    <value>12.</value>
     <comment>Sub-string used in automation name for 12 bit in bit flip</comment>
   </data>
   <data name="11" xml:space="preserve">
-    <value>11. </value>
+    <value>11.</value>
     <comment>Sub-string used in automation name for 11 bit in bit flip</comment>
   </data>
   <data name="10" xml:space="preserve">
-    <value>10. </value>
+    <value>10.</value>
     <comment>Sub-string used in automation name for 10 bit in bit flip</comment>
   </data>
   <data name="9" xml:space="preserve">
-    <value>9. </value>
+    <value>9.</value>
     <comment>Sub-string used in automation name for 9 bit in bit flip</comment>
   </data>
   <data name="8" xml:space="preserve">
-    <value>8. </value>
+    <value>8.</value>
     <comment>Sub-string used in automation name for 8 bit in bit flip</comment>
   </data>
   <data name="7" xml:space="preserve">
-    <value>7. </value>
+    <value>7.</value>
     <comment>Sub-string used in automation name for 7 bit in bit flip</comment>
   </data>
   <data name="6" xml:space="preserve">
-    <value>6. </value>
+    <value>6.</value>
     <comment>Sub-string used in automation name for 6 bit in bit flip</comment>
   </data>
   <data name="5" xml:space="preserve">
-    <value>5. </value>
+    <value>5.</value>
     <comment>Sub-string used in automation name for 5 bit in bit flip</comment>
   </data>
   <data name="4" xml:space="preserve">
-    <value>4. </value>
+    <value>4.</value>
     <comment>Sub-string used in automation name for 4 bit in bit flip</comment>
   </data>
   <data name="3" xml:space="preserve">
-    <value>3. </value>
+    <value>3.</value>
     <comment>Sub-string used in automation name for 3 bit in bit flip</comment>
   </data>
   <data name="2" xml:space="preserve">
-    <value>2. </value>
+    <value>2.</value>
     <comment>Sub-string used in automation name for 2 bit in bit flip</comment>
   </data>
   <data name="1" xml:space="preserve">
-    <value>1. </value>
+    <value>1.</value>
     <comment>Sub-string used in automation name for 1 bit in bit flip</comment>
   </data>
-  <data name="0" xml:space="preserve">
-    <value>0. </value>
-    <comment>Sub-string used in automation name for 0 bit in bit flip</comment>
+  <data name="LeastSignificantBit" xml:space="preserve">
+    <value>en az önemli bit</value>
+    <comment>Used to describe the first bit of a binary number. Used in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
     <value>Bellek açılır ögesini aç</value>
@@ -420,6 +424,14 @@
   <data name="MemoryButton_Close" xml:space="preserve">
     <value>Bellek açılır ögesini kapat</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
+  </data>
+  <data name="AlwaysOnTop_Enter" xml:space="preserve">
+    <value>Üstte tut</value>
+    <comment>This is the tool tip automation name for the always-on-top button when out of always-on-top mode.</comment>
+  </data>
+  <data name="AlwaysOnTop_Exit" xml:space="preserve">
+    <value>Tam görünüme geri dön</value>
+    <comment>This is the tool tip automation name for the always-on-top button when in always-on-top mode.</comment>
   </data>
   <data name="MemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Bellek</value>
@@ -532,6 +544,10 @@
   <data name="Format_CalculatorResults" xml:space="preserve">
     <value>Ekran değeri %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
+  </data>
+  <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
+    <value>İfade %1, Geçerli girdi %2</value>
+    <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
     <value>Ekran puanı %1</value>
@@ -680,6 +696,10 @@
   <data name="DeleteHistorySwipeItem.Text" xml:space="preserve">
     <value>Sil</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
+  </data>
+  <data name="CopyHistoryMenuItem.Text" xml:space="preserve">
+    <value>Kopyala</value>
+    <comment>Text string for the Calculator Copy option in the History list context menu</comment>
   </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
     <value>Sil</value>
@@ -847,7 +867,7 @@
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Eşittir</value>
-    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+    <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Ters İşlev</value>
@@ -896,6 +916,14 @@
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Sağ parantez</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
+  </data>
+  <data name="Format_OpenParenthesisCountAutomationNamePrefix" xml:space="preserve">
+    <value>Açık parantez sayısı %1</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific and programmer operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
+  </data>
+  <data name="NoRightParenthesisAdded_Announcement" xml:space="preserve">
+    <value>Kapatılacak açık parantez yok.</value>
+    <comment>{Locked="%1"} Screen reader prompt for the Calculator when the ")" button on the scientific and programmer operator keypad cannot be added to the equation. e.g. "1+)".</comment>
   </data>
   <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Bilimsel gösterim</value>
@@ -1036,6 +1064,22 @@
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Kategoriler Açılan Menüsü</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
+  </data>
+  <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Üstte tut</value>
+    <comment>Screen reader prompt for the Always-on-Top button when in normal mode.</comment>
+  </data>
+  <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tam görünüme geri dön</value>
+    <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
+  </data>
+  <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Üstte tut (Alt+Yukarı)</value>
+    <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
+  </data>
+  <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tam görünüme geri dön (Alt+Aşağı)</value>
+    <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
     <value>%1 %2 öğesinden dönüştür</value>
@@ -2262,13 +2306,17 @@
     <value>Microsoft Yazılımı Lisans Koşulları</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
+  <data name="PreviewTag.Text" xml:space="preserve">
+    <value>Önizleme</value>
+    <comment>Label displayed next to upcoming features</comment>
+  </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Microsoft Gizlilik Bildirimi</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
   </data>
-  <data name="AboutControlCopyright.Text" xml:space="preserve">
-    <value>© 2018 Microsoft. Tüm hakları saklıdır.</value>
-    <comment>Copyright statement, displayed on the About panel</comment>
+  <data name="AboutControlCopyright" xml:space="preserve">
+    <value>© %1 Microsoft. Tüm hakları saklıdır.</value>
+    <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Hakkında</value>
@@ -2413,9 +2461,9 @@
     <value>Fark</value>
     <comment>Difference result label</comment>
   </data>
-  <data name="Date_FromLabel.Text" xml:space="preserve">
-    <value>Kimden</value>
-    <comment>From Date label for Date Picker</comment>
+  <data name="DateDiff_FromHeader.Header" xml:space="preserve">
+    <value>Şu tarihten:</value>
+    <comment>From Date Header for Difference Date Picker</comment>
   </data>
   <data name="MonthsLabel.Text" xml:space="preserve">
     <value>Ay</value>
@@ -2425,9 +2473,9 @@
     <value>Çıkar</value>
     <comment>Subtract toggle button text</comment>
   </data>
-  <data name="Date_ToLabel.Text" xml:space="preserve">
-    <value>Kime</value>
-    <comment>To Date label for Date Picker</comment>
+  <data name="DateDiff_ToHeader.Header" xml:space="preserve">
+    <value>Şu tarihe:</value>
+    <comment>To Date Header for Difference Date Picker</comment>
   </data>
   <data name="YearsLabel.Text" xml:space="preserve">
     <value>Yıl</value>
@@ -2602,7 +2650,7 @@
   </data>
   <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>x veya</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronounciation.</comment>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ve</value>
@@ -2648,10 +2696,6 @@
     <value>AB</value>
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
-  <data name="DateCalculationModeAccessKey" xml:space="preserve">
-    <value>4</value>
-    <comment>AccessKey for the Date Calculation mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
@@ -2663,18 +2707,6 @@
   <data name="NavView.AccessKey" xml:space="preserve">
     <value>H</value>
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ProgrammerModeAccessKey" xml:space="preserve">
-    <value>3</value>
-    <comment>AccessKey for the Programmer mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ScientificModeAccessKey" xml:space="preserve">
-    <value>2</value>
-    <comment>AccessKey for the Scientific mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="StandardModeAccessKey" xml:space="preserve">
-    <value>1</value>
-    <comment>AccessKey for the Standard mode navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AngleAccessKey" xml:space="preserve">
     <value>AN</value>
@@ -2848,6 +2880,114 @@
     <value>ters hiperbolik tanjant</value>
     <comment>Name for the inverse hyperbolic tangent function. Used by screen readers.</comment>
   </data>
+  <data name="SecantDegrees" xml:space="preserve">
+    <value>sekant derece</value>
+    <comment>Name for the secant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="SecantRadians" xml:space="preserve">
+    <value>sekant radyan</value>
+    <comment>Name for the secant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="SecantGradians" xml:space="preserve">
+    <value>sekant gradyan</value>
+    <comment>Name for the secant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantDegrees" xml:space="preserve">
+    <value>ters sekant derece</value>
+    <comment>Name for the inverse secant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantRadians" xml:space="preserve">
+    <value>ters sekant radyan</value>
+    <comment>Name for the inverse secant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseSecantGradians" xml:space="preserve">
+    <value>ters sekant gradyan</value>
+    <comment>Name for the inverse secant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicSecant" xml:space="preserve">
+    <value>hiperbolik sekant</value>
+    <comment>Name for the hyperbolic secant function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicSecant" xml:space="preserve">
+    <value>ters hiperbolik sekant</value>
+    <comment>Name for the inverse hyperbolic secant function. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantDegrees" xml:space="preserve">
+    <value>kosekant derece</value>
+    <comment>Name for the cosecant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantRadians" xml:space="preserve">
+    <value>kosekant radyan</value>
+    <comment>Name for the cosecant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="CosecantGradians" xml:space="preserve">
+    <value>kosekant gradyan</value>
+    <comment>Name for the cosecant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantDegrees" xml:space="preserve">
+    <value>ters kosekant derece</value>
+    <comment>Name for the inverse cosecant function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantRadians" xml:space="preserve">
+    <value>ters kosekant radyan</value>
+    <comment>Name for the inverse cosecant function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCosecantGradians" xml:space="preserve">
+    <value>ters kosekant gradyan</value>
+    <comment>Name for the inverse cosecant function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicCosecant" xml:space="preserve">
+    <value>hiperbolik kosekant</value>
+    <comment>Name for the hyperbolic cosecant function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicCosecant" xml:space="preserve">
+    <value>ters hiperbolik kosekant</value>
+    <comment>Name for the inverse hyperbolic cosecant function. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentDegrees" xml:space="preserve">
+    <value>kotanjant derece</value>
+    <comment>Name for the cotangent function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentRadians" xml:space="preserve">
+    <value>Kotanjant radyan</value>
+    <comment>Name for the cotangent function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="CotangentGradians" xml:space="preserve">
+    <value>kotanjant gradyan</value>
+    <comment>Name for the cotangent function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentDegrees" xml:space="preserve">
+    <value>ters kotanjant derece</value>
+    <comment>Name for the inverse cotangent function in degrees mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentRadians" xml:space="preserve">
+    <value>ters kotanjant radyan</value>
+    <comment>Name for the inverse cotangent function in radians mode. Used by screen readers.</comment>
+  </data>
+  <data name="InverseCotangentGradians" xml:space="preserve">
+    <value>ters kotanjant gradyan</value>
+    <comment>Name for the inverse cotangent function in gradians mode. Used by screen readers.</comment>
+  </data>
+  <data name="HyperbolicCotangent" xml:space="preserve">
+    <value>hiperbolik kotanjant</value>
+    <comment>Name for the hyperbolic cotangent function. Used by screen readers.</comment>
+  </data>
+  <data name="InverseHyperbolicCotangent" xml:space="preserve">
+    <value>ters hiperbolik kotanjant</value>
+    <comment>Name for the inverse hyperbolic cotangent function. Used by screen readers.</comment>
+  </data>
+  <data name="CubeRoot" xml:space="preserve">
+    <value>Küp Kök</value>
+    <comment>Name for the cube root function. Used by screen readers.</comment>
+  </data>
+  <data name="Logy" xml:space="preserve">
+    <value>Logaritma Tabanı</value>
+    <comment>Name for the logbasey function. Used by screen readers.</comment>
+  </data>
+  <data name="AbsoluteValue" xml:space="preserve">
+    <value>Mutlak Değer</value>
+    <comment>Name for the absolute value function. Used by screen readers.</comment>
+  </data>
   <data name="LeftShift" xml:space="preserve">
     <value>sol shift tuşu</value>
     <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
@@ -2887,5 +3027,1100 @@
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">
     <value>Microsoft Hizmet Sözleşmesi</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
+  </data>
+  <data name="UnitAbbreviation_Pyeong" xml:space="preserve">
+    <value>Pyeong</value>
+    <comment>An abbreviation for a measurement unit of area.</comment>
+  </data>
+  <data name="UnitName_Pyeong" xml:space="preserve">
+    <value>Pyeong</value>
+    <comment>A measurement unit for area.</comment>
+  </data>
+  <data name="AddSubtract_Date_FromHeader.Header" xml:space="preserve">
+    <value>Şu tarihten:</value>
+    <comment>From Date Header for AddSubtract Date Picker</comment>
+  </data>
+  <data name="CalculationResultScrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hesaplama Sonucunu Sola Kaydır</value>
+    <comment>Automation label for the "Scroll Left" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
+  </data>
+  <data name="CalculationResultScrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hesaplama Sonucunu Sağa Kaydır</value>
+    <comment>Automation label for the "Scroll Right" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
+  </data>
+  <data name="CalculationFailed" xml:space="preserve">
+    <value>Hesaplama başarısız oldu</value>
+    <comment>Text displayed when the application is not able to do a calculation</comment>
+  </data>
+  <data name="logBaseY.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Y logaritma tabanı</value>
+    <comment>Screen reader prompt for the logBaseY button</comment>
+  </data>
+  <data name="trigButton.Text" xml:space="preserve">
+    <value>Trigonometri</value>
+    <comment>Displayed on the button that contains a flyout for the trig functions in scientific mode.</comment>
+  </data>
+  <data name="funcButton.Text" xml:space="preserve">
+    <value>İşlev</value>
+    <comment>Displayed on the button that contains a flyout for the general functions in scientific mode.</comment>
+  </data>
+  <data name="inequalityButton.Text" xml:space="preserve">
+    <value>Eşitsizlikler</value>
+    <comment>Displayed on the button that contains a flyout for the inequality functions.</comment>
+  </data>
+  <data name="inequalityButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Eşitsizlikler</value>
+    <comment>Screen reader prompt for the Inequalities button</comment>
+  </data>
+  <data name="bitwiseButton.Text" xml:space="preserve">
+    <value>Bit düzeyinde</value>
+    <comment>Displayed on the button that contains a flyout for the bitwise functions in programmer mode.</comment>
+  </data>
+  <data name="bitShiftButton.Text" xml:space="preserve">
+    <value>Bit Kaydırma</value>
+    <comment>Displayed on the button that contains a flyout for the bit shift functions in programmer mode.</comment>
+  </data>
+  <data name="trigShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ters İşlev</value>
+    <comment>Screen Reader prompt for the shift button in the trig flyout in scientific mode.</comment>
+  </data>
+  <data name="hypButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hiperbolik işlev</value>
+    <comment>Screen reader prompt for the Calculator button HYP in the scientific flyout keypad</comment>
+  </data>
+  <data name="secButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Sekant</value>
+    <comment>Screen reader prompt for the Calculator button sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="sechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hiperbolik Sekant</value>
+    <comment>Screen reader prompt for the Calculator button sech in the scientific flyout keypad</comment>
+  </data>
+  <data name="invsecButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ark Sekant</value>
+    <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="invsechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hiperbolik Ark Sekant</value>
+    <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
+  </data>
+  <data name="cscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kosekant</value>
+    <comment>Screen reader prompt for the Calculator button csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="cschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hiperbolik Kosekant</value>
+    <comment>Screen reader prompt for the Calculator button csch in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ark Kosekant</value>
+    <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hiperbolik Ark Kosekant</value>
+    <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
+  </data>
+  <data name="cotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kotanjant</value>
+    <comment>Screen reader prompt for the Calculator button cot in the scientific flyout keypad</comment>
+  </data>
+  <data name="cothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hiperbolik Kotanjant</value>
+    <comment>Screen reader prompt for the Calculator button coth in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ark Kotanjant</value>
+    <comment>Screen reader prompt for the Calculator button arc cot in the scientific flyout keypad</comment>
+  </data>
+  <data name="invcothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hiperbolik Ark Kotanjant</value>
+    <comment>Screen reader prompt for the Calculator button arc coth in the scientific flyout keypad</comment>
+  </data>
+  <data name="floorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Taban</value>
+    <comment>Screen reader prompt for the Calculator button floor in the scientific flyout keypad</comment>
+  </data>
+  <data name="ceilButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tavan</value>
+    <comment>Screen reader prompt for the Calculator button ceiling in the scientific flyout keypad</comment>
+  </data>
+  <data name="randButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Rastgele</value>
+    <comment>Screen reader prompt for the Calculator button random in the scientific flyout keypad</comment>
+  </data>
+  <data name="absButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mutlak Değer</value>
+    <comment>Screen reader prompt for the Calculator button abs in the scientific flyout keypad</comment>
+  </data>
+  <data name="eulerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>e sayısı</value>
+    <comment>Screen reader prompt for the Calculator button e in the scientific flyout keypad</comment>
+  </data>
+  <data name="twoPowerXButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Karesi</value>
+    <comment>Screen reader prompt for the Calculator button 2^x in the scientific flyout keypad</comment>
+  </data>
+  <data name="nandButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ve değil</value>
+    <comment>Screen reader prompt for the Calculator button nand in the scientific flyout keypad</comment>
+  </data>
+  <data name="nandButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Ve değil</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="norButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Veya değil</value>
+    <comment>Screen reader prompt for the Calculator button nor in the scientific flyout keypad</comment>
+  </data>
+  <data name="norButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Veya değil</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="rolCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Elde ile sola döndür</value>
+    <comment>Screen reader prompt for the Calculator button rol with carry in the scientific flyout keypad</comment>
+  </data>
+  <data name="rorCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Elde ile sağa döndür</value>
+    <comment>Screen reader prompt for the Calculator button ror with carry in the scientific flyout keypad</comment>
+  </data>
+  <data name="lshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Sola Kaydırma</value>
+    <comment>Screen reader prompt for the Calculator button lshLogical in the scientific flyout keypad</comment>
+  </data>
+  <data name="lshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Sola kaydırma</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="rshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Sağa Kaydırma</value>
+    <comment>Screen reader prompt for the Calculator button rshLogical in the scientific flyout keypad</comment>
+  </data>
+  <data name="rshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
+    <value>Sağa kaydırma</value>
+    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+  </data>
+  <data name="arithmeticShiftButton.Content" xml:space="preserve">
+    <value>Aritmetik Kaydırma</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButton.Content" xml:space="preserve">
+    <value>Mantıksal Kaydırma</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButton.Content" xml:space="preserve">
+    <value>Dairesel Kaydırmayı Döndür</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButton.Content" xml:space="preserve">
+    <value>Elde Dairesel Kaydırmayla Döndür</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="cubeRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Küp kök</value>
+    <comment>Screen reader prompt for the cube root button on the scientific operator keypad</comment>
+  </data>
+  <data name="trigButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Trigonometri</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="funcButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>İşlevler</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="bitwiseButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Bit düzeyinde</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="bitShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Bit kaydırma</value>
+    <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
+  </data>
+  <data name="ScientificOperatorPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Bilimsel İşleç Panelleri</value>
+    <comment>Screen reader prompt for the Scientific Operator Panels on the scientific operator keypad</comment>
+  </data>
+  <data name="ProgrammerOperatorPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Programcı İşleç Panelleri</value>
+    <comment>Screen reader prompt for the Programmer Operator Panels on the programmer operator keypad</comment>
+  </data>
+  <data name="MostSignificantBit" xml:space="preserve">
+    <value>en önemli bit</value>
+    <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
+  </data>
+  <data name="GraphingCalculatorModeText" xml:space="preserve">
+    <value>Grafik Oluşturma</value>
+    <comment>Name of the Graphing mode of the Calculator app. Displayed in the navigation menu.</comment>
+  </data>
+  <data name="plotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Çizim</value>
+    <comment>Screen reader prompt for the plot button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="graphViewButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Görünümü otomatik olarak yenile (Ctrl + 0)</value>
+    <comment>This is the tool tip automation name for the Calculator graph view button.</comment>
+  </data>
+  <data name="graphViewButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Grafik Görünümü</value>
+    <comment>Screen reader prompt for the graph view button.</comment>
+  </data>
+  <data name="GraphViewAutomaticBestFitAnnouncement" xml:space="preserve">
+    <value>Otomatik En Uygun Boyut</value>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set</comment>
+  </data>
+  <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
+    <value>El ile Ayarlama</value>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and manual adjustment is set</comment>
+  </data>
+  <data name="GridResetAnnouncement" xml:space="preserve">
+    <value>Grafik görünümü sıfırlandı</value>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set, resetting the graph</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Yakınlaştır (Ctrl + artı)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom in button.</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Yakınlaştır</value>
+    <comment>Screen reader prompt for the zoom in button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Uzaklaştır (Ctrl + eksi)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom out button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Uzaklaştır</value>
+    <comment>Screen reader prompt for the zoom out button.</comment>
+  </data>
+  <data name="EquationTextBoxAddPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Denklem Ekle</value>
+    <comment>Placeholder text for the equation input button</comment>
+  </data>
+  <data name="ShareActionErrorMessage" xml:space="preserve">
+    <value>Şu anda paylaşılamıyor.</value>
+    <comment>If there is an error in the sharing action will display a dialog with this text.</comment>
+  </data>
+  <data name="ShareActionErrorOk" xml:space="preserve">
+    <value>Tamam</value>
+    <comment>Used on the dismiss button of the share action error dialog.</comment>
+  </data>
+  <data name="ShareActionTitle" xml:space="preserve">
+    <value>Windows Hesap Makinesi ile neyin grafiğini çizdiğime bakın</value>
+    <comment>Sent as part of the shared content. The title for the share.</comment>
+  </data>
+  <data name="EquationsShareHeader" xml:space="preserve">
+    <value>Denklemler</value>
+    <comment>Header that appears over the equations section when sharing</comment>
+  </data>
+  <data name="VariablesShareHeader" xml:space="preserve">
+    <value>Değişkenler</value>
+    <comment>Header that appears over the variables section when sharing</comment>
+  </data>
+  <data name="GraphImageAltText" xml:space="preserve">
+    <value>Denklemli bir grafik resmi</value>
+    <comment>Alt text for the graph image when output via Share</comment>
+  </data>
+  <data name="VaiablesHeader.Text" xml:space="preserve">
+    <value>Değişkenler</value>
+    <comment>Header text for variables area</comment>
+  </data>
+  <data name="StepTextBlock.Text" xml:space="preserve">
+    <value>Adım</value>
+    <comment>Label text for the step text box</comment>
+  </data>
+  <data name="MinTextBlock.Text" xml:space="preserve">
+    <value>En az</value>
+    <comment>Label text for the min text box</comment>
+  </data>
+  <data name="MaxTextBlock.Text" xml:space="preserve">
+    <value>En fazla</value>
+    <comment>Label text for the max text box</comment>
+  </data>
+  <data name="LineColorText.Text" xml:space="preserve">
+    <value>Renk</value>
+    <comment>Label for the Line Color section of the style picker</comment>
+  </data>
+  <data name="StyleChooserBoxHeading.Text" xml:space="preserve">
+    <value>Stil</value>
+    <comment>Label for the Line Style section of the style picker</comment>
+  </data>
+  <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
+    <value>İşlev çözümlemesi</value>
+    <comment>Title for KeyGraphFeatures Control</comment>
+  </data>
+  <data name="KGFHorizontalAsymptotesNone" xml:space="preserve">
+    <value>İşlevde yatay asimptot yok.</value>
+    <comment>Message displayed when the graph does not have any horizontal asymptotes</comment>
+  </data>
+  <data name="KGFInflectionPointsNone" xml:space="preserve">
+    <value>İşlevde çekim noktası yok.</value>
+    <comment>Message displayed when the graph does not have any inflection points</comment>
+  </data>
+  <data name="KGFMaximaNone" xml:space="preserve">
+    <value>İşlevde maksimum noktası yok.</value>
+    <comment>Message displayed when the graph does not have any maxima</comment>
+  </data>
+  <data name="KGFMinimaNone" xml:space="preserve">
+    <value>İşlevde minimum noktası yok.</value>
+    <comment>Message displayed when the graph does not have any minima</comment>
+  </data>
+  <data name="KGFMonotonicityConstant" xml:space="preserve">
+    <value>Sabit</value>
+    <comment>String describing constant monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityDecreasing" xml:space="preserve">
+    <value>Azalan</value>
+    <comment>String describing decreasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityError" xml:space="preserve">
+    <value>İşlevin monotonluğu belirlenemiyor.</value>
+    <comment>Error displayed when monotonicity cannot be determined</comment>
+  </data>
+  <data name="KGFMonotonicityIncreasing" xml:space="preserve">
+    <value>Artan</value>
+    <comment>String describing increasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityUnknown" xml:space="preserve">
+    <value>İşlevin monotonluğu bilinmiyor.</value>
+    <comment>Error displayed when monotonicity is unknown</comment>
+  </data>
+  <data name="KGFObliqueAsymptotesNone" xml:space="preserve">
+    <value>İşlevde eğik asimptot yok.</value>
+    <comment>Message displayed when the graph does not have any oblique asymptotes</comment>
+  </data>
+  <data name="KGFParityError" xml:space="preserve">
+    <value>İşlevin eşliği belirlenemiyor.</value>
+    <comment>Error displayed when parity is cannot be determined</comment>
+  </data>
+  <data name="KGFParityEven" xml:space="preserve">
+    <value>İşlev çift.</value>
+    <comment>Message displayed with the function parity is even</comment>
+  </data>
+  <data name="KGFParityNeither" xml:space="preserve">
+    <value>İşlev çift veya tek değil.</value>
+    <comment>Message displayed with the function parity is neither even nor odd</comment>
+  </data>
+  <data name="KGFParityOdd" xml:space="preserve">
+    <value>İşlev tek.</value>
+    <comment>Message displayed with the function parity is odd</comment>
+  </data>
+  <data name="KGFParityUnknown" xml:space="preserve">
+    <value>İşlev eşliği bilinmiyor.</value>
+    <comment>Error displayed when parity is unknown</comment>
+  </data>
+  <data name="KGFPeriodicityError" xml:space="preserve">
+    <value>Dönemsellik bu işlev için desteklenmiyor.</value>
+    <comment>Error displayed when periodicity is not supported</comment>
+  </data>
+  <data name="KGFPeriodicityNotPeriodic" xml:space="preserve">
+    <value>İşlev dönemsel değil.</value>
+    <comment>Message displayed with the function periodicity is not periodic</comment>
+  </data>
+  <data name="KGFPeriodicityUnknown" xml:space="preserve">
+    <value>İşlev dönemselliği bilinmiyor.</value>
+    <comment>Message displayed with the function periodicity is unknown</comment>
+  </data>
+  <data name="KGFTooComplexFeaturesError" xml:space="preserve">
+    <value>Bu özellikler, Hesap Makinesi'nin hesaplayamayacağı kadar çok karmaşık:</value>
+    <comment>Error displayed when analysis features cannot be calculated</comment>
+  </data>
+  <data name="KGFVerticalAsymptotesNone" xml:space="preserve">
+    <value>İşlevde dikey asimptot yok.</value>
+    <comment>Message displayed when the graph does not have any vertical asymptotes</comment>
+  </data>
+  <data name="KGFXInterceptNone" xml:space="preserve">
+    <value>İşlevde x kesişim noktası yok.</value>
+    <comment>Message displayed when the graph does not have any x-intercepts</comment>
+  </data>
+  <data name="KGFYInterceptNone" xml:space="preserve">
+    <value>İşlevde y kesişim noktası yok.</value>
+    <comment>Message displayed when the graph does not have any y-intercepts</comment>
+  </data>
+  <data name="Domain" xml:space="preserve">
+    <value>Etki alanı</value>
+    <comment>Title for KeyGraphFeatures Domain Property</comment>
+  </data>
+  <data name="HorizontalAsymptotes" xml:space="preserve">
+    <value>Yatay Asimptotlar</value>
+    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+  </data>
+  <data name="InflectionPoints" xml:space="preserve">
+    <value>Çekim Noktaları</value>
+    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+  </data>
+  <data name="KGFAnalysisNotSupported" xml:space="preserve">
+    <value>Bu işlev için çözümleme desteklenmiyor.</value>
+    <comment>Error displayed when graph analysis is not supported or had an error.</comment>
+  </data>
+  <data name="Maxima" xml:space="preserve">
+    <value>Maksimum</value>
+    <comment>Title for KeyGraphFeatures Maxima Property</comment>
+  </data>
+  <data name="Minima" xml:space="preserve">
+    <value>Minimum</value>
+    <comment>Title for KeyGraphFeatures Minima Property</comment>
+  </data>
+  <data name="Monotonicity" xml:space="preserve">
+    <value>Monotonluk</value>
+    <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
+  </data>
+  <data name="ObliqueAsymptotes" xml:space="preserve">
+    <value>Eğik Asimptotlar</value>
+    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+  </data>
+  <data name="Parity" xml:space="preserve">
+    <value>Eşlik</value>
+    <comment>Title for KeyGraphFeatures Parity Property</comment>
+  </data>
+  <data name="Periodicity" xml:space="preserve">
+    <value>Döngü</value>
+    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>Aralık</value>
+    <comment>Title for KeyGraphFeatures Range Property</comment>
+  </data>
+  <data name="VerticalAsymptotes" xml:space="preserve">
+    <value>Dikey Asimptotlar</value>
+    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
+  </data>
+  <data name="XIntercept" xml:space="preserve">
+    <value>X Kesişim Noktası</value>
+    <comment>Title for KeyGraphFeatures XIntercept Property</comment>
+  </data>
+  <data name="YIntercept" xml:space="preserve">
+    <value>Y Kesişim Noktası</value>
+    <comment>Title for KeyGraphFeatures YIntercept Property</comment>
+  </data>
+  <data name="KGFAnalysisCouldNotBePerformed" xml:space="preserve">
+    <value>İşlev için çözümleme gerçekleştirilemedi.</value>
+  </data>
+  <data name="KGFDomainNone" xml:space="preserve">
+    <value>Bu işlev için etki alanı hesaplanamıyor.</value>
+    <comment>Error displayed when Domain is not returned from the analyzer.</comment>
+  </data>
+  <data name="KGFRangeNone" xml:space="preserve">
+    <value>Bu işlevin aralığı hesaplanamıyor.</value>
+    <comment>Error displayed when Range is not returned from the analyzer.</comment>
+  </data>
+  <data name="Overflow" xml:space="preserve">
+    <value>Taşma (sayı çok büyük)</value>
+    <comment>Error that occurs during graphing when the number is too large. To see this error, assign a large number to variable a, then keep doing "a:=a*a" until it happens.</comment>
+  </data>
+  <data name="RequireRadiansMode" xml:space="preserve">
+    <value>Bu denklemin grafiğini çizmek için Radyan modu gereklidir.</value>
+    <comment>Error that occurs during graphing when radians is required.</comment>
+  </data>
+  <data name="TooComplexToSolve" xml:space="preserve">
+    <value>Bu fonksiyon grafiği çizilemeyecek kadar karmaşık</value>
+    <comment>Error that occurs during graphing when the equation is too complex.</comment>
+  </data>
+  <data name="RequireDegreesMode" xml:space="preserve">
+    <value>Bu fonksiyonun grafiğini çizmek için Derece modu gereklidir</value>
+    <comment>Error that occurs during graphing when degrees is required</comment>
+  </data>
+  <data name="FactorialInvalidArgument" xml:space="preserve">
+    <value>Faktöriyel fonksiyonda geçersiz bağımsız değişken var</value>
+    <comment>Error that occurs during graphing when a factorial function has an invalid argument.</comment>
+  </data>
+  <data name="FactorialCannotPerformOnLargeNumber" xml:space="preserve">
+    <value>Faktöriyel fonksiyonda grafiği çizilemeyecek kadar büyük bir bağımsız değişken var</value>
+    <comment>Error that occurs during graphing when a factorial has a large n</comment>
+  </data>
+  <data name="ModuloCannotPerformOnFloat" xml:space="preserve">
+    <value>Modülleme yalnızca tam sayılarla kullanılabilir</value>
+    <comment>Error that occurs during graphing when modulo is used with a float.</comment>
+  </data>
+  <data name="EquationHasNoSolution" xml:space="preserve">
+    <value>Denklemin çözümü yok</value>
+    <comment>Error that occurs during graphing when the equation has no solution.</comment>
+  </data>
+  <data name="DivideByZero" xml:space="preserve">
+    <value>Sıfıra bölünemez</value>
+    <comment>Error that occurs during graphing when a divison by zero occurs.</comment>
+  </data>
+  <data name="MutuallyExclusiveConditions" xml:space="preserve">
+    <value>Denklem birlikte kullanılamayan mantıksal koşullar içeriyor</value>
+    <comment>Error that occurs during graphing when mutually exclusive conditions are used.</comment>
+  </data>
+  <data name="OutOfDomain" xml:space="preserve">
+    <value>Denklem etki alanı dışında</value>
+    <comment>Error that occurs during graphing when the equation is out of domain.</comment>
+  </data>
+  <data name="GE_NotSupported" xml:space="preserve">
+    <value>Bu denklemin grafiğinin oluşturulması desteklenmiyor</value>
+    <comment>Error that occurs during graphing when the equation is not supported.</comment>
+  </data>
+  <data name="ParenthesisMismatch" xml:space="preserve">
+    <value>Denklemde açma parantezi eksik</value>
+    <comment>Error that occurs during graphing when the equation is missing a (</comment>
+  </data>
+  <data name="UnmatchedParenthesis" xml:space="preserve">
+    <value>Denklemde kapama parantezi eksik</value>
+    <comment>Error that occurs during graphing when the equation is missing a )</comment>
+  </data>
+  <data name="TooManyDecimalPoints" xml:space="preserve">
+    <value>Sayıda çok fazla ondalık virgül var</value>
+    <comment>Error that occurs during graphing when a number has too many decimals. Ex: 1.2.3</comment>
+  </data>
+  <data name="DecimalPointWithoutDigits" xml:space="preserve">
+    <value>Ondalık virgülde basamak eksik</value>
+    <comment>Error that occurs during graphing with a decimal point without digits</comment>
+  </data>
+  <data name="UnexpectedEndOfExpression" xml:space="preserve">
+    <value>Beklenmeyen ifade sonu</value>
+    <comment>Error that occurs during graphing when the expression ends unexpectedly. Ex: 3-4*</comment>
+  </data>
+  <data name="UnexpectedToken" xml:space="preserve">
+    <value>İfadede beklenmedik karakterler</value>
+    <comment>Error that occurs during graphing when there is an unexpected token.</comment>
+  </data>
+  <data name="InvalidToken" xml:space="preserve">
+    <value>İfadedeki geçersiz karakterler</value>
+    <comment>Error that occurs during graphing when there is an invalid token.</comment>
+  </data>
+  <data name="TooManyEquals" xml:space="preserve">
+    <value>Çok fazla eşittir işareti var</value>
+    <comment>Error that occurs during graphing when there are too many equals.</comment>
+  </data>
+  <data name="EqualWithoutGraphVariable" xml:space="preserve">
+    <value>Fonksiyon en az bir x veya y değişkeni içermelidir</value>
+    <comment>Error that occurs during graphing when the equation is missing x or y.</comment>
+  </data>
+  <data name="InvalidEquationSyntax" xml:space="preserve">
+    <value>Geçersiz ifade</value>
+    <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
+    </data>
+  <data name="EmptyExpression" xml:space="preserve">
+    <value>İfade boş</value>
+    <comment>Error that occurs during graphing when the expression is empty</comment>
+  </data>
+  <data name="EqualWithoutEquation" xml:space="preserve">
+    <value>Eşittir denklem olmadan kullanıldı</value>
+    <comment>Error that occurs during graphing when equal is used without an equation. Ex: sin(x=y)</comment>
+  </data>
+  <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
+    <value>Fonksiyon adından sonra parantez eksik</value>
+    <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
+    </data>
+  <data name="IncorrectNumParameter" xml:space="preserve">
+    <value>Bir matematik işleminde yanlış sayıda parametre var</value>
+    <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
+  </data>
+  <data name="InvalidVariableNameFormat" xml:space="preserve">
+    <value>Değişken adı geçersiz</value>
+    <comment>Error that occurs during graphing when a variable name is invalid.</comment>
+  </data>
+  <data name="BracketMismatch" xml:space="preserve">
+    <value>Denklemde açma köşeli ayracı eksik</value>
+    <comment>Error that occurs during graphing when a { is missing</comment>
+  </data>
+  <data name="UnmatchedBracket" xml:space="preserve">
+    <value>Denklemde kapama köşeli ayracı eksik</value>
+    <comment>Error that occurs during graphing when a } is missing.</comment>
+  </data>
+  <data name="CannotUseIInReal" xml:space="preserve">
+    <value>"i" ve "ı" değişken adı olarak kullanılamaz</value>
+    <comment>Error that occurs during graphing when i or I is used.</comment>
+  </data>
+  <data name="GeneralError" xml:space="preserve">
+    <value>Denklemin grafiği çizilemedi</value>
+    <comment>General error that occurs during graphing.</comment>
+  </data>
+  <data name="InvalidNumberDigit" xml:space="preserve">
+    <value>Basamak, verilen taban için çözümlenemedi</value>
+    <comment>Error that occurs during graphing when trying to use bases incorrect. Ex: base(2,1020).</comment>
+  </data>
+  <data name="InvalidNumberBase" xml:space="preserve">
+    <value>Taban 2 ' den büyük ve 36 ' den küçük olmalıdır</value>
+    <comment>Error that occurs during graphing when the base is out of range.</comment>
+  </data>
+  <data name="InvalidVariableSpecification" xml:space="preserve">
+    <value>Matematik işlemi, parametrelerinden birinin değişken olmasını gerektirir</value>
+    <comment>Error that occurs during graphing when a function requires a variable in a particular position. Ex: 2nd argument of deriv.</comment>
+  </data>
+  <data name="ExpectingLogicalOperands" xml:space="preserve">
+    <value>Denklem mantıksal ve skalar işlenenleri karıştırıyor</value>
+    <comment>Error that occurs during graphing when operands are mixed. Such as true and 1.</comment>
+  </data>
+  <data name="CannotUseIndexVarInOpLimits" xml:space="preserve">
+    <value>x veya y daha yüksek ya da daha alçak sınırlarda kullanılamaz</value>
+    <comment>Error that occurs during graphing when x or y is used in integral upper limits.</comment>
+  </data>
+  <data name="CannotUseIndexVarInLimPoint" xml:space="preserve">
+    <value>x veya y sınır noktasında kullanılamaz</value>
+    <comment>Error that occurs during graphing when x or y is used in the limit point.</comment>
+  </data>
+  <data name="CannotUseComplexInfinityInReal" xml:space="preserve">
+    <value>Karmaşık sonsuzluk kullanılamaz</value>
+    <comment>Error that occurs during graphing when complex infinity is used</comment>
+  </data>
+  <data name="CannotUseIInInequalitySolving" xml:space="preserve">
+    <value>Eşitsizliklerde karmaşık sayılar kullanılamaz</value>
+    <comment>Error that occurs during graphing when complex numbers are used in inequalities.</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>İşlev listesine dön</value>
+    <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>İşlev listesine dön</value>
+    <comment>This is the automation name for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>İşlevi çözümle</value>
+    <comment>This is the tooltip for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>İşlevi çözümle</value>
+    <comment>This is the automation name for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisMenuItem" xml:space="preserve">
+    <value>İşlevi çözümle</value>
+    <comment>This is the text for the for the analyze function context menu command</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Denklemi kaldır</value>
+    <comment>This is the tooltip for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Denklemi kaldır</value>
+    <comment>This is the automation name for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeMenuItem" xml:space="preserve">
+    <value>Denklemi kaldır</value>
+    <comment>This is the text for the for the remove equation context menu command</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Paylaş</value>
+    <comment>This is the automation name for the graphing calculator share button.</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Paylaş</value>
+    <comment>This is the tooltip for the graphing calculator share button.</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Denklem stilini değiştir</value>
+    <comment>This is the tooltip for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Denklem stilini değiştir</value>
+    <comment>This is the automation name for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserMenuItem" xml:space="preserve">
+    <value>Denklem stilini değiştir</value>
+    <comment>This is the text for the for the equation style context menu command</comment>
+  </data>
+  <data name="showEquationButtonToolTip" xml:space="preserve">
+    <value>Denklemi göster</value>
+    <comment>This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator.</comment>
+  </data>
+  <data name="hideEquationButtonToolTip" xml:space="preserve">
+    <value>Denklemi gizle</value>
+    <comment>This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator.</comment>
+  </data>
+  <data name="showEquationButtonAutomationName" xml:space="preserve">
+    <value>%1 denklemini göster</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="hideEquationButtonAutomationName" xml:space="preserve">
+    <value>%1 denklemini gizle</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="disableTracingButtonToolTip" xml:space="preserve">
+    <value>İzlemeyi durdur</value>
+    <comment>This is the tooltip/automation name for the graphing calculator stop tracing button</comment>
+  </data>
+  <data name="enableTracingButtonToolTip" xml:space="preserve">
+    <value>İzlemeyi başlat</value>
+    <comment>This is the tooltip/automation name for the graphing calculator start tracing button</comment>
+  </data>
+  <data name="graphAutomationName" xml:space="preserve">
+    <value>Grafik görüntüleme penceresi, %1 ve %2 ile sınırlanan x ekseni, y ekseni %3 ve %4 ile sınırlı, %5 denklemleri görüntüleme</value>
+    <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
+    </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Kaydırıcıyı yapılandır</value>
+    <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kaydırıcıyı yapılandır</value>
+    <comment>This is the automation name text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphSwitchToEquationMode" xml:space="preserve">
+    <value>Denklem moduna geçiş yap</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchToGraphMode" xml:space="preserve">
+    <value>Grafik moduna geçiş yap</value>
+    <comment>Used in Graphing Calculator to switch the view to the graph mode</comment>
+  </data>
+  <data name="SwitchModeToggleButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Denklem moduna geçiş yap</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToEquationModeAnnouncement" xml:space="preserve">
+    <value>Geçerli mod denklem modudur</value>
+    <comment>Announcement used in Graphing Calculator when switching to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToGraphModeAnnouncement" xml:space="preserve">
+    <value>Geçerli mod grafik modudur</value>
+    <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
+  </data>
+  <data name="GridHeading.Text" xml:space="preserve">
+    <value>Pencere</value>
+    <comment>Heading for window extents on the settings </comment>
+  </data>
+  <data name="TrigModeDegrees.Content" xml:space="preserve">
+    <value>Derece</value>
+    <comment>Degrees mode on settings page</comment>
+  </data>
+  <data name="TrigModeGradians.Content" xml:space="preserve">
+    <value>Gradyan</value>
+    <comment>Gradian mode on settings page</comment>
+  </data>
+  <data name="TrigModeRadians.Content" xml:space="preserve">
+    <value>Radyan</value>
+    <comment>Radians mode on settings page</comment>
+  </data>
+  <data name="UnitsHeading.Text" xml:space="preserve">
+    <value>Birimler</value>
+    <comment>Heading for Unit's on the settings</comment>
+  </data>
+  <data name="ResetViewButton.Content" xml:space="preserve">
+    <value>Görünümü sıfırla</value>
+    <comment>Hyperlink button to reset the view of the graph</comment>
+  </data>
+  <data name="GraphSettingsXMax.Header" xml:space="preserve">
+    <value>X Maksimum</value>
+    <comment>X maximum value header</comment>
+  </data>
+  <data name="GraphSettingsXMin.Header" xml:space="preserve">
+    <value>X Minimum</value>
+    <comment>X minimum value header</comment>
+  </data>
+  <data name="GraphSettingsYMax.Header" xml:space="preserve">
+    <value>Y Maksimum</value>
+    <comment>Y Maximum value header</comment>
+  </data>
+  <data name="GraphSettingsYMin.Header" xml:space="preserve">
+    <value>Y Minimum</value>
+    <comment>Y minimum value header</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Grafik seçenekleri</value>
+    <comment>This is the tooltip text for the graph options button in Graphing Calculator</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Grafik seçenekleri</value>
+    <comment>This is the automation name text for the graph options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphOptionsHeading.Text" xml:space="preserve">
+    <value>Grafik Seçenekleri</value>
+    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+  </data>
+  <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Değişken seçenekleri</value>
+    <comment>Screen reader prompt for the variable settings toggle button</comment>
+  </data>
+  <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Değişken seçenekleri değiştir</value>
+    <comment>Tool tip for the variable settings toggle button</comment>
+  </data>
+  <data name="LineThicknessBoxHeading.Text" xml:space="preserve">
+    <value>Çizgi Kalınlığı</value>
+    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+  </data>
+  <data name="LineOptionsHeading.Text" xml:space="preserve">
+    <value>Çizgi Seçenekleri</value>
+    <comment>Heading for the equation style flyout in Graphing mode.</comment>
+  </data>
+  <data name="SmallLineWidthAutomationName" xml:space="preserve">
+    <value>Küçük Çizgi Genişliği</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="MediumLineWidthAutomationName" xml:space="preserve">
+    <value>Orta Boy Çizgi Genişliği</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="LargeLineWidthAutomationName" xml:space="preserve">
+    <value>Büyük Çizgi Genişliği</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="ExtraLargeLineWidthAutomationName" xml:space="preserve">
+    <value>Çok Büyük Çizgi Genişliği</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
+    <value>Bir ifade girin</value>
+    <comment>this is the placeholder text used by the textbox to enter an equation</comment>
+  </data>
+  <data name="GraphCopyMenuItem.Text">
+    <value>Kopyala</value>
+    <comment>Copy menu item for the graph context menu</comment>
+  </data>
+  <data name="cutEquationMenuItem.Text" xml:space="preserve">
+    <value>Kes</value>
+    <comment>Cut menu item from the Equation TextBox</comment>
+  </data>
+  <data name="copyEquationMenuItem.Text" xml:space="preserve">
+    <value>Kopyala</value>
+    <comment>Copy menu item from the Equation TextBox</comment>
+  </data>
+  <data name="pasteEquationMenuItem.Text" xml:space="preserve">
+    <value>Yapıştır</value>
+    <comment>Paste menu item from the Equation TextBox</comment>
+  </data>
+  <data name="undoEquationMenuItem.Text" xml:space="preserve">
+    <value>Geri Al</value>
+    <comment>Undo menu item from the Equation TextBox</comment>
+  </data>
+  <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
+    <value>Tümünü Seç</value>
+    <comment>Select all menu item from the Equation TextBox</comment>
+  </data>
+  <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>İşlev Giriş Listesi Öğesi</value>
+    <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>İşlev Giriş Listesi</value>
+    <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>İşlev Giriş Paneli</value>
+    <comment>The automation name for the Equation Input StackPanel that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableStackPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Değişken Panel</value>
+    <comment>The automation name for the Variable StackPanel that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableListView.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Değişken Liste</value>
+    <comment>The automation name for the Variable ListView that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableListViewItem" xml:space="preserve">
+    <value>Değişken %1 Listesi Öğesi</value>
+    <comment>The automation name for the Variable ListViewItem that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableValueTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Değişken Değer Metin Kutusu</value>
+    <comment>The automation name for the Variable Value Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableValueSlider.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Değişken Değer Kaydırıcısı</value>
+    <comment>The automation name for the Variable Value Slider that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableMinTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Değişken Minimum Değer Metin Kutusu</value>
+    <comment>The automation name for the Variable Min Value Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableStepTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Değişken Adım Değeri Metin Kutusu</value>
+    <comment>The automation name for the Variable Step Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableMaxTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Değişken Maksimum Değer Metin Kutusu</value>
+    <comment>The automation name for the Variable Max Value Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="solidLineStyleAutomationName" xml:space="preserve">
+    <value>Düz çizgi stili</value>
+    <comment>Name of the solid line style for a graphed equation</comment>
+  </data>
+  <data name="dotLineStyleAutomationName" xml:space="preserve">
+    <value>Noktalı çizgi stili</value>
+    <comment>Name of the dotted line style for a graphed equation</comment>
+  </data>
+  <data name="dashLineStyleAutomationName" xml:space="preserve">
+    <value>Kesik çizgi stili</value>
+    <comment>Name of the dashed line style for a graphed equation</comment>
+  </data>
+  <data name="equationColor1AutomationName" xml:space="preserve">
+    <value>Lacivert</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor2AutomationName" xml:space="preserve">
+    <value>Deniz köpüğü</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor3AutomationName" xml:space="preserve">
+    <value>Mor</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor4AutomationName" xml:space="preserve">
+    <value>Yeşil</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor5AutomationName" xml:space="preserve">
+    <value>Nane Yeşili</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor6AutomationName" xml:space="preserve">
+    <value>Koyu Yeşil</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor7AutomationName" xml:space="preserve">
+    <value>Kömür rengi</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor8AutomationName" xml:space="preserve">
+    <value>Kırmızı</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor9AutomationName" xml:space="preserve">
+    <value>Açık Erik moru</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor10AutomationName" xml:space="preserve">
+    <value>Eflatun</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor11AutomationName" xml:space="preserve">
+    <value>Altın Sarısı</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor12AutomationName" xml:space="preserve">
+    <value>Parlak Turuncu</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor13AutomationName" xml:space="preserve">
+    <value>Kahverengi</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor14BlackAutomationName" xml:space="preserve">
+    <value>Siyah</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor14WhiteAutomationName" xml:space="preserve">
+    <value>Beyaz</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationHighContrastColor1AutomationName" xml:space="preserve">
+    <value>1. Renk</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationHighContrastColor2AutomationName" xml:space="preserve">
+    <value>2. Renk</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationHighContrastColor3AutomationName" xml:space="preserve">
+    <value>3. Renk</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationHighContrastColor4AutomationName" xml:space="preserve">
+    <value>4. Renk</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="GraphThemeHeading.Text" xml:space="preserve">
+    <value>Graph Teması</value>
+    <comment>Graph settings heading for the theme options</comment>
+  </data>
+  <data name="AlwaysLightTheme.Content" xml:space="preserve">
+    <value>Her zaman açık</value>
+    <comment>Graph settings option to set graph to light theme</comment>
+  </data>
+  <data name="MatchAppTheme.Content" xml:space="preserve">
+    <value>Uygulama temasını eşleştir</value>
+    <comment>Graph settings option to set graph to match the app theme</comment>
+  </data>
+  <data name="GraphThemeHeading.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tema</value>
+    <comment>This is the automation name text for the Graph settings heading for the theme options</comment>
+  </data>
+  <data name="AlwaysLightTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Her zaman açık</value>
+    <comment>This is the automation name text for the Graph settings option to set graph to light theme</comment>
+  </data>
+  <data name="MatchAppTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Uygulama temasını eşleştir</value>
+    <comment>This is the automation name text for the Graph settings option to set graph to match the app theme</comment>
+  </data>
+  <data name="FunctionRemovedAnnouncement" xml:space="preserve">
+    <value>İşlev kaldırıldı</value>
+    <comment>Announcement used in Graphing Calculator when a function is removed from the function list</comment>
+  </data>
+  <data name="KGFEquationTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>İşlev Analizi Denklem Kutusu</value>
+    <comment>This is the automation name text for the equation box in the function analysis panel</comment>
+  </data>
+  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Eşittir</value>
+    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="lessThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Küçüktür</value>
+    <comment>Screen reader prompt for the Less than button</comment>
+  </data>
+  <data name="lessThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Küçük veya eşittir</value>
+    <comment>Screen reader prompt for the Less than or equal button</comment>
+  </data>
+  <data name="equalsFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Eşittir</value>
+    <comment>Screen reader prompt for the Equal button</comment>
+  </data>
+  <data name="greaterThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Büyük veya eşittir</value>
+    <comment>Screen reader prompt for the Greater than or equal button</comment>
+  </data>
+  <data name="greaterThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Büyüktür</value>
+    <comment>Screen reader prompt for the Greater than button</comment>
+  </data>
+  <data name="xButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>X</value>
+    <comment>Screen reader prompt for the X button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="yButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Y</value>
+    <comment>Screen reader prompt for the Y button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="submitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Gönder</value>
+    <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>İşlev Analizi</value>
+    <comment>Screen reader prompt for the function analysis grid</comment>
+  </data>
+  <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Grafik Seçenekleri</value>
+    <comment>Screen reader prompt for the graph options panel</comment>
+  </data>
+  <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
+    <value>Geçmiş ve Bellek listeleri</value>
+    <comment>Automation name for the group of controls for history and memory lists.</comment>
+  </data>
+  <data name="DockPanel_MemoryList" xml:space="preserve">
+    <value>Bellek listesi</value>
+    <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>%1 geçmiş yuvası temizlendi</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>Hesap makinesini her zaman üstte göster</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>Hesap makinesinin tam görünümüne geri dön</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
+  <data name="arithmeticShiftButtonSelected" xml:space="preserve">
+    <value>Aritmetik Döndür seçildi</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButtonSelected" xml:space="preserve">
+    <value>Mantıksal Döndür seçildi</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButtonSelected" xml:space="preserve">
+    <value>Dairesel Kaydırmayı Döndür seçildi</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
+    <value>Elde Dairesel Kaydırmayla Döndür seçildi</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
 </root>

@@ -19,8 +19,7 @@ DEPENDENCY_PROPERTY_INITIALIZATION(FlipButtons, HoverForeground);
 DEPENDENCY_PROPERTY_INITIALIZATION(FlipButtons, PressBackground);
 DEPENDENCY_PROPERTY_INITIALIZATION(FlipButtons, PressForeground);
 
-
-void FlipButtons::OnKeyDown(KeyRoutedEventArgs^ e)
+void FlipButtons::OnKeyDown(KeyRoutedEventArgs ^ e)
 {
     // Ignore the Enter key
     if (e->Key == VirtualKey::Enter)
@@ -31,7 +30,7 @@ void FlipButtons::OnKeyDown(KeyRoutedEventArgs^ e)
     ToggleButton::OnKeyDown(e);
 }
 
-void FlipButtons::OnKeyUp(KeyRoutedEventArgs^ e)
+void FlipButtons::OnKeyUp(KeyRoutedEventArgs ^ e)
 {
     // Ignore the Enter key
     if (e->Key == VirtualKey::Enter)
@@ -42,10 +41,7 @@ void FlipButtons::OnKeyUp(KeyRoutedEventArgs^ e)
     ToggleButton::OnKeyUp(e);
 }
 
-void FlipButtons::OnButtonIdPropertyChanged(
-    NumbersAndOperatorsEnum /*oldValue*/,
-    NumbersAndOperatorsEnum newValue)
+void FlipButtons::OnButtonIdPropertyChanged(NumbersAndOperatorsEnum /*oldValue*/, NumbersAndOperatorsEnum newValue)
 {
     this->CommandParameter = newValue;
 }
-

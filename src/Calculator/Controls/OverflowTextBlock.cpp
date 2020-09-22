@@ -27,51 +27,74 @@ using namespace Windows::UI::Xaml::Navigation;
 DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, IsActive);
 DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, TextStyle);
 DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, TokensUpdated);
+DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, ScrollButtonsWidth);
+DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, ScrollButtonsFontSize);
+DEPENDENCY_PROPERTY_INITIALIZATION(OverflowTextBlock, ScrollButtonsPlacement);
+
+static constexpr unsigned int SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
+static constexpr double SCROLL_RATIO = 0.7;
 
 void OverflowTextBlock::OnApplyTemplate()
 {
-    assert(((m_scrollLeft == nullptr) && (m_scrollRight == nullptr)) || ((m_scrollLeft != nullptr) && (m_scrollRight != nullptr)));
+    UnregisterEventHandlers();
 
-    m_expressionContainer = safe_cast<ScrollViewer^>(GetTemplateChild("expressionContainer"));
-    m_expressionContainer->ChangeView(m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth, nullptr, nullptr);
+    auto uiElement = GetTemplateChild("ExpressionContainer");
+    if (uiElement != nullptr)
+    {
+        m_expressionContainer = safe_cast<ScrollViewer ^>(uiElement);
+        m_expressionContainer->ChangeView(m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth, nullptr, nullptr);
+        m_containerViewChangedToken = m_expressionContainer->ViewChanged +=
+            ref new EventHandler<ScrollViewerViewChangedEventArgs ^>(this, &OverflowTextBlock::OnViewChanged);
+    }
 
-    m_scrollLeft = safe_cast<Button^>(GetTemplateChild("scrollLeft"));
-    m_scrollRight = safe_cast<Button^>(GetTemplateChild("scrollRight"));
+    uiElement = GetTemplateChild("ExpressionContent");
+    if (uiElement != nullptr)
+    {
+        m_expressionContent = safe_cast<FrameworkElement ^>(uiElement);
+    }
 
-    m_scrollLeftClickEventToken = m_scrollLeft->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
-    m_scrollRightClickEventToken = m_scrollRight->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollClick);
+    uiElement = GetTemplateChild("ScrollLeft");
+    if (uiElement != nullptr)
+    {
+        m_scrollLeft = safe_cast<Button ^>(uiElement);
+        m_scrollLeftClickEventToken = m_scrollLeft->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollLeftClick);
+    }
 
-    m_scrollingLeft = false;
-    m_scrollingRight = false;
+    uiElement = GetTemplateChild("ScrollRight");
+    if (uiElement != nullptr)
+    {
+        m_scrollRight = safe_cast<Button ^>(uiElement);
+        m_scrollRightClickEventToken = m_scrollRight->Click += ref new RoutedEventHandler(this, &OverflowTextBlock::OnScrollRightClick);
+    }
 
-    auto borderContainer = safe_cast<Border^>(GetTemplateChild("expressionborder"));
-    m_pointerEnteredEventToken = borderContainer->PointerEntered += ref new PointerEventHandler(this, &OverflowTextBlock::OnPointerEntered);
-    m_pointerExitedEventToken = borderContainer->PointerExited += ref new PointerEventHandler(this, &OverflowTextBlock::OnPointerExited);
-
-    m_listView = safe_cast<ListView^>(GetTemplateChild("TokenList"));
+    uiElement = GetTemplateChild("TokenList");
+    if (uiElement != nullptr)
+    {
+        m_itemsControl = safe_cast<ItemsControl ^>(uiElement);
+    }
 
     UpdateAllState();
 }
 
-AutomationPeer^ OverflowTextBlock::OnCreateAutomationPeer()
+AutomationPeer ^ OverflowTextBlock::OnCreateAutomationPeer()
 {
     return ref new OverflowTextBlockAutomationPeer(this);
 }
 
 void OverflowTextBlock::OnTokensUpdatedPropertyChanged(bool /*oldValue*/, bool newValue)
 {
-    if ((m_listView != nullptr) && (newValue))
+    if (m_expressionContainer != nullptr && newValue)
     {
-        unsigned int tokenCount = m_listView->Items->Size;
-        if (tokenCount > 0)
-        {
-            m_listView->UpdateLayout();
-            m_listView->ScrollIntoView(m_listView->Items->GetAt(tokenCount - 1));
-            m_expressionContainer->ChangeView(m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth, nullptr, nullptr);
-        }
+        m_expressionContainer->UpdateLayout();
+        m_expressionContainer->ChangeView(m_expressionContainer->ScrollableWidth, nullptr, nullptr, true);
     }
-    AutomationProperties::SetAccessibilityView(this,
-        m_listView != nullptr && m_listView->Items->Size > 0 ? AccessibilityView::Control : AccessibilityView::Raw);
+    auto newIsAccessibilityViewControl = m_itemsControl != nullptr && m_itemsControl->Items->Size > 0;
+    if (m_isAccessibilityViewControl != newIsAccessibilityViewControl)
+    {
+        m_isAccessibilityViewControl = newIsAccessibilityViewControl;
+        AutomationProperties::SetAccessibilityView(this, newIsAccessibilityViewControl ? AccessibilityView::Control : AccessibilityView::Raw);
+    }
+    UpdateScrollButtons();
 }
 
 void OverflowTextBlock::UpdateAllState()
@@ -93,10 +116,9 @@ void OverflowTextBlock::UpdateVisualState()
 
 void OverflowTextBlock::ScrollLeft()
 {
-    if (m_expressionContainer->HorizontalOffset > 0)
+    if (m_expressionContainer != nullptr && m_expressionContainer->HorizontalOffset > 0)
     {
-        m_scrollingLeft = true;
-        double offset = m_expressionContainer->HorizontalOffset - (scrollRatio * m_expressionContainer->ViewportWidth);
+        double offset = m_expressionContainer->HorizontalOffset - (SCROLL_RATIO * m_expressionContainer->ViewportWidth);
         m_expressionContainer->ChangeView(offset, nullptr, nullptr);
         m_expressionContainer->UpdateLayout();
         UpdateScrollButtons();
@@ -105,84 +127,81 @@ void OverflowTextBlock::ScrollLeft()
 
 void OverflowTextBlock::ScrollRight()
 {
-    if (m_expressionContainer->HorizontalOffset < m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth)
+    auto realOffset = m_expressionContainer->HorizontalOffset + m_expressionContainer->Padding.Left + m_expressionContent->Margin.Left;
+    if (m_expressionContainer != nullptr && realOffset + m_expressionContainer->ActualWidth < m_expressionContent->ActualWidth)
     {
-        m_scrollingRight = true;
-        double offset = m_expressionContainer->HorizontalOffset + (scrollRatio * m_expressionContainer->ViewportWidth);
+        double offset = m_expressionContainer->HorizontalOffset + (SCROLL_RATIO * m_expressionContainer->ViewportWidth);
         m_expressionContainer->ChangeView(offset, nullptr, nullptr);
         m_expressionContainer->UpdateLayout();
         UpdateScrollButtons();
     }
 }
 
-void OverflowTextBlock::OnScrollClick(_In_ Object^ sender, _In_ RoutedEventArgs^)
+void OverflowTextBlock::OnScrollLeftClick(_In_ Object ^ sender, _In_ RoutedEventArgs ^)
 {
-    auto clicked = safe_cast<Button^>(sender);
-    if (clicked == m_scrollLeft)
-    {
-        ScrollLeft();
-    }
-    else
-    {
-        ScrollRight();
-    }
+    ScrollLeft();
 }
 
-void OverflowTextBlock::OnPointerEntered(_In_ Object^, _In_ PointerRoutedEventArgs^ e)
+void OverflowTextBlock::OnScrollRightClick(_In_ Object ^ sender, _In_ RoutedEventArgs ^)
 {
-    if (e->Pointer->PointerDeviceType == PointerDeviceType::Mouse)
-    {
-        UpdateScrollButtons();
-    }
-}
-
-void OverflowTextBlock::OnPointerExited(_In_ Object^, _In_ PointerRoutedEventArgs^ e)
-{
-    if (e->Pointer->PointerDeviceType == PointerDeviceType::Mouse)
-    {
-        UpdateScrollButtons();
-    }
+    ScrollRight();
 }
 
 void OverflowTextBlock::UpdateScrollButtons()
 {
-    // When the width is smaller than the container, don't show any
-    if (m_listView->ActualWidth <= m_expressionContainer->ActualWidth)
+    if (m_expressionContainer == nullptr || m_scrollLeft == nullptr || m_scrollRight == nullptr)
     {
-        ShowHideScrollButtons(::Visibility::Collapsed, ::Visibility::Collapsed);
+        return;
     }
-    // We have more number on both side. Show both arrows
-    else if ((m_expressionContainer->HorizontalOffset > 0) && (m_expressionContainer->HorizontalOffset < (m_expressionContainer->ExtentWidth - m_expressionContainer->ViewportWidth)))
+
+    auto realOffset = m_expressionContainer->HorizontalOffset + m_expressionContainer->Padding.Left + m_expressionContent->Margin.Left;
+    auto scrollLeftVisibility = realOffset > SCROLL_BUTTONS_APPROXIMATION_RANGE ? ::Visibility::Visible : ::Visibility::Collapsed;
+    auto scrollRightVisibility = realOffset + m_expressionContainer->ActualWidth + SCROLL_BUTTONS_APPROXIMATION_RANGE < m_expressionContent->ActualWidth
+                                     ? ::Visibility::Visible
+                                     : ::Visibility::Collapsed;
+
+    bool shouldTryFocusScrollRight = false;
+    if (m_scrollLeft->Visibility != scrollLeftVisibility)
     {
-        ShowHideScrollButtons(::Visibility::Visible, ::Visibility::Visible);
-    }
-    // Width is larger than the container and left most part of the number is shown. Should be able to scroll left.
-    else if (m_expressionContainer->HorizontalOffset == 0)
-    {
-        ShowHideScrollButtons(::Visibility::Collapsed, ::Visibility::Visible);
-        if (m_scrollingLeft)
+        if (scrollLeftVisibility == ::Visibility::Collapsed)
         {
-            m_scrollingLeft = false;
-            m_scrollRight->Focus(::FocusState::Programmatic);
+            shouldTryFocusScrollRight = m_scrollLeft->Equals(FocusManager::GetFocusedElement());
         }
+
+        m_scrollLeft->Visibility = scrollLeftVisibility;
     }
-    else // Width is larger than the container and right most part of the number is shown. Should be able to scroll left.
+
+    if (m_scrollRight->Visibility != scrollRightVisibility)
     {
-        ShowHideScrollButtons(::Visibility::Visible, ::Visibility::Collapsed);
-        if (m_scrollingRight)
+        if (scrollRightVisibility == ::Visibility::Collapsed && m_scrollLeft->Visibility == ::Visibility::Visible
+            && m_scrollRight->Equals(FocusManager::GetFocusedElement()))
         {
-            m_scrollingRight = false;
             m_scrollLeft->Focus(::FocusState::Programmatic);
         }
+        m_scrollRight->Visibility = scrollRightVisibility;
     }
-}
 
-void OverflowTextBlock::ShowHideScrollButtons(::Visibility vLeft, ::Visibility vRight)
-{
-    if (m_scrollLeft != nullptr && m_scrollRight != nullptr)
+    if (shouldTryFocusScrollRight && scrollRightVisibility == ::Visibility::Visible)
     {
-        m_scrollLeft->Visibility = vLeft;
-        m_scrollRight->Visibility = vRight;
+        m_scrollRight->Focus(::FocusState::Programmatic);
+    }
+
+    if (ScrollButtonsPlacement == OverflowButtonPlacement::Above && m_expressionContent != nullptr)
+    {
+        double left = m_scrollLeft != nullptr && m_scrollLeft->Visibility == ::Visibility::Visible ? ScrollButtonsWidth : 0;
+        double right = m_scrollRight != nullptr && m_scrollRight->Visibility == ::Visibility::Visible ? ScrollButtonsWidth : 0;
+        if (m_expressionContainer->Padding.Left != left || m_expressionContainer->Padding.Right != right)
+        {
+            m_expressionContainer->ViewChanged -= m_containerViewChangedToken;
+
+            m_expressionContainer->Padding = Thickness(left, 0, right, 0);
+            m_expressionContent->Margin = Thickness(-left, 0, -right, 0);
+            m_expressionContainer->UpdateLayout();
+            m_expressionContainer->Measure(m_expressionContainer->RenderSize);
+
+            m_containerViewChangedToken = m_expressionContainer->ViewChanged +=
+                ref new EventHandler<ScrollViewerViewChangedEventArgs ^>(this, &OverflowTextBlock::OnViewChanged);
+        }
     }
 }
 
@@ -199,12 +218,23 @@ void OverflowTextBlock::UnregisterEventHandlers()
         m_scrollRight->Click -= m_scrollRightClickEventToken;
     }
 
-    auto borderContainer = safe_cast<Border^>(GetTemplateChild("expressionborder"));
-
-    // Adding an extra check, in case the returned template is null
-    if (borderContainer != nullptr)
+    if (m_expressionContainer != nullptr)
     {
-        borderContainer->PointerEntered -= m_pointerEnteredEventToken;
-        borderContainer->PointerExited -= m_pointerExitedEventToken;
+        m_expressionContainer->ViewChanged -= m_containerViewChangedToken;
     }
+}
+
+void OverflowTextBlock::OnViewChanged(_In_opt_ Object ^ /*sender*/, _In_opt_ ScrollViewerViewChangedEventArgs ^ /*args*/)
+{
+    UpdateScrollButtons();
+}
+
+void OverflowTextBlock::OnScrollButtonsPlacementPropertyChanged(OverflowButtonPlacement /*oldValue*/, OverflowButtonPlacement newValue)
+{
+    if (newValue == OverflowButtonPlacement::InLine)
+    {
+        m_expressionContainer->Padding = Thickness(0);
+        m_expressionContent->Margin = Thickness(0);
+    }
+    UpdateScrollButtons();
 }
