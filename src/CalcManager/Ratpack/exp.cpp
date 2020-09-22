@@ -287,7 +287,7 @@ void powrat(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, int32_t precision)
     }
 }
 
-void powratPowerOfPowers(_Inout_ PRAT* px, PRAT y, uint32_t radix, int32_t precision)
+void powratPowerOfPowers(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, int32_t precision)
 {
     // Prepare rationals
     PRAT yNumerator = nullptr;
