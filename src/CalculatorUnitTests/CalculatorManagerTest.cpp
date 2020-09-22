@@ -636,13 +636,13 @@ namespace CalculatorManagerTest
         Command commands43[] = { Command::CommandOPENP, Command::Command1, Command::CommandDIV,
             Command::Command9, Command::CommandCLOSEP, Command::CommandSQRT, Command::CommandSUB,
             Command::Command1, Command::CommandDIV, Command::Command3, Command::CommandADD, Command::CommandNULL };
-        TestDriver::Test(L"0", L"\x221A(1 \x00F7 9) - 1 \x00F7 3 + ", commands23, true, true);
+        TestDriver::Test(L"0", L"\x221A(1 \x00F7 9) - 1 \x00F7 3 + ", commands43, true, true);
 
         Command commands44[] = { Command::CommandOPENP, Command::Command2, Command::Command7,
             Command::CommandDIV, Command::Command1, Command::Command2, Command::CommandCLOSEP,
             Command::CommandSQRT, Command::CommandSUB, Command::Command1, Command::CommandPNT, Command::Command5,
             Command::CommandADD, Command::CommandNULL };
-        TestDriver::Test(L"0", L"\x221A(27 \x00F7 12) - 1.5 + ", commands24, true, true);
+        TestDriver::Test(L"0", L"\x221A(27 \x00F7 12) - 1.5 + ", commands44, true, true);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientificParenthesis()
