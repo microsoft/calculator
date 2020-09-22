@@ -297,7 +297,7 @@ void powrat(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
     }
 }
 
-void powratNumeratorDenominatorPartial(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
+void powratPowerOfPowers(_Inout_ PRAT* px, PRAT y, uint32_t radix, int32_t precision)
 {
     // Prepare rationals
     PRAT yNumerator = nullptr;
@@ -392,8 +392,15 @@ void powratNumeratorDenominatorPartial(PRAT *px, PRAT y, uint32_t radix, int32_t
     destroyrat(pxPow);
 }
 
-void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precision)
+void powratNumeratorDenominator(_Inout_ PRAT* px, PRAT y, uint32_t radix, int32_t precision)
 {
+    // To avoid rounding calculate power of numerator and denominator separately and divide the result:
+    // px ^ py == (xNum ^ py) / (xDenom ^ py)
+    // In powratPowerOfPowers the following rule is applied:
+    // px ^ py == px ^ (yNum/yDenom) == px ^ yNum ^ (1/yDenom)
+    // Final expression is then:
+    // px ^ py == (xNum ^ yNum ^ (1/yDenom)) / (xDenom ^ yNum ^ (1/yDenom))
+
     // We need px as simple as possible
     gcdrat(px, precision);
 
@@ -406,8 +413,8 @@ void powratNumeratorDenominator(PRAT *px, PRAT y, uint32_t radix, int32_t precis
     DUPNUM(pxDenominator->pp, (*px)->pq);
 
     // Calculate pow for Numerator and Denominator separately
-    powratNumeratorDenominatorPartial(&pxNumerator, y, radix, precision);
-    powratNumeratorDenominatorPartial(&pxDenominator, y, radix, precision);
+    powratPowerOfPowers(&pxNumerator, y, radix, precision);
+    powratPowerOfPowers(&pxDenominator, y, radix, precision);
 
     // Combine results back to px
     DUPRAT(*px, pxNumerator);

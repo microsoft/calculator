@@ -434,6 +434,7 @@ extern void numpowlongx( _Inout_ PNUMBER *proot, long power );
 extern void orrat( _Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
 extern void powrat( _Inout_ PRAT *pa, _In_ PRAT b , uint32_t radix, int32_t precision);
 extern void powratNumeratorDenominator(_Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
+extern void powratPowerOfPowers(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision);
 extern void powratcomp(_Inout_ PRAT *pa, _In_ PRAT b, uint32_t radix, int32_t precision);
 extern void ratpowlong( _Inout_ PRAT *proot, long power, int32_t precision);
 extern void remnum( _Inout_ PNUMBER *pa, _In_ PNUMBER b, uint32_t radix);

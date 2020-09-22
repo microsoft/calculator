@@ -38,22 +38,22 @@ using namespace std;
 //
 //-----------------------------------------------------------------------------
 
-void gcdrat( PRAT *pa, int32_t precision)
+void gcdrat(PRAT* pa, int32_t precision)
 
 {
-    PNUMBER pgcd= nullptr;
-    PRAT a= nullptr;
+    PNUMBER pgcd = nullptr;
+    PRAT a = nullptr;
 
-    DUPRAT(a,*pa);
-    pgcd = gcd( a->pp, a->pq );
+    DUPRAT(a, *pa);
+    pgcd = gcd(a->pp, a->pq);
 
-    if ( !zernum( pgcd ) )
-        {
-        divnumx( &(a->pp), pgcd, precision);
-        divnumx( &(a->pq), pgcd, precision);
-        }
+    if (!zernum(pgcd))
+    {
+        divnumx(&(a->pp), pgcd, precision);
+        divnumx(&(a->pq), pgcd, precision);
+    }
 
-    destroynum( pgcd );
+    destroynum(pgcd);
 
     RENORMALIZE(a);
 
