@@ -27,19 +27,18 @@
                 <TextBlock x:Name="SettingsAppTheme"
                            x:Uid="SettingsAppTheme"
                            Style="{StaticResource SubtitleTextBlockStyle}"
-                           FontWeight="SemiBold"
                            AutomationProperties.HeadingLevel="Level1"
                            TextTrimming="Clip"/>
-
-                <RadioButton x:Name="SettingsDarkTheme"
-                             x:Uid="SettingsDarkTheme"
-                             Grid.Row="2"
-                             Checked="DarkChecked"/>
 
                 <RadioButton x:Name="SettingsLightTheme"
                              x:Uid="SettingsLightTheme"
                              Grid.Row="3"
                              Checked="LightChecked"/>
+
+                <RadioButton x:Name="SettingsDarkTheme"
+                             x:Uid="SettingsDarkTheme"
+                             Grid.Row="2"
+                             Checked="DarkChecked"/>
 
                 <RadioButton x:Name="SettingsSystemTheme"
                              x:Uid="SettingsSystemTheme"
@@ -67,7 +66,6 @@
                 <TextBlock x:Name="SettingsAboutLabel"
                            x:Uid="SettingsAboutLabel"
                            Style="{StaticResource SubtitleTextBlockStyle}"
-                           FontWeight="SemiBold"
                            AutomationProperties.HeadingLevel="Level2"
                            TextTrimming="Clip"/>
 

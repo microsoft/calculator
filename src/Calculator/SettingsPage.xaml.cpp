@@ -91,21 +91,6 @@ void SettingsPage::SettingsFeedbackButtonClick(_In_ Object ^ sender, _In_ Routed
     Launcher::LaunchUriAsync(ref new Uri("windows-feedback:?contextid=130&metadata=%7B%22Metadata%22:[%7B%22AppBuild%22:%22" + versionNumber + "%22%7D]%7D"));
 }
 
-void SettingsPage::DarkChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
-{
-    if (colorSetting == "Dark")
-    {
-        SettingsRestartApp->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-    }
-    else
-    {
-        SettingsRestartApp->Visibility = Windows::UI::Xaml::Visibility::Visible;
-        SettingsRestartApp->Text = resourceLoader->GetResourceString("SettingsRestartNotice");
-    }
-    Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Dark.ToString());
-}
-
-
 void SettingsPage::LightChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     if (colorSetting == "Light")
@@ -118,6 +103,20 @@ void SettingsPage::LightChecked(Platform::Object ^ sender, Windows::UI::Xaml::Ro
         SettingsRestartApp->Text = resourceLoader->GetResourceString("SettingsRestartNotice");
     }
     Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Light.ToString());
+}
+
+void SettingsPage::DarkChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    if (colorSetting == "Dark")
+    {
+        SettingsRestartApp->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+    }
+    else
+    {
+        SettingsRestartApp->Visibility = Windows::UI::Xaml::Visibility::Visible;
+        SettingsRestartApp->Text = resourceLoader->GetResourceString("SettingsRestartNotice");
+    }
+    Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Dark.ToString());
 }
 
 void SettingsPage::SystemChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
