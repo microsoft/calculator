@@ -1538,19 +1538,19 @@
     <Image Include="Assets\Graphing.targetsize-64_contrast-white.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorSplashScreen.scale-100.altform-colorful.png">
+    <Image Include="Assets\CalculatorSplashScreen.scale-400_altform-colorful.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorSplashScreen.scale-125.altform-colorful.png">
+    <Image Include="Assets\CalculatorSplashScreen.scale-200_altform-colorful.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorSplashScreen.scale-150.altform-colorful.png">
+    <Image Include="Assets\CalculatorSplashScreen.scale-150_altform-colorful.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorSplashScreen.scale-200.altform-colorful.png">
+    <Image Include="Assets\CalculatorSplashScreen.scale-125_altform-colorful.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorSplashScreen.scale-400.altform-colorful.png">
+    <Image Include="Assets\CalculatorSplashScreen.scale-100_altform-colorful.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
