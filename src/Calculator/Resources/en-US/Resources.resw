@@ -4045,7 +4045,7 @@
   </data>
   <data name="Periodicity" xml:space="preserve">
     <value>Period</value>
-    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+    <comment>Title for KeyGraphFeatures Periodicity Property. The period of a mathematical function is the smallest interval in its input values such that its output values repeat every such interval.</comment>
   </data>
   <data name="Range" xml:space="preserve">
     <value>Range</value>
