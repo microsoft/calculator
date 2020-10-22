@@ -162,14 +162,17 @@
                                     <TextBox x:Name="MinTextBox"
                                              x:Uid="VariableMinTextBox"
                                              Grid.Column="1"
-                                             MaxWidth="18"
                                              Padding="2,16,2,2"
                                              Style="{StaticResource ThemedVariableTextBoxStyle}"
                                              FontSize="11"
                                              GotFocus="TextBoxGotFocus"
                                              KeyDown="TextBoxKeyDown"
                                              LosingFocus="TextBoxLosingFocus"
-                                             Text="{x:Bind Min, Mode=OneWay}"/>
+                                             Text="{x:Bind Min, Mode=OneWay}">
+                                        <TextBox.Resources>
+                                            <x:Double x:Key="TextControlThemeMinWidth">18</x:Double>
+                                        </TextBox.Resources>
+                                    </TextBox>
                                 </Grid>
                                 <Grid Grid.Column="1" HorizontalAlignment="Center">
                                     <Grid.ColumnDefinitions>
@@ -184,14 +187,17 @@
                                     <TextBox x:Name="StepTextBox"
                                              x:Uid="VariableStepTextBox"
                                              Grid.Column="1"
-                                             MaxWidth="18"
                                              Padding="2,16,2,2"
                                              Style="{StaticResource ThemedVariableTextBoxStyle}"
                                              FontSize="11"
                                              GotFocus="TextBoxGotFocus"
                                              KeyDown="TextBoxKeyDown"
                                              LosingFocus="TextBoxLosingFocus"
-                                             Text="{x:Bind Step, Mode=OneWay}"/>
+                                             Text="{x:Bind Step, Mode=OneWay}">
+                                        <TextBox.Resources>
+                                            <x:Double x:Key="TextControlThemeMinWidth">18</x:Double>
+                                        </TextBox.Resources>
+                                    </TextBox>
                                 </Grid>
                                 <Grid Grid.Column="2" HorizontalAlignment="Right">
                                     <Grid.ColumnDefinitions>
@@ -205,14 +211,17 @@
                                     <TextBox x:Name="MaxTextBox"
                                              x:Uid="VariableMaxTextBox"
                                              Grid.Column="1"
-                                             MaxWidth="18"
                                              Padding="2,16,2,2"
                                              Style="{StaticResource ThemedVariableTextBoxStyle}"
                                              FontSize="11"
                                              GotFocus="TextBoxGotFocus"
                                              KeyDown="TextBoxKeyDown"
                                              LosingFocus="TextBoxLosingFocus"
-                                             Text="{x:Bind Max, Mode=OneWay}"/>
+                                             Text="{x:Bind Max, Mode=OneWay}">
+                                        <TextBox.Resources>
+                                            <x:Double x:Key="TextControlThemeMinWidth">18</x:Double>
+                                        </TextBox.Resources>
+                                    </TextBox>
                                 </Grid>
                             </Grid>
 
