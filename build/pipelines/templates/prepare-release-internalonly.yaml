@@ -134,6 +134,8 @@ jobs:
       skipPolling: true
       targetPublishMode: Immediate
       logPath: '$(SBLogPath)'
+      deletePackages: true
+      numberOfPackagesToKeep: 0
 
   - task: PkgESStoreBrokerAeroUpload@10
     displayName: Upload to Aero flighting dashboard
