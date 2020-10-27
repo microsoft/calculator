@@ -187,7 +187,7 @@ namespace CalculatorApp
                         auto currentCategory = value->GetModelCategory();
                         IsCurrencyCurrentCategory = currentCategory.id == CalculatorApp::Common::NavCategory::Serialize(CalculatorApp::Common::ViewMode::Currency);
                     }
-                    OnPropertyChanged("CurrentCategory");
+                    RaisePropertyChanged("CurrentCategory");
                 }
             }
 
