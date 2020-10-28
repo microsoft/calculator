@@ -16,11 +16,9 @@ jobs:
   variables:
     BuildConfiguration: Release
     BuildPlatform: ${{ parameters.platform }}
-  workspace:
-    clean: outputs
   steps:
   - checkout: self
-    clean: true
+    fetchDepth: 1
 
   - task: UniversalPackages@0
     displayName: Download internals package
