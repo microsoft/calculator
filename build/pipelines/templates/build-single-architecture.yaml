@@ -32,7 +32,6 @@ steps:
       msbuildArgs: /bl:$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator.binlog /p:OutDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\ /p:GenerateProjectSpecificOutputFolder=true /p:AppVersion=$(Build.BuildNumber) /t:Publish /p:PublishDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\publish\ ${{ parameters.extraMsBuildArgs }}
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
-      clean: true
       maximumCpuCount: true
 
   - task: PublishBuildArtifacts@1
