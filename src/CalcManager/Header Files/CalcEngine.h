@@ -77,7 +77,7 @@ public:
     }
     void SettingsChanged();
     bool IsCurrentTooBigForTrig();
-    int GetCurrentRadix();
+    uint32_t GetCurrentRadix();
     std::wstring GetCurrentResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix);
     void ChangePrecision(int32_t precision)
     {

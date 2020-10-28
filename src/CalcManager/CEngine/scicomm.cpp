@@ -1045,7 +1045,7 @@ bool CCalcEngine::IsCurrentTooBigForTrig()
     return m_currentVal >= m_maxTrigonometricNum;
 }
 
-int CCalcEngine::GetCurrentRadix()
+uint32_t CCalcEngine::GetCurrentRadix()
 {
     return m_radix;
 }

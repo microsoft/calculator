@@ -534,7 +534,7 @@ namespace CalculationManager
         vector<wstring> resultVector;
         for (auto const& memoryItem : m_memorizedNumbers)
         {
-            int radix = m_currentCalculatorEngine->GetCurrentRadix();
+            auto radix = m_currentCalculatorEngine->GetCurrentRadix();
             wstring stringValue = m_currentCalculatorEngine->GetStringForDisplay(memoryItem, radix);
 
             if (!stringValue.empty())
