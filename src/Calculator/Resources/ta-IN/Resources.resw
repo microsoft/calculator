@@ -3452,6 +3452,10 @@
     <value>இந்தச் செயல்பாட்டுக்காகப் பகுப்பாய்வு ஆதரிக்கப்படவில்லை.</value>
     <comment>Error displayed when graph analysis is not supported or had an error.</comment>
   </data>
+  <data name="KGFVariableIsNotX" xml:space="preserve">
+    <value>f(x) வடிவத்தில் உள்ள சார்புகளுக்கு மட்டுமே பகுப்பாய்வு துணைபுரிகிறது. உதாரணம்: y=x</value>
+    <comment>Error displayed when graph analysis detects the function format is not f(x).</comment>
+  </data>
   <data name="Maxima" xml:space="preserve">
     <value>பெருமம்</value>
     <comment>Title for KeyGraphFeatures Maxima Property</comment>
@@ -3474,7 +3478,7 @@
   </data>
   <data name="Periodicity" xml:space="preserve">
     <value>காலஅளவு</value>
-    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+    <comment>Title for KeyGraphFeatures Periodicity Property. The period of a mathematical function is the smallest interval in its input values such that its output values repeat every such interval.</comment>
   </data>
   <data name="Range" xml:space="preserve">
     <value>வரம்பு</value>

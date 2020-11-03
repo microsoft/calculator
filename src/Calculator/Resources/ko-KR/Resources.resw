@@ -3451,6 +3451,10 @@
     <value>이 함수에 대한 분석이 지원되지 않습니다.</value>
     <comment>Error displayed when graph analysis is not supported or had an error.</comment>
   </data>
+  <data name="KGFVariableIsNotX" xml:space="preserve">
+    <value>분석은 f(x) 형식의 함수에 대해서만 지원됩니다. 예: y = x</value>
+    <comment>Error displayed when graph analysis detects the function format is not f(x).</comment>
+  </data>
   <data name="Maxima" xml:space="preserve">
     <value>최대값</value>
     <comment>Title for KeyGraphFeatures Maxima Property</comment>
@@ -3473,7 +3477,7 @@
   </data>
   <data name="Periodicity" xml:space="preserve">
     <value>주기</value>
-    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+    <comment>Title for KeyGraphFeatures Periodicity Property. The period of a mathematical function is the smallest interval in its input values such that its output values repeat every such interval.</comment>
   </data>
   <data name="Range" xml:space="preserve">
     <value>범위</value>

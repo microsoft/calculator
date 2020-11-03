@@ -3451,6 +3451,10 @@
     <value>Phân tích không được hỗ trợ cho hàm này.</value>
     <comment>Error displayed when graph analysis is not supported or had an error.</comment>
   </data>
+  <data name="KGFVariableIsNotX" xml:space="preserve">
+    <value>Chỉ hỗ trợ phân tích đối với hàm ở dạng f(x). Ví dụ: y=x</value>
+    <comment>Error displayed when graph analysis detects the function format is not f(x).</comment>
+  </data>
   <data name="Maxima" xml:space="preserve">
     <value>Cực đại</value>
     <comment>Title for KeyGraphFeatures Maxima Property</comment>
@@ -3473,7 +3477,7 @@
   </data>
   <data name="Periodicity" xml:space="preserve">
     <value>Chu kỳ</value>
-    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+    <comment>Title for KeyGraphFeatures Periodicity Property. The period of a mathematical function is the smallest interval in its input values such that its output values repeat every such interval.</comment>
   </data>
   <data name="Range" xml:space="preserve">
     <value>Phạm vi</value>
