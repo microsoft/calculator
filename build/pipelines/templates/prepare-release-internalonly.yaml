@@ -12,7 +12,7 @@ jobs:
 - job: WindowsInternalRelease
   dependsOn: Package
   pool:
-    name: Package ES Lab E
+    name: Package ES Standard Build
   workspace:
     clean: outputs
   variables:
