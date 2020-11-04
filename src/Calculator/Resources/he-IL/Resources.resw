@@ -3455,6 +3455,10 @@
     <value>אין תמיכה בניתוח עבור פונקציה זו.</value>
     <comment>Error displayed when graph analysis is not supported or had an error.</comment>
   </data>
+  <data name="KGFVariableIsNotX" xml:space="preserve">
+    <value>הניתוח נתמך רק עבור פונקציות בתבנית f(x). דוגמה: y=x</value>
+    <comment>Error displayed when graph analysis detects the function format is not f(x).</comment>
+  </data>
   <data name="Maxima" xml:space="preserve">
     <value>מקסימום</value>
     <comment>Title for KeyGraphFeatures Maxima Property</comment>
@@ -3477,7 +3481,7 @@
   </data>
   <data name="Periodicity" xml:space="preserve">
     <value>מחזור</value>
-    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+    <comment>Title for KeyGraphFeatures Periodicity Property. The period of a mathematical function is the smallest interval in its input values such that its output values repeat every such interval.</comment>
   </data>
   <data name="Range" xml:space="preserve">
     <value>טווח</value>
