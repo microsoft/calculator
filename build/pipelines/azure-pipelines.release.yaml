@@ -16,8 +16,8 @@ pr: none
 
 variables:
   versionMajor: 10
-  versionMinor: 2009
-  versionBuild: $[counter('10.2009.*', 0)]
+  versionMinor: 2010
+  versionBuild: $[counter('10.2010.*', 0)]
   versionPatch: 0
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
