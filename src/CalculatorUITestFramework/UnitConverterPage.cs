@@ -35,17 +35,17 @@ namespace CalculatorUITestFramework
         }
 
         /// <summary>
-        /// Navigates the caclulator to Standard mode and ensures that it is in standard mode
+        /// Navigates the calculator is in currency mode
         /// </summary>
         public void NavigateToUnitConverter()
         {
-            // Ensure that calculator is in standard mode
+            // Ensure that calculator is in Currency Mode
             this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Currency);
             this.UnitConverterResults.IsResultsDisplayPresent();
         }
 
         ///// <summary>
-        ///// Ensures that the calculator is in Standard Mode
+        ///// Ensures that the calculator is in Currency Mode
         ///// </summary>
         public void EnsureCalculatorIsCurrencyMode()
         {
