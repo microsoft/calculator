@@ -9,9 +9,9 @@ const uint64_t c_minute = 60 * c_second;
 const uint64_t c_hour = 60 * c_minute;
 const uint64_t c_day = 24 * c_hour;
 
-const int c_unitsOfDate = 4;          // Units Year,Month,Week,Day
-const int c_unitsGreaterThanDays = 3; // Units Greater than Days (Year/Month/Week) 3
-const int c_daysInWeek = 7;
+const unsigned int c_unitsOfDate = 4;          // Units Year, Month, Week, Day
+const unsigned int c_unitsGreaterThanDays = 3; // Units Greater than Days (Year/Month/Week) 3
+const unsigned int c_daysInWeek = 7;
 
 namespace CalculatorApp
 {
@@ -28,7 +28,7 @@ namespace CalculatorApp
                 Day = 0x08
             };
 
-            // Struct to store the difference between two Dates in the form of Years, Months , Weeks
+            // Struct to store the difference between two Dates in the form of Years, Months, Weeks
         public
             value struct DateDifference
             {

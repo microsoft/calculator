@@ -6,7 +6,7 @@
 #include "Common/Utils.h"
 #include "Common/DateCalculator.h"
 
-const int c_maxOffsetValue = 999;
+const unsigned int c_maxOffsetValue = 999;
 
 namespace CalculatorApp
 {

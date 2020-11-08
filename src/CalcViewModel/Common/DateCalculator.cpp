@@ -162,7 +162,7 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
         {
             UINT daysIn[c_unitsOfDate] = { approximateDaysInYear, daysInMonth, c_daysInWeek, 1 };
 
-            for (int unitIndex = 0; unitIndex < c_unitsGreaterThanDays; unitIndex++)
+            for (unsigned int unitIndex = 0; unitIndex < c_unitsGreaterThanDays; unitIndex++)
             {
                 tempPivotDate = pivotDate;
 

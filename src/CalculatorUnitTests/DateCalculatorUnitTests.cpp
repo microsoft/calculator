@@ -19,13 +19,13 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace DateCalculationUnitTests
 {
-    const int c_numDate = 15;
-    const int c_diffTestCase = 9;
-    const int c_numAddOobDate = 2;
-    const int c_numSubtractOobDate = 2;
-    const int c_addCases = 3;
-    const int c_subtractCases = 3;
-    const int c_dateDiff = 14;
+    const unsigned int c_numDate = 15;
+    const unsigned int c_diffTestCase = 9;
+    const unsigned int c_numAddOobDate = 2;
+    const unsigned int c_numSubtractOobDate = 2;
+    const unsigned int c_addCases = 3;
+    const unsigned int c_subtractCases = 3;
+    const unsigned int c_dateDiff = 14;
 
     typedef struct
     {
@@ -277,7 +277,7 @@ namespace DateCalculationUnitTests
         {
             // TODO - MSFT 10331900, fix this test
 
-            // for (int testIndex = 0; testIndex < c_diffTestCase; testIndex++)
+            // for (unsigned int testIndex = 0; testIndex < c_diffTestCase; testIndex++)
             //{
             //    DateDifference diff;
             //    DateUnit dateOutputFormat;
@@ -330,7 +330,7 @@ namespace DateCalculationUnitTests
         {
             // TODO - MSFT 10331900, fix this test
 
-            // for (int testIndex = 0; testIndex< c_numAddOobDate; testIndex++)
+            // for (unsigned int testIndex = 0; testIndex< c_numAddOobDate; testIndex++)
             //{
             //    DateTime endDate;
 
@@ -346,7 +346,7 @@ namespace DateCalculationUnitTests
         /*Subtract Out of bound Tests*/
         TEST_METHOD(TestSubtractOob)
         {
-            for (int testIndex = 0; testIndex < c_numSubtractOobDate; testIndex++)
+            for (unsigned int testIndex = 0; testIndex < c_numSubtractOobDate; testIndex++)
             {
                 // Subtract Duration
                 auto endDate = m_DateCalcEngine->SubtractDuration(
@@ -362,7 +362,7 @@ namespace DateCalculationUnitTests
         {
             // TODO - MSFT 10331900, fix this test
 
-            // for (int testIndex = 0; testIndex < c_addCases; testIndex++)
+            // for (unsigned int testIndex = 0; testIndex < c_addCases; testIndex++)
             //{
             //    DateTime endDate;
 
@@ -391,7 +391,7 @@ namespace DateCalculationUnitTests
         {
             // TODO - MSFT 10331900, fix this test
 
-            // for (int testIndex = 0; testIndex < c_subtractCases; testIndex++)
+            // for (unsigned int testIndex = 0; testIndex < c_subtractCases; testIndex++)
             //{
             //    DateTime endDate;
 
@@ -812,7 +812,7 @@ TEST_METHOD(DateCalcViewModelAddOobTest)
     // VERIFY_IS_FALSE(viewModel->IsDateDiffMode);
     // VERIFY_IS_TRUE(viewModel->IsAddMode);
 
-    // for (int testIndex = 0; testIndex< c_numAddOobDate; testIndex++)
+    // for (unsigned int testIndex = 0; testIndex< c_numAddOobDate; testIndex++)
     //{
     //    viewModel->StartDate = DateUtils::SystemTimeToDateTime(datetimeBoundAdd[testIndex].startDate);
     //    viewModel->DaysOffset = datetimeBoundAdd[testIndex].dateDiff.day;
@@ -833,7 +833,7 @@ TEST_METHOD(DateCalcViewModelSubtractOobTest)
     VERIFY_IS_FALSE(viewModel->IsDateDiffMode);
     VERIFY_IS_FALSE(viewModel->IsAddMode);
 
-    for (int testIndex = 0; testIndex < c_numSubtractOobDate; testIndex++)
+    for (unsigned int testIndex = 0; testIndex < c_numSubtractOobDate; testIndex++)
     {
         viewModel->StartDate = DateUtils::SystemTimeToDateTime(datetimeBoundSubtract[testIndex].startDate);
         viewModel->DaysOffset = datetimeBoundSubtract[testIndex].dateDiff.day;

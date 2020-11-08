@@ -74,7 +74,7 @@ DateCalculatorViewModel::DateCalculatorViewModel()
     UpdateDisplayResult();
 
     m_offsetValues = ref new Vector<String ^>();
-    for (int i = 0; i <= c_maxOffsetValue; i++)
+    for (unsigned int i = 0; i <= c_maxOffsetValue; i++)
     {
         wstring numberStr(to_wstring(i));
         localizationSettings.LocalizeDisplayValue(&numberStr);
