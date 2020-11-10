@@ -474,7 +474,9 @@ void UnitConverterViewModel::OnButtonPressed(Platform::Object ^ parameter)
 
     static constexpr UCM::Command OPERANDS[] = { UCM::Command::Zero, UCM::Command::One, UCM::Command::Two,   UCM::Command::Three, UCM::Command::Four,
                                                    UCM::Command::Five, UCM::Command::Six, UCM::Command::Seven, UCM::Command::Eight, UCM::Command::Nine };
-    if (m_isInputBlocked && (command != UCM::Command::Clear && command != UCM::Command::Backspace))
+    if (m_isInputBlocked &&
+        command != UCM::Command::Clear &&
+        command != UCM::Command::Backspace)
 	{
 		return;
 	}

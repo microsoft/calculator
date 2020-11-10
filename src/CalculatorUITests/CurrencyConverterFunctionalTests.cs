@@ -8,7 +8,7 @@ using System;
 namespace CalculatorUITests
 {
     [TestClass]
-    public class UnitConverterFunctionalTests
+    public class CurrencyConverterFunctionalTests
     {
         private static UnitConverterPage page = new UnitConverterPage();
 
@@ -51,13 +51,26 @@ namespace CalculatorUITests
         }
 
         #region Basic UI Functionality via Mouse Input Tests
-
         /// <summary>
         /// These automated tests verify clicking each of the buttons in the Calculator UI and getting an expected result
         /// Via mouse input, all basic UI functionality is checked 
         /// </summary>
         [TestMethod]
         [Priority(0)]
+        public void MouseInput_EnterInputAndCheckTheResult()
+        {
+            //Verifies the 2 is entered and clear is functional
+            page.UnitConverterOperators.NumberPad.Num2Button.Click();
+            Assert.AreEqual("2", page.UnitConverterResults.GetCalculationResult1Text()); //verifies 2 button
+            Assert.AreEqual("2", page.UnitConverterResults.GetCalculationResult2Text()); //verifies 2 button
+        }
+
+        /// <summary>
+        /// These automated tests verify clicking each of the buttons in the Calculator UI and getting an expected result
+        /// Via mouse input, all basic UI functionality is checked 
+        /// </summary>
+        [TestMethod]
+        [Priority(1)]
         public void MouseInput_EnterInputWithFullDecimalAndClear()
         {
             //Verifies the 20.42 is entered and clear is functional
@@ -87,7 +100,7 @@ namespace CalculatorUITests
         /// Via mouse input, all basic UI functionality is checked 
         /// </summary>
         [TestMethod]
-        [Priority(0)]
+        [Priority(1)]
         public void MouseInput_EnterInputWithFullDecimalAndClearWithBackspace()
         {
             //Verifies the 20.42 is entered and clear is functional
