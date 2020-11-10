@@ -202,6 +202,8 @@ namespace UnitConverterUnitTests
         TEST_METHOD(UnitConverterTestQuote);
         TEST_METHOD(UnitConverterTestUnquote);
         TEST_METHOD(UnitConverterTestBackspace);
+        TEST_METHOD(UnitConverterTestBackspaceBasic);
+        TEST_METHOD(UnitConverterTestClear);
         TEST_METHOD(UnitConverterTestScientificInputs);
         TEST_METHOD(UnitConverterTestSupplementaryResultRounding);
         TEST_METHOD(UnitConverterTestMaxDigitsReached);
@@ -289,6 +291,41 @@ namespace UnitConverterUnitTests
         s_unitConverter->SendCommand(Command::Zero);
         VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"30.0"), wstring(L"30")));
         VERIFY_IS_TRUE(s_testVMCallback->CheckSuggestedValues(vector<tuple<wstring, Unit>>(begin(test2), end(test2))));
+    }
+
+
+    // Verify a basic copy paste steam. '20.43' with backspace button pressed
+    void UnitConverterTest::UnitConverterTestBackspaceBasic()
+    {
+        s_unitConverter->SendCommand(Command::Two);
+        s_unitConverter->SendCommand(Command::Zero);
+        s_unitConverter->SendCommand(Command::Decimal);
+        s_unitConverter->SendCommand(Command::Four);
+        s_unitConverter->SendCommand(Command::Three);
+        s_unitConverter->SendCommand(Command::Backspace);
+
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"20.4"), wstring(L"20.4")));
+        s_unitConverter->SendCommand(Command::Backspace);
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"20."), wstring(L"20")));
+        s_unitConverter->SendCommand(Command::Backspace);
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"20"), wstring(L"20")));
+        s_unitConverter->SendCommand(Command::Backspace);
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"2"), wstring(L"2")));
+        s_unitConverter->SendCommand(Command::Backspace);
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"0"), wstring(L"0")));
+    }
+
+    // Verify a basic copy paste steam. '20.43' with backspace button pressed
+    void UnitConverterTest::UnitConverterTestClear()
+    {
+        s_unitConverter->SendCommand(Command::Two);
+        s_unitConverter->SendCommand(Command::Zero);
+        s_unitConverter->SendCommand(Command::Decimal);
+        s_unitConverter->SendCommand(Command::Four);
+        s_unitConverter->SendCommand(Command::Three);
+        s_unitConverter->SendCommand(Command::Clear);
+
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"0"), wstring(L"0")));
     }
 
     // Check the getter functions
