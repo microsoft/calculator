@@ -13,5 +13,7 @@ namespace CalculatorUITestFramework
         public NumberPad NumberPad = new NumberPad();
         public WindowsElement ClearButton => this.session.TryFindElementByAccessibilityId("ClearEntryButtonPos0");
         public WindowsElement BackSpaceButton => this.session.TryFindElementByAccessibilityId("BackSpaceButtonSmall");
+        public WindowsElement Units1 => this.session.TryFindElementByAccessibilityId("Units1");
+        public WindowsElement Units2 => this.session.TryFindElementByAccessibilityId("Units2");
     }
 }

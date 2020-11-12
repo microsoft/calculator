@@ -64,5 +64,35 @@ namespace CalculatorUITestFramework
             }
         }
 
+        /// <summary>
+        /// Ensure Units1 and Units2 are the same 
+        /// </summary>
+        public void EnsureSameUnitsAreSelected()
+        {
+            SelectUnits1("United States - Dollar");
+            SelectUnits2("United States - Dollar");
+        }
+
+        /// <summary>
+        /// Select value in Units1 ComboBox
+        /// </summary>
+        /// <param name="value">Value in ComboBox Units1</param>
+        public void SelectUnits1(string value)
+        {
+            UnitConverterOperators.Units1.SendKeys(OpenQA.Selenium.Keys.Home);
+            UnitConverterOperators.Units1.SendKeys(value);
+            UnitConverterOperators.Units1.SendKeys(OpenQA.Selenium.Keys.Enter);
+        }
+
+        /// <summary>
+        /// Select value in Units2 ComboBox
+        /// </summary>
+        /// <param name="value">Value in ComboBox Units2</param>
+        public void SelectUnits2(string value)
+        {
+            UnitConverterOperators.Units2.SendKeys(OpenQA.Selenium.Keys.Home);
+            UnitConverterOperators.Units2.SendKeys(value);
+            UnitConverterOperators.Units2.SendKeys(OpenQA.Selenium.Keys.Enter);
+        }
     }
 }

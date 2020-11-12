@@ -42,12 +42,30 @@ namespace CalculatorUITests
             CalculatorApp.EnsureCalculatorHasFocus();
             page.EnsureCalculatorIsCurrencyMode();
             page.EnsureCalculatorResultTextIsZero();
+            page.EnsureSameUnitsAreSelected();
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
             page.ClearAll();
+        }
+
+        private string NormalizeCurrencyText(string realValue, int fractionDigits)
+        {
+            if (!realValue.Contains('.')) return realValue;
+
+            var parts = realValue.Split('.');
+            if (parts[1].Length < fractionDigits)
+            {
+                parts[1] += new string('0', fractionDigits - parts[1].Length);
+            }
+            else
+            {
+                parts[1] = parts[1].Substring(0, fractionDigits);
+            }
+
+            return $"{parts[0]}.{parts[1]}".TrimEnd('.');
         }
 
         #region Basic UI Functionality via Mouse Input Tests
@@ -127,6 +145,36 @@ namespace CalculatorUITests
             page.UnitConverterOperators.BackSpaceButton.Click();
             Assert.AreEqual("0", page.UnitConverterResults.GetCalculationResult1Text()); //verifies Backspace button clicks
             Assert.AreEqual("0", page.UnitConverterResults.GetCalculationResult2Text()); //verifies Backspace button clicks
+        }
+
+        /// <summary>
+        /// These automated tests verify different currencies use different formatter that the display value should have expected fraction digits
+        /// Via mouse input, all basic UI functionality is checked 
+        /// </summary>
+        [TestMethod]
+        [DataRow("Japan - Yen", 0)]
+        [DataRow("Korea - Won", 0)]
+        [DataRow("Tunisia - Dinar", 3)]
+        [DataRow("Jordan - Dinar", 3)]
+        [DataRow("China - Yuan", 2)]
+        [Priority(0)]
+        public void MouseInput_SelectCurrencyEnterInputWithDecimalAndCheckTheFractionDigits(string currency, int fractionDigits)
+        {
+            //Verifies fraction digits in given currency
+            page.SelectUnits1(currency);
+            Assert.AreEqual(currency.Replace(" - ", " "), page.UnitConverterOperators.Units1.Text); // Text is the AccessibleName of Unit
+            page.UnitConverterOperators.NumberPad.Num2Button.Click();
+            Assert.AreEqual(NormalizeCurrencyText("2", fractionDigits), page.UnitConverterResults.GetCalculationResult1Text()); //verifies 2 button
+            page.UnitConverterOperators.NumberPad.DecimalButton.Click();
+            Assert.AreEqual(NormalizeCurrencyText("2.", fractionDigits), page.UnitConverterResults.GetCalculationResult1Text()); //verifies decimal button
+            page.UnitConverterOperators.NumberPad.Num4Button.Click();
+            Assert.AreEqual(NormalizeCurrencyText("2.4", fractionDigits), page.UnitConverterResults.GetCalculationResult1Text()); //verifies 4 button
+            page.UnitConverterOperators.NumberPad.Num3Button.Click();
+            Assert.AreEqual(NormalizeCurrencyText("2.43", fractionDigits), page.UnitConverterResults.GetCalculationResult1Text()); //verifies 3 button
+            page.UnitConverterOperators.NumberPad.Num5Button.Click();
+            Assert.AreEqual(NormalizeCurrencyText("2.435", fractionDigits), page.UnitConverterResults.GetCalculationResult1Text()); //verifies 5 button
+            page.UnitConverterOperators.NumberPad.Num6Button.Click();
+            Assert.AreEqual(NormalizeCurrencyText("2.4356", fractionDigits), page.UnitConverterResults.GetCalculationResult1Text()); //verifies 6 button
         }
 
         #endregion
