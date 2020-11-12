@@ -227,9 +227,10 @@ void UnitConverterViewModel::OnUnitChanged(Object ^ parameter)
         return;
     }
 
+    m_model->SetCurrentUnitTypes(UnitFrom->GetModelUnit(), UnitTo->GetModelUnit());
+
     UpdateCurrencyFormatter();
 
-    m_model->SetCurrentUnitTypes(UnitFrom->GetModelUnit(), UnitTo->GetModelUnit());
     if (m_supplementaryResultsTimer != nullptr)
     {
         // End timer to show results immediately
