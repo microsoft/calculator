@@ -5,6 +5,7 @@ using CalculatorUITestFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using System;
+using System.Text.RegularExpressions;
 
 namespace CalculatorUITests
 {
@@ -360,6 +361,32 @@ namespace CalculatorUITests
             Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText()); //verifies MemMinus hotkey
             CalculatorApp.Window.SendKeys(Keys.Control + "l" + Keys.Control);
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty")); //verifies the Memory panel's memory clear button hotkey
+        }
+
+        [TestMethod]
+        [Priority(1)]
+        public void KeyboardInput_HistoryHotkeys()
+        {
+            //Verifies history buttons
+            CalculatorApp.EnsureCalculatorHasFocus();
+            CalculatorApp.Window.SendKeys("4");
+            CalculatorApp.Window.SendKeys(Keys.Multiply);
+            CalculatorApp.Window.SendKeys("5");
+            CalculatorApp.Window.SendKeys(Keys.Divide);
+            CalculatorApp.Window.SendKeys("2");
+            CalculatorApp.Window.SendKeys(Keys.Equal);
+            page.HistoryPanel.ResizeWindowToDisplayHistoryButton();
+            CalculatorApp.Window.SendKeys(Keys.Control + "h" + Keys.Control);
+            var historyFlyoutItems = page.HistoryPanel.GetAllHistoryFlyoutListViewItems();
+            var historyExpression = Regex.Replace(historyFlyoutItems[0].GetExpression(), @"\s", string.Empty);
+            Assert.IsTrue(historyFlyoutItems[0].GetValue().Equals("10", StringComparison.InvariantCultureIgnoreCase)); //verifies History button hotkeys
+            Assert.IsTrue(historyExpression.Equals("4×5÷2=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button hotkeys
+            page.HistoryPanel.ResizeWindowToDisplayHistoryLabel();
+            var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
+            Assert.IsTrue(historyItems[0].GetValue().Equals("10", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyExpression.Equals("4×5÷2=", StringComparison.InvariantCultureIgnoreCase));
+            CalculatorApp.Window.SendKeys(Keys.Shift + Keys.Control + "d" + Keys.Control + Keys.Shift);
+            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty")); //verifies the History panel's clear history button hotkeys
         }
 
         #endregion
