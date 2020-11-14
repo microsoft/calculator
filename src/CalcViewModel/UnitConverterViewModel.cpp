@@ -396,8 +396,6 @@ String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& st
             // Copy back the edited string to the result
             result = ref new String(resultWithDecimal.c_str());
         }
-
-        currencyFormatter->FractionDigits = lastCurrencyFractionDigits;
     }
 
     wstring resultHolder = wstring(result->Data());
@@ -409,6 +407,10 @@ String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& st
         }
         result = L"-" + result;
     }
+    
+    // restore the original fraction digits
+    currencyFormatter->FractionDigits = lastCurrencyFractionDigits;
+    
     return result;
 }
 
