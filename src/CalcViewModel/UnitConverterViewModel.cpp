@@ -286,14 +286,14 @@ String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& st
 
     switch (cfp)
     {
-    case CurrencyFormatterParameter::Default:
-        currencyFormatter = m_currencyFormatter;
-        break;
     case CurrencyFormatterParameter::ForValue1:
         currencyFormatter = m_currencyFormatter1;
         break;
     case CurrencyFormatterParameter::ForValue2:
         currencyFormatter = m_currencyFormatter2;
+        break;
+    default:
+        currencyFormatter = m_currencyFormatter;
         break;
     }
 
