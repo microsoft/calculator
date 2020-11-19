@@ -967,10 +967,10 @@ TEST_METHOD(TestCurrencyFormattingLogic)
     const WCHAR *vFrom = L"1.2340", *vTo = L"0.0070";
     vm.UpdateDisplay(vFrom, vTo);
 
-    VERIFY_IS_TRUE(vm.Value1 == L"1.");
+    VERIFY_IS_TRUE(vm.Value1 == L"1");
     VERIFY_IS_TRUE(vm.Value2 == L"0.007");
     vm.SwitchActive->Execute(nullptr);
-    VERIFY_IS_TRUE(vm.Value1 == L"1"); // dangling decimal now removed
+    VERIFY_IS_TRUE(vm.Value1 == L"1");
     VERIFY_IS_TRUE(vm.Value2 == L"0.007");
     vm.SwitchActive->Execute(nullptr);
     VERIFY_IS_TRUE(vm.Value1 == L"1");

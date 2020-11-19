@@ -856,6 +856,8 @@ void UnitConverterViewModel::UpdateCurrencyFormatter()
 
 void UnitConverterViewModel::UpdateIsDecimalEnabled()
 {
+    if (!IsCurrencyCurrentCategory || CurrencyFormatterFrom == nullptr)
+        return;
     IsDecimalEnabled = CurrencyFormatterFrom->FractionDigits > 0;
 }
 
