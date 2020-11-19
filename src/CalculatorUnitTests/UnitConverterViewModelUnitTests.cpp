@@ -220,6 +220,16 @@ void UnitConverterMock::SwitchActive(const std::wstring& newValue)
     m_curValue = newValue;
 }
 
+bool UnitConverterMock::IsSwitchedActive() const
+{
+    return false;
+}
+
+void UnitConverterMock::SetValue(const std::wstring& newValue)
+{
+    m_curValue = newValue;
+}
+
 std::wstring UnitConverterMock::SaveUserPreferences()
 {
     return L"TEST";
@@ -950,8 +960,8 @@ TEST_METHOD(TestCurrencyFormattingLogic)
 
     // Establish base condition
     vm.CurrentCategory = vm.Categories->GetAt(3); // Currency
-    vm.Unit1 = vm.Units->GetAt(0); // JPY
-    vm.Unit2 = vm.Units->GetAt(1); // JOD
+    vm.Unit1 = vm.Units->GetAt(0);                // JPY
+    vm.Unit2 = vm.Units->GetAt(1);                // JOD
     vm.UnitChanged->Execute(nullptr);
 
     const WCHAR *vFrom = L"1.2340", *vTo = L"0.0070";

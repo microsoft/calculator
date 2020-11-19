@@ -288,6 +288,7 @@ namespace CalculatorApp
             void RefreshSupplementaryResults();
             void UpdateInputBlocked(_In_ const std::wstring& currencyInput);
             void UpdateCurrencyFormatter();
+            void UpdateIsDecimalEnabled();
             bool UnitsAreValid();
             void ResetCategory();
 

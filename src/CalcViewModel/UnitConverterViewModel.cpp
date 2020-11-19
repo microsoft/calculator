@@ -227,9 +227,8 @@ void UnitConverterViewModel::OnUnitChanged(Object ^ parameter)
         return;
     }
 
-    m_model->SetCurrentUnitTypes(UnitFrom->GetModelUnit(), UnitTo->GetModelUnit());
-
     UpdateCurrencyFormatter();
+    m_model->SetCurrentUnitTypes(UnitFrom->GetModelUnit(), UnitTo->GetModelUnit());
 
     if (m_supplementaryResultsTimer != nullptr)
     {
@@ -271,6 +270,8 @@ void UnitConverterViewModel::OnSwitchActive(Platform::Object ^ unused)
 
     m_isInputBlocked = false;
     m_model->SwitchActive(m_valueFromUnlocalized);
+
+    UpdateIsDecimalEnabled();
 }
 
 String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& stringToLocalize, bool allowPartialStrings, CurrencyFormatterParameter cfp)
@@ -330,7 +331,7 @@ String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& st
 
         if (hasDecimal)
         {
-            if (allowPartialStrings)
+            if (allowPartialStrings && lastCurrencyFractionDigits > 0)
             {
                 // allow "in progress" strings, like "3." that occur during the composition of
                 // a final number. Without this, when typing the three characters in "3.2"
@@ -407,10 +408,10 @@ String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& st
         }
         result = L"-" + result;
     }
-    
+
     // restore the original fraction digits
     currencyFormatter->FractionDigits = lastCurrencyFractionDigits;
-    
+
     return result;
 }
 
@@ -504,9 +505,7 @@ void UnitConverterViewModel::OnButtonPressed(Platform::Object ^ parameter)
 
     static constexpr UCM::Command OPERANDS[] = { UCM::Command::Zero, UCM::Command::One, UCM::Command::Two,   UCM::Command::Three, UCM::Command::Four,
                                                  UCM::Command::Five, UCM::Command::Six, UCM::Command::Seven, UCM::Command::Eight, UCM::Command::Nine };
-    if (m_isInputBlocked &&
-        command != UCM::Command::Clear &&
-        command != UCM::Command::Backspace)
+    if (m_isInputBlocked && !m_model->IsSwitchedActive() && command != UCM::Command::Clear && command != UCM::Command::Backspace)
     {
         return;
     }
@@ -851,6 +850,13 @@ void UnitConverterViewModel::UpdateCurrencyFormatter()
     m_currencyFormatter2->IsGrouped = true;
     m_currencyFormatter2->Mode = CurrencyFormatterMode::UseCurrencyCode;
     m_currencyFormatter2->ApplyRoundingForCurrency(RoundingAlgorithm::RoundHalfDown);
+
+    UpdateIsDecimalEnabled();
+}
+
+void UnitConverterViewModel::UpdateIsDecimalEnabled()
+{
+    IsDecimalEnabled = CurrencyFormatterFrom->FractionDigits > 0;
 }
 
 NumbersAndOperatorsEnum UnitConverterViewModel::MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate)

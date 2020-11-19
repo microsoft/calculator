@@ -191,6 +191,18 @@ void UnitConverter::SwitchActive(const wstring& newValue)
     }
 }
 
+bool UnitConversionManager::UnitConverter::IsSwitchedActive() const
+{
+    return m_switchedActive;
+}
+
+void UnitConversionManager::UnitConverter::SetValue(const std::wstring& newValue)
+{
+    m_returnDisplay = m_currentDisplay;
+    m_currentDisplay = newValue;
+    m_currentHasDecimal = (m_currentDisplay.find(L'.') != wstring::npos);
+}
+
 wstring UnitConverter::CategoryToString(const Category& c, wstring_view delimiter)
 {
     return Quote(std::to_wstring(c.id))
