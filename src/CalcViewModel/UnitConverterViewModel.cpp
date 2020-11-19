@@ -505,6 +505,8 @@ void UnitConverterViewModel::OnButtonPressed(Platform::Object ^ parameter)
 
     static constexpr UCM::Command OPERANDS[] = { UCM::Command::Zero, UCM::Command::One, UCM::Command::Two,   UCM::Command::Three, UCM::Command::Four,
                                                  UCM::Command::Five, UCM::Command::Six, UCM::Command::Seven, UCM::Command::Eight, UCM::Command::Nine };
+
+    // input should be allowed if user just switches active, because we will clear values in such cases
     if (m_isInputBlocked && !m_model->IsSwitchedActive() && command != UCM::Command::Clear && command != UCM::Command::Backspace)
     {
         return;
