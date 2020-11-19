@@ -40,7 +40,6 @@ namespace CalculatorUnitTests
         void SetCurrentUnitTypes(const UCM::Unit& fromType, const UCM::Unit& toType) override;
         void SwitchActive(const std::wstring& newValue) override;
         bool IsSwitchedActive() const override;
-        void SetValue(const std::wstring& newValue) override;
         std::wstring SaveUserPreferences() override;
         void RestoreUserPreferences(_In_ std::wstring_view userPreferences) override;
         void SendCommand(UCM::Command command) override;

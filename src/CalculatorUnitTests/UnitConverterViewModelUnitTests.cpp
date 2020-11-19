@@ -225,11 +225,6 @@ bool UnitConverterMock::IsSwitchedActive() const
     return false;
 }
 
-void UnitConverterMock::SetValue(const std::wstring& newValue)
-{
-    m_curValue = newValue;
-}
-
 std::wstring UnitConverterMock::SaveUserPreferences()
 {
     return L"TEST";
