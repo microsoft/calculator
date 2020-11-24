@@ -24,7 +24,7 @@ static constexpr uint32_t OPTIMALDIGITSALLOWED = 7U;
 static constexpr wchar_t LEFTESCAPECHAR = L'{';
 static constexpr wchar_t RIGHTESCAPECHAR = L'}';
 
-static const double OPTIMALDECIMALALLOWED = 1e-6; // pow(10, -1 * (OPTIMALDIGITSALLOWED - 1));
+static const double OPTIMALDECIMALALLOWED = 1e-6;  // pow(10, -1 * (OPTIMALDIGITSALLOWED - 1));
 static const double MINIMUMDECIMALALLOWED = 1e-14; // pow(10, -1 * (MAXIMUMDIGITSALLOWED - 1));
 
 unordered_map<wchar_t, wstring> quoteConversions;
@@ -147,6 +147,11 @@ void UnitConverter::SetCurrentUnitTypes(const Unit& fromType, const Unit& toType
     if (!CheckLoad())
     {
         return;
+    }
+
+    if (m_fromType != fromType)
+    {
+        m_switchedActive = true;
     }
 
     m_fromType = fromType;
