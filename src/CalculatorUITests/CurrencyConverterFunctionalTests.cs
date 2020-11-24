@@ -154,7 +154,7 @@ namespace CalculatorUITests
         /// Via mouse input, all basic UI functionality is checked 
         /// </summary>
         [TestMethod]
-        [Priority(1)]
+        [Priority(0)]
         public void MouseInput_SelectCurrencyWith3FractionalDigitsEnterInputAndCheckTheFormat()
         {
             var currency = (string)TestContext.Properties["CurrencyWith3FractionalDigits"];
@@ -182,7 +182,7 @@ namespace CalculatorUITests
         /// Via mouse input, all basic UI functionality is checked 
         /// </summary>
         [TestMethod]
-        [Priority(1)]
+        [Priority(0)]
         public void MouseInput_SelectCurrencyWithoutFractionalDigitEnterInputAndCheckTheFormat()
         {
             var currency = (string)TestContext.Properties["CurrencyWithoutFractionalDigits"];
@@ -204,7 +204,7 @@ namespace CalculatorUITests
         /// Via mouse input, all basic UI functionality is checked 
         /// </summary>
         [TestMethod]
-        [Priority(1)]
+        [Priority(0)]
         public void MouseInput_SwitchCurrencyWithDifferentFractionalDigitsAndCheckTheFormat()
         {
             var currencyWith3FractionalDigits = (string)TestContext.Properties["CurrencyWith3FractionalDigits"];
@@ -231,7 +231,7 @@ namespace CalculatorUITests
         /// Via mouse input, all basic UI functionality is checked 
         /// </summary>
         [TestMethod]
-        [Priority(1)]
+        [Priority(0)]
         public void MouseInput_SwitchCurrencyWithLessFractionalDigitsAndEnterInput()
         {
             var currencyWith3FractionalDigits = (string)TestContext.Properties["CurrencyWith3FractionalDigits"];
