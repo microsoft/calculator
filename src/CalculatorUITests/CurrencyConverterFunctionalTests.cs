@@ -222,12 +222,13 @@ namespace CalculatorUITests
             page.SelectUnits1(currencyWithoutFractionalDigits);
             Assert.AreEqual("2", page.UnitConverterResults.GetCalculationResult1Text());
 
+            // The digits will be truncated forever, even if swiching back
             page.SelectUnits1(currencyWith3FractionalDigits);
-            Assert.AreEqual("2.435", page.UnitConverterResults.GetCalculationResult1Text());
+            Assert.AreEqual("2", page.UnitConverterResults.GetCalculationResult1Text());
         }
 
         /// <summary>
-        /// These automated tests verify if input is not blocked after swiching to currency with less fractional digits
+        /// These automated tests verify input is not blocked after swiching to currency with less fractional digits
         /// Via mouse input, all basic UI functionality is checked 
         /// </summary>
         [TestMethod]
@@ -254,6 +255,45 @@ namespace CalculatorUITests
 
             page.SelectUnits1(currencyWith3FractionalDigits);
             Assert.AreEqual("4", page.UnitConverterResults.GetCalculationResult1Text());
+        }
+
+        /// <summary>
+        /// These automated tests verify the result consists after swiching currency
+        /// Via mouse input, all basic UI functionality is checked 
+        /// </summary>
+        [TestMethod]
+        [Priority(0)]
+        public void MouseInput_SwitchCurrencyWithLessFractionalDigitsAndCheckIfTheResultIsConsistent()
+        {
+            var currencyWith3FractionalDigits = (string)TestContext.Properties["CurrencyWith3FractionalDigits"];
+            var currencyWithoutFractionalDigits = (string)TestContext.Properties["CurrencyWithoutFractionalDigits"];
+
+            page.SelectUnits1(currencyWith3FractionalDigits);
+            page.SelectUnits2(currencyWith3FractionalDigits);
+
+            page.UnitConverterOperators.NumberPad.Num2Button.Click();
+            page.UnitConverterOperators.NumberPad.Num0Button.Click();
+            page.UnitConverterOperators.NumberPad.Num0Button.Click();
+            page.UnitConverterOperators.NumberPad.DecimalButton.Click();
+            page.UnitConverterOperators.NumberPad.Num9Button.Click();
+            page.UnitConverterOperators.NumberPad.Num9Button.Click();
+            page.UnitConverterOperators.NumberPad.Num9Button.Click();
+
+            Assert.AreEqual("200.999", page.UnitConverterResults.GetCalculationResult1Text());
+            Assert.AreEqual("200.999", page.UnitConverterResults.GetCalculationResult2Text());
+
+            page.SelectUnits1(currencyWithoutFractionalDigits);
+            Assert.AreEqual("200", page.UnitConverterResults.GetCalculationResult1Text());
+            var result = page.UnitConverterResults.GetCalculationResult2Text();
+
+            page.UnitConverterOperators.ClearButton.Click();
+
+            page.UnitConverterOperators.NumberPad.Num2Button.Click();
+            page.UnitConverterOperators.NumberPad.Num0Button.Click();
+            page.UnitConverterOperators.NumberPad.Num0Button.Click();
+
+            Assert.AreEqual("200", page.UnitConverterResults.GetCalculationResult1Text());
+            Assert.AreEqual(result, page.UnitConverterResults.GetCalculationResult2Text());
         }
 
         #endregion

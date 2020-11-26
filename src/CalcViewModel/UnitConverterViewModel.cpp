@@ -838,6 +838,15 @@ void UnitConverterViewModel::UpdateInputBlocked(_In_ const wstring& currencyInpu
     }
 }
 
+std::wstring TruncateFractionDigits(const std::wstring& n, int digitCount)
+{
+    auto i = n.find('.');
+    if (i == std::wstring::npos)
+        return n;
+    size_t actualDigitCount = n.size() - i - 1;
+    return n.substr(0, n.size() - (actualDigitCount - digitCount));
+}
+
 void UnitConverterViewModel::UpdateCurrencyFormatter()
 {
     if (!IsCurrencyCurrentCategory || m_Unit1->Abbreviation->IsEmpty() || m_Unit2->Abbreviation->IsEmpty())
@@ -854,6 +863,8 @@ void UnitConverterViewModel::UpdateCurrencyFormatter()
     m_currencyFormatter2->ApplyRoundingForCurrency(RoundingAlgorithm::RoundHalfDown);
 
     UpdateIsDecimalEnabled();
+
+    OnPaste(ref new String(TruncateFractionDigits(m_valueFromUnlocalized, CurrencyFormatterFrom->FractionDigits).data()));
 }
 
 void UnitConverterViewModel::UpdateIsDecimalEnabled()
