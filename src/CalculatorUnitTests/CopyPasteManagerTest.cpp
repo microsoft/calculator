@@ -825,9 +825,13 @@ namespace CalculatorUnitTests
                                      L"12^2",
                                      L"-12.12^-2",
                                      L"61%99"
-                                     L"-6.1%99" };
+                                     L"-6.1%99",
+                                     L"1.1111111111111111111111111111111e+1142" };
         String
             ^ negativeInput[] = { L"abcdef", L"xyz",   L"ABab", L"e+234", L"123456789123456781234567890123456" /*boundary condition: greater than 32 digits*/,
+                                  L"11.1111111111111111111111111111111e+1142",
+                                  L"1.1e+10001", /*boundary condition: exponent greater than 5 digits*/
+                                  L"0.11111111111111111111111111111111111e+111111" /*boundary condition: both exponent and non exponent exceed limits*/
                                   L"SIN(2)", L"2+2==", L"2=+2" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateScientificPasteExpression, positiveInput);
