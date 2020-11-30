@@ -62,7 +62,7 @@ Diagnostic data is disabled in development builds by default, and can be enabled
 build flag.
 
 ## Currency Converter
-Windows Calculator includes a currency converter feature that uses mock data in developer builds. The data that
+Windows Calculator includes a currency converter feature that uses a mock data for developer builds. The data which
 Microsoft uses for the currency converter feature (e.g., in the retail version of the application) is not licensed
 for your use. The mock data will be clearly identifiable as it references planets instead of countries,
 and remains static regardless of selected inputs.
