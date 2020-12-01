@@ -3392,15 +3392,15 @@
     <comment>Error displayed when parity is cannot be determined</comment>
   </data>
   <data name="KGFParityEven" xml:space="preserve">
-    <value>此函数为偶数。</value>
+    <value>此函数为偶函数。</value>
     <comment>Message displayed with the function parity is even</comment>
   </data>
   <data name="KGFParityNeither" xml:space="preserve">
-    <value>此函数既不是偶数也不是奇数。</value>
+    <value>此函数既不是偶函数也不是奇函数。</value>
     <comment>Message displayed with the function parity is neither even nor odd</comment>
   </data>
   <data name="KGFParityOdd" xml:space="preserve">
-    <value>函数为奇数。</value>
+    <value>此函数为奇函数。</value>
     <comment>Message displayed with the function parity is odd</comment>
   </data>
   <data name="KGFParityUnknown" xml:space="preserve">
