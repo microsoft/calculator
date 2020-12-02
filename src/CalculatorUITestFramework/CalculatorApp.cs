@@ -36,6 +36,14 @@ namespace CalculatorUITestFramework
         }
 
         /// <summary>
+        /// Click the window (to lose focus on components)
+        /// </summary>
+        public static void ClickOnWindow()
+        {
+            Window.Click();
+        }
+
+        /// <summary>
         /// If the the Dock Panel for the History and Memory lists is not displayed, resize the window
         /// Two attempts are made, the the lable is not found a "not found" exception is thrown
         /// </summary>

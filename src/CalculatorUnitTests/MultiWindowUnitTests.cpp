@@ -685,7 +685,7 @@ TEST_METHOD(InitializeMultipleConverterTest)
         viewModels[i] = ref new UnitConverterViewModel(unitConverterMocks[i]);
         IObservableVector<Category ^> ^ cats = viewModels[i]->Categories;
         VERIFY_ARE_EQUAL((UINT)1, unitConverterMocks[i]->m_getCategoriesCallCount);
-        VERIFY_ARE_EQUAL((UINT)3, cats->Size);
+        VERIFY_ARE_EQUAL((UINT)4, cats->Size);
         // Verify that we match current category
         VERIFY_IS_TRUE(CAT2 == viewModels[i]->CurrentCategory->GetModelCategory());
     }
@@ -697,7 +697,7 @@ TEST_METHOD(InitializeMultipleConverterTest)
     // Verify that the instance properties were set independently
     for (int i = 0; i < 2; i++)
     {
-        VERIFY_ARE_EQUAL((UINT)3, viewModels[i]->Categories->Size);
+        VERIFY_ARE_EQUAL((UINT)4, viewModels[i]->Categories->Size);
         VERIFY_ARE_EQUAL((UINT)3, viewModels[i]->Units->Size);
     }
 
