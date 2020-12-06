@@ -28,6 +28,7 @@
         <Style x:Key="AboutFlyoutPresenterStyle" TargetType="FlyoutPresenter">
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         </Style>
         <Style x:Key="NavViewItemStyle" TargetType="muxc:NavigationViewItem">
             <Setter Property="KeyTipPlacementMode" Value="Right"/>
@@ -174,18 +175,18 @@
 
             <muxc:NavigationView.PaneFooter>
                 <muxc:NavigationViewItem x:Name="AboutButton"
-                                                     x:Uid="AboutButton"
-                                                     Style="{StaticResource NavViewItemStyle}"
-                                             Tapped="OnAboutButtonClick">
+                                         x:Uid="AboutButton"
+                                         Style="{StaticResource NavViewItemStyle}"
+                                         Tapped="OnAboutButtonClick">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xe946;"/>
                     </muxc:NavigationViewItem.Icon>
                     <FlyoutBase.AttachedFlyout>
                         <Flyout x:Name="AboutPageFlyout"
-                                            x:Uid="AboutPageFlyout"
-                                            Closed="OnAboutFlyoutClosed"
-                                            FlyoutPresenterStyle="{StaticResource AboutFlyoutPresenterStyle}"
-                                            Opened="OnAboutFlyoutOpened">
+                                x:Uid="AboutPageFlyout"
+                                Closed="OnAboutFlyoutClosed"
+                                FlyoutPresenterStyle="{StaticResource AboutFlyoutPresenterStyle}"
+                                Opened="OnAboutFlyoutOpened">
                             <local:AboutFlyout x:Name="AboutPage" x:Load="False"/>
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
