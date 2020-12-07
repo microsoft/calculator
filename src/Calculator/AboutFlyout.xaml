@@ -76,7 +76,7 @@
         <RichTextBlock x:Name="AboutFlyoutContribute"
                        Grid.Row="2"
                        Grid.ColumnSpan="2"
-                       Margin="12,10,12,6"
+                       Margin="12,18,12,6"
                        HorizontalAlignment="Left"
                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
                        FontSize="{ThemeResource BodyFontSize}"
