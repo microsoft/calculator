@@ -2718,7 +2718,7 @@
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutFlyoutContribute" xml:space="preserve">
-    <value>Windows Calculator is made available under the MIT license. To learn more and contribute, check out the project on %HL%GitHub%HL%.</value>
+    <value>To learn how you can contribute to Windows Calculator, check out the project on %HL%GitHub%HL%.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
