@@ -109,9 +109,6 @@
             <Border x:Name="ConverterHolder">
                 <!-- PLACEHOLDER!!!! This is where the converter goes when it is delay loaded -->
             </Border>
-            <Border x:Name="SettingsHolder">
-                <!-- PLACEHOLDER!!!! This is where the settings goes when it is delay loaded -->
-            </Border>
         </Grid>
 
         <Grid Grid.Row="1"
@@ -151,6 +148,10 @@
                     <KeyboardAccelerator Key="Up" Modifiers="Menu"/>
                 </Button.KeyboardAccelerators>
             </Button>
+        </Grid>
+
+        <Grid Grid.Row="1" Canvas.ZIndex="0">
+            <Frame x:Name="SettingsHolder" Visibility="Collapsed"/>
         </Grid>
 
         <muxc:NavigationView x:Name="NavView"

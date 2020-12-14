@@ -123,7 +123,6 @@ namespace CalculatorUnitTests
         VERIFY_IS_TRUE(NavCategory::IsValidViewMode(ViewMode::Data));
         VERIFY_IS_TRUE(NavCategory::IsValidViewMode(ViewMode::Pressure));
         VERIFY_IS_TRUE(NavCategory::IsValidViewMode(ViewMode::Angle));
-        VERIFY_IS_TRUE(NavCategory::IsValidViewMode(ViewMode::Settings));
     }
 
     void NavCategoryUnitTests::IsValidViewMode_AllInvalid()
@@ -173,7 +172,6 @@ namespace CalculatorUnitTests
         VERIFY_IS_FALSE(NavCategory::IsCalculatorViewMode(ViewMode::Data));
         VERIFY_IS_FALSE(NavCategory::IsCalculatorViewMode(ViewMode::Pressure));
         VERIFY_IS_FALSE(NavCategory::IsCalculatorViewMode(ViewMode::Angle));
-        VERIFY_IS_FALSE(NavCategory::IsCalculatorViewMode(ViewMode::Settings));
     }
 
     void NavCategoryUnitTests::IsDateCalculatorViewMode()
@@ -201,7 +199,6 @@ namespace CalculatorUnitTests
         VERIFY_IS_FALSE(NavCategory::IsDateCalculatorViewMode(ViewMode::Data));
         VERIFY_IS_FALSE(NavCategory::IsDateCalculatorViewMode(ViewMode::Pressure));
         VERIFY_IS_FALSE(NavCategory::IsDateCalculatorViewMode(ViewMode::Angle));
-        VERIFY_IS_FALSE(NavCategory::IsDateCalculatorViewMode(ViewMode::Settings));
     }
 
     void NavCategoryUnitTests::IsConverterViewMode()
@@ -228,7 +225,6 @@ namespace CalculatorUnitTests
         VERIFY_IS_TRUE(NavCategory::IsConverterViewMode(ViewMode::Data));
         VERIFY_IS_TRUE(NavCategory::IsConverterViewMode(ViewMode::Pressure));
         VERIFY_IS_TRUE(NavCategory::IsConverterViewMode(ViewMode::Angle));
-        VERIFY_IS_TRUE(NavCategory::IsConverterViewMode(ViewMode::Settings));
     }
 
     void NavCategoryUnitTests::GetFriendlyName()
@@ -254,7 +250,6 @@ namespace CalculatorUnitTests
         VERIFY_ARE_EQUAL(StringReference(L"Data"), NavCategory::GetFriendlyName(ViewMode::Data));
         VERIFY_ARE_EQUAL(StringReference(L"Pressure"), NavCategory::GetFriendlyName(ViewMode::Pressure));
         VERIFY_ARE_EQUAL(StringReference(L"Angle"), NavCategory::GetFriendlyName(ViewMode::Angle));
-        VERIFY_ARE_EQUAL(StringReference(L"Settings"), NavCategory::GetFriendlyName(ViewMode::Settings));
 
         VERIFY_ARE_EQUAL(StringReference(L"None"), NavCategory::GetFriendlyName(ViewMode::None));
     }
@@ -283,7 +278,6 @@ namespace CalculatorUnitTests
         VERIFY_ARE_EQUAL(CategoryGroupType::Converter, NavCategory::GetGroupType(ViewMode::Data));
         VERIFY_ARE_EQUAL(CategoryGroupType::Converter, NavCategory::GetGroupType(ViewMode::Pressure));
         VERIFY_ARE_EQUAL(CategoryGroupType::Converter, NavCategory::GetGroupType(ViewMode::Angle));
-        VERIFY_ARE_EQUAL(CategoryGroupType::None, NavCategory::GetGroupType(ViewMode::Settings));
     }
 
     void NavCategoryUnitTests::GetIndex()
@@ -296,13 +290,13 @@ namespace CalculatorUnitTests
             orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Graphing, ViewMode::Programmer, ViewMode::Date,
                              ViewMode::Currency, ViewMode::Volume,     ViewMode::Length,   ViewMode::Weight,     ViewMode::Temperature,
                              ViewMode::Energy,   ViewMode::Area,       ViewMode::Speed,    ViewMode::Time,       ViewMode::Power,
-                             ViewMode::Data,     ViewMode::Pressure,   ViewMode::Angle,    ViewMode::Settings };
+                             ViewMode::Data,     ViewMode::Pressure,   ViewMode::Angle };
         }
         else
         {
             orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Programmer,  ViewMode::Date,     ViewMode::Currency, ViewMode::Volume,
                              ViewMode::Length,   ViewMode::Weight,     ViewMode::Temperature, ViewMode::Energy,   ViewMode::Area,     ViewMode::Speed,
-                             ViewMode::Time,     ViewMode::Power,      ViewMode::Data,        ViewMode::Pressure, ViewMode::Angle,    ViewMode::Settings };
+                             ViewMode::Time,     ViewMode::Power,      ViewMode::Data,        ViewMode::Pressure, ViewMode::Angle };
         }
 
         auto orderedModesSize = size(orderedModes);
@@ -325,13 +319,13 @@ namespace CalculatorUnitTests
             orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Graphing, ViewMode::Programmer, ViewMode::Date,
                              ViewMode::Currency, ViewMode::Volume,     ViewMode::Length,   ViewMode::Weight,     ViewMode::Temperature,
                              ViewMode::Energy,   ViewMode::Area,       ViewMode::Speed,    ViewMode::Time,       ViewMode::Power,
-                             ViewMode::Data,     ViewMode::Pressure,   ViewMode::Angle,    ViewMode::Settings };
+                             ViewMode::Data,     ViewMode::Pressure,   ViewMode::Angle };
         }
         else
         {
             orderedModes = { ViewMode::Standard, ViewMode::Scientific, ViewMode::Programmer,  ViewMode::Date,     ViewMode::Currency, ViewMode::Volume,
                              ViewMode::Length,   ViewMode::Weight,     ViewMode::Temperature, ViewMode::Energy,   ViewMode::Area,     ViewMode::Speed,
-                             ViewMode::Time,     ViewMode::Power,      ViewMode::Data,        ViewMode::Pressure, ViewMode::Angle,    ViewMode::Settings };
+                             ViewMode::Time,     ViewMode::Power,      ViewMode::Data,        ViewMode::Pressure, ViewMode::Angle };
         }
 
         auto orderedModesSize = size(orderedModes);
@@ -381,7 +375,6 @@ namespace CalculatorUnitTests
         VERIFY_ARE_EQUAL(10, NavCategory::GetIndexInGroup(ViewMode::Data, CategoryGroupType::Converter));
         VERIFY_ARE_EQUAL(11, NavCategory::GetIndexInGroup(ViewMode::Pressure, CategoryGroupType::Converter));
         VERIFY_ARE_EQUAL(12, NavCategory::GetIndexInGroup(ViewMode::Angle, CategoryGroupType::Converter));
-        VERIFY_ARE_EQUAL(0, NavCategory::GetIndexInGroup(ViewMode::Settings, CategoryGroupType::None));
 
         VERIFY_ARE_EQUAL(-1, NavCategory::GetIndexInGroup(ViewMode::None, CategoryGroupType::Calculator));
         VERIFY_ARE_EQUAL(-1, NavCategory::GetIndexInGroup(ViewMode::None, CategoryGroupType::Converter));

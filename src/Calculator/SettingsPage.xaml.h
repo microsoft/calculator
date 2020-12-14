@@ -4,6 +4,7 @@
 #pragma once
 
 #include "SettingsPage.g.h"
+#include "Views/MainPage.xaml.h"
 
 namespace CalculatorApp
 {
@@ -12,8 +13,13 @@ namespace CalculatorApp
 	{
 	public:
 		SettingsPage();
+        property MainPage ^ MainPageProperty;
+
+    protected:
+        virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e) override;
 
     private:
+        void BackButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void ColorSettingsButtonClicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SettingsFeedbackButtonClick(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SetVersionString();

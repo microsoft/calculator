@@ -4726,4 +4726,12 @@
     <value>You'll see your changes the next time you start the app.</value>
     <comment>Notice when the user change the theme.</comment>
   </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Back</value>
+    <comment>This is the tool tip for the back button </comment>
+  </data>
+  <data name="SettingsHeader.Text" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Text for the "Settings" header</comment>
+  </data>
 </root>

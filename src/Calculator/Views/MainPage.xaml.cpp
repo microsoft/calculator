@@ -178,10 +178,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
                 m_converter->AnimateConverter();
             }
         }
-        else if (newValue == ViewMode::Settings)
-        {
-            EnsureSettings();
-        }
 
         ShowHideControls(newValue);
 
@@ -201,7 +197,6 @@ void MainPage::ShowHideControls(ViewMode mode)
     auto isDateCalcViewMode = NavCategory::IsDateCalculatorViewMode(mode);
     auto isGraphingCalcViewMode = NavCategory::IsGraphingCalculatorViewMode(mode);
     auto isConverterViewMode = NavCategory::IsConverterViewMode(mode);
-    auto isSettingsViewMode = NavCategory::IsSettingsViewMode(mode);
 
     if (m_calculator)
     {
@@ -227,11 +222,6 @@ void MainPage::ShowHideControls(ViewMode mode)
         m_converter->IsEnabled = isConverterViewMode;
     }
 
-    if (m_settings)
-    {
-        m_settings->Visibility = BooleanToVisibilityConverter::Convert(isSettingsViewMode);
-        m_settings->IsEnabled = isSettingsViewMode;
-    }
 }
 
 void MainPage::UpdateViewState()
@@ -393,17 +383,14 @@ void MainPage::EnsureConverter()
 
 void MainPage::EnsureSettings()
 {
-    if (!m_settings)
-    {
-        m_settings = ref new CalculatorApp::SettingsPage();
-        m_settings->Name = L"SettingsPage";
-
-        SettingsHolder->Child = m_settings;
-    }
+    SettingsHolder->Navigate((SettingsPage::typeid), this);
+    SettingsHolder->Visibility = ::Visibility::Visible;
+    NavView->IsPaneOpen = false;
+    NavView->Visibility = ::Visibility::Collapsed;
 }
 
 void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
-{
+    {
     if (NavView->SelectedItem == nullptr)
     {
         auto menuItems = static_cast<IObservableVector<Object ^> ^>(NavView->MenuItemsSource);
@@ -451,7 +438,13 @@ void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView ^ sender, _In_ Object ^
 
 void MainPage::OnSettingsButtonClick(Object ^ sender, ItemClickEventArgs ^ e, ViewMode /*model*/)
 {
-    Model->Mode = ViewMode::Settings;
+    EnsureSettings();
+}
+
+void MainPage::CollapseSettings()
+{
+    SettingsHolder->Visibility = ::Visibility::Collapsed;
+    NavView->Visibility = ::Visibility::Visible;
 }
 
 void MainPage::OnNavSelectionChanged(_In_ Object ^ sender, _In_ MUXC::NavigationViewSelectionChangedEventArgs ^ e)

@@ -62,6 +62,20 @@ SettingsPage::SettingsPage()
     }
 }
 
+void SettingsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e)
+{
+    MainPage ^ mainPage = (MainPage ^) e->Parameter;
+    if (mainPage != nullptr)
+    {
+        MainPageProperty = mainPage;
+    }
+}
+
+void SettingsPage::BackButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    MainPageProperty->CollapseSettings();
+}
+
 void SettingsPage::SetVersionString()
 {
     PackageVersion version = Package::Current->Id->Version;

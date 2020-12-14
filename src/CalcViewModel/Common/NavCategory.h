@@ -45,8 +45,7 @@ namespace CalculatorApp
             Pressure = 14,
             Angle = 15,
             Currency = 16,
-            Graphing = 17,
-            Settings = 18
+            Graphing = 17
         };
 
     public
@@ -140,7 +139,6 @@ namespace CalculatorApp
             static bool IsGraphingCalculatorViewMode(ViewMode mode);
             static bool IsDateCalculatorViewMode(ViewMode mode);
             static bool IsConverterViewMode(ViewMode mode);
-            static bool IsSettingsViewMode(ViewMode mode);
 
             static Platform::String ^ GetFriendlyName(ViewMode mode);
             static Platform::String ^ GetNameResourceKey(ViewMode mode);
