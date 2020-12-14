@@ -28,6 +28,7 @@
         <Style x:Key="AboutFlyoutPresenterStyle" TargetType="FlyoutPresenter">
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         </Style>
         <Style x:Key="NavViewItemStyle" TargetType="muxc:NavigationViewItem">
             <Setter Property="KeyTipPlacementMode" Value="Right"/>
@@ -184,6 +185,7 @@
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xe713;"/>
                     </muxc:NavigationViewItem.Icon>
+
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.PaneFooter>
         </muxc:NavigationView>

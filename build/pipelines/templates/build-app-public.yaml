@@ -14,10 +14,8 @@ jobs:
   variables:
     BuildConfiguration: Release
     BuildPlatform: ${{ parameters.platform }}
-  workspace:
-    clean: outputs
   steps:
   - checkout: self
-    clean: true
+    fetchDepth: 1
   
   - template: ./build-single-architecture.yaml

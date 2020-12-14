@@ -134,7 +134,6 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
     m_currencyFormatter->IsGrouped = true;
     m_currencyFormatter->Mode = CurrencyFormatterMode::UseCurrencyCode;
     m_currencyFormatter->ApplyRoundingForCurrency(RoundingAlgorithm::RoundHalfDown);
-    m_currencyMaxFractionDigits = m_currencyFormatter->FractionDigits;
 
     auto resourceLoader = AppResourceProvider::GetInstance();
     m_localizedValueFromFormat = resourceLoader->GetResourceString(UnitConverterResourceKeys::ValueFromFormat);
@@ -228,7 +227,9 @@ void UnitConverterViewModel::OnUnitChanged(Object ^ parameter)
         return;
     }
 
+    UpdateCurrencyFormatter();
     m_model->SetCurrentUnitTypes(UnitFrom->GetModelUnit(), UnitTo->GetModelUnit());
+
     if (m_supplementaryResultsTimer != nullptr)
     {
         // End timer to show results immediately
@@ -246,7 +247,7 @@ void UnitConverterViewModel::OnSwitchActive(Platform::Object ^ unused)
     if (m_relocalizeStringOnSwitch)
     {
         // clean up any ill-formed strings that were in progress before the switch
-        ValueFrom = ConvertToLocalizedString(m_valueFromUnlocalized, false);
+        ValueFrom = ConvertToLocalizedString(m_valueFromUnlocalized, false, CurrencyFormatterParameterFrom);
     }
 
     SwitchConversionParameters();
@@ -269,9 +270,11 @@ void UnitConverterViewModel::OnSwitchActive(Platform::Object ^ unused)
 
     m_isInputBlocked = false;
     m_model->SwitchActive(m_valueFromUnlocalized);
+
+    UpdateIsDecimalEnabled();
 }
 
-String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& stringToLocalize, bool allowPartialStrings)
+String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& stringToLocalize, bool allowPartialStrings, CurrencyFormatterParameter cfp)
 {
     Platform::String ^ result;
 
@@ -280,10 +283,33 @@ String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& st
         return result;
     }
 
+    CurrencyFormatter ^ currencyFormatter;
+
+    switch (cfp)
+    {
+    case CurrencyFormatterParameter::ForValue1:
+        currencyFormatter = m_currencyFormatter1;
+        break;
+    case CurrencyFormatterParameter::ForValue2:
+        currencyFormatter = m_currencyFormatter2;
+        break;
+    default:
+        currencyFormatter = m_currencyFormatter;
+        break;
+    }
+
+    // If unit hasn't been set, currencyFormatter1/2 is nullptr. Fallback to default.
+    if (currencyFormatter == nullptr)
+    {
+        currencyFormatter = m_currencyFormatter;
+    }
+
+    int lastCurrencyFractionDigits = currencyFormatter->FractionDigits;
+
     m_decimalFormatter->IsDecimalPointAlwaysDisplayed = false;
     m_decimalFormatter->FractionDigits = 0;
-    m_currencyFormatter->IsDecimalPointAlwaysDisplayed = false;
-    m_currencyFormatter->FractionDigits = 0;
+    currencyFormatter->IsDecimalPointAlwaysDisplayed = false;
+    currencyFormatter->FractionDigits = 0;
 
     wstring::size_type posOfE = stringToLocalize.find(L'e');
     if (posOfE != wstring::npos)
@@ -293,7 +319,8 @@ String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& st
         std::wstring significandStr(stringToLocalize.substr(0, posOfE));
         std::wstring exponentStr(stringToLocalize.substr(posOfSign + 1, stringToLocalize.length() - posOfSign));
 
-        result += ConvertToLocalizedString(significandStr, allowPartialStrings) + "e" + signOfE + ConvertToLocalizedString(exponentStr, allowPartialStrings);
+        result += ConvertToLocalizedString(significandStr, allowPartialStrings, cfp) + "e" + signOfE
+                  + ConvertToLocalizedString(exponentStr, allowPartialStrings, cfp);
     }
     else
     {
@@ -304,7 +331,7 @@ String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& st
 
         if (hasDecimal)
         {
-            if (allowPartialStrings)
+            if (allowPartialStrings && lastCurrencyFractionDigits > 0)
             {
                 // allow "in progress" strings, like "3." that occur during the composition of
                 // a final number. Without this, when typing the three characters in "3.2"
@@ -312,18 +339,18 @@ String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& st
                 // typed a post-decimal digit.
 
                 m_decimalFormatter->IsDecimalPointAlwaysDisplayed = true;
-                m_currencyFormatter->IsDecimalPointAlwaysDisplayed = true;
+                currencyFormatter->IsDecimalPointAlwaysDisplayed = true;
             }
 
             // force post-decimal digits so that trailing zeroes entered by the user aren't suddenly cut off.
             m_decimalFormatter->FractionDigits = static_cast<int>(stringToLocalize.length() - (posOfDecimal + 1));
-            m_currencyFormatter->FractionDigits = m_currencyMaxFractionDigits;
+            currencyFormatter->FractionDigits = lastCurrencyFractionDigits;
         }
 
         if (IsCurrencyCurrentCategory)
         {
-            wstring currencyResult = m_currencyFormatter->Format(stod(stringToLocalize))->Data();
-            wstring currencyCode = m_currencyFormatter->Currency->Data();
+            wstring currencyResult = currencyFormatter->Format(stod(stringToLocalize))->Data();
+            wstring currencyCode = currencyFormatter->Currency->Data();
 
             // CurrencyFormatter always includes LangCode or Symbol. Make it include LangCode
             // because this includes a non-breaking space. Remove the LangCode.
@@ -381,6 +408,10 @@ String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& st
         }
         result = L"-" + result;
     }
+
+    // restore the original fraction digits
+    currencyFormatter->FractionDigits = lastCurrencyFractionDigits;
+
     return result;
 }
 
@@ -394,9 +425,9 @@ void UnitConverterViewModel::DisplayPasteError()
 
 void UnitConverterViewModel::UpdateDisplay(const wstring& from, const wstring& to)
 {
-    String ^ fromStr = this->ConvertToLocalizedString(from, true);
+    String ^ fromStr = this->ConvertToLocalizedString(from, true, CurrencyFormatterParameterFrom);
     UpdateInputBlocked(from);
-    String ^ toStr = this->ConvertToLocalizedString(to, true);
+    String ^ toStr = this->ConvertToLocalizedString(to, true, CurrencyFormatterParameterTo);
 
     bool updatedValueFrom = ValueFrom != fromStr;
     bool updatedValueTo = ValueTo != toStr;
@@ -473,12 +504,14 @@ void UnitConverterViewModel::OnButtonPressed(Platform::Object ^ parameter)
     }
 
     static constexpr UCM::Command OPERANDS[] = { UCM::Command::Zero, UCM::Command::One, UCM::Command::Two,   UCM::Command::Three, UCM::Command::Four,
-                                                   UCM::Command::Five, UCM::Command::Six, UCM::Command::Seven, UCM::Command::Eight, UCM::Command::Nine };
-	if (m_isInputBlocked)
-	{
-		return;
-	}
-	m_model->SendCommand(command);
+                                                 UCM::Command::Five, UCM::Command::Six, UCM::Command::Seven, UCM::Command::Eight, UCM::Command::Nine };
+
+    // input should be allowed if user just switches active, because we will clear values in such cases
+    if (m_isInputBlocked && !m_model->IsSwitchedActive() && command != UCM::Command::Clear && command != UCM::Command::Backspace)
+    {
+        return;
+    }
+    m_model->SendCommand(command);
 
     TraceLogger::GetInstance()->LogConverterInputReceived(Mode);
 }
@@ -753,8 +786,8 @@ void UnitConverterViewModel::RefreshSupplementaryResults()
 
     for (tuple<wstring, UCM::Unit> suggestedValue : m_cachedSuggestedValues)
     {
-        SupplementaryResult ^ result =
-            ref new SupplementaryResult(this->ConvertToLocalizedString(get<0>(suggestedValue), false), ref new Unit(get<1>(suggestedValue)));
+        SupplementaryResult ^ result = ref new SupplementaryResult(
+            this->ConvertToLocalizedString(get<0>(suggestedValue), false, CurrencyFormatterParameter::Default), ref new Unit(get<1>(suggestedValue)));
         if (result->IsWhimsical())
         {
             whimsicals.push_back(result);
@@ -801,8 +834,44 @@ void UnitConverterViewModel::UpdateInputBlocked(_In_ const wstring& currencyInpu
     m_isInputBlocked = false;
     if (posOfDecimal != wstring::npos && IsCurrencyCurrentCategory)
     {
-        m_isInputBlocked = (posOfDecimal + static_cast<size_t>(m_currencyMaxFractionDigits) + 1 == currencyInput.length());
+        m_isInputBlocked = (posOfDecimal + static_cast<size_t>(CurrencyFormatterFrom->FractionDigits) + 1 == currencyInput.length());
     }
+}
+
+std::wstring TruncateFractionDigits(const std::wstring& n, int digitCount)
+{
+    auto i = n.find('.');
+    if (i == std::wstring::npos)
+        return n;
+    size_t actualDigitCount = n.size() - i - 1;
+    return n.substr(0, n.size() - (actualDigitCount - digitCount));
+}
+
+void UnitConverterViewModel::UpdateCurrencyFormatter()
+{
+    if (!IsCurrencyCurrentCategory || m_Unit1->Abbreviation->IsEmpty() || m_Unit2->Abbreviation->IsEmpty())
+        return;
+
+    m_currencyFormatter1 = ref new CurrencyFormatter(m_Unit1->Abbreviation);
+    m_currencyFormatter1->IsGrouped = true;
+    m_currencyFormatter1->Mode = CurrencyFormatterMode::UseCurrencyCode;
+    m_currencyFormatter1->ApplyRoundingForCurrency(RoundingAlgorithm::RoundHalfDown);
+
+    m_currencyFormatter2 = ref new CurrencyFormatter(m_Unit2->Abbreviation);
+    m_currencyFormatter2->IsGrouped = true;
+    m_currencyFormatter2->Mode = CurrencyFormatterMode::UseCurrencyCode;
+    m_currencyFormatter2->ApplyRoundingForCurrency(RoundingAlgorithm::RoundHalfDown);
+
+    UpdateIsDecimalEnabled();
+
+    OnPaste(ref new String(TruncateFractionDigits(m_valueFromUnlocalized, CurrencyFormatterFrom->FractionDigits).data()));
+}
+
+void UnitConverterViewModel::UpdateIsDecimalEnabled()
+{
+    if (!IsCurrencyCurrentCategory || CurrencyFormatterFrom == nullptr)
+        return;
+    IsDecimalEnabled = CurrencyFormatterFrom->FractionDigits > 0;
 }
 
 NumbersAndOperatorsEnum UnitConverterViewModel::MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate)
@@ -932,14 +1001,19 @@ void UnitConverterViewModel::OnPaste(String ^ stringToPaste)
     }
 }
 
-String ^ UnitConverterViewModel::GetLocalizedAutomationName(_In_ String ^ displayvalue, _In_ String ^ unitname, _In_ String ^ format)
+String
+    ^ UnitConverterViewModel::GetLocalizedAutomationName(
+        _In_ String ^ displayvalue,
+        _In_ String ^ unitname,
+        _In_ String ^ format,
+        _In_ CurrencyFormatterParameter cfp)
 {
     String ^ valueToLocalize = displayvalue;
     if (displayvalue == ValueFrom && Utils::IsLastCharacterTarget(m_valueFromUnlocalized, m_decimalSeparator))
     {
         // Need to compute a second localized value for the automation
         // name that does not include the decimal separator.
-        displayvalue = ConvertToLocalizedString(m_valueFromUnlocalized, false /*allowTrailingDecimal*/);
+        displayvalue = ConvertToLocalizedString(m_valueFromUnlocalized, false /*allowTrailingDecimal*/, cfp);
         format = m_localizedValueFromDecimalFormat;
     }
 
@@ -960,7 +1034,7 @@ void UnitConverterViewModel::UpdateValue1AutomationName()
 {
     if (Unit1)
     {
-        Value1AutomationName = GetLocalizedAutomationName(Value1, Unit1->AccessibleName, m_localizedValueFromFormat);
+        Value1AutomationName = GetLocalizedAutomationName(Value1, Unit1->AccessibleName, m_localizedValueFromFormat, CurrencyFormatterParameter::ForValue1);
     }
 }
 
@@ -968,7 +1042,7 @@ void UnitConverterViewModel::UpdateValue2AutomationName()
 {
     if (Unit2)
     {
-        Value2AutomationName = GetLocalizedAutomationName(Value2, Unit2->AccessibleName, m_localizedValueToFormat);
+        Value2AutomationName = GetLocalizedAutomationName(Value2, Unit2->AccessibleName, m_localizedValueToFormat, CurrencyFormatterParameter::ForValue1);
     }
 }
 

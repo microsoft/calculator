@@ -118,7 +118,7 @@ namespace GraphControl
     {
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
-            if(auto renderer = m_graph->GetRenderer())
+            if (auto renderer = m_graph->GetRenderer())
             {
                 HRESULT hr;
 
@@ -281,7 +281,7 @@ namespace GraphControl
 
     void Grapher::PlotGraph(bool keepCurrentView)
     {
-        TryPlotGraph(keepCurrentView,false);
+        TryPlotGraph(keepCurrentView, false);
     }
 
     task<void> Grapher::TryPlotGraph(bool keepCurrentView, bool shouldRetry)
@@ -587,7 +587,7 @@ namespace GraphControl
                 auto lineColor = eq->LineColor;
                 graphColors.emplace_back(lineColor.R, lineColor.G, lineColor.B, lineColor.A);
 
-                if (eq->GraphedEquation)                
+                if (eq->GraphedEquation)
                 {
                     if (!eq->HasGraphError && eq->IsSelected)
                     {
@@ -1085,7 +1085,6 @@ void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, 
     }
 }
 
-
 void Grapher::OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
 {
     if (m_renderMain != nullptr && m_graph != nullptr)
@@ -1106,13 +1105,14 @@ void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
             m_renderMain->SetPointRadius(LineWidth + 1);
             m_renderMain->RunRenderPass();
 
-             TraceLogger::GetInstance()->LogLineWidthChanged();
+            TraceLogger::GetInstance()->LogLineWidthChanged();
         }
     }
 }
 
 optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bool keepCurrentView, const IExpression* graphingExp)
 {
+    critical_section::scoped_lock lock(m_renderMain->GetCriticalSection());
     if (keepCurrentView || IsKeepCurrentView)
     {
         auto renderer = m_graph->GetRenderer();

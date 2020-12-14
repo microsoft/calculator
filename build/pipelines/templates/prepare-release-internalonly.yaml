@@ -12,7 +12,7 @@ jobs:
 - job: WindowsInternalRelease
   dependsOn: Package
   pool:
-    name: Package ES Lab E
+    name: Package ES Standard Build
   workspace:
     clean: outputs
   variables:
@@ -80,7 +80,7 @@ jobs:
       downloadDirectory: $(Build.SourcesDirectory)
       vstsFeed: WindowsInboxApps
       vstsFeedPackage: calculator-internals
-      vstsPackageVersion: 0.0.50
+      vstsPackageVersion: 0.0.53
 
   - powershell: |
       # Just modify this line to indicate where your en-us PDP file is. Leave the other lines alone.
@@ -134,6 +134,8 @@ jobs:
       skipPolling: true
       targetPublishMode: Immediate
       logPath: '$(SBLogPath)'
+      deletePackages: true
+      numberOfPackagesToKeep: 0
 
   - task: PkgESStoreBrokerAeroUpload@10
     displayName: Upload to Aero flighting dashboard

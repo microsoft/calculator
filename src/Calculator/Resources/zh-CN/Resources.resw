@@ -3392,15 +3392,15 @@
     <comment>Error displayed when parity is cannot be determined</comment>
   </data>
   <data name="KGFParityEven" xml:space="preserve">
-    <value>此函数为偶数。</value>
+    <value>此函数为偶函数。</value>
     <comment>Message displayed with the function parity is even</comment>
   </data>
   <data name="KGFParityNeither" xml:space="preserve">
-    <value>此函数既不是偶数也不是奇数。</value>
+    <value>此函数既不是偶函数也不是奇函数。</value>
     <comment>Message displayed with the function parity is neither even nor odd</comment>
   </data>
   <data name="KGFParityOdd" xml:space="preserve">
-    <value>函数为奇数。</value>
+    <value>此函数为奇函数。</value>
     <comment>Message displayed with the function parity is odd</comment>
   </data>
   <data name="KGFParityUnknown" xml:space="preserve">
@@ -3436,7 +3436,7 @@
     <comment>Message displayed when the graph does not have any y-intercepts</comment>
   </data>
   <data name="Domain" xml:space="preserve">
-    <value>域</value>
+    <value>定义域</value>
     <comment>Title for KeyGraphFeatures Domain Property</comment>
   </data>
   <data name="HorizontalAsymptotes" xml:space="preserve">
@@ -3450,6 +3450,10 @@
   <data name="KGFAnalysisNotSupported" xml:space="preserve">
     <value>此函数不支持分析。</value>
     <comment>Error displayed when graph analysis is not supported or had an error.</comment>
+  </data>
+  <data name="KGFVariableIsNotX" xml:space="preserve">
+    <value>仅 f(x) 格式的函数支持分析。示例: y=x</value>
+    <comment>Error displayed when graph analysis detects the function format is not f(x).</comment>
   </data>
   <data name="Maxima" xml:space="preserve">
     <value>极大值</value>
@@ -3473,10 +3477,10 @@
   </data>
   <data name="Periodicity" xml:space="preserve">
     <value>周期</value>
-    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+    <comment>Title for KeyGraphFeatures Periodicity Property. The period of a mathematical function is the smallest interval in its input values such that its output values repeat every such interval.</comment>
   </data>
   <data name="Range" xml:space="preserve">
-    <value>区间</value>
+    <value>值域</value>
     <comment>Title for KeyGraphFeatures Range Property</comment>
   </data>
   <data name="VerticalAsymptotes" xml:space="preserve">
@@ -3495,11 +3499,11 @@
     <value>无法对此函数执行分析。</value>
   </data>
   <data name="KGFDomainNone" xml:space="preserve">
-    <value>无法计算此函数的域。</value>
+    <value>无法计算此函数的定义域。</value>
     <comment>Error displayed when Domain is not returned from the analyzer.</comment>
   </data>
   <data name="KGFRangeNone" xml:space="preserve">
-    <value>无法计算此函数的区间。</value>
+    <value>无法计算此函数的值域。</value>
     <comment>Error displayed when Range is not returned from the analyzer.</comment>
   </data>
   <data name="Overflow" xml:space="preserve">
@@ -3543,7 +3547,7 @@
     <comment>Error that occurs during graphing when mutually exclusive conditions are used.</comment>
   </data>
   <data name="OutOfDomain" xml:space="preserve">
-    <value>公式超出域</value>
+    <value>方程超出定义域</value>
     <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
   <data name="GE_NotSupported" xml:space="preserve">

@@ -4,13 +4,20 @@
 # Store and the Windows image. This pipeline relies on Microsoft-internal resources to run.
 #
 
+schedules:
+- cron: "0 7 * * *"
+  displayName: Daily midnight build
+  branches:
+    include:
+    - master
+
 trigger: none
 pr: none
 
 variables:
   versionMajor: 10
-  versionMinor: 2009
-  versionBuild: $[counter('10.2009.*', 0)]
+  versionMinor: 2012
+  versionBuild: $[counter('10.2012.*', 0)]
   versionPatch: 0
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'

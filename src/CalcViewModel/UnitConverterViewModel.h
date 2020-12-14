@@ -187,7 +187,7 @@ namespace CalculatorApp
                         auto currentCategory = value->GetModelCategory();
                         IsCurrencyCurrentCategory = currentCategory.id == CalculatorApp::Common::NavCategory::Serialize(CalculatorApp::Common::ViewMode::Currency);
                     }
-                    OnPropertyChanged("CurrentCategory");
+                    RaisePropertyChanged("CurrentCategory");
                 }
             }
 
@@ -227,8 +227,19 @@ namespace CalculatorApp
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
 
+            enum class CurrencyFormatterParameter
+            {
+                Default,
+                ForValue1,
+                ForValue2,
+            };
+
             Platform::String
-                ^ GetLocalizedAutomationName(_In_ Platform::String ^ displayvalue, _In_ Platform::String ^ unitname, _In_ Platform::String ^ format);
+                ^ GetLocalizedAutomationName(
+                    _In_ Platform::String ^ displayvalue,
+                    _In_ Platform::String ^ unitname,
+                    _In_ Platform::String ^ format,
+                    _In_ CurrencyFormatterParameter cfp);
             Platform::String
                 ^ GetLocalizedConversionResultStringFormat(
                     _In_ Platform::String ^ fromValue,
@@ -276,11 +287,13 @@ namespace CalculatorApp
             void SupplementaryResultsTimerCancel(Windows::System::Threading::ThreadPoolTimer ^ timer);
             void RefreshSupplementaryResults();
             void UpdateInputBlocked(_In_ const std::wstring& currencyInput);
+            void UpdateCurrencyFormatter();
+            void UpdateIsDecimalEnabled();
             bool UnitsAreValid();
             void ResetCategory();
 
             void OnButtonPressed(Platform::Object ^ parameter);
-            Platform::String ^ ConvertToLocalizedString(const std::wstring& stringToLocalize, bool allowPartialStrings);
+            Platform::String ^ ConvertToLocalizedString(const std::wstring& stringToLocalize, bool allowPartialStrings, CurrencyFormatterParameter cfp);
 
             std::shared_ptr<UnitConversionManager::IUnitConverter> m_model;
             wchar_t m_decimalSeparator;
@@ -290,6 +303,34 @@ namespace CalculatorApp
                 Source,
                 Target
             } m_value1cp;
+            property CurrencyFormatterParameter CurrencyFormatterParameterFrom
+            {
+                CurrencyFormatterParameter get()
+                {
+                    return m_value1cp == ConversionParameter::Source ? CurrencyFormatterParameter::ForValue1 : CurrencyFormatterParameter::ForValue2;
+                }
+            }
+            property CurrencyFormatterParameter CurrencyFormatterParameterTo
+            {
+                CurrencyFormatterParameter get()
+                {
+                    return m_value1cp == ConversionParameter::Target ? CurrencyFormatterParameter::ForValue1 : CurrencyFormatterParameter::ForValue2;
+                }
+            }
+            property Windows::Globalization::NumberFormatting::CurrencyFormatter^ CurrencyFormatterFrom
+            {
+                Windows::Globalization::NumberFormatting::CurrencyFormatter^ get()
+                {
+                    return m_value1cp == ConversionParameter::Source ? m_currencyFormatter1 : m_currencyFormatter2;
+                }
+            }
+            property Windows::Globalization::NumberFormatting::CurrencyFormatter^ CurrencyFormatterTo
+            {
+                Windows::Globalization::NumberFormatting::CurrencyFormatter^ get()
+                {
+                    return m_value1cp == ConversionParameter::Target ? m_currencyFormatter1 : m_currencyFormatter2;
+                }
+            }
             property Platform::String^ ValueFrom
             {
                 Platform::String^ get() { return m_value1cp == ConversionParameter::Source ? Value1 : Value2; }
@@ -323,7 +364,8 @@ namespace CalculatorApp
             std::mutex m_cacheMutex;
             Windows::Globalization::NumberFormatting::DecimalFormatter ^ m_decimalFormatter;
             Windows::Globalization::NumberFormatting::CurrencyFormatter ^ m_currencyFormatter;
-            int m_currencyMaxFractionDigits;
+            Windows::Globalization::NumberFormatting::CurrencyFormatter ^ m_currencyFormatter1;
+            Windows::Globalization::NumberFormatting::CurrencyFormatter ^ m_currencyFormatter2;
             std::wstring m_valueFromUnlocalized;
             std::wstring m_valueToUnlocalized;
             bool m_relocalizeStringOnSwitch;

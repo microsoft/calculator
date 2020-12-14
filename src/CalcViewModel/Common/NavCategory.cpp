@@ -9,10 +9,13 @@
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
+using namespace Concurrency;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace std;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::Management::Policies;
+using namespace Windows::System;
 
 namespace UCM = UnitConversionManager;
 
@@ -50,22 +53,6 @@ wchar_t* towchar_t(int number)
     return _wcsdup(wstr.c_str());
 }
 
-extern "C"
-{
-    WINADVAPI LSTATUS APIENTRY RegGetValueW(
-        _In_ HKEY hkey,
-        _In_opt_ LPCWSTR lpSubKey,
-        _In_opt_ LPCWSTR lpValue,
-        _In_ DWORD dwFlags,
-        _Out_opt_ LPDWORD pdwType,
-        _When_(
-            (dwFlags & 0x7F) == RRF_RT_REG_SZ || (dwFlags & 0x7F) == RRF_RT_REG_EXPAND_SZ || (dwFlags & 0x7F) == (RRF_RT_REG_SZ | RRF_RT_REG_EXPAND_SZ)
-                || *pdwType == REG_SZ || *pdwType == REG_EXPAND_SZ,
-            _Post_z_) _When_((dwFlags & 0x7F) == RRF_RT_REG_MULTI_SZ || *pdwType == REG_MULTI_SZ, _Post_ _NullNull_terminated_)
-            _Out_writes_bytes_to_opt_(*pcbData, *pcbData) PVOID pvData,
-        _Inout_opt_ LPDWORD pcbData);
-}
-
 bool IsGraphingModeAvailable()
 {
     static bool supportGraph = Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath");
@@ -85,25 +72,12 @@ bool IsGraphingModeEnabled()
         return _isGraphingModeEnabledCached->Value;
     }
 
-    DWORD allowGraphingCalculator{ 0 };
-    DWORD bufferSize{ sizeof(allowGraphingCalculator) };
-    // Make sure to call RegGetValueW only on Windows 10 1903+
-    if (RegGetValueW(
-            HKEY_CURRENT_USER,
-            L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Calculator",
-            L"AllowGraphingCalculator",
-            RRF_RT_DWORD, // RRF_RT_DWORD == RRF_RT_REG_DWORD | RRF_RT_REG_BINARY
-            nullptr,
-            reinterpret_cast<LPBYTE>(&allowGraphingCalculator),
-            &bufferSize)
-        == ERROR_SUCCESS)
-    {
-        _isGraphingModeEnabledCached = allowGraphingCalculator != 0;
-    }
-    else
-    {
-        _isGraphingModeEnabledCached = true;
-    }
+    User ^ firstUser;
+    create_task(User::FindAllAsync(UserType::LocalUser)).then([&firstUser](IVectorView<User ^> ^ users) {
+        firstUser = users->GetAt(0); }).wait();
+        auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
+        _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
+
     return _isGraphingModeEnabledCached->Value;
 }
 

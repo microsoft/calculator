@@ -2696,7 +2696,7 @@
   <data name="PreviewTag.Text" xml:space="preserve">
     <value>Preview</value>
     <comment>Label displayed next to upcoming features</comment>
-  </data>
+  </data>  
   <data name="FeedbackButton.Content" xml:space="preserve">
     <value>Send feedback</value>
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
@@ -4013,7 +4013,7 @@
   </data>
   <data name="Periodicity" xml:space="preserve">
     <value>Period</value>
-    <comment>Title for KeyGraphFeatures Periodicity Property</comment>
+    <comment>Title for KeyGraphFeatures Periodicity Property. The period of a mathematical function is the smallest interval in its input values such that its output values repeat every such interval.</comment>
   </data>
   <data name="Range" xml:space="preserve">
     <value>Range</value>
