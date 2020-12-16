@@ -115,13 +115,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeLarge}"/>
 
-                        <Setter Target="BitwiseButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeLarge}"/>
-                        <Setter Target="BitwiseButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeLarge}"/>
-                        <Setter Target="BitwiseButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeLarge}"/>
-
-                        <Setter Target="BitShiftButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeLarge}"/>
-                        <Setter Target="BitShiftButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeLarge}"/>
-                        <Setter Target="BitShiftButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeLarge}"/>
+                        <Setter Target="BitwiseButton.Style" Value="{StaticResource OperatorPanelButtonLargeStyle}"/>
+                        <Setter Target="BitShiftButton.Style" Value="{StaticResource OperatorPanelButtonLargeStyle}"/>
 
                         <Setter Target="BitwiseGrid.MinWidth" Value="387"/>
                         <Setter Target="BitwiseGrid.MinHeight" Value="192"/>
@@ -172,13 +167,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeMedium}"/>
 
-                        <Setter Target="BitwiseButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeMedium}"/>
-                        <Setter Target="BitwiseButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeMedium}"/>
-                        <Setter Target="BitwiseButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeMedium}"/>
-
-                        <Setter Target="BitShiftButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeMedium}"/>
-                        <Setter Target="BitShiftButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeMedium}"/>
-                        <Setter Target="BitShiftButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeMedium}"/>
+                        <Setter Target="BitwiseButton.Style" Value="{StaticResource OperatorPanelButtonMediumStyle}"/>
+                        <Setter Target="BitShiftButton.Style" Value="{StaticResource OperatorPanelButtonMediumStyle}"/>
 
                         <Setter Target="BitwiseGrid.MinWidth" Value="416"/>
                         <Setter Target="BitwiseGrid.MinHeight" Value="144"/>
@@ -227,13 +217,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeSmall}"/>
 
-                        <Setter Target="BitwiseButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeSmall}"/>
-                        <Setter Target="BitwiseButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeSmall}"/>
-                        <Setter Target="BitwiseButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeSmall}"/>
-
-                        <Setter Target="BitShiftButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeSmall}"/>
-                        <Setter Target="BitShiftButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeSmall}"/>
-                        <Setter Target="BitShiftButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeSmall}"/>
+                        <Setter Target="BitwiseButton.Style" Value="{StaticResource OperatorPanelButtonSmallStyle}"/>
+                        <Setter Target="BitShiftButton.Style" Value="{StaticResource OperatorPanelButtonSmallStyle}"/>
 
                         <Setter Target="BitwiseGrid.MinWidth" Value="194"/>
                         <Setter Target="BitwiseGrid.MinHeight" Value="96"/>
@@ -311,19 +296,6 @@
                                                        Content="NOT"
                                                        IsEnabled="{x:Bind BitwiseButton.IsEnabled, Mode=OneWay}"/>
 
-                            <controls:CalculatorButton x:Name="XorButton"
-                                                       x:Uid="xorButton"
-                                                       Grid.Row="1"
-                                                       Grid.Column="2"
-                                                       Style="{StaticResource OperatorButtonStyle}"
-                                                       FontSize="12"
-                                                       AutomationProperties.AutomationId="xorButton"
-                                                       ButtonId="Xor"
-                                                       Click="FlyoutButton_Clicked"
-                                                       Command="{x:Bind Model.ButtonPressed}"
-                                                       Content="XOR"
-                                                       IsEnabled="{x:Bind BitwiseButton.IsEnabled, Mode=OneWay}"/>
-
                             <controls:CalculatorButton x:Name="NandButton"
                                                        x:Uid="nandButton"
                                                        Grid.Row="1"
@@ -348,6 +320,19 @@
                                                        Command="{x:Bind Model.ButtonPressed}"
                                                        Content="NOR"
                                                        IsEnabled="{x:Bind BitwiseButton.IsEnabled, Mode=OneWay}"/>
+
+                            <controls:CalculatorButton x:Name="XorButton"
+                                                       x:Uid="xorButton"
+                                                       Grid.Row="1"
+                                                       Grid.Column="2"
+                                                       Style="{StaticResource OperatorButtonStyle}"
+                                                       FontSize="12"
+                                                       AutomationProperties.AutomationId="xorButton"
+                                                       ButtonId="Xor"
+                                                       Click="FlyoutButton_Clicked"
+                                                       Command="{x:Bind Model.ButtonPressed}"
+                                                       Content="XOR"
+                                                       IsEnabled="{x:Bind BitwiseButton.IsEnabled, Mode=OneWay}"/>
                         </Grid>
                     </Flyout>
                 </controls:OperatorPanelButton.FlyoutMenu>
@@ -361,13 +346,13 @@
                     <Flyout x:Name="BitShiftFlyout"
                             Windows10version1809:AreOpenCloseAnimationsEnabled="False"
                             FlyoutPresenterStyle="{ThemeResource OperatorPanelFlyoutStyle}"
-                            Placement="Bottom">
+                            Placement="Bottom"
+                            Opened="BitShiftFlyout_Opened">
                         <StackPanel MaxWidth="192" Padding="12">
                             <RadioButton x:Name="ArithmeticShiftButton"
                                          x:Uid="arithmeticShiftButton"
                                          AutomationProperties.AutomationId="arithmeticShiftButton"
-                                         Checked="BitshiftFlyout_Checked"
-                                         IsChecked="True"/>
+                                         Checked="BitshiftFlyout_Checked"/>
                             <RadioButton x:Name="LogicalShiftButton"
                                          x:Uid="logicalShiftButton"
                                          AutomationProperties.AutomationId="logicalShiftButton"
@@ -490,6 +475,7 @@
                                        AutomationProperties.AutomationId="clearButton"
                                        ButtonId="Clear"
                                        Content="C"
+                                       LostFocus="ClearButton_LostFocus"
                                        Visibility="{x:Bind Model.IsInputEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <controls:CalculatorButton x:Name="ClearEntryButton"
@@ -499,6 +485,7 @@
                                        AutomationProperties.AutomationId="clearEntryButton"
                                        ButtonId="ClearEntry"
                                        Content="CE"
+                                       LostFocus="ClearEntryButton_LostFocus"
                                        Visibility="{x:Bind Model.IsInputEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
 
             <controls:CalculatorButton x:Name="BackSpaceButton"

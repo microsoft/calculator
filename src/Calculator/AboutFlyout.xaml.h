@@ -18,5 +18,6 @@ public
     private:
         void FeedbackButton_Click(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SetVersionString();
+        void InitializeContributeTextBlock();
     };
 } /* namespace CalculatorApp */

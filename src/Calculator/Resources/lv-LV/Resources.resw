@@ -697,9 +697,9 @@
     <value>Dzēst</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
   </data>
-  <data name="CopyHistoryMenuItem.Text" xml:space="preserve"> 
-     <value>Kopēt</value> 
-     <comment>Text string for the Calculator Copy option in the History list context menu</comment> 
+  <data name="CopyHistoryMenuItem.Text" xml:space="preserve">
+    <value>Kopēt</value>
+    <comment>Text string for the Calculator Copy option in the History list context menu</comment>
   </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
     <value>Dzēst</value>
@@ -867,7 +867,7 @@
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Vienāds ar</value>
-    <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
+    <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Inversā funkcija</value>
@@ -1074,11 +1074,11 @@
     <comment>Screen reader prompt for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Paturēt augšpusē</value>
+    <value>Paturēt augšpusē (Alt+augšup)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in normal mode.</comment>
   </data>
   <data name="ExitAlwaysOnTopButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Atpakaļ uz pilnu skatu</value>
+    <value>Atpakaļ uz pilnu skatu (Alt+lejup)</value>
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
@@ -2305,6 +2305,10 @@
     <value>Microsoft programmatūras licences nosacījumi</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
+  <data name="PreviewTag.Text" xml:space="preserve">
+    <value>Priekšskatījums</value>
+    <comment>Label displayed next to upcoming features</comment>
+  </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Microsoft paziņojums par konfidencialitāti</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
@@ -2691,10 +2695,6 @@
     <value>AB</value>
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
-  <data name="DateCalculationModeAccessKey" xml:space="preserve">
-    <value>4</value>
-    <comment>AccessKey for the Date Calculation mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
@@ -2706,18 +2706,6 @@
   <data name="NavView.AccessKey" xml:space="preserve">
     <value>H</value>
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ProgrammerModeAccessKey" xml:space="preserve">
-    <value>3</value>
-    <comment>AccessKey for the Programmer mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="ScientificModeAccessKey" xml:space="preserve">
-    <value>2</value>
-    <comment>AccessKey for the Scientific mode navbar item. {StringCategory="Accelerator"}</comment>
-  </data>
-  <data name="StandardModeAccessKey" xml:space="preserve">
-    <value>1</value>
-    <comment>AccessKey for the Standard mode navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AngleAccessKey" xml:space="preserve">
     <value>AN</value>
@@ -2991,9 +2979,9 @@
     <value>Kuba sakne</value>
     <comment>Name for the cube root function. Used by screen readers.</comment>
   </data>
-  <data name="Logx" xml:space="preserve">
+  <data name="Logy" xml:space="preserve">
     <value>Pamata žurnāls</value>
-    <comment>Name for the logbasex function. Used by screen readers.</comment>
+    <comment>Name for the logbasey function. Used by screen readers.</comment>
   </data>
   <data name="AbsoluteValue" xml:space="preserve">
     <value>Absolūtā vērtība</value>
@@ -3061,11 +3049,11 @@
   </data>
   <data name="CalculationFailed" xml:space="preserve">
     <value>Aprēķins neizdevās</value>
-    <comment>Text displayed when the application is not able to do a calculation</comment>  
+    <comment>Text displayed when the application is not able to do a calculation</comment>
   </data>
-  <data name="logBaseX.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Pamata žurnāls X</value>
-    <comment>Screen reader prompt for the logBaseX button</comment>
+  <data name="logBaseY.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Pamata žurnāls Y</value>
+    <comment>Screen reader prompt for the logBaseY button</comment>
   </data>
   <data name="trigButton.Text" xml:space="preserve">
     <value>Trigonometrija</value>
@@ -3074,6 +3062,14 @@
   <data name="funcButton.Text" xml:space="preserve">
     <value>Funkcija</value>
     <comment>Displayed on the button that contains a flyout for the general functions in scientific mode.</comment>
+  </data>
+  <data name="inequalityButton.Text" xml:space="preserve">
+    <value>Nevienādības</value>
+    <comment>Displayed on the button that contains a flyout for the inequality functions.</comment>
+  </data>
+  <data name="inequalityButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Nevienādības</value>
+    <comment>Screen reader prompt for the Inequalities button</comment>
   </data>
   <data name="bitwiseButton.Text" xml:space="preserve">
     <value>Bitu</value>
@@ -3250,5 +3246,884 @@
   <data name="MostSignificantBit" xml:space="preserve">
     <value>visnozīmīgākais bits</value>
     <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
+  </data>
+  <data name="GraphingCalculatorModeText" xml:space="preserve">
+    <value>Grafiska attēlošana</value>
+    <comment>Name of the Graphing mode of the Calculator app. Displayed in the navigation menu.</comment>
+  </data>
+  <data name="plotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Punkts</value>
+    <comment>Screen reader prompt for the plot button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="graphViewButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Automātiski atsvaidzināt skatu (Ctrl + 0)</value>
+    <comment>This is the tool tip automation name for the Calculator graph view button.</comment>
+  </data>
+  <data name="graphViewButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Diagrammas skats</value>
+    <comment>Screen reader prompt for the graph view button.</comment>
+  </data>
+  <data name="GraphViewAutomaticBestFitAnnouncement" xml:space="preserve">
+    <value>Automātiska optimālā ietilpināšana</value>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set</comment>
+  </data>
+  <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
+    <value>Manuāla korekcija</value>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and manual adjustment is set</comment>
+  </data>
+  <data name="GridResetAnnouncement" xml:space="preserve">
+    <value>Diagrammas skats ir atiestatīts</value>
+    <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set, resetting the graph</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tuvināt (Ctrl + pluszīme)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom in button.</comment>
+  </data>
+  <data name="zoomInButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tuvināt</value>
+    <comment>Screen reader prompt for the zoom in button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tālināt (Ctrl + mīnuszīme)</value>
+    <comment>This is the tool tip automation name for the Calculator zoom out button.</comment>
+  </data>
+  <data name="zoomOutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tālināt</value>
+    <comment>Screen reader prompt for the zoom out button.</comment>
+  </data>
+  <data name="EquationTextBoxAddPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Pievienot vienādojumu</value>
+    <comment>Placeholder text for the equation input button</comment>
+  </data>
+  <data name="ShareActionErrorMessage" xml:space="preserve">
+    <value>Pašlaik nevar koplietot.</value>
+    <comment>If there is an error in the sharing action will display a dialog with this text.</comment>
+  </data>
+  <data name="ShareActionErrorOk" xml:space="preserve">
+    <value>Labi</value>
+    <comment>Used on the dismiss button of the share action error dialog.</comment>
+  </data>
+  <data name="ShareActionTitle" xml:space="preserve">
+    <value>Skatiet, ko esmu attēlojis grafiski ar Windows kalkulatoru</value>
+    <comment>Sent as part of the shared content. The title for the share.</comment>
+  </data>
+  <data name="EquationsShareHeader" xml:space="preserve">
+    <value>Vienādojumi</value>
+    <comment>Header that appears over the equations section when sharing</comment>
+  </data>
+  <data name="VariablesShareHeader" xml:space="preserve">
+    <value>Mainīgie</value>
+    <comment>Header that appears over the variables section when sharing</comment>
+  </data>
+  <data name="GraphImageAltText" xml:space="preserve">
+    <value>Diagrammas attēls ar vienādojumiem</value>
+    <comment>Alt text for the graph image when output via Share</comment>
+  </data>
+  <data name="VaiablesHeader.Text" xml:space="preserve">
+    <value>Mainīgie</value>
+    <comment>Header text for variables area</comment>
+  </data>
+  <data name="StepTextBlock.Text" xml:space="preserve">
+    <value>Darbība</value>
+    <comment>Label text for the step text box</comment>
+  </data>
+  <data name="MinTextBlock.Text" xml:space="preserve">
+    <value>Min.</value>
+    <comment>Label text for the min text box</comment>
+  </data>
+  <data name="MaxTextBlock.Text" xml:space="preserve">
+    <value>Maks.</value>
+    <comment>Label text for the max text box</comment>
+  </data>
+  <data name="LineColorText.Text" xml:space="preserve">
+    <value>Krāsa</value>
+    <comment>Label for the Line Color section of the style picker</comment>
+  </data>
+  <data name="StyleChooserBoxHeading.Text" xml:space="preserve">
+    <value>Stils</value>
+    <comment>Label for the Line Style section of the style picker</comment>
+  </data>
+  <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
+    <value>Funkciju analīze</value>
+    <comment>Title for KeyGraphFeatures Control</comment>
+  </data>
+  <data name="KGFHorizontalAsymptotesNone" xml:space="preserve">
+    <value>Funkcijai nav nevienas horizontālas asimptotas.</value>
+    <comment>Message displayed when the graph does not have any horizontal asymptotes</comment>
+  </data>
+  <data name="KGFInflectionPointsNone" xml:space="preserve">
+    <value>Funkcijai nav neviena formveidošanas punkta.</value>
+    <comment>Message displayed when the graph does not have any inflection points</comment>
+  </data>
+  <data name="KGFMaximaNone" xml:space="preserve">
+    <value>Funkcijai nav neviena maksimuma punkta.</value>
+    <comment>Message displayed when the graph does not have any maxima</comment>
+  </data>
+  <data name="KGFMinimaNone" xml:space="preserve">
+    <value>Funkcijai nav neviena minimuma punkta.</value>
+    <comment>Message displayed when the graph does not have any minima</comment>
+  </data>
+  <data name="KGFMonotonicityConstant" xml:space="preserve">
+    <value>Konstante</value>
+    <comment>String describing constant monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityDecreasing" xml:space="preserve">
+    <value>Samazinājums</value>
+    <comment>String describing decreasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityError" xml:space="preserve">
+    <value>Nevar noteikt funkcijas monotoniskumu.</value>
+    <comment>Error displayed when monotonicity cannot be determined</comment>
+  </data>
+  <data name="KGFMonotonicityIncreasing" xml:space="preserve">
+    <value>Palielinājums</value>
+    <comment>String describing increasing monotonicity of a function</comment>
+  </data>
+  <data name="KGFMonotonicityUnknown" xml:space="preserve">
+    <value>Funkcijas monotoniskums nav zināms.</value>
+    <comment>Error displayed when monotonicity is unknown</comment>
+  </data>
+  <data name="KGFObliqueAsymptotesNone" xml:space="preserve">
+    <value>Funkcijai nav nevienas slīpas asimptotas.</value>
+    <comment>Message displayed when the graph does not have any oblique asymptotes</comment>
+  </data>
+  <data name="KGFParityError" xml:space="preserve">
+    <value>Nevar noteikt funkcijas pārību.</value>
+    <comment>Error displayed when parity is cannot be determined</comment>
+  </data>
+  <data name="KGFParityEven" xml:space="preserve">
+    <value>Funkcija ir pāra.</value>
+    <comment>Message displayed with the function parity is even</comment>
+  </data>
+  <data name="KGFParityNeither" xml:space="preserve">
+    <value>Funkcija nav ne pāra, ne nepāra.</value>
+    <comment>Message displayed with the function parity is neither even nor odd</comment>
+  </data>
+  <data name="KGFParityOdd" xml:space="preserve">
+    <value>Funkcija ir nepāra.</value>
+    <comment>Message displayed with the function parity is odd</comment>
+  </data>
+  <data name="KGFParityUnknown" xml:space="preserve">
+    <value>Funkcijas pārība nav zināma.</value>
+    <comment>Error displayed when parity is unknown</comment>
+  </data>
+  <data name="KGFPeriodicityError" xml:space="preserve">
+    <value>Šīs funkcijas periodiskums netiek atbalstīts.</value>
+    <comment>Error displayed when periodicity is not supported</comment>
+  </data>
+  <data name="KGFPeriodicityNotPeriodic" xml:space="preserve">
+    <value>Funkcija nav periodiska.</value>
+    <comment>Message displayed with the function periodicity is not periodic</comment>
+  </data>
+  <data name="KGFPeriodicityUnknown" xml:space="preserve">
+    <value>Funkcijas periodiskums nav zināms.</value>
+    <comment>Message displayed with the function periodicity is unknown</comment>
+  </data>
+  <data name="KGFTooComplexFeaturesError" xml:space="preserve">
+    <value>Šie līdzekļi ir pārāk sarežģīti, lai kalkulators tos aprēķinātu:</value>
+    <comment>Error displayed when analysis features cannot be calculated</comment>
+  </data>
+  <data name="KGFVerticalAsymptotesNone" xml:space="preserve">
+    <value>Funkcijai nav nevienas vertikālas asimptotas.</value>
+    <comment>Message displayed when the graph does not have any vertical asymptotes</comment>
+  </data>
+  <data name="KGFXInterceptNone" xml:space="preserve">
+    <value>Funkcijai nav neviena x krustpunkta.</value>
+    <comment>Message displayed when the graph does not have any x-intercepts</comment>
+  </data>
+  <data name="KGFYInterceptNone" xml:space="preserve">
+    <value>Funkcijai nav neviena y krustpunkta.</value>
+    <comment>Message displayed when the graph does not have any y-intercepts</comment>
+  </data>
+  <data name="Domain" xml:space="preserve">
+    <value>Domēns</value>
+    <comment>Title for KeyGraphFeatures Domain Property</comment>
+  </data>
+  <data name="HorizontalAsymptotes" xml:space="preserve">
+    <value>Horizontālas asimptotas</value>
+    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+  </data>
+  <data name="InflectionPoints" xml:space="preserve">
+    <value>Formveidošanas punkti</value>
+    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+  </data>
+  <data name="KGFAnalysisNotSupported" xml:space="preserve">
+    <value>Šai funkcijai analīze netiek atbalstīta.</value>
+    <comment>Error displayed when graph analysis is not supported or had an error.</comment>
+  </data>
+  <data name="KGFVariableIsNotX" xml:space="preserve">
+    <value>Analīze tiek atbalstīta tikai f(x) formāta funkcijām. Piemērs: y=x</value>
+    <comment>Error displayed when graph analysis detects the function format is not f(x).</comment>
+  </data>
+  <data name="Maxima" xml:space="preserve">
+    <value>Maksimumi</value>
+    <comment>Title for KeyGraphFeatures Maxima Property</comment>
+  </data>
+  <data name="Minima" xml:space="preserve">
+    <value>Minimumi</value>
+    <comment>Title for KeyGraphFeatures Minima Property</comment>
+  </data>
+  <data name="Monotonicity" xml:space="preserve">
+    <value>Monotoniskums</value>
+    <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
+  </data>
+  <data name="ObliqueAsymptotes" xml:space="preserve">
+    <value>Slīpas asimptotas</value>
+    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+  </data>
+  <data name="Parity" xml:space="preserve">
+    <value>Pārība</value>
+    <comment>Title for KeyGraphFeatures Parity Property</comment>
+  </data>
+  <data name="Periodicity" xml:space="preserve">
+    <value>Cikliskums</value>
+    <comment>Title for KeyGraphFeatures Periodicity Property. The period of a mathematical function is the smallest interval in its input values such that its output values repeat every such interval.</comment>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>Diapazons</value>
+    <comment>Title for KeyGraphFeatures Range Property</comment>
+  </data>
+  <data name="VerticalAsymptotes" xml:space="preserve">
+    <value>Vertikālas asimptotas</value>
+    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
+  </data>
+  <data name="XIntercept" xml:space="preserve">
+    <value>X krustpunkts</value>
+    <comment>Title for KeyGraphFeatures XIntercept Property</comment>
+  </data>
+  <data name="YIntercept" xml:space="preserve">
+    <value>Y krustpunkts</value>
+    <comment>Title for KeyGraphFeatures YIntercept Property</comment>
+  </data>
+  <data name="KGFAnalysisCouldNotBePerformed" xml:space="preserve">
+    <value>Funkcijai nevarēja veikt analīzi.</value>
+  </data>
+  <data name="KGFDomainNone" xml:space="preserve">
+    <value>Nevar aprēķināt šīs funkcijas domēnu.</value>
+    <comment>Error displayed when Domain is not returned from the analyzer.</comment>
+  </data>
+  <data name="KGFRangeNone" xml:space="preserve">
+    <value>Nevar aprēķināt šīs funkcijas diapazonu.</value>
+    <comment>Error displayed when Range is not returned from the analyzer.</comment>
+  </data>
+  <data name="Overflow" xml:space="preserve">
+    <value>Pārpilde (skaitlis ir pārāk liels)</value>
+    <comment>Error that occurs during graphing when the number is too large. To see this error, assign a large number to variable a, then keep doing "a:=a*a" until it happens.</comment>
+  </data>
+  <data name="RequireRadiansMode" xml:space="preserve">
+    <value>Šī vienādojuma grafika izveidei ir nepieciešams radiānu režīms.</value>
+    <comment>Error that occurs during graphing when radians is required.</comment>
+  </data>
+  <data name="TooComplexToSolve" xml:space="preserve">
+    <value>Šī funkcija ir pārāk sarežģīta attēlošanai grafikā</value>
+    <comment>Error that occurs during graphing when the equation is too complex.</comment>
+  </data>
+  <data name="RequireDegreesMode" xml:space="preserve">
+    <value>Lai grafa šo funkciju, ir nepieciešams grādi režīms</value>
+    <comment>Error that occurs during graphing when degrees is required</comment>
+  </data>
+  <data name="FactorialInvalidArgument" xml:space="preserve">
+    <value>Faktoriāla funkcijai ir nederīgs arguments</value>
+    <comment>Error that occurs during graphing when a factorial function has an invalid argument.</comment>
+  </data>
+  <data name="FactorialCannotPerformOnLargeNumber" xml:space="preserve">
+    <value>Faktoriālās funkcijas arguments ir pārāk liels grafika izveidošanai</value>
+    <comment>Error that occurs during graphing when a factorial has a large n</comment>
+  </data>
+  <data name="ModuloCannotPerformOnFloat" xml:space="preserve">
+    <value>Modulo var izmantot tikai ar veseliem skaitļiem</value>
+    <comment>Error that occurs during graphing when modulo is used with a float.</comment>
+  </data>
+  <data name="EquationHasNoSolution" xml:space="preserve">
+    <value>Šim vienādojumam nav risinājuma</value>
+    <comment>Error that occurs during graphing when the equation has no solution.</comment>
+  </data>
+  <data name="DivideByZero" xml:space="preserve">
+    <value>Nevar dalīt ar nulli</value>
+    <comment>Error that occurs during graphing when a divison by zero occurs.</comment>
+  </data>
+  <data name="MutuallyExclusiveConditions" xml:space="preserve">
+    <value>Vienādojums satur savstarpēji izslēdzošus loģiskos nosacījumus</value>
+    <comment>Error that occurs during graphing when mutually exclusive conditions are used.</comment>
+  </data>
+  <data name="OutOfDomain" xml:space="preserve">
+    <value>Vienādojums ir ārpus vērtību apgabala</value>
+    <comment>Error that occurs during graphing when the equation is out of domain.</comment>
+  </data>
+  <data name="GE_NotSupported" xml:space="preserve">
+    <value>Šī vienādojuma grafiska attēlošana netiek atbalstīta</value>
+    <comment>Error that occurs during graphing when the equation is not supported.</comment>
+  </data>
+  <data name="ParenthesisMismatch" xml:space="preserve">
+    <value>Vienādojumā trūkst atverošās iekavas</value>
+    <comment>Error that occurs during graphing when the equation is missing a (</comment>
+  </data>
+  <data name="UnmatchedParenthesis" xml:space="preserve">
+    <value>Vienādojumā trūkst aizverošās iekavas</value>
+    <comment>Error that occurs during graphing when the equation is missing a )</comment>
+  </data>
+  <data name="TooManyDecimalPoints" xml:space="preserve">
+    <value>Skaitlī ir pārāk daudz decimālatdalītāju</value>
+    <comment>Error that occurs during graphing when a number has too many decimals. Ex: 1.2.3</comment>
+  </data>
+  <data name="DecimalPointWithoutDigits" xml:space="preserve">
+    <value>Decimālatdalītājam trūkst ciparu</value>
+    <comment>Error that occurs during graphing with a decimal point without digits</comment>
+  </data>
+  <data name="UnexpectedEndOfExpression" xml:space="preserve">
+    <value>Neparedzēts izteiksmes nobeigums</value>
+    <comment>Error that occurs during graphing when the expression ends unexpectedly. Ex: 3-4*</comment>
+  </data>
+  <data name="UnexpectedToken" xml:space="preserve">
+    <value>Neparedzētas rakstzīmes izteiksmē</value>
+    <comment>Error that occurs during graphing when there is an unexpected token.</comment>
+  </data>
+  <data name="InvalidToken" xml:space="preserve">
+    <value>Nederīgas rakstzīmes izteiksmē</value>
+    <comment>Error that occurs during graphing when there is an invalid token.</comment>
+  </data>
+  <data name="TooManyEquals" xml:space="preserve">
+    <value>Pārāk daudz vienādības zīmju</value>
+    <comment>Error that occurs during graphing when there are too many equals.</comment>
+  </data>
+  <data name="EqualWithoutGraphVariable" xml:space="preserve">
+    <value>Funkcijai ir jāsatur vismaz viens x vai y mainīgais</value>
+    <comment>Error that occurs during graphing when the equation is missing x or y.</comment>
+  </data>
+  <data name="InvalidEquationSyntax" xml:space="preserve">
+    <value>Nederīga izteiksme</value>
+    <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
+    </data>
+  <data name="EmptyExpression" xml:space="preserve">
+    <value>Izteiksme ir tukša</value>
+    <comment>Error that occurs during graphing when the expression is empty</comment>
+  </data>
+  <data name="EqualWithoutEquation" xml:space="preserve">
+    <value>Vienāds tika izmantots bez vienādojuma</value>
+    <comment>Error that occurs during graphing when equal is used without an equation. Ex: sin(x=y)</comment>
+  </data>
+  <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
+    <value>Pēc funkcijas nosaukuma trūkst iekavas</value>
+    <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
+    </data>
+  <data name="IncorrectNumParameter" xml:space="preserve">
+    <value>Matemātiskai darbībai ir nepareizs parametru skaits</value>
+    <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
+  </data>
+  <data name="InvalidVariableNameFormat" xml:space="preserve">
+    <value>Nederīgs mainīgā nosaukums</value>
+    <comment>Error that occurs during graphing when a variable name is invalid.</comment>
+  </data>
+  <data name="BracketMismatch" xml:space="preserve">
+    <value>Vienādojumā trūkst atverošās iekavas</value>
+    <comment>Error that occurs during graphing when a { is missing</comment>
+  </data>
+  <data name="UnmatchedBracket" xml:space="preserve">
+    <value>Vienādojumā trūkst aizverošās iekavas</value>
+    <comment>Error that occurs during graphing when a } is missing.</comment>
+  </data>
+  <data name="CannotUseIInReal" xml:space="preserve">
+    <value>"i" un "I" nav iespējams izmantot kā mainīgo apzīmētājus</value>
+    <comment>Error that occurs during graphing when i or I is used.</comment>
+  </data>
+  <data name="GeneralError" xml:space="preserve">
+    <value>Vienādojumu neizdevās attēlot grafikā</value>
+    <comment>General error that occurs during graphing.</comment>
+  </data>
+  <data name="InvalidNumberDigit" xml:space="preserve">
+    <value>Dotajā bāzē neizdevās noteikt skaitli</value>
+    <comment>Error that occurs during graphing when trying to use bases incorrect. Ex: base(2,1020).</comment>
+  </data>
+  <data name="InvalidNumberBase" xml:space="preserve">
+    <value>Bāzes vērtībai ir jābūt lielākai par 2 un mazākam par 36</value>
+    <comment>Error that occurs during graphing when the base is out of range.</comment>
+  </data>
+  <data name="InvalidVariableSpecification" xml:space="preserve">
+    <value>Matemātiskai darbībai ir nepieciešams, lai viens no tās parametriem būtu mainīgais</value>
+    <comment>Error that occurs during graphing when a function requires a variable in a particular position. Ex: 2nd argument of deriv.</comment>
+  </data>
+  <data name="ExpectingLogicalOperands" xml:space="preserve">
+    <value>Vienādojums jauc loģiskus un skalārus operandus</value>
+    <comment>Error that occurs during graphing when operands are mixed. Such as true and 1.</comment>
+  </data>
+  <data name="CannotUseIndexVarInOpLimits" xml:space="preserve">
+    <value>x vai y nav iespējams izmantot augšējo vai apakšējo robežvērtību apzīmēšanai</value>
+    <comment>Error that occurs during graphing when x or y is used in integral upper limits.</comment>
+  </data>
+  <data name="CannotUseIndexVarInLimPoint" xml:space="preserve">
+    <value>x vai y nav iespējams izmantot ierobežojuma punkta apzīmēšanai</value>
+    <comment>Error that occurs during graphing when x or y is used in the limit point.</comment>
+  </data>
+  <data name="CannotUseComplexInfinityInReal" xml:space="preserve">
+    <value>Nav iespējams izmantot komplekso bezgalību</value>
+    <comment>Error that occurs during graphing when complex infinity is used</comment>
+  </data>
+  <data name="CannotUseIInInequalitySolving" xml:space="preserve">
+    <value>Nevienādībās nav iespējams izmantot kompleksos skaitļus</value>
+    <comment>Error that occurs during graphing when complex numbers are used in inequalities.</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Atpakaļ uz funkciju sarakstu</value>
+    <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Atpakaļ uz funkciju sarakstu</value>
+    <comment>This is the automation name for the back button in the equation analysis page in the graphing calculator</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Analizēt funkciju</value>
+    <comment>This is the tooltip for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Analizēt funkciju</value>
+    <comment>This is the automation name for the analyze function button</comment>
+  </data>
+  <data name="functionAnalysisMenuItem" xml:space="preserve">
+    <value>Analizēt funkciju</value>
+    <comment>This is the text for the for the analyze function context menu command</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Noņemt vienādojumu</value>
+    <comment>This is the tooltip for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Noņemt vienādojumu</value>
+    <comment>This is the automation name for the graphing calculator remove equation buttons</comment>
+  </data>
+  <data name="removeMenuItem" xml:space="preserve">
+    <value>Noņemt vienādojumu</value>
+    <comment>This is the text for the for the remove equation context menu command</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Kopīgot</value>
+    <comment>This is the automation name for the graphing calculator share button.</comment>
+  </data>
+  <data name="shareButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kopīgot</value>
+    <comment>This is the tooltip for the graphing calculator share button.</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Mainīt vienādojuma stilu</value>
+    <comment>This is the tooltip for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mainīt vienādojuma stilu</value>
+    <comment>This is the automation name for the graphing calculator equation style button</comment>
+  </data>
+  <data name="colorChooserMenuItem" xml:space="preserve">
+    <value>Mainīt vienādojuma stilu</value>
+    <comment>This is the text for the for the equation style context menu command</comment>
+  </data>
+  <data name="showEquationButtonToolTip" xml:space="preserve">
+    <value>Rādīt vienādojumu</value>
+    <comment>This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator.</comment>
+  </data>
+  <data name="hideEquationButtonToolTip" xml:space="preserve">
+    <value>Paslēpt vienādojumu</value>
+    <comment>This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator.</comment>
+  </data>
+  <data name="showEquationButtonAutomationName" xml:space="preserve">
+    <value>Rādīt vienādojumu %1</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="hideEquationButtonAutomationName" xml:space="preserve">
+    <value>Paslēpt vienādojumu %1</value>
+    <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator. %1 is the equation number.</comment>
+  </data>
+  <data name="disableTracingButtonToolTip" xml:space="preserve">
+    <value>Apturēt izsekošanu</value>
+    <comment>This is the tooltip/automation name for the graphing calculator stop tracing button</comment>
+  </data>
+  <data name="enableTracingButtonToolTip" xml:space="preserve">
+    <value>Sākt izsekošanu</value>
+    <comment>This is the tooltip/automation name for the graphing calculator start tracing button</comment>
+  </data>
+  <data name="graphAutomationName" xml:space="preserve">
+    <value>Grafa skatīšanas logs, x ass Bounded, %1 un %2, y ass Bounded, %3 un %4, rāda %5 vienādojumus</value>
+    <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
+    </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Konfigurēt slīdni</value>
+    <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Konfigurēt slīdni</value>
+    <comment>This is the automation name text for the slider options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphSwitchToEquationMode" xml:space="preserve">
+    <value>Pārslēgt uz vienādojumu režīmu</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchToGraphMode" xml:space="preserve">
+    <value>Pārslēgt uz diagrammu režīmu</value>
+    <comment>Used in Graphing Calculator to switch the view to the graph mode</comment>
+  </data>
+  <data name="SwitchModeToggleButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Pārslēgt uz vienādojumu režīmu</value>
+    <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToEquationModeAnnouncement" xml:space="preserve">
+    <value>Pašreizējais režīms ir vienādojuma režīms</value>
+    <comment>Announcement used in Graphing Calculator when switching to the equation mode</comment>
+  </data>
+  <data name="GraphSwitchedToGraphModeAnnouncement" xml:space="preserve">
+    <value>Pašreizējais režīms ir diagrammas režīms</value>
+    <comment>Announcement used in Graphing Calculator when switching to the graph mode</comment>
+  </data>
+  <data name="GridHeading.Text" xml:space="preserve">
+    <value>Logs</value>
+    <comment>Heading for window extents on the settings </comment>
+  </data>
+  <data name="TrigModeDegrees.Content" xml:space="preserve">
+    <value>Grādi</value>
+    <comment>Degrees mode on settings page</comment>
+  </data>
+  <data name="TrigModeGradians.Content" xml:space="preserve">
+    <value>Gradiāni</value>
+    <comment>Gradian mode on settings page</comment>
+  </data>
+  <data name="TrigModeRadians.Content" xml:space="preserve">
+    <value>Radiāni</value>
+    <comment>Radians mode on settings page</comment>
+  </data>
+  <data name="UnitsHeading.Text" xml:space="preserve">
+    <value>Vienības</value>
+    <comment>Heading for Unit's on the settings</comment>
+  </data>
+  <data name="ResetViewButton.Content" xml:space="preserve">
+    <value>Atiestatīt skatu</value>
+    <comment>Hyperlink button to reset the view of the graph</comment>
+  </data>
+  <data name="GraphSettingsXMax.Header" xml:space="preserve">
+    <value>X maks.</value>
+    <comment>X maximum value header</comment>
+  </data>
+  <data name="GraphSettingsXMin.Header" xml:space="preserve">
+    <value>X min.</value>
+    <comment>X minimum value header</comment>
+  </data>
+  <data name="GraphSettingsYMax.Header" xml:space="preserve">
+    <value>Y maks.</value>
+    <comment>Y Maximum value header</comment>
+  </data>
+  <data name="GraphSettingsYMin.Header" xml:space="preserve">
+    <value>Y min.</value>
+    <comment>Y minimum value header</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Diagrammas opcijas</value>
+    <comment>This is the tooltip text for the graph options button in Graphing Calculator</comment>
+  </data>
+  <data name="graphSettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Diagrammas opcijas</value>
+    <comment>This is the automation name text for the graph options button in Graphing Calculator</comment>
+  </data>
+  <data name="GraphOptionsHeading.Text" xml:space="preserve">
+    <value>Diagrammas opcijas</value>
+    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+  </data>
+  <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mainīgas opcijas</value>
+    <comment>Screen reader prompt for the variable settings toggle button</comment>
+  </data>
+  <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Pārslēga mainīgas opcijas</value>
+    <comment>Tool tip for the variable settings toggle button</comment>
+  </data>
+  <data name="LineThicknessBoxHeading.Text" xml:space="preserve">
+    <value>Līnijas biezums</value>
+    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+  </data>
+  <data name="LineOptionsHeading.Text" xml:space="preserve">
+    <value>Līnijas opcijas</value>
+    <comment>Heading for the equation style flyout in Graphing mode.</comment>
+  </data>
+  <data name="SmallLineWidthAutomationName" xml:space="preserve">
+    <value>Mazs līnijas platums</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="MediumLineWidthAutomationName" xml:space="preserve">
+    <value>Vidējs līnijas platums</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="LargeLineWidthAutomationName" xml:space="preserve">
+    <value>Liels līnijas platums</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="ExtraLargeLineWidthAutomationName" xml:space="preserve">
+    <value>Ļoti liels līnijas platums</value>
+    <comment>Automation name for line width setting</comment>
+  </data>
+  <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
+    <value>Ievadiet izteiksmi</value>
+    <comment>this is the placeholder text used by the textbox to enter an equation</comment>
+  </data>
+  <data name="GraphCopyMenuItem.Text">
+    <value>Kopēt</value>
+    <comment>Copy menu item for the graph context menu</comment>
+  </data>
+  <data name="cutEquationMenuItem.Text" xml:space="preserve">
+    <value>Izgriezt</value>
+    <comment>Cut menu item from the Equation TextBox</comment>
+  </data>
+  <data name="copyEquationMenuItem.Text" xml:space="preserve">
+    <value>Kopēt</value>
+    <comment>Copy menu item from the Equation TextBox</comment>
+  </data>
+  <data name="pasteEquationMenuItem.Text" xml:space="preserve">
+    <value>Ielīmēt</value>
+    <comment>Paste menu item from the Equation TextBox</comment>
+  </data>
+  <data name="undoEquationMenuItem.Text" xml:space="preserve">
+    <value>Atsaukt</value>
+    <comment>Undo menu item from the Equation TextBox</comment>
+  </data>
+  <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
+    <value>Atlasīt visu</value>
+    <comment>Select all menu item from the Equation TextBox</comment>
+  </data>
+  <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Funkcijas ievades saraksta elements</value>
+    <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Funkcijas ievades saraksts</value>
+    <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Funkcijas ievades panelis</value>
+    <comment>The automation name for the Equation Input StackPanel that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableStackPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mainīgais panelis</value>
+    <comment>The automation name for the Variable StackPanel that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableListView.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mainīgais saraksts</value>
+    <comment>The automation name for the Variable ListView that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableListViewItem" xml:space="preserve">
+    <value>Mainīgais %1 saraksta vienums</value>
+    <comment>The automation name for the Variable ListViewItem that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableValueTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mainīgais vērtības tekstlodziņš</value>
+    <comment>The automation name for the Variable Value Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableValueSlider.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mainīgais vērtības slīdnis</value>
+    <comment>The automation name for the Variable Value Slider that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableMinTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mainīgais minimālās vērtības tekstlodziņš</value>
+    <comment>The automation name for the Variable Min Value Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableStepTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mainīgais soļa vērtības tekstlodziņš</value>
+    <comment>The automation name for the Variable Step Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="VariableMaxTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mainīgais maksimālās vērtības tekstlodziņš</value>
+    <comment>The automation name for the Variable Max Value Textbox that is shown when Calculator is in graphing mode.</comment>
+  </data>
+  <data name="solidLineStyleAutomationName" xml:space="preserve">
+    <value>Nepārtrauktas līnijas stils</value>
+    <comment>Name of the solid line style for a graphed equation</comment>
+  </data>
+  <data name="dotLineStyleAutomationName" xml:space="preserve">
+    <value>Punktētas līnijas stils</value>
+    <comment>Name of the dotted line style for a graphed equation</comment>
+  </data>
+  <data name="dashLineStyleAutomationName" xml:space="preserve">
+    <value>Svītru līnijas stils</value>
+    <comment>Name of the dashed line style for a graphed equation</comment>
+  </data>
+  <data name="equationColor1AutomationName" xml:space="preserve">
+    <value>Tumšzila</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor2AutomationName" xml:space="preserve">
+    <value>Jūras putas</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor3AutomationName" xml:space="preserve">
+    <value>Violeta</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor4AutomationName" xml:space="preserve">
+    <value>Zaļa</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor5AutomationName" xml:space="preserve">
+    <value>Piparmētru zaļa</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor6AutomationName" xml:space="preserve">
+    <value>Tumši zaļa</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor7AutomationName" xml:space="preserve">
+    <value>Ogļu pelēks</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor8AutomationName" xml:space="preserve">
+    <value>Sarkana</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor9AutomationName" xml:space="preserve">
+    <value>Gaiša plūmju</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor10AutomationName" xml:space="preserve">
+    <value>Fuksīna</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor11AutomationName" xml:space="preserve">
+    <value>Dzeltena zelta</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor12AutomationName" xml:space="preserve">
+    <value>Koši oranža</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor13AutomationName" xml:space="preserve">
+    <value>Brūna</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor14BlackAutomationName" xml:space="preserve">
+    <value>Melna</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationColor14WhiteAutomationName" xml:space="preserve">
+    <value>Balta</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationHighContrastColor1AutomationName" xml:space="preserve">
+    <value>1. krāsa</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationHighContrastColor2AutomationName" xml:space="preserve">
+    <value>2. krāsa</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationHighContrastColor3AutomationName" xml:space="preserve">
+    <value>3. krāsa</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="equationHighContrastColor4AutomationName" xml:space="preserve">
+    <value>4. krāsa</value>
+    <comment>Name of color in the color picker</comment>
+  </data>
+  <data name="GraphThemeHeading.Text" xml:space="preserve">
+    <value>Diagrammas motīvs</value>
+    <comment>Graph settings heading for the theme options</comment>
+  </data>
+  <data name="AlwaysLightTheme.Content" xml:space="preserve">
+    <value>Vienmēr gaiša</value>
+    <comment>Graph settings option to set graph to light theme</comment>
+  </data>
+  <data name="MatchAppTheme.Content" xml:space="preserve">
+    <value>Saskaņot programmas dizainu</value>
+    <comment>Graph settings option to set graph to match the app theme</comment>
+  </data>
+  <data name="GraphThemeHeading.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Motīvs</value>
+    <comment>This is the automation name text for the Graph settings heading for the theme options</comment>
+  </data>
+  <data name="AlwaysLightTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Vienmēr gaiša</value>
+    <comment>This is the automation name text for the Graph settings option to set graph to light theme</comment>
+  </data>
+  <data name="MatchAppTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Saskaņot programmas dizainu</value>
+    <comment>This is the automation name text for the Graph settings option to set graph to match the app theme</comment>
+  </data>
+  <data name="FunctionRemovedAnnouncement" xml:space="preserve">
+    <value>Funkcija noņemta</value>
+    <comment>Announcement used in Graphing Calculator when a function is removed from the function list</comment>
+  </data>
+  <data name="KGFEquationTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Funkcijas analīzes vienādojuma lodziņš</value>
+    <comment>This is the automation name text for the equation box in the function analysis panel</comment>
+  </data>
+  <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Vienāds ar</value>
+    <comment>Screen reader prompt for the equal button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="lessThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mazāk nekā</value>
+    <comment>Screen reader prompt for the Less than button</comment>
+  </data>
+  <data name="lessThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mazāks vai vienāds ar</value>
+    <comment>Screen reader prompt for the Less than or equal button</comment>
+  </data>
+  <data name="equalsFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ir vienāds ar</value>
+    <comment>Screen reader prompt for the Equal button</comment>
+  </data>
+  <data name="greaterThanOrEqualFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Lielāks vai vienāds ar</value>
+    <comment>Screen reader prompt for the Greater than or equal button</comment>
+  </data>
+  <data name="greaterThanFlyoutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Lielāks par</value>
+    <comment>Screen reader prompt for the Greater than button</comment>
+  </data>
+  <data name="xButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>X</value>
+    <comment>Screen reader prompt for the X button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="yButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Y</value>
+    <comment>Screen reader prompt for the Y button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="submitButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Iesniegt</value>
+    <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
+  </data>
+  <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Funkciju analīze</value>
+    <comment>Screen reader prompt for the function analysis grid</comment>
+  </data>
+  <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Diagrammas opcijas</value>
+    <comment>Screen reader prompt for the graph options panel</comment>
+  </data>
+  <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
+    <value>Vēstures un atmiņas saraksti</value>
+    <comment>Automation name for the group of controls for history and memory lists.</comment>
+  </data>
+  <data name="DockPanel_MemoryList" xml:space="preserve">
+    <value>Atmiņas saraksts</value>
+    <comment>Automation name for the group of controls for memory list.</comment>
+  </data>
+  <data name="Format_HistorySlotCleared" xml:space="preserve">
+    <value>Vēstures slots %1 notīrīts</value>
+    <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a history slot. The %1 is the index of the history slot. For example, users might hear "History slot 2 cleared".</comment>
+  </data>
+  <data name="CalcAlwaysOnTop" xml:space="preserve">
+    <value>Kalkulators vienmēr augšpusē</value>
+    <comment>Announcement to indicate calculator window is always shown on top.</comment>
+  </data>
+  <data name="CalcBackToFullView" xml:space="preserve">
+    <value>Kalkulators atpakaļ uz pilnu skatu</value>
+    <comment>Announcement to indicate calculator window is now back to full view.</comment>
+  </data>
+  <data name="arithmeticShiftButtonSelected" xml:space="preserve">
+    <value>Atlasīta aritmētiskā nobīde</value>
+    <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
+  </data>
+  <data name="logicalShiftButtonSelected" xml:space="preserve">
+    <value>Atlasīta loģiskā nobīde</value>
+    <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCircularButtonSelected" xml:space="preserve">
+    <value>Atlasīta cirkulārās nobīdes pagriešana</value>
+    <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
+  </data>
+  <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
+    <value>Atlasīta pagriešana, izmantojot pārneses cirkulāro nobīdi</value>
+    <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
 </root>

@@ -21,7 +21,7 @@
 #include <windows.h>
 #include <collection.h>
 #include <ppltasks.h>
-#include <assert.h>
+#include <cassert>
 #include <concrt.h>
 #include <string>
 #include <bitset>

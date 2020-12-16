@@ -60,8 +60,8 @@ namespace UnitConverterUnitTests
             c2units.push_back(u3);
             c2units.push_back(u4);
 
-            m_units[c1] = c1units;
-            m_units[c2] = c2units;
+            m_units[c1.id] = c1units;
+            m_units[c2.id] = c2units;
 
             unordered_map<Unit, ConversionData, UnitHash> unit1Map = unordered_map<Unit, ConversionData, UnitHash>();
             unordered_map<Unit, ConversionData, UnitHash> unit2Map = unordered_map<Unit, ConversionData, UnitHash>();
@@ -99,14 +99,14 @@ namespace UnitConverterUnitTests
             m_loadDataCallCount++;
         }
 
-        vector<Category> LoadOrderedCategories()
+        vector<Category> GetOrderedCategories()
         {
             return m_categories;
         }
 
-        vector<Unit> LoadOrderedUnits(const Category& c)
+        vector<Unit> GetOrderedUnits(const Category& category)
         {
-            return m_units[c];
+            return m_units[category.id];
         }
 
         unordered_map<Unit, ConversionData, UnitHash> LoadOrderedRatios(const Unit& u)
@@ -202,6 +202,8 @@ namespace UnitConverterUnitTests
         TEST_METHOD(UnitConverterTestQuote);
         TEST_METHOD(UnitConverterTestUnquote);
         TEST_METHOD(UnitConverterTestBackspace);
+        TEST_METHOD(UnitConverterTestBackspaceBasic);
+        TEST_METHOD(UnitConverterTestClear);
         TEST_METHOD(UnitConverterTestScientificInputs);
         TEST_METHOD(UnitConverterTestSupplementaryResultRounding);
         TEST_METHOD(UnitConverterTestMaxDigitsReached);
@@ -289,6 +291,41 @@ namespace UnitConverterUnitTests
         s_unitConverter->SendCommand(Command::Zero);
         VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"30.0"), wstring(L"30")));
         VERIFY_IS_TRUE(s_testVMCallback->CheckSuggestedValues(vector<tuple<wstring, Unit>>(begin(test2), end(test2))));
+    }
+
+
+    // Verify a basic copy paste steam. '20.43' with backspace button pressed
+    void UnitConverterTest::UnitConverterTestBackspaceBasic()
+    {
+        s_unitConverter->SendCommand(Command::Two);
+        s_unitConverter->SendCommand(Command::Zero);
+        s_unitConverter->SendCommand(Command::Decimal);
+        s_unitConverter->SendCommand(Command::Four);
+        s_unitConverter->SendCommand(Command::Three);
+        s_unitConverter->SendCommand(Command::Backspace);
+
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"20.4"), wstring(L"20.4")));
+        s_unitConverter->SendCommand(Command::Backspace);
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"20."), wstring(L"20")));
+        s_unitConverter->SendCommand(Command::Backspace);
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"20"), wstring(L"20")));
+        s_unitConverter->SendCommand(Command::Backspace);
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"2"), wstring(L"2")));
+        s_unitConverter->SendCommand(Command::Backspace);
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"0"), wstring(L"0")));
+    }
+
+    // Verify a basic copy paste steam. '20.43' with backspace button pressed
+    void UnitConverterTest::UnitConverterTestClear()
+    {
+        s_unitConverter->SendCommand(Command::Two);
+        s_unitConverter->SendCommand(Command::Zero);
+        s_unitConverter->SendCommand(Command::Decimal);
+        s_unitConverter->SendCommand(Command::Four);
+        s_unitConverter->SendCommand(Command::Three);
+        s_unitConverter->SendCommand(Command::Clear);
+
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"0"), wstring(L"0")));
     }
 
     // Check the getter functions

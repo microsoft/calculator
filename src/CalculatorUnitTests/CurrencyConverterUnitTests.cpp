@@ -103,8 +103,6 @@ namespace CalculatorUnitTests
 {
     constexpr auto sc_Language_EN = L"en-US";
 
-    const UCM::Category CURRENCY_CATEGORY = { NavCategory::Serialize(ViewMode::Currency), L"Currency", false /*supportsNegative*/ };
-
     unique_ptr<CurrencyDataLoader> MakeLoaderWithResults(String ^ staticResponse, String ^ allRatiosResponse)
     {
         auto client = make_unique<MockCurrencyHttpClientWithResult>(staticResponse, allRatiosResponse);
@@ -382,8 +380,12 @@ TEST_METHOD(Load_Success_LoadedFromWeb)
 }
 ;
 
-TEST_CLASS(CurrencyConverterUnitTests){ const UCM::Unit GetUnit(const vector<UCM::Unit>& unitList, const wstring& target){
-    return *find_if(begin(unitList), end(unitList), [&target](const UCM::Unit& u) { return u.abbreviation == target; });
+TEST_CLASS(CurrencyConverterUnitTests){
+
+    const UCM::Category CURRENCY_CATEGORY = { NavCategory::Serialize(ViewMode::Currency), L"Currency", false /*supportsNegative*/ };
+
+    const UCM::Unit GetUnit(const vector<UCM::Unit>& unitList, const wstring& target){
+        return *find_if(begin(unitList), end(unitList), [&target](const UCM::Unit& u) { return u.abbreviation == target; });
 }
 
 TEST_METHOD(Loaded_LoadOrderedUnits)
@@ -402,7 +404,7 @@ TEST_METHOD(Loaded_LoadOrderedUnits)
     VERIFY_IS_TRUE(loader.LoadedFromCache());
     VERIFY_IS_FALSE(loader.LoadedFromWeb());
 
-    vector<UCM::Unit> unitList = loader.LoadOrderedUnits(CURRENCY_CATEGORY);
+    vector<UCM::Unit> unitList = loader.GetOrderedUnits(CURRENCY_CATEGORY);
     VERIFY_ARE_EQUAL(size_t{ 2 }, unitList.size());
 
     const UCM::Unit usdUnit = GetUnit(unitList, L"USD");
@@ -432,7 +434,7 @@ TEST_METHOD(Loaded_LoadOrderedRatios)
     VERIFY_IS_TRUE(loader.LoadedFromCache());
     VERIFY_IS_FALSE(loader.LoadedFromWeb());
 
-    vector<UCM::Unit> unitList = loader.LoadOrderedUnits(CURRENCY_CATEGORY);
+    vector<UCM::Unit> unitList = loader.GetOrderedUnits(CURRENCY_CATEGORY);
     VERIFY_ARE_EQUAL(size_t{ 2 }, unitList.size());
 
     const UCM::Unit usdUnit = GetUnit(unitList, L"USD");
@@ -465,7 +467,7 @@ TEST_METHOD(Loaded_GetCurrencySymbols_Valid)
     VERIFY_IS_TRUE(loader.LoadedFromCache());
     VERIFY_IS_FALSE(loader.LoadedFromWeb());
 
-    vector<UCM::Unit> unitList = loader.LoadOrderedUnits(CURRENCY_CATEGORY);
+    vector<UCM::Unit> unitList = loader.GetOrderedUnits(CURRENCY_CATEGORY);
     VERIFY_ARE_EQUAL(size_t{ 2 }, unitList.size());
 
     const UCM::Unit usdUnit = GetUnit(unitList, L"USD");
@@ -504,7 +506,7 @@ TEST_METHOD(Loaded_GetCurrencySymbols_Invalid)
     VERIFY_ARE_EQUAL(wstring(L""), wstring(symbols.second.c_str()));
 
     // Verify that when only one unit is valid, both symbols return as empty string.
-    vector<UCM::Unit> unitList = loader.LoadOrderedUnits(CURRENCY_CATEGORY);
+    vector<UCM::Unit> unitList = loader.GetOrderedUnits(CURRENCY_CATEGORY);
     VERIFY_ARE_EQUAL(size_t{ 2 }, unitList.size());
 
     const UCM::Unit usdUnit = GetUnit(unitList, L"USD");
@@ -537,7 +539,7 @@ TEST_METHOD(Loaded_GetCurrencyRatioEquality_Valid)
     VERIFY_IS_TRUE(loader.LoadedFromCache());
     VERIFY_IS_FALSE(loader.LoadedFromWeb());
 
-    vector<UCM::Unit> unitList = loader.LoadOrderedUnits(CURRENCY_CATEGORY);
+    vector<UCM::Unit> unitList = loader.GetOrderedUnits(CURRENCY_CATEGORY);
     VERIFY_ARE_EQUAL(size_t{ 2 }, unitList.size());
 
     const UCM::Unit usdUnit = GetUnit(unitList, L"USD");
@@ -575,7 +577,7 @@ TEST_METHOD(Loaded_GetCurrencyRatioEquality_Invalid)
     VERIFY_ARE_EQUAL(wstring(L""), ratio.second);
 
     // Verify that when only one unit is valid, both symbols return as empty string.
-    vector<UCM::Unit> unitList = loader.LoadOrderedUnits(CURRENCY_CATEGORY);
+    vector<UCM::Unit> unitList = loader.GetOrderedUnits(CURRENCY_CATEGORY);
     VERIFY_ARE_EQUAL(size_t{ 2 }, unitList.size());
 
     const UCM::Unit usdUnit = GetUnit(unitList, L"USD");

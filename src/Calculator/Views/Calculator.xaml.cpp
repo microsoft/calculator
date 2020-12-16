@@ -71,8 +71,11 @@ void Calculator::LoadResourceStrings()
     m_closeMemoryFlyoutAutomationName = resProvider->GetResourceString(L"MemoryButton_Close");
     m_openHistoryFlyoutAutomationName = resProvider->GetResourceString(L"HistoryButton_Open");
     m_closeHistoryFlyoutAutomationName = resProvider->GetResourceString(L"HistoryButton_Close");
+    m_dockPanelHistoryMemoryLists = resProvider->GetResourceString(L"DockPanel_HistoryMemoryLists");
+    m_dockPanelMemoryList = resProvider->GetResourceString(L"DockPanel_MemoryList");
     AutomationProperties::SetName(MemoryButton, m_openMemoryFlyoutAutomationName);
     AutomationProperties::SetName(HistoryButton, m_openHistoryFlyoutAutomationName);
+    AutomationProperties::SetName(DockPanel, m_dockPanelHistoryMemoryLists);
 }
 
 void Calculator::InitializeHistoryView(_In_ HistoryViewModel ^ historyVM)
@@ -150,7 +153,6 @@ void Calculator::OnLoaded(_In_ Object ^, _In_ RoutedEventArgs ^)
 
 Platform::String ^ Calculator::GetCurrentLayoutState()
 {
-
     if (IsProgrammer)
     {
         return L"Programmer";
@@ -195,7 +197,7 @@ void Calculator::UpdateViewState()
 
 void Calculator::AnimateCalculator(bool resultAnimate)
 {
-    static auto uiSettings = ref new UISettings(); 
+    static auto uiSettings = ref new UISettings();
     if (uiSettings->AnimationsEnabled)
     {
         m_doAnimate = true;
@@ -344,6 +346,14 @@ void Calculator::OnModeVisualStateCompleted(_In_ Object ^ sender, _In_ Object ^ 
             AnimateWithoutResult->Begin();
         }
     }
+    if (IsProgrammer)
+    {
+        AutomationProperties::SetName(DockPanel, m_dockPanelMemoryList);
+    }
+    else
+    {
+        AutomationProperties::SetName(DockPanel, m_dockPanelHistoryMemoryLists);
+    }
 }
 
 void Calculator::EnsureScientific()
@@ -408,10 +418,6 @@ void Calculator::UpdateHistoryState()
     {
         // flyout view
         DockHistoryHolder->Child = nullptr;
-        if (!IsProgrammer)
-        {
-            HistoryButton->Visibility = ::Visibility::Visible;
-        }
     }
 }
 
@@ -679,6 +685,7 @@ void Calculator::DockPanelTapped(_In_ TappedRoutedEventArgs ^ e)
 void Calculator::UnregisterEventHandlers()
 {
     ExpressionText->UnregisterEventHandlers();
+    AlwaysOnTopResults->UnregisterEventHandlers();
 }
 
 void Calculator::OnErrorVisualStateCompleted(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e)
@@ -703,6 +710,11 @@ void Calculator::OnMemoryAccessKeyInvoked(_In_ UIElement ^ sender, _In_ AccessKe
 
 void CalculatorApp::Calculator::OnVisualStateChanged(Platform::Object ^ sender, Windows::UI::Xaml::VisualStateChangedEventArgs ^ e)
 {
+    if (!IsStandard && !IsScientific && !IsProgrammer)
+    {
+        return;
+    }
+
     auto mode = IsStandard ? ViewMode::Standard : IsScientific ? ViewMode::Scientific : ViewMode::Programmer;
     TraceLogger::GetInstance()->LogVisualStateChanged(mode, e->NewState->Name, IsAlwaysOnTop);
 }

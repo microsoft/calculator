@@ -57,6 +57,7 @@ public
         static NarratorAnnouncement ^ GetMemoryItemAddedAnnouncement(Platform::String ^ announcement);
 
         static NarratorAnnouncement ^ GetHistoryClearedAnnouncement(Platform::String ^ announcement);
+        static NarratorAnnouncement ^ GetHistorySlotClearedAnnouncement(Platform::String ^ announcement);
 
         static NarratorAnnouncement ^ GetCategoryNameChangedAnnouncement(Platform::String ^ announcement);
 
@@ -66,5 +67,16 @@ public
 
         static NarratorAnnouncement ^ GetOpenParenthesisCountChangedAnnouncement(Platform::String ^ announcement);
         static NarratorAnnouncement ^ GetNoRightParenthesisAddedAnnouncement(Platform::String ^ announcement);
+
+        static NarratorAnnouncement ^ GetGraphModeChangedAnnouncement(Platform::String ^ announcement);
+        static NarratorAnnouncement ^ GetGraphViewChangedAnnouncement(Platform::String ^ announcement);
+        static NarratorAnnouncement ^ GetGraphViewBestFitChangedAnnouncement(Platform::String ^ announcement);
+
+        static NarratorAnnouncement ^ GetFunctionRemovedAnnouncement(Platform::String ^ announcement);
+
+        static NarratorAnnouncement ^ GetAlwaysOnTopChangedAnnouncement(Platform::String ^ announcement);
+
+        static NarratorAnnouncement ^ GetBitShiftRadioButtonCheckedAnnouncement(Platform::String ^ announcement);
+
     };
 }

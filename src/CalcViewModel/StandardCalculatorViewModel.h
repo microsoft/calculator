@@ -12,11 +12,6 @@
 #include "Common/BitLength.h"
 #include "Common/NumberBase.h"
 
-namespace CalculatorFunctionalTests
-{
-    class HistoryTests;
-}
-
 namespace CalculatorUnitTests
 {
     class MultiWindowUnitTests;
@@ -43,7 +38,6 @@ namespace CalculatorApp
         public:
             StandardCalculatorViewModel();
             void UpdateOperand(int pos, Platform::String ^ text);
-            void UpdateCommandsInRecordingMode();
 
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, DisplayValue);
@@ -71,7 +65,6 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_R(bool, IsUnaryOperatorEnabled);
             OBSERVABLE_PROPERTY_R(bool, IsNegateEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsDecimalEnabled);
-            OBSERVABLE_PROPERTY_R(bool, IsCurrentViewPinned);
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IVector<MemoryItemViewModel ^> ^, MemorizedNumbers);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmpty);
             OBSERVABLE_PROPERTY_R(bool, IsFToEChecked);
@@ -83,8 +76,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_R(CalculatorApp::Common::NumberBase, CurrentRadixType);
             OBSERVABLE_PROPERTY_R(bool, AreTokensUpdated);
             OBSERVABLE_PROPERTY_R(bool, AreAlwaysOnTopResultsUpdated);
-            OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
-            OBSERVABLE_PROPERTY_R(bool, AreProgrammerRadixOperatorsEnabled);
+            OBSERVABLE_PROPERTY_R(bool, AreProgrammerRadixOperatorsVisible);
             OBSERVABLE_PROPERTY_R(bool, IsInputEmpty);
             OBSERVABLE_PROPERTY_R(CalculatorApp::Common::Automation::NarratorAnnouncement ^, Announcement);
             OBSERVABLE_PROPERTY_R(unsigned int, OpenParenthesisCount);
@@ -111,7 +103,7 @@ namespace CalculatorApp
                     {
                         m_isBitFlipChecked = value;
                         IsBinaryBitFlippingEnabled = IsProgrammer && m_isBitFlipChecked;
-                        AreProgrammerRadixOperatorsEnabled = IsProgrammer && !m_isBitFlipChecked;
+                        AreProgrammerRadixOperatorsVisible = IsProgrammer && !m_isBitFlipChecked;
                         RaisePropertyChanged(L"IsBitFlipChecked");
                     }
                 }
@@ -186,7 +178,7 @@ namespace CalculatorApp
                             IsBitFlipChecked = false;
                         }
                         IsBinaryBitFlippingEnabled = m_isProgrammer && IsBitFlipChecked;
-                        AreProgrammerRadixOperatorsEnabled = m_isProgrammer && !IsBitFlipChecked;
+                        AreProgrammerRadixOperatorsVisible = m_isProgrammer && !IsBitFlipChecked;
                         if (value)
                         {
                             IsStandard = false;
@@ -209,7 +201,6 @@ namespace CalculatorApp
                 {
                     if (m_isEditingEnabled != value)
                     {
-                        //                        Numbers::Common::KeyboardShortcutManager::IsCalculatorInEditingMode = value;
                         m_isEditingEnabled = value;
                         bool currentEditToggleValue = !m_isEditingEnabled;
                         IsBinaryOperatorEnabled = currentEditToggleValue;
@@ -249,7 +240,11 @@ namespace CalculatorApp
                 }
             }
 
-        internal :
+            // Used by unit tests
+            void ResetCalcManager(bool clearMemory);
+            void SendCommandToCalcManager(int command);
+
+        internal:
             void OnPaste(Platform::String ^ pastedString);
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
@@ -262,7 +257,6 @@ namespace CalculatorApp
             void OnMemoryAdd(Platform::Object ^ memoryItemPosition);
             void OnMemorySubtract(Platform::Object ^ memoryItemPosition);
             void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
-            void OnPinUnpinCommand(Platform::Object ^ parameter);
 
             void OnInputChanged();
             void DisplayPasteError();
@@ -273,6 +267,7 @@ namespace CalculatorApp
             void OnMaxDigitsReached();
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
+            void SetBitshiftRadioButtonCheckedAnnouncement(Platform::String ^ announcement);
 
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);
@@ -310,7 +305,7 @@ namespace CalculatorApp
                 _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands);
             void SetTokens(_Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens);
             NumbersAndOperatorsEnum ConvertIntegerToNumbersAndOperatorsEnum(unsigned int parameter);
-            static RADIX_TYPE GetRadixTypeFromNumberBase(CalculatorApp::Common::NumberBase base);
+            static RadixType GetRadixTypeFromNumberBase(CalculatorApp::Common::NumberBase base);
             NumbersAndOperatorsEnum m_CurrentAngleType;
             wchar_t m_decimalSeparator;
             CalculatorDisplay m_calculatorDisplay;
@@ -332,7 +327,6 @@ namespace CalculatorApp
             Platform::String ^ m_localizedOpenParenthesisCountChangedAutomationFormat;
             Platform::String ^ m_localizedNoRightParenthesisAddedFormat;
 
-            bool m_pinned;
             bool m_isOperandEnabled;
             bool m_isEditingEnabled;
             bool m_isStandard;
@@ -346,9 +340,9 @@ namespace CalculatorApp
             Platform::String ^ m_selectedExpressionLastData;
             Common::DisplayExpressionToken ^ m_selectedExpressionToken;
 
-            Platform::String ^ LocalizeDisplayValue(_In_ std::wstring const& displayValue, _In_ bool isError);
+            Platform::String ^ LocalizeDisplayValue(_In_ std::wstring const& displayValue);
             Platform::String
-                ^ CalculateNarratorDisplayValue(_In_ std::wstring const& displayValue, _In_ Platform::String ^ localizedDisplayValue, _In_ bool isError);
+                ^ CalculateNarratorDisplayValue(_In_ std::wstring const& displayValue, _In_ Platform::String ^ localizedDisplayValue);
             CalculatorApp::Common::Automation::NarratorAnnouncement ^ GetDisplayUpdatedNarratorAnnouncement();
             Platform::String ^ GetCalculatorExpressionAutomationName();
             Platform::String ^ GetNarratorStringReadRawNumbers(_In_ Platform::String ^ localizedDisplayValue);
@@ -372,16 +366,11 @@ namespace CalculatorApp
             bool IsOpnd(CalculationManager::Command command);
             bool IsRecoverableCommand(CalculationManager::Command command);
 
-            CalculationManager::CommandType GetSelectedTokenType(_In_ unsigned int);
             void SaveEditedCommand(_In_ unsigned int index, _In_ CalculationManager::Command command);
-
-            bool IsViewPinned();
-            void SetViewPinnedState(bool pinned);
 
             CalculatorApp::Common::ViewMode GetCalculatorMode();
 
             friend class CalculatorDisplay;
-            friend class CalculatorFunctionalTests::HistoryTests;
             friend class CalculatorUnitTests::MultiWindowUnitTests;
         };
     }

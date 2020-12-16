@@ -218,6 +218,12 @@
     <Filter Include="Views\StateTriggers">
       <UniqueIdentifier>{0120c344-0bc0-4a1d-b82c-df7945f46189}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Views\GraphingCalculator">
+      <UniqueIdentifier>{e23e2a6e-491b-4200-9bf7-d355a1ee695b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{b491a249-26b8-4814-9f50-2c3a57018c56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -225,9 +231,6 @@
   <ItemGroup>
     <ClCompile Include="App.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Common\BindableBase.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Controls\CalculationResult.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -308,14 +311,29 @@
     <ClCompile Include="Controls\OperatorPanelButton.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
+    <ClCompile Include="Views\GraphingCalculator\EquationInputArea.xaml.cpp" />
+    <ClCompile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cpp" />
+    <ClCompile Include="Controls\EquationTextBox.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\MathRichEditBox.cpp" />
+    <ClCompile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cpp">
+      <Filter>Views\GraphingCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.cpp" />
+    <ClCompile Include="Utils\VisualTree.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\KeyboardShortcutManager.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ViewState.cpp" />
+    <ClCompile Include="Utils\DispatcherTimerDelayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h" />
     <ClInclude Include="Common\AlwaysSelectedCollectionView.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\BindableBase.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Controls\CalculationResult.h">
@@ -398,13 +416,34 @@
     <ClInclude Include="Controls\OperatorPanelButton.h">
       <Filter>Controls</Filter>
     </ClInclude>
+    <ClInclude Include="Views\GraphingCalculator\EquationInputArea.xaml.h" />
+    <ClInclude Include="Views\GraphingCalculator\GraphingCalculator.xaml.h" />
+    <ClInclude Include="Controls\EquationTextBox.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\MathRichEditBox.h" />
+    <ClInclude Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.h">
+      <Filter>Views\GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateSelectors\KeyGraphFeaturesTemplateSelector.h" />
+    <ClInclude Include="Utils\VisualTree.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\KeyboardShortcutManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ValidatingConverters.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ViewState.h" />
+    <ClInclude Include="Utils\DispatcherTimerDelayer.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="TemporaryKey.pfx" />
+    <None Include="WindowsDev_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Calculator.xaml">
@@ -447,9 +486,6 @@
       <Filter>Views</Filter>
     </Page>
     <Page Include="AboutFlyout.xaml" />
-    <Page Include="Views\CalculatorProgrammerDisplayPanel.xaml">
-      <Filter>Views</Filter>
-    </Page>
     <Page Include="Views\CalculatorProgrammerBitFlipPanel.xaml">
       <Filter>Views</Filter>
     </Page>
@@ -465,6 +501,28 @@
     <Page Include="Views\TitleBar.xaml">
       <Filter>Views</Filter>
     </Page>
+    <Page Include="Views\GraphingCalculator\EquationInputArea.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
+    <Page Include="Views\TitleBar.xaml">
+      <Filter>Views</Filter>
+    </Page>
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingSettings.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml">
+      <Filter>Views\GraphingCalculator</Filter>
+    </Page>
+    <Page Include="EquationStylePanelControl.xaml" />
+    <Page Include="Views\CalculatorProgrammerDisplayPanel.xaml">
+      <Filter>Views\StateTriggers</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en-US\CEngineStrings.resw">
@@ -475,9 +533,6 @@
     </PRIResource>
     <PRIResource Include="Resources\az-Latn-AZ\CEngineStrings.resw">
       <Filter>Resources\az-Latn-az</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\uz-Latn-UZ\CEngineStrings.resw">
-      <Filter>Resources\uz-latn-uz</Filter>
     </PRIResource>
     <PRIResource Include="Resources\af-ZA\CEngineStrings.resw">
       <Filter>Resources\af-za</Filter>
@@ -490,9 +545,6 @@
     </PRIResource>
     <PRIResource Include="Resources\vi-vn\CEngineStrings.resw">
       <Filter>Resources\vi-vn</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\be-BY\CEngineStrings.resw">
-      <Filter>Resources\be-by</Filter>
     </PRIResource>
     <PRIResource Include="Resources\am-et\CEngineStrings.resw">
       <Filter>Resources\am-et</Filter>
@@ -517,12 +569,6 @@
     </PRIResource>
     <PRIResource Include="Resources\zh-cn\CEngineStrings.resw">
       <Filter>Resources\zh-cn</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\sw-KE\CEngineStrings.resw">
-      <Filter>Resources\sw-ke</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\bn-BD\CEngineStrings.resw">
-      <Filter>Resources\bn-bd</Filter>
     </PRIResource>
     <PRIResource Include="Resources\ta-IN\CEngineStrings.resw">
       <Filter>Resources\ta-in</Filter>
@@ -613,9 +659,6 @@
     </PRIResource>
     <PRIResource Include="Resources\pt-br\CEngineStrings.resw">
       <Filter>Resources\pt-br</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\ha-Latn-NG\CEngineStrings.resw">
-      <Filter>Resources\ha-latn-ng</Filter>
     </PRIResource>
     <PRIResource Include="Resources\lt-LT\CEngineStrings.resw">
       <Filter>Resources\lt-lt</Filter>
@@ -749,9 +792,6 @@
     <PRIResource Include="Resources\ru-ru\Resources.resw">
       <Filter>Resources\ru-ru</Filter>
     </PRIResource>
-    <PRIResource Include="Resources\ha-Latn-NG\Resources.resw">
-      <Filter>Resources\ha-latn-ng</Filter>
-    </PRIResource>
     <PRIResource Include="Resources\lo-LA\Resources.resw">
       <Filter>Resources\lo-la</Filter>
     </PRIResource>
@@ -794,9 +834,6 @@
     <PRIResource Include="Resources\el-GR\Resources.resw">
       <Filter>Resources\el-gr</Filter>
     </PRIResource>
-    <PRIResource Include="Resources\sw-KE\Resources.resw">
-      <Filter>Resources\sw-ke</Filter>
-    </PRIResource>
     <PRIResource Include="Resources\uk-UA\Resources.resw">
       <Filter>Resources\uk-ua</Filter>
     </PRIResource>
@@ -806,9 +843,6 @@
     <PRIResource Include="Resources\vi-vn\Resources.resw">
       <Filter>Resources\vi-vn</Filter>
     </PRIResource>
-    <PRIResource Include="Resources\uz-Latn-UZ\Resources.resw">
-      <Filter>Resources\uz-latn-uz</Filter>
-    </PRIResource>
     <PRIResource Include="Resources\tr-tr\Resources.resw">
       <Filter>Resources\tr-tr</Filter>
     </PRIResource>
@@ -817,9 +851,6 @@
     </PRIResource>
     <PRIResource Include="Resources\zh-tw\Resources.resw">
       <Filter>Resources\zh-tw</Filter>
-    </PRIResource>
-    <PRIResource Include="Resources\bn-BD\Resources.resw">
-      <Filter>Resources\bn-bd</Filter>
     </PRIResource>
     <PRIResource Include="Resources\cs-cz\Resources.resw">
       <Filter>Resources\cs-cz</Filter>
@@ -842,9 +873,6 @@
     <PRIResource Include="Resources\ar-sa\Resources.resw">
       <Filter>Resources\ar-sa</Filter>
     </PRIResource>
-    <PRIResource Include="Resources\be-BY\Resources.resw">
-      <Filter>Resources\be-by</Filter>
-    </PRIResource>
     <PRIResource Include="Resources\kk-KZ\Resources.resw">
       <Filter>Resources\kk-kz</Filter>
     </PRIResource>
@@ -859,450 +887,6 @@
     </PRIResource>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\CalculatorAppList.targetsize-16.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-20.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-24.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-32.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-40.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-48.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-64.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-80.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-96.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-256.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-16.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-20.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-24.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-32.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-40.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-48.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-64.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-80.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-96.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-256.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorLargeTile.contrast-white_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorLargeTile.contrast-white_scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorLargeTile.contrast-white_scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorLargeTile.contrast-white_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorLargeTile.contrast-white_scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorMedTile.contrast-white_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorMedTile.contrast-white_scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorMedTile.contrast-white_scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorMedTile.contrast-white_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorMedTile.contrast-white_scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSmallTile.contrast-white_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSmallTile.contrast-white_scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSmallTile.contrast-white_scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSmallTile.contrast-white_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSmallTile.contrast-white_scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorWideTile.contrast-white_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorWideTile.contrast-white_scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorWideTile.contrast-white_scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorWideTile.contrast-white_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorWideTile.contrast-white_scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-16.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-20.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-24.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-32.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-40.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-48.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-64.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-80.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-96.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-256.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorLargeTile.contrast-black_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorLargeTile.contrast-black_scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorLargeTile.contrast-black_scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorLargeTile.contrast-black_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorLargeTile.contrast-black_scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorMedTile.contrast-black_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorMedTile.contrast-black_scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorMedTile.contrast-black_scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorMedTile.contrast-black_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorMedTile.contrast-black_scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSmallTile.contrast-black_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSmallTile.contrast-black_scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSmallTile.contrast-black_scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSmallTile.contrast-black_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSmallTile.contrast-black_scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorWideTile.contrast-black_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorWideTile.contrast-black_scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorWideTile.contrast-black_scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorWideTile.contrast-black_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorWideTile.contrast-black_scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-16_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-16_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-16_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-20_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-20_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-20_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-32_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-32_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-32_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-64_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-64_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-64_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSplashScreen.contrast-black_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSplashScreen.contrast-white_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-30.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-36.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-60.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-black_targetsize-72.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-30.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-36.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-60.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.contrast-white_targetsize-72.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-30.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-36.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-36_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-36_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-36_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-60.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-72.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-72_altform-unplated.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-72_altform-unplated_contrast-black.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-72_altform-unplated_contrast-white.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorStoreLogo.contrast-black_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorStoreLogo.contrast-white_scale-100.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSplashScreen.contrast-white_scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSplashScreen.contrast-white_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSplashScreen.contrast-white_scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSplashScreen.contrast-white_scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSplashScreen.contrast-black_scale-400.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSplashScreen.contrast-black_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSplashScreen.contrast-black_scale-150.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorSplashScreen.contrast-black_scale-125.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorStoreLogo.contrast-black_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\CalculatorStoreLogo.contrast-white_scale-200.png">
-      <Filter>Assets</Filter>
-    </Image>
     <Image Include="Assets\Standard.targetsize-64_contrast-white.png">
       <Filter>Assets</Filter>
     </Image>
@@ -1423,82 +1007,550 @@
     <Image Include="Assets\Date.targetsize-16_contrast-black.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-80_altform-lightunplated.png">
+    <Image Include="Assets\CalculatorAppList.scale-100_contrast-black.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-lightunplated.png">
+    <Image Include="Assets\CalculatorAppList.scale-100_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.scale-125_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.scale-125_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.scale-150_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.scale-150_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.scale-200_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.scale-200_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.scale-400_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.scale-400_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-16.png">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-16_altform-lightunplated.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-16_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-16_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-16_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-16_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-16_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-20.png">
+      <Filter>Assets</Filter>
+    </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-20_altform-lightunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-20_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-20_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-20_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-20_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-20_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-24.png">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-24_altform-lightunplated.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-24_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-24_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-24_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-30.png">
+      <Filter>Assets</Filter>
+    </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-30_altform-lightunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-30_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-30_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-30_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-32.png">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-32_altform-lightunplated.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-32_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-32_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-32_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-32_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-32_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-36.png">
+      <Filter>Assets</Filter>
+    </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-36_altform-lightunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-36_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-36_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-36_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-36_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-36_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-40.png">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-40_altform-lightunplated.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-40_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-40_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-40_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-48.png">
+      <Filter>Assets</Filter>
+    </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-48_altform-lightunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-48_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-48_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-60.png">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-60_altform-lightunplated.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-60_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-60_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-60_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-64.png">
+      <Filter>Assets</Filter>
+    </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-64_altform-lightunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-64_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-64_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-64_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-64_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-64_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-72.png">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-72_altform-lightunplated.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-72_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-72_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-72_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-72_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-72_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-80.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-80_altform-lightunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-80_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-80_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-80_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-96.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-lightunplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-96_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-96_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorAppList.targetsize-256.png">
+      <Filter>Assets</Filter>
+    </Image>
     <Image Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-lightunplated_devicefamily-colorfulunplated.png">
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-black_devicefamily-colorfulunplated.png">
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-black.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-white_devicefamily-colorfulunplated.png">
+    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-white.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_devicefamily-colorfulunplated.png">
+    <Image Include="Assets\CalculatorAppList.targetsize-256_contrast-black.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-lightunplated_devicefamily-colorfulunplated.png">
+    <Image Include="Assets\CalculatorAppList.targetsize-256_contrast-white.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-black_devicefamily-colorfulunplated.png">
+    <Image Include="Assets\CalculatorLargeTile.scale-100_contrast-black.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-white_devicefamily-colorfulunplated.png">
+    <Image Include="Assets\CalculatorLargeTile.scale-100_contrast-white.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_devicefamily-colorfulunplated.png">
+    <Image Include="Assets\CalculatorLargeTile.scale-125_contrast-black.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated_devicefamily-colorfulunplated.png">
+    <Image Include="Assets\CalculatorLargeTile.scale-125_contrast-white.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-black_devicefamily-colorfulunplated.png">
+    <Image Include="Assets\CalculatorLargeTile.scale-150_contrast-black.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-white_devicefamily-colorfulunplated.png">
+    <Image Include="Assets\CalculatorLargeTile.scale-150_contrast-white.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_devicefamily-colorfulunplated.png">
+    <Image Include="Assets\CalculatorLargeTile.scale-200_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorLargeTile.scale-200_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorLargeTile.scale-400_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorLargeTile.scale-400_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorMedTile.scale-100_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorMedTile.scale-100_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorMedTile.scale-125_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorMedTile.scale-125_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorMedTile.scale-150_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorMedTile.scale-150_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorMedTile.scale-200_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorMedTile.scale-200_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorMedTile.scale-400_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorMedTile.scale-400_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSmallTile.scale-100_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSmallTile.scale-100_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSmallTile.scale-125_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSmallTile.scale-125_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSmallTile.scale-150_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSmallTile.scale-150_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSmallTile.scale-200_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSmallTile.scale-200_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSmallTile.scale-400_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSmallTile.scale-400_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-100_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-100_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-125_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-125_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-150_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-150_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-200_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-200_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-400_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-400_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorStoreLogo.scale-100_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorStoreLogo.scale-100_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorStoreLogo.scale-200_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorStoreLogo.scale-200_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorWideTile.scale-100_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorWideTile.scale-100_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorWideTile.scale-125_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorWideTile.scale-125_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorWideTile.scale-150_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorWideTile.scale-150_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorWideTile.scale-200_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorWideTile.scale-200_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorWideTile.scale-400_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorWideTile.scale-400_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-16.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-16_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-16_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-20.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-20_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-20_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-24.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-24_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-24_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-32.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-32_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-32_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-64.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-64_contrast-black.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Graphing.targetsize-64_contrast-white.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-400_altform-colorful.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-200_altform-colorful.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-150_altform-colorful.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-125_altform-colorful.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\CalculatorSplashScreen.scale-100_altform-colorful.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
@@ -1509,5 +1561,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Calculator.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="$(GraphingImplDll)" />
+    <CopyFileToFolders Include="$(GraphingEngineDll)" />
   </ItemGroup>
 </Project>

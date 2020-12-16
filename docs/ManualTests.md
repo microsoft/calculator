@@ -260,17 +260,19 @@ Steps:
 4.	While in the Menu: Check the About Page
 *Expected:  Everything in the about page fits into its window*
 5.	For Scientific Mode: At a Larger Scale
-*Expected: All buttons are present and the up arrow is grayed out.*
+*Expected: All buttons are present and the 2nd button is grayed out.*
 6.	For Scientific Mode: At a Smaller Scale
-*Expected: All buttons are present and the up arrow is able to be toggled.*
+*Expected: All buttons are present and the 2nd button is able to be toggled.*
 7.	For Programmer Mode: At a Any Scale
-*Expected: All buttons are present and the up arrow is able to be toggled.*
+*Expected: All buttons are present and the 2nd button is able to be toggled.*
 8.	For Converter Mode: While Scaling
 *Expected: The number pad and input areas move around each other gracefully.*
-9.	Changing Language: Open Settings app > Time & language > Region & language > Add a language > Select a Right to Left (RTL) language such as Hebrew > Install the associated files> Set it to the system default.
-10.	Set the system number format preference: Open a Run dialog (WIN + R) > type ‘intl.cpl’ > Enter > In the format dropdown list > Select Hebrew > Apply.
-11.	Initiating the change: Package has completed installing > Sign out > Sign in. (This change to the app may also require a reinstallation of the build)
-12.	Repeat Steps 2-6 again in a (RTL) language.
+9.  For Graphing Mode: While Scaling
+*Expected: The number pad, graph area, and input areas move around each other gracefully.*
+10.	Changing Language: Open Settings app > Time & language > Region & language > Add a language > Select a Right to Left (RTL) language such as Hebrew > Install the associated files> Set it to the system default.
+11.	Set the system number format preference: Open a Run dialog (WIN + R) > type ‘intl.cpl’ > Enter > In the format dropdown list > Select Hebrew > Apply.
+12.	Initiating the change: Package has completed installing > Sign out > Sign in. (This change to the app may also require a reinstallation of the build)
+13.	Repeat Steps 2-6 again in a (RTL) language.
 *Expected: No elements fall out of intended boundaries.*
 
 
@@ -302,11 +304,60 @@ Verify the following:
 11.	"Bin" Binary:
 *Expected: A B C D E F 2 3 4 5 6 7 8 9 are inactive. A maximum of 64 characters can be entered.*
 
+**Graphing Mode Test: Verify Graphing mode functions**
+Steps:
+1.  Launch the "Calculator" app
+2.  Navigate to "Graphing" Calculator
+3.  Enter a function of x in the input field <br>
+*Expected: Function is plotted in the graph area. Line color matches the colored square next to the input field*
+4.  Select the "+" button below the function input and enter more functions in the fields that appear <br>
+*Expected: All functions are plotted in the graph area and match the colors of the input field squares*
+5.  Select the colored square for any function <br>
+*Expected: Visibility of the function in the graph is toggled off/on*
+6.  Select the "Zoom In", "Zoom Out", and "Reset View' buttons in the graph area <br>
+*Expected: Both X and Y axes zoom in, out, and revert to default settings, respectively*
+7.  Select the Trace button, then click + drag the graph until the red square is near a graphed function<br>
+*Expected: Closest (X, Y) coordinates of the function to the red square are displayed with a black dot to indicate the location*
+8.  Enter "y=mx+b" into a function input field, then select "Variables" button <br>
+*Expected: y=x+1 function is plotted in the graph, "Variables" modal window shows two variables "m" and "b" with values set to 1.*
+9.  Adjust the value, minimum, maximum, and step for each variable <br>
+*Expected: y=mx+b graph adjusts to the new values for m and b, step size changes the increments of the slider for each value*
+10.  Share the graph via OneNote, Outlook/Mail, Twitter, and Feedback Hub <br>
+*Expected: Modifiable message that contains an image of the graph customized for the chosen application opens*
+11.  Verify Key Graph Features tab shows the correct information for the following functions: <br>
+    *(Note: IP = Inflection Points, VA = Vertical Asymptotes, HA = Horizontal Asymptotes, OA = Oblique Asymptotes)* <br>
+    a.  **y=x** <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅y∈ℝ⁆; X/Y Intercepts: (0)/(0); Max: none; Min: none; IP: none; VA: none; HA: none; OA: none; Parity: Odd; Monotonicity: (-∞, ∞) Increasing* <br>
+    b.  **y=1/x** <br>
+    *Expected: Domain: ⁅𝑥≠0⁆; Range: ⁅y∈ℝ\{0}⁆; X/Y Intercepts: ø/ø; Max: none; Min: none; IP: none; VA: x=0; HA: y=0; OA: none; Parity: Odd; Monotonicity: (0, ∞) Decreasing, (-∞, 0) Increasing* <br>
+    c.  **y=x^2** <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅y∈{0, ∞)⁆; X/Y Intercepts: (0)/(0); Max: none; Min: (0,0); IP: none; VA: none; HA: none; OA: none; Parity: Even; Monotonicity: (0, ∞) Increasing, (-∞, 0) Decreasing* <br>
+    d.  **y=x^3** <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅y∈ℝ⁆; X/Y Intercepts: (0)/(0); Max: none; Min: none; IP: (0,0); VA: none; HA: none; OA: none; Parity: Odd; Monotonicity: (-∞, ∞) Increasing* <br>
+    e.  **y=e^x** <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅y∈(0, ∞)⁆; X/Y Intercepts: ø/(1); Max: none; Min: none; IP: none; VA: none; HA: y=0; OA: none; Parity: none; Monotonicity: (-∞, ∞) Increasing* <br>
+    f.  **y=ln(x)** <br>
+    *Expected: Domain: ⁅𝑥>0⁆; Range: ⁅y∈ℝ⁆; X/Y Intercepts: (1)/ø; Max: none; Min: none; IP: none; VA: x=0; HA: none; OA: none; Parity: none; Monotonicity: (0, ∞) Increasing* <br>
+    g.  **y=sin(x)** <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅𝑦∈[−1,1]⁆; X/Y Intercepts: (⁅𝜋n1,n1∈ℤ⁆)/(0); Max: ⁅(2𝜋n1+𝜋/2,1),n1∈ℤ⁆; Min: ⁅(2𝜋n1+3𝜋/2,−1),n1∈ℤ⁆; IP: ⁅(𝜋n1,0),n1∈ℤ⁆; VA: none; HA: none; OA: none; Parity: Odd; Monotonicity: ⁅(2𝜋n1+𝜋/2,2𝜋n1+3𝜋/2),n1∈ℤ⁆ Decreasing; ⁅(2𝜋n1+3𝜋/2,2𝜋n1+5𝜋/2),n1∈ℤ⁆ Increasing; Period: 2𝜋* <br>
+    h.  **y=cos(x)** <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: ⁅𝑦∈[−1,1]⁆; X/Y Intercepts: (⁅𝜋n1+𝜋/2,n1∈ℤ⁆)/(1); Max: ⁅(2𝜋n1,1),n1∈ℤ⁆; Min: ⁅(2𝜋n1+𝜋,-1),n1∈ℤ⁆; IP: ⁅(𝜋n1+𝜋/2,0),n1∈ℤ⁆; VA: none; HA: none; OA: none; Parity: Even; Monotonicity: ⁅(2𝜋n1+𝜋,2𝜋n1+2𝜋),n1∈ℤ⁆ Increasing, ⁅(2𝜋n1,2𝜋n1+𝜋),n1∈ℤ⁆ Decreasing; Period: 2𝜋* <br>
+    i.  **y=tan(x)** <br>
+    *Expected: Domain: ⁅x≠𝜋n1+𝜋/2,∀n1∈ℤ⁆; Range: ⁅𝑦∈ℝ⁆; X/Y Intercepts: (x=𝜋n1, n1 ∈ℤ)/(0); Max: none; Min: none; IP: x=𝜋n1, n1 ∈ℤ; VA: x=𝜋n1+𝜋/2, n1∈ℤ; HA: none; OA: none; Parity: Odd; Monotonicity: ⁅(𝜋n1+𝜋/2,𝜋n1+3𝜋/2),n1∈ℤ⁆ Increasing; Period: 𝜋* <br>
+    j.  **y=sqrt(25-x^2)** <br>
+    *Expected: Domain: ⁅x∈[-5,5]⁆; Range: ⁅𝑦∈[0,5]⁆; X/Y Intercepts: (5),(-5)/(5); Max: (0,5); Min: (-5,0) and (5,0); IP: none; VA: none; HA: none; OA: none; Parity: Even; Monotonicity: (0,5) Decreasing, (-5,0) Increasing* <br>
+    k.  **y=(-3x^2+2)/(x-1)** <br>
+    *Expected: Domain: ⁅x≠1⁆; Range: ⁅𝑦∈(-∞, -2√3 - 6}U{2√3 -6,∞⁆; X/Y Intercepts: (-√6/3),(√6/3)/(-2); Max: ⁅(√3/3+1,-2√3−6)⁆; Min: ⁅(−√3/3+1,2√3−6)⁆; IP: none; VA: x=1; HA: none; OA: y=-3x-3; Parity: none; Monotonicity: (√3/3+1,∞) Decreasing, (1,√3/3+1,) Increasing(-√3/3+1,1), Increasing, (-∞,-√3/3+1) Decreasing* <br>
+    l. **y=sin(sin(x))** ("too complex" error test) <br>
+    *Expected: Domain: ⁅𝑥∈ℝ⁆; Range: Unable to calculate range for this function; X/Y Intercepts: none; Max: none; Min: none; IP: none; VA: none; HA: none; OA: none; Parity: odd; Monotonicity: Unable to determine the monotonicity of the function* <br>
+    *These features are too complex for Calculator to calculate: Range, X Intercept, Period, Minima, Maxima, Inflection Points, Monotonicity*
+    m. **y=mx+b** <br>
+    *Expected: Analysis is not supported for this function*
 
 **Date Calculation Test: Verify dates can be calculated.**
 Steps:
-1.	Launch the "Calculator" app.
-2.	Navigate to "Date Calculation" Calculator.
+1.	Launch the "Calculator" app
+2.	Navigate to "Date Calculation" Calculator
 3.  With "Difference between dates" Selected
     Change the various date input fields
 *Expected: From and To reflect dates input respectively.*
@@ -332,80 +383,88 @@ Steps:
 1.	Launch the "Calculator" app.
 
     For All Applicable Modes verify the following (note: only 11-15 and 20 work in Always-on-Top mode):
-2.	Press **Alt +1** to Enter "Standard" mode
+2.	Press **Alt +1** to enter "Standard" mode
 *Expected: Move to "Standard" screen.*
-3.	Press **Alt +2** to Enter "Scientific" mode
+3.	Press **Alt +2** to enter "Scientific" mode
 *Expected: Move to "Scientific" screen.*
-4.	Press **Alt +3** to Enter "Programmer" mode
+4.	Press **Alt +3** to enter "Programmer" mode
 *Expected: Move to "Programming" screen.*
-5.	Press **Alt +4** to Enter "Date Calculation" mode
+5.	Press **Alt +4** to enter "Date Calculation" mode
 *Expected: Move to "Date Calculation" screen.*
-6.	Press **Ctrl +M** to Store in Memory
-7.	Press **Ctrl +P** to Add to Active Memory
-8.	Press **Ctrl +Q** to Subtract form Active Memory
-9.	Press **Ctrl +R** to Recall from Memory
-10.	Press **Ctrl +L** to Clear from Memory
-11.	Press **Delete** to Clear Current Input 'CE'
-12.	Press **Esc** to Full Clear Input 'C'
-13.	Press **F9** to Toggle '±'
-14.	Press **R** to Select '1/x'
-15.	Press **@** to Select '√'
-16.	Press **Ctrl + H** to Toggle History Panel
+6   Press **Alt +5** to enter "Graphing" mode
+*Expected: Move to "Graphing" screen.*
+7.	Press **Ctrl +M** to Store in Memory
+8.	Press **Ctrl +P** to Add to Active Memory
+9.	Press **Ctrl +Q** to Subtract form Active Memory
+10.	Press **Ctrl +R** to Recall from Memory
+11.	Press **Ctrl +L** to Clear from Memory
+12.	Press **Delete** to Clear Current Input 'CE'
+13.	Press **Esc** to Full Clear Input 'C'
+14.	Press **F9** to Toggle '±'
+15.	Press **R** to Select '1/x'
+16.	Press **@** to Select '√'
+17.	Press **Ctrl + H** to Toggle History Panel
 *Expected: Function when in small scale window.*
-17.	Press **Up arrow** to Move up History Panel
+18.	Press **Up arrow** to Move up History Panel
 *Expected: Function when in small scale window.*
-18.	Press **Down arrow** to Move Down History Panel
+19.	Press **Down arrow** to Move Down History Panel
 *Expected: Function when in small scale window.*
-19.	Press **Ctrl + Shift + D** to Clear History Panel
+20.	Press **Ctrl + Shift + D** to Clear History Panel
 *Expected: Function when in small scale window.*
-20.	Press **Spacebar** to Repeat Last Input
+21.	Press **Spacebar** to Repeat Last Input
 
     Verify the following in Scientific Mode
-21.	Press **F3** to Select 'DEG'
-22.	Press **F4** to Select 'RAD'
-23.	Press **F5** to Select 'GRAD'
-24.	Press **Ctrl +G** to Select '10ˣ'
-25.	Press **Ctrl +Y** to Select 'y√x'
-26.	Press **Shift +O** to Select 'sin-1'
-27.	Press **Shift + S** to Select 'cos-1'
-28.	Press **Shift +T** to Select 'tan-1'
-29.	Press **Ctrl +O** to Select 'Cosh'
-30.	Press **Ctrl +S** to Select 'Sinh'
-31.	Press **Ctrl +T** to Select 'Tanh'
-32.	Press **D** to Select 'Mod'
-33.	Press **L** to Select 'log'
-34.	Press **M** to Select 'dms'
-35.	Press **N** to Select 'ln'
-36.	Press **Ctrl +N** to Select 'ex'
-37.	Press **O** to Select 'Cos'
-38.	Press **P** to Select 'π'
-39.	Press **Q** to Select 'x²'
-40.	Press **S** to Select 'Sin'
-41.	Press **T** to Select 'Tan'
-42.	Press **V** to Toggle 'F-E'
-43.	Press **X** to Select 'Exp'
-44.	Press **Y** or **^** to Select 'xʸ'
-45.	Press **#** to Select 'x³'
-46.	Press **!** to Select 'n!'
+22.	Press **F3** to Select 'DEG'
+23.	Press **F4** to Select 'RAD'
+24.	Press **F5** to Select 'GRAD'
+25.	Press **Ctrl +G** to Select '10ˣ'
+26.	Press **Ctrl +Y** to Select 'y√x'
+27.	Press **Shift +O** to Select 'sin-1'
+28.	Press **Shift + S** to Select 'cos-1'
+29.	Press **Shift +T** to Select 'tan-1'
+30.	Press **Ctrl +O** to Select 'Cosh'
+31.	Press **Ctrl +S** to Select 'Sinh'
+32.	Press **Ctrl +T** to Select 'Tanh'
+33.	Press **D** to Select 'Mod'
+34.	Press **L** to Select 'log'
+35.	Press **M** to Select 'dms'
+36.	Press **N** to Select 'ln'
+37.	Press **Ctrl +N** to Select 'ex'
+38.	Press **O** to Select 'Cos'
+39.	Press **P** to Select 'π'
+40.	Press **Q** to Select 'x²'
+41.	Press **S** to Select 'Sin'
+42.	Press **T** to Select 'Tan'
+43.	Press **V** to Toggle 'F-E'
+44.	Press **X** to Select 'Exp'
+45.	Press **Y** or **^** to Select 'xʸ'
+46.	Press **#** to Select 'x³'
+47.	Press **!** to Select 'n!'
 
     Verify the following in Programmer Mode
-47.	Press **F2** to Select 'DWORD'
-48.	Press **F3** to Select 'WORD'
-49.	Press **F4** to Select 'BYTE'
-50.	Press **F5** to Select 'HEX'
-51.	Press **F6** to Select 'DEC'
-52.	Press **F7** to Select 'OCT'
-53.	Press **F8** to Select 'BIN'
-54.	Press **F12** to Select 'QWORD'
-55.	Press **A-F** to Input in HEX
-56.	Press **J** to Select 'RoL'
-57.	Press **K** to Select 'RoR'
-58.	Press **<** to Select 'Lsh'
-59.	Press **>** to Select 'Rsh'
-60.	Press **%** to Select 'Mod'
-61.	Press **|** to Select 'Or'
-62.	Press **~** to Select 'Not'
-63.	Press **&** to Select 'And'
+48.	Press **F2** to Select 'DWORD'
+49.	Press **F3** to Select 'WORD'
+50.	Press **F4** to Select 'BYTE'
+51.	Press **F5** to Select 'HEX'
+52.	Press **F6** to Select 'DEC'
+53.	Press **F7** to Select 'OCT'
+54.	Press **F8** to Select 'BIN'
+55.	Press **F12** to Select 'QWORD'
+56.	Press **A-F** to Input in HEX
+57.	Press **J** to Select 'RoL'
+58.	Press **K** to Select 'RoR'
+59.	Press **<** to Select 'Lsh'
+60.	Press **>** to Select 'Rsh'
+61.	Press **%** to Select 'Mod'
+62.	Press **|** to Select 'Or'
+63.	Press **~** to Select 'Not'
+64.	Press **&** to Select 'And'
+
+    Verify the following in Graphing Mode
+65. Press **x** to Select 'x'
+66. Press **y** to Select 'y'
+67. Press **Ctrl +[Numpad+]** to Select 'Zoom In'
+68. Press **Ctrl +[Numpad-]** to Select 'Zoom Out'
 
 ## Localization Tests
 

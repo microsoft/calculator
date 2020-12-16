@@ -109,7 +109,7 @@ public
         InvCoth = (int) CM::Command::CommandACOTH,
         CubeRoot = (int) CM::Command::CommandCUBEROOT,
         TwoPowerX = (int) CM::Command::CommandPOW2,
-        LogBaseX = (int) CM::Command::CommandLogBaseX,
+        LogBaseY = (int) CM::Command::CommandLogBaseY,
         Nand = (int) CM::Command::CommandNand,
         Nor = (int) CM::Command::CommandNor,
         Abs = (int) CM::Command::CommandAbs,
@@ -120,7 +120,7 @@ public
         RshL = (int)CM::Command::CommandRSHFL,
         RolC = (int)CM::Command::CommandROLC,
         RorC = (int)CM::Command::CommandRORC,
-
+            
         BINSTART = (int)CM::Command::CommandBINEDITSTART,
         BINPOS0 = (int)CM::Command::CommandBINPOS0,
         BINPOS1 = (int)CM::Command::CommandBINPOS1,
@@ -194,6 +194,15 @@ public
         MemoryRecall = (int)CM::Command::CommandRECALL,
         MemoryClear = (int)CM::Command::CommandMCLEAR,
         BitflipButton = 1000,
-        FullKeypadButton = 1001
+        FullKeypadButton = 1001,
+
+        // Buttons used in graphing calculator
+        LessThan,
+        LessThanOrEqualTo,
+        GreaterThan,
+        GreaterThanOrEqualTo,
+        X,
+        Y,
+        Submit
     };
 }

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="GraphingInterfaces">
+      <UniqueIdentifier>{a74bebcf-8242-4c82-bd5f-6735feda8879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mocks">
+      <UniqueIdentifier>{e5205167-e65a-458c-a7e4-b3bc468c60ab}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Mocks\MathSolver.cpp">
+      <Filter>Mocks</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\GraphingInterfaces\Common.h">
+      <Filter>GraphingInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GraphingInterfaces\GraphingEnums.h">
+      <Filter>GraphingInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GraphingInterfaces\IGraph.h">
+      <Filter>GraphingInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GraphingInterfaces\IGraphingOptions.h">
+      <Filter>GraphingInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GraphingInterfaces\IMathSolver.h">
+      <Filter>GraphingInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Mocks\MathSolver.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GraphingInterfaces\IGraphRenderer.h">
+      <Filter>GraphingInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GraphingInterfaces\IEquation.h" />
+    <ClInclude Include="..\GraphingInterfaces\IEquationOptions.h" />
+    <ClInclude Include="..\GraphingInterfaces\IGraphAnalyzer.h">
+      <Filter>GraphingInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Mocks\GraphingOptions.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Mocks\Graph.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GraphingInterfaces\IBitmap.h">
+      <Filter>GraphingInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Mocks\Bitmap.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Mocks\GraphRenderer.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

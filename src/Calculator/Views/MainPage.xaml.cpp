@@ -4,7 +4,6 @@
 #include "pch.h"
 #include "MainPage.xaml.h"
 #include "CalcViewModel/Common/TraceLogger.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
 #include "CalcViewModel/Common/LocalizationService.h"
 #include "CalcViewModel/Common/Automation/NarratorNotifier.h"
 #include "CalcViewModel/Common/AppResourceProvider.h"
@@ -12,6 +11,8 @@
 #include "Converters/BooleanToVisibilityConverter.h"
 #include "CalcViewModel/Common/LocalizationStringUtil.h"
 #include "Common/AppLifecycleLogger.h"
+#include "Common/KeyboardShortcutManager.h"
+
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
 using namespace CalculatorApp::Common::Automation;
@@ -88,11 +89,6 @@ MainPage::MainPage()
 
 void MainPage::OnNavigatedTo(NavigationEventArgs ^ e)
 {
-    if (m_model->CalculatorViewModel)
-    {
-        m_model->CalculatorViewModel->HistoryVM->ClearHistory();
-    }
-
     ViewMode initialMode = ViewMode::Standard;
     if (e->Parameter != nullptr)
     {
@@ -128,10 +124,11 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         ViewMode newValue = m_model->Mode;
         ViewMode previousMode = m_model->PreviousMode;
 
+        KeyboardShortcutManager::DisableShortcuts(false);
+
         if (newValue == ViewMode::Standard)
         {
             EnsureCalculator();
-            m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
             m_calculator->AnimateCalculator(NavCategory::IsConverterViewMode(previousMode));
             m_model->CalculatorViewModel->HistoryVM->ReloadHistory(newValue);
@@ -139,7 +136,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         else if (newValue == ViewMode::Scientific)
         {
             EnsureCalculator();
-            m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = true;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = true;
             if (m_model->PreviousMode != ViewMode::Scientific)
             {
@@ -150,7 +146,6 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         }
         else if (newValue == ViewMode::Programmer)
         {
-            m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
             m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             EnsureCalculator();
             if (m_model->PreviousMode != ViewMode::Programmer)
@@ -162,16 +157,19 @@ void MainPage::OnAppPropertyChanged(_In_ Platform::Object ^ sender, _In_ Windows
         {
             if (m_model->CalculatorViewModel)
             {
-                m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
                 m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             }
             EnsureDateCalculator();
+        }
+        else if (newValue == ViewMode::Graphing)
+        {
+            EnsureGraphingCalculator();
+            KeyboardShortcutManager::DisableShortcuts(true);
         }
         else if (NavCategory::IsConverterViewMode(newValue))
         {
             if (m_model->CalculatorViewModel)
             {
-                m_model->CalculatorViewModel->AreHistoryShortcutsEnabled = false;
                 m_model->CalculatorViewModel->HistoryVM->AreHistoryShortcutsEnabled = false;
             }
             EnsureConverter();
@@ -197,6 +195,7 @@ void MainPage::ShowHideControls(ViewMode mode)
 {
     auto isCalcViewMode = NavCategory::IsCalculatorViewMode(mode);
     auto isDateCalcViewMode = NavCategory::IsDateCalculatorViewMode(mode);
+    auto isGraphingCalcViewMode = NavCategory::IsGraphingCalculatorViewMode(mode);
     auto isConverterViewMode = NavCategory::IsConverterViewMode(mode);
 
     if (m_calculator)
@@ -209,6 +208,12 @@ void MainPage::ShowHideControls(ViewMode mode)
     {
         m_dateCalculator->Visibility = BooleanToVisibilityConverter::Convert(isDateCalcViewMode);
         m_dateCalculator->IsEnabled = isDateCalcViewMode;
+    }
+
+    if (m_graphingCalculator)
+    {
+        m_graphingCalculator->Visibility = BooleanToVisibilityConverter::Convert(isGraphingCalcViewMode);
+        m_graphingCalculator->IsEnabled = isGraphingCalcViewMode;
     }
 
     if (m_converter)
@@ -238,7 +243,7 @@ void MainPage::UpdatePanelViewState()
 
 void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
 {
-    if (!m_converter && !m_calculator && !m_dateCalculator)
+    if (!m_converter && !m_calculator && !m_dateCalculator && !m_graphingCalculator)
     {
         // We have just launched into our default mode (standard calc) so ensure calc is loaded
         EnsureCalculator();
@@ -255,12 +260,14 @@ void MainPage::OnPageLoaded(_In_ Object ^, _In_ RoutedEventArgs ^ args)
 
     // Delay load things later when we get a chance.
     this->Dispatcher->RunAsync(
-        CoreDispatcherPriority::Normal, ref new DispatchedHandler([]() {
+        CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]() {
             if (TraceLogger::GetInstance()->IsWindowIdInLog(ApplicationView::GetApplicationViewIdForWindow(CoreWindow::GetForCurrentThread())))
             {
                 AppLifecycleLogger::GetInstance().LaunchUIResponsive();
                 AppLifecycleLogger::GetInstance().LaunchVisibleComplete();
             }
+
+            this->FindName(L"NavView");
         }));
 }
 
@@ -282,6 +289,10 @@ void MainPage::SetDefaultFocus()
     if (m_dateCalculator != nullptr && m_dateCalculator->Visibility == ::Visibility::Visible)
     {
         m_dateCalculator->SetDefaultFocus();
+    }
+    if (m_graphingCalculator != nullptr && m_graphingCalculator->Visibility == ::Visibility::Visible)
+    {
+        m_graphingCalculator->SetDefaultFocus();
     }
     if (m_converter != nullptr && m_converter->Visibility == ::Visibility::Visible)
     {
@@ -344,6 +355,18 @@ void MainPage::EnsureDateCalculator()
     }
 }
 
+void MainPage::EnsureGraphingCalculator()
+{
+    if (!m_graphingCalculator)
+    {
+        m_graphingCalculator = ref new GraphingCalculator();
+        m_graphingCalculator->Name = L"GraphingCalculator";
+        m_graphingCalculator->DataContext = m_model->GraphingCalcViewModel;
+
+        GraphingCalcHolder->Child = m_graphingCalculator;
+    }
+}
+
 void MainPage::EnsureConverter()
 {
     if (!m_converter)
@@ -382,9 +405,9 @@ void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 
 void MainPage::OnNavPaneOpening(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
-    if (!NavFooter)
+    if (!AboutButton)
     {
-        this->FindName(L"NavFooter");
+        this->FindName(L"AboutButton");
     }
 }
 
@@ -396,7 +419,11 @@ void MainPage::OnNavPaneOpened(_In_ MUXC::NavigationView ^ sender, _In_ Object ^
 
 void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView ^ sender, _In_ Object ^ args)
 {
-    KeyboardShortcutManager::HonorShortcuts(true);
+    if (Model->Mode != ViewMode::Graphing)
+    {
+        KeyboardShortcutManager::HonorShortcuts(true);
+    }
+
     this->SetDefaultFocus();
 }
 
@@ -409,16 +436,14 @@ void MainPage::OnAboutFlyoutOpened(_In_ Object ^ sender, _In_ Object ^ e)
 {
     // Keep Ignoring Escape till the About page flyout is opened
     KeyboardShortcutManager::IgnoreEscape(false);
-
-    KeyboardShortcutManager::UpdateDropDownState(this->AboutPageFlyout);
+    KeyboardShortcutManager::HonorShortcuts(false);
 }
 
 void MainPage::OnAboutFlyoutClosed(_In_ Object ^ sender, _In_ Object ^ e)
 {
     // Start Honoring Escape once the About page flyout is closed
     KeyboardShortcutManager::HonorEscape();
-
-    KeyboardShortcutManager::UpdateDropDownState(nullptr);
+    KeyboardShortcutManager::HonorShortcuts(!NavView->IsPaneOpen);
 }
 
 void MainPage::OnNavSelectionChanged(_In_ Object ^ sender, _In_ MUXC::NavigationViewSelectionChangedEventArgs ^ e)
@@ -472,6 +497,7 @@ MUXC::NavigationViewItem ^ MainPage::CreateNavViewItemFromCategory(NavCategory ^
 
     item->Content = category->Name;
     item->AccessKey = category->AccessKey;
+    item->IsEnabled = category->IsEnabled;
     item->Style = static_cast<Windows::UI::Xaml::Style ^>(Resources->Lookup(L"NavViewItemStyle"));
 
     AutomationProperties::SetName(item, category->AutomationName);
@@ -516,7 +542,7 @@ void MainPage::SetHeaderAutomationName()
     else
     {
         String ^ full;
-        if (NavCategory::IsCalculatorViewMode(mode))
+        if (NavCategory::IsCalculatorViewMode(mode) || NavCategory::IsGraphingCalculatorViewMode(mode))
         {
             full = resProvider->GetResourceString(L"HeaderAutomationName_Calculator");
         }

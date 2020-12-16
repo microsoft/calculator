@@ -35,19 +35,16 @@ namespace
             IDC_ADD,2, IDC_SUB,2,
             IDC_RSHF,3, IDC_LSHF,3, IDC_RSHFL,3,
             IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,
-            IDC_PWR,4, IDC_ROOT,4, IDC_LOGBASEX,4 };
-        unsigned int iPrec;
+            IDC_PWR,4, IDC_ROOT,4, IDC_LOGBASEY,4 };
 
-        iPrec = 0;
-        while ((iPrec < size(rgbPrec)) && (nopCode != rgbPrec[iPrec]))
+        for (unsigned int iPrec = 0; iPrec < size(rgbPrec); iPrec += 2)
         {
-            iPrec += 2;
+            if (nopCode == rgbPrec[iPrec]) 
+            {
+                return rgbPrec[iPrec + 1];
+            }
         }
-        if (iPrec >= size(rgbPrec))
-        {
-            iPrec = 0;
-        }
-        return rgbPrec[iPrec + 1];
+        return 0;
     }
 }
 
@@ -104,8 +101,6 @@ void CCalcEngine::ProcessCommand(OpCode wParam)
 
 void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 {
-    int nx, ni;
-
     // Save the last command.  Some commands are not saved in this manor, these
     // commands are:
     // Inv, Deg, Rad, Grad, Stat, FE, MClear, Back, and Exp.  The excluded
@@ -163,14 +158,11 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             DisplayNum(); // Causes 3.000 to shrink to 3. on first op.
         }
     }
-    else
+    else if (IsDigitOpCode(wParam) || wParam == IDC_PNT)
     {
-        if (IsDigitOpCode(wParam) || wParam == IDC_PNT)
-        {
-            m_bRecord = true;
-            m_input.Clear();
-            CheckAndAddLastBinOpToHistory();
-        }
+        m_bRecord = true;
+        m_input.Clear();
+        CheckAndAddLastBinOpToHistory();
     }
 
     // Interpret digit keys.
@@ -185,7 +177,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             return;
         }
 
-        if (!m_input.TryAddDigit(iValue, m_radix, m_fIntegerMode, m_maxDecimalValueStrings[m_numwidth], m_dwWordBitWidth, m_cIntDigitsSav))
+        if (!m_input.TryAddDigit(iValue, m_radix, m_fIntegerMode, GetMaxDecimalValueString(), m_dwWordBitWidth, m_cIntDigitsSav))
         {
             HandleErrorCommand(wParam);
             HandleMaxDigitsReached();
@@ -203,7 +195,6 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         // Change the operation if last input was operation.
         if (IsBinOpCode(m_nLastCom))
         {
-            int nPrev;
             bool fPrecInvToHigher = false; // Is Precedence Inversion from lower to higher precedence happening ??
 
             m_nOpCode = (int)wParam;
@@ -214,9 +205,9 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             // Here * is m_nPrevOpCode, m_currentVal is 2  (by 1*2), m_nLastCom is +, m_nOpCode is ^
             if (m_fPrecedence && 0 != m_nPrevOpCode)
             {
-                nPrev = NPrecedenceOfOp(m_nPrevOpCode);
-                nx = NPrecedenceOfOp(m_nLastCom);
-                ni = NPrecedenceOfOp(m_nOpCode);
+                int nPrev = NPrecedenceOfOp(m_nPrevOpCode);
+                int nx = NPrecedenceOfOp(m_nLastCom);
+                int ni = NPrecedenceOfOp(m_nOpCode);
                 if (nx <= nPrev && ni > nPrev) // condition for Precedence Inversion
                 {
                     fPrecInvToHigher = true;
@@ -243,8 +234,8 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         {
         DoPrecedenceCheckAgain:
 
-            nx = NPrecedenceOfOp((int)wParam);
-            ni = NPrecedenceOfOp(m_nOpCode);
+            int nx = NPrecedenceOfOp((int)wParam);
+            int ni = NPrecedenceOfOp(m_nOpCode);
 
             if ((nx > ni) && m_fPrecedence)
             {
@@ -492,8 +483,8 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             m_lastVal = m_precedenceVals[m_precedenceOpCount];
 
             // Precedence Inversion check
-            ni = NPrecedenceOfOp(m_nPrevOpCode);
-            nx = NPrecedenceOfOp(m_nOpCode);
+            int ni = NPrecedenceOfOp(m_nPrevOpCode);
+            int nx = NPrecedenceOfOp(m_nOpCode);
             if (ni <= nx)
             {
                 m_HistoryCollector.EnclosePrecInversionBrackets();
@@ -518,20 +509,15 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 
     case IDC_OPENP:
     case IDC_CLOSEP:
-        nx = 0;
-        if (wParam == IDC_OPENP)
-        {
-            nx = 1;
-        }
 
         // -IF- the Paren holding array is full and we try to add a paren
         // -OR- the paren holding array is empty and we try to remove a
         //      paren
         // -OR- the precedence holding array is full
-        if ((m_openParenCount >= MAXPRECDEPTH && nx) || (!m_openParenCount && !nx)
+        if ((m_openParenCount >= MAXPRECDEPTH && (wParam == IDC_OPENP)) || (!m_openParenCount && (wParam != IDC_OPENP))
             || ((m_precedenceOpCount >= MAXPRECDEPTH && m_nPrecOp[m_precedenceOpCount - 1] != 0)))
         {
-            if (!m_openParenCount && !nx)
+            if (!m_openParenCount && (wParam != IDC_OPENP))
             {
                 m_pCalcDisplay->OnNoRightParenAdded();
             }
@@ -540,7 +526,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             break;
         }
 
-        if (nx)
+        if (wParam == IDC_OPENP)
         {
             CheckAndAddLastBinOpToHistory();
             m_HistoryCollector.AddOpenBraceToHistory();
@@ -588,8 +574,8 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             for (m_nOpCode = m_nPrecOp[--m_precedenceOpCount]; m_nOpCode; m_nOpCode = m_nPrecOp[--m_precedenceOpCount])
             {
                 // Precedence Inversion check
-                ni = NPrecedenceOfOp(m_nPrevOpCode);
-                nx = NPrecedenceOfOp(m_nOpCode);
+                int ni = NPrecedenceOfOp(m_nPrevOpCode);
+                int nx = NPrecedenceOfOp(m_nOpCode);
                 if (ni <= nx)
                 {
                     m_HistoryCollector.EnclosePrecInversionBrackets();
@@ -633,7 +619,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     case IDM_OCT:
     case IDM_BIN:
     {
-        SetRadixTypeAndNumWidth((RADIX_TYPE)(wParam - IDM_HEX), (NUM_WIDTH)-1);
+        SetRadixTypeAndNumWidth((RadixType)(wParam - IDM_HEX), (NUM_WIDTH)-1);
         m_HistoryCollector.UpdateHistoryExpression(m_radix, m_precision);
         break;
     }
@@ -649,20 +635,20 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         }
 
         // Compat. mode BaseX: Qword, Dword, Word, Byte
-        SetRadixTypeAndNumWidth((RADIX_TYPE)-1, (NUM_WIDTH)(wParam - IDM_QWORD));
+        SetRadixTypeAndNumWidth((RadixType)-1, (NUM_WIDTH)(wParam - IDM_QWORD));
         break;
 
     case IDM_DEG:
     case IDM_RAD:
     case IDM_GRAD:
-        m_angletype = static_cast<ANGLE_TYPE>(wParam - IDM_DEG);
+        m_angletype = static_cast<AngleType>(wParam - IDM_DEG);
         break;
 
     case IDC_SIGN:
     {
         if (m_bRecord)
         {
-            if (m_input.TryToggleSign(m_fIntegerMode, m_maxDecimalValueStrings[m_numwidth]))
+            if (m_input.TryToggleSign(m_fIntegerMode, GetMaxDecimalValueString()))
             {
                 DisplayNum();
             }
@@ -780,7 +766,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         break;
     case IDC_FE:
         // Toggle exponential notation display.
-        m_nFE = NUMOBJ_FMT(!(int)m_nFE);
+        m_nFE = NumberFormat(!(int)m_nFE);
         DisplayNum();
         break;
 
@@ -952,7 +938,7 @@ static const std::unordered_map<int, FunctionNameElement> operatorStringTable =
     { IDC_SECH, { SIDS_SECH, SIDS_ASECH } },
     { IDC_CSCH, { SIDS_CSCH, SIDS_ACSCH } },
     { IDC_COTH, { SIDS_COTH, SIDS_ACOTH } },
-    
+
     { IDC_LN, { L"", SIDS_POWE } },
     { IDC_SQR, { SIDS_SQR } },
     { IDC_CUB, { SIDS_CUBE } },
@@ -962,7 +948,7 @@ static const std::unordered_map<int, FunctionNameElement> operatorStringTable =
     { IDC_SIGN, { SIDS_NEGATE } },
     { IDC_DEGREES, { SIDS_DEGREES } },
     { IDC_POW2, { SIDS_TWOPOWX } },
-    { IDC_LOGBASEX, { SIDS_LOGBASEX } },
+    { IDC_LOGBASEY, { SIDS_LOGBASEY } },
     { IDC_ABS, { SIDS_ABS } },
     { IDC_CEIL, { SIDS_CEIL } },
     { IDC_FLOOR, { SIDS_FLOOR } },
@@ -971,11 +957,11 @@ static const std::unordered_map<int, FunctionNameElement> operatorStringTable =
     { IDC_RSHFL, { SIDS_RSH } },
     { IDC_RORC, { SIDS_ROR } },
     { IDC_ROLC, { SIDS_ROL } },
-    { IDC_CUBEROOT, {SIDS_CUBEROOT} },
-    { IDC_MOD, {SIDS_MOD, L"", L"", L"", L"", L"", SIDS_PROGRAMMER_MOD} },
+    { IDC_CUBEROOT, { SIDS_CUBEROOT } },
+    { IDC_MOD, { SIDS_MOD, L"", L"", L"", L"", L"", SIDS_PROGRAMMER_MOD } },
 };
 
-wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE angletype)
+wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, AngleType angletype)
 {
     // Try to lookup the ID in the UFNE table
     wstring ids = L"";
@@ -983,7 +969,7 @@ wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE
     if (auto pair = operatorStringTable.find(nOpCode); pair != operatorStringTable.end())
     {
         const FunctionNameElement& element = pair->second;
-        if (!element.hasAngleStrings || ANGLE_DEG == angletype)
+        if (!element.hasAngleStrings || AngleType::Degrees == angletype)
         {
             if (fInv)
             {
@@ -995,7 +981,7 @@ wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE
                 ids = element.degreeString;
             }
         }
-        else if (ANGLE_RAD == angletype)
+        else if (AngleType::Radians == angletype)
         {
             if (fInv)
             {
@@ -1006,7 +992,7 @@ wstring_view CCalcEngine::OpCodeToUnaryString(int nOpCode, bool fInv, ANGLE_TYPE
                 ids = element.radString;
             }
         }
-        else if (ANGLE_GRAD == angletype)
+        else if (AngleType::Gradians == angletype)
         {
             if (fInv)
             {
@@ -1059,7 +1045,7 @@ bool CCalcEngine::IsCurrentTooBigForTrig()
     return m_currentVal >= m_maxTrigonometricNum;
 }
 
-int CCalcEngine::GetCurrentRadix()
+uint32_t CCalcEngine::GetCurrentRadix()
 {
     return m_radix;
 }
@@ -1108,7 +1094,7 @@ wstring CCalcEngine::GetStringForDisplay(Rational const& rat, uint32_t radix)
             if ((radix == 10) && fMsb)
             {
                 // If high bit is set, then get the decimal number in negative 2's complement form.
-                tempRat = -((tempRat ^ m_chopNumbers[m_numwidth]) + 1);
+                tempRat = -((tempRat ^ GetChopNumber()) + 1);
             }
 
             result = tempRat.ToString(radix, m_nFE, m_precision);

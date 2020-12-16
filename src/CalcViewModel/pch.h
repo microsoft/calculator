@@ -40,6 +40,8 @@
 #include "winrt/Windows.Globalization.DateTimeFormatting.h"
 #include "winrt/Windows.System.UserProfile.h"
 #include "winrt/Windows.UI.Xaml.h"
+#include "winrt/Windows.Foundation.Metadata.h"
+#include "winrt/Windows.Management.Policies.h"
 
 // The following namespaces exist as a convenience to resolve
 // ambiguity for Windows types in the Windows::UI::Xaml::Automation::Peers

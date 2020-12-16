@@ -189,7 +189,7 @@ namespace CalculatorApp
 
     void TitleBar::OnIsAlwaysOnTopModePropertyChanged(bool /*oldValue*/, bool newValue)
     {
-        SetTitleBarVisibility();
+        SetTitleBarVisibility(false);
         VisualStateManager::GoToState(this, newValue ? "AOTMiniState" : "AOTNormalState", false);
     }
 

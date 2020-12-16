@@ -148,6 +148,10 @@ task<void> App::SetupJumpList()
 
         for (NavCategory ^ option : calculatorOptions->Categories)
         {
+            if (!option->IsEnabled)
+            {
+                continue;
+            }
             ViewMode mode = option->Mode;
             auto item = JumpListItem::CreateWithArguments(((int)mode).ToString(), L"ms-resource:///Resources/" + NavCategory::GetNameResourceKey(mode));
             item->Description = L"ms-resource:///Resources/" + NavCategory::GetNameResourceKey(mode);

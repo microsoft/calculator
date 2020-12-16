@@ -29,11 +29,11 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             break;
 
         case IDC_NAND:
-            result = (result & rhs) ^ m_chopNumbers[m_numwidth];
+            result = (result & rhs) ^ GetChopNumber();
             break;
 
         case IDC_NOR:
-            result = (result | rhs) ^ m_chopNumbers[m_numwidth];
+            result = (result | rhs) ^ GetChopNumber();
             break;
 
         case IDC_RSHF:
@@ -53,10 +53,10 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             {
                 result = Integer(result);
 
-                auto tempRat = m_chopNumbers[m_numwidth] >> holdVal;
+                auto tempRat = GetChopNumber() >> holdVal;
                 tempRat = Integer(tempRat);
 
-                result |= tempRat ^ m_chopNumbers[m_numwidth];
+                result |= tempRat ^ GetChopNumber();
             }
             break;
         }
@@ -105,7 +105,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
                 if (fMsb)
                 {
-                    result = (rhs ^ m_chopNumbers[m_numwidth]) + 1;
+                    result = (rhs ^ GetChopNumber()) + 1;
 
                     iNumeratorSign = -1;
                 }
@@ -115,7 +115,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
 
                 if (fMsb)
                 {
-                    temp = (temp ^ m_chopNumbers[m_numwidth]) + 1;
+                    temp = (temp ^ GetChopNumber()) + 1;
 
                     iDenominatorSign = -1;
                 }
@@ -158,8 +158,8 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             result = Root(rhs, result);
             break;
 
-        case IDC_LOGBASEX:
-            result = (Log(result) / Log(rhs));
+        case IDC_LOGBASEY:
+            result = (Log(rhs) / Log(result));
             break;
         }
     }

@@ -4,11 +4,10 @@
 #pragma once
 
 // This is expected to be in same order as IDM_HEX, IDM_DEC, IDM_OCT, IDM_BIN
-enum eRADIX_TYPE
+enum class RadixType
 {
-    HEX_RADIX,
-    DEC_RADIX,
-    OCT_RADIX,
-    BIN_RADIX
+    Hex,
+    Decimal,
+    Octal,
+    Binary
 };
-typedef enum eRADIX_TYPE RADIX_TYPE;

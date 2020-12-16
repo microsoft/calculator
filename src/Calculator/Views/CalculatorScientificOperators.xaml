@@ -90,7 +90,7 @@
                         <Setter Target="FuncButton.IsEnabled" Value="False"/>
                         <Setter Target="EulerButton.IsEnabled" Value="False"/>
                         <Setter Target="AbsButton.IsEnabled" Value="False"/>
-                        <Setter Target="LogBaseX.IsEnabled" Value="False"/>
+                        <Setter Target="LogBaseY.IsEnabled" Value="False"/>
                         <Setter Target="TwoPowerXButton.IsEnabled" Value="False"/>
                         <Setter Target="CubeRootButton.IsEnabled" Value="False"/>
                     </VisualState.Setters>
@@ -148,7 +148,7 @@
 
                         <Setter Target="EulerButton.FontSize" Value="{ThemeResource CalcButtonCaptionSize}"/>
                         <Setter Target="AbsButton.FontSize" Value="{ThemeResource CalcButtonCaptionSize}"/>
-                        <Setter Target="LogBaseX.FontSize" Value="{ThemeResource CalcButtonCaptionSize}"/>
+                        <Setter Target="LogBaseY.FontSize" Value="{ThemeResource CalcButtonCaptionSize}"/>
                         <Setter Target="TwoPowerXButton.FontSize" Value="{ThemeResource CalcButtonCaptionSize}"/>
                         <Setter Target="CubeRootButton.FontSize" Value="{ThemeResource CalcButtonCaptionSize}"/>
 
@@ -177,14 +177,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeLarge}"/>
 
-                        <Setter Target="TrigButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeLarge}"/>
-                        <Setter Target="TrigButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeLarge}"/>
-                        <Setter Target="TrigButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeLarge}"/>
-
-
-                        <Setter Target="FuncButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeLarge}"/>
-                        <Setter Target="FuncButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeLarge}"/>
-                        <Setter Target="FuncButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeLarge}"/>
+                        <Setter Target="TrigButton.Style" Value="{StaticResource OperatorPanelButtonLargeStyle}"/>
+                        <Setter Target="FuncButton.Style" Value="{StaticResource OperatorPanelButtonLargeStyle}"/>
 
                         <Setter Target="TrigGrid.MinWidth" Value="516"/>
                         <Setter Target="TrigGrid.MinHeight" Value="192"/>
@@ -244,7 +238,7 @@
 
                         <Setter Target="EulerButton.FontSize" Value="{ThemeResource CalcStandardOperatorCaptionSize}"/>
                         <Setter Target="AbsButton.FontSize" Value="{ThemeResource CalcStandardOperatorCaptionSize}"/>
-                        <Setter Target="LogBaseX.FontSize" Value="{ThemeResource CalcStandardOperatorCaptionSize}"/>
+                        <Setter Target="LogBaseY.FontSize" Value="{ThemeResource CalcStandardOperatorCaptionSize}"/>
                         <Setter Target="TwoPowerXButton.FontSize" Value="{ThemeResource CalcStandardOperatorCaptionSize}"/>
                         <Setter Target="CubeRootButton.FontSize" Value="{ThemeResource CalcStandardOperatorCaptionSize}"/>
 
@@ -273,13 +267,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{StaticResource OperatorPanelButtonRowSizeMedium}"/>
 
-                        <Setter Target="TrigButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeMedium}"/>
-                        <Setter Target="TrigButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeMedium}"/>
-                        <Setter Target="TrigButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeMedium}"/>
-
-                        <Setter Target="FuncButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeMedium}"/>
-                        <Setter Target="FuncButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeMedium}"/>
-                        <Setter Target="FuncButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeMedium}"/>
+                        <Setter Target="TrigButton.Style" Value="{StaticResource OperatorPanelButtonMediumStyle}"/>
+                        <Setter Target="FuncButton.Style" Value="{StaticResource OperatorPanelButtonMediumStyle}"/>
 
                         <Setter Target="TrigGrid.MinWidth" Value="480"/>
                         <Setter Target="TrigGrid.MinHeight" Value="144"/>
@@ -337,7 +326,7 @@
 
                         <Setter Target="EulerButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
                         <Setter Target="AbsButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="LogBaseX.FontSize" Value="16"/>
+                        <Setter Target="LogBaseY.FontSize" Value="16"/>
                         <Setter Target="TwoPowerXButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
                         <Setter Target="CubeRootButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
 
@@ -366,13 +355,8 @@
 
                         <Setter Target="OperatorPanelRow.MinHeight" Value="{ThemeResource OperatorPanelButtonRowSizeSmall}"/>
 
-                        <Setter Target="TrigButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeSmall}"/>
-                        <Setter Target="TrigButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeSmall}"/>
-                        <Setter Target="TrigButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeSmall}"/>
-
-                        <Setter Target="FuncButton.ChevronFontSize" Value="{ThemeResource OperatorPanelChevronFontSizeSmall}"/>
-                        <Setter Target="FuncButton.GlyphFontSize" Value="{ThemeResource OperatorPanelGlyphFontSizeSmall}"/>
-                        <Setter Target="FuncButton.FontSize" Value="{ThemeResource OperatorPanelFontSizeSmall}"/>
+                        <Setter Target="TrigButton.Style" Value="{StaticResource OperatorPanelButtonSmallStyle}"/>
+                        <Setter Target="FuncButton.Style" Value="{StaticResource OperatorPanelButtonSmallStyle}"/>
 
                         <Setter Target="TrigGrid.MinWidth" Value="258"/>
                         <Setter Target="TrigGrid.MinHeight" Value="96"/>
@@ -914,7 +898,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <controls:CalculatorButton Name="ClearEntryButton"
+            <controls:CalculatorButton x:Name="ClearEntryButton"
                                        x:Uid="clearEntryButton"
                                        Grid.Column="1"
                                        Style="{StaticResource OperatorButtonStyle}"
@@ -922,6 +906,7 @@
                                        AutomationProperties.AutomationId="clearEntryButton"
                                        ButtonId="ClearEntry"
                                        Content="CE"
+                                       LostFocus="ClearEntryButton_LostFocus"
                                        Visibility="{x:Bind Model.IsInputEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
 
             <controls:CalculatorButton x:Name="ClearButton"
@@ -932,6 +917,7 @@
                                        AutomationProperties.AutomationId="clearButton"
                                        ButtonId="Clear"
                                        Content="C"
+                                       LostFocus="ClearButton_LostFocus"
                                        Visibility="{x:Bind Model.IsInputEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <controls:CalculatorButton x:Name="BackSpaceButton"
@@ -967,13 +953,13 @@
                                            ButtonId="XPower2"
                                            Content="&#xf7c8;"/>
 
-                <controls:CalculatorButton x:Name="XPower3Button"
-                                           x:Uid="xpower3Button"
+                <controls:CalculatorButton x:Name="SquareRootButton"
+                                           x:Uid="squareRootButton"
                                            Grid.Row="1"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
-                                           AutomationProperties.AutomationId="xpower3Button"
-                                           ButtonId="Cube"
-                                           Content="&#xf7cb;"/>
+                                           AutomationProperties.AutomationId="squareRootButton"
+                                           ButtonId="Sqrt"
+                                           Content="&#xF899;"/>
 
                 <controls:CalculatorButton x:Name="PowerButton"
                                            x:Uid="powerButton"
@@ -1018,13 +1004,13 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <controls:CalculatorButton x:Name="SquareRootButton"
-                                           x:Uid="squareRootButton"
+                <controls:CalculatorButton x:Name="XPower3Button"
+                                           x:Uid="xpower3Button"
                                            Style="{StaticResource EmphasizedCalcButtonStyle}"
-                                           AutomationProperties.AutomationId="squareRootButton"
-                                           ButtonId="Sqrt"
+                                           AutomationProperties.AutomationId="xpower3Button"
+                                           ButtonId="Cube"
                                            Click="ShiftButton_Uncheck"
-                                           Content="&#xF899;"/>
+                                           Content="&#xf7cb;"/>
 
                 <controls:CalculatorButton x:Name="CubeRootButton"
                                            x:Uid="cubeRootButton"
@@ -1053,12 +1039,12 @@
                                            Click="ShiftButton_Uncheck"
                                            Content="&#xF882;"/>
 
-                <controls:CalculatorButton x:Name="LogBaseX"
-                                           x:Uid="logBaseX"
+                <controls:CalculatorButton x:Name="LogBaseY"
+                                           x:Uid="logBaseY"
                                            Grid.Row="4"
                                            Style="{StaticResource EmphasizedCalcButtonStyle}"
-                                           AutomationProperties.AutomationId="logBaseX"
-                                           ButtonId="LogBaseX"
+                                           AutomationProperties.AutomationId="logBaseY"
+                                           ButtonId="LogBaseY"
                                            Click="ShiftButton_Uncheck"
                                            Content="&#xF883;"/>
 

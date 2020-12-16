@@ -22,9 +22,6 @@ namespace CalculatorUnitTests
 
     namespace UtfUtils
     {
-        constexpr wchar_t LRE = 0x202a; // Left-to-Right Embedding
-        constexpr wchar_t PDF = 0x202c; // Pop Directional Formatting
-        constexpr wchar_t LRO = 0x202d; // Left-to-Right Override
         constexpr wchar_t MUL = 0x00d7; // Multiplication Symbol
     }
 }

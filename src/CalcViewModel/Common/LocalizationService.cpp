@@ -545,7 +545,7 @@ unordered_map<wstring, wstring> LocalizationService::GetTokenToReadableNameMap()
     static vector<pair<wstring, wstring>> s_noParenEngineKeyResourceMap = { // Programmer mode functions
                                                                             make_pair<wstring, wstring>(L"9", L"LeftShift"),
                                                                             make_pair<wstring, wstring>(L"10", L"RightShift"),
-                                                                            make_pair<wstring, wstring>(L"LogBaseX", L"Logx"),
+                                                                            make_pair<wstring, wstring>(L"LogBaseY", L"Logy"),
 
                                                                             // Y Root scientific function
                                                                             make_pair<wstring, wstring>(L"16", L"YRoot")

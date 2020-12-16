@@ -71,14 +71,14 @@
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CalculatorUnitTests_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Assets">
       <UniqueIdentifier>{f2987b0a-9832-46fc-b818-d5347362b3d8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Mocks">
       <UniqueIdentifier>{d3ec8922-022d-4531-8744-f65a872f3841}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="WindowsDev_TemporaryKey.pfx" />
   </ItemGroup>
 </Project>

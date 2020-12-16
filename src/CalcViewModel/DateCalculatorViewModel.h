@@ -110,7 +110,7 @@ namespace CalculatorApp
             Platform::String ^ GetDateDiffString() const;
             Platform::String ^ GetDateDiffStringInDays() const;
             Platform::String ^ GetLocalizedNumberString(int value) const;
-            static Windows::Foundation::DateTime ClipTime(Windows::Foundation::DateTime dateTime, bool adjustToLocalTime);
+            static Windows::Foundation::DateTime ClipTime(Windows::Foundation::DateTime dateTime, bool adjustUsingLocalTime = false);
 
             property bool IsOutOfBound
             {

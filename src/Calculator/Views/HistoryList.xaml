@@ -2,10 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.Common.Automation"
-             xmlns:controls="using:CalculatorApp.Controls"
              xmlns:converters="using:CalculatorApp.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:model="using:CalculatorApp.ViewModel"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
@@ -65,6 +63,7 @@
                                    Margin="0,0,0,4"
                                    HorizontalAlignment="Right"
                                    Style="{ThemeResource BodyTextBlockMediumStyle}"
+                                   AutomationProperties.AutomationId="HistoryItemExpression"
                                    AutomationProperties.Name="{x:Bind AccExpression}"
                                    IsTextSelectionEnabled="True"
                                    Text="{x:Bind Expression}"
@@ -74,6 +73,7 @@
                                    HorizontalAlignment="Right"
                                    Style="{ThemeResource TitleTextBlockStyle}"
                                    FontWeight="SemiBold"
+                                   AutomationProperties.AutomationId="HistoryItemValue"
                                    AutomationProperties.Name="{x:Bind AccResult}"
                                    IsTextSelectionEnabled="True"
                                    Text="{x:Bind Result}"
@@ -134,11 +134,12 @@
             </Grid.RowDefinitions>
             <TextBlock x:Name="HistoryEmpty"
                        x:Uid="HistoryEmpty"
-                       Margin="12,14,24,0"
+                       Margin="16,14,24,0"
                        Style="{ThemeResource BaseTextBlockStyle}"
                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                       FontWeight="SemiLight"
                        TextWrapping="Wrap"
-                       Visibility="{Binding ItemSize, Converter={StaticResource ItemSizeToVisibilityConverter}}"/>
+                       Visibility="{x:Bind Model.ItemsCount, Converter={StaticResource ItemSizeToVisibilityConverter}, Mode=OneWay}"/>
             <ListView x:Name="HistoryListView"
                       MinHeight="60"
                       Padding="0,12,0,0"
@@ -151,7 +152,7 @@
                       ItemsSource="{x:Bind Model.Items, Mode=OneWay}"
                       SelectionMode="None"
                       TabIndex="0"
-                      Visibility="{x:Bind Model.ItemSize, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}">
+                      Visibility="{x:Bind Model.ItemsCount, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}">
                 <ListView.ItemContainerTransitions>
                     <TransitionCollection>
                         <AddDeleteThemeTransition/>
@@ -167,7 +168,7 @@
                     AutomationProperties.AutomationId="ClearHistory"
                     Command="{x:Bind Model.ClearCommand, Mode=OneWay}"
                     Content="&#xE74D;"
-                    Visibility="{x:Bind Model.ItemSize, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}"/>
+                    Visibility="{x:Bind Model.ItemsCount, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}"/>
         </Grid>
     </Grid>
 </UserControl>

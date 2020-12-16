@@ -8,7 +8,7 @@
 
 #include "pch.h"
 #include "CalculatorScientificOperators.xaml.h"
-#include "CalcViewModel/Common/KeyboardShortcutManager.h"
+#include "Common/KeyboardShortcutManager.h"
 #include "CalcViewModel/Common/TraceLogger.h"
 #include "Controls/CalculatorButton.h"
 #include "CalcViewModel/StandardCalculatorViewModel.h"
@@ -139,4 +139,20 @@ void CalculatorScientificOperators::OpenParenthesisButton_GotFocus(Object ^ send
 String ^ CalculatorScientificOperators::ParenthesisCountToString(unsigned int count)
 {
     return (count == 0) ? ref new String() : ref new String(to_wstring(count).data());
+}
+
+void CalculatorScientificOperators::ClearEntryButton_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (ClearEntryButton->Visibility == ::Visibility::Collapsed && ClearButton->Visibility == ::Visibility::Visible)
+    {
+        ClearButton->Focus(::FocusState::Programmatic);
+    }
+}
+
+void CalculatorScientificOperators::ClearButton_LostFocus(Object ^ sender, RoutedEventArgs ^ e)
+{
+    if (ClearEntryButton->Visibility == ::Visibility::Visible && ClearButton->Visibility == ::Visibility::Collapsed)
+    {
+        ClearEntryButton->Focus(::FocusState::Programmatic);
+    }
 }

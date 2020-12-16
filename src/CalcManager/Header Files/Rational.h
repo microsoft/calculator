@@ -64,7 +64,7 @@ namespace CalcEngine
         friend bool operator<=(Rational const& lhs, Rational const& rhs);
         friend bool operator>=(Rational const& lhs, Rational const& rhs);
 
-        std::wstring ToString(uint32_t radix, NUMOBJ_FMT format, int32_t precision) const;
+        std::wstring ToString(uint32_t radix, NumberFormat format, int32_t precision) const;
         uint64_t ToUInt64_t() const;
 
     private:

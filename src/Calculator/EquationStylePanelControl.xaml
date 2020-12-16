@@ -1,0 +1,133 @@
+<UserControl x:Class="CalculatorApp.EquationStylePanelControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:CalculatorApp"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock x:Uid="LineOptionsHeading"
+                   Margin="8,0,0,16"
+                   FontSize="20"
+                   FontWeight="Medium"
+                   AutomationProperties.HeadingLevel="Level2"/>
+        <GridView x:Name="ColorChooser"
+                  ItemsSource="{x:Bind AvailableColors}"
+                  Loaded="ColorChooserLoaded"
+                  SelectionChanged="SelectionChanged"
+                  SingleSelectionFollowsFocus="False">
+            <GridView.Resources>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="MinHeight" Value="52"/>
+                    <Setter Property="MinWidth" Value="52"/>
+                    <Setter Property="Height" Value="52"/>
+                    <Setter Property="Width" Value="52"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="GridViewItem">
+                                <Grid>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal"/>
+                                            <VisualState x:Name="PointerOver">
+                                                <VisualState.Setters>
+                                                    <Setter Target="ItemContent.Margin" Value="-2,-2,-2,-2"/>
+                                                    <Setter Target="ItemBorder.Margin" Value="2,2,2,2"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Pressed">
+                                                <VisualState.Setters>
+                                                    <Setter Target="ItemContent.Margin" Value="-2,-2,-2,-2"/>
+                                                    <Setter Target="ItemBorder.Stroke" Value="{ThemeResource InkToolbarFlyoutItemBorderPressedThemeBrush}"/>
+                                                    <Setter Target="ItemBorder.Margin" Value="2,2,2,2"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Target="ItemContent.Margin" Value="2,2,2,2"/>
+                                                    <Setter Target="ItemBorder.Stroke" Value="{ThemeResource InkToolbarFlyoutItemBorderSelectedThemeBrush}"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                        <VisualStateGroup x:Name="FocusStates">
+                                            <VisualState x:Name="Focused"/>
+                                            <VisualState x:Name="Unfocused"/>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <Ellipse x:Name="ItemBorder"
+                                             Margin="6,6,6,6"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Stretch"
+                                             Fill="Transparent"
+                                             Stroke="Transparent"
+                                             StrokeThickness="2"
+                                             UseLayoutRounding="false"/>
+                                    <ContentPresenter x:Name="ItemContent" UseLayoutRounding="false"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </GridView.Resources>
+            <GridView.Header>
+                <TextBlock x:Uid="LineColorText" Margin="8,0,8,8"/>
+            </GridView.Header>
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="Brush">
+                    <Ellipse Margin="8,8,8,8"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Stretch"
+                             Fill="{x:Bind}"
+                             StrokeThickness="0"
+                             AutomationProperties.Name="{x:Bind local:EquationStylePanelControl.GetColorAutomationName((Brush))}"
+                             ToolTipService.ToolTip="{x:Bind local:EquationStylePanelControl.GetColorAutomationName((Brush))}"
+                             UseLayoutRounding="false"/>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid MaximumRowsOrColumns="7" Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
+
+        <ComboBox x:Name="StyleChooserBox"
+                  MinWidth="200"
+                  Margin="8,0"
+                  Foreground="{ThemeResource AppControlPageTextBaseHighColorBrush}"
+                  Loaded="StyleChooserBox_Loaded"
+                  SelectedItem="{x:Bind SelectedStyle}"
+                  SelectionChanged="StyleChooserBox_SelectionChanged"
+                  Visibility="Visible"
+                  IsEnabled="{x:Bind EnableLineStylePicker, Mode=OneWay}">
+            <ComboBox.Header>
+                <TextBlock x:Uid="StyleChooserBoxHeading" Margin="0,0,8,8"/>
+            </ComboBox.Header>
+            <ComboBox.ItemTemplate>
+                <!-- Set x:DataType to be Platform::Object so that we can pass it to the x:Bind function directly since we cannot pass an enum in c++/cx -->
+                <DataTemplate x:DataType="x:Object">
+                    <Grid x:Name="LineGrid"
+                          Height="20"
+                          MaxWidth="200"
+                          AutomationProperties.Name="{x:Bind local:EquationStylePanelControl.GetLineAutomationName((x:Object))}">
+
+                        <Line x:Name="LineItem"
+                              VerticalAlignment="Center"
+                              Stroke="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"
+                              StrokeThickness="2.5"
+                              StrokeDashArray="{x:Bind local:EquationStylePanelControl.GetLinePattern((x:Object))}"
+                              X1="0"
+                              X2="200"
+                              Y1="4"
+                              Y2="4"/>
+                    </Grid>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </StackPanel>
+</UserControl>

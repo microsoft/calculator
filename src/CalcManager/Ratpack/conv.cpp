@@ -303,17 +303,13 @@ PRAT numtorat(_In_ PNUMBER pin, uint32_t radix)
 PNUMBER nRadixxtonum(_In_ PNUMBER a, uint32_t radix, int32_t precision)
 
 {
-    uint32_t bitmask;
-    uint32_t cdigits;
-    MANTTYPE* ptr;
-
     PNUMBER sum = i32tonum(0, radix);
     PNUMBER powofnRadix = i32tonum(BASEX, radix);
 
     // A large penalty is paid for conversion of digits no one will see anyway.
     // limit the digits to the minimum of the existing precision or the
     // requested precision.
-    cdigits = precision + 1;
+    uint32_t cdigits = precision + 1;
     if (cdigits > (uint32_t)a->cdigit)
     {
         cdigits = (uint32_t)a->cdigit;
@@ -323,10 +319,10 @@ PNUMBER nRadixxtonum(_In_ PNUMBER a, uint32_t radix, int32_t precision)
     numpowi32(&powofnRadix, a->exp + (a->cdigit - cdigits), radix, precision);
 
     // Loop over all the relative digits from MSD to LSD
-    for (ptr = &(a->mant[a->cdigit - 1]); cdigits > 0; ptr--, cdigits--)
+    for (MANTTYPE* ptr = &(a->mant[a->cdigit - 1]); cdigits > 0; ptr--, cdigits--)
     {
         // Loop over all the bits from MSB to LSB
-        for (bitmask = BASEX / 2; bitmask > 0; bitmask /= 2)
+        for (uint32_t bitmask = BASEX / 2; bitmask > 0; bitmask /= 2)
         {
             addnum(&sum, sum, radix);
             if (*ptr & bitmask)
@@ -368,9 +364,7 @@ PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
     ptrdigit += a->cdigit - 1;
 
     PNUMBER thisdigit = nullptr; // thisdigit holds the current digit of a
-                                 // being summed into result.
-    int32_t idigit;              // idigit is the iterate of digits in a.
-    for (idigit = 0; idigit < a->cdigit; idigit++)
+    for (int32_t idigit = 0; idigit < a->cdigit; idigit++)
     {
         mulnumx(&pnumret, num_radix);
         // WARNING:
@@ -628,11 +622,10 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
     MANTTYPE* pmant = pnumret->mant + numberString.length() - 1;
 
     uint8_t state = START; // state is the state of the input state machine.
-    wchar_t curChar;
     for (const auto& c : numberString)
     {
         // If the character is the decimal separator, use L'.' for the purposes of the state machine.
-        curChar = (c == g_decimalSeparator ? L'.' : c);
+        wchar_t curChar = (c == g_decimalSeparator ? L'.' : c);
 
         // Switch states based on the character we encountered
         switch (curChar)
@@ -1032,13 +1025,10 @@ int32_t numtoi32(_In_ PNUMBER pnum, uint32_t radix)
 
 bool stripzeroesnum(_Inout_ PNUMBER pnum, int32_t starting)
 {
-    MANTTYPE* pmant;
-    int32_t cdigits;
     bool fstrip = false;
-
     // point pmant to the LeastCalculatedDigit
-    pmant = pnum->mant;
-    cdigits = pnum->cdigit;
+    MANTTYPE* pmant = pnum->mant;
+    int32_t cdigits = pnum->cdigit;
     // point pmant to the LSD
     if (cdigits > starting)
     {
@@ -1073,27 +1063,27 @@ bool stripzeroesnum(_Inout_ PNUMBER pnum, int32_t starting)
 //    FUNCTION: NumberToString
 //
 //    ARGUMENTS: number representation
-//          fmt, one of FMT_FLOAT FMT_SCIENTIFIC or
-//          FMT_ENGINEERING
+//          fmt, one of NumberFormat::Float, NumberFormat::Scientific or
+//          NumberFormat::Engineering
 //          integer radix and int32_t precision value
 //
 //    RETURN: String representation of number.
 //
-//    DESCRIPTION: Converts a number to it's string
+//    DESCRIPTION: Converts a number to its string
 //    representation.
 //
 //-----------------------------------------------------------------------------
-wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_t precision)
+wstring NumberToString(_Inout_ PNUMBER& pnum, NumberFormat format, uint32_t radix, int32_t precision)
 {
     stripzeroesnum(pnum, precision + 2);
     int32_t length = pnum->cdigit;
     int32_t exponent = pnum->exp + length; // Actual number of digits to the left of decimal
 
-    int32_t oldFormat = format;
-    if (exponent > precision && format == FMT_FLOAT)
+    NumberFormat oldFormat = format;
+    if (exponent > precision && format == NumberFormat::Float)
     {
         // Force scientific mode to prevent user from assuming 33rd digit is exact.
-        format = FMT_SCIENTIFIC;
+        format = NumberFormat::Scientific;
     }
 
     // Make length small enough to fit in pret.
@@ -1113,7 +1103,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
         divnum(&round, num_two, radix, precision);
 
         // Make round number exponent one below the LSD for the number.
-        if (exponent > 0 || format == FMT_FLOAT)
+        if (exponent > 0 || format == NumberFormat::Float)
         {
             round->exp = pnum->exp + pnum->cdigit - round->cdigit - precision;
         }
@@ -1126,7 +1116,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
         round->sign = pnum->sign;
     }
 
-    if (format == FMT_FLOAT)
+    if (format == NumberFormat::Float)
     {
         // Figure out if the exponent will fill more space than the non-exponent field.
         if ((length - exponent > precision) || (exponent > precision + 3))
@@ -1140,7 +1130,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
             {
                 // Case where too many zeros are to the right or left of the
                 // decimal pt. And we are forced to switch to scientific form.
-                format = FMT_SCIENTIFIC;
+                format = NumberFormat::Scientific;
             }
         }
         else if (length + abs(exponent) < precision && round)
@@ -1173,13 +1163,13 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
     int32_t eout = exponent - 1; // Displayed exponent.
     MANTTYPE* pmant = pnum->mant + pnum->cdigit - 1;
     // Case where too many digits are to the left of the decimal or
-    // FMT_SCIENTIFIC or FMT_ENGINEERING was specified.
-    if ((format == FMT_SCIENTIFIC) || (format == FMT_ENGINEERING))
+    // NumberFormat::Scientific or NumberFormat::Engineering was specified.
+    if ((format == NumberFormat::Scientific) || (format == NumberFormat::Engineering))
     {
         useSciForm = true;
         if (eout != 0)
         {
-            if (format == FMT_ENGINEERING)
+            if (format == NumberFormat::Engineering)
             {
                 exponent = (eout % 3);
                 eout -= exponent;
@@ -1280,7 +1270,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
 //  ARGUMENTS:
 //              PRAT *representation of a number.
 //              i32 representation of base  to  dump to screen.
-//              fmt, one of FMT_FLOAT FMT_SCIENTIFIC or FMT_ENGINEERING
+//              fmt, one of NumberFormat::Float, NumberFormat::Scientific, or NumberFormat::Engineering
 //              precision uint32_t
 //
 //  RETURN: string
@@ -1293,7 +1283,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_
 //       why a pointer to the rational is passed in.
 //
 //-----------------------------------------------------------------------------
-wstring RatToString(_Inout_ PRAT& prat, int format, uint32_t radix, int32_t precision)
+wstring RatToString(_Inout_ PRAT& prat, NumberFormat format, uint32_t radix, int32_t precision)
 {
     PNUMBER p = RatToNumber(prat, radix, precision);
 

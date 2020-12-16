@@ -31,24 +31,19 @@ static constexpr uint32_t BASEX = 0x80000000; // Internal radix used in calculat
 typedef uint32_t MANTTYPE;
 typedef uint64_t TWO_MANTTYPE;
 
-enum eNUMOBJ_FMT
+enum class NumberFormat
 {
-    FMT_FLOAT,      // returns floating point, or exponential if number is too big
-    FMT_SCIENTIFIC, // always returns scientific notation
-    FMT_ENGINEERING // always returns engineering notation such that exponent is a multiple of 3
-
+    Float,      // returns floating point, or exponential if number is too big
+    Scientific, // always returns scientific notation
+    Engineering // always returns engineering notation such that exponent is a multiple of 3
 };
 
-enum eANGLE_TYPE
+enum class AngleType
 {
-    ANGLE_DEG, // Calculate trig using 360 degrees per revolution
-    ANGLE_RAD, // Calculate trig using 2 pi  radians per revolution
-    ANGLE_GRAD // Calculate trig using 400 gradients per revolution
-
+    Degrees, // Calculate trig using 360 degrees per revolution
+    Radians, // Calculate trig using 2 pi radians per revolution
+    Gradians // Calculate trig using 400 gradians per revolution
 };
-
-typedef enum eNUMOBJ_FMT NUMOBJ_FMT;
-typedef enum eANGLE_TYPE ANGLE_TYPE;
 
 //-----------------------------------------------------------------------------
 //
@@ -341,10 +336,10 @@ extern bool equnum(_In_ PNUMBER a, _In_ PNUMBER b);  // returns true of a == b
 extern bool lessnum(_In_ PNUMBER a, _In_ PNUMBER b); // returns true of a < b
 extern bool zernum(_In_ PNUMBER a);                  // returns true of a == 0
 extern bool zerrat(_In_ PRAT a);                     // returns true if a == 0/q
-extern std::wstring NumberToString(_Inout_ PNUMBER& pnum, int format, uint32_t radix, int32_t precision);
+extern std::wstring NumberToString(_Inout_ PNUMBER& pnum, NumberFormat format, uint32_t radix, int32_t precision);
 
 // returns a text representation of a PRAT
-extern std::wstring RatToString(_Inout_ PRAT& prat, int format, uint32_t radix, int32_t precision);
+extern std::wstring RatToString(_Inout_ PRAT& prat, NumberFormat format, uint32_t radix, int32_t precision);
 // converts a PRAT into a PNUMBER
 extern PNUMBER RatToNumber(_In_ PRAT prat, uint32_t radix, int32_t precision);
 // flattens a PRAT by converting it to a PNUMBER and back to a PRAT
@@ -376,7 +371,7 @@ extern PRAT _createrat(void);
 
 // returns a new rat structure with the acos of x->p/x->q taking into account
 // angle type
-extern void acosanglerat(_Inout_ PRAT* px, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
+extern void acosanglerat(_Inout_ PRAT* px, AngleType angletype, uint32_t radix, int32_t precision);
 
 // returns a new rat structure with the acosh of x->p/x->q
 extern void acoshrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
@@ -386,7 +381,7 @@ extern void acosrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
 
 // returns a new rat structure with the asin of x->p/x->q taking into account
 // angle type
-extern void asinanglerat(_Inout_ PRAT* px, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
+extern void asinanglerat(_Inout_ PRAT* px, AngleType angletype, uint32_t radix, int32_t precision);
 
 extern void asinhrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
 // returns a new rat structure with the asinh of x->p/x->q
@@ -396,7 +391,7 @@ extern void asinrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
 
 // returns a new rat structure with the atan of x->p/x->q taking into account
 // angle type
-extern void atananglerat(_Inout_ PRAT* px, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
+extern void atananglerat(_Inout_ PRAT* px, AngleType angletype, uint32_t radix, int32_t precision);
 
 // returns a new rat structure with the atanh of x->p/x->q
 extern void atanhrat(_Inout_ PRAT* px, int32_t precision);
@@ -412,7 +407,7 @@ extern void cosrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
 
 // returns a new rat structure with the cos of x->p/x->q taking into account
 // angle type
-extern void cosanglerat(_Inout_ PRAT* px, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
+extern void cosanglerat(_Inout_ PRAT* px, AngleType angletype, uint32_t radix, int32_t precision);
 
 // returns a new rat structure with the exp of x->p/x->q this should not be called explicitly.
 extern void _exprat(_Inout_ PRAT* px, int32_t precision);
@@ -435,14 +430,14 @@ extern void sinrat(_Inout_ PRAT* px);
 
 // returns a new rat structure with the sin of x->p/x->q taking into account
 // angle type
-extern void sinanglerat(_Inout_ PRAT* px, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
+extern void sinanglerat(_Inout_ PRAT* px, AngleType angletype, uint32_t radix, int32_t precision);
 
 extern void tanhrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
 extern void tanrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
 
 // returns a new rat structure with the tan of x->p/x->q taking into account
 // angle type
-extern void tananglerat(_Inout_ PRAT* px, ANGLE_TYPE angletype, uint32_t radix, int32_t precision);
+extern void tananglerat(_Inout_ PRAT* px, AngleType angletype, uint32_t radix, int32_t precision);
 
 extern void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER* const src);
 

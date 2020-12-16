@@ -27,6 +27,11 @@
 #include <concrt.h>
 #include <regex>
 #include <string>
+#include <tuple>
+#include <cmath>
+#include <algorithm>
+#include <iomanip>
+#include <WindowsNumerics.h>
 
 // C++\WinRT Headers
 #include "winrt/base.h"
@@ -38,6 +43,7 @@
 #include "winrt/Windows.System.UserProfile.h"
 #include "winrt/Windows.UI.ViewManagement.h"
 #include "winrt/Windows.UI.Xaml.h"
+#include "winrt/Windows.Foundation.h"
 
 // Project Headers
 #include "App.xaml.h"

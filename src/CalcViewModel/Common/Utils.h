@@ -5,9 +5,13 @@
 
 #include "CalcManager/ExpressionCommandInterface.h"
 #include "DelegateCommand.h"
+#include "GraphingInterfaces/GraphingEnums.h"
 
 // Utility macros to make Models easier to write
 // generates a member variable called m_<n>
+
+#define SINGLE_ARG(...) __VA_ARGS__
+
 #define PROPERTY_R(t, n)                                                                                                                                       \
     property t n                                                                                                                                               \
     {                                                                                                                                                          \
@@ -94,7 +98,7 @@ public:
 
 #define OBSERVABLE_NAMED_PROPERTY_R(t, n)                                                                                                                      \
     OBSERVABLE_PROPERTY_R(t, n)                                                                                                                                \
-    internal:                                                                                                                                                  \
+public:                                                                                                                                                        \
     static property Platform::String ^ n##PropertyName                                                                                                         \
     {                                                                                                                                                          \
         Platform::String ^ get() { return Platform::StringReference(L#n); }                                                                                    \
@@ -104,7 +108,7 @@ public:
 
 #define OBSERVABLE_NAMED_PROPERTY_RW(t, n)                                                                                                                     \
     OBSERVABLE_PROPERTY_RW(t, n)                                                                                                                               \
-    internal:                                                                                                                                                  \
+public:                                                                                                                                                        \
     static property Platform::String ^ n##PropertyName                                                                                                         \
     {                                                                                                                                                          \
         Platform::String ^ get() { return Platform::StringReference(L#n); }                                                                                    \
@@ -237,9 +241,6 @@ namespace Utils
         };
     }
 
-    const wchar_t LRE = 0x202a; // Left-to-Right Embedding
-    const wchar_t PDF = 0x202c; // Pop Directional Formatting
-    const wchar_t LRO = 0x202d; // Left-to-Right Override
 
     // Regular DependencyProperty
     template <typename TOwner, typename TType>
@@ -368,16 +369,7 @@ namespace Utils
                 ref new Windows::UI::Xaml::PropertyChangedCallback(callback)));
     }
 
-    template <typename T>
-    void Swap(T *ref1, T *ref2)
-    {
-        T temp = *ref1;
-        *ref1 = *ref2;
-        *ref2 = temp;
-    }
-
     void IFTPlatformException(HRESULT hr);
-    Platform::String ^ GetStringValue(Platform::String ^ input);
     bool IsLastCharacterTarget(std::wstring const& input, wchar_t target);
 
     // Return wstring after removing characters specified by unwantedChars array
@@ -394,23 +386,23 @@ namespace Utils
     double GetDoubleFromWstring(std::wstring input);
     int GetWindowId();
     void RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Windows::UI::Core::CoreDispatcher ^ currentDispatcher);
-    void SerializeCommandsAndTokens(
-        _In_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
-        _In_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands,
-        Windows::Storage::Streams::DataWriter ^ writer);
-
-    const std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> DeserializeCommands(Windows::Storage::Streams::DataReader ^ reader);
-    const std::shared_ptr<std::vector<std::pair<std::wstring, int>>> DeserializeTokens(Windows::Storage::Streams::DataReader ^ reader);
 
     Windows::Foundation::DateTime GetUniversalSystemTime();
     bool IsDateTimeOlderThan(Windows::Foundation::DateTime dateTime, const long long duration);
 
-    concurrency::task<void> WriteFileToFolder(
-        Windows::Storage::IStorageFolder ^ folder,
-        Platform::String ^ fileName,
-        Platform::String ^ contents,
-        Windows::Storage::CreationCollisionOption collisionOption);
-    concurrency::task<Platform::String ^> ReadFileFromFolder(Windows::Storage::IStorageFolder ^ folder, Platform::String ^ fileName);
+    concurrency::task<void> WriteFileToFolder(Windows::Storage::IStorageFolder^ folder, Platform::String^ fileName, Platform::String^ contents, Windows::Storage::CreationCollisionOption collisionOption);
+    concurrency::task<Platform::String^> ReadFileFromFolder(Windows::Storage::IStorageFolder^ folder, Platform::String^ fileName);
+
+    bool AreColorsEqual(const Windows::UI::Color& color1, const Windows::UI::Color& color2);
+
+    Platform::String^ Trim(Platform::String^ value);
+    void Trim(std::wstring& value);
+    void TrimFront(std::wstring& value);
+    void TrimBack(std::wstring& value);
+
+    Platform::String ^ EscapeHtmlSpecialCharacters(Platform::String ^ originalString, std::shared_ptr<std::vector<wchar_t>> specialCharacters = nullptr);
+
+    Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
 }
 
 // This goes into the header to define the property, in the public: section of the class
@@ -707,3 +699,18 @@ namespace CalculatorApp
         return to;
     }
 }
+
+// There's no standard definition of equality for Windows::UI::Color structs.
+// Define a template specialization for std::equal_to.
+template<>
+class std::equal_to<Windows::UI::Color>
+{
+public:
+    bool operator()(const Windows::UI::Color& color1, const Windows::UI::Color& color2)
+    {
+        return Utils::AreColorsEqual(color1, color2);
+    }
+};
+
+bool operator==(const Windows::UI::Color& color1, const Windows::UI::Color& color2);
+bool operator!=(const Windows::UI::Color& color1, const Windows::UI::Color& color2);
