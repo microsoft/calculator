@@ -27,9 +27,8 @@ public
         void OnLoaded(_In_ Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void OnUnloaded(_In_ Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
-        void SetTitleBarVisibility();
-        void SetTitleBarHeight();
-        void SetTitleBarPadding();
+        void SetTitleBarVisibility(bool forceDisplay);
+        void SetTitleBarHeightAndPadding();
         void SetTitleBarControlColors();
         void ColorValuesChanged(_In_ Windows::UI::ViewManagement::UISettings ^ sender, _In_ Platform::Object ^ e);
         void OnHighContrastChanged(Windows::UI::ViewManagement::AccessibilitySettings ^ sender, Platform::Object ^ args);
