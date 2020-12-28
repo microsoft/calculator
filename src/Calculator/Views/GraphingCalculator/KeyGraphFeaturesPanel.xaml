@@ -177,7 +177,9 @@
                                         <ColumnDefinition Width="Auto" MinWidth="64"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <controls:MathRichEditBox Style="{StaticResource KGF_RichEditBoxStyle}" MathText="{x:Bind Expression}"/>
+                                    <controls:MathRichEditBox Style="{StaticResource KGF_RichEditBoxStyle}"
+                                                              IsTabStop="False"
+                                                              MathText="{x:Bind Expression}"/>
                                     <TextBlock Grid.Column="1"
                                                Margin="0,-2,0,0"
                                                HorizontalAlignment="Left"
