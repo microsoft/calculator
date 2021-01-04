@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="100" xml:space="preserve">
-    <value>Ongeldige toevoer</value>
+    <value>Ongeldige invoer</value>
     <comment>Error message shown when the input makes a function fail, like log(-1)</comment>
   </data>
   <data name="101" xml:space="preserve">
@@ -126,7 +126,7 @@
     <comment>Error message shown when there's no possible value for a function.</comment>
   </data>
   <data name="105" xml:space="preserve">
-    <value>Nie genoeg geld nie</value>
+    <value>Nie genoeg geheue nie</value>
     <comment>Error message shown when we run out of memory during a calculation.</comment>
   </data>
   <data name="107" xml:space="preserve">

@@ -134,15 +134,15 @@
     <comment>Error message shown when there's an overflow during the calculation.</comment>
   </data>
   <data name="108" xml:space="preserve">
-    <value>النتيجة غير معرّفة</value>
+    <value>لم يتم تحديد النتيجة</value>
     <comment>Same as 101</comment>
   </data>
   <data name="118" xml:space="preserve">
-    <value>النتيجة غير معرّفة</value>
+    <value>النتيجة غير محددة</value>
     <comment>Same 101</comment>
   </data>
   <data name="119" xml:space="preserve">
-    <value>تجاوز</value>
+    <value>تجاوز سعة</value>
     <comment>Same as 107</comment>
   </data>
   <data name="120" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Same 107</comment>
   </data>
   <data name="99" xml:space="preserve">
-    <value>لا يمكن القسمة على صفر</value>
+    <value>تتعذر القسمة على صفر</value>
     <comment>Error string shown when a divide by zero condition happens during the calculation</comment>
   </data>
 </root>

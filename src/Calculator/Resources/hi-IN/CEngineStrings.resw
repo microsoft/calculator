@@ -142,7 +142,7 @@
     <comment>Same 101</comment>
   </data>
   <data name="119" xml:space="preserve">
-    <value>ओवरफ्‍लो</value>
+    <value>ओवरफ़्लो</value>
     <comment>Same as 107</comment>
   </data>
   <data name="120" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Same 107</comment>
   </data>
   <data name="99" xml:space="preserve">
-    <value>शून्‍य से भाग नहीं दिया जा सकता</value>
+    <value>शून्य से भाग नहीं दिया जा सकता</value>
     <comment>Error string shown when a divide by zero condition happens during the calculation</comment>
   </data>
 </root>

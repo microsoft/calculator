@@ -122,7 +122,7 @@
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppName" xml:space="preserve">
-    <value>കാല്‍‌ക്കുലേറ്റര് [ദേവ്]</value>
+    <value>കാല്‍ക്കുലേറ്റര്‍ [Dev]</value>
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the name of the application when built by a user via GitHub. We use a different name to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="AppStoreName" xml:space="preserve">
@@ -130,15 +130,15 @@
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
   </data>
   <data name="DevAppStoreName" xml:space="preserve">
-    <value>Windows കാൽക്കുലേറ്റർ [ദേവ്]</value>
+    <value>Windows കാൽക്കുലേറ്റർ [Dev]</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps. This is the the version of the name used when the app is built by a user via GitHub.</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
-    <value>കാൽക്കുലേറ്റർ</value>
+    <value>കാല്‍ക്കുലേറ്റര്‍</value>
     <comment>{@Appx_Description@} This description is used for the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppDescription" xml:space="preserve">
-    <value>കാല്‍‌ക്കുലേറ്റര് [ദേവ്]</value>
+    <value>കാല്‍ക്കുലേറ്റര്‍ [Dev]</value>
     <comment>{@Appx_Description@} This is the description of the application when built by a user via GitHub. We use a different description to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="copyMenuItem" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Paste context menu string</comment>
   </data>
   <data name="SupplementaryResultsHeader.Text" xml:space="preserve">
-    <value>സമമായതിനേക്കുറിച്ച്</value>
+    <value>തുല്യമായതിനെ കുറിച്ച്</value>
     <comment>The text that shows at the bottom of the converter to head the supplementary results. Indicates that the main result is approximately equal to the supplementary results.</comment>
   </data>
   <data name="BitFlipItemAutomationName" xml:space="preserve">
@@ -418,11 +418,11 @@
     <comment>Used to describe the first bit of a binary number. Used in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
-    <value>തുറന്ന മെമ്മറി ഫ്ലൈഔട്ട്</value>
+    <value>മെമ്മറി ഫ്ലൈഔട്ട് തുറക്കുക</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is closed.</comment>
   </data>
   <data name="MemoryButton_Close" xml:space="preserve">
-    <value>അടച്ച മെമ്മറി ഫ്ലൈഔട്ട്</value>
+    <value>മെമ്മറി ഫ്ലൈഔട്ട് അടയ്ക്കുക</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
   </data>
   <data name="AlwaysOnTop_Enter" xml:space="preserve">
@@ -442,7 +442,7 @@
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Bit ടോഗിളിംഗ് കീപാഡ്</value>
+    <value>ബിറ്റ് ടോഗിളിംഗ് കീപാഡ്</value>
     <comment>This is the tool tip automation name for the bitFlip button.</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -450,7 +450,7 @@
     <comment>This is the tool tip automation name for the numberPad button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>എല്ലാ മെമ്മറി മായ്ക്കുക (Ctrl+L)</value>
+    <value>എല്ലാ മെമ്മറിയും മായ്ക്കുക (Ctrl+L)</value>
     <comment>This is the tool tip automation name for the Clear Memory (MC) button.</comment>
   </data>
   <data name="MemoryLabel.Text" xml:space="preserve">
@@ -494,11 +494,11 @@
     <comment>Screen reader prompt for a control that activates standard mode calculator layout.</comment>
   </data>
   <data name="ClearHistory.Name" xml:space="preserve">
-    <value>എല്ലാ ചരിത്രം മായ്ക്കുക</value>
+    <value>എല്ലാ ചരിത്രവും മായ്ക്കുക</value>
     <comment>"ClearHistory" used on the calculator history pane that stores the calculation history.</comment>
   </data>
   <data name="ClearHistory.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>എല്ലാ ചരിത്രം മായ്ക്കുക</value>
+    <value>എല്ലാ ചരിത്രവും മായ്ക്കുക</value>
     <comment>This is the tool tip automation name for the Clear History button.</comment>
   </data>
   <data name="HideHistory.Name" xml:space="preserve">
@@ -510,7 +510,7 @@
     <comment>The text that shows in the dropdown navigation control in snapped mode when standard calculator mode is selected.</comment>
   </data>
   <data name="ScientificModeText" xml:space="preserve">
-    <value>ശാസ്ത്രീയമായ</value>
+    <value>ശാസ്ത്രീയമായത്</value>
     <comment>The text that shows in the dropdown navigation control in snapped mode when scientific calculator mode is selected.</comment>
   </data>
   <data name="ProgrammerModeText" xml:space="preserve">
@@ -518,15 +518,15 @@
     <comment>The text that shows in the dropdown navigation control in snapped mode when programmer calculator mode is selected.</comment>
   </data>
   <data name="ConverterModeText" xml:space="preserve">
-    <value>കൺവേർട്ടർ</value>
+    <value>കണ്‍വെര്‍ട്ടര്‍</value>
     <comment>The text that shows in the dropdown navigation control for the converter group. The previous key for this was "ConverterMode.Text".</comment>
   </data>
   <data name="CalculatorModeText" xml:space="preserve">
-    <value>കാൽക്കുലേറ്റർ</value>
+    <value>കാല്‍ക്കുലേറ്റര്‍</value>
     <comment>The text that shows in the dropdown navigation control for the calculator group.</comment>
   </data>
   <data name="ConverterModeTextCaps" xml:space="preserve">
-    <value>കൺവേർട്ടർ</value>
+    <value>കണ്‍വെര്‍ട്ടര്‍</value>
     <comment>The text that shows in the dropdown navigation control for the converter group in upper case. The previous key for this was "ConverterMode.Text".</comment>
   </data>
   <data name="CalculatorModeTextCaps" xml:space="preserve">
@@ -534,11 +534,11 @@
     <comment>The text that shows in the dropdown navigation control for the calculator group in upper case.</comment>
   </data>
   <data name="ConverterModePluralText" xml:space="preserve">
-    <value>കൺവേര്‍ട്ടറുകള്‍</value>
+    <value>കണ്‍വെര്‍ട്ടറുകൾ</value>
     <comment>Pluralized version of the converter group text, used for the screen reader prompt.</comment>
   </data>
   <data name="CalculatorModePluralText" xml:space="preserve">
-    <value>കാല്‍ക്കുലേറ്റര്‍</value>
+    <value>കാൽക്കുലേറ്ററുകൾ</value>
     <comment>Pluralized version of the calculator group text, used for the screen reader prompt.</comment>
   </data>
   <data name="Format_CalculatorResults" xml:space="preserve">
@@ -554,7 +554,7 @@
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
-    <value>%1 എന്നതാണ് ഗണനപ്രയോഗം</value>
+    <value>%1 എന്നതാണ് എക്‌സ്‌പ്രഷന്‍</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator expression results. %1 = Localized display value, e.g. "50 + 2 - 60 +".</comment>
   </data>
   <data name="Display_Copied" xml:space="preserve">
@@ -586,7 +586,7 @@
     <comment>{Locked="%1"}. Screen reader prompt for the binary value in Programmer mode. %1 = the localized binary value, e.g. "0010 1011".</comment>
   </data>
   <data name="ClearHistory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>എല്ലാ ചരിത്രം മായ്ക്കുക</value>
+    <value>എല്ലാ ചരിത്രവും മായ്ക്കുക</value>
     <comment>Screen reader prompt for the Calculator History Clear button</comment>
   </data>
   <data name="HistoryList_Cleared" xml:space="preserve">
@@ -598,11 +598,11 @@
     <comment>Screen reader prompt for the Calculator History Hide button</comment>
   </data>
   <data name="HistoryButton_Open" xml:space="preserve">
-    <value>തുറന്ന ചരിത്രം ഫ്ലൈഔട്ട്</value>
+    <value>ഫ്ലൈഔട്ട് ചരിത്രം സൃഷ്‌ടിക്കുക</value>
     <comment>Screen reader prompt for the Calculator History button, when the flyout is closed.</comment>
   </data>
   <data name="HistoryButton_Close" xml:space="preserve">
-    <value>അടച്ച ചരിത്രം ഫ്ലൈഔട്ട്</value>
+    <value>ചരിത്രം ഫ്ലൈഔട്ട് അടയ്ക്കുക</value>
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -614,7 +614,7 @@
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>എല്ലാ മെമ്മറി മായ്ക്കുക</value>
+    <value>എല്ലാ മെമ്മറിയും മായ്ക്കുക</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="Memory_Cleared" xml:space="preserve">
@@ -638,19 +638,19 @@
     <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>മെമ്മറി കുറയ്‌ക്കുക</value>
+    <value>മെമ്മറി കുറയ്ക്കുക</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>മെമ്മറി കുറയ്‌ക്കുക (Ctrl+Q)</value>
+    <value>മെമ്മറി കുറയ്ക്കുക (Ctrl+Q)</value>
     <comment>This is the tool tip automation name for the Memory Subtract (M-) button.</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>മെമ്മറി ഇനം മായ്‌ക്കുക</value>
+    <value>മെമ്മറി ഇനം മായ്ക്കുക</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>മെമ്മറി ഇനം മായ്‌ക്കുക</value>
+    <value>മെമ്മറി ഇനം മായ്ക്കുക</value>
     <comment>This is the tool tip automation name for the Clear Memory Item (MC) button in the Memory list.</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -662,19 +662,19 @@
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>മെമ്മറി ഇനത്തിൽ നിന്ന് കുറയ്‌ക്കുക</value>
+    <value>മെമ്മറി ഇനത്തിൽ നിന്ന് കുറയ്ക്കുക</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>മെമ്മറി ഇനത്തിൽ നിന്ന് കുറയ്‌ക്കുക</value>
+    <value>മെമ്മറി ഇനത്തിൽ നിന്ന് കുറയ്ക്കുക</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>മെമ്മറി ഇനം മായ്‌ക്കുക</value>
+    <value>മെമ്മറി ഇനം മായ്ക്കുക</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryMenuItem.Text" xml:space="preserve">
-    <value>മെമ്മറി ഇനം മായ്‌ക്കുക</value>
+    <value>മെമ്മറി ഇനം മായ്ക്കുക</value>
     <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
   </data>
   <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -686,11 +686,11 @@
     <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
   </data>
   <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>മെമ്മറി ഇനത്തിൽ നിന്ന് കുറയ്‌ക്കുക</value>
+    <value>മെമ്മറി ഇനത്തിൽ നിന്ന് കുറയ്ക്കുക</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract swipe button in the Memory list</comment>
   </data>
   <data name="MemMinusMenuItem.Text" xml:space="preserve">
-    <value>മെമ്മറി ഇനത്തിൽ നിന്ന് കുറയ്‌ക്കുക</value>
+    <value>മെമ്മറി ഇനത്തിൽ നിന്ന് കുറയ്ക്കുക</value>
     <comment>Text string for the Calculator Memory Subtract option in the Memory list context menu</comment>
   </data>
   <data name="DeleteHistorySwipeItem.Text" xml:space="preserve">
@@ -810,11 +810,11 @@
     <comment>Screen reader prompt for the Calculator ROR button</comment>
   </data>
   <data name="lshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ഇടത് shift</value>
+    <value>ഇടത് ഷിഫ്‌റ്റ്</value>
     <comment>Screen reader prompt for the Calculator LSH button</comment>
   </data>
   <data name="rshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>വലത് shift</value>
+    <value>വലത് ഷിഫ്‌റ്റ്</value>
     <comment>Screen reader prompt for the Calculator RSH button</comment>
   </data>
   <data name="xorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -822,7 +822,7 @@
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Quadruple Word ടോഗിൾ</value>
+    <value>ക്വാഡ്രപൽ Word ടോഗിൾ</value>
     <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
   </data>
   <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -838,7 +838,7 @@
     <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Bit ടോഗിളിംഗ് കീപാഡ്</value>
+    <value>ബിറ്റ് ടോഗിളിംഗ് കീപാഡ്</value>
     <comment>Screen reader prompt for the Calculator bitFlip button</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -994,19 +994,19 @@
     <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
   </data>
   <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>എക്സ്പോണന്‍റിലേക്ക് 'X'</value>
+    <value>എക്സ്പോണന്റിലേക്ക് 'X'</value>
     <comment>Screen reader prompt for x power y button on the scientific operator keypad. </comment>
   </data>
   <data name="powerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>എക്സ്പോണന്‍റിലേക്ക് പത്ത്</value>
+    <value>എക്സ്പോണന്റിലേക്കുള്ള പത്ത്</value>
     <comment>Screen reader prompt for the 10 power x button on the scientific operator keypad.</comment>
   </data>
   <data name="powerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>എക്സ്പോണന്‍റിലേക്ക് 'e'</value>
+    <value>എക്സ്പോണന്റിലേക്ക് 'e'</value>
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
   <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>'x' ന്‍റെ 'y' റൂട്ട്</value>
+    <value>'x' ന്റെ 'y' റൂട്ട്</value>
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
   <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1058,11 +1058,11 @@
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
   <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>മോഡ് ഡ്രോപ്‌ഡൗൺ</value>
+    <value>മോഡ് ഡ്രോപ്ഡൗൺ ചെയ്യുക</value>
     <comment>Screen reader prompt for the Mode dropdown field in Snapped and Portrait modes.</comment>
   </data>
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>വകുപ്പുകളുടെ ഡ്രോപ്പ്‌ഡൗൺ</value>
+    <value>വകുപ്പുകളുടെ ഡ്രോപ്പ്ഡൗൺ</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1082,15 +1082,15 @@
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
-    <value>%1 %2 എന്നതിൽ നിന്ന് കൺവെർട്ടുചെയ്യുക</value>
+    <value>%1 %2 എന്നതിൽ നിന്ന് പരിവര്‍ത്തനം ചെയ്യുക</value>
     <comment>Screen reader prompt for the Unit Converter Value1 i.e. top number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ValueFrom_Decimal" xml:space="preserve">
-    <value>%1 പോയിന്റ് %2 എന്നതിൽ നിന്ന് കൺവെർട്ടുചെയ്യുക</value>
+    <value>%1 പോയിന്റ് %2 എന്നതിൽ നിന്ന് പരിവർത്തനം ചെയ്യുക</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Convert from 7 point _current_unit_". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_ValueTo" xml:space="preserve">
-    <value>%1 %2 എന്നതിലേക്ക് കൺവെർട്ടുചെയ്യുക</value>
+    <value>%1 %2 എന്നതിലേക്ക് പരിവര്‍ത്തനം ചെയ്യുക</value>
     <comment>Screen reader prompt for the Unit Converter Value2 i.e. bottom number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ConversionResult" xml:space="preserve">
@@ -1102,7 +1102,7 @@
     <comment>Screen reader prompt for the Unit Converter Units1 i.e. top units field.</comment>
   </data>
   <data name="OutputUnit_Name" xml:space="preserve">
-    <value>ഔട്ട്‌പുട്ട് യൂണിറ്റ്</value>
+    <value>ഔട്ട്പുട്ട് യൂണിറ്റ്</value>
     <comment>Screen reader prompt for the Unit Converter Units2 i.e. bottom units field.</comment>
   </data>
   <data name="CategoryName_AreaText" xml:space="preserve">
@@ -1178,7 +1178,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_GallonUK" xml:space="preserve">
-    <value>ഗാലൻ (UK)</value>
+    <value>GAL (UK)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUS" xml:space="preserve">
@@ -1206,7 +1206,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_PintUK" xml:space="preserve">
-    <value>പിന്‍റ്സ് (UK)</value>
+    <value>പിന്റ്സ് (UK)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_PintUK" xml:space="preserve">
@@ -1214,11 +1214,11 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_PintUS" xml:space="preserve">
-    <value>പിന്‍റ്സ് (US)</value>
+    <value>പിന്റ്സ് (US)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_PintUS" xml:space="preserve">
-    <value>പൈന്റ് (US)</value>
+    <value>പോയിന്‍റ് (US)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TablespoonUS" xml:space="preserve">
@@ -1242,7 +1242,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TablespoonUK" xml:space="preserve">
-    <value>ടേബിൾസ്പൂൺ (UK)</value>
+    <value>ടേബിൾസ്പൂൺ. (UK)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TeaspoonUK" xml:space="preserve">
@@ -1258,7 +1258,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_QuartUK" xml:space="preserve">
-    <value>ക്വാർട്ട് (UK)</value>
+    <value>qt (UK)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_QuartUS" xml:space="preserve">
@@ -1278,11 +1278,11 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
-    <value>ഏക്കർ</value>
+    <value>ac</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Bit" xml:space="preserve">
-    <value>ബി</value>
+    <value>b</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_BritishThermalUnit" xml:space="preserve">
@@ -1298,35 +1298,35 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Calorie" xml:space="preserve">
-    <value>കാലറി</value>
+    <value>CAL</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Centimeter" xml:space="preserve">
-    <value>സെ.മീ</value>
+    <value>cm</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_CentimetersPerSecond" xml:space="preserve">
-    <value>സെ.മീ./സെക്കൻറ്</value>
+    <value>cm/s</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_CubicCentimeter" xml:space="preserve">
-    <value>സെ.മി.³</value>
+    <value>cm³</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicFoot" xml:space="preserve">
-    <value>അടി³</value>
+    <value>ft³</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicInch" xml:space="preserve">
-    <value>ഇഞ്ച്³</value>
+    <value>in³</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicMeter" xml:space="preserve">
-    <value>മീറ്റർ³</value>
+    <value>m³</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicYard" xml:space="preserve">
-    <value>മൂന്നടി³</value>
+    <value>yd³</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Day" xml:space="preserve">
@@ -1334,11 +1334,11 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_DegreesCelsius" xml:space="preserve">
-    <value>°സെൽഷ്യസ്</value>
+    <value>°C</value>
     <comment>An abbreviation for "degrees Celsius"</comment>
   </data>
   <data name="UnitAbbreviation_DegreesFahrenheit" xml:space="preserve">
-    <value>°ഫാരൻഹീറ്റ്</value>
+    <value>°F</value>
     <comment>An abbreviation for a "degrees Fahrenheit"</comment>
   </data>
   <data name="UnitAbbreviation_Electron-Volt" xml:space="preserve">
@@ -1346,15 +1346,15 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Foot" xml:space="preserve">
-    <value>അടി</value>
+    <value>ft</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_FeetPerSecond" xml:space="preserve">
-    <value>അടി/സെക്കൻറ്</value>
+    <value>ft/s</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Foot-Pound" xml:space="preserve">
-    <value>അടി•പൗണ്ട്</value>
+    <value>ft•lb</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Gigabit" xml:space="preserve">
@@ -1370,11 +1370,11 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Horsepower" xml:space="preserve">
-    <value>എച്ച്‌പി (US)</value>
+    <value>hp (US)</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Hour" xml:space="preserve">
-    <value>മണിക്കൂർ</value>
+    <value>hr</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Inch" xml:space="preserve">
@@ -1390,7 +1390,7 @@
     <comment>An abbreviation for the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin)</comment>
   </data>
   <data name="UnitAbbreviation_Kilobit" xml:space="preserve">
-    <value>കിലോബിറ്റ്</value>
+    <value>Kb</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kilobyte" xml:space="preserve">
@@ -1402,23 +1402,23 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Kilojoule" xml:space="preserve">
-    <value>കിലോജൂൾസ്</value>
+    <value>kJ</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Kilometer" xml:space="preserve">
-    <value>കിലോമീറ്റർ</value>
+    <value>km</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_KilometersPerHour" xml:space="preserve">
-    <value>കി.മീ പ്രതി മണിക്കൂർ</value>
+    <value>km/h</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Kilowatt" xml:space="preserve">
-    <value>കിലോവാട്ട്</value>
+    <value>kW</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Knot" xml:space="preserve">
-    <value>കിലോന്യൂട്ടൺ</value>
+    <value>kn</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Mach" xml:space="preserve">
@@ -1426,7 +1426,7 @@
     <comment>An abbreviation for a measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
   </data>
   <data name="UnitAbbreviation_Megabit" xml:space="preserve">
-    <value>മെഗാബിറ്റ്</value>
+    <value>Mb</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Megabyte" xml:space="preserve">
@@ -1434,19 +1434,19 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Meter" xml:space="preserve">
-    <value>മീറ്റർ</value>
+    <value>m</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_MetersPerSecond" xml:space="preserve">
-    <value>മീറ്റർ പ്രതി സെക്കൻറ്</value>
+    <value>m/s</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Micron" xml:space="preserve">
-    <value>മൈക്രോമീറ്റർ</value>
+    <value>µm</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Microsecond" xml:space="preserve">
-    <value>മൈക്രോസെക്കൻഡ്</value>
+    <value>µs</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Mile" xml:space="preserve">
@@ -1454,15 +1454,15 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_MilesPerHour" xml:space="preserve">
-    <value>മൈൽ പ്രതി മണിക്കൂർ</value>
+    <value>mph</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Millimeter" xml:space="preserve">
-    <value>മില്ലീമീറ്റർ</value>
+    <value>mm</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Millisecond" xml:space="preserve">
-    <value>മില്ലിസെക്കൻറ്</value>
+    <value>മി.സെ.</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Minute" xml:space="preserve">
@@ -1486,7 +1486,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Foot-PoundPerMinute" xml:space="preserve">
-    <value>അടി•പൗണ്ട്/മിനിറ്റിനുള്ളിൽ</value>
+    <value>ft•lb/min</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Second" xml:space="preserve">
@@ -1494,27 +1494,27 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_SquareCentimeter" xml:space="preserve">
-    <value>സെ.മി.²</value>
+    <value>cm²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareFoot" xml:space="preserve">
-    <value>അടി²</value>
+    <value>ft²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareInch" xml:space="preserve">
-    <value>ഇഞ്ച്²</value>
+    <value>in²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareKilometer" xml:space="preserve">
-    <value>കിമി²</value>
+    <value>km²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareMeter" xml:space="preserve">
-    <value>മീറ്റർ²</value>
+    <value>m²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareMile" xml:space="preserve">
-    <value>മി²</value>
+    <value>mi²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareMillimeter" xml:space="preserve">
@@ -1630,7 +1630,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yobibits" xml:space="preserve">
-    <value>Yi</value>
+    <value>യി</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yobibytes" xml:space="preserve">
@@ -1662,15 +1662,15 @@
     <comment>A measurement unit for energy. Please note that this is the "small calorie" used in science for measuring heat energy, not the "large calorie" commonly used for measuring food energy. If there is a simple term to distinguish this one from the large "Food calorie", please use that. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Centimeter" xml:space="preserve">
-    <value>സെന്റീമീറ്റര്‍‌</value>
+    <value>സെന്‍റിമീറ്റര്‍‌</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CentimetersPerSecond" xml:space="preserve">
-    <value>ഒരു സെക്കന്‍റിലെ സെന്‍റിമീറ്ററുകൾ</value>
+    <value>ഒരു സെക്കന്റിലെ സെന്റിമീറ്ററുകൾ</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicCentimeter" xml:space="preserve">
-    <value>ക്യുബിക് സെന്‍റിമീറ്ററുകൾ</value>
+    <value>ക്യുബിക് സെന്റിമീറ്ററുകൾ</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicFoot" xml:space="preserve">
@@ -1690,7 +1690,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Day" xml:space="preserve">
-    <value>ദിവസം</value>
+    <value>ദിവസങ്ങൾ</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_DegreesCelsius" xml:space="preserve">
@@ -1706,11 +1706,11 @@
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot" xml:space="preserve">
-    <value>അടി</value>
+    <value>പാദം</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_FeetPerSecond" xml:space="preserve">
-    <value>ഒരു സെക്കന്‍റിലെ അടി</value>
+    <value>ഒരു സെക്കന്റിലെ അടി</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot-Pound" xml:space="preserve">
@@ -1738,7 +1738,7 @@
     <comment>A measurement unit for power</comment>
   </data>
   <data name="UnitName_Hour" xml:space="preserve">
-    <value>മണിക്കൂര്‍</value>
+    <value>മണിക്കൂർ</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Inch" xml:space="preserve">
@@ -1774,7 +1774,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_KilometersPerHour" xml:space="preserve">
-    <value>ഒരു മണിക്കൂറിലെ കിലോമീറ്ററുകൾ</value>
+    <value>ഓരോ മണിക്കൂറിലെ കിലോമീറ്ററുകൾ</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilowatt" xml:space="preserve">
@@ -1786,7 +1786,7 @@
     <comment>A nautical/aerial measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mach" xml:space="preserve">
-    <value>പൊരുത്തം</value>
+    <value>മാച്ച്</value>
     <comment>A measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
   </data>
   <data name="UnitName_Megabit" xml:space="preserve">
@@ -1802,7 +1802,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_MetersPerSecond" xml:space="preserve">
-    <value>ഒരു സെക്കന്‍റിലെ മീറ്ററുകൾ</value>
+    <value>ഓരോ സെക്കന്റിലെ മീറ്ററുകൾ</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Micron" xml:space="preserve">
@@ -1826,7 +1826,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Millisecond" xml:space="preserve">
-    <value>മില്ലിസെക്കൻറുകള്‍‌</value>
+    <value>മില്ലിസെക്കന്റുകള്‍‌</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Minute" xml:space="preserve">
@@ -1854,7 +1854,7 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareCentimeter" xml:space="preserve">
-    <value>സ്ക്വയർ സെന്‍റിമീറ്ററുകൾ</value>
+    <value>സ്ക്വയർ സെന്റിമീറ്ററുകൾ</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareFoot" xml:space="preserve">
@@ -1898,7 +1898,7 @@
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Week" xml:space="preserve">
-    <value>ആഴ്ച</value>
+    <value>ആഴ്ചകൾ</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yard" xml:space="preserve">
@@ -1906,7 +1906,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Year" xml:space="preserve">
-    <value>വർഷങ്ങൾ</value>
+    <value>വർഷം</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Carat" xml:space="preserve">
@@ -1950,23 +1950,23 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Centigram" xml:space="preserve">
-    <value>സെൻറീഗ്രാം</value>
+    <value>cg</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Decagram" xml:space="preserve">
-    <value>ഡാഗ്</value>
+    <value>DAG</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Decigram" xml:space="preserve">
-    <value>ഡെസിഗ്രാം</value>
+    <value>dg</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Gram" xml:space="preserve">
-    <value>ഗ്രാം</value>
+    <value>g</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Hectogram" xml:space="preserve">
-    <value>ഹെക്ടോഗ്രാം</value>
+    <value>hg</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Kilogram" xml:space="preserve">
@@ -1986,7 +1986,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Pound" xml:space="preserve">
-    <value>പൌണ്ട്</value>
+    <value>lb</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_ShortTon" xml:space="preserve">
@@ -2042,7 +2042,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Centigram" xml:space="preserve">
-    <value>സെന്‍റിഗ്രാമുകൾ</value>
+    <value>സെന്റിഗ്രാമുകൾ</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Decagram" xml:space="preserve">
@@ -2066,7 +2066,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_LongTon" xml:space="preserve">
-    <value>നീണ്ട ടണ്ണുകൾ (യുകെ)</value>
+    <value>നീണ്ട ടണ്ണുകൾ (UK)</value>
     <comment>A measurement unit for weight. This is the UK version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Milligram" xml:space="preserve">
@@ -2086,7 +2086,7 @@
     <comment>A measurement unit for weight. This is the US version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Stone" xml:space="preserve">
-    <value>റാത്തൽ</value>
+    <value>സ്റ്റോൺ</value>
     <comment>A measurement unit for weight. Equal to 14 pounds. Note that this is the plural form of the word in English (eg. "This man weighs 11 stone."). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tonne" xml:space="preserve">
@@ -2094,11 +2094,11 @@
     <comment>A measurement unit for weight. This is the metric version of tonne. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CD" xml:space="preserve">
-    <value>CD–കള്‍‌</value>
+    <value>CD-കൾ</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CD" xml:space="preserve">
-    <value>CD–കള്‍‌</value>
+    <value>CD-കൾ</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerField" xml:space="preserve">
@@ -2118,7 +2118,7 @@
     <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_DVD" xml:space="preserve">
-    <value>DVD–കള്‍‌‌</value>
+    <value>DVDs</value>
     <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_DVD" xml:space="preserve">
@@ -2166,11 +2166,11 @@
     <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bathtub" xml:space="preserve">
-    <value>ബാത്ത്‌ടബുകൾ</value>
+    <value>ബാത്ത്ടബുകൾ</value>
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Bathtub" xml:space="preserve">
-    <value>ബാത്ത്‌ടബുകൾ</value>
+    <value>ബാത്ത്ടബുകൾ</value>
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Snowflake" xml:space="preserve">
@@ -2302,7 +2302,7 @@
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
   <data name="AboutFlyoutEULA.Text" xml:space="preserve">
-    <value>Microsoft സോഫ്റ്റ്‌വെയര്‍ ലൈസന്‍സ് നിബന്ധനകള്‍</value>
+    <value>Microsoft സോഫ്റ്റ്‌വെയർ ലൈസൻസ് നിബന്ധനകൾ</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
   <data name="PreviewTag.Text" xml:space="preserve">
@@ -2317,8 +2317,12 @@
     <value>© %1 Microsoft. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Windows കാൽക്കുലേറ്ററിന് സംഭാവന നൽകുന്നത് എങ്ങനെയെന്ന് അറിയാൻ %HL%GitHub%HL%-ലെ പ്രൊജക്റ്റ് പരിശോധിക്കുക.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
-    <value>വിവരം</value>
+    <value>കുറിച്ച്</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
@@ -2326,11 +2330,11 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>ചരിത്രമൊന്നുമില്ല</value>
+    <value>അവിടെ ഇതുവരെ ചരിത്രമൊന്നുമില്ല</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>മെമ്മറിയിൽ ഒന്നും സംരക്ഷിച്ചിട്ടില്ല</value>
+    <value>മെമ്മറിയിൽ ഒന്നും തന്നെ സംരക്ഷിച്ചിട്ടില്ല</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2342,43 +2346,43 @@
     <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
   </data>
   <data name="UnitName_Gibibits" xml:space="preserve">
-    <value>ജിബി‌ബിറ്റ്സ്</value>
+    <value>ജിബിബിറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gibibytes" xml:space="preserve">
-    <value>ജിബി‌ബൈറ്റ്സ്</value>
+    <value>ജിബിബൈറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibits" xml:space="preserve">
-    <value>കിബി‌ബിറ്റ്സ്</value>
+    <value>കിബിബിറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibytes" xml:space="preserve">
-    <value>കിബി‌ബൈറ്റ്സ്</value>
+    <value>കിബിബൈറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mebibits" xml:space="preserve">
-    <value>മെബി‌ബിറ്റ്സ്</value>
+    <value>മെബിബിറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mebibytes" xml:space="preserve">
-    <value>മെബി‌ബൈറ്റ്സ്</value>
+    <value>മെബിബൈറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pebibits" xml:space="preserve">
-    <value>പെബി‌ബിറ്റ്സ്</value>
+    <value>പെബിബിറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pebibytes" xml:space="preserve">
-    <value>പെബി‌ബൈറ്റ്സ്</value>
+    <value>പെബിബൈറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tebibits" xml:space="preserve">
-    <value>ടെബി‌‌ബിറ്റ്സ്</value>
+    <value>ടെബിബിറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tebibytes" xml:space="preserve">
-    <value>ടെബി‌ബൈറ്റ്സ്</value>
+    <value>ടെബിബൈറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabits" xml:space="preserve">
@@ -2390,15 +2394,15 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibits" xml:space="preserve">
-    <value>എക്സി‌ബിറ്റ്സ്</value>
+    <value>എക്സിബിറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibytes" xml:space="preserve">
-    <value>എക്സി‌ബൈറ്റ്സ്</value>
+    <value>എക്സിബൈറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabits" xml:space="preserve">
-    <value>സെറ്റ‌ബിറ്റ്സ്</value>
+    <value>സെറ്റബിറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabytes" xml:space="preserve">
@@ -2422,11 +2426,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibits" xml:space="preserve">
-    <value>യോബി‌ബിറ്റ്സ്</value>
+    <value>യോബിബിറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibytes" xml:space="preserve">
-    <value>യോബി‌ബൈറ്റ്സ്</value>
+    <value>യോബിബൈറ്റ്സ്</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="DateCalculationModeText" xml:space="preserve">
@@ -2437,11 +2441,11 @@
     <comment>Automation label for the Date Calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
   </data>
   <data name="AddOption.Content" xml:space="preserve">
-    <value>ചേര്‍ക്കുക</value>
+    <value>ചേർക്കുക</value>
     <comment>Add toggle button text</comment>
   </data>
   <data name="Date_AddSubtractOption.Content" xml:space="preserve">
-    <value>ദിവസം ചേർക്കൂ/കുറയ്ക്കൂ</value>
+    <value>ദിവസങ്ങൾ ചേർക്കുകയോ/കുറയ്ക്കുകയോ ചെയ്യുക</value>
     <comment>Add or Subtract days option</comment>
   </data>
   <data name="DateLabel.Text" xml:space="preserve">
@@ -2453,7 +2457,7 @@
     <comment>Date Difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
-    <value>ദിവസം</value>
+    <value>ദിവസങ്ങൾ</value>
     <comment>Add/Subtract Days label</comment>
   </data>
   <data name="Date_DifferenceLabel.Text" xml:space="preserve">
@@ -2465,7 +2469,7 @@
     <comment>From Date Header for Difference Date Picker</comment>
   </data>
   <data name="MonthsLabel.Text" xml:space="preserve">
-    <value>മാസം</value>
+    <value>മാസങ്ങൾ</value>
     <comment>Add/Subtract Months label</comment>
   </data>
   <data name="SubtractOption.Content" xml:space="preserve">
@@ -2488,13 +2492,13 @@
     <value>ദിവസം</value>
   </data>
   <data name="Date_Days" xml:space="preserve">
-    <value>ദിവസം</value>
+    <value>ദിവസങ്ങൾ</value>
   </data>
   <data name="Date_Month" xml:space="preserve">
     <value>മാസം</value>
   </data>
   <data name="Date_Months" xml:space="preserve">
-    <value>മാസം</value>
+    <value>മാസങ്ങൾ</value>
   </data>
   <data name="Date_SameDates" xml:space="preserve">
     <value>അതേ തീയതികൾ</value>
@@ -2503,13 +2507,13 @@
     <value>ആഴ്ച</value>
   </data>
   <data name="Date_Weeks" xml:space="preserve">
-    <value>ആഴ്ച</value>
+    <value>ആഴ്ചകൾ</value>
   </data>
   <data name="Date_Year" xml:space="preserve">
     <value>വർഷം</value>
   </data>
   <data name="Date_Years" xml:space="preserve">
-    <value>വർഷം</value>
+    <value>വർഷങ്ങൾ</value>
   </data>
   <data name="Date_DifferenceResultAutomationName" xml:space="preserve">
     <value>വ്യത്യാസം %1</value>
@@ -2532,7 +2536,7 @@
     <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ചരിത്രം ഒപ്പം മെമ്മറി ലിസ്റ്റുകൾ</value>
+    <value>ചരിത്രവും മെമ്മറി ലിസ്റ്റുകളും</value>
     <comment>Automation name for the group of controls for history and memory lists.</comment>
   </data>
   <data name="MemoryPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2560,11 +2564,11 @@
     <comment>Automation name for the group of Scientific angle operators (Degree mode, Hyperbolic toggle, and Precision button)</comment>
   </data>
   <data name="ScientificFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>സയന്റിഫിക്ക് കാര്യപ്രവർത്തനങ്ങൾ</value>
+    <value>ശാസ്ത്രീയമായ ഫംഗ്ഷനുകള്‍</value>
     <comment>Automation name for the group of Scientific functions.</comment>
   </data>
   <data name="RadixGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>റാഡിക്‌സ് തിരഞ്ഞെടുക്കൽ</value>
+    <value>റാഡിക്സ് തിരഞ്ഞെടുപ്പ്</value>
     <comment>Automation name for the group of radices (Hexadecimal, Decimal, Octal, Binary). https://en.wikipedia.org/wiki/Radix </comment>
   </data>
   <data name="ProgrammerOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2572,7 +2576,7 @@
     <comment>Automation name for the group of programmer operators (RoL, RoR, Lsh, Rsh, OR, XOR, NOT, AND).</comment>
   </data>
   <data name="InputModeSelectionGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ഇൻപുട്ട് മോഡ് തിരഞ്ഞെടുക്കൽ</value>
+    <value>ഇൻപുട്ട് മോഡ് തിരഞ്ഞെടുപ്പ്</value>
     <comment>Automation name for the group of input mode toggling buttons.</comment>
   </data>
   <data name="BitFlipPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2580,11 +2584,11 @@
     <comment>Automation name for the group of bit toggling buttons.</comment>
   </data>
   <data name="scrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>വാക്ക് ഇടത്തേക്ക് സ്ക്രോൾ ചെയ്യുക</value>
+    <value>എക്‌സ്‌പ്രഷൻ ഇടത്തേക്ക് സ്ക്രോൾ ചെയ്യുക</value>
     <comment>Automation label for the "scroll left" button that appears when an expression is too large to fit in the window.</comment>
   </data>
   <data name="scrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>വാക്ക് വലത്തേക്ക് സ്ക്രോൾ ചെയ്യുക</value>
+    <value>എക്‌സ്‌പ്രഷൻ വലത്തേക്ക് സ്ക്രോൾ ചെയ്യുക</value>
     <comment>Automation label for the "scroll right" button that appears when an expression is too large to fit in the window.</comment>
   </data>
   <data name="Format_MaxDigitsReached" xml:space="preserve">
@@ -2600,7 +2604,7 @@
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user stores a number to memory. The %1 is the automation name of the display. Users will hear "_current_value_ saved to memory".</comment>
   </data>
   <data name="Format_MemorySlotChanged" xml:space="preserve">
-    <value>മെമ്മറി സ്ലോട്ട് %1 എന്നത് %2</value>
+    <value>മെമ്മറി സ്ലോട്ട് %1 എന്നത് %2 ആകുന്നു</value>
     <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when the user changes a memory slot. The %1 is the index of the memory slot and %2 is the new value. For example, users might hear "Memory slot 2 is 37".</comment>
   </data>
   <data name="Format_MemorySlotCleared" xml:space="preserve">
@@ -2636,11 +2640,11 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>ഇടത് shift</value>
+    <value>ഇടത് ഷിഫ്‌റ്റ്</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>വലത് shift</value>
+    <value>വലത് ഷിഫ്‌റ്റ്</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2660,7 +2664,7 @@
     <comment>The exact ratio between converted currencies, e.g. "1 USD = 0.8885 EUR". %1 will always be '1'. %2 is the From currency code. %3 is the formatted conversion ratio. %4 is the To currency code.</comment>
   </data>
   <data name="CurrencyTimestampFormat" xml:space="preserve">
-    <value>അപ്‌ഡേറ്റ് ചെയ്‌തത് %1 %2</value>
+    <value>അപ്‌ഡേറ്റ് ചെയ്ത %1 %2</value>
     <comment>The timestamp of currency conversion ratios fetched from an online service. %1 is the date. %2 is the time. Example: "Updated Sep 28, 2016 5:42 PM"</comment>
   </data>
   <data name="RefreshButtonText.Content" xml:space="preserve">
@@ -2676,7 +2680,7 @@
     <comment>The text displayed when currency ratio data fails to load.</comment>
   </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
-    <value>ഓഫ്‌ലൈൻ. നിങ്ങളുടെ%HL% നെറ്റ്‌വർക്ക് ക്രമീകരണം%HL% പരിശോധിക്കുക</value>
+    <value>ഓഫ്‌ലൈൻ. ദയവായി നിങ്ങളുടെ %HL% നെറ്റ്‌വർക്ക് ക്രമീകരണങ്ങൾ %HL% പരിശോധിക്കുക</value>
     <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
   </data>
   <data name="UpdatingCurrencyRates" xml:space="preserve">
@@ -2768,11 +2772,11 @@
     <comment>Access key for the Clear memory button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>എല്ലാ മെമ്മറി മായ്ക്കുക (Ctrl+L)</value>
+    <value>എല്ലാ മെമ്മറിയും മായ്ക്കുക (Ctrl+L)</value>
     <comment>This is the tool tip automation name for the Clear Memory button in the Memory Pane.</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>എല്ലാ മെമ്മറി മായ്ക്കുക</value>
+    <value>എല്ലാ മെമ്മറിയും മായ്ക്കുക</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button in the Memory Pane</comment>
   </data>
   <data name="HistoryLabel.AccessKey" xml:space="preserve">
@@ -2988,15 +2992,15 @@
     <comment>Name for the absolute value function. Used by screen readers.</comment>
   </data>
   <data name="LeftShift" xml:space="preserve">
-    <value>ഇടത് shift</value>
+    <value>ഇടത് ഷിഫ്‌റ്റ്</value>
     <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
   </data>
   <data name="RightShift" xml:space="preserve">
-    <value>വലത് shift</value>
+    <value>വലത് ഷിഫ്‌റ്റ്</value>
     <comment>Name for the programmer function that shifts bits to the right. Used by screen readers.</comment>
   </data>
   <data name="Factorial" xml:space="preserve">
-    <value>ഫാക്റ്റോറിയൽ</value>
+    <value>നിര്‍മ്മാണപരത</value>
     <comment>Name for the factorial function. Used by screen readers.</comment>
   </data>
   <data name="DegreeMinuteSecond" xml:space="preserve">
