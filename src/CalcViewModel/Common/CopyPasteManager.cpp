@@ -502,23 +502,32 @@ ULONG32 CopyPasteManager::StandardScientificOperandLength(Platform::String ^ ope
 {
     auto operandWstring = wstring(operand->Data());
     const bool hasDecimal = operandWstring.find('.') != wstring::npos;
+    auto length = operandWstring.length();
 
     if (hasDecimal)
     {
-        if (operandWstring.length() >= 2)
+        if (length >= 2)
         {
             if ((operandWstring[0] == L'0') && (operandWstring[1] == L'.'))
             {
-                return static_cast<ULONG32>(operandWstring.length() - 2);
+                length -= 2;
             }
             else
             {
-                return static_cast<ULONG32>(operandWstring.length() - 1);
+                length -= 1;
             }
         }
     }
 
-    return static_cast<ULONG32>(operandWstring.length());
+    auto exponentPos = operandWstring.find('e');
+    const bool hasExponent = exponentPos != wstring::npos;
+    if (hasExponent)
+    {
+        auto expLength = operandWstring.substr(exponentPos).length();
+        length -= expLength;
+    }
+
+    return static_cast<ULONG32>(length);
 }
 
 ULONG32 CopyPasteManager::ProgrammerOperandLength(Platform::String ^ operand, NumberBase numberBase)

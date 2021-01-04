@@ -27,7 +27,6 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid x:Name="BackgroundElement"
-              Height="32"
               Background="Transparent">
             <TextBlock x:Name="AppName"
                        x:Uid="AppName"
@@ -36,7 +35,6 @@
                        VerticalAlignment="Center"
                        Foreground="{ThemeResource TitleBarForegroundBaseHighBrush}"
                        FontSize="12"
-                       TextAlignment="Left"
                        TextTrimming="CharacterEllipsis"/>
         </Grid>
         <Button x:Name="ExitAlwaysOnTopButton"

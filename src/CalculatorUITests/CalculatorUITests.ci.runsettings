@@ -8,5 +8,7 @@
     </DataCollectionRunSettings>
     <TestRunParameters>
         <Parameter Name="AppId" Value="Microsoft.WindowsCalculator.Dev_8wekyb3d8bbwe!App" />
+        <Parameter Name="CurrencyWith3FractionalDigits" Value="Test Fractional Digits - Test Fractional Digits" />
+        <Parameter Name="CurrencyWithoutFractionalDigits" Value="Test No Fractional Digits - Test No Fractional Digits" />
     </TestRunParameters>
 </RunSettings>

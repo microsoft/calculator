@@ -140,6 +140,7 @@ vector<UCM::Category> UnitConverterMock::GetCategories()
     cats.push_back(CAT1);
     cats.push_back(CAT2);
     cats.push_back(CAT3);
+    cats.push_back(CAT_CURRENCY);
 
     m_curCategory = CAT2;
 
@@ -174,6 +175,10 @@ UCM::CategorySelectionInitializer UnitConverterMock::SetCurrentCategory(const UC
         units.push_back(UNIT9);
         break;
     }
+    case CURRENCY_ID:
+        units.push_back(UNITJPY);
+        units.push_back(UNITJOD);
+        break;
     default:
         throw;
     }
@@ -215,10 +220,15 @@ void UnitConverterMock::SwitchActive(const std::wstring& newValue)
     m_curValue = newValue;
 }
 
-    std::wstring UnitConverterMock::SaveUserPreferences()
-    {
-        return L"TEST";
-    };
+bool UnitConverterMock::IsSwitchedActive() const
+{
+    return false;
+}
+
+std::wstring UnitConverterMock::SaveUserPreferences()
+{
+    return L"TEST";
+};
 
 void UnitConverterMock::RestoreUserPreferences(_In_ std::wstring_view /*userPreferences*/){};
 
@@ -341,7 +351,7 @@ TEST_METHOD(TestUnitConverterLoadSetsUpCategories)
     VM::UnitConverterViewModel vm(mock);
     IObservableVector<VM::Category ^> ^ cats = vm.Categories;
     VERIFY_ARE_EQUAL((UINT)1, mock->m_getCategoriesCallCount);
-    VERIFY_ARE_EQUAL((UINT)3, cats->Size);
+    VERIFY_ARE_EQUAL((UINT)4, cats->Size);
     // Verify that we match current category
     VERIFY_IS_TRUE(CAT2 == vm.CurrentCategory->GetModelCategory());
 }
@@ -935,6 +945,33 @@ TEST_METHOD(TestDecimalFormattingLogic)
     VERIFY_IS_TRUE(vm.Value1 == L"3");
     VERIFY_IS_TRUE(vm.Value2 == L"2.50");
 }
+
+TEST_METHOD(TestCurrencyFormattingLogic)
+{
+    // verify that currency fraction digits is formatted per currency type
+
+    shared_ptr<UnitConverterMock> mock = make_shared<UnitConverterMock>();
+    VM::UnitConverterViewModel vm(mock);
+
+    // Establish base condition
+    vm.CurrentCategory = vm.Categories->GetAt(3); // Currency
+    vm.Unit1 = vm.Units->GetAt(0);                // JPY
+    vm.Unit2 = vm.Units->GetAt(1);                // JOD
+    vm.UnitChanged->Execute(nullptr);
+
+    const WCHAR *vFrom = L"1.2340", *vTo = L"0.0070";
+    vm.UpdateDisplay(vFrom, vTo);
+
+    VERIFY_IS_TRUE(vm.Value1 == L"1");
+    VERIFY_IS_TRUE(vm.Value2 == L"0.007");
+    vm.SwitchActive->Execute(nullptr);
+    VERIFY_IS_TRUE(vm.Value1 == L"1");
+    VERIFY_IS_TRUE(vm.Value2 == L"0.007");
+    vm.SwitchActive->Execute(nullptr);
+    VERIFY_IS_TRUE(vm.Value1 == L"1");
+    VERIFY_IS_TRUE(vm.Value2 == L"0.007");
+}
+
 // Tests that when we switch the active field and get display
 // updates, the correct automation names are are being updated.
 TEST_METHOD(TestValue1AndValue2AutomationNameChanges)
