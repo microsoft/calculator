@@ -122,7 +122,7 @@
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppName" xml:space="preserve">
-    <value>Makinë llogaritëse [Dev]</value>
+    <value>Makina llogaritëse [Dev]</value>
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the name of the application when built by a user via GitHub. We use a different name to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="AppStoreName" xml:space="preserve">
@@ -130,7 +130,7 @@
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
   </data>
   <data name="DevAppStoreName" xml:space="preserve">
-    <value>Makinë llogaritëse e Windows [Dev]</value>
+    <value>Makina llogaritëse e Windows [Dev]</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps. This is the the version of the name used when the app is built by a user via GitHub.</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
@@ -138,7 +138,7 @@
     <comment>{@Appx_Description@} This description is used for the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppDescription" xml:space="preserve">
-    <value>Makinë llogaritëse [Dev]</value>
+    <value>Makina llogaritëse [Dev]</value>
     <comment>{@Appx_Description@} This is the description of the application when built by a user via GitHub. We use a different description to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="copyMenuItem" xml:space="preserve">
@@ -534,11 +534,11 @@
     <comment>The text that shows in the dropdown navigation control for the calculator group in upper case.</comment>
   </data>
   <data name="ConverterModePluralText" xml:space="preserve">
-    <value>Konvertuesë</value>
+    <value>Konvertuesit</value>
     <comment>Pluralized version of the converter group text, used for the screen reader prompt.</comment>
   </data>
   <data name="CalculatorModePluralText" xml:space="preserve">
-    <value>Makina llogaritëse</value>
+    <value>Makinat llogaritëse</value>
     <comment>Pluralized version of the calculator group text, used for the screen reader prompt.</comment>
   </data>
   <data name="Format_CalculatorResults" xml:space="preserve">
@@ -550,15 +550,15 @@
     <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
-    <value>Ekrani është %1 pikë</value>
+    <value>Afishimi është %1 pikë</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
-    <value>Expression is %1</value>
+    <value>Shprehja është %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator expression results. %1 = Localized display value, e.g. "50 + 2 - 60 +".</comment>
   </data>
   <data name="Display_Copied" xml:space="preserve">
-    <value>Norma e afishuar u kopjua në kujtesën e fragmenteve</value>
+    <value>Vlera e afishuar u kopjua në kujtesën e fragmenteve</value>
     <comment>Screen reader prompt for the Calculator display copy button, when the button is invoked.</comment>
   </data>
   <data name="HistoryPane" xml:space="preserve">
@@ -638,11 +638,11 @@
     <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Hiq në memorie</value>
+    <value>Hiq nga memoria</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Hiq në memorie (Ctrl+Q)</value>
+    <value>Hiq nga memoria (Ctrl+Q)</value>
     <comment>This is the tool tip automation name for the Memory Subtract (M-) button.</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -694,7 +694,7 @@
     <comment>Text string for the Calculator Memory Subtract option in the Memory list context menu</comment>
   </data>
   <data name="DeleteHistorySwipeItem.Text" xml:space="preserve">
-    <value>Fshij</value>
+    <value>Fshi</value>
     <comment>Text string for the Calculator Delete swipe button in the History list</comment>
   </data>
   <data name="CopyHistoryMenuItem.Text" xml:space="preserve">
@@ -702,15 +702,15 @@
     <comment>Text string for the Calculator Copy option in the History list context menu</comment>
   </data>
   <data name="DeleteHistoryMenuItem.Text" xml:space="preserve">
-    <value>Fshij</value>
+    <value>Fshi</value>
     <comment>Text string for the Calculator Delete option in the History list context menu</comment>
   </data>
   <data name="DeleteHistorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Fshij artikullin e historikut</value>
+    <value>Fshi artikullin e historikut</value>
     <comment>Screen reader prompt for the Calculator Delete swipe button in the History list</comment>
   </data>
   <data name="DeleteHistoryMenuItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Fshij artikullin e historikut</value>
+    <value>Fshi artikullin e historikut</value>
     <comment>Screen reader prompt for the Calculator Delete option in the History list context menu</comment>
   </data>
   <data name="backSpaceButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -858,11 +858,11 @@
     <comment>Screen reader prompt for the "C" button</comment>
   </data>
   <data name="divideButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Pjesëtim</value>
+    <value>Pjesëto me</value>
     <comment>Screen reader prompt for the divide button on the number pad</comment>
   </data>
   <data name="multiplyButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Shumëzim</value>
+    <value>Shumëzo me</value>
     <comment>Screen reader prompt for the multiply button on the number pad</comment>
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -910,7 +910,7 @@
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
   <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
-    <value>Kllapa e majtë, numri i kllapave hapëse %1</value>
+    <value>Kllapa e majtë, numri i kllapave hapëse %1</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -994,19 +994,19 @@
     <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
   </data>
   <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>'X' në fuqi të</value>
+    <value>"X" në fuqi të</value>
     <comment>Screen reader prompt for x power y button on the scientific operator keypad. </comment>
   </data>
   <data name="powerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>10 në fuqi të</value>
+    <value>Dhjetë në fuqi të</value>
     <comment>Screen reader prompt for the 10 power x button on the scientific operator keypad.</comment>
   </data>
   <data name="powerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>'e' në fuqi të</value>
+    <value>"e" në fuqi të</value>
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
   <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>rrënja 'y' e 'x'</value>
+    <value>rrënja "y" e "x"</value>
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
   <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1018,7 +1018,7 @@
     <comment>Screen reader for the log base e on the scientific operator keypad</comment>
   </data>
   <data name="modButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Modul</value>
+    <value>Moduli</value>
     <comment>Screen reader for the mod button on the scientific operator keypad</comment>
   </data>
   <data name="expButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1086,7 +1086,7 @@
     <comment>Screen reader prompt for the Unit Converter Value1 i.e. top number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ValueFrom_Decimal" xml:space="preserve">
-    <value>Konverto nga %1 presje %2</value>
+    <value>Konverto nga %1 pikë %2</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Convert from 7 point _current_unit_". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_ValueTo" xml:space="preserve">
@@ -1122,7 +1122,7 @@
     <comment>Unit conversion category name called Length</comment>
   </data>
   <data name="CategoryName_PowerText" xml:space="preserve">
-    <value>Fuqia</value>
+    <value>Ndezja/Fikja</value>
     <comment>Unit conversion category name called Power (eg. the power of an engine or a light bulb)</comment>
   </data>
   <data name="CategoryName_SpeedText" xml:space="preserve">
@@ -1162,7 +1162,7 @@
     <comment>A measurement unit for volume, in plural. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FluidOunceUK" xml:space="preserve">
-    <value>fl oz (MB)</value>
+    <value>fl oz (MB)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_FluidOunceUS" xml:space="preserve">
@@ -1170,7 +1170,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FluidOunceUS" xml:space="preserve">
-    <value>fl oz (SHBA)</value>
+    <value>fl oz (SHBA)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUK" xml:space="preserve">
@@ -1194,7 +1194,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Liter" xml:space="preserve">
-    <value>l</value>
+    <value>L</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
@@ -1678,7 +1678,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicInch" xml:space="preserve">
-    <value>Inç kub</value>
+    <value>inç kub</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicMeter" xml:space="preserve">
@@ -2014,7 +2014,7 @@
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Gradian" xml:space="preserve">
-    <value>Gradë</value>
+    <value>Gradianë</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Atmosphere" xml:space="preserve">
@@ -2078,7 +2078,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pound" xml:space="preserve">
-    <value>Paunde</value>
+    <value>Paundë</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_ShortTon" xml:space="preserve">
@@ -2286,7 +2286,7 @@
     <comment>A soccer ball, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="MemoryItemHelpText" xml:space="preserve">
-    <value>Njësi e memories</value>
+    <value>Njësia e memories</value>
     <comment>Help text used by accessibility tools to indicate that an item in the list of memory values is a memory item.</comment>
   </data>
   <data name="SupplementaryUnit_AutomationName" xml:space="preserve">
@@ -2316,6 +2316,10 @@
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© %1 Microsoft. Të gjitha të drejtat të rezervuara.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
+  </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Për të mësuar se si mund të kontribuosh në Makinën llogaritëse të Windows, shiko projektin në %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Rreth</value>
@@ -2441,7 +2445,7 @@
     <comment>Add toggle button text</comment>
   </data>
   <data name="Date_AddSubtractOption.Content" xml:space="preserve">
-    <value>Shto ose pakëso ditët</value>
+    <value>Shto ose zbrit ditët</value>
     <comment>Add or Subtract days option</comment>
   </data>
   <data name="DateLabel.Text" xml:space="preserve">
@@ -2449,7 +2453,7 @@
     <comment>Date result label</comment>
   </data>
   <data name="Date_DifferenceOption.Content" xml:space="preserve">
-    <value>Ndryshimi midis datave</value>
+    <value>Ndryshimi midis datave</value>
     <comment>Date Difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
@@ -2512,11 +2516,11 @@
     <value>vite</value>
   </data>
   <data name="Date_DifferenceResultAutomationName" xml:space="preserve">
-    <value>Diferenca %1</value>
+    <value>Diferenca %1</value>
     <comment>Automation name for reading out the date difference. %1 =  Date difference</comment>
   </data>
   <data name="Date_ResultingDateAutomationName" xml:space="preserve">
-    <value>Data që rezulton %1</value>
+    <value>Data që rezulton %1</value>
     <comment>Automation name for reading out the resulting date in Add/Subtract mode. %1 = Resulting date</comment>
   </data>
   <data name="HeaderAutomationName_Calculator" xml:space="preserve">
@@ -2688,7 +2692,7 @@
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have successfully updated.</comment>
   </data>
   <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
-    <value>Normat nuk u përditësuan dot</value>
+    <value>Normat nuk mund të përditësoheshin</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
   </data>
   <data name="AboutButton.AccessKey" xml:space="preserve">
@@ -2996,7 +3000,7 @@
     <comment>Name for the programmer function that shifts bits to the right. Used by screen readers.</comment>
   </data>
   <data name="Factorial" xml:space="preserve">
-    <value>faktor</value>
+    <value>faktoriali</value>
     <comment>Name for the factorial function. Used by screen readers.</comment>
   </data>
   <data name="DegreeMinuteSecond" xml:space="preserve">

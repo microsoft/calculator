@@ -122,7 +122,7 @@
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppName" xml:space="preserve">
-    <value>Kalkulators [izstr.]</value>
+    <value>Kalkulators [Dev]</value>
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the name of the application when built by a user via GitHub. We use a different name to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="AppStoreName" xml:space="preserve">
@@ -130,7 +130,7 @@
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
   </data>
   <data name="DevAppStoreName" xml:space="preserve">
-    <value>Windows kalkulators [izstr.]</value>
+    <value>Windows kalkulators [Dev]</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps. This is the the version of the name used when the app is built by a user via GitHub.</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
@@ -138,7 +138,7 @@
     <comment>{@Appx_Description@} This description is used for the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppDescription" xml:space="preserve">
-    <value>Kalkulators [izstr.]</value>
+    <value>Kalkulators [Dev]</value>
     <comment>{@Appx_Description@} This is the description of the application when built by a user via GitHub. We use a different description to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="copyMenuItem" xml:space="preserve">
@@ -550,7 +550,7 @@
     <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
-    <value>Displejs ir %1 punkts</value>
+    <value>Displejs ir %1 punkts</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
@@ -574,7 +574,7 @@
     <comment>{Locked="%1"}. Screen reader prompt for the hexadecimal value in Programmer mode. %1 = the localized hexadecimal value, e.g. "21B4 8F73".</comment>
   </data>
   <data name="Format_DecButtonValue" xml:space="preserve">
-    <value>Decimālā vērtība: %1</value>
+    <value>Decimāldaļa %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the decimal value in Programmer mode. %1 = the localized decimal value, e.g. "5,732".</comment>
   </data>
   <data name="Format_OctButtonValue" xml:space="preserve">
@@ -718,7 +718,7 @@
     <comment>Screen reader prompt for the Calculator Backspace button</comment>
   </data>
   <data name="BinaryZero.Text" xml:space="preserve">
-    <value>0</value>
+    <value>10</value>
     <comment>Screen reader prompt for the Calculator number "0" button</comment>
   </data>
   <data name="BinaryOne.Text" xml:space="preserve">
@@ -822,19 +822,19 @@
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Pārslēgt četrkāršu vārdu</value>
+    <value>Četrkāršu vārdu pārslēgšanas poga</value>
     <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
   </data>
   <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Pārslēgt dubultu vārdu</value>
+    <value>Dubultu vārdu pārslēgšanas poga</value>
     <comment>Screen reader prompt for the Calculator dword button. Should read as "Double word toggle button".</comment>
   </data>
   <data name="wordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Pārslēgt vārdu</value>
+    <value>Vārdu pārslēgšanas poga</value>
     <comment>Screen reader prompt for the Calculator word button. Should read as "Word toggle button".</comment>
   </data>
   <data name="byteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Pārslēgt baitu</value>
+    <value>Baitu pārslēgšanas poga</value>
     <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1006,7 +1006,7 @@
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
   <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>y pakāpes sakne no x</value>
+    <value>y sakne no x</value>
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
   <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1026,7 +1026,7 @@
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
   <data name="dmsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Grādi, minūtes, sekundes</value>
+    <value>Grāds Minūte Sekunde</value>
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
   <data name="degreesButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1046,15 +1046,15 @@
     <comment>Screen reader for the factorial button on the basic operator keypad</comment>
   </data>
   <data name="degButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Pārslēgt grādus</value>
+    <value>Grādu pārslēgšanas poga</value>
     <comment>This the Deg button's Degree mode automation nameon the scientific operator keypad. Should read as "Degrees toggle button".</comment>
   </data>
   <data name="gradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Pārslēgt centigrādus</value>
+    <value>Centigrādu pārslēgšanas poga</value>
     <comment>This is the Deg button's Grad mode automation name on the scientific operator keypad. Should read as "Gradians toggle button".</comment>
   </data>
   <data name="radButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Pārslēgt radiānus</value>
+    <value>Radiānu pārslēgšanas poga</value>
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
   <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1354,7 +1354,7 @@
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Foot-Pound" xml:space="preserve">
-    <value>mārciņpēdas</value>
+    <value>ft•lb</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Gigabit" xml:space="preserve">
@@ -1486,7 +1486,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Foot-PoundPerMinute" xml:space="preserve">
-    <value>mārciņpēdas minūtē</value>
+    <value>ft•lb/min</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Second" xml:space="preserve">
@@ -2030,7 +2030,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>Dzīvsudraba milimetri</value>
+    <value>Dzīvsudraba milimetri </value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
@@ -2317,6 +2317,10 @@
     <value>© %1 Microsoft. Visas tiesības paturētas.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Lai uzzinātu, kā varat piedalīties Windows kalkulators, skatiet projektu %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Par</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
@@ -2516,7 +2520,7 @@
     <comment>Automation name for reading out the date difference. %1 =  Date difference</comment>
   </data>
   <data name="Date_ResultingDateAutomationName" xml:space="preserve">
-    <value>Iegūtais datums: %1</value>
+    <value>Iegūtais datu vienums %1</value>
     <comment>Automation name for reading out the resulting date in Add/Subtract mode. %1 = Resulting date</comment>
   </data>
   <data name="HeaderAutomationName_Calculator" xml:space="preserve">
@@ -2532,7 +2536,7 @@
     <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Vēstures un atmiņas saraksti</value>
+    <value>Vēsture un atmiņas saraksti</value>
     <comment>Automation name for the group of controls for history and memory lists.</comment>
   </data>
   <data name="MemoryPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2600,7 +2604,7 @@
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user stores a number to memory. The %1 is the automation name of the display. Users will hear "_current_value_ saved to memory".</comment>
   </data>
   <data name="Format_MemorySlotChanged" xml:space="preserve">
-    <value>Atmiņas slots %1 ir %2</value>
+    <value>Atmiņas slots%1 ir %2</value>
     <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when the user changes a memory slot. The %1 is the index of the memory slot and %2 is the new value. For example, users might hear "Memory slot 2 is 37".</comment>
   </data>
   <data name="Format_MemorySlotCleared" xml:space="preserve">
@@ -2624,7 +2628,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
   </data>
   <data name="powerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>par labu:</value>
+    <value>pakāpē:</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
   </data>
   <data name="ySquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2632,7 +2636,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
   </data>
   <data name="modButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>vid.</value>
+    <value>mod</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2644,15 +2648,15 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>or</value>
+    <value>vai</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
   </data>
   <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>x or</value>
+    <value>x vai</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>and</value>
+    <value>un</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="CurrencyFromToRatioFormat" xml:space="preserve">
@@ -2680,7 +2684,7 @@
     <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
   </data>
   <data name="UpdatingCurrencyRates" xml:space="preserve">
-    <value>Valūtas kursu atjaunošana</value>
+    <value>Valūtas kursu atjaunināšana</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the "Update rates" button in the Currency Converter is clicked.</comment>
   </data>
   <data name="CurrencyRatesUpdated" xml:space="preserve">
@@ -2688,7 +2692,7 @@
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have successfully updated.</comment>
   </data>
   <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
-    <value>Nevarēja atjaunināt kursus</value>
+    <value>Nevarēja atjaunināt likmes</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
   </data>
   <data name="AboutButton.AccessKey" xml:space="preserve">

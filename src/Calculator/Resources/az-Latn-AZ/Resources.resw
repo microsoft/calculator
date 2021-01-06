@@ -442,7 +442,7 @@
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Bit dəyişdirici klaviatura</value>
+    <value>İkili dəyişdirici klaviatura</value>
     <comment>This is the tool tip automation name for the bitFlip button.</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -450,7 +450,7 @@
     <comment>This is the tool tip automation name for the numberPad button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Bütün yaddaşı təmizləyin (Ctrl+L)</value>
+    <value>Bütün yaddaşı təmizlə (Ctrl+L)</value>
     <comment>This is the tool tip automation name for the Clear Memory (MC) button.</comment>
   </data>
   <data name="MemoryLabel.Text" xml:space="preserve">
@@ -482,15 +482,15 @@
     <comment>Label for a control that activates standard mode calculator layout.</comment>
   </data>
   <data name="converterModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Çevirici rejimi</value>
+    <value>Çevirici Rejimi</value>
     <comment>Screen reader prompt for a control that activates the unit converter mode.</comment>
   </data>
   <data name="scientificModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Elmi rejim</value>
+    <value>Elmi Rejim</value>
     <comment>Screen reader prompt for a control that activates scientific mode calculator layout</comment>
   </data>
   <data name="standardModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Standart rejim</value>
+    <value>Standart Rejim</value>
     <comment>Screen reader prompt for a control that activates standard mode calculator layout.</comment>
   </data>
   <data name="ClearHistory.Name" xml:space="preserve">
@@ -594,7 +594,7 @@
     <comment>Screen reader prompt for the Calculator History Clear button, when the button is invoked.</comment>
   </data>
   <data name="HideHistory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Tarixçəni gizlət</value>
+    <value>Tarixçəni Gizlət</value>
     <comment>Screen reader prompt for the Calculator History Hide button</comment>
   </data>
   <data name="HistoryButton_Open" xml:space="preserve">
@@ -606,7 +606,7 @@
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Yaddaş anbarı</value>
+    <value>Yaddaş Anbarı</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -614,7 +614,7 @@
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Bütün yaddaşı təmizləyin</value>
+    <value>Bütün yaddaşı təmizlə</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="Memory_Cleared" xml:space="preserve">
@@ -662,11 +662,11 @@
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Yaddaş elementindən çıxarış</value>
+    <value>Yaddaş elementindən çıxar</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Yaddaş elementindən çıxarış</value>
+    <value>Yaddaş elementindən çıxar</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -686,11 +686,11 @@
     <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
   </data>
   <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Yaddaş elementindən çıxarış</value>
+    <value>Yaddaş elementindən çıxar</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract swipe button in the Memory list</comment>
   </data>
   <data name="MemMinusMenuItem.Text" xml:space="preserve">
-    <value>Yaddaş elementindən çıxarış</value>
+    <value>Yaddaş elementindən çıxar</value>
     <comment>Text string for the Calculator Memory Subtract option in the Memory list context menu</comment>
   </data>
   <data name="DeleteHistorySwipeItem.Text" xml:space="preserve">
@@ -798,7 +798,7 @@
     <comment>Screen reader prompt for the Calculator Or button</comment>
   </data>
   <data name="notButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Xeyr</value>
+    <value>Deyil</value>
     <comment>Screen reader prompt for the Calculator Not button</comment>
   </data>
   <data name="rolButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -810,11 +810,11 @@
     <comment>Screen reader prompt for the Calculator ROR button</comment>
   </data>
   <data name="lshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Sol dəyişmə</value>
+    <value>Sola keçir</value>
     <comment>Screen reader prompt for the Calculator LSH button</comment>
   </data>
   <data name="rshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Sağ dəyişmə</value>
+    <value>Sağa keçir</value>
     <comment>Screen reader prompt for the Calculator RSH button</comment>
   </data>
   <data name="xorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -838,7 +838,7 @@
     <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Bit dəyişdirici klaviatura</value>
+    <value>İkili dəyişdirici klaviatura</value>
     <comment>Screen reader prompt for the Calculator bitFlip button</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -846,7 +846,7 @@
     <comment>Screen reader prompt for the Calculator numberPad button</comment>
   </data>
   <data name="decimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Onluq ayırıcı</value>
+    <value>Onluq Ayırıcı</value>
     <comment>Screen reader prompt for the "." button</comment>
   </data>
   <data name="clearEntryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1010,11 +1010,11 @@
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
   <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Loq</value>
+    <value>Qeyd</value>
     <comment>Screen reader for the log base 10  on the scientific operator keypad</comment>
   </data>
   <data name="logBaseEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Təbii loqarifm</value>
+    <value>Natural loqarifm</value>
     <comment>Screen reader for the log base e on the scientific operator keypad</comment>
   </data>
   <data name="modButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1058,11 +1058,11 @@
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
   <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Rejimin aşağıaçılan menyusu</value>
+    <value>Rejimin Aşağıaçılan Menyusu</value>
     <comment>Screen reader prompt for the Mode dropdown field in Snapped and Portrait modes.</comment>
   </data>
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Kateqoriyalar üzrə aşağıaçılan menyu</value>
+    <value>Kateqoriyalar üzrə Aşağıaçılan Menyu</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1082,15 +1082,15 @@
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
-    <value>%1 %2-dan çevir</value>
+    <value>%1 %2 dəyərindən çevir</value>
     <comment>Screen reader prompt for the Unit Converter Value1 i.e. top number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ValueFrom_Decimal" xml:space="preserve">
-    <value>%1 tam %2-dan çevir</value>
+    <value>%1 tam %2 dəyərindən çevir</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Convert from 7 point _current_unit_". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_ValueTo" xml:space="preserve">
-    <value>%1 %2-a çevirir</value>
+    <value>%1 %2 dəyərinə çevirir</value>
     <comment>Screen reader prompt for the Unit Converter Value2 i.e. bottom number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ConversionResult" xml:space="preserve">
@@ -1142,7 +1142,7 @@
     <comment>Unit conversion category name called Temperature</comment>
   </data>
   <data name="CategoryName_WeightText" xml:space="preserve">
-    <value>Çəki və kütlə</value>
+    <value>Çəki və Kütlə</value>
     <comment>Unit conversion category name called Weight and Mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
   </data>
   <data name="CategoryName_PressureText" xml:space="preserve">
@@ -1374,7 +1374,7 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Hour" xml:space="preserve">
-    <value>sa</value>
+    <value>saat</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Inch" xml:space="preserve">
@@ -1462,7 +1462,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Millisecond" xml:space="preserve">
-    <value>ds</value>
+    <value>ms</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Minute" xml:space="preserve">
@@ -1502,7 +1502,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareInch" xml:space="preserve">
-    <value>in²</value>
+    <value>düym²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareKilometer" xml:space="preserve">
@@ -1546,7 +1546,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Year" xml:space="preserve">
-    <value>yr</value>
+    <value>il</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Gibibits" xml:space="preserve">
@@ -1566,7 +1566,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Mebibits" xml:space="preserve">
-    <value>mi</value>
+    <value>Mi</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Mebibytes" xml:space="preserve">
@@ -1914,7 +1914,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Degree" xml:space="preserve">
-    <value>dər</value>
+    <value>deg</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Radian" xml:space="preserve">
@@ -1934,7 +1934,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_KiloPascal" xml:space="preserve">
-    <value>kpa</value>
+    <value>kPa</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_MillimeterOfMercury" xml:space="preserve">
@@ -2026,7 +2026,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_KiloPascal" xml:space="preserve">
-    <value>Kilopaskallar</value>
+    <value>Kilopaskal</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
@@ -2102,19 +2102,19 @@
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerField" xml:space="preserve">
-    <value>Futbol sahələri</value>
+    <value>futbol sahələri</value>
     <comment>A professional-sized soccer field, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_SoccerField" xml:space="preserve">
-    <value>Futbol sahələri</value>
+    <value>futbol sahələri</value>
     <comment>A professional-sized soccer field, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_FloppyDisk" xml:space="preserve">
-    <value>Disketlər</value>
+    <value>disketlər</value>
     <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FloppyDisk" xml:space="preserve">
-    <value>Disketlər</value>
+    <value>disketlər</value>
     <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_DVD" xml:space="preserve">
@@ -2126,51 +2126,51 @@
     <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Battery" xml:space="preserve">
-    <value>Batareyalar</value>
+    <value>batareyalar</value>
     <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Battery" xml:space="preserve">
-    <value>Batareyalar</value>
+    <value>batareyalar</value>
     <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paperclip" xml:space="preserve">
-    <value>Kağız qısqacları</value>
+    <value>kağız qısqacları</value>
     <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Paperclip" xml:space="preserve">
-    <value>Kağız qısqacları</value>
+    <value>kağız qısqacları</value>
     <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_JumboJet" xml:space="preserve">
-    <value>Jumbo jet</value>
+    <value>jumbo jet</value>
     <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_JumboJet" xml:space="preserve">
-    <value>Jumbo jet</value>
+    <value>jumbo jet</value>
     <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_LightBulb" xml:space="preserve">
-    <value>Elektrik lampaları</value>
+    <value>elektrik lampaları</value>
     <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_LightBulb" xml:space="preserve">
-    <value>Elektrik lampaları</value>
+    <value>elektrik lampaları</value>
     <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Horse" xml:space="preserve">
-    <value>At gücü</value>
+    <value>at gücü</value>
     <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Horse" xml:space="preserve">
-    <value>At gücü</value>
+    <value>at gücü</value>
     <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bathtub" xml:space="preserve">
-    <value>Pivə qədəhi</value>
+    <value>pivə qədəhi</value>
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Bathtub" xml:space="preserve">
-    <value>Pivə qədəhi</value>
+    <value>pivə qədəhi</value>
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Snowflake" xml:space="preserve">
@@ -2178,111 +2178,111 @@
     <comment>A snowflake, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Snowflake" xml:space="preserve">
-    <value>Qar dənəcikləri</value>
+    <value>qar dənəcikləri</value>
     <comment>A snowflake, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Elephant" xml:space="preserve">
-    <value>Düym (kağız formatı)</value>
+    <value>düym (kağız formatı)</value>
     <comment>An elephant, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Elephant" xml:space="preserve">
-    <value>Düym (kağız formatı)</value>
+    <value>düym (kağız formatı)</value>
     <comment>An elephant, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Turtle" xml:space="preserve">
-    <value>Tısbağa</value>
+    <value>tısbağa</value>
     <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Turtle" xml:space="preserve">
-    <value>Tısbağa</value>
+    <value>tısbağa</value>
     <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Jet" xml:space="preserve">
-    <value>Jet</value>
+    <value>jet</value>
     <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Jet" xml:space="preserve">
-    <value>Jet</value>
+    <value>jet</value>
     <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Whale" xml:space="preserve">
-    <value>Balinalar</value>
+    <value>balinalar</value>
     <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Whale" xml:space="preserve">
-    <value>Balinalar</value>
+    <value>balinalar</value>
     <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CoffeeCup" xml:space="preserve">
-    <value>Kofe fincanları</value>
+    <value>kofe fincanları</value>
     <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CoffeeCup" xml:space="preserve">
-    <value>Kofe fincanları</value>
+    <value>kofe fincanları</value>
     <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SwimmingPool" xml:space="preserve">
-    <value>Çimərlik hovuzları</value>
+    <value>çimərlik hovuzları</value>
     <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_SwimmingPool" xml:space="preserve">
-    <value>Çimərlik hovuzları</value>
+    <value>çimərlik hovuzları</value>
     <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hand" xml:space="preserve">
-    <value>Əl</value>
+    <value>əllər</value>
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Hand" xml:space="preserve">
-    <value>Əl</value>
+    <value>əllər</value>
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paper" xml:space="preserve">
-    <value>Kağız vərəqləri</value>
+    <value>kağız vərəqləri</value>
     <comment>A sheet of 8.5 x 11 inch paper, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Paper" xml:space="preserve">
-    <value>Kağız vərəqləri</value>
+    <value>kağız vərəqləri</value>
     <comment>A sheet of 8.5 x 11 inch paper, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Castle" xml:space="preserve">
-    <value>Qalalar</value>
+    <value>qalalar</value>
     <comment>A castle, used as a comparison measurement unit for area (floorspace). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Castle" xml:space="preserve">
-    <value>Qalalar</value>
+    <value>qalalar</value>
     <comment>A castle, used as a comparison measurement unit for area (floorspace). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Banana" xml:space="preserve">
-    <value>Banan</value>
+    <value>banan</value>
     <comment>A banana, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Banana" xml:space="preserve">
-    <value>Banan</value>
+    <value>banan</value>
     <comment>A banana, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SliceOfCake" xml:space="preserve">
-    <value>Tortun dilimləri</value>
+    <value>tortun dilimləri</value>
     <comment>A slice of chocolate cake, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_SliceOfCake" xml:space="preserve">
-    <value>Tortun dilimləri</value>
+    <value>tortun dilimləri</value>
     <comment>A slice of chocolate cake, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_TrainEngine" xml:space="preserve">
-    <value>Qatar mühərrikləri</value>
+    <value>qatar mühərrikləri</value>
     <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TrainEngine" xml:space="preserve">
-    <value>Qatar mühərrikləri</value>
+    <value>qatar mühərrikləri</value>
     <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerBall" xml:space="preserve">
-    <value>Futbol topları</value>
+    <value>futbol topları</value>
     <comment>A soccer ball, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_SoccerBall" xml:space="preserve">
-    <value>Futbol topları</value>
+    <value>futbol topları</value>
     <comment>A soccer ball, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="MemoryItemHelpText" xml:space="preserve">
@@ -2317,12 +2317,16 @@
     <value>© %1 Microsoft. Bütün hüquqlar qorunur.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Windows Kalkulyatora necə töhfə verməyi öyrənmək üçün layihəni %HL%GitHub%HL%-da yoxlayın.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Haqqında</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
-    <value>Rəy göndər</value>
+    <value>Əks-əlaqə göndər</value>
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
@@ -2338,7 +2342,7 @@
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
   <data name="CannotPaste" xml:space="preserve">
-    <value>Bu ifadəni əlavə etmək olmur</value>
+    <value>Bu ifadəni yerləşdirmək olmur</value>
     <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
   </data>
   <data name="UnitName_Gibibits" xml:space="preserve">
@@ -2453,7 +2457,7 @@
     <comment>Date Difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
-    <value>Günlər</value>
+    <value>Gün</value>
     <comment>Add/Subtract Days label</comment>
   </data>
   <data name="Date_DifferenceLabel.Text" xml:space="preserve">
@@ -2481,7 +2485,7 @@
     <comment>Add/Subtract Years label</comment>
   </data>
   <data name="Date_OutOfBoundMessage" xml:space="preserve">
-    <value>Hüdudlardan kənar tarix</value>
+    <value>Tarix Hüdudlarından Kənarda</value>
     <comment>Out of bound message shown as result when the date calculation exceeds the bounds</comment>
   </data>
   <data name="Date_Day" xml:space="preserve">
@@ -2528,7 +2532,7 @@
     <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and Mass", "Energy", "Volume", etc.</comment>
   </data>
   <data name="HeaderAutomationName_Date" xml:space="preserve">
-    <value>Tarixin Hesablanması rejimi</value>
+    <value>Tarix Hesablanması rejimi</value>
     <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2588,7 +2592,7 @@
     <comment>Automation label for the "scroll right" button that appears when an expression is too large to fit in the window.</comment>
   </data>
   <data name="Format_MaxDigitsReached" xml:space="preserve">
-    <value>Maksimum rəqəm sayı çatıb. %1</value>
+    <value>Maksimum rəqəm sayına çatıb. %1</value>
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when user reaches max digits. The %1 is the automation name of the display. Users will hear "Max digits reached. Display is _current_value_".</comment>
   </data>
   <data name="Format_ButtonPressAuditoryFeedback" xml:space="preserve">
@@ -2604,7 +2608,7 @@
     <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when the user changes a memory slot. The %1 is the index of the memory slot and %2 is the new value. For example, users might hear "Memory slot 2 is 37".</comment>
   </data>
   <data name="Format_MemorySlotCleared" xml:space="preserve">
-    <value>Yaddaş yeri %1 təmizləndi</value>
+    <value>Yaddaş slotu %1 təmizləndi</value>
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a memory slot. The %1 is the index of the memory slot. For example, users might hear "Memory slot 2 cleared".</comment>
   </data>
   <data name="divideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2624,7 +2628,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
   </data>
   <data name="powerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>enerjisi</value>
+    <value>dərəcə</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
   </data>
   <data name="ySquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2636,11 +2640,11 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>sol shift</value>
+    <value>sola keçir</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>sağ shift</value>
+    <value>sağa keçir</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2672,7 +2676,7 @@
     <comment>The text displayed when users are on a metered connection and using currency converter.</comment>
   </data>
   <data name="FailedToRefresh" xml:space="preserve">
-    <value>Yeni tarifləri əldə etmək mümkün olmadı. Az sonra yenidən cəhd edin.</value>
+    <value>Yeni tarifləri əldə etmək mümkün olmadı. Daha sonra yenidən cəhd edin.</value>
     <comment>The text displayed when currency ratio data fails to load.</comment>
   </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
@@ -2768,11 +2772,11 @@
     <comment>Access key for the Clear memory button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Bütün yaddaşı təmizləyin (Ctrl+L)</value>
+    <value>Bütün yaddaşı təmizlə (Ctrl+L)</value>
     <comment>This is the tool tip automation name for the Clear Memory button in the Memory Pane.</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Bütün yaddaşı təmizləyin</value>
+    <value>Bütün yaddaşı təmizlə</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button in the Memory Pane</comment>
   </data>
   <data name="HistoryLabel.AccessKey" xml:space="preserve">
@@ -2868,7 +2872,7 @@
     <comment>Name for the inverse tangent function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentGradians" xml:space="preserve">
-    <value>geri tangens qrdları</value>
+    <value>geri tangens qradları</value>
     <comment>Name for the inverse tangent function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="HyperbolicTangent" xml:space="preserve">
@@ -2988,11 +2992,11 @@
     <comment>Name for the absolute value function. Used by screen readers.</comment>
   </data>
   <data name="LeftShift" xml:space="preserve">
-    <value>sol shift</value>
+    <value>sola keçir</value>
     <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
   </data>
   <data name="RightShift" xml:space="preserve">
-    <value>sağ shift</value>
+    <value>sağa keçir</value>
     <comment>Name for the programmer function that shifts bits to the right. Used by screen readers.</comment>
   </data>
   <data name="Factorial" xml:space="preserve">

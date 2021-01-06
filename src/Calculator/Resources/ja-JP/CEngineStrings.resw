@@ -130,7 +130,7 @@
     <comment>Error message shown when we run out of memory during a calculation.</comment>
   </data>
   <data name="107" xml:space="preserve">
-    <value>オーバーフローしました</value>
+    <value>オーバーフロー</value>
     <comment>Error message shown when there's an overflow during the calculation.</comment>
   </data>
   <data name="108" xml:space="preserve">
@@ -146,7 +146,7 @@
     <comment>Same as 107</comment>
   </data>
   <data name="120" xml:space="preserve">
-    <value>オーバーフローしました</value>
+    <value>オーバーフロー</value>
     <comment>Same 107</comment>
   </data>
   <data name="99" xml:space="preserve">

@@ -130,7 +130,7 @@
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
   </data>
   <data name="DevAppStoreName" xml:space="preserve">
-    <value>Windows ເຄື່ອງ​ຄິດ​ເລກ [Dev]</value>
+    <value>ເຄື່ອງຄິດເລກ Windows [Dev]</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps. This is the the version of the name used when the app is built by a user via GitHub.</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
@@ -422,7 +422,7 @@
     <comment>This is the automation name and label for the memory button when the memory flyout is closed.</comment>
   </data>
   <data name="MemoryButton_Close" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="7"&gt;ປິດໜ່ວຍຄວາມຈຳແບບລອຍອອກມາ&lt;/mrk&gt;</value>
+    <value>ປິດໜ່ວຍຄວາມຈຳແບບລອຍອອກມາ</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
   </data>
   <data name="AlwaysOnTop_Enter" xml:space="preserve">
@@ -434,11 +434,11 @@
     <comment>This is the tool tip automation name for the always-on-top button when in always-on-top mode.</comment>
   </data>
   <data name="MemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>ໜ່ວຍຄວາມຈຳ</value>
+    <value>ຄວາມຈຳ</value>
     <comment>This is the tool tip automation name for the memory button.</comment>
   </data>
   <data name="HistoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>ປະຫວັດ (Ctrl+H)</value>
+    <value>ປະຫວັດ (Ctrl + H)</value>
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -454,7 +454,7 @@
     <comment>This is the tool tip automation name for the Clear Memory (MC) button.</comment>
   </data>
   <data name="MemoryLabel.Text" xml:space="preserve">
-    <value>ໜ່ວຍຄວາມຈຳ</value>
+    <value>ຄວາມຈຳ</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryPivotItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -474,7 +474,7 @@
     <comment>Label for a control that activates the unit converter mode.</comment>
   </data>
   <data name="scientificModeButton.Content" xml:space="preserve">
-    <value>ທາງວິທະຍາສາດ</value>
+    <value>ວິ​ທະຍາ​ສາດ</value>
     <comment>Label for a control that activates scientific mode calculator layout</comment>
   </data>
   <data name="standardModeButton.Content" xml:space="preserve">
@@ -510,11 +510,11 @@
     <comment>The text that shows in the dropdown navigation control in snapped mode when standard calculator mode is selected.</comment>
   </data>
   <data name="ScientificModeText" xml:space="preserve">
-    <value>ທາງວິທະຍາສາດ</value>
+    <value>ວິ​ທະຍາ​ສາດ</value>
     <comment>The text that shows in the dropdown navigation control in snapped mode when scientific calculator mode is selected.</comment>
   </data>
   <data name="ProgrammerModeText" xml:space="preserve">
-    <value>ນັກຂຽນໂປຼແກຣມ</value>
+    <value>ໂປຣແກຣມເມີ</value>
     <comment>The text that shows in the dropdown navigation control in snapped mode when programmer calculator mode is selected.</comment>
   </data>
   <data name="ConverterModeText" xml:space="preserve">
@@ -526,7 +526,7 @@
     <comment>The text that shows in the dropdown navigation control for the calculator group.</comment>
   </data>
   <data name="ConverterModeTextCaps" xml:space="preserve">
-    <value>ເຄື່ອງປ່ຽນ</value>
+    <value>ຕົວປ່ຽນ</value>
     <comment>The text that shows in the dropdown navigation control for the converter group in upper case. The previous key for this was "ConverterMode.Text".</comment>
   </data>
   <data name="CalculatorModeTextCaps" xml:space="preserve">
@@ -542,7 +542,7 @@
     <comment>Pluralized version of the calculator group text, used for the screen reader prompt.</comment>
   </data>
   <data name="Format_CalculatorResults" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="53"&gt;ການສະແດງໜ້າຈໍແມ່ນ %1&lt;/mrk&gt;</value>
+    <value>ໜ້າຈໍແມ່ນ %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
@@ -566,23 +566,23 @@
     <comment>Screen reader prompt for the history flyout</comment>
   </data>
   <data name="MemoryPane" xml:space="preserve">
-    <value>ໜ່ວຍຄວາມຈຳ</value>
+    <value>ຄວາມຈຳ</value>
     <comment>Screen reader prompt for the memory flyout</comment>
   </data>
   <data name="Format_HexButtonValue" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="57"&gt;HexaDecimal %1&lt;/mrk&gt;</value>
+    <value>HexaDecimal %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the hexadecimal value in Programmer mode. %1 = the localized hexadecimal value, e.g. "21B4 8F73".</comment>
   </data>
   <data name="Format_DecButtonValue" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="58"&gt;ເລກທົດສະນິຍົມ %1&lt;/mrk&gt;</value>
+    <value>ເລກທົດສະນິຍົມ %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the decimal value in Programmer mode. %1 = the localized decimal value, e.g. "5,732".</comment>
   </data>
   <data name="Format_OctButtonValue" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="56"&gt;ຖານແປດ %1&lt;/mrk&gt;</value>
+    <value>ຖານແປດ %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the octal value in Programmer mode. %1 = the localized octal value, e.g. "155 174".</comment>
   </data>
   <data name="Format_BinButtonValue" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="54"&gt;ຖານສອງ %1&lt;/mrk&gt;</value>
+    <value>ຖານສອງ %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the binary value in Programmer mode. %1 = the localized binary value, e.g. "0010 1011".</comment>
   </data>
   <data name="ClearHistory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -594,15 +594,15 @@
     <comment>Screen reader prompt for the Calculator History Clear button, when the button is invoked.</comment>
   </data>
   <data name="HideHistory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ເຊື່ອງ​ປະ​ຫວັດ</value>
+    <value>ເຊື່ອງປະຫວັດ</value>
     <comment>Screen reader prompt for the Calculator History Hide button</comment>
   </data>
   <data name="HistoryButton_Open" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="8"&gt;ເປີດປະຫວັດແບບລອຍອອກມາ&lt;/mrk&gt;</value>
+    <value>ເປີດປະຫວັດແບບລອຍອອກມາ</value>
     <comment>Screen reader prompt for the Calculator History button, when the flyout is closed.</comment>
   </data>
   <data name="HistoryButton_Close" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="9"&gt;ປິດປະຫວັດແບບລອຍອອກມາ&lt;/mrk&gt;</value>
+    <value>ປິດປະຫວັດແບບລອຍອອກມາ</value>
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -614,7 +614,7 @@
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ລ້າງຄວາມຈໍາທັງໝົດ</value>
+    <value>ລຶບຄວາມຈໍາທັງໝົດ</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="Memory_Cleared" xml:space="preserve">
@@ -630,7 +630,7 @@
     <comment>This is the tool tip automation name for the Memory Recall (MR) button.</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="1"&gt;ເພີ່ມຄວາມຈຳ&lt;/mrk&gt;</value>
+    <value>ເພີ່ມຄວາມຈຳ</value>
     <comment>Screen reader prompt for the Calculator Memory Add button</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -638,7 +638,7 @@
     <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="2"&gt;ລົບອອກຄວາມຈຳ&lt;/mrk&gt;</value>
+    <value>ລົບອອກຄວາມຈຳ</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -646,27 +646,27 @@
     <comment>This is the tool tip automation name for the Memory Subtract (M-) button.</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="22"&gt;ລຶບລາຍການຄວາມຈຳ&lt;/mrk&gt;</value>
+    <value>ລຶບລາຍການຄວາມຈຳ</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="21"&gt;ລຶບລາຍການຄວາມຈຳ&lt;/mrk&gt;</value>
+    <value>ລຶບລາຍການຄວາມຈຳ</value>
     <comment>This is the tool tip automation name for the Clear Memory Item (MC) button in the Memory list.</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="16"&gt;ເພີ່ມໄປທີ່ລາຍການຄວາມຈຳ&lt;/mrk&gt;</value>
+    <value>ເພີ່ມໄປທີ່ລາຍການຄວາມຈຳ</value>
     <comment>Screen reader prompt for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="15"&gt;ເພີ່ມໄປທີ່ລາຍການຄວາມຈຳ&lt;/mrk&gt;</value>
+    <value>ເພີ່ມໄປທີ່ລາຍການຄວາມຈຳ</value>
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="19"&gt;ລົບອອກຈາກລາຍການຄວາມຈຳ&lt;/mrk&gt;</value>
+    <value>ລົບອອກຈາກລາຍການຄວາມຈຳ</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="18"&gt;ລົບອອກຈາກລາຍການຄວາມຈຳ&lt;/mrk&gt;</value>
+    <value>ລົບອອກຈາກລາຍການຄວາມຈຳ</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -822,19 +822,19 @@
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="44"&gt;ສະວິດຄັນໂຍກຄຳສັບແບບສີ່ເທົ່າ&lt;/mrk&gt;</value>
+    <value>ສະວິດຄັນໂຍກຄຳສັບແບບສີ່ເທົ່າ</value>
     <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
   </data>
   <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="32"&gt;ສະວິດຄັນໂຍກ ຄຳສັບແບບຄູ່&lt;/mrk&gt;</value>
+    <value>ສະວິດຄັນໂຍກ ຄຳສັບແບບຄູ່</value>
     <comment>Screen reader prompt for the Calculator dword button. Should read as "Double word toggle button".</comment>
   </data>
   <data name="wordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="25"&gt;ສະວິດຄັນໂຍກຄຳສັບ&lt;/mrk&gt;</value>
+    <value>ສະວິດຄັນໂຍກຄຳສັບ</value>
     <comment>Screen reader prompt for the Calculator word button. Should read as "Word toggle button".</comment>
   </data>
   <data name="byteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="28"&gt;ສະວິດຄັນໂຍກ ໄບທ໌&lt;/mrk&gt;</value>
+    <value>ສະວິດຄັນໂຍກ ໄບທ໌</value>
     <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -870,7 +870,7 @@
     <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="5"&gt;ຟັງຄ໌ຊັນກັບກັນ&lt;/mrk&gt;</value>
+    <value>ຟັງຄ໌ຊັນກັບກັນ</value>
     <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
   </data>
   <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -910,7 +910,7 @@
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
   <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="55"&gt;ວົງເລັບຊ້າຍ, ເປີດຍອດລວມວົງເລັບ %1&lt;/mrk&gt;</value>
+    <value>ວົງເລັບຊ້າຍ, ເປີດຍອດລວມວົງເລັບ %1</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -954,7 +954,7 @@
     <comment>Screen reader prompt for the Calculator sinh button  on the scientific operator keypad</comment>
   </data>
   <data name="coshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ການໂຄຊີນທີ່ເກີນຄວາມຈິງ</value>
+    <value>ໄຮເປີຣໂບລິກ Cos</value>
     <comment>Screen reader prompt for the Calculator cosh button  on the scientific operator keypad</comment>
   </data>
   <data name="tanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -994,7 +994,7 @@
     <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
   </data>
   <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>X' ຍົກກຳລັງ</value>
+    <value>'X' ຍົກກຳລັງ</value>
     <comment>Screen reader prompt for x power y button on the scientific operator keypad. </comment>
   </data>
   <data name="powerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1002,7 +1002,7 @@
     <comment>Screen reader prompt for the 10 power x button on the scientific operator keypad.</comment>
   </data>
   <data name="powerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>e' ຍົກກຳລັງ</value>
+    <value>'e' ຍົກກຳລັງ</value>
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
   <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1010,11 +1010,11 @@
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
   <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>log</value>
+    <value>Log</value>
     <comment>Screen reader for the log base 10  on the scientific operator keypad</comment>
   </data>
   <data name="logBaseEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ການບັນທຶກແບບ Natural</value>
+    <value>ການບັນທຶກແບບທຳມະຊາດ</value>
     <comment>Screen reader for the log base e on the scientific operator keypad</comment>
   </data>
   <data name="modButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1042,19 +1042,19 @@
     <comment>Screen reader for the frac button on the scientific operator keypad</comment>
   </data>
   <data name="factorialButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ແຟັກທໍຣຽວ</value>
+    <value>ການປະກອບ</value>
     <comment>Screen reader for the factorial button on the basic operator keypad</comment>
   </data>
   <data name="degButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="33"&gt;ສະວິດຄັນໂຍກ ລະດັບ&lt;/mrk&gt;</value>
+    <value>ສະວິດຄັນໂຍກ ລະດັບ</value>
     <comment>This the Deg button's Degree mode automation nameon the scientific operator keypad. Should read as "Degrees toggle button".</comment>
   </data>
   <data name="gradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="29"&gt;ສະວິດຄັນໂຍກ ກຣາດຽນ&lt;/mrk&gt;</value>
+    <value>ສະວິດຄັນໂຍກ ກຣາດຽນ</value>
     <comment>This is the Deg button's Grad mode automation name on the scientific operator keypad. Should read as "Gradians toggle button".</comment>
   </data>
   <data name="radButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="43"&gt;ສະວິດຄັນໂຍກ ຣາດຽນ&lt;/mrk&gt;</value>
+    <value>ສະວິດຄັນໂຍກ ຣາດຽນ</value>
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
   <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1098,15 +1098,15 @@
     <comment>Screen reader prompt for a conversion result, ie "2 liters is 2,000 milliliters" . %1 = From unit display value, %2 = From unit, %3 = To unit display value, %4 = To unit.</comment>
   </data>
   <data name="InputUnit_Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="48"&gt;ຫົວໜ່ວຍເຂົ້າ&lt;/mrk&gt;</value>
+    <value>ຫົວໜ່ວຍເຂົ້າ</value>
     <comment>Screen reader prompt for the Unit Converter Units1 i.e. top units field.</comment>
   </data>
   <data name="OutputUnit_Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="52"&gt;ຫົວໜ່ວຍອອກ&lt;/mrk&gt;</value>
+    <value>ຫົວໜ່ວຍອອກ</value>
     <comment>Screen reader prompt for the Unit Converter Units2 i.e. bottom units field.</comment>
   </data>
   <data name="CategoryName_AreaText" xml:space="preserve">
-    <value>ເນື້ອທີ່</value>
+    <value>ພື້ນທີ່</value>
     <comment>Unit conversion category name called Area (eg. area of a sports field in square meters)</comment>
   </data>
   <data name="CategoryName_DataText" xml:space="preserve">
@@ -1122,7 +1122,7 @@
     <comment>Unit conversion category name called Length</comment>
   </data>
   <data name="CategoryName_PowerText" xml:space="preserve">
-    <value>ກຳ​ລັງ</value>
+    <value>ກຳລັງ</value>
     <comment>Unit conversion category name called Power (eg. the power of an engine or a light bulb)</comment>
   </data>
   <data name="CategoryName_SpeedText" xml:space="preserve">
@@ -1134,7 +1134,7 @@
     <comment>Unit conversion category name called Time</comment>
   </data>
   <data name="CategoryName_VolumeText" xml:space="preserve">
-    <value>ບໍ​ລິ​ມາດ</value>
+    <value>ບໍລິມາດ</value>
     <comment>Unit conversion category name called Volume (eg. cups, teaspoons, milliliters)</comment>
   </data>
   <data name="CategoryName_TemperatureText" xml:space="preserve">
@@ -1142,7 +1142,7 @@
     <comment>Unit conversion category name called Temperature</comment>
   </data>
   <data name="CategoryName_WeightText" xml:space="preserve">
-    <value>ນ້ຳໜັກ ແລະມວນສານ</value>
+    <value>ນ້ຳໜັກ ແລະ ມວນສານ</value>
     <comment>Unit conversion category name called Weight and Mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
   </data>
   <data name="CategoryName_PressureText" xml:space="preserve">
@@ -1174,7 +1174,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUK" xml:space="preserve">
-    <value>ແກຼລອນ (ສະຫະລາຊະອານາຈັກ)</value>
+    <value>ແກລອນ (ສະຫະລາຊະອານາຈັກ)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_GallonUK" xml:space="preserve">
@@ -1182,7 +1182,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUS" xml:space="preserve">
-    <value>ແກຼລອນ (ສະຫະລັດ)</value>
+    <value>ແກລອນ (ສະຫະລັດ)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_GallonUS" xml:space="preserve">
@@ -1302,7 +1302,7 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Centimeter" xml:space="preserve">
-    <value>ຊມ.</value>
+    <value>ຊມ</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_CentimetersPerSecond" xml:space="preserve">
@@ -1350,7 +1350,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_FeetPerSecond" xml:space="preserve">
-    <value>ຟຸດ​/ວິ</value>
+    <value>ຟຸດ/ວິນາທີ</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Foot-Pound" xml:space="preserve">
@@ -1378,7 +1378,7 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Inch" xml:space="preserve">
-    <value>in</value>
+    <value>ນີ້ວ</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Joule" xml:space="preserve">
@@ -1458,11 +1458,11 @@
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Millimeter" xml:space="preserve">
-    <value>ມມ</value>
+    <value>ນທ</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Millisecond" xml:space="preserve">
-    <value>MS</value>
+    <value>ms</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Minute" xml:space="preserve">
@@ -1538,7 +1538,7 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Week" xml:space="preserve">
-    <value>wk</value>
+    <value>ອາທິດ</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Yard" xml:space="preserve">
@@ -1630,7 +1630,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yobibits" xml:space="preserve">
-    <value>Yi</value>
+    <value>ຢີ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yobibytes" xml:space="preserve">
@@ -1654,11 +1654,11 @@
     <comment>A measurement unit for power: British Thermal Units per minute. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Byte" xml:space="preserve">
-    <value>ໄບທ໌</value>
+    <value>ໄບທ</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Calorie" xml:space="preserve">
-    <value>ພະລັງງານ(ແຄລໍລີ່)ຄວາມຮ້ອນ</value>
+    <value>ແຄລໍລີ່ຄວາມຮ້ອນ</value>
     <comment>A measurement unit for energy. Please note that this is the "small calorie" used in science for measuring heat energy, not the "large calorie" commonly used for measuring food energy. If there is a simple term to distinguish this one from the large "Food calorie", please use that. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Centimeter" xml:space="preserve">
@@ -1694,11 +1694,11 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_DegreesCelsius" xml:space="preserve">
-    <value>ອົງສາເຊວຊຽດ</value>
+    <value>ເຊວຊຽສ</value>
     <comment>An option in the unit converter to select degrees Celsius</comment>
   </data>
   <data name="UnitName_DegreesFahrenheit" xml:space="preserve">
-    <value>ອົງສາຟາເຣັນຮາຍ</value>
+    <value>ຟາເຣນຮາຍ</value>
     <comment>An option in the unit converter to select degrees Fahrenheit</comment>
   </data>
   <data name="UnitName_Electron-Volt" xml:space="preserve">
@@ -1706,7 +1706,7 @@
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot" xml:space="preserve">
-    <value>ຟຸດ</value>
+    <value>ຕີນ</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_FeetPerSecond" xml:space="preserve">
@@ -1726,7 +1726,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabyte" xml:space="preserve">
-    <value>ກິກາໄບທ໌</value>
+    <value>ກິກະໄບທ໌</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hectare" xml:space="preserve">
@@ -1742,7 +1742,7 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Inch" xml:space="preserve">
-    <value>ນີ້ວ</value>
+    <value>ນິ້ວ</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Joule" xml:space="preserve">
@@ -1794,7 +1794,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Megabyte" xml:space="preserve">
-    <value>ເມກາໄບທ໌</value>
+    <value>ເມກະໄບທ໌</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Meter" xml:space="preserve">
@@ -1810,7 +1810,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Microsecond" xml:space="preserve">
-    <value>ໄມໂຄຼວິນາທີ</value>
+    <value>ມີໂຄຣວິນາທີ</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mile" xml:space="preserve">
@@ -1822,7 +1822,7 @@
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Millimeter" xml:space="preserve">
-    <value>ມີລີແມັດ</value>
+    <value>ມິລິແມັດ</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Millisecond" xml:space="preserve">
@@ -1918,15 +1918,15 @@
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Radian" xml:space="preserve">
-    <value>Rad</value>
+    <value>rad</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Gradian" xml:space="preserve">
-    <value>Grad</value>
+    <value>grad</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Atmosphere" xml:space="preserve">
-    <value>ATM</value>
+    <value>atm</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Bar" xml:space="preserve">
@@ -1938,7 +1938,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_MillimeterOfMercury" xml:space="preserve">
-    <value>ຮກ</value>
+    <value>mmHg</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Pascal" xml:space="preserve">
@@ -1962,7 +1962,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Gram" xml:space="preserve">
-    <value>ກ</value>
+    <value>g</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Hectogram" xml:space="preserve">
@@ -1998,7 +1998,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Tonne" xml:space="preserve">
-    <value>t</value>
+    <value>T</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitName_Carat" xml:space="preserve">
@@ -2010,11 +2010,11 @@
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Radian" xml:space="preserve">
-    <value>ຣາ​ດ່ຽງ</value>
+    <value>ເຣດຽນ</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Gradian" xml:space="preserve">
-    <value>ກາດຽນ</value>
+    <value>ໄລ່ສີ</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Atmosphere" xml:space="preserve">
@@ -2034,7 +2034,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
-    <value>Pascals</value>
+    <value>ປາສກໍ</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_PSI" xml:space="preserve">
@@ -2066,7 +2066,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_LongTon" xml:space="preserve">
-    <value>ໜ່ວຍນ້ຳໜັກເທົ່າກັບ 2.240 ປອນ (ສະຫະລາຊະອານາຈັກ)</value>
+    <value>ປອນຍາວ (ສະຫະລາຊະອານາຈັກ)</value>
     <comment>A measurement unit for weight. This is the UK version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Milligram" xml:space="preserve">
@@ -2082,7 +2082,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_ShortTon" xml:space="preserve">
-    <value>ນ້ຳໜັກໜຶ່ງໂຕນ (ສະຫະລັດ)</value>
+    <value>ໂຕນສັ້ນ (ສະຫະລັດ)</value>
     <comment>A measurement unit for weight. This is the US version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Stone" xml:space="preserve">
@@ -2114,7 +2114,7 @@
     <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FloppyDisk" xml:space="preserve">
-    <value>ຟລັອບພີ ດີສທ໌</value>
+    <value>ຟຣັອບພີ ດີສທ໌</value>
     <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_DVD" xml:space="preserve">
@@ -2126,11 +2126,11 @@
     <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Battery" xml:space="preserve">
-    <value>ໝໍ້ໄຟ(ໜ່ວຍ)</value>
+    <value>ໝໍ້ໄຟ</value>
     <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Battery" xml:space="preserve">
-    <value>ໝໍ້ໄຟ(ໜ່ວຍ)</value>
+    <value>ໝໍ້ໄຟ</value>
     <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paperclip" xml:space="preserve">
@@ -2166,11 +2166,11 @@
     <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bathtub" xml:space="preserve">
-    <value>ອ່າງນ້ຳ(ອ່າງ)</value>
+    <value>ອ່າງນ້ຳ</value>
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Bathtub" xml:space="preserve">
-    <value>ອ່າງນ້ຳ(ອ່າງ)</value>
+    <value>ອ່າງນ້ຳ</value>
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Snowflake" xml:space="preserve">
@@ -2218,7 +2218,7 @@
     <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CoffeeCup" xml:space="preserve">
-    <value>ຖ້ວຍກາເຟ</value>
+    <value>ຈອກກາເຟ</value>
     <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SwimmingPool" xml:space="preserve">
@@ -2230,11 +2230,11 @@
     <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hand" xml:space="preserve">
-    <value>ກຳ</value>
+    <value>ມື</value>
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Hand" xml:space="preserve">
-    <value>ມື(ເບື້ອງ)</value>
+    <value>ມື</value>
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paper" xml:space="preserve">
@@ -2246,19 +2246,19 @@
     <comment>A sheet of 8.5 x 11 inch paper, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Castle" xml:space="preserve">
-    <value>ຫໍ​ປາ​ສາດ</value>
+    <value>ຫໍປາສາດ</value>
     <comment>A castle, used as a comparison measurement unit for area (floorspace). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Castle" xml:space="preserve">
-    <value>ຫໍ​ປາ​ສາດ</value>
+    <value>ຫໍປາສາດ</value>
     <comment>A castle, used as a comparison measurement unit for area (floorspace). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Banana" xml:space="preserve">
-    <value>ກ້ວຍ(ໜ່ວຍ)</value>
+    <value>ກ້ວຍ</value>
     <comment>A banana, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Banana" xml:space="preserve">
-    <value>ກ້ວຍ(ໜ່ວຍ)</value>
+    <value>ກ້ວຍ</value>
     <comment>A banana, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SliceOfCake" xml:space="preserve">
@@ -2317,6 +2317,10 @@
     <value>© %1 Microsoft. ສະຫງວນລິຂະສິດ.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>ເພື່ອຮຽນຮູ້ວິທີທີ່ທ່ານສາມາດມີສ່ວນຮ່ວມໃນ Windows ເຄື່ອງ​ຄິດ​ເລກ, ໃຫ້ກວດເບິ່ງໂປຣເຈັກໃນ %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>ກ່ຽວກັບ</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
@@ -2334,7 +2338,7 @@
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ໜ່ວຍຄວາມຈຳ</value>
+    <value>ຄວາມຈຳ</value>
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
   <data name="CannotPaste" xml:space="preserve">
@@ -2433,7 +2437,7 @@
     <value>ການຄິດໄລ່ວັນທີ</value>
   </data>
   <data name="DateCalculationOption.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="60"&gt;ໂໝດການຄຳນວນ&lt;/mrk&gt;</value>
+    <value>ໂໝດການຄຳນວນ</value>
     <comment>Automation label for the Date Calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
   </data>
   <data name="AddOption.Content" xml:space="preserve">
@@ -2441,7 +2445,7 @@
     <comment>Add toggle button text</comment>
   </data>
   <data name="Date_AddSubtractOption.Content" xml:space="preserve">
-    <value>ເພີ່ມ ຫຼືລົບວັນອອກ</value>
+    <value>ເພີ່ມ ຫຼື ລົບວັນອອກ</value>
     <comment>Add or Subtract days option</comment>
   </data>
   <data name="DateLabel.Text" xml:space="preserve">
@@ -2453,7 +2457,7 @@
     <comment>Date Difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
-    <value>ວັນ</value>
+    <value>ມື້</value>
     <comment>Add/Subtract Days label</comment>
   </data>
   <data name="Date_DifferenceLabel.Text" xml:space="preserve">
@@ -2488,13 +2492,13 @@
     <value>ວັນ</value>
   </data>
   <data name="Date_Days" xml:space="preserve">
-    <value>ວັນ</value>
+    <value>ມື້</value>
   </data>
   <data name="Date_Month" xml:space="preserve">
     <value>ເດືອນ</value>
   </data>
   <data name="Date_Months" xml:space="preserve">
-    <value>ເດືອນ</value>
+    <value>​ເດືອນ</value>
   </data>
   <data name="Date_SameDates" xml:space="preserve">
     <value>ວັນທີດຽວກັນ</value>
@@ -2524,27 +2528,27 @@
     <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current calculator mode: Scientific, Standard, or Programmer.</comment>
   </data>
   <data name="HeaderAutomationName_Converter" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="11"&gt;ໂໝດຕົວແປງ %1&lt;/mrk&gt;</value>
+    <value>ໂໝດຕົວແປງ %1</value>
     <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and Mass", "Energy", "Volume", etc.</comment>
   </data>
   <data name="HeaderAutomationName_Date" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="10"&gt;ໂໝດການຄຳນວນວັນທີ&lt;/mrk&gt;</value>
+    <value>ໂໝດການຄຳນວນວັນທີ</value>
     <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ລາຍການ ປະຫວັດ ແລະຄວາມຈຳ</value>
+    <value>ລາຍການປະຫວັດ ແລະ ຄວາມຈຳ</value>
     <comment>Automation name for the group of controls for history and memory lists.</comment>
   </data>
   <data name="MemoryPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="41"&gt;ຄວບຄຸມຄວາມຈຳ&lt;/mrk&gt;</value>
+    <value>ຄວບຄຸມຄວາມຈຳ</value>
     <comment>Automation name for the group of memory controls (Mem Clear, Mem Recall, Mem Add, Mem Subtract, Mem Store, Memory flyout toggle)</comment>
   </data>
   <data name="StandardFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="27"&gt;ຟັງຄ໌ຊັນ ມາດຕະຖານ&lt;/mrk&gt;</value>
+    <value>ຟັງຄ໌ຊັນມາດຕະຖານ</value>
     <comment>Automation name for the group of standard function buttons (Percent, Square Root, Square, Cube, Reciprocal)</comment>
   </data>
   <data name="DisplayControls.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="42"&gt;ຄວາມຄຸມການສະແດງໜ້າຈໍ&lt;/mrk&gt;</value>
+    <value>ຄວາມຄຸມການສະແດງໜ້າຈໍ</value>
     <comment>Automation name for the group of display control buttons (Clear, Clear Entry, and Backspace)</comment>
   </data>
   <data name="StandardOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2552,7 +2556,7 @@
     <comment>Automation name for the group of standard operator buttons (Add, Subtract, Multiply, Divide, and Equals)</comment>
   </data>
   <data name="NumberPad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="40"&gt;ແປ້ນໝາຍເລກ&lt;/mrk&gt;</value>
+    <value>ແປ້ນໝາຍເລກ</value>
     <comment>Automation name for the group of NumberPad buttons (0-9, A-F and Decimal button)</comment>
   </data>
   <data name="ScientificAngleOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2560,11 +2564,11 @@
     <comment>Automation name for the group of Scientific angle operators (Degree mode, Hyperbolic toggle, and Precision button)</comment>
   </data>
   <data name="ScientificFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="34"&gt;ຟັງຄ໌ຊັນທາງວິທະຍາສາດ&lt;/mrk&gt;</value>
+    <value>ຟັງຄ໌ຊັນທາງວິທະຍາສາດ</value>
     <comment>Automation name for the group of Scientific functions.</comment>
   </data>
   <data name="RadixGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>&lt;mrk mtype="seg" mid="38"&gt;ການເລືອກ Radix&lt;/mrk&gt;</value>
+    <value>ການເລືອກ Radix</value>
     <comment>Automation name for the group of radices (Hexadecimal, Decimal, Octal, Binary). https://en.wikipedia.org/wiki/Radix </comment>
   </data>
   <data name="ProgrammerOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2636,11 +2640,11 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>ປຸ່ມຊີບດ້ານຊ້າຍ</value>
+    <value>ປຸ່ມ shift ຊ້າຍ</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>ປຸ່ມຊີບດ້ານຂວາ</value>
+    <value>ປຸ່ມ shift ຂວາ</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2668,7 +2672,7 @@
     <comment>The text displayed for a hyperlink button that refreshes currency converter ratios.</comment>
   </data>
   <data name="DataChargesMayApply" xml:space="preserve">
-    <value>ການເກັບຄ່າຂໍ້ມູນອາດຈະນຳໃຊ້.</value>
+    <value>ອາດມີການຄິດຄ່າຂໍ້ມູນ.</value>
     <comment>The text displayed when users are on a metered connection and using currency converter.</comment>
   </data>
   <data name="FailedToRefresh" xml:space="preserve">
@@ -2696,7 +2700,7 @@
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
-    <value>I </value>
+    <value>I</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryButton.AccessKey" xml:space="preserve">
@@ -2776,7 +2780,7 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button in the Memory Pane</comment>
   </data>
   <data name="HistoryLabel.AccessKey" xml:space="preserve">
-    <value>I </value>
+    <value>I</value>
     <comment>Access key for the History pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryLabel.AccessKey" xml:space="preserve">
@@ -3004,11 +3008,11 @@
     <comment>Name for the degree minute second (dms) function. Used by screen readers.</comment>
   </data>
   <data name="NaturalLog" xml:space="preserve">
-    <value>ການບັນທຶກແບບ Natural</value>
+    <value>ການບັນທຶກແບບທຳມະຊາດ</value>
     <comment>Name for the natural log (ln) function. Used by screen readers.</comment>
   </data>
   <data name="Square" xml:space="preserve">
-    <value>ສີ່ຫຼ່ຽມມົນທົນ</value>
+    <value>ຮູບຈະຕຸລັດ</value>
     <comment>Name for the square function. Used by screen readers.</comment>
   </data>
   <data name="YRoot" xml:space="preserve">
@@ -3024,7 +3028,7 @@
     <comment>{Locked='%1'} Format string for the accessible name of a Calculator menu category header, used by screen readers. "%1" is the pluralized category name, e.g. Calculators, Converters. An example when formatted is "Calculators category".</comment>
   </data>
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">
-    <value>ຂໍ້ຕົກລົງ ການບໍລິການ Microsoft</value>
+    <value>ຂໍ້​ຕົກ​ລົງ​ການ​ບໍ​ລິ​ການ Microsoft</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
   </data>
   <data name="UnitAbbreviation_Pyeong" xml:space="preserve">

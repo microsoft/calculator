@@ -150,7 +150,7 @@
     <comment>Same 107</comment>
   </data>
   <data name="99" xml:space="preserve">
-    <value>సున్నాచే భాగహారం చేయలేరు</value>
+    <value>సున్నాతో భాగహారం చేయలేరు</value>
     <comment>Error string shown when a divide by zero condition happens during the calculation</comment>
   </data>
 </root>
