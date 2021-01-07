@@ -58,7 +58,7 @@ namespace CalculatorFunctionalTests
         TEST_METHOD(TestHistoryStandardOrderOfOperations_21);
         TEST_METHOD(TestHistoryStandardOrderOfOperations_22);
         TEST_METHOD(TestHistoryStandardOrderOfOperations_23);
-        TEST_METHOD(TestHistoryStandardOrderOfOperations_24);
+        TEST_METHOD(TestHistoryStandardOrderOfOperationsMultiple);
 
     private:
         HistoryViewModel ^ m_historyViewModel;
@@ -387,7 +387,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void HistoryStandardOrderOfOperationsHelperSingle(String ^ expectedResult, String ^ expectedExpression, Command testCommands[])
+        void HistoryStandardOrderOfOperationsHelper(String ^ expectedResult, String ^ expectedExpression, Command testCommands[])
         {
             Initialize();
             int initialSize = m_historyViewModel->ItemsCount;
@@ -411,158 +411,145 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void HistoryStandardOrderOfOperationsHelperMultiple(String ^ expectedResults[], String ^ expectedExpressions[], int numResults, Command testCommands[])
-        {
+        void HistoryStandardOrderOfOperations_1() {
+            Command commands[] = { Command::Command1, Command::CommandREC };
+            HistoryStandardOrderOfOperationsHelper(L"", L"", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_2() {
+            Command commands[] = { Command::Command4, Command::CommandSQRT };
+            HistoryStandardOrderOfOperationsHelper(L"", L"", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_3() {
+            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command4, Command::CommandSQRT };
+            HistoryStandardOrderOfOperationsHelper(L"", L"", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_4() {
+            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command4, Command::CommandSQRT, Command::CommandSUB };
+            HistoryStandardOrderOfOperationsHelper(L"3", L"1   +   \x221A( 4 ) =", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_5() {
+            Command commands[] = { Command::Command2, Command::CommandMUL, Command::Command4, Command::CommandREC };
+            HistoryStandardOrderOfOperationsHelper(L"", L"", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_6() {
+            Command commands[] = { Command::Command5, Command::CommandDIV, Command::Command6, Command::CommandPERCENT };
+            HistoryStandardOrderOfOperationsHelper(L"", L"", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_7() {
+            Command commands[] = { Command::Command4, Command::CommandSQRT, Command::CommandSUB };
+            HistoryStandardOrderOfOperationsHelper(L"", L"", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_8() {
+            Command commands[] = { Command::Command7, Command::CommandSQR, Command::CommandDIV };
+            HistoryStandardOrderOfOperationsHelper(L"", L"", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_9() {
+            Command commands[] = { Command::Command8, Command::CommandSQR, Command::CommandSQRT };
+            HistoryStandardOrderOfOperationsHelper(L"", L"", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_10() {
+            Command commands[] = { Command::Command1, Command::Command0, Command::CommandADD, Command::Command2, Command::CommandSUB };
+            HistoryStandardOrderOfOperationsHelper(L"12", L"10   +   2 =", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_11() {
+            Command commands[] = { Command::Command3, Command::CommandMUL, Command::Command4, Command::CommandDIV };
+            HistoryStandardOrderOfOperationsHelper(L"12", L"3   \x00D7   4 =", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_12() {
+            Command commands[] = { Command::Command6, Command::CommandDIV, Command::Command3, Command::CommandSUB, Command::CommandADD };
+            HistoryStandardOrderOfOperationsHelper(L"2", L"6   \x00F7   3 =", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_13() {
+            Command commands[] = { Command::Command7, Command::CommandSUB, Command::Command4, Command::CommandDIV, Command::CommandMUL };
+            HistoryStandardOrderOfOperationsHelper(L"3", L"7   -   4 =", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_14() {
+            Command commands[] = { Command::Command8, Command::CommandMUL, Command::Command2, Command::CommandADD, Command::CommandSQRT };
+            HistoryStandardOrderOfOperationsHelper(L"16", L"8   \x00D7   2 =", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_15() {
+            Command commands[] = { Command::Command9, Command::CommandADD, Command::Command0, Command::CommandMUL, Command::CommandSIGN };
+            HistoryStandardOrderOfOperationsHelper(L"9", L"9   +   0 =", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_16() {
+            Command commands[] = { Command::Command9, Command::CommandSIGN, Command::Command0, Command::CommandADD, Command::CommandMUL };
+            HistoryStandardOrderOfOperationsHelper(L"", L"", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_17() {
+            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandEQU };
+            HistoryStandardOrderOfOperationsHelper(L"3", L"1   +   2 =", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_18() {
+            Command commands[] = { Command::Command2, Command::Command0, Command::CommandMUL, Command::Command0, Command::Command2, Command::CommandEQU };
+            HistoryStandardOrderOfOperationsHelper(L"40", L"20   \x00D7   2 =", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_19() {
+            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandADD, Command::CommandBACK };
+            HistoryStandardOrderOfOperationsHelper(L"3", L"1   +   2 =", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_20() {
+            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandADD, Command::CommandCLEAR };
+            HistoryStandardOrderOfOperationsHelper(L"3", L"1   +   2 =", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_21() {
+            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandADD, Command::CommandCENTR };
+            HistoryStandardOrderOfOperationsHelper(L"3", L"1   +   2 =", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_22() {
+            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandCLEAR };
+            HistoryStandardOrderOfOperationsHelper(L"", L"", commands);
+        }
+
+        void HistoryStandardOrderOfOperations_23() {
+            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandCENTR };
+            HistoryStandardOrderOfOperationsHelper(L"", L"", commands);
+        }
+
+        void HistoryStandardOrderOfOperationsMultiple() {
             Initialize();
+            Command commands[] = { Command::Command1, Command::CommandMUL, Command::Command2, Command::CommandMUL, Command::Command3,   Command::CommandMUL, Command::Command4, Command::CommandMUL, Command::Command5, Command::CommandMUL };
             int initialSize = m_historyViewModel->ItemsCount;
-            Command* currentCommand = testCommands;
+            Command* currentCommand = commands;
             while (*currentCommand != Command::CommandNULL)
             {
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(*currentCommand++));
             }
             int sizeAfterCommandsAdd = m_historyViewModel->ItemsCount;
-            VERIFY_ARE_EQUAL(initialSize + numResults, sizeAfterCommandsAdd);
+            VERIFY_ARE_EQUAL(initialSize + 4, sizeAfterCommandsAdd);
             auto historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(0));
-            VERIFY_ARE_EQUAL(historyItem->Expression, expectedExpressions[0]);
-            VERIFY_ARE_EQUAL(historyItem->Result, expectedResults[0]);
+            VERIFY_ARE_EQUAL(historyItem->Expression, L"24   \x00D7   5 =");
+            VERIFY_ARE_EQUAL(historyItem->Result, L"120");
             historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(1));
-            VERIFY_ARE_EQUAL(historyItem->Expression, expectedExpressions[1]);
-            VERIFY_ARE_EQUAL(historyItem->Result, expectedResults[1]);
+            VERIFY_ARE_EQUAL(historyItem->Expression, L"6   \x00D7   4 =");
+            VERIFY_ARE_EQUAL(historyItem->Result, L"24");
             historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(2));
-            VERIFY_ARE_EQUAL(historyItem->Expression, expectedExpressions[2]);
-            VERIFY_ARE_EQUAL(historyItem->Result, expectedResults[2]);
+            VERIFY_ARE_EQUAL(historyItem->Expression, L"2   \x00D7   3 =");
+            VERIFY_ARE_EQUAL(historyItem->Result, L"6");
             historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(3));
-            VERIFY_ARE_EQUAL(historyItem->Expression, expectedExpressions[3]);
-            VERIFY_ARE_EQUAL(historyItem->Result, expectedResults[3]);
-            //for (int i = 0; i < numResults; i++)
-            //{
-            //    auto historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(i));
-            //    VERIFY_ARE_EQUAL(historyItem->Expression, expectedExpressions[i]);
-            //    VERIFY_ARE_EQUAL(historyItem->Result, expectedResults[i]);
-            //}
+            VERIFY_ARE_EQUAL(historyItem->Expression, L"1   \x00D7   2 =");
+            VERIFY_ARE_EQUAL(historyItem->Result, L"2");
             Cleanup();
-        }
-
-        void HistoryStandardOrderOfOperations_1() {
-            Command commands[] = { Command::Command1, Command::CommandREC };
-            HistoryStandardOrderOfOperationsHelperSingle(L"", L"", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_2() {
-            Command commands[] = { Command::Command4, Command::CommandSQRT };
-            HistoryStandardOrderOfOperationsHelperSingle(L"", L"", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_3() {
-            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command4, Command::CommandSQRT };
-            HistoryStandardOrderOfOperationsHelperSingle(L"", L"", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_4() {
-            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command4, Command::CommandSQRT, Command::CommandSUB };
-            HistoryStandardOrderOfOperationsHelperSingle(L"3", L"1   +   \x221A( 4 ) =", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_5() {
-            Command commands[] = { Command::Command2, Command::CommandMUL, Command::Command4, Command::CommandREC };
-            HistoryStandardOrderOfOperationsHelperSingle(L"", L"", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_6() {
-            Command commands[] = { Command::Command5, Command::CommandDIV, Command::Command6, Command::CommandPERCENT };
-            HistoryStandardOrderOfOperationsHelperSingle(L"", L"", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_7() {
-            Command commands[] = { Command::Command4, Command::CommandSQRT, Command::CommandSUB };
-            HistoryStandardOrderOfOperationsHelperSingle(L"", L"", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_8() {
-            Command commands[] = { Command::Command7, Command::CommandSQR, Command::CommandDIV };
-            HistoryStandardOrderOfOperationsHelperSingle(L"", L"", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_9() {
-            Command commands[] = { Command::Command8, Command::CommandSQR, Command::CommandSQRT };
-            HistoryStandardOrderOfOperationsHelperSingle(L"", L"", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_10() {
-            Command commands[] = { Command::Command1, Command::Command0, Command::CommandADD, Command::Command2, Command::CommandSUB };
-            HistoryStandardOrderOfOperationsHelperSingle(L"12", L"10   +   2 =", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_11() {
-            Command commands[] = { Command::Command3, Command::CommandMUL, Command::Command4, Command::CommandDIV };
-            HistoryStandardOrderOfOperationsHelperSingle(L"12", L"3   \x00D7   4 =", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_12() {
-            Command commands[] = { Command::Command6, Command::CommandDIV, Command::Command3, Command::CommandSUB, Command::CommandADD };
-            HistoryStandardOrderOfOperationsHelperSingle(L"2", L"6   \x00F7   3 =", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_13() {
-            Command commands[] = { Command::Command7, Command::CommandSUB, Command::Command4, Command::CommandDIV, Command::CommandMUL };
-            HistoryStandardOrderOfOperationsHelperSingle(L"3", L"7   -   4 =", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_14() {
-            Command commands[] = { Command::Command8, Command::CommandMUL, Command::Command2, Command::CommandADD, Command::CommandSQRT };
-            HistoryStandardOrderOfOperationsHelperSingle(L"16", L"8   \x00D7   2 =", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_15() {
-            Command commands[] = { Command::Command9, Command::CommandADD, Command::Command0, Command::CommandMUL, Command::CommandSIGN };
-            HistoryStandardOrderOfOperationsHelperSingle(L"9", L"9   +   0 =", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_16() {
-            Command commands[] = { Command::Command9, Command::CommandSIGN, Command::Command0, Command::CommandADD, Command::CommandMUL };
-            HistoryStandardOrderOfOperationsHelperSingle(L"", L"", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_17() {
-            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandEQU };
-            HistoryStandardOrderOfOperationsHelperSingle(L"3", L"1   +   2 =", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_18() {
-            Command commands[] = { Command::Command2, Command::Command0, Command::CommandMUL, Command::Command0, Command::Command2, Command::CommandEQU };
-            HistoryStandardOrderOfOperationsHelperSingle(L"40", L"20   \x00D7   2 =", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_19() {
-            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandADD, Command::CommandBACK };
-            HistoryStandardOrderOfOperationsHelperSingle(L"3", L"1   +   2 =", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_20() {
-            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandADD, Command::CommandCLEAR };
-            HistoryStandardOrderOfOperationsHelperSingle(L"3", L"1   +   2 =", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_21() {
-            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandADD, Command::CommandCENTR };
-            HistoryStandardOrderOfOperationsHelperSingle(L"3", L"1   +   2 =", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_22() {
-            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandCLEAR };
-            HistoryStandardOrderOfOperationsHelperSingle(L"", L"", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_23() {
-            Command commands[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandCENTR };
-            HistoryStandardOrderOfOperationsHelperSingle(L"", L"", commands);
-        }
-
-        void HistoryStandardOrderOfOperations_24() {
-            Command commands[] = { Command::Command1, Command::CommandMUL, Command::Command2, Command::CommandMUL, Command::Command3,   Command::CommandMUL, Command::Command4, Command::CommandMUL, Command::Command5, Command::CommandMUL };
-            String ^ expectedResults[] = { L"120", L"24", L"6", L"2" };
-            String ^ expectedExpressions[] = { L"24   \x00D7   5 =", L"6   \x00D7   4 =", L"2   \x00D7   3 =", L"1   \x00D7   2 =" };
-            HistoryStandardOrderOfOperationsHelperMultiple(expectedResults, expectedExpressions, 4, commands);
         }
     };
 
@@ -718,7 +705,7 @@ namespace CalculatorFunctionalTests
         HistoryStandardOrderOfOperations_23();
     }
 
-    void HistoryTests::TestHistoryStandardOrderOfOperations_24(){
-        HistoryStandardOrderOfOperations_24();
+    void HistoryTests::TestHistoryStandardOrderOfOperationsMultiple(){
+        HistoryStandardOrderOfOperationsMultiple();
     }
 }
