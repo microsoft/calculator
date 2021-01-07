@@ -411,7 +411,7 @@ namespace CalculatorFunctionalTests
             Cleanup();
         }
 
-        void HistoryStandardOrderOfOperationsHelperMultiple(int numResults, Command testCommands[])
+        void HistoryStandardOrderOfOperationsHelperMultiple(String ^ expectedResults[], String ^ expectedExpressions[], int numResults, Command testCommands[])
         {
             Initialize();
             int initialSize = m_historyViewModel->ItemsCount;
@@ -422,6 +422,9 @@ namespace CalculatorFunctionalTests
             }
             int sizeAfterCommandsAdd = m_historyViewModel->ItemsCount;
             VERIFY_ARE_EQUAL(initialSize + numResults, sizeAfterCommandsAdd);
+            auto historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(0));
+            VERIFY_ARE_EQUAL(historyItem->Expression, expectedExpressions[0]);
+            VERIFY_ARE_EQUAL(historyItem->Result, expectedResults[0]);
             //for (int i = 0; i < numResults; i++)
             //{
             //    auto historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(i));
@@ -548,9 +551,9 @@ namespace CalculatorFunctionalTests
 
         void HistoryStandardOrderOfOperations_24() {
             Command commands[] = { Command::Command1, Command::CommandMUL, Command::Command2, Command::CommandMUL, Command::Command3,   Command::CommandMUL, Command::Command4, Command::CommandMUL, Command::Command5, Command::CommandMUL };
-            /*String ^ expectedResults[] = { L"120", L"24", L"6", L"2" };
-            String ^ expectedExpressions[] = { L"24   \x00D7   5 =", L"6   \x00D7   4 =", L"2   \x00D7   3 =", L"1   \x00D7   2 =" };*/
-            HistoryStandardOrderOfOperationsHelperMultiple(4, commands);
+            String ^ expectedResults[] = { L"120", L"24", L"6", L"2" };
+            String ^ expectedExpressions[] = { L"24   \x00D7   5 =", L"6   \x00D7   4 =", L"2   \x00D7   3 =", L"1   \x00D7   2 =" };
+            HistoryStandardOrderOfOperationsHelperMultiple(expectedResults, expectedExpressions, 4, commands);
         }
     };
 
