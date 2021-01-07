@@ -432,6 +432,14 @@ void MainPage::OnAboutButtonClick(Object ^ sender, ItemClickEventArgs ^ e)
     ShowAboutPage();
 }
 
+void MainPage::OnAboutButtonKeyDown(Object ^ sender, KeyRoutedEventArgs ^ e)
+{
+    if (e->Key == VirtualKey::Space || e->Key == VirtualKey::Enter)
+    {
+        ShowAboutPage();
+    }
+}
+
 void MainPage::OnAboutFlyoutOpened(_In_ Object ^ sender, _In_ Object ^ e)
 {
     // Keep Ignoring Escape till the About page flyout is opened

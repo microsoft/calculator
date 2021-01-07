@@ -55,6 +55,7 @@ public
             _In_ Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs ^ e);
 
         void OnAboutButtonClick(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::ItemClickEventArgs ^ e);
+        void OnAboutButtonKeyDown(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
         void OnAboutFlyoutOpened(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void OnAboutFlyoutClosed(_In_ Platform::Object ^ sender, _In_ Platform::Object ^ e);
         void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
