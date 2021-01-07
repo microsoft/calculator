@@ -422,7 +422,16 @@ namespace CalculatorFunctionalTests
             }
             int sizeAfterCommandsAdd = m_historyViewModel->ItemsCount;
             VERIFY_ARE_EQUAL(initialSize + numResults, sizeAfterCommandsAdd);
-            auto historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(3));
+            auto historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(0));
+            VERIFY_ARE_EQUAL(historyItem->Expression, expectedExpressions[0]);
+            VERIFY_ARE_EQUAL(historyItem->Result, expectedResults[0]);
+            historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(1));
+            VERIFY_ARE_EQUAL(historyItem->Expression, expectedExpressions[1]);
+            VERIFY_ARE_EQUAL(historyItem->Result, expectedResults[1]);
+            historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(2));
+            VERIFY_ARE_EQUAL(historyItem->Expression, expectedExpressions[2]);
+            VERIFY_ARE_EQUAL(historyItem->Result, expectedResults[2]);
+            historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(3));
             VERIFY_ARE_EQUAL(historyItem->Expression, expectedExpressions[3]);
             VERIFY_ARE_EQUAL(historyItem->Result, expectedResults[3]);
             //for (int i = 0; i < numResults; i++)
