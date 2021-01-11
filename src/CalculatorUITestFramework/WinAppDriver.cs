@@ -38,14 +38,14 @@ namespace CalculatorUITestFramework
         {
             this.windowsDriverService = new WindowsDriverServiceBuilder().Build();
 
-            this.windowsDriverService.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
+            this.windowsDriverService.OutputDataReceived += (sender, e) =>
             {
                 var outputData = e.Data?.Replace("\0", string.Empty);
                 if (!String.IsNullOrEmpty(outputData))
                 {
                     Console.WriteLine(outputData);
                 }
-            });
+            };
 
             this.windowsDriverService.Start();
 
