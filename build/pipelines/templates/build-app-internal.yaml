@@ -27,7 +27,7 @@ jobs:
       downloadDirectory: $(Build.SourcesDirectory)
       vstsFeed: WindowsInboxApps
       vstsFeedPackage: calculator-internals
-      vstsPackageVersion: 0.0.53
+      vstsPackageVersion: 0.0.54
 
   - template: ./build-single-architecture.yaml
     parameters:
