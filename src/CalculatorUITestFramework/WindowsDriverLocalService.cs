@@ -122,7 +122,7 @@ namespace CalculatorUITestFramework
         public Uri ServiceUrl
         {
             // Note: append /wd/hub to the URL if you're directing the test at Appium
-            get { return new Uri($"http://{this.IP.ToString()}:{Convert.ToString(this.Port)}"); }
+            get { return new Uri($"http://{this.IP}:{Convert.ToString(this.Port)}"); }
         }
 
         private void DestroyProcess()
@@ -158,7 +158,7 @@ namespace CalculatorUITestFramework
             }
             else
             {
-                status = new Uri(service.ToString() + "/status");
+                status = new Uri(service + "/status");
             }
 
             DateTime endTime = DateTime.Now.Add(this.InitializationTimeout);
