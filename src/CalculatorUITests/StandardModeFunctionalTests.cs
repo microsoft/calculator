@@ -78,7 +78,7 @@ namespace CalculatorUITests
             page.StandardOperators.NumberPad.Num2Button.Click();
             page.StandardOperators.MinusButton.Click();
             Assert.AreEqual("4", page.CalculatorResults.GetCalculatorResultText()); //verifies addition
-            Assert.AreEqual("2 + 2 Minus (", page.CalculatorResults.GetCalculatorExpressionText()); //verifies - button
+            Assert.AreEqual("4 Minus (", page.CalculatorResults.GetCalculatorExpressionText()); //verifies - button
             page.StandardOperators.NumberPad.Num3Button.Click();
             Assert.AreEqual("3", page.CalculatorResults.GetCalculatorResultText()); //verifies 3 button
             page.StandardOperators.EqualButton.Click();
@@ -102,12 +102,12 @@ namespace CalculatorUITests
             Assert.AreEqual("5", page.CalculatorResults.GetCalculatorResultText()); //verifies 5 button
             page.StandardOperators.DivideButton.Click();
             Assert.AreEqual("20", page.CalculatorResults.GetCalculatorResultText()); //verifies multiplication
-            Assert.AreEqual("4 × 5 ÷", page.CalculatorResults.GetCalculatorExpressionText()); //verifies ÷ button
+            Assert.AreEqual("20 ÷", page.CalculatorResults.GetCalculatorExpressionText()); //verifies ÷ button
             page.StandardOperators.NumberPad.Num6Button.Click();
             Assert.AreEqual("6", page.CalculatorResults.GetCalculatorResultText()); //verifies 6 button
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("3.333333333333333", page.CalculatorResults.GetCalculatorResultText()); //verifies division
-            Assert.AreEqual("4 × 5 ÷ 6=", page.CalculatorResults.GetCalculatorExpressionText()); //verifies = button
+            Assert.AreEqual("20 ÷ 6=", page.CalculatorResults.GetCalculatorExpressionText()); //verifies = button
         }
 
         [TestMethod]
@@ -173,11 +173,15 @@ namespace CalculatorUITests
             page.HistoryPanel.HistoryButton.Click();
             var historyFlyoutItems = page.HistoryPanel.GetAllHistoryFlyoutListViewItems();
             Assert.IsTrue(historyFlyoutItems[0].GetValue().Equals("3.333333333333333", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
-            Assert.IsTrue(historyFlyoutItems[0].GetExpression().Equals("4   ×   5   ÷   6 =", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
+            Assert.IsTrue(historyFlyoutItems[0].GetExpression().Equals("20   ÷   6 =", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
+            Assert.IsTrue(historyFlyoutItems[1].GetValue().Equals("20", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
+            Assert.IsTrue(historyFlyoutItems[1].GetExpression().Equals("4   ×   5 =", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
             page.HistoryPanel.ResizeWindowToDisplayHistoryLabel();
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].GetValue().Equals("3.333333333333333", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[0].GetExpression().Equals("4   ×   5   ÷   6 =", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyFlyoutItems[0].GetValue().Equals("3.333333333333333", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
+            Assert.IsTrue(historyFlyoutItems[0].GetExpression().Equals("20   ÷   6 =", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
+            Assert.IsTrue(historyFlyoutItems[1].GetValue().Equals("20", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
+            Assert.IsTrue(historyFlyoutItems[1].GetExpression().Equals("4   ×   5 =", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
             page.HistoryPanel.ClearHistoryButton.Click();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty")); //verifies the History panel's clear history button
         }
@@ -251,7 +255,7 @@ namespace CalculatorUITests
             CalculatorApp.Window.SendKeys("2");
             CalculatorApp.Window.SendKeys(Keys.Subtract);
             Assert.AreEqual("4", page.CalculatorResults.GetCalculatorResultText()); //verifies addition
-            Assert.AreEqual("2 + 2 Minus (", page.CalculatorResults.GetCalculatorExpressionText()); //verifies using subtraction key
+            Assert.AreEqual("4 Minus (", page.CalculatorResults.GetCalculatorExpressionText()); //verifies using subtraction key
             CalculatorApp.Window.SendKeys("3");
             Assert.AreEqual("3", page.CalculatorResults.GetCalculatorResultText()); //verifies using 3 key
             page.StandardOperators.EqualButton.Click();
@@ -278,12 +282,12 @@ namespace CalculatorUITests
             Assert.AreEqual("5", page.CalculatorResults.GetCalculatorResultText()); //verifies using 5 key
             CalculatorApp.Window.SendKeys(Keys.Divide);
             Assert.AreEqual("20", page.CalculatorResults.GetCalculatorResultText()); //verifies multiplication
-            Assert.AreEqual("4 × 5 ÷", page.CalculatorResults.GetCalculatorExpressionText()); //verifies using divide key
+            Assert.AreEqual("20 ÷", page.CalculatorResults.GetCalculatorExpressionText()); //verifies using divide key
             CalculatorApp.Window.SendKeys("6");
             Assert.AreEqual("6", page.CalculatorResults.GetCalculatorResultText()); //verifies using 6 key
             CalculatorApp.Window.SendKeys(Keys.Equal);
             Assert.AreEqual("3.333333333333333", page.CalculatorResults.GetCalculatorResultText()); //verifies division
-            Assert.AreEqual("4 × 5 ÷ 6=", page.CalculatorResults.GetCalculatorExpressionText()); //verifies equal key
+            Assert.AreEqual("20 ÷ 6=", page.CalculatorResults.GetCalculatorExpressionText()); //verifies equal key
         }
 
         [TestMethod]
@@ -378,13 +382,18 @@ namespace CalculatorUITests
             page.HistoryPanel.ResizeWindowToDisplayHistoryButton();
             CalculatorApp.Window.SendKeys(Keys.Control + "h" + Keys.Control);
             var historyFlyoutItems = page.HistoryPanel.GetAllHistoryFlyoutListViewItems();
-            var historyExpression = Regex.Replace(historyFlyoutItems[0].GetExpression(), @"\s", string.Empty);
+            var historyExpression0 = Regex.Replace(historyFlyoutItems[0].GetExpression(), @"\s", string.Empty);
+            var historyExpression1 = Regex.Replace(historyFlyoutItems[1].GetExpression(), @"\s", string.Empty);
             Assert.IsTrue(historyFlyoutItems[0].GetValue().Equals("10", StringComparison.InvariantCultureIgnoreCase)); //verifies History button hotkeys
-            Assert.IsTrue(historyExpression.Equals("4×5÷2=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button hotkeys
+            Assert.IsTrue(historyExpression0.Equals("20÷2=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button hotkeys
+            Assert.IsTrue(historyFlyoutItems[1].GetValue().Equals("20", StringComparison.InvariantCultureIgnoreCase)); //verifies History button hotkeys
+            Assert.IsTrue(historyExpression1.Equals("4×5=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button hotkeys
             page.HistoryPanel.ResizeWindowToDisplayHistoryLabel();
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
             Assert.IsTrue(historyItems[0].GetValue().Equals("10", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyExpression.Equals("4×5÷2=", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].GetValue().Equals("20", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyExpression0.Equals("20÷2=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button hotkeys
+            Assert.IsTrue(historyExpression1.Equals("4×5=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button hotkeys
             CalculatorApp.Window.SendKeys(Keys.Shift + Keys.Control + "d" + Keys.Control + Keys.Shift);
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty")); //verifies the History panel's clear history button hotkeys
         }
@@ -604,7 +613,7 @@ namespace CalculatorUITests
             CalculatorApp.Window.SendKeys("6");
             page.StandardOperators.ClearEntryButton.Click();
             Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
-            Assert.AreEqual("3 + 9 Minus (", page.CalculatorResults.GetCalculatorExpressionText());
+            Assert.AreEqual("12 Minus (", page.CalculatorResults.GetCalculatorExpressionText());
 
             //Verify Clear
             page.StandardOperators.NumberPad.Input(6);
