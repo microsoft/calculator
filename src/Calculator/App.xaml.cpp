@@ -198,7 +198,7 @@ void App::OnLaunched(LaunchActivatedEventArgs ^ args)
         // If the app got pre-launch activated, then save that state in a flag
         m_preLaunched = true;
     }
-    NavCategory::CreateCategoryManifest(args->User);
+    NavCategory::InitializeCategoryManifest(args->User);
     OnAppLaunch(args, args->Arguments);
 }
 

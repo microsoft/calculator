@@ -62,34 +62,29 @@ bool IsGraphingModeAvailable()
 Box<bool> ^ _isGraphingModeEnabledCached = nullptr;
 bool IsGraphingModeEnabled(User ^ firstUser = nullptr)
 {
-    if (firstUser)
+    if (!IsGraphingModeAvailable())
     {
-        if (!IsGraphingModeAvailable())
-        {
-            return false;
-        }
-
-        if (_isGraphingModeEnabledCached != nullptr)
-        {
-            return _isGraphingModeEnabledCached->Value;
-        }
-
-        auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
-        _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
-
-        return _isGraphingModeEnabledCached->Value;
+        return false;
     }
-    else
+
+    if (_isGraphingModeEnabledCached != nullptr)
     {
         return _isGraphingModeEnabledCached->Value;
     }
+
+    if (!firstUser)
+    {
+        return false;
+    }
+
+    auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
+    _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
+
+    return _isGraphingModeEnabledCached->Value;
 }
 
 // The order of items in this list determines the order of items in the menu.
-static list<NavCategoryInitializer> s_categoryManifest;
-
-void NavCategory::CreateCategoryManifest(User ^ user)
-{
+static list<NavCategoryInitializer> s_categoryManifest = [] {
     auto res = list<NavCategoryInitializer>{ NavCategoryInitializer{ ViewMode::Standard,
                                                                      STANDARD_ID,
                                                                      L"Standard",
@@ -115,7 +110,7 @@ void NavCategory::CreateCategoryManifest(User ^ user)
     bool supportGraphingCalculator = IsGraphingModeAvailable();
     if (supportGraphingCalculator)
     {
-        bool isEnabled = IsGraphingModeEnabled(user);
+        bool isEnabled = IsGraphingModeEnabled();
         res.push_back(NavCategoryInitializer{ ViewMode::Graphing,
                                               GRAPHING_ID,
                                               L"Graphing",
@@ -280,8 +275,15 @@ void NavCategory::CreateCategoryManifest(User ^ user)
                                   nullptr,
                                   SUPPORTS_NEGATIVE,
                                   true } });
-    s_categoryManifest = res;
-}
+    return res;
+}();
+
+void NavCategory::InitializeCategoryManifest(User ^ user)
+{
+    auto navCatInit = s_categoryManifest.begin();
+    std::advance(navCatInit, 2);
+    (*navCatInit).isEnabled = IsGraphingModeEnabled(user);
+ }
 
 // This function should only be used when storing the mode to app data.
 int NavCategory::Serialize(ViewMode mode)

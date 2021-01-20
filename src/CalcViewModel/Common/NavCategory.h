@@ -59,15 +59,15 @@ namespace CalculatorApp
     private
         struct NavCategoryInitializer
         {
-            NavCategoryInitializer(
+            constexpr NavCategoryInitializer(
                 ViewMode mode,
                 int id,
-                wchar_t * name,
-                wchar_t * nameKey,
-                wchar_t * glyph,
+                wchar_t const* name,
+                wchar_t const* nameKey,
+                wchar_t const* glyph,
                 CategoryGroupType group,
                 MyVirtualKey vKey,
-                wchar_t * aKey,
+                wchar_t const* aKey,
                 bool categorySupportsNegative,
                 bool enabled)
                 : viewMode(mode)
@@ -83,22 +83,22 @@ namespace CalculatorApp
             {
             }
 
-            ViewMode viewMode;
-            int serializationId;
-            wchar_t* friendlyName;
-            wchar_t* nameResourceKey;
-            wchar_t* glyph;
-            CategoryGroupType groupType;
-            MyVirtualKey virtualKey;
-            wchar_t* accessKey;
-            bool supportsNegative;
+            const ViewMode viewMode;
+            const int serializationId;
+            const wchar_t* const friendlyName;
+            const wchar_t* const nameResourceKey;
+            const wchar_t* const glyph;
+            const CategoryGroupType groupType;
+            const MyVirtualKey virtualKey;
+            const wchar_t* const accessKey;
+            const bool supportsNegative;
             bool isEnabled;
         };
 
     private
         struct NavCategoryGroupInitializer
         {
-            NavCategoryGroupInitializer(CategoryGroupType t, wchar_t * h, wchar_t * n, wchar_t * a)
+            constexpr NavCategoryGroupInitializer(CategoryGroupType t, wchar_t const* h, wchar_t const* n, wchar_t const* a)
                 : type(t)
                 , headerResourceKey(h)
                 , modeResourceKey(n)
@@ -106,10 +106,10 @@ namespace CalculatorApp
             {
             }
 
-            CategoryGroupType type;
-            wchar_t* headerResourceKey;
-            wchar_t* modeResourceKey;
-            wchar_t* automationResourceKey;
+            const CategoryGroupType type;
+            const wchar_t* headerResourceKey;
+            const wchar_t* modeResourceKey;
+            const wchar_t* automationResourceKey;
         };
 
         [Windows::UI::Xaml::Data::Bindable] public ref class NavCategory sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
@@ -140,7 +140,7 @@ namespace CalculatorApp
             static bool IsDateCalculatorViewMode(ViewMode mode);
             static bool IsConverterViewMode(ViewMode mode);
 
-            static void CreateCategoryManifest(Windows::System::User ^ user);
+            static void InitializeCategoryManifest(Windows::System::User ^ user);
 
             static Platform::String ^ GetFriendlyName(ViewMode mode);
             static Platform::String ^ GetNameResourceKey(ViewMode mode);
