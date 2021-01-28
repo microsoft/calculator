@@ -7,6 +7,13 @@
 
 # Expects a variable called LocServiceKey to contain the OAuth client secret for Touchdown.
 
+schedules:
+- cron: "0 5 * * *"
+  displayName: Daily sync
+  branches:
+    include:
+    - master
+
 trigger: none
 pr: none
 
