@@ -446,7 +446,7 @@
     <comment>This is the tool tip automation name for the bitFlip button.</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Volle sleutelbord</value>
+    <value>Volle sleutelblok</value>
     <comment>This is the tool tip automation name for the numberPad button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -470,7 +470,7 @@
     <comment>The automation name for the History pivot item that is shown when Calculator is in wide layout.</comment>
   </data>
   <data name="converterModeButton.Content" xml:space="preserve">
-    <value>Omskakelaar</value>
+    <value>Omsetter</value>
     <comment>Label for a control that activates the unit converter mode.</comment>
   </data>
   <data name="scientificModeButton.Content" xml:space="preserve">
@@ -482,7 +482,7 @@
     <comment>Label for a control that activates standard mode calculator layout.</comment>
   </data>
   <data name="converterModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Omskakelaarmodus</value>
+    <value>Omsettermodus</value>
     <comment>Screen reader prompt for a control that activates the unit converter mode.</comment>
   </data>
   <data name="scientificModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -518,7 +518,7 @@
     <comment>The text that shows in the dropdown navigation control in snapped mode when programmer calculator mode is selected.</comment>
   </data>
   <data name="ConverterModeText" xml:space="preserve">
-    <value>Omskakelaar</value>
+    <value>Omsetter</value>
     <comment>The text that shows in the dropdown navigation control for the converter group. The previous key for this was "ConverterMode.Text".</comment>
   </data>
   <data name="CalculatorModeText" xml:space="preserve">
@@ -526,7 +526,7 @@
     <comment>The text that shows in the dropdown navigation control for the calculator group.</comment>
   </data>
   <data name="ConverterModeTextCaps" xml:space="preserve">
-    <value>Omskakelaar</value>
+    <value>Omsetter</value>
     <comment>The text that shows in the dropdown navigation control for the converter group in upper case. The previous key for this was "ConverterMode.Text".</comment>
   </data>
   <data name="CalculatorModeTextCaps" xml:space="preserve">
@@ -550,7 +550,7 @@
     <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
-    <value>Beeld is %1 punt</value>
+    <value>Vertoon is %1 komma</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
@@ -570,7 +570,7 @@
     <comment>Screen reader prompt for the memory flyout</comment>
   </data>
   <data name="Format_HexButtonValue" xml:space="preserve">
-    <value>HexaDecimal %1</value>
+    <value>HeksaDesimaal %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the hexadecimal value in Programmer mode. %1 = the localized hexadecimal value, e.g. "21B4 8F73".</comment>
   </data>
   <data name="Format_DecButtonValue" xml:space="preserve">
@@ -590,7 +590,7 @@
     <comment>Screen reader prompt for the Calculator History Clear button</comment>
   </data>
   <data name="HistoryList_Cleared" xml:space="preserve">
-    <value>Geskiedenis skoongemaak</value>
+    <value>Geskiedenis uitgevee</value>
     <comment>Screen reader prompt for the Calculator History Clear button, when the button is invoked.</comment>
   </data>
   <data name="HideHistory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -606,7 +606,7 @@
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Geheuewinkel</value>
+    <value>Geheue stoor</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -618,7 +618,7 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="Memory_Cleared" xml:space="preserve">
-    <value>Geheue skoongemaak</value>
+    <value>Geheue uitgevee</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button, when the button is invoked.</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -646,11 +646,11 @@
     <comment>This is the tool tip automation name for the Memory Subtract (M-) button.</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Maak geheue-item skoon</value>
+    <value>Vee geheue-item uit</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Maak geheue-item skoon</value>
+    <value>Vee geheue-item uit</value>
     <comment>This is the tool tip automation name for the Clear Memory Item (MC) button in the Memory list.</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -810,15 +810,15 @@
     <comment>Screen reader prompt for the Calculator ROR button</comment>
   </data>
   <data name="lshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Linker-shift</value>
+    <value>Linksskuif</value>
     <comment>Screen reader prompt for the Calculator LSH button</comment>
   </data>
   <data name="rshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Regter-shift</value>
+    <value>Regsskuif</value>
     <comment>Screen reader prompt for the Calculator RSH button</comment>
   </data>
   <data name="xorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Eksklusief of</value>
+    <value>Uitsluitend of</value>
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -842,7 +842,7 @@
     <comment>Screen reader prompt for the Calculator bitFlip button</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Volle sleutelbord</value>
+    <value>Volle sleutelblok</value>
     <comment>Screen reader prompt for the Calculator numberPad button</comment>
   </data>
   <data name="decimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -850,11 +850,11 @@
     <comment>Screen reader prompt for the "." button</comment>
   </data>
   <data name="clearEntryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Maak inskrywing skoon</value>
+    <value>Vee inskrywing uit</value>
     <comment>Screen reader prompt for the "CE" button</comment>
   </data>
   <data name="clearButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Maak skoon</value>
+    <value>Vee uit</value>
     <comment>Screen reader prompt for the "C" button</comment>
   </data>
   <data name="divideButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -870,7 +870,7 @@
     <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Omkeerfunksie</value>
+    <value>Inverse funksie</value>
     <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
   </data>
   <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -906,15 +906,15 @@
     <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
   </data>
   <data name="openParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Hakies links</value>
+    <value>Linkerhakie</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
   <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
-    <value>Linkerhakie, oop-hakie-telling %1</value>
+    <value>Linkerhakie, maak hakie nommer %1 oop</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Hakies regs</value>
+    <value>Regterhakie</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
   </data>
   <data name="Format_OpenParenthesisCountAutomationNamePrefix" xml:space="preserve">
@@ -926,7 +926,7 @@
     <comment>{Locked="%1"} Screen reader prompt for the Calculator when the ")" button on the scientific and programmer operator keypad cannot be added to the equation. e.g. "1+)".</comment>
   </data>
   <data name="ftoeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Wetenskaplike notering</value>
+    <value>Wetenskaplike notasie</value>
     <comment>Screen reader prompt for the Calculator F-E the scientific operator keypad</comment>
   </data>
   <data name="hyperbolicButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -966,19 +966,19 @@
     <comment>Screen reader prompt for the x squared on the scientific operator keypad. </comment>
   </data>
   <data name="xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Kubus</value>
+    <value>Kubieke</value>
     <comment>Screen reader prompt for the x cubed on the scientific operator keypad. </comment>
   </data>
   <data name="invsinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Arc-sinus</value>
+    <value>Boogsinus</value>
     <comment>Screen reader prompt for the inverted sin on the scientific operator keypad.</comment>
   </data>
   <data name="invcosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Arc-kosinus</value>
+    <value>Boogkosinus</value>
     <comment>Screen reader prompt for the inverted cos on the scientific operator keypad.</comment>
   </data>
   <data name="invtanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Arc-tangens</value>
+    <value>Boogtangens</value>
     <comment>Screen reader prompt for the inverted tan on the scientific operator keypad.</comment>
   </data>
   <data name="invsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1014,7 +1014,7 @@
     <comment>Screen reader for the log base 10  on the scientific operator keypad</comment>
   </data>
   <data name="logBaseEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Natural-log</value>
+    <value>Natuurlike log</value>
     <comment>Screen reader for the log base e on the scientific operator keypad</comment>
   </data>
   <data name="modButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1022,11 +1022,11 @@
     <comment>Screen reader for the mod button on the scientific operator keypad</comment>
   </data>
   <data name="expButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Tot die mag</value>
+    <value>Eksponensiaal</value>
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
   <data name="dmsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Grade Minuut Seokonde</value>
+    <value>Grade Minuut Sekonde</value>
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
   <data name="degreesButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1050,15 +1050,15 @@
     <comment>This the Deg button's Degree mode automation nameon the scientific operator keypad. Should read as "Degrees toggle button".</comment>
   </data>
   <data name="gradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Gradiëntewissel</value>
+    <value>Gradiaalwissel</value>
     <comment>This is the Deg button's Grad mode automation name on the scientific operator keypad. Should read as "Gradians toggle button".</comment>
   </data>
   <data name="radButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Radialewissel</value>
+    <value>Radiaalwissel</value>
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
   <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Aftrekkieslys vir modus</value>
+    <value>Modus-aftrekkieslys</value>
     <comment>Screen reader prompt for the Mode dropdown field in Snapped and Portrait modes.</comment>
   </data>
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1090,7 +1090,7 @@
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Convert from 7 point _current_unit_". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_ValueTo" xml:space="preserve">
-    <value>Skakel om in %1 %2</value>
+    <value>Skakel om na %1 %2</value>
     <comment>Screen reader prompt for the Unit Converter Value2 i.e. bottom number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ConversionResult" xml:space="preserve">
@@ -1098,7 +1098,7 @@
     <comment>Screen reader prompt for a conversion result, ie "2 liters is 2,000 milliliters" . %1 = From unit display value, %2 = From unit, %3 = To unit display value, %4 = To unit.</comment>
   </data>
   <data name="InputUnit_Name" xml:space="preserve">
-    <value>Toevoereenheid</value>
+    <value>Invoereenheid</value>
     <comment>Screen reader prompt for the Unit Converter Units1 i.e. top units field.</comment>
   </data>
   <data name="OutputUnit_Name" xml:space="preserve">
@@ -1162,7 +1162,7 @@
     <comment>A measurement unit for volume, in plural. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FluidOunceUK" xml:space="preserve">
-    <value>vloz (VK)</value>
+    <value>vloz. (VK)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_FluidOunceUS" xml:space="preserve">
@@ -1170,7 +1170,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FluidOunceUS" xml:space="preserve">
-    <value>vloz (VSA)</value>
+    <value>vloz. (VSA)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUK" xml:space="preserve">
@@ -1178,7 +1178,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_GallonUK" xml:space="preserve">
-    <value>g (VK)</value>
+    <value>gall. (VK)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUS" xml:space="preserve">
@@ -1186,7 +1186,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_GallonUS" xml:space="preserve">
-    <value>g (VSA)</value>
+    <value>gall. (VSA)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Liter" xml:space="preserve">
@@ -1202,7 +1202,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Milliliter" xml:space="preserve">
-    <value>mL</value>
+    <value>ml</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_PintUK" xml:space="preserve">
@@ -1210,7 +1210,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_PintUK" xml:space="preserve">
-    <value>pt (VK)</value>
+    <value>pt. (VK)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_PintUS" xml:space="preserve">
@@ -1218,7 +1218,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_PintUS" xml:space="preserve">
-    <value>pt (VSA)</value>
+    <value>pt. (VSA)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TablespoonUS" xml:space="preserve">
@@ -1258,7 +1258,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_QuartUK" xml:space="preserve">
-    <value>kw (VK)</value>
+    <value>kw. (VK)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_QuartUS" xml:space="preserve">
@@ -1266,7 +1266,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_QuartUS" xml:space="preserve">
-    <value>kw (VSA)</value>
+    <value>kw. (VSA)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_CupUS" xml:space="preserve">
@@ -1278,7 +1278,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
-    <value>ac</value>
+    <value>akker</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Bit" xml:space="preserve">
@@ -1290,7 +1290,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_BTUPerMinute" xml:space="preserve">
-    <value>BTE/min</value>
+    <value>BTE/min.</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Byte" xml:space="preserve">
@@ -1298,7 +1298,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Calorie" xml:space="preserve">
-    <value>kal</value>
+    <value>kal.</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Centimeter" xml:space="preserve">
@@ -1306,7 +1306,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_CentimetersPerSecond" xml:space="preserve">
-    <value>cm/sek</value>
+    <value>cm/sek.</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_CubicCentimeter" xml:space="preserve">
@@ -1330,7 +1330,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Day" xml:space="preserve">
-    <value>d</value>
+    <value>d.</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_DegreesCelsius" xml:space="preserve">
@@ -1346,15 +1346,15 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Foot" xml:space="preserve">
-    <value>vt</value>
+    <value>vt.</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_FeetPerSecond" xml:space="preserve">
-    <value>vt/sek</value>
+    <value>vt./sek.</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Foot-Pound" xml:space="preserve">
-    <value>vt•lb</value>
+    <value>vt.•lb.</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Gigabit" xml:space="preserve">
@@ -1370,11 +1370,11 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Horsepower" xml:space="preserve">
-    <value>pk (VSA)</value>
+    <value>pk. (VSA)</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Hour" xml:space="preserve">
-    <value>u</value>
+    <value>u.</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Inch" xml:space="preserve">
@@ -1394,11 +1394,11 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kilobyte" xml:space="preserve">
-    <value>KG</value>
+    <value>KB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kilocalorie" xml:space="preserve">
-    <value>kkal</value>
+    <value>kkal.</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Kilojoule" xml:space="preserve">
@@ -1430,7 +1430,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Megabyte" xml:space="preserve">
-    <value>MG</value>
+    <value>MB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Meter" xml:space="preserve">
@@ -1438,7 +1438,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_MetersPerSecond" xml:space="preserve">
-    <value>m/sek</value>
+    <value>m/sek.</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Micron" xml:space="preserve">
@@ -1450,11 +1450,11 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Mile" xml:space="preserve">
-    <value>myl</value>
+    <value>m.</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_MilesPerHour" xml:space="preserve">
-    <value>mpu</value>
+    <value>m.p.u.</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Millimeter" xml:space="preserve">
@@ -1466,7 +1466,7 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Minute" xml:space="preserve">
-    <value>min</value>
+    <value>min.</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Nanometer" xml:space="preserve">
@@ -1474,7 +1474,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_NauticalMile" xml:space="preserve">
-    <value>nm</value>
+    <value>sm.</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Petabit" xml:space="preserve">
@@ -1482,15 +1482,15 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Petabyte" xml:space="preserve">
-    <value>PG</value>
+    <value>PB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Foot-PoundPerMinute" xml:space="preserve">
-    <value>vt•lb/min</value>
+    <value>vt.•lb./min.</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Second" xml:space="preserve">
-    <value>s</value>
+    <value>sek.</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_SquareCentimeter" xml:space="preserve">
@@ -1514,7 +1514,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareMile" xml:space="preserve">
-    <value>m²</value>
+    <value>mi²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareMillimeter" xml:space="preserve">
@@ -1530,7 +1530,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Terabyte" xml:space="preserve">
-    <value>TG</value>
+    <value>TB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Watt" xml:space="preserve">
@@ -1538,15 +1538,15 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Week" xml:space="preserve">
-    <value>w</value>
+    <value>w.</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Yard" xml:space="preserve">
-    <value>jt</value>
+    <value>jt.</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Year" xml:space="preserve">
-    <value>j</value>
+    <value>j.</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Gibibits" xml:space="preserve">
@@ -1638,7 +1638,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitName_Acre" xml:space="preserve">
-    <value>Acres</value>
+    <value>Akker</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bit" xml:space="preserve">
@@ -1650,7 +1650,7 @@
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_BTUPerMinute" xml:space="preserve">
-    <value>BTE’s/minuut</value>
+    <value>BTE’e/minuut</value>
     <comment>A measurement unit for power: British Thermal Units per minute. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Byte" xml:space="preserve">
@@ -1918,19 +1918,19 @@
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Radian" xml:space="preserve">
-    <value>ra</value>
+    <value>rad.</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Gradian" xml:space="preserve">
-    <value>gr</value>
+    <value>grad.</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Atmosphere" xml:space="preserve">
-    <value>atm</value>
+    <value>atm.</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Bar" xml:space="preserve">
-    <value>ba</value>
+    <value>bar.</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_KiloPascal" xml:space="preserve">
@@ -1942,7 +1942,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Pascal" xml:space="preserve">
-    <value>pa</value>
+    <value>Pa</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_PSI" xml:space="preserve">
@@ -1986,7 +1986,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Pound" xml:space="preserve">
-    <value>lb</value>
+    <value>lb.</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_ShortTon" xml:space="preserve">
@@ -1994,11 +1994,11 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Stone" xml:space="preserve">
-    <value>st</value>
+    <value>st.</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Tonne" xml:space="preserve">
-    <value>t</value>
+    <value>t.</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitName_Carat" xml:space="preserve">
@@ -2010,11 +2010,11 @@
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Radian" xml:space="preserve">
-    <value>Radiaan</value>
+    <value>Radiale</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Gradian" xml:space="preserve">
-    <value>Gradiënte</value>
+    <value>Gradiale</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Atmosphere" xml:space="preserve">
@@ -2038,7 +2038,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_PSI" xml:space="preserve">
-    <value>Pond per vierkanteduim</value>
+    <value>Pond per vierkante duim</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Centigram" xml:space="preserve">
@@ -2238,11 +2238,11 @@
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paper" xml:space="preserve">
-    <value>papierblaaie</value>
+    <value>blaaie papier</value>
     <comment>A sheet of 8.5 x 11 inch paper, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Paper" xml:space="preserve">
-    <value>papierblaaie</value>
+    <value>blaaie papier</value>
     <comment>A sheet of 8.5 x 11 inch paper, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Castle" xml:space="preserve">
@@ -2310,12 +2310,16 @@
     <comment>Label displayed next to upcoming features</comment>
   </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
-    <value>Microsoft-Privaatheidstelling</value>
+    <value>Microsoft-privaatheidstelling</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
   </data>
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© %1 Microsoft. Alle regte voorbehou.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
+  </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Om uit te vind hoe om tot Windows-Sakrekenaar by te dra, gaan kyk na die projek op %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Inligting oor</value>
@@ -2382,19 +2386,19 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabits" xml:space="preserve">
-    <value>Exabisse</value>
+    <value>Eksabisse</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabytes" xml:space="preserve">
-    <value>Exagrepe</value>
+    <value>Eksagrepe</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibits" xml:space="preserve">
-    <value>Exbibisse</value>
+    <value>Eksbibisse</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibytes" xml:space="preserve">
-    <value>Exbigrepe</value>
+    <value>Eksbigrepe</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabits" xml:space="preserve">
@@ -2520,11 +2524,11 @@
     <comment>Automation name for reading out the resulting date in Add/Subtract mode. %1 = Resulting date</comment>
   </data>
   <data name="HeaderAutomationName_Calculator" xml:space="preserve">
-    <value>%1 Sakrekenaarmodus</value>
+    <value>%1-sakrekenaarmodus</value>
     <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current calculator mode: Scientific, Standard, or Programmer.</comment>
   </data>
   <data name="HeaderAutomationName_Converter" xml:space="preserve">
-    <value>%1 Omskakelaarmodus</value>
+    <value>%1-omsettermodus</value>
     <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and Mass", "Energy", "Volume", etc.</comment>
   </data>
   <data name="HeaderAutomationName_Date" xml:space="preserve">
@@ -2536,27 +2540,27 @@
     <comment>Automation name for the group of controls for history and memory lists.</comment>
   </data>
   <data name="MemoryPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Geheuebeheermiddels</value>
+    <value>Geheuekontroles</value>
     <comment>Automation name for the group of memory controls (Mem Clear, Mem Recall, Mem Add, Mem Subtract, Mem Store, Memory flyout toggle)</comment>
   </data>
   <data name="StandardFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Standaard funksies</value>
+    <value>Standaardfunksies</value>
     <comment>Automation name for the group of standard function buttons (Percent, Square Root, Square, Cube, Reciprocal)</comment>
   </data>
   <data name="DisplayControls.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Skermbeheermiddels</value>
+    <value>Vertoonkontroles</value>
     <comment>Automation name for the group of display control buttons (Clear, Clear Entry, and Backspace)</comment>
   </data>
   <data name="StandardOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Standaard operateurs</value>
+    <value>Standaardoperators</value>
     <comment>Automation name for the group of standard operator buttons (Add, Subtract, Multiply, Divide, and Equals)</comment>
   </data>
   <data name="NumberPad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Sleutelbladjie</value>
+    <value>Sleutelblok</value>
     <comment>Automation name for the group of NumberPad buttons (0-9, A-F and Decimal button)</comment>
   </data>
   <data name="ScientificAngleOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Hoekoperateurs</value>
+    <value>Hoekoperators</value>
     <comment>Automation name for the group of Scientific angle operators (Degree mode, Hyperbolic toggle, and Precision button)</comment>
   </data>
   <data name="ScientificFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2568,7 +2572,7 @@
     <comment>Automation name for the group of radices (Hexadecimal, Decimal, Octal, Binary). https://en.wikipedia.org/wiki/Radix </comment>
   </data>
   <data name="ProgrammerOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Programmeerder-operateurs</value>
+    <value>Programmeerder-operators</value>
     <comment>Automation name for the group of programmer operators (RoL, RoR, Lsh, Rsh, OR, XOR, NOT, AND).</comment>
   </data>
   <data name="InputModeSelectionGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2600,15 +2604,15 @@
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user stores a number to memory. The %1 is the automation name of the display. Users will hear "_current_value_ saved to memory".</comment>
   </data>
   <data name="Format_MemorySlotChanged" xml:space="preserve">
-    <value>Geheuegleuf %1 is %2</value>
+    <value>Geheue-gleuf %1 is %2</value>
     <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when the user changes a memory slot. The %1 is the index of the memory slot and %2 is the new value. For example, users might hear "Memory slot 2 is 37".</comment>
   </data>
   <data name="Format_MemorySlotCleared" xml:space="preserve">
-    <value>Geheue-gleuf %1 skoongemaak</value>
+    <value>Geheue-gleuf %1 is uitgevee</value>
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a memory slot. The %1 is the index of the memory slot. For example, users might hear "Memory slot 2 cleared".</comment>
   </data>
   <data name="divideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>deel deur</value>
+    <value>gedeel deur</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
   </data>
   <data name="multiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2628,7 +2632,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
   </data>
   <data name="ySquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>'y'-wortel</value>
+    <value>y-wortel</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
   </data>
   <data name="modButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2636,11 +2640,11 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>linker-shift</value>
+    <value>linksskuif</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>regter-shift</value>
+    <value>regsskuif</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2668,7 +2672,7 @@
     <comment>The text displayed for a hyperlink button that refreshes currency converter ratios.</comment>
   </data>
   <data name="DataChargesMayApply" xml:space="preserve">
-    <value>Datakoste kan moontlik van toepassing wees.</value>
+    <value>Datakoste kan moontlik geld.</value>
     <comment>The text displayed when users are on a metered connection and using currency converter.</comment>
   </data>
   <data name="FailedToRefresh" xml:space="preserve">
@@ -2792,19 +2796,19 @@
     <comment>Name for the sine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="SineGradians" xml:space="preserve">
-    <value>sinusradiale</value>
+    <value>sinusgradiale</value>
     <comment>Name for the sine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineDegrees" xml:space="preserve">
-    <value>omgekeerde sinusgrade</value>
+    <value>inverse sinusgrade</value>
     <comment>Name for the inverse sine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineRadians" xml:space="preserve">
-    <value>omgekeerde sinusradiale</value>
+    <value>inverse sinusradiale</value>
     <comment>Name for the inverse sine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineGradians" xml:space="preserve">
-    <value>omgekeerde sinusradiale</value>
+    <value>inverse sinusgradiale</value>
     <comment>Name for the inverse sine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="HyperbolicSine" xml:space="preserve">
@@ -2812,7 +2816,7 @@
     <comment>Name for the hyperbolic sine function. Used by screen readers.</comment>
   </data>
   <data name="InverseHyperbolicSine" xml:space="preserve">
-    <value>omgekeerde hiperboliese sinus</value>
+    <value>inverse hiperboliese sinus</value>
     <comment>Name for the inverse hyperbolic sine function. Used by screen readers.</comment>
   </data>
   <data name="CosineDegrees" xml:space="preserve">
@@ -2824,19 +2828,19 @@
     <comment>Name for the cosine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="CosineGradians" xml:space="preserve">
-    <value>kosinusradiale</value>
+    <value>kosinusgradiale</value>
     <comment>Name for the cosine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineDegrees" xml:space="preserve">
-    <value>omgekeerde kosinusgrade</value>
+    <value>inverse kosinusgrade</value>
     <comment>Name for the inverse cosine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineRadians" xml:space="preserve">
-    <value>omgekeerde kosinusradiale</value>
+    <value>inverse kosinusradiale</value>
     <comment>Name for the inverse cosine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineGradians" xml:space="preserve">
-    <value>omgekeerde kosinusradiale</value>
+    <value>inverse kosinusgradiale</value>
     <comment>Name for the inverse cosine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="HyperbolicCosine" xml:space="preserve">
@@ -2844,7 +2848,7 @@
     <comment>Name for the hyperbolic cosine function. Used by screen readers.</comment>
   </data>
   <data name="InverseHyperbolicCosine" xml:space="preserve">
-    <value>omgkeerde hiperboliese kosinus</value>
+    <value>inverse hiperboliese kosinus</value>
     <comment>Name for the inverse hyperbolic cosine function. Used by screen readers.</comment>
   </data>
   <data name="TangentDegrees" xml:space="preserve">
@@ -2856,19 +2860,19 @@
     <comment>Name for the tangent function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="TangentGradians" xml:space="preserve">
-    <value>tangensradiale</value>
+    <value>tangensgradiale</value>
     <comment>Name for the tangent function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentDegrees" xml:space="preserve">
-    <value>omgekeerde tangensgrade</value>
+    <value>inverse tangensgrade</value>
     <comment>Name for the inverse tangent function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentRadians" xml:space="preserve">
-    <value>omgekeerde tangensradiale</value>
+    <value>inverse tangensradiale</value>
     <comment>Name for the inverse tangent function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentGradians" xml:space="preserve">
-    <value>omgekeerde tangensradiale</value>
+    <value>inverse tangensgradiale</value>
     <comment>Name for the inverse tangent function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="HyperbolicTangent" xml:space="preserve">
@@ -2876,7 +2880,7 @@
     <comment>Name for the hyperbolic tangent function. Used by screen readers.</comment>
   </data>
   <data name="InverseHyperbolicTangent" xml:space="preserve">
-    <value>omgekeerde hiperboliese tangens</value>
+    <value>inverse hiperboliese tangens</value>
     <comment>Name for the inverse hyperbolic tangent function. Used by screen readers.</comment>
   </data>
   <data name="SecantDegrees" xml:space="preserve">
@@ -2988,11 +2992,11 @@
     <comment>Name for the absolute value function. Used by screen readers.</comment>
   </data>
   <data name="LeftShift" xml:space="preserve">
-    <value>linker-shift</value>
+    <value>linksskuif</value>
     <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
   </data>
   <data name="RightShift" xml:space="preserve">
-    <value>regter-shift</value>
+    <value>regsskuif</value>
     <comment>Name for the programmer function that shifts bits to the right. Used by screen readers.</comment>
   </data>
   <data name="Factorial" xml:space="preserve">
@@ -3004,7 +3008,7 @@
     <comment>Name for the degree minute second (dms) function. Used by screen readers.</comment>
   </data>
   <data name="NaturalLog" xml:space="preserve">
-    <value>natural-log</value>
+    <value>natuurlike log</value>
     <comment>Name for the natural log (ln) function. Used by screen readers.</comment>
   </data>
   <data name="Square" xml:space="preserve">
@@ -3020,7 +3024,7 @@
     <comment>{Locked='%1','%2'}.  Format string for the accessible name of a Calculator menu item, used by screen readers. "%1" is the item name, e.g. Standard, Programmer, etc. %2 is the category name, e.g. Calculator, Converter. An example when formatted is "Standard Calculator" or "Currency Converter".</comment>
   </data>
   <data name="NavCategoryHeader_AutomationNameFormat" xml:space="preserve">
-    <value>%1 kategorie</value>
+    <value>%1-kategorie</value>
     <comment>{Locked='%1'} Format string for the accessible name of a Calculator menu category header, used by screen readers. "%1" is the pluralized category name, e.g. Calculators, Converters. An example when formatted is "Calculators category".</comment>
   </data>
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">

@@ -474,7 +474,7 @@
     <comment>Label for a control that activates the unit converter mode.</comment>
   </data>
   <data name="scientificModeButton.Content" xml:space="preserve">
-    <value>Avancerat</value>
+    <value>Vetenskaplig</value>
     <comment>Label for a control that activates scientific mode calculator layout</comment>
   </data>
   <data name="standardModeButton.Content" xml:space="preserve">
@@ -510,7 +510,7 @@
     <comment>The text that shows in the dropdown navigation control in snapped mode when standard calculator mode is selected.</comment>
   </data>
   <data name="ScientificModeText" xml:space="preserve">
-    <value>Avancerad</value>
+    <value>Vetenskaplig</value>
     <comment>The text that shows in the dropdown navigation control in snapped mode when scientific calculator mode is selected.</comment>
   </data>
   <data name="ProgrammerModeText" xml:space="preserve">
@@ -550,7 +550,7 @@
     <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
-    <value>Resultatet är %1 komma</value>
+    <value>Visa är %1 punkt</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
@@ -878,7 +878,7 @@
     <comment>Screen reader prompt for the minus button on the number pad</comment>
   </data>
   <data name="minus" xml:space="preserve">
-    <value>minus</value>
+    <value>Minus</value>
     <comment>We use this resource to replace "-" sign for accessibility. So expression like, 1 - 3 = -2 becomes 1 minus 3 = minus 2</comment>
   </data>
   <data name="plusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1002,7 +1002,7 @@
     <comment>Screen reader prompt for the 10 power x button on the scientific operator keypad.</comment>
   </data>
   <data name="powerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Exponenten e</value>
+    <value>'e' till exponenten</value>
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
   <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1086,7 +1086,7 @@
     <comment>Screen reader prompt for the Unit Converter Value1 i.e. top number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ValueFrom_Decimal" xml:space="preserve">
-    <value>Konvertera från %1 komma %2</value>
+    <value>Konvertera från %1 punkt %2</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Convert from 7 point _current_unit_". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_ValueTo" xml:space="preserve">
@@ -1122,7 +1122,7 @@
     <comment>Unit conversion category name called Length</comment>
   </data>
   <data name="CategoryName_PowerText" xml:space="preserve">
-    <value>Effekt</value>
+    <value>Ström</value>
     <comment>Unit conversion category name called Power (eg. the power of an engine or a light bulb)</comment>
   </data>
   <data name="CategoryName_SpeedText" xml:space="preserve">
@@ -1194,7 +1194,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Liter" xml:space="preserve">
-    <value>l</value>
+    <value>L</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
@@ -1390,11 +1390,11 @@
     <comment>An abbreviation for the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin)</comment>
   </data>
   <data name="UnitAbbreviation_Kilobit" xml:space="preserve">
-    <value>kbit</value>
+    <value>Kb</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kilobyte" xml:space="preserve">
-    <value>kB</value>
+    <value>KB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kilocalorie" xml:space="preserve">
@@ -1478,7 +1478,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Petabit" xml:space="preserve">
-    <value>Pbit</value>
+    <value>Pb</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Petabyte" xml:space="preserve">
@@ -1526,7 +1526,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Terabit" xml:space="preserve">
-    <value>Tbit</value>
+    <value>Tb</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Terabyte" xml:space="preserve">
@@ -1638,7 +1638,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitName_Acre" xml:space="preserve">
-    <value>Acre</value>
+    <value>Tunnland</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bit" xml:space="preserve">
@@ -1658,7 +1658,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Calorie" xml:space="preserve">
-    <value>Värmekalorier</value>
+    <value>Termiska kalorier</value>
     <comment>A measurement unit for energy. Please note that this is the "small calorie" used in science for measuring heat energy, not the "large calorie" commonly used for measuring food energy. If there is a simple term to distinguish this one from the large "Food calorie", please use that. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Centimeter" xml:space="preserve">
@@ -1794,7 +1794,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Megabyte" xml:space="preserve">
-    <value>Megabyte</value>
+    <value>MB</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Meter" xml:space="preserve">
@@ -1874,7 +1874,7 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareMile" xml:space="preserve">
-    <value>Kvadratmiles</value>
+    <value>Kvadratmile</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareMillimeter" xml:space="preserve">
@@ -2014,7 +2014,7 @@
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Gradian" xml:space="preserve">
-    <value>Gon</value>
+    <value>Gradians</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Atmosphere" xml:space="preserve">
@@ -2022,7 +2022,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Bar" xml:space="preserve">
-    <value>Bar</value>
+    <value>Barer</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_KiloPascal" xml:space="preserve">
@@ -2294,11 +2294,11 @@
     <comment>This string is what is read by Narrator, and other screen readers, for the supplementary value at the bottom of the converter view, %1 = the value of the supplementary unit (i.e. 0.5), %2 = the unit itself (i.e. inches, meters, etc)</comment>
   </data>
   <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Bakåt</value>
+    <value>Tillbaka</value>
     <comment>Screen reader prompt for the About panel back button</comment>
   </data>
   <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Bakåt</value>
+    <value>Tillbaka</value>
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
   <data name="AboutFlyoutEULA.Text" xml:space="preserve">
@@ -2316,6 +2316,10 @@
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© %1 Microsoft. Med ensamrätt.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
+  </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Om du vill veta hur du kan bidra till Windows-kalkylatorn kan du checka ut projektet på %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Om</value>
@@ -2469,7 +2473,7 @@
     <comment>Add/Subtract Months label</comment>
   </data>
   <data name="SubtractOption.Content" xml:space="preserve">
-    <value>Dra ifrån</value>
+    <value>Subtract</value>
     <comment>Subtract toggle button text</comment>
   </data>
   <data name="DateDiff_ToHeader.Header" xml:space="preserve">
@@ -2640,7 +2644,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>höger skift</value>
+    <value>högerskift</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2824,7 +2828,7 @@
     <comment>Name for the cosine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="CosineGradians" xml:space="preserve">
-    <value>cosinus gon</value>
+    <value>cosinus gradians</value>
     <comment>Name for the cosine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineDegrees" xml:space="preserve">

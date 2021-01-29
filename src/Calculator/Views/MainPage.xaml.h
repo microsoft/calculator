@@ -58,6 +58,7 @@ public
             _In_ Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs ^ e);
 
         void OnSettingsButtonClick(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::ItemClickEventArgs ^ e, CalculatorApp::Common::ViewMode mode);
+        void OnSettingsButtonKeyDown(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
         void AlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void TitleBarAlwaysOnTopButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 

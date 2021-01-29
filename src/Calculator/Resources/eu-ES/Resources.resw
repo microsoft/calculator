@@ -122,7 +122,7 @@
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppName" xml:space="preserve">
-    <value>Kalkulagailua [Gar.]</value>
+    <value>Kalkulagailua [Dev]</value>
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the name of the application when built by a user via GitHub. We use a different name to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="AppStoreName" xml:space="preserve">
@@ -130,7 +130,7 @@
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
   </data>
   <data name="DevAppStoreName" xml:space="preserve">
-    <value>Windows Kalkulagailua [Gar.]</value>
+    <value>Windows Kalkulagailua [Dev]</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps. This is the the version of the name used when the app is built by a user via GitHub.</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
@@ -138,7 +138,7 @@
     <comment>{@Appx_Description@} This description is used for the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppDescription" xml:space="preserve">
-    <value>Kalkulagailua [Gar.]</value>
+    <value>Kalkulagailua [Dev]</value>
     <comment>{@Appx_Description@} This is the description of the application when built by a user via GitHub. We use a different description to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="copyMenuItem" xml:space="preserve">
@@ -555,7 +555,7 @@
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
-    <value>Adierazpena da %1</value>
+    <value>Adierazpena %1 da</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator expression results. %1 = Localized display value, e.g. "50 + 2 - 60 +".</comment>
   </data>
   <data name="Display_Copied" xml:space="preserve">
@@ -655,7 +655,7 @@
     <comment>This is the tool tip automation name for the Clear Memory Item (MC) button in the Memory list.</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Gehitu memoriako elementuari</value>
+    <value>Gehitu memoriako elementuri</value>
     <comment>Screen reader prompt for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -679,11 +679,11 @@
     <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
   </data>
   <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Gehitu memoriako elementuan</value>
+    <value>Gehitu memoriako elementuri</value>
     <comment>Screen reader prompt for the Calculator Memory Add swipe button in the Memory list</comment>
   </data>
   <data name="MemPlusMenuItem.Text" xml:space="preserve">
-    <value>Gehitu memoriako elementuan</value>
+    <value>Gehitu memoriako elementuri</value>
     <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
   </data>
   <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -819,7 +819,7 @@
     <comment>Screen reader prompt for the Calculator RSH button</comment>
   </data>
   <data name="xorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Edo esklusiboa</value>
+    <value>Esklusiboa edo</value>
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -899,11 +899,11 @@
     <comment>Screen reader prompt for the negate button on the scientific operator keypad</comment>
   </data>
   <data name="converterNegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Positiboa, negatiboa</value>
+    <value>Positiboa negatiboa</value>
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
   <data name="invertButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Erreziprokoa</value>
+    <value>Elkarrekikoa</value>
     <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
   </data>
   <data name="openParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1007,7 +1007,7 @@
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
   <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>“x”-en “y” erroa</value>
+    <value>"x"-en "y" erroa</value>
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
   <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1051,7 +1051,7 @@
     <comment>This the Deg button's Degree mode automation nameon the scientific operator keypad. Should read as "Degrees toggle button".</comment>
   </data>
   <data name="gradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Aldatu gradianak</value>
+    <value>Aldatu gradienteak</value>
     <comment>This is the Deg button's Grad mode automation name on the scientific operator keypad. Should read as "Gradians toggle button".</comment>
   </data>
   <data name="radButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1787,7 +1787,7 @@
     <comment>A nautical/aerial measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mach" xml:space="preserve">
-    <value>mach</value>
+    <value>Mach</value>
     <comment>A measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
   </data>
   <data name="UnitName_Megabit" xml:space="preserve">
@@ -1895,7 +1895,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Watt" xml:space="preserve">
-    <value>Watt</value>
+    <value>watt</value>
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Week" xml:space="preserve">
@@ -2007,7 +2007,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Degree" xml:space="preserve">
-    <value>gradu</value>
+    <value>Graduak</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Radian" xml:space="preserve">
@@ -2318,6 +2318,10 @@
     <value>© %1 Microsoft. Eskubide guztiak erreserbatuta.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Windows Kalkulagailuari ekarpenak egiten ikasteko, begiratu proiektua hemen: %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Honi buruz</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
@@ -2339,7 +2343,7 @@
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
   <data name="CannotPaste" xml:space="preserve">
-    <value>Ezin da adierazpena itsatsi</value>
+    <value>Ezin da itsatsi adierazpena</value>
     <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
   </data>
   <data name="UnitName_Gibibits" xml:space="preserve">
@@ -2454,7 +2458,7 @@
     <comment>Date Difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
-    <value>Egunak</value>
+    <value>egun</value>
     <comment>Add/Subtract Days label</comment>
   </data>
   <data name="Date_DifferenceLabel.Text" xml:space="preserve">
@@ -2478,7 +2482,7 @@
     <comment>To Date Header for Difference Date Picker</comment>
   </data>
   <data name="YearsLabel.Text" xml:space="preserve">
-    <value>Urteak</value>
+    <value>urte</value>
     <comment>Add/Subtract Years label</comment>
   </data>
   <data name="Date_OutOfBoundMessage" xml:space="preserve">
@@ -2517,7 +2521,7 @@
     <comment>Automation name for reading out the date difference. %1 =  Date difference</comment>
   </data>
   <data name="Date_ResultingDateAutomationName" xml:space="preserve">
-    <value>Data %1</value>
+    <value>Emaitzaren data: %1</value>
     <comment>Automation name for reading out the resulting date in Add/Subtract mode. %1 = Resulting date</comment>
   </data>
   <data name="HeaderAutomationName_Calculator" xml:space="preserve">
@@ -2577,7 +2581,7 @@
     <comment>Automation name for the group of input mode toggling buttons.</comment>
   </data>
   <data name="BitFlipPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Bitak txandakatzeko teklatua</value>
+    <value>Bitak txandakatzeko zenbakizko teklatua</value>
     <comment>Automation name for the group of bit toggling buttons.</comment>
   </data>
   <data name="scrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2589,7 +2593,7 @@
     <comment>Automation label for the "scroll right" button that appears when an expression is too large to fit in the window.</comment>
   </data>
   <data name="Format_MaxDigitsReached" xml:space="preserve">
-    <value>Gehienezko zenbaki kopurua erdietsi da. %1</value>
+    <value>Gehieneko zenbaki kopurua erdietsi da. %1</value>
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when user reaches max digits. The %1 is the automation name of the display. Users will hear "Max digits reached. Display is _current_value_".</comment>
   </data>
   <data name="Format_ButtonPressAuditoryFeedback" xml:space="preserve">
@@ -3025,7 +3029,7 @@
     <comment>{Locked='%1'} Format string for the accessible name of a Calculator menu category header, used by screen readers. "%1" is the pluralized category name, e.g. Calculators, Converters. An example when formatted is "Calculators category".</comment>
   </data>
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">
-    <value>Microsoft-en zerbitzu-hitzarmena</value>
+    <value>Microsoft-en zerbitzu-hitzarmen</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
   </data>
   <data name="UnitAbbreviation_Pyeong" xml:space="preserve">

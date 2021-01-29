@@ -130,23 +130,23 @@
     <comment>Error message shown when we run out of memory during a calculation.</comment>
   </data>
   <data name="107" xml:space="preserve">
-    <value>Tràn</value>
+    <value>Tràn ra</value>
     <comment>Error message shown when there's an overflow during the calculation.</comment>
   </data>
   <data name="108" xml:space="preserve">
-    <value>Kết quả không xác định</value>
+    <value>Kết quả không được xác định</value>
     <comment>Same as 101</comment>
   </data>
   <data name="118" xml:space="preserve">
-    <value>Kết quả không xác định</value>
+    <value>Kết quả không được xác định</value>
     <comment>Same 101</comment>
   </data>
   <data name="119" xml:space="preserve">
-    <value>Tràn</value>
+    <value>Tràn ra</value>
     <comment>Same as 107</comment>
   </data>
   <data name="120" xml:space="preserve">
-    <value>Tràn</value>
+    <value>Tràn ra</value>
     <comment>Same 107</comment>
   </data>
   <data name="99" xml:space="preserve">

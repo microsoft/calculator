@@ -441,6 +441,14 @@ void MainPage::OnSettingsButtonClick(Object ^ sender, ItemClickEventArgs ^ e, Vi
     EnsureSettings();
 }
 
+void MainPage::OnSettingsButtonKeyDown(Object ^ sender, KeyRoutedEventArgs ^ e)
+{
+    if (e->Key == VirtualKey::Space || e->Key == VirtualKey::Enter)
+    {
+        EnsureSettings();
+    }
+}
+
 void MainPage::CollapseSettings()
 {
     SettingsHolder->Visibility = ::Visibility::Collapsed;

@@ -150,7 +150,7 @@
     <comment>Same 107</comment>
   </data>
   <data name="99" xml:space="preserve">
-    <value>0으로 나눌 수 없습니다.</value>
+    <value>0으로 나눌 수 없습니다</value>
     <comment>Error string shown when a divide by zero condition happens during the calculation</comment>
   </data>
 </root>

@@ -542,7 +542,7 @@
     <comment>Pluralized version of the calculator group text, used for the screen reader prompt.</comment>
   </data>
   <data name="Format_CalculatorResults" xml:space="preserve">
-    <value>Exibição é %1</value>
+    <value>A exibição é %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
@@ -690,7 +690,7 @@
     <comment>Screen reader prompt for the Calculator Memory Subtract swipe button in the Memory list</comment>
   </data>
   <data name="MemMinusMenuItem.Text" xml:space="preserve">
-    <value>Subtrair do item de memória</value>
+    <value>Subtrair do item da memória</value>
     <comment>Text string for the Calculator Memory Subtract option in the Memory list context menu</comment>
   </data>
   <data name="DeleteHistorySwipeItem.Text" xml:space="preserve">
@@ -878,7 +878,7 @@
     <comment>Screen reader prompt for the minus button on the number pad</comment>
   </data>
   <data name="minus" xml:space="preserve">
-    <value>Sinal de Subtração</value>
+    <value>Menos</value>
     <comment>We use this resource to replace "-" sign for accessibility. So expression like, 1 - 3 = -2 becomes 1 minus 3 = minus 2</comment>
   </data>
   <data name="plusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -982,7 +982,7 @@
     <comment>Screen reader prompt for the inverted tan on the scientific operator keypad.</comment>
   </data>
   <data name="invsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value> Arco seno hiperbólico</value>
+    <value>Arco seno hiperbólico</value>
     <comment>Screen reader prompt for the inverted sinh on the scientific operator keypad.</comment>
   </data>
   <data name="invcoshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2317,6 +2317,10 @@
     <value>© %1 Microsoft. Todos os direitos reservados.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Para saber como você pode contribuir para a calculadora do Windows, faça check-out no projeto em %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Sobre</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
@@ -2740,7 +2744,7 @@
     <comment>AccessKey for the pressure converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_SpeedAccessKey" xml:space="preserve">
-    <value>E</value>
+    <value>S</value>
     <comment>AccessKey for the speed converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_TimeAccessKey" xml:space="preserve">

@@ -265,6 +265,13 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
                 if (!m_bError)
                 {
                     DisplayNum();
+                    if (!m_fPrecedence)
+                    {
+
+                        wstring groupedString = GroupDigitsPerRadix(m_numberString, m_radix);
+                        m_HistoryCollector.CompleteEquation(groupedString);
+                        m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
+                    }
                 }
 
                 if ((m_precedenceOpCount != 0) && (m_nPrecOp[m_precedenceOpCount - 1]))

@@ -122,7 +122,7 @@
     <comment>Error message shown when the input makes a function fail, like log(-1)</comment>
   </data>
   <data name="101" xml:space="preserve">
-    <value>Le résultat est non défini</value>
+    <value>Le résultat est indéfini</value>
     <comment>Error message shown when there's no possible value for a function.</comment>
   </data>
   <data name="105" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Same 107</comment>
   </data>
   <data name="99" xml:space="preserve">
-    <value>Nous ne pouvons pas diviser par zéro</value>
+    <value>Désolé... Nous ne pouvons pas diviser par zéro</value>
     <comment>Error string shown when a divide by zero condition happens during the calculation</comment>
   </data>
 </root>

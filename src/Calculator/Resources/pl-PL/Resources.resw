@@ -122,7 +122,7 @@
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppName" xml:space="preserve">
-    <value>Kalkulator [deweloper]</value>
+    <value>Kalkulator [Dev]</value>
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the name of the application when built by a user via GitHub. We use a different name to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="AppStoreName" xml:space="preserve">
@@ -130,7 +130,7 @@
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
   </data>
   <data name="DevAppStoreName" xml:space="preserve">
-    <value>Kalkulator Windows [deweloper]</value>
+    <value>Kalkulator Windows [Dev]</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps. This is the the version of the name used when the app is built by a user via GitHub.</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
@@ -138,7 +138,7 @@
     <comment>{@Appx_Description@} This description is used for the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppDescription" xml:space="preserve">
-    <value>Kalkulator [deweloper]</value>
+    <value>Kalkulator [Dev]</value>
     <comment>{@Appx_Description@} This is the description of the application when built by a user via GitHub. We use a different description to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="copyMenuItem" xml:space="preserve">
@@ -790,15 +790,15 @@
     <comment>Screen reader prompt for the Calculator number "F" button</comment>
   </data>
   <data name="andButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>And</value>
+    <value>I</value>
     <comment>Screen reader prompt for the Calculator And button</comment>
   </data>
   <data name="orButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Or</value>
+    <value>Lub</value>
     <comment>Screen reader prompt for the Calculator Or button</comment>
   </data>
   <data name="notButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Not</value>
+    <value>Nie</value>
     <comment>Screen reader prompt for the Calculator Not button</comment>
   </data>
   <data name="rolButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -818,7 +818,7 @@
     <comment>Screen reader prompt for the Calculator RSH button</comment>
   </data>
   <data name="xorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Lub wykluczające</value>
+    <value>Wyłączny lub</value>
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -994,7 +994,7 @@
     <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
   </data>
   <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>„X” do potęgi</value>
+    <value>'X' do wykładnika potęgowego</value>
     <comment>Screen reader prompt for x power y button on the scientific operator keypad. </comment>
   </data>
   <data name="powerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1006,7 +1006,7 @@
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
   <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>pierwiastek „y” stopnia z „x”</value>
+    <value>pierwiastek 'y' stopnia 'x'</value>
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
   <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1122,7 +1122,7 @@
     <comment>Unit conversion category name called Length</comment>
   </data>
   <data name="CategoryName_PowerText" xml:space="preserve">
-    <value>Moc</value>
+    <value>Zasilanie</value>
     <comment>Unit conversion category name called Power (eg. the power of an engine or a light bulb)</comment>
   </data>
   <data name="CategoryName_SpeedText" xml:space="preserve">
@@ -1270,7 +1270,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_CupUS" xml:space="preserve">
-    <value>Filiżanki (USA)</value>
+    <value>Cups (USA)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CupUS" xml:space="preserve">
@@ -2317,6 +2317,10 @@
     <value>© %1 Microsoft. Wszelkie prawa zastrzeżone.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Aby dowiedzieć się, jak można uczestniczyć w programie Kalkulator systemu Windows, Wyewidencjonuj projekt na stronie %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Informacje</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
@@ -2652,7 +2656,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>i</value>
+    <value>oraz</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="CurrencyFromToRatioFormat" xml:space="preserve">

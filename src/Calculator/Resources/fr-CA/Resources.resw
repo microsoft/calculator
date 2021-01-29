@@ -122,7 +122,7 @@
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppName" xml:space="preserve">
-    <value>Calculatrice [Dév]</value>
+    <value>Calculatrice [Dev]</value>
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the name of the application when built by a user via GitHub. We use a different name to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="AppStoreName" xml:space="preserve">
@@ -130,7 +130,7 @@
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
   </data>
   <data name="DevAppStoreName" xml:space="preserve">
-    <value>Calculatrice Windows [Dév]</value>
+    <value>Calculatrice Windows [Dev]</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps. This is the the version of the name used when the app is built by a user via GitHub.</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
@@ -138,7 +138,7 @@
     <comment>{@Appx_Description@} This description is used for the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppDescription" xml:space="preserve">
-    <value>Calculatrice [Dév]</value>
+    <value>Calculatrice [Dev]</value>
     <comment>{@Appx_Description@} This is the description of the application when built by a user via GitHub. We use a different description to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="copyMenuItem" xml:space="preserve">
@@ -442,7 +442,7 @@
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Clavier inverseur de bits</value>
+    <value>Clavier pour bit de basculement</value>
     <comment>This is the tool tip automation name for the bitFlip button.</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -550,7 +550,7 @@
     <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
-    <value>L’affichage est %1 point</value>
+    <value>L’affichage est %1point</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
@@ -614,7 +614,7 @@
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Effacer toutes les données de la mémoire</value>
+    <value>Effacer toute la mémoire</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="Memory_Cleared" xml:space="preserve">
@@ -662,11 +662,11 @@
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Soustraire de l’élément en mémoire</value>
+    <value>Soustraire de l'élément en mémoire</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Soustraire de l’élément en mémoire</value>
+    <value>Soustraire de l'élément en mémoire</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -674,7 +674,7 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryMenuItem.Text" xml:space="preserve">
-    <value>Effacer l'élément en mémoire</value>
+    <value>Effacer l’élément en mémoire</value>
     <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
   </data>
   <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -682,7 +682,7 @@
     <comment>Screen reader prompt for the Calculator Memory Add swipe button in the Memory list</comment>
   </data>
   <data name="MemPlusMenuItem.Text" xml:space="preserve">
-    <value>Ajouter à l'élément en mémoire</value>
+    <value>Ajouter à l’élément en mémoire</value>
     <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
   </data>
   <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -838,7 +838,7 @@
     <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Clavier inverseur de bits</value>
+    <value>Clavier pour bit de basculement</value>
     <comment>Screen reader prompt for the Calculator bitFlip button</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1294,7 +1294,7 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Byte" xml:space="preserve">
-    <value>O</value>
+    <value>B</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Calorie" xml:space="preserve">
@@ -1390,7 +1390,7 @@
     <comment>An abbreviation for the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin)</comment>
   </data>
   <data name="UnitAbbreviation_Kilobit" xml:space="preserve">
-    <value>kb</value>
+    <value>Kb</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kilobyte" xml:space="preserve">
@@ -1938,7 +1938,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_MillimeterOfMercury" xml:space="preserve">
-    <value>mm Hg</value>
+    <value>mmHg</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Pascal" xml:space="preserve">
@@ -1946,7 +1946,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_PSI" xml:space="preserve">
-    <value>lb/po² </value>
+    <value>lb/po²</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Centigram" xml:space="preserve">
@@ -2294,15 +2294,15 @@
     <comment>This string is what is read by Narrator, and other screen readers, for the supplementary value at the bottom of the converter view, %1 = the value of the supplementary unit (i.e. 0.5), %2 = the unit itself (i.e. inches, meters, etc)</comment>
   </data>
   <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Précédent</value>
+    <value>Retour</value>
     <comment>Screen reader prompt for the About panel back button</comment>
   </data>
   <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Précédent</value>
+    <value>Retour</value>
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
   <data name="AboutFlyoutEULA.Text" xml:space="preserve">
-    <value>Termes du contrat de licence logiciel Microsoft</value>
+    <value>Modalités du contrat de licence logiciel Microsoft</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
   <data name="PreviewTag.Text" xml:space="preserve">
@@ -2316,6 +2316,10 @@
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© %1 Microsoft. Tous droits réservés.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
+  </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Pour savoir comment vous pouvez contribuer à Windows Calculator, consultez le projet sur %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>À propos de</value>
@@ -2668,7 +2672,7 @@
     <comment>The text displayed for a hyperlink button that refreshes currency converter ratios.</comment>
   </data>
   <data name="DataChargesMayApply" xml:space="preserve">
-    <value>Des frais relatifs aux données peuvent s'appliquer.</value>
+    <value>Des frais de données peuvent s'appliquer.</value>
     <comment>The text displayed when users are on a metered connection and using currency converter.</comment>
   </data>
   <data name="FailedToRefresh" xml:space="preserve">
@@ -2716,7 +2720,7 @@
     <comment>AccessKey for the area converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_CurrencyAccessKey" xml:space="preserve">
-    <value>D</value>
+    <value>C</value>
     <comment>AccessKey for the currency converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_DataAccessKey" xml:space="preserve">
@@ -2740,7 +2744,7 @@
     <comment>AccessKey for the pressure converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_SpeedAccessKey" xml:space="preserve">
-    <value>V</value>
+    <value>S</value>
     <comment>AccessKey for the speed converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_TimeAccessKey" xml:space="preserve">
@@ -2788,19 +2792,19 @@
     <comment>Name for the sine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="SineRadians" xml:space="preserve">
-    <value>sinus - radians</value>
+    <value>radians sinus</value>
     <comment>Name for the sine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="SineGradians" xml:space="preserve">
-    <value>sinus - grades</value>
+    <value>grades sinus</value>
     <comment>Name for the sine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineDegrees" xml:space="preserve">
-    <value>arc sinus - degrés</value>
+    <value>degrés arc sinus</value>
     <comment>Name for the inverse sine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineRadians" xml:space="preserve">
-    <value>arc sinus - radians</value>
+    <value>radians arc sinus</value>
     <comment>Name for the inverse sine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineGradians" xml:space="preserve">
@@ -2816,19 +2820,19 @@
     <comment>Name for the inverse hyperbolic sine function. Used by screen readers.</comment>
   </data>
   <data name="CosineDegrees" xml:space="preserve">
-    <value>cosinus - degrés</value>
+    <value>degrés cosinus</value>
     <comment>Name for the cosine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="CosineRadians" xml:space="preserve">
-    <value>cosinus - radians</value>
+    <value>radians cosinus</value>
     <comment>Name for the cosine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="CosineGradians" xml:space="preserve">
-    <value>cosinus - grades</value>
+    <value>grades cosinus</value>
     <comment>Name for the cosine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineDegrees" xml:space="preserve">
-    <value>arc cosinus - degrés</value>
+    <value>degrés arc cosinus</value>
     <comment>Name for the inverse cosine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineRadians" xml:space="preserve">
@@ -2848,7 +2852,7 @@
     <comment>Name for the inverse hyperbolic cosine function. Used by screen readers.</comment>
   </data>
   <data name="TangentDegrees" xml:space="preserve">
-    <value>tangente - degrés</value>
+    <value>degrés tangente</value>
     <comment>Name for the tangent function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="TangentRadians" xml:space="preserve">
@@ -2860,7 +2864,7 @@
     <comment>Name for the tangent function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentDegrees" xml:space="preserve">
-    <value>arc tangente - degrés</value>
+    <value>degrés arc tangente</value>
     <comment>Name for the inverse tangent function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentRadians" xml:space="preserve">

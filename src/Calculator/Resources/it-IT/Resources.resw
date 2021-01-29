@@ -442,7 +442,7 @@
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Tastierino numerico inversione bit</value>
+    <value>Tastierino per numeri binari</value>
     <comment>This is the tool tip automation name for the bitFlip button.</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -550,7 +550,7 @@
     <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
-    <value>Lo schermo è %1 punto</value>
+    <value>Lo schermo è %1 virgola</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
@@ -818,7 +818,7 @@
     <comment>Screen reader prompt for the Calculator RSH button</comment>
   </data>
   <data name="xorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>OR esclusivo</value>
+    <value>XOR</value>
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -826,7 +826,7 @@
     <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
   </data>
   <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Attivazione/Disattivazione double word</value>
+    <value>Attivazione/Disattivazione dword</value>
     <comment>Screen reader prompt for the Calculator dword button. Should read as "Double word toggle button".</comment>
   </data>
   <data name="wordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -838,7 +838,7 @@
     <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Tastierino numerico inversione bit</value>
+    <value>Tastierino per numeri binari</value>
     <comment>Screen reader prompt for the Calculator bitFlip button</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -890,7 +890,7 @@
     <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
   </data>
   <data name="percentButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Percento</value>
+    <value>Percentuale</value>
     <comment>Screen reader prompt for the percent button on the scientific operator keypad</comment>
   </data>
   <data name="negateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -906,15 +906,15 @@
     <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
   </data>
   <data name="openParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Parentesi sinistra</value>
+    <value>Parentesi aperta</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
   <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
-    <value>Conteggio parentesi sinistra, parentesi aperta %1</value>
+    <value>Parentesi aperta, numero %1 parentesi aperte</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Parentesi destra</value>
+    <value>Parentesi chiusa</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
   </data>
   <data name="Format_OpenParenthesisCountAutomationNamePrefix" xml:space="preserve">
@@ -974,11 +974,11 @@
     <comment>Screen reader prompt for the inverted sin on the scientific operator keypad.</comment>
   </data>
   <data name="invcosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Arcocoseno</value>
+    <value>Arco coseno</value>
     <comment>Screen reader prompt for the inverted cos on the scientific operator keypad.</comment>
   </data>
   <data name="invtanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Arcotangente</value>
+    <value>Arco tangente</value>
     <comment>Screen reader prompt for the inverted tan on the scientific operator keypad.</comment>
   </data>
   <data name="invsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1062,7 +1062,7 @@
     <comment>Screen reader prompt for the Mode dropdown field in Snapped and Portrait modes.</comment>
   </data>
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Elenco a discesa categorie</value>
+    <value>Elenco a discesa Categorie</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1082,7 +1082,7 @@
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
-    <value>Converte da %1 %2</value>
+    <value>Converti da %1 %2</value>
     <comment>Screen reader prompt for the Unit Converter Value1 i.e. top number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ValueFrom_Decimal" xml:space="preserve">
@@ -1130,7 +1130,7 @@
     <comment>Unit conversion category name called Speed</comment>
   </data>
   <data name="CategoryName_TimeText" xml:space="preserve">
-    <value>Tempo</value>
+    <value>Orario</value>
     <comment>Unit conversion category name called Time</comment>
   </data>
   <data name="CategoryName_VolumeText" xml:space="preserve">
@@ -1574,7 +1574,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
-    <value>Pi</value>
+    <value>Pi greco</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Pebibytes" xml:space="preserve">
@@ -1702,7 +1702,7 @@
     <comment>An option in the unit converter to select degrees Fahrenheit</comment>
   </data>
   <data name="UnitName_Electron-Volt" xml:space="preserve">
-    <value>Elettronvolt</value>
+    <value>Elettronvolt (eV)</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot" xml:space="preserve">
@@ -1766,7 +1766,7 @@
     <comment>A measurement unit for energy. The scientific name is kilocalorie, but this is what is commonly referred to as a "calorie" or "large calorie" when talking about food. Please use the everyday-use word for food energy calories if there is one. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilojoule" xml:space="preserve">
-    <value>Chilojoule</value>
+    <value>Kilojoule</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilometer" xml:space="preserve">
@@ -1778,7 +1778,7 @@
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilowatt" xml:space="preserve">
-    <value>Chilowatt</value>
+    <value>Kilowatt</value>
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Knot" xml:space="preserve">
@@ -1794,7 +1794,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Megabyte" xml:space="preserve">
-    <value>Megabyte</value>
+    <value>MB</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Meter" xml:space="preserve">
@@ -2026,11 +2026,11 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_KiloPascal" xml:space="preserve">
-    <value>Chilopascal</value>
+    <value>Kilopascals</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>Millimetri di mercurio</value>
+    <value>Millimetri di mercurio </value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
@@ -2270,7 +2270,7 @@
     <comment>A slice of chocolate cake, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_TrainEngine" xml:space="preserve">
-    <value>locomotive</value>
+    <value>motori del treno</value>
     <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TrainEngine" xml:space="preserve">
@@ -2317,6 +2317,10 @@
     <value>© %1 Microsoft. Tutti i diritti sono riservati.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Per informazioni su come contribuire a calcolatrice di Windows, controllare il progetto in %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Informazioni</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
@@ -2326,7 +2330,7 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>Non è ancora presente alcuna cronologia</value>
+    <value>Non è ancora presente la cronologia</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
@@ -2449,7 +2453,7 @@
     <comment>Date result label</comment>
   </data>
   <data name="Date_DifferenceOption.Content" xml:space="preserve">
-    <value>Differenza tra le date</value>
+    <value>Differenza tra date</value>
     <comment>Date Difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
@@ -2568,11 +2572,11 @@
     <comment>Automation name for the group of radices (Hexadecimal, Decimal, Octal, Binary). https://en.wikipedia.org/wiki/Radix </comment>
   </data>
   <data name="ProgrammerOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Operatori programmatori</value>
+    <value>Operatori di programmazione</value>
     <comment>Automation name for the group of programmer operators (RoL, RoR, Lsh, Rsh, OR, XOR, NOT, AND).</comment>
   </data>
   <data name="InputModeSelectionGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Selezione modalità di input</value>
+    <value>Selezione modalità input</value>
     <comment>Automation name for the group of input mode toggling buttons.</comment>
   </data>
   <data name="BitFlipPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2588,7 +2592,7 @@
     <comment>Automation label for the "scroll right" button that appears when an expression is too large to fit in the window.</comment>
   </data>
   <data name="Format_MaxDigitsReached" xml:space="preserve">
-    <value>Raggiungimento cifre massime. %1</value>
+    <value>Numero massimo di cifre raggiunto. %1</value>
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when user reaches max digits. The %1 is the automation name of the display. Users will hear "Max digits reached. Display is _current_value_".</comment>
   </data>
   <data name="Format_ButtonPressAuditoryFeedback" xml:space="preserve">
@@ -2668,11 +2672,11 @@
     <comment>The text displayed for a hyperlink button that refreshes currency converter ratios.</comment>
   </data>
   <data name="DataChargesMayApply" xml:space="preserve">
-    <value>Potrebbero essere addebitati costi per i dati.</value>
+    <value>Potrebbero essere applicati addebiti per i dati.</value>
     <comment>The text displayed when users are on a metered connection and using currency converter.</comment>
   </data>
   <data name="FailedToRefresh" xml:space="preserve">
-    <value>Impossibile ottenere le nuove tariffe. Riprova più tardi.</value>
+    <value>Non è possibile ottenere nuove percentuali. Riprova più tardi.</value>
     <comment>The text displayed when currency ratio data fails to load.</comment>
   </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
@@ -2688,7 +2692,7 @@
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have successfully updated.</comment>
   </data>
   <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
-    <value>Impossibile aggiornare le tariffe.</value>
+    <value>Non è stato possibile aggiornare le tariffe</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
   </data>
   <data name="AboutButton.AccessKey" xml:space="preserve">
@@ -2784,7 +2788,7 @@
     <comment>Access key for the Memory pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="SineDegrees" xml:space="preserve">
-    <value>gradi seno</value>
+    <value>gradi sinusoidali</value>
     <comment>Name for the sine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="SineRadians" xml:space="preserve">
@@ -2864,7 +2868,7 @@
     <comment>Name for the inverse tangent function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentRadians" xml:space="preserve">
-    <value>radianti tangente inversa</value>
+    <value>gradienti tangente inversa</value>
     <comment>Name for the inverse tangent function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentGradians" xml:space="preserve">
@@ -3012,7 +3016,7 @@
     <comment>Name for the square function. Used by screen readers.</comment>
   </data>
   <data name="YRoot" xml:space="preserve">
-    <value>radice y</value>
+    <value>y radice</value>
     <comment>Name for the y root function. Used by screen readers.</comment>
   </data>
   <data name="NavCategoryItem_AutomationNameFormat" xml:space="preserve">

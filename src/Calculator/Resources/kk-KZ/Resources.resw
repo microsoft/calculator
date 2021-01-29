@@ -510,11 +510,11 @@
     <comment>The text that shows in the dropdown navigation control in snapped mode when standard calculator mode is selected.</comment>
   </data>
   <data name="ScientificModeText" xml:space="preserve">
-    <value>Инженерлік</value>
+    <value>Ғылыми</value>
     <comment>The text that shows in the dropdown navigation control in snapped mode when scientific calculator mode is selected.</comment>
   </data>
   <data name="ProgrammerModeText" xml:space="preserve">
-    <value>Бағдарламалаушы</value>
+    <value>Бағдарламашы</value>
     <comment>The text that shows in the dropdown navigation control in snapped mode when programmer calculator mode is selected.</comment>
   </data>
   <data name="ConverterModeText" xml:space="preserve">
@@ -554,7 +554,7 @@
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
-    <value>Expression: %1</value>
+    <value>Өрнек: %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator expression results. %1 = Localized display value, e.g. "50 + 2 - 60 +".</comment>
   </data>
   <data name="Display_Copied" xml:space="preserve">
@@ -646,11 +646,11 @@
     <comment>This is the tool tip automation name for the Memory Subtract (M-) button.</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Жадты элементін өшіру</value>
+    <value>Жад элементін өшіру</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Жадты элементін өшіру</value>
+    <value>Жад элементін өшіру</value>
     <comment>This is the tool tip automation name for the Clear Memory Item (MC) button in the Memory list.</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -662,27 +662,27 @@
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Жад элементінен алу</value>
+    <value>Жадтағы элементтен шығарып алу</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Жад элементінен алу</value>
+    <value>Жадтағы элементтен шығарып алу</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Жадтағы элементті тазалау</value>
+    <value>Жад элементін өшіру</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryMenuItem.Text" xml:space="preserve">
-    <value>Жадтағы элементті тазалау</value>
+    <value>Жад элементін өшіру</value>
     <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
   </data>
   <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Жадтағы элементке қосу</value>
+    <value>Жад элементіне қосу</value>
     <comment>Screen reader prompt for the Calculator Memory Add swipe button in the Memory list</comment>
   </data>
   <data name="MemPlusMenuItem.Text" xml:space="preserve">
-    <value>Жадтағы элементке қосу</value>
+    <value>Жад элементіне қосу</value>
     <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
   </data>
   <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -822,15 +822,15 @@
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Төрттік сөз қосқыш</value>
+    <value>Төрттік сөз қосқышы</value>
     <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
   </data>
   <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Қос сөз қосқыш</value>
+    <value>Қос сөз қосқышы</value>
     <comment>Screen reader prompt for the Calculator dword button. Should read as "Double word toggle button".</comment>
   </data>
   <data name="wordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Сөз қосқыш</value>
+    <value>Сөз қосқышы</value>
     <comment>Screen reader prompt for the Calculator word button. Should read as "Word toggle button".</comment>
   </data>
   <data name="byteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -994,7 +994,7 @@
     <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
   </data>
   <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>«X» экспонентаға</value>
+    <value>"X" экспонентаға</value>
     <comment>Screen reader prompt for x power y button on the scientific operator keypad. </comment>
   </data>
   <data name="powerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1002,11 +1002,11 @@
     <comment>Screen reader prompt for the 10 power x button on the scientific operator keypad.</comment>
   </data>
   <data name="powerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>«e» экспонентаға</value>
+    <value>"e" экспонентаға</value>
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
   <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>«y» - «x» мәнінің түбірі</value>
+    <value>"x" мәнінің "y" түбірі</value>
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
   <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1046,7 +1046,7 @@
     <comment>Screen reader for the factorial button on the basic operator keypad</comment>
   </data>
   <data name="degButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Градус қосқыш</value>
+    <value>Градус қосқышы</value>
     <comment>This the Deg button's Degree mode automation nameon the scientific operator keypad. Should read as "Degrees toggle button".</comment>
   </data>
   <data name="gradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1054,7 +1054,7 @@
     <comment>This is the Deg button's Grad mode automation name on the scientific operator keypad. Should read as "Gradians toggle button".</comment>
   </data>
   <data name="radButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Радиан қосқыштары</value>
+    <value>Радиан қосқышы</value>
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
   <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1062,7 +1062,7 @@
     <comment>Screen reader prompt for the Mode dropdown field in Snapped and Portrait modes.</comment>
   </data>
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Ашылмалы мәзір санаттары</value>
+    <value>Санаттардың ашылмалы мәзірі</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1114,11 +1114,11 @@
     <comment>Unit conversion category name called Data</comment>
   </data>
   <data name="CategoryName_EnergyText" xml:space="preserve">
-    <value>Қуат</value>
+    <value>Энергия</value>
     <comment>Unit conversion category name called Energy. (eg. the energy in a battery or in food)</comment>
   </data>
   <data name="CategoryName_LengthText" xml:space="preserve">
-    <value>Ұзындық</value>
+    <value>Ұзындығы</value>
     <comment>Unit conversion category name called Length</comment>
   </data>
   <data name="CategoryName_PowerText" xml:space="preserve">
@@ -1194,7 +1194,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Liter" xml:space="preserve">
-    <value>L</value>
+    <value>Л</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
@@ -1282,7 +1282,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Bit" xml:space="preserve">
-    <value>b</value>
+    <value>бит</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_BritishThermalUnit" xml:space="preserve">
@@ -1330,7 +1330,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Day" xml:space="preserve">
-    <value>d</value>
+    <value>күн</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_DegreesCelsius" xml:space="preserve">
@@ -1354,11 +1354,11 @@
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Foot-Pound" xml:space="preserve">
-    <value>фут•фунт</value>
+    <value>фут-фунт</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Gigabit" xml:space="preserve">
-    <value>Гбайт</value>
+    <value>Гбит</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Gigabyte" xml:space="preserve">
@@ -1382,7 +1382,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Joule" xml:space="preserve">
-    <value>J</value>
+    <value>Дж</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
@@ -1390,7 +1390,7 @@
     <comment>An abbreviation for the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin)</comment>
   </data>
   <data name="UnitAbbreviation_Kilobit" xml:space="preserve">
-    <value>Кбайт</value>
+    <value>Кбит</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kilobyte" xml:space="preserve">
@@ -1426,7 +1426,7 @@
     <comment>An abbreviation for a measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
   </data>
   <data name="UnitAbbreviation_Megabit" xml:space="preserve">
-    <value>Мбайт</value>
+    <value>Мбит</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Megabyte" xml:space="preserve">
@@ -1442,11 +1442,11 @@
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Micron" xml:space="preserve">
-    <value>µm</value>
+    <value>мкм</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Microsecond" xml:space="preserve">
-    <value>µs</value>
+    <value>мкс</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Mile" xml:space="preserve">
@@ -1474,11 +1474,11 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_NauticalMile" xml:space="preserve">
-    <value>нмиля</value>
+    <value>теңіздік миля</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Petabit" xml:space="preserve">
-    <value>Петабайт</value>
+    <value>Петабит</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Petabyte" xml:space="preserve">
@@ -1486,11 +1486,11 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Foot-PoundPerMinute" xml:space="preserve">
-    <value>фут•фунт/мин</value>
+    <value>фут-фунт/мин</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Second" xml:space="preserve">
-    <value>s</value>
+    <value>сек</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_SquareCentimeter" xml:space="preserve">
@@ -1526,7 +1526,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Terabit" xml:space="preserve">
-    <value>Тбайт</value>
+    <value>Тбит</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Terabyte" xml:space="preserve">
@@ -1534,7 +1534,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Watt" xml:space="preserve">
-    <value>W</value>
+    <value>Вт</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Week" xml:space="preserve">
@@ -1550,19 +1550,19 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Gibibits" xml:space="preserve">
-    <value>Gi</value>
+    <value>Ги</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Gibibytes" xml:space="preserve">
-    <value>GiB</value>
+    <value>ГиБ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kibibits" xml:space="preserve">
-    <value>Ki</value>
+    <value>Ки</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kibibytes" xml:space="preserve">
-    <value>KiB</value>
+    <value>КиБ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Mebibits" xml:space="preserve">
@@ -1570,7 +1570,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Mebibytes" xml:space="preserve">
-    <value>MiB</value>
+    <value>МиБ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
@@ -1578,15 +1578,15 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Pebibytes" xml:space="preserve">
-    <value>PiB</value>
+    <value>ПиБ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Tebibits" xml:space="preserve">
-    <value>Ti</value>
+    <value>Ти</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Tebibytes" xml:space="preserve">
-    <value>TiB</value>
+    <value>Тебибайт</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Exabits" xml:space="preserve">
@@ -1594,39 +1594,39 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Exabytes" xml:space="preserve">
-    <value>EB</value>
+    <value>ЭБ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Exbibits" xml:space="preserve">
-    <value>Ei</value>
+    <value>Эи</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Exbibytes" xml:space="preserve">
-    <value>EiB</value>
+    <value>ЭиБ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Zetabits" xml:space="preserve">
-    <value>Z</value>
+    <value>Зетабит</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Zetabytes" xml:space="preserve">
-    <value>ZB</value>
+    <value>ЗБ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Zebibits" xml:space="preserve">
-    <value>Zi</value>
+    <value>Зи</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Zebibytes" xml:space="preserve">
-    <value>ZiB</value>
+    <value>ЗиБ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yottabit" xml:space="preserve">
-    <value>Y</value>
+    <value>Йоттабит</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yottabyte" xml:space="preserve">
-    <value>YB</value>
+    <value>ЙБ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yobibits" xml:space="preserve">
@@ -1634,7 +1634,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yobibytes" xml:space="preserve">
-    <value>YiB</value>
+    <value>ЙиБ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitName_Acre" xml:space="preserve">
@@ -1658,7 +1658,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Calorie" xml:space="preserve">
-    <value>Жылу калориялары</value>
+    <value>Жылу калорияcы</value>
     <comment>A measurement unit for energy. Please note that this is the "small calorie" used in science for measuring heat energy, not the "large calorie" commonly used for measuring food energy. If there is a simple term to distinguish this one from the large "Food calorie", please use that. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Centimeter" xml:space="preserve">
@@ -1714,11 +1714,11 @@
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot-Pound" xml:space="preserve">
-    <value>Футофунттар</value>
+    <value>Фут-фунт</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot-PoundPerMinute" xml:space="preserve">
-    <value>Футофунт/мин</value>
+    <value>Фут-фунт/мин</value>
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabit" xml:space="preserve">
@@ -1914,7 +1914,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Degree" xml:space="preserve">
-    <value>град</value>
+    <value>град.</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Radian" xml:space="preserve">
@@ -1922,7 +1922,7 @@
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Gradian" xml:space="preserve">
-    <value>гр</value>
+    <value>град</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Atmosphere" xml:space="preserve">
@@ -1930,7 +1930,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Bar" xml:space="preserve">
-    <value>ба</value>
+    <value>бар</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_KiloPascal" xml:space="preserve">
@@ -1950,7 +1950,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Centigram" xml:space="preserve">
-    <value>сантиграмм</value>
+    <value>cг</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Decagram" xml:space="preserve">
@@ -1966,7 +1966,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Hectogram" xml:space="preserve">
-    <value>сынап бағаны</value>
+    <value>гектограмм</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Kilogram" xml:space="preserve">
@@ -1998,7 +1998,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Tonne" xml:space="preserve">
-    <value>t</value>
+    <value>т</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitName_Carat" xml:space="preserve">
@@ -2030,7 +2030,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>Сынап бағаны миллиметрі</value>
+    <value>Сынап бағаны миллиметрі </value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
@@ -2094,123 +2094,123 @@
     <comment>A measurement unit for weight. This is the metric version of tonne. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CD" xml:space="preserve">
-    <value>Ықшам дискілер</value>
+    <value>Ықшам дискі</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CD" xml:space="preserve">
-    <value>Ықшам дискілер</value>
+    <value>Ықшам дискі</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerField" xml:space="preserve">
-    <value>футбол алаңдары</value>
+    <value>футбол алаңы</value>
     <comment>A professional-sized soccer field, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_SoccerField" xml:space="preserve">
-    <value>футбол алаңдары</value>
+    <value>футбол алаңы</value>
     <comment>A professional-sized soccer field, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_FloppyDisk" xml:space="preserve">
-    <value>алмалы дискілер</value>
+    <value>дискета</value>
     <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FloppyDisk" xml:space="preserve">
-    <value>алмалы дискілер</value>
+    <value>дискета</value>
     <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_DVD" xml:space="preserve">
-    <value>DVD дискілері</value>
+    <value>DVD дискісі</value>
     <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_DVD" xml:space="preserve">
-    <value>DVD дискілері</value>
+    <value>DVD дискісі</value>
     <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Battery" xml:space="preserve">
-    <value>батареялар</value>
+    <value>батарея</value>
     <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Battery" xml:space="preserve">
-    <value>батареялар</value>
+    <value>батарея</value>
     <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paperclip" xml:space="preserve">
-    <value>қағаз түйрегіштері</value>
+    <value>қағаз түйрегіші</value>
     <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Paperclip" xml:space="preserve">
-    <value>қағаз түйрегіштері</value>
+    <value>қағаз түйрегіші</value>
     <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_JumboJet" xml:space="preserve">
-    <value>алып әуе лайнерлері</value>
+    <value>алып әуе лайнері</value>
     <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_JumboJet" xml:space="preserve">
-    <value>алып әуе лайнерлері</value>
+    <value>алып әуе лайнері</value>
     <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_LightBulb" xml:space="preserve">
-    <value>электр шамдары</value>
+    <value>электр шамы</value>
     <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_LightBulb" xml:space="preserve">
-    <value>электр шамдары</value>
+    <value>электр шамы</value>
     <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Horse" xml:space="preserve">
-    <value>аттар</value>
+    <value>ат</value>
     <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Horse" xml:space="preserve">
-    <value>аттар</value>
+    <value>ат</value>
     <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bathtub" xml:space="preserve">
-    <value>ванналар</value>
+    <value>ванна</value>
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Bathtub" xml:space="preserve">
-    <value>ванналар</value>
+    <value>ванна</value>
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Snowflake" xml:space="preserve">
-    <value>қар ұшқындары</value>
+    <value>қар ұшқыны</value>
     <comment>A snowflake, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Snowflake" xml:space="preserve">
-    <value>қар ұшқындары</value>
+    <value>қар ұшқыны</value>
     <comment>A snowflake, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Elephant" xml:space="preserve">
-    <value>пілдер</value>
+    <value>піл</value>
     <comment>An elephant, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Elephant" xml:space="preserve">
-    <value>пілдер</value>
+    <value>піл</value>
     <comment>An elephant, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Turtle" xml:space="preserve">
-    <value>тасбақалар</value>
+    <value>тасбақа</value>
     <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Turtle" xml:space="preserve">
-    <value>тасбақалар</value>
+    <value>тасбақа</value>
     <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Jet" xml:space="preserve">
-    <value>реактивті ұшақтар</value>
+    <value>реактивті ұшақ</value>
     <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Jet" xml:space="preserve">
-    <value>реактивті ұшақтар</value>
+    <value>реактивті ұшақ</value>
     <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Whale" xml:space="preserve">
-    <value>киттер</value>
+    <value>кит</value>
     <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Whale" xml:space="preserve">
-    <value>киттер</value>
+    <value>кит</value>
     <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CoffeeCup" xml:space="preserve">
@@ -2222,15 +2222,15 @@
     <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SwimmingPool" xml:space="preserve">
-    <value>жүзу бассейндері</value>
+    <value>жүзу бассейні</value>
     <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_SwimmingPool" xml:space="preserve">
-    <value>жүзу бассейндері</value>
+    <value>жүзу бассейні</value>
     <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hand" xml:space="preserve">
-    <value>қолдар</value>
+    <value>қол</value>
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Hand" xml:space="preserve">
@@ -2238,19 +2238,19 @@
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paper" xml:space="preserve">
-    <value>қағаз парақтары</value>
+    <value>қағаз парағы</value>
     <comment>A sheet of 8.5 x 11 inch paper, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Paper" xml:space="preserve">
-    <value>қағаз парақтары</value>
+    <value>қағаз парағы</value>
     <comment>A sheet of 8.5 x 11 inch paper, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Castle" xml:space="preserve">
-    <value>қорғандар</value>
+    <value>қорған</value>
     <comment>A castle, used as a comparison measurement unit for area (floorspace). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Castle" xml:space="preserve">
-    <value>қорғандар</value>
+    <value>қорған</value>
     <comment>A castle, used as a comparison measurement unit for area (floorspace). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Banana" xml:space="preserve">
@@ -2262,27 +2262,27 @@
     <comment>A banana, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SliceOfCake" xml:space="preserve">
-    <value>торт тәлімдері</value>
+    <value>торт тілімі</value>
     <comment>A slice of chocolate cake, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_SliceOfCake" xml:space="preserve">
-    <value>торт тәлімдері</value>
+    <value>торт тілімі</value>
     <comment>A slice of chocolate cake, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_TrainEngine" xml:space="preserve">
-    <value>пойыз қозғалтқыштары</value>
+    <value>пойыз қозғалтқышы</value>
     <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TrainEngine" xml:space="preserve">
-    <value>пойыз қозғалтқыштары</value>
+    <value>пойыз қозғалтқышы</value>
     <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerBall" xml:space="preserve">
-    <value>футбол доптары</value>
+    <value>футбол добы</value>
     <comment>A soccer ball, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_SoccerBall" xml:space="preserve">
-    <value>футбол доптары</value>
+    <value>футбол добы</value>
     <comment>A soccer ball, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="MemoryItemHelpText" xml:space="preserve">
@@ -2302,7 +2302,7 @@
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
   <data name="AboutFlyoutEULA.Text" xml:space="preserve">
-    <value>Microsoft бағдарламалық жасақтама Лицензиялық келісімінің шарттары</value>
+    <value>Microsoft бағдарламалық жасақтамасын пайдалану бойынша лицензиялық келісім шарттары</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
   <data name="PreviewTag.Text" xml:space="preserve">
@@ -2310,15 +2310,19 @@
     <comment>Label displayed next to upcoming features</comment>
   </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
-    <value>Microsoft құпиялылық туралы мәлімдемесі</value>
+    <value>Microsoft корпорациясының құпиялылық туралы мәлімдемесі</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
   </data>
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© %1 Microsoft. Барлық құқықтары қорғалған.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Windows есептегішіне қалай іскерлесуге болатындығын білу үшін, %HL%GitHub%HL% қоймасында жобаны тексеріңіз.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
-    <value>Бағдарлама туралы</value>
+    <value>Бағдарлама туралы ақпарат</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
@@ -2453,7 +2457,7 @@
     <comment>Date Difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
-    <value>Күндер</value>
+    <value>Күн</value>
     <comment>Add/Subtract Days label</comment>
   </data>
   <data name="Date_DifferenceLabel.Text" xml:space="preserve">
@@ -2477,7 +2481,7 @@
     <comment>To Date Header for Difference Date Picker</comment>
   </data>
   <data name="YearsLabel.Text" xml:space="preserve">
-    <value>Жылдар</value>
+    <value>Жыл</value>
     <comment>Add/Subtract Years label</comment>
   </data>
   <data name="Date_OutOfBoundMessage" xml:space="preserve">
@@ -2532,7 +2536,7 @@
     <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Журнал және Жад тізімдері</value>
+    <value>Журнал және жад тізімдері</value>
     <comment>Automation name for the group of controls for history and memory lists.</comment>
   </data>
   <data name="MemoryPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2792,7 +2796,7 @@
     <comment>Name for the sine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="SineGradians" xml:space="preserve">
-    <value>синустық градиенттер</value>
+    <value>синус, градиан</value>
     <comment>Name for the sine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineDegrees" xml:space="preserve">
@@ -2804,7 +2808,7 @@
     <comment>Name for the inverse sine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineGradians" xml:space="preserve">
-    <value>кері синустық градиенттер</value>
+    <value>арксинус, градиан</value>
     <comment>Name for the inverse sine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="HyperbolicSine" xml:space="preserve">
@@ -2824,7 +2828,7 @@
     <comment>Name for the cosine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="CosineGradians" xml:space="preserve">
-    <value>косинус градиенттері</value>
+    <value>косинус, градиан</value>
     <comment>Name for the cosine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineDegrees" xml:space="preserve">
@@ -2836,7 +2840,7 @@
     <comment>Name for the inverse cosine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineGradians" xml:space="preserve">
-    <value>кері косинус градиенттері</value>
+    <value>арккосинус, градиан</value>
     <comment>Name for the inverse cosine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="HyperbolicCosine" xml:space="preserve">
@@ -2852,11 +2856,11 @@
     <comment>Name for the tangent function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="TangentRadians" xml:space="preserve">
-    <value>тангенстік радиандар</value>
+    <value>тангенстік радиан</value>
     <comment>Name for the tangent function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="TangentGradians" xml:space="preserve">
-    <value>тангенстік градиенттер</value>
+    <value>тангенс, градиан</value>
     <comment>Name for the tangent function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentDegrees" xml:space="preserve">
@@ -2868,7 +2872,7 @@
     <comment>Name for the inverse tangent function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentGradians" xml:space="preserve">
-    <value>кері тангенстік градиенттер</value>
+    <value>арктангенс, градиан</value>
     <comment>Name for the inverse tangent function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="HyperbolicTangent" xml:space="preserve">

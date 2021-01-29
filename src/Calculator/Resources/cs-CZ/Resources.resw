@@ -574,7 +574,7 @@
     <comment>{Locked="%1"}. Screen reader prompt for the hexadecimal value in Programmer mode. %1 = the localized hexadecimal value, e.g. "21B4 8F73".</comment>
   </data>
   <data name="Format_DecButtonValue" xml:space="preserve">
-    <value>Desetinný %1</value>
+    <value>Desetinné číslo %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the decimal value in Programmer mode. %1 = the localized decimal value, e.g. "5,732".</comment>
   </data>
   <data name="Format_OctButtonValue" xml:space="preserve">
@@ -606,7 +606,7 @@
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Uložení do paměti</value>
+    <value>Uložit do paměti</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -630,11 +630,11 @@
     <comment>This is the tool tip automation name for the Memory Recall (MR) button.</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Přičíst k paměti</value>
+    <value>Přičíst k paměti</value>
     <comment>Screen reader prompt for the Calculator Memory Add button</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Přičíst k paměti (Ctrl+P)</value>
+    <value>Přičíst k paměti (Ctrl+P)</value>
     <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -646,51 +646,51 @@
     <comment>This is the tool tip automation name for the Memory Subtract (M-) button.</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Vymazat položku v paměti</value>
+    <value>Vymazat položku z paměti</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Vymazat položku v paměti</value>
+    <value>Vymazat položku z paměti</value>
     <comment>This is the tool tip automation name for the Clear Memory Item (MC) button in the Memory list.</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Přičíst k položce v paměti</value>
+    <value>Přičíst k položce v paměti</value>
     <comment>Screen reader prompt for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Přičíst k položce v paměti</value>
+    <value>Přičíst k položce v paměti</value>
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Odečíst od položky v paměti</value>
+    <value>Odečíst od položky v paměti</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Odečíst od položky v paměti</value>
+    <value>Odečíst od položky v paměti</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Vymazat položku v paměti</value>
+    <value>Vymazat položku v paměti</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryMenuItem.Text" xml:space="preserve">
-    <value>Vymazat položku v paměti</value>
+    <value>Vymazat položku z paměti</value>
     <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
   </data>
   <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Přičíst k položce v paměti</value>
+    <value>Přidat k položce v paměti</value>
     <comment>Screen reader prompt for the Calculator Memory Add swipe button in the Memory list</comment>
   </data>
   <data name="MemPlusMenuItem.Text" xml:space="preserve">
-    <value>Přičíst k položce v paměti</value>
+    <value>Přičíst k položce v paměti</value>
     <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
   </data>
   <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Odečíst od položky v paměti</value>
+    <value>Odečíst od položky v paměti</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract swipe button in the Memory list</comment>
   </data>
   <data name="MemMinusMenuItem.Text" xml:space="preserve">
-    <value>Odečíst od položky v paměti</value>
+    <value>Odečíst od položky v paměti</value>
     <comment>Text string for the Calculator Memory Subtract option in the Memory list context menu</comment>
   </data>
   <data name="DeleteHistorySwipeItem.Text" xml:space="preserve">
@@ -890,7 +890,7 @@
     <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
   </data>
   <data name="percentButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Procento</value>
+    <value>Procenta</value>
     <comment>Screen reader prompt for the percent button on the scientific operator keypad</comment>
   </data>
   <data name="negateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -966,7 +966,7 @@
     <comment>Screen reader prompt for the x squared on the scientific operator keypad. </comment>
   </data>
   <data name="xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Krychle</value>
+    <value>Datová krychle</value>
     <comment>Screen reader prompt for the x cubed on the scientific operator keypad. </comment>
   </data>
   <data name="invsinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1082,15 +1082,15 @@
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
-    <value>převést z %1 %2</value>
+    <value>Převést z %1 %2</value>
     <comment>Screen reader prompt for the Unit Converter Value1 i.e. top number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ValueFrom_Decimal" xml:space="preserve">
-    <value>převést z %1 čárka %2</value>
+    <value>Převést z %1 čárka %2</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Convert from 7 point _current_unit_". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_ValueTo" xml:space="preserve">
-    <value>převést na %1 %2</value>
+    <value>Převést na %1 %2</value>
     <comment>Screen reader prompt for the Unit Converter Value2 i.e. bottom number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ConversionResult" xml:space="preserve">
@@ -1194,7 +1194,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Liter" xml:space="preserve">
-    <value>l</value>
+    <value>L</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
@@ -1726,7 +1726,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabyte" xml:space="preserve">
-    <value>gigabajtů</value>
+    <value>GB</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hectare" xml:space="preserve">
@@ -1758,7 +1758,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilobyte" xml:space="preserve">
-    <value>kilobajtů</value>
+    <value>kB</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilocalorie" xml:space="preserve">
@@ -1806,7 +1806,7 @@
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Micron" xml:space="preserve">
-    <value>mikronů</value>
+    <value>Mikrometry</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Microsecond" xml:space="preserve">
@@ -1890,7 +1890,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabyte" xml:space="preserve">
-    <value>terabajtů</value>
+    <value>TB</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Watt" xml:space="preserve">
@@ -1906,7 +1906,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Year" xml:space="preserve">
-    <value>roků</value>
+    <value>let</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Carat" xml:space="preserve">
@@ -2010,7 +2010,7 @@
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Radian" xml:space="preserve">
-    <value>Radiány</value>
+    <value>Radiánů</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Gradian" xml:space="preserve">
@@ -2030,11 +2030,11 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>Milimetry rtuti</value>
+    <value>Milimetry rtuti </value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
-    <value>Pascaly</value>
+    <value>Pascalů</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_PSI" xml:space="preserve">
@@ -2114,7 +2114,7 @@
     <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FloppyDisk" xml:space="preserve">
-    <value>diskety</value>
+    <value>disket</value>
     <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_DVD" xml:space="preserve">
@@ -2138,7 +2138,7 @@
     <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Paperclip" xml:space="preserve">
-    <value>papírové sponky</value>
+    <value>papírových sponek</value>
     <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_JumboJet" xml:space="preserve">
@@ -2317,6 +2317,10 @@
     <value>© %1 Microsoft. Všechna práva vyhrazena.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Pokud se chcete dozvědět, jak můžete přispívat do Windows Kalkulačky, podívejte se na projekt na %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>O aplikaci</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
@@ -2477,7 +2481,7 @@
     <comment>To Date Header for Difference Date Picker</comment>
   </data>
   <data name="YearsLabel.Text" xml:space="preserve">
-    <value>Roky</value>
+    <value>let</value>
     <comment>Add/Subtract Years label</comment>
   </data>
   <data name="Date_OutOfBoundMessage" xml:space="preserve">
@@ -2572,11 +2576,11 @@
     <comment>Automation name for the group of programmer operators (RoL, RoR, Lsh, Rsh, OR, XOR, NOT, AND).</comment>
   </data>
   <data name="InputModeSelectionGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Výběr vstupního režimu</value>
+    <value>Výběr režimu zadávání</value>
     <comment>Automation name for the group of input mode toggling buttons.</comment>
   </data>
   <data name="BitFlipPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Klávesnice algoritmické manipulace s bity</value>
+    <value>Klávesnice s přepínáním bitů</value>
     <comment>Automation name for the group of bit toggling buttons.</comment>
   </data>
   <data name="scrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2600,7 +2604,7 @@
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user stores a number to memory. The %1 is the automation name of the display. Users will hear "_current_value_ saved to memory".</comment>
   </data>
   <data name="Format_MemorySlotChanged" xml:space="preserve">
-    <value>Paměťový slot %1 je nyní %2.</value>
+    <value>Paměťový slot %1 je nyní %2</value>
     <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when the user changes a memory slot. The %1 is the index of the memory slot and %2 is the new value. For example, users might hear "Memory slot 2 is 37".</comment>
   </data>
   <data name="Format_MemorySlotCleared" xml:space="preserve">
@@ -2644,15 +2648,15 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>OR</value>
+    <value>nebo</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
   </data>
   <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>XOR</value>
+    <value>x nebo</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>AND</value>
+    <value>a</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="CurrencyFromToRatioFormat" xml:space="preserve">
@@ -2672,11 +2676,11 @@
     <comment>The text displayed when users are on a metered connection and using currency converter.</comment>
   </data>
   <data name="FailedToRefresh" xml:space="preserve">
-    <value>Nejde načíst nové sazby. Zkuste to později!</value>
+    <value>Nejde načíst nové sazby. Zkuste to později.</value>
     <comment>The text displayed when currency ratio data fails to load.</comment>
   </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
-    <value>Offline. Zkontrolujte si prosím %HL%nastavení sítě%HL%.</value>
+    <value>Offline. Zkontrolujte si prosím %HL%Nastavení sítě%HL%.</value>
     <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
   </data>
   <data name="UpdatingCurrencyRates" xml:space="preserve">
@@ -2692,11 +2696,11 @@
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
   </data>
   <data name="AboutButton.AccessKey" xml:space="preserve">
-    <value>PL</value>
+    <value>AB</value>
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
-    <value>I </value>
+    <value>I</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryButton.AccessKey" xml:space="preserve">
@@ -2708,15 +2712,15 @@
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AngleAccessKey" xml:space="preserve">
-    <value>HE</value>
+    <value>AN</value>
     <comment>AccessKey for the angle converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AreaAccessKey" xml:space="preserve">
-    <value>PL</value>
+    <value>AR</value>
     <comment>AccessKey for the area converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_CurrencyAccessKey" xml:space="preserve">
-    <value>M</value>
+    <value>C</value>
     <comment>AccessKey for the currency converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_DataAccessKey" xml:space="preserve">
@@ -2728,27 +2732,27 @@
     <comment>AccessKey for the energy converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_LengthAccessKey" xml:space="preserve">
-    <value>l</value>
+    <value>L</value>
     <comment>AccessKey for the length converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_PowerAccessKey" xml:space="preserve">
-    <value>KO</value>
+    <value>PO</value>
     <comment>AccessKey for the power converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_PressureAccessKey" xml:space="preserve">
-    <value>TL</value>
+    <value>PR</value>
     <comment>AccessKey for the pressure converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_SpeedAccessKey" xml:space="preserve">
-    <value>R</value>
+    <value>S</value>
     <comment>AccessKey for the speed converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_TimeAccessKey" xml:space="preserve">
-    <value>AS</value>
+    <value>TI</value>
     <comment>AccessKey for the time converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_VolumeAccessKey" xml:space="preserve">
-    <value>B</value>
+    <value>V</value>
     <comment>AccessKey for the volume converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_WeightAccessKey" xml:space="preserve">
@@ -2760,11 +2764,11 @@
     <comment>AccessKey for the temperature converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearHistory.AccessKey" xml:space="preserve">
-    <value>Y</value>
+    <value>C</value>
     <comment>Access key for the Clear history button.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearMemory.AccessKey" xml:space="preserve">
-    <value>Y</value>
+    <value>C</value>
     <comment>Access key for the Clear memory button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -2776,7 +2780,7 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button in the Memory Pane</comment>
   </data>
   <data name="HistoryLabel.AccessKey" xml:space="preserve">
-    <value>I </value>
+    <value>I</value>
     <comment>Access key for the History pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryLabel.AccessKey" xml:space="preserve">

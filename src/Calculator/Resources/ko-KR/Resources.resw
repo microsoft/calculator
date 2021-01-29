@@ -138,7 +138,7 @@
     <comment>{@Appx_Description@} This description is used for the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppDescription" xml:space="preserve">
-    <value>계산기[Dev]</value>
+    <value>계산기 [Dev]</value>
     <comment>{@Appx_Description@} This is the description of the application when built by a user via GitHub. We use a different description to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="copyMenuItem" xml:space="preserve">
@@ -442,7 +442,7 @@
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>비트전환키패드</value>
+    <value>비트 전환 키패드</value>
     <comment>This is the tool tip automation name for the bitFlip button.</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -462,7 +462,7 @@
     <comment>The automation name for the Memory pivot item that is shown when Calculator is in wide layout.</comment>
   </data>
   <data name="HistoryLabel.Text" xml:space="preserve">
-    <value>계산 기록</value>
+    <value>기록</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="HistoryPivotItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -726,7 +726,7 @@
     <comment>Screen reader prompt for the Calculator number "1" button</comment>
   </data>
   <data name="num0Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>0</value>
+    <value>공</value>
     <comment>Screen reader prompt for the Calculator number "0" button</comment>
   </data>
   <data name="num1Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -810,7 +810,7 @@
     <comment>Screen reader prompt for the Calculator ROR button</comment>
   </data>
   <data name="lshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>왼쪽 Shift</value>
+    <value>왼쪽으로 시프트</value>
     <comment>Screen reader prompt for the Calculator LSH button</comment>
   </data>
   <data name="rshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -822,11 +822,11 @@
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>4배 워드 켜기/끄기</value>
+    <value>네 배 워드 토글</value>
     <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
   </data>
   <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>2배 워드 켜기/끄기</value>
+    <value>더블 워드 토글</value>
     <comment>Screen reader prompt for the Calculator dword button. Should read as "Double word toggle button".</comment>
   </data>
   <data name="wordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -834,7 +834,7 @@
     <comment>Screen reader prompt for the Calculator word button. Should read as "Word toggle button".</comment>
   </data>
   <data name="byteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>바이트 켜기/끄기</value>
+    <value>음소거 토글</value>
     <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -862,11 +862,11 @@
     <comment>Screen reader prompt for the divide button on the number pad</comment>
   </data>
   <data name="multiplyButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>곱하기</value>
+    <value>곱</value>
     <comment>Screen reader prompt for the multiply button on the number pad</comment>
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>같음</value>
+    <value>일치</value>
     <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -874,7 +874,7 @@
     <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
   </data>
   <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>빼기</value>
+    <value>음의 값</value>
     <comment>Screen reader prompt for the minus button on the number pad</comment>
   </data>
   <data name="minus" xml:space="preserve">
@@ -882,7 +882,7 @@
     <comment>We use this resource to replace "-" sign for accessibility. So expression like, 1 - 3 = -2 becomes 1 minus 3 = minus 2</comment>
   </data>
   <data name="plusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>더하기</value>
+    <value>양의 값</value>
     <comment>Screen reader prompt for the plus button on the number pad</comment>
   </data>
   <data name="squareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -890,15 +890,15 @@
     <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
   </data>
   <data name="percentButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>퍼센트</value>
+    <value>백분율</value>
     <comment>Screen reader prompt for the percent button on the scientific operator keypad</comment>
   </data>
   <data name="negateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>양수 음수</value>
+    <value>양의 부정</value>
     <comment>Screen reader prompt for the negate button on the scientific operator keypad</comment>
   </data>
   <data name="converterNegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>양수 음수</value>
+    <value>양의 부정</value>
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
   <data name="invertButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -906,7 +906,7 @@
     <comment>Screen reader prompt for the invert button on the scientific operator keypad</comment>
   </data>
   <data name="openParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>여는 괄호</value>
+    <value>왼쪽 괄호</value>
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
   <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
@@ -914,7 +914,7 @@
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>닫는 괄호</value>
+    <value>오른쪽 괄호</value>
     <comment>Screen reader prompt for the Calculator ")" button on the scientific operator keypad</comment>
   </data>
   <data name="Format_OpenParenthesisCountAutomationNamePrefix" xml:space="preserve">
@@ -934,7 +934,7 @@
     <comment>Screen reader prompt for the Calculator button HYP in the scientific operator keypad</comment>
   </data>
   <data name="piButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Pi</value>
+    <value>파이</value>
     <comment>Screen reader prompt for the Calculator pi button  on the scientific operator keypad</comment>
   </data>
   <data name="sinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -998,7 +998,7 @@
     <comment>Screen reader prompt for x power y button on the scientific operator keypad. </comment>
   </data>
   <data name="powerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>10의 지수</value>
+    <value>'10'의 지수</value>
     <comment>Screen reader prompt for the 10 power x button on the scientific operator keypad.</comment>
   </data>
   <data name="powerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1006,7 +1006,7 @@
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
   <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>'x'의 'y'번째 루트</value>
+    <value>'x'의 'y' 루트</value>
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
   <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1050,7 +1050,7 @@
     <comment>This the Deg button's Degree mode automation nameon the scientific operator keypad. Should read as "Degrees toggle button".</comment>
   </data>
   <data name="gradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>그라디안 켜기/끄기</value>
+    <value>그라이던 전환</value>
     <comment>This is the Deg button's Grad mode automation name on the scientific operator keypad. Should read as "Gradians toggle button".</comment>
   </data>
   <data name="radButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1082,7 +1082,7 @@
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
-    <value>%1%2에서 변환</value>
+    <value>%1 %2에서 변환</value>
     <comment>Screen reader prompt for the Unit Converter Value1 i.e. top number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ValueFrom_Decimal" xml:space="preserve">
@@ -1090,11 +1090,11 @@
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Convert from 7 point _current_unit_". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_ValueTo" xml:space="preserve">
-    <value>%1%2(으)로 변환</value>
+    <value>%1 %2(으)로 변환</value>
     <comment>Screen reader prompt for the Unit Converter Value2 i.e. bottom number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ConversionResult" xml:space="preserve">
-    <value>%1%2은(는) %3%4</value>
+    <value>%1 %2은(는) %3%4</value>
     <comment>Screen reader prompt for a conversion result, ie "2 liters is 2,000 milliliters" . %1 = From unit display value, %2 = From unit, %3 = To unit display value, %4 = To unit.</comment>
   </data>
   <data name="InputUnit_Name" xml:space="preserve">
@@ -1174,7 +1174,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUK" xml:space="preserve">
-    <value>갤론(영국)</value>
+    <value>갤런(영국)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_GallonUK" xml:space="preserve">
@@ -1182,7 +1182,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUS" xml:space="preserve">
-    <value>갤론(미국)</value>
+    <value>갤런(미국)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_GallonUS" xml:space="preserve">
@@ -1218,11 +1218,11 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_PintUS" xml:space="preserve">
-    <value>pt(미국)</value>
+    <value>포인트(미국)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TablespoonUS" xml:space="preserve">
-    <value>테이블스푼(미국)</value>
+    <value>테이블 스푼(미국)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TablespoonUS" xml:space="preserve">
@@ -1238,11 +1238,11 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TablespoonUK" xml:space="preserve">
-    <value>테이블스푼(영국)</value>
+    <value>테이블 스푼(영국)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TablespoonUK" xml:space="preserve">
-    <value>tbsp.(영국)</value>
+    <value>tbsp(미국)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TeaspoonUK" xml:space="preserve">
@@ -1250,7 +1250,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TeaspoonUK" xml:space="preserve">
-    <value>tsp.(영국)</value>
+    <value>tsp.(미국)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_QuartUK" xml:space="preserve">
@@ -1270,7 +1270,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_CupUS" xml:space="preserve">
-    <value>컵(미국)</value>
+    <value>Cups(미국)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CupUS" xml:space="preserve">
@@ -1366,7 +1366,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Hectare" xml:space="preserve">
-    <value>ha</value>
+    <value>HA</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Horsepower" xml:space="preserve">
@@ -1414,7 +1414,7 @@
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Kilowatt" xml:space="preserve">
-    <value>kW</value>
+    <value>KW</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Knot" xml:space="preserve">
@@ -1438,7 +1438,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_MetersPerSecond" xml:space="preserve">
-    <value>m/s</value>
+    <value>분/초</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Micron" xml:space="preserve">
@@ -1478,7 +1478,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Petabit" xml:space="preserve">
-    <value>Pb</value>
+    <value>PB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Petabyte" xml:space="preserve">
@@ -1486,7 +1486,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Foot-PoundPerMinute" xml:space="preserve">
-    <value>ft•lb/분</value>
+    <value>ft•lb/min</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Second" xml:space="preserve">
@@ -1566,7 +1566,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Mebibits" xml:space="preserve">
-    <value>Mi</value>
+    <value>마일</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Mebibytes" xml:space="preserve">
@@ -1574,7 +1574,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
-    <value>Pi</value>
+    <value>파이</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Pebibytes" xml:space="preserve">
@@ -1646,15 +1646,15 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_BritishThermalUnit" xml:space="preserve">
-    <value>영국 열량 단위(BTU)</value>
+    <value>영국 열량 단위</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_BTUPerMinute" xml:space="preserve">
-    <value>BTU/분</value>
+    <value>BTUs/분</value>
     <comment>A measurement unit for power: British Thermal Units per minute. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Byte" xml:space="preserve">
-    <value>바이트</value>
+    <value>바이트 수</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Calorie" xml:space="preserve">
@@ -1714,7 +1714,7 @@
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot-Pound" xml:space="preserve">
-    <value>피트파운드</value>
+    <value>피트-파운드</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot-PoundPerMinute" xml:space="preserve">
@@ -1726,7 +1726,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabyte" xml:space="preserve">
-    <value>기가바이트</value>
+    <value>GB</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hectare" xml:space="preserve">
@@ -1754,7 +1754,7 @@
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
   </data>
   <data name="UnitName_Kilobit" xml:space="preserve">
-    <value>킬로비트</value>
+    <value>Kbps</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilobyte" xml:space="preserve">
@@ -1762,7 +1762,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilocalorie" xml:space="preserve">
-    <value>음식 칼로리</value>
+    <value>열량</value>
     <comment>A measurement unit for energy. The scientific name is kilocalorie, but this is what is commonly referred to as a "calorie" or "large calorie" when talking about food. Please use the everyday-use word for food energy calories if there is one. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilojoule" xml:space="preserve">
@@ -1786,7 +1786,7 @@
     <comment>A nautical/aerial measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mach" xml:space="preserve">
-    <value>마하</value>
+    <value>매치</value>
     <comment>A measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
   </data>
   <data name="UnitName_Megabit" xml:space="preserve">
@@ -1806,11 +1806,11 @@
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Micron" xml:space="preserve">
-    <value>마이크론</value>
+    <value>미크론</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Microsecond" xml:space="preserve">
-    <value>마이크로초</value>
+    <value>밀리초</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mile" xml:space="preserve">
@@ -1914,7 +1914,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Degree" xml:space="preserve">
-    <value>도</value>
+    <value>deg</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Radian" xml:space="preserve">
@@ -1922,7 +1922,7 @@
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Gradian" xml:space="preserve">
-    <value>gr</value>
+    <value>대학원생</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Atmosphere" xml:space="preserve">
@@ -1930,7 +1930,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Bar" xml:space="preserve">
-    <value>ba</value>
+    <value>BA</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_KiloPascal" xml:space="preserve">
@@ -1942,11 +1942,11 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Pascal" xml:space="preserve">
-    <value>pa</value>
+    <value>PA</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_PSI" xml:space="preserve">
-    <value>psi</value>
+    <value>프사이</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Centigram" xml:space="preserve">
@@ -1986,7 +1986,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Pound" xml:space="preserve">
-    <value>lb</value>
+    <value>LB</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_ShortTon" xml:space="preserve">
@@ -1994,7 +1994,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Stone" xml:space="preserve">
-    <value>st</value>
+    <value>ST</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Tonne" xml:space="preserve">
@@ -2006,7 +2006,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Degree" xml:space="preserve">
-    <value>도</value>
+    <value>온도</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Radian" xml:space="preserve">
@@ -2030,7 +2030,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>수은주 밀리미터</value>
+    <value>수은주 밀리미터 </value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
@@ -2038,7 +2038,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_PSI" xml:space="preserve">
-    <value>평방 인치당 파운드</value>
+    <value>평방 인치 당 파운드</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Centigram" xml:space="preserve">
@@ -2046,7 +2046,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Decagram" xml:space="preserve">
-    <value>데카그램</value>
+    <value>Dekagrams</value>
     <comment>A measurement unit for weight. Note: Dekagram is spelled "decagram" everywhere except where US English is used. (EN-US dekagram, elsewhere decagram). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Decigram" xml:space="preserve">
@@ -2066,7 +2066,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_LongTon" xml:space="preserve">
-    <value>톤(영국)</value>
+    <value>롱톤(영국)</value>
     <comment>A measurement unit for weight. This is the UK version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Milligram" xml:space="preserve">
@@ -2134,11 +2134,11 @@
     <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paperclip" xml:space="preserve">
-    <value>클립</value>
+    <value>paperclips</value>
     <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Paperclip" xml:space="preserve">
-    <value>클립</value>
+    <value>paperclips</value>
     <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_JumboJet" xml:space="preserve">
@@ -2150,19 +2150,19 @@
     <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_LightBulb" xml:space="preserve">
-    <value>전구</value>
+    <value>백열 전구</value>
     <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_LightBulb" xml:space="preserve">
-    <value>전구</value>
+    <value>백열 전구</value>
     <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Horse" xml:space="preserve">
-    <value>마력</value>
+    <value>목마가</value>
     <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Horse" xml:space="preserve">
-    <value>마력</value>
+    <value>목마가</value>
     <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bathtub" xml:space="preserve">
@@ -2198,11 +2198,11 @@
     <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Jet" xml:space="preserve">
-    <value>제트</value>
+    <value>젯</value>
     <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Jet" xml:space="preserve">
-    <value>제트</value>
+    <value>젯</value>
     <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Whale" xml:space="preserve">
@@ -2230,11 +2230,11 @@
     <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hand" xml:space="preserve">
-    <value>뼘</value>
+    <value>손</value>
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Hand" xml:space="preserve">
-    <value>뼘</value>
+    <value>손</value>
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paper" xml:space="preserve">
@@ -2290,7 +2290,7 @@
     <comment>Help text used by accessibility tools to indicate that an item in the list of memory values is a memory item.</comment>
   </data>
   <data name="SupplementaryUnit_AutomationName" xml:space="preserve">
-    <value>%1%2</value>
+    <value>%1 %2</value>
     <comment>This string is what is read by Narrator, and other screen readers, for the supplementary value at the bottom of the converter view, %1 = the value of the supplementary unit (i.e. 0.5), %2 = the unit itself (i.e. inches, meters, etc)</comment>
   </data>
   <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2310,12 +2310,16 @@
     <comment>Label displayed next to upcoming features</comment>
   </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
-    <value>Microsoft 개인정보취급방침</value>
+    <value>Microsoft 개인정보처리방침</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
   </data>
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© %1 Microsoft. All rights reserved.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
+  </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Windows 계산기에 대한 참가 방법을 알아보려면 %HL%GitHub%HL% 프로젝트를 체크 아웃하세요.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>정보</value>
@@ -2330,7 +2334,7 @@
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>메모리에 저장된 항목 없음</value>
+    <value>메모리에 저장된 내용이 없음</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2342,7 +2346,7 @@
     <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
   </data>
   <data name="UnitName_Gibibits" xml:space="preserve">
-    <value>기비비트</value>
+    <value>기비비트(비트)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gibibytes" xml:space="preserve">
@@ -2358,7 +2362,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mebibits" xml:space="preserve">
-    <value>메비비트</value>
+    <value>메비바이트</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mebibytes" xml:space="preserve">
@@ -2390,7 +2394,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibits" xml:space="preserve">
-    <value>엑스비비트</value>
+    <value>엑시비비트</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibytes" xml:space="preserve">
@@ -2441,7 +2445,7 @@
     <comment>Add toggle button text</comment>
   </data>
   <data name="Date_AddSubtractOption.Content" xml:space="preserve">
-    <value>추가 또는 뺀 날</value>
+    <value>일 합산 또는 빼기</value>
     <comment>Add or Subtract days option</comment>
   </data>
   <data name="DateLabel.Text" xml:space="preserve">
@@ -2552,7 +2556,7 @@
     <comment>Automation name for the group of standard operator buttons (Add, Subtract, Multiply, Divide, and Equals)</comment>
   </data>
   <data name="NumberPad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>숫자 키패드</value>
+    <value>숫자 패드</value>
     <comment>Automation name for the group of NumberPad buttons (0-9, A-F and Decimal button)</comment>
   </data>
   <data name="ScientificAngleOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2564,11 +2568,11 @@
     <comment>Automation name for the group of Scientific functions.</comment>
   </data>
   <data name="RadixGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>기수 선택</value>
+    <value>라딕스 구역</value>
     <comment>Automation name for the group of radices (Hexadecimal, Decimal, Octal, Binary). https://en.wikipedia.org/wiki/Radix </comment>
   </data>
   <data name="ProgrammerOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>프로그래머 연산자</value>
+    <value>프로그래머용 연산자</value>
     <comment>Automation name for the group of programmer operators (RoL, RoR, Lsh, Rsh, OR, XOR, NOT, AND).</comment>
   </data>
   <data name="InputModeSelectionGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2580,7 +2584,7 @@
     <comment>Automation name for the group of bit toggling buttons.</comment>
   </data>
   <data name="scrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>식을 왼쪽으로 스크롤</value>
+    <value>식을 완쪽으로 스크롤</value>
     <comment>Automation label for the "scroll left" button that appears when an expression is too large to fit in the window.</comment>
   </data>
   <data name="scrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2612,7 +2616,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
   </data>
   <data name="multiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>횟수</value>
+    <value>곱하기</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
   </data>
   <data name="minusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2640,7 +2644,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>오른쪽 Shift</value>
+    <value>오른쪽으로 이동</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2660,7 +2664,7 @@
     <comment>The exact ratio between converted currencies, e.g. "1 USD = 0.8885 EUR". %1 will always be '1'. %2 is the From currency code. %3 is the formatted conversion ratio. %4 is the To currency code.</comment>
   </data>
   <data name="CurrencyTimestampFormat" xml:space="preserve">
-    <value>업데이트 일자: %1 %2</value>
+    <value>업데이트됨 %1 %2</value>
     <comment>The timestamp of currency conversion ratios fetched from an online service. %1 is the date. %2 is the time. Example: "Updated Sep 28, 2016 5:42 PM"</comment>
   </data>
   <data name="RefreshButtonText.Content" xml:space="preserve">
@@ -2680,7 +2684,7 @@
     <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
   </data>
   <data name="UpdatingCurrencyRates" xml:space="preserve">
-    <value>환율을 업데이트하는 중</value>
+    <value>통화 속도 업데이트</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the "Update rates" button in the Currency Converter is clicked.</comment>
   </data>
   <data name="CurrencyRatesUpdated" xml:space="preserve">
@@ -2744,7 +2748,7 @@
     <comment>AccessKey for the speed converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_TimeAccessKey" xml:space="preserve">
-    <value>Ti</value>
+    <value>TI</value>
     <comment>AccessKey for the time converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_VolumeAccessKey" xml:space="preserve">
@@ -2992,7 +2996,7 @@
     <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
   </data>
   <data name="RightShift" xml:space="preserve">
-    <value>오른쪽 Shift</value>
+    <value>오른쪽으로 이동</value>
     <comment>Name for the programmer function that shifts bits to the right. Used by screen readers.</comment>
   </data>
   <data name="Factorial" xml:space="preserve">
@@ -3008,7 +3012,7 @@
     <comment>Name for the natural log (ln) function. Used by screen readers.</comment>
   </data>
   <data name="Square" xml:space="preserve">
-    <value>제곱</value>
+    <value>정사각형</value>
     <comment>Name for the square function. Used by screen readers.</comment>
   </data>
   <data name="YRoot" xml:space="preserve">
@@ -3016,7 +3020,7 @@
     <comment>Name for the y root function. Used by screen readers.</comment>
   </data>
   <data name="NavCategoryItem_AutomationNameFormat" xml:space="preserve">
-    <value>%1%2</value>
+    <value>%1 %2</value>
     <comment>{Locked='%1','%2'}.  Format string for the accessible name of a Calculator menu item, used by screen readers. "%1" is the item name, e.g. Standard, Programmer, etc. %2 is the category name, e.g. Calculator, Converter. An example when formatted is "Standard Calculator" or "Currency Converter".</comment>
   </data>
   <data name="NavCategoryHeader_AutomationNameFormat" xml:space="preserve">

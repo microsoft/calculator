@@ -442,7 +442,7 @@
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Клавіатура з переключенням бітів</value>
+    <value>Двійкова клавіатура</value>
     <comment>This is the tool tip automation name for the bitFlip button.</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -474,7 +474,7 @@
     <comment>Label for a control that activates the unit converter mode.</comment>
   </data>
   <data name="scientificModeButton.Content" xml:space="preserve">
-    <value>Інженерний</value>
+    <value>Експоненційний</value>
     <comment>Label for a control that activates scientific mode calculator layout</comment>
   </data>
   <data name="standardModeButton.Content" xml:space="preserve">
@@ -514,7 +514,7 @@
     <comment>The text that shows in the dropdown navigation control in snapped mode when scientific calculator mode is selected.</comment>
   </data>
   <data name="ProgrammerModeText" xml:space="preserve">
-    <value>Програміст</value>
+    <value>Програмний</value>
     <comment>The text that shows in the dropdown navigation control in snapped mode when programmer calculator mode is selected.</comment>
   </data>
   <data name="ConverterModeText" xml:space="preserve">
@@ -526,7 +526,7 @@
     <comment>The text that shows in the dropdown navigation control for the calculator group.</comment>
   </data>
   <data name="ConverterModeTextCaps" xml:space="preserve">
-    <value>Перетворювач</value>
+    <value>Конвертер</value>
     <comment>The text that shows in the dropdown navigation control for the converter group in upper case. The previous key for this was "ConverterMode.Text".</comment>
   </data>
   <data name="CalculatorModeTextCaps" xml:space="preserve">
@@ -542,7 +542,7 @@
     <comment>Pluralized version of the calculator group text, used for the screen reader prompt.</comment>
   </data>
   <data name="Format_CalculatorResults" xml:space="preserve">
-    <value>Відображається –%1</value>
+    <value>Дисплей: %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
@@ -550,11 +550,11 @@
     <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
-    <value>Відображається: %1 кома</value>
+    <value>Дисплей: %1 цілих</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
-    <value>Вираз – %1</value>
+    <value>Вираз: %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator expression results. %1 = Localized display value, e.g. "50 + 2 - 60 +".</comment>
   </data>
   <data name="Display_Copied" xml:space="preserve">
@@ -570,19 +570,19 @@
     <comment>Screen reader prompt for the memory flyout</comment>
   </data>
   <data name="Format_HexButtonValue" xml:space="preserve">
-    <value>Шістнадцятковий формат – %1</value>
+    <value>Шістнадцятковий формат %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the hexadecimal value in Programmer mode. %1 = the localized hexadecimal value, e.g. "21B4 8F73".</comment>
   </data>
   <data name="Format_DecButtonValue" xml:space="preserve">
-    <value>Десятковий формат – %1</value>
+    <value>Десятковий формат %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the decimal value in Programmer mode. %1 = the localized decimal value, e.g. "5,732".</comment>
   </data>
   <data name="Format_OctButtonValue" xml:space="preserve">
-    <value>Восьмеричний формат – %1</value>
+    <value>Восьмеричний формат %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the octal value in Programmer mode. %1 = the localized octal value, e.g. "155 174".</comment>
   </data>
   <data name="Format_BinButtonValue" xml:space="preserve">
-    <value>Двійковий формат – %1</value>
+    <value>Двійковий формат%1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the binary value in Programmer mode. %1 = the localized binary value, e.g. "0010 1011".</comment>
   </data>
   <data name="ClearHistory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -606,7 +606,7 @@
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Збереження пам’яті</value>
+    <value>Збереження в пам’яті</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -622,11 +622,11 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button, when the button is invoked.</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Виклик пам’яті</value>
+    <value>Відкликання пам'яті</value>
     <comment>Screen reader prompt for the Calculator Memory Recall button</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Виклик пам’яті (Ctrl+R)</value>
+    <value>Відкликання пам’яті (Ctrl+R)</value>
     <comment>This is the tool tip automation name for the Memory Recall (MR) button.</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -634,7 +634,7 @@
     <comment>Screen reader prompt for the Calculator Memory Add button</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Додавання до пам’яті (Ctrl+P)</value>
+    <value>Додати до пам’яті (Ctrl+P)</value>
     <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -714,7 +714,7 @@
     <comment>Screen reader prompt for the Calculator Delete option in the History list context menu</comment>
   </data>
   <data name="backSpaceButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Backspace</value>
+    <value>Видалення останнього знака</value>
     <comment>Screen reader prompt for the Calculator Backspace button</comment>
   </data>
   <data name="BinaryZero.Text" xml:space="preserve">
@@ -790,7 +790,7 @@
     <comment>Screen reader prompt for the Calculator number "F" button</comment>
   </data>
   <data name="andButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Та</value>
+    <value>І</value>
     <comment>Screen reader prompt for the Calculator And button</comment>
   </data>
   <data name="orButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -818,27 +818,27 @@
     <comment>Screen reader prompt for the Calculator RSH button</comment>
   </data>
   <data name="xorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Виключне АБО</value>
+    <value>Виключне або</value>
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Переключення на четверні слова</value>
+    <value>Переключити на четверні слова</value>
     <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
   </data>
   <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Переключення на подвійні слова</value>
+    <value>Переключити на подвійні слова</value>
     <comment>Screen reader prompt for the Calculator dword button. Should read as "Double word toggle button".</comment>
   </data>
   <data name="wordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Переключення на слова</value>
+    <value>Переключити на слова</value>
     <comment>Screen reader prompt for the Calculator word button. Should read as "Word toggle button".</comment>
   </data>
   <data name="byteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Переключення на байти</value>
+    <value>Переключити на байти</value>
     <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Клавіатура з переключенням бітів</value>
+    <value>Двійкова клавіатура</value>
     <comment>Screen reader prompt for the Calculator bitFlip button</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -898,7 +898,7 @@
     <comment>Screen reader prompt for the negate button on the scientific operator keypad</comment>
   </data>
   <data name="converterNegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Додатне, від’ємне</value>
+    <value>Додатне від’ємне</value>
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
   <data name="invertButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -910,7 +910,7 @@
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
   <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
-    <value>Ліва кругла дужка, кількість відкривних круглих дужок – %1</value>
+    <value>Ліва кругла дужка, кількість відкритих круглих дужок: %1</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1010,7 +1010,7 @@
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
   <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Логарифм</value>
+    <value>Журнал</value>
     <comment>Screen reader for the log base 10  on the scientific operator keypad</comment>
   </data>
   <data name="logBaseEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1022,7 +1022,7 @@
     <comment>Screen reader for the mod button on the scientific operator keypad</comment>
   </data>
   <data name="expButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Експоненціальна</value>
+    <value>Експонентна</value>
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
   <data name="dmsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1046,15 +1046,15 @@
     <comment>Screen reader for the factorial button on the basic operator keypad</comment>
   </data>
   <data name="degButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Переключення на градуси</value>
+    <value>Переключити на градуси</value>
     <comment>This the Deg button's Degree mode automation nameon the scientific operator keypad. Should read as "Degrees toggle button".</comment>
   </data>
   <data name="gradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Переключення на гради</value>
+    <value>Переключити на гради</value>
     <comment>This is the Deg button's Grad mode automation name on the scientific operator keypad. Should read as "Gradians toggle button".</comment>
   </data>
   <data name="radButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Переключення на радіани</value>
+    <value>Переключити на радіани</value>
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
   <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1094,7 +1094,7 @@
     <comment>Screen reader prompt for the Unit Converter Value2 i.e. bottom number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ConversionResult" xml:space="preserve">
-    <value>%1 %2 – це %3 %4</value>
+    <value>%1 %2 – це %3 %4</value>
     <comment>Screen reader prompt for a conversion result, ie "2 liters is 2,000 milliliters" . %1 = From unit display value, %2 = From unit, %3 = To unit display value, %4 = To unit.</comment>
   </data>
   <data name="InputUnit_Name" xml:space="preserve">
@@ -1158,7 +1158,7 @@
     <comment>Unit conversion category name called Currency</comment>
   </data>
   <data name="UnitName_FluidOunceUK" xml:space="preserve">
-    <value>рідинних унцій (Сполучене Королівство)</value>
+    <value>Рідинних унцій (Сполучене Королівство)</value>
     <comment>A measurement unit for volume, in plural. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FluidOunceUK" xml:space="preserve">
@@ -1166,7 +1166,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_FluidOunceUS" xml:space="preserve">
-    <value>рідинних унцій (США)</value>
+    <value>Рідинних унцій (США)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FluidOunceUS" xml:space="preserve">
@@ -1174,7 +1174,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUK" xml:space="preserve">
-    <value>галонів (Сполучене Королівство)</value>
+    <value>Галонів (Сполучене Королівство)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_GallonUK" xml:space="preserve">
@@ -1182,7 +1182,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUS" xml:space="preserve">
-    <value>галонів (США)</value>
+    <value>Галонів (США)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_GallonUS" xml:space="preserve">
@@ -1190,15 +1190,15 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Liter" xml:space="preserve">
-    <value>літрів</value>
+    <value>Літрів</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Liter" xml:space="preserve">
-    <value>л</value>
+    <value>L</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
-    <value>мілілітрів</value>
+    <value>Мілілітри</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Milliliter" xml:space="preserve">
@@ -1206,7 +1206,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_PintUK" xml:space="preserve">
-    <value>пінт (Сполучене Королівство)</value>
+    <value>Пінти (Сполучене Королівство)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_PintUK" xml:space="preserve">
@@ -1214,7 +1214,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_PintUS" xml:space="preserve">
-    <value>пінт (США)</value>
+    <value>Пінти (США)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_PintUS" xml:space="preserve">
@@ -1222,7 +1222,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TablespoonUS" xml:space="preserve">
-    <value>столових ложок (США)</value>
+    <value>Столових ложок (США)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TablespoonUS" xml:space="preserve">
@@ -1230,7 +1230,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TeaspoonUS" xml:space="preserve">
-    <value>чайних ложок (США)</value>
+    <value>Чайних ложок (США)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TeaspoonUS" xml:space="preserve">
@@ -1238,7 +1238,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TablespoonUK" xml:space="preserve">
-    <value>столових ложок (Сполучене Королівство)</value>
+    <value>Стол. лож. (Сполучене Королівство)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TablespoonUK" xml:space="preserve">
@@ -1246,7 +1246,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TeaspoonUK" xml:space="preserve">
-    <value>чайних ложок (Сполучене Королівство)</value>
+    <value>Чайних ложок (Сполучене Королівство)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TeaspoonUK" xml:space="preserve">
@@ -1254,23 +1254,23 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_QuartUK" xml:space="preserve">
-    <value>кварт (Сполучене Королівство)</value>
+    <value>Кварт (Сполучене Королівство)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_QuartUK" xml:space="preserve">
-    <value>кв (Сполучене Королівство)</value>
+    <value>кварт. (Сполучене Королівство)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_QuartUS" xml:space="preserve">
-    <value>кварт (США)</value>
+    <value>Кварт (США)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_QuartUS" xml:space="preserve">
-    <value>кв (США)</value>
+    <value>кварта (США)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_CupUS" xml:space="preserve">
-    <value>чашок (США)</value>
+    <value>Чашок (США)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CupUS" xml:space="preserve">
@@ -1278,7 +1278,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
-    <value>ак</value>
+    <value>змінний струм</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Bit" xml:space="preserve">
@@ -1374,7 +1374,7 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Hour" xml:space="preserve">
-    <value>год.</value>
+    <value>год</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Inch" xml:space="preserve">
@@ -1422,7 +1422,7 @@
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Mach" xml:space="preserve">
-    <value>число М</value>
+    <value>М</value>
     <comment>An abbreviation for a measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
   </data>
   <data name="UnitAbbreviation_Megabit" xml:space="preserve">
@@ -1450,11 +1450,11 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Mile" xml:space="preserve">
-    <value>ми</value>
+    <value>мил.</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_MilesPerHour" xml:space="preserve">
-    <value>ми/год</value>
+    <value>милі за годину</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Millimeter" xml:space="preserve">
@@ -1474,7 +1474,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_NauticalMile" xml:space="preserve">
-    <value>нми</value>
+    <value>морських миль</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Petabit" xml:space="preserve">
@@ -1514,7 +1514,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareMile" xml:space="preserve">
-    <value>ми²</value>
+    <value>мил.²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareMillimeter" xml:space="preserve">
@@ -1534,7 +1534,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Watt" xml:space="preserve">
-    <value>Вт</value>
+    <value>W</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Week" xml:space="preserve">
@@ -1622,7 +1622,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yottabit" xml:space="preserve">
-    <value>Й</value>
+    <value>Йотабіт.</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yottabyte" xml:space="preserve">
@@ -1638,83 +1638,83 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitName_Acre" xml:space="preserve">
-    <value>акрів</value>
+    <value>Акрів</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bit" xml:space="preserve">
-    <value>біт</value>
+    <value>Біт.</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_BritishThermalUnit" xml:space="preserve">
-    <value>британських теплових одиниць</value>
+    <value>Британських теплових одиниць</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_BTUPerMinute" xml:space="preserve">
-    <value>британських теплових одиниць на хвилину</value>
+    <value>Британських теплових одиниць на хвилину</value>
     <comment>A measurement unit for power: British Thermal Units per minute. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Byte" xml:space="preserve">
-    <value>байт</value>
+    <value>Байт.</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Calorie" xml:space="preserve">
-    <value>термокалорій</value>
+    <value>Термокалорій</value>
     <comment>A measurement unit for energy. Please note that this is the "small calorie" used in science for measuring heat energy, not the "large calorie" commonly used for measuring food energy. If there is a simple term to distinguish this one from the large "Food calorie", please use that. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Centimeter" xml:space="preserve">
-    <value>сантиметрів</value>
+    <value>Сантиметрів</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CentimetersPerSecond" xml:space="preserve">
-    <value>сантиметрів на секунду</value>
+    <value>Сантиметрів на секунду</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicCentimeter" xml:space="preserve">
-    <value>кубічних сантиметрів</value>
+    <value>Кубічних сантиметрів</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicFoot" xml:space="preserve">
-    <value>кубічних футів</value>
+    <value>Кубічних футів</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicInch" xml:space="preserve">
-    <value>кубічних дюймів</value>
+    <value>Кубічних дюймів</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicMeter" xml:space="preserve">
-    <value>кубічних метрів</value>
+    <value>Кубічних метрів</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicYard" xml:space="preserve">
-    <value>кубічних ярдів</value>
+    <value>Кубічних ярдів</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Day" xml:space="preserve">
-    <value>днів</value>
+    <value>Дн.</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_DegreesCelsius" xml:space="preserve">
-    <value>Градуси Цельсія</value>
+    <value>за Цельсієм</value>
     <comment>An option in the unit converter to select degrees Celsius</comment>
   </data>
   <data name="UnitName_DegreesFahrenheit" xml:space="preserve">
-    <value>Градуси Фаренгейта</value>
+    <value>за Фаренгейтом</value>
     <comment>An option in the unit converter to select degrees Fahrenheit</comment>
   </data>
   <data name="UnitName_Electron-Volt" xml:space="preserve">
-    <value>електрон-вольтів</value>
+    <value>Електрон-вольт.</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot" xml:space="preserve">
-    <value>футів</value>
+    <value>Футів</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_FeetPerSecond" xml:space="preserve">
-    <value>футів за секунду</value>
+    <value>Футів за секунду</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot-Pound" xml:space="preserve">
-    <value>фут-фунтів</value>
+    <value>Фут-фунтів</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot-PoundPerMinute" xml:space="preserve">
@@ -1722,15 +1722,15 @@
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabit" xml:space="preserve">
-    <value>гігабіт</value>
+    <value>Гігабіти</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabyte" xml:space="preserve">
-    <value>гігабайт</value>
+    <value>Гігабайт.</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hectare" xml:space="preserve">
-    <value>гектарів</value>
+    <value>Гектарів</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Horsepower" xml:space="preserve">
@@ -1738,15 +1738,15 @@
     <comment>A measurement unit for power</comment>
   </data>
   <data name="UnitName_Hour" xml:space="preserve">
-    <value>годин</value>
+    <value>Години</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Inch" xml:space="preserve">
-    <value>дюймів</value>
+    <value>Дюймів</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Joule" xml:space="preserve">
-    <value>джоулів</value>
+    <value>Джоулі</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
@@ -1754,163 +1754,163 @@
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
   </data>
   <data name="UnitName_Kilobit" xml:space="preserve">
-    <value>кілобіт</value>
+    <value>Кілобіт</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilobyte" xml:space="preserve">
-    <value>кілобайт</value>
+    <value>Кілобайти</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilocalorie" xml:space="preserve">
-    <value>харчових калорій</value>
+    <value>Харчових калорій</value>
     <comment>A measurement unit for energy. The scientific name is kilocalorie, but this is what is commonly referred to as a "calorie" or "large calorie" when talking about food. Please use the everyday-use word for food energy calories if there is one. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilojoule" xml:space="preserve">
-    <value>кілоджоулів</value>
+    <value>Кілоджоулів</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilometer" xml:space="preserve">
-    <value>кілометрів</value>
+    <value>Кілометри</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_KilometersPerHour" xml:space="preserve">
-    <value>кілометрів на годину</value>
+    <value>Кілометри на годину</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilowatt" xml:space="preserve">
-    <value>кіловат</value>
+    <value>Кіловат</value>
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Knot" xml:space="preserve">
-    <value>вузлів</value>
+    <value>Вузлів</value>
     <comment>A nautical/aerial measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mach" xml:space="preserve">
-    <value>Число М</value>
+    <value>Махи</value>
     <comment>A measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
   </data>
   <data name="UnitName_Megabit" xml:space="preserve">
-    <value>мегабіт</value>
+    <value>Мегабіти</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Megabyte" xml:space="preserve">
-    <value>мегабайт</value>
+    <value>Мегабайт.</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Meter" xml:space="preserve">
-    <value>метрів</value>
+    <value>Метр.</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_MetersPerSecond" xml:space="preserve">
-    <value>метрів за секунду</value>
+    <value>Метри на секунду</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Micron" xml:space="preserve">
-    <value>мкм</value>
+    <value>Мкм</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Microsecond" xml:space="preserve">
-    <value>мкс</value>
+    <value>Мікросекунди</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mile" xml:space="preserve">
-    <value>миль</value>
+    <value>Миль</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_MilesPerHour" xml:space="preserve">
-    <value>миль на годину</value>
+    <value>Милі на годину</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Millimeter" xml:space="preserve">
-    <value>міліметрів</value>
+    <value>Міліметри</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Millisecond" xml:space="preserve">
-    <value>мілісекунд</value>
+    <value>Мілісекунди</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Minute" xml:space="preserve">
-    <value>хвилин</value>
+    <value>Хвилини</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
-    <value>нанометрів</value>
+    <value>Нанометр.</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
-    <value>морських миль</value>
+    <value>Морські милі</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabit" xml:space="preserve">
-    <value>петабіт</value>
+    <value>Петабіти</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabyte" xml:space="preserve">
-    <value>петабайт</value>
+    <value>Петабайти</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Second" xml:space="preserve">
-    <value>секунд</value>
+    <value>Секунди</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareCentimeter" xml:space="preserve">
-    <value>квадратних сантиметрів</value>
+    <value>Квадратних сантиметрів</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareFoot" xml:space="preserve">
-    <value>квадратних футів</value>
+    <value>Квадратних фут.</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareInch" xml:space="preserve">
-    <value>квадратних дюймів</value>
+    <value>Квадратних дюймів</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareKilometer" xml:space="preserve">
-    <value>квадратних кілометрів</value>
+    <value>Квадратні кілометри</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareMeter" xml:space="preserve">
-    <value>квадратних метрів</value>
+    <value>Квадратні метри</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareMile" xml:space="preserve">
-    <value>квадратних миль</value>
+    <value>Квадратні милі</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareMillimeter" xml:space="preserve">
-    <value>квадратних міліметрів</value>
+    <value>Квадратних міліметрів</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareYard" xml:space="preserve">
-    <value>квадратних ярдів</value>
+    <value>Квадратних ярд.</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabit" xml:space="preserve">
-    <value>терабіт</value>
+    <value>Терабіти</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabyte" xml:space="preserve">
-    <value>терабайт</value>
+    <value>Терабайт</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Watt" xml:space="preserve">
-    <value>Ват</value>
+    <value>Вати</value>
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Week" xml:space="preserve">
-    <value>тижнів</value>
+    <value>Тижн.</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yard" xml:space="preserve">
-    <value>ярдів</value>
+    <value>Ярди</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Year" xml:space="preserve">
-    <value>років</value>
+    <value>Роки</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Carat" xml:space="preserve">
-    <value>кар</value>
+    <value>кд</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Degree" xml:space="preserve">
@@ -1994,7 +1994,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Stone" xml:space="preserve">
-    <value>ст</value>
+    <value>каміння</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Tonne" xml:space="preserve">
@@ -2002,7 +2002,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitName_Carat" xml:space="preserve">
-    <value>карат</value>
+    <value>Карат</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Degree" xml:space="preserve">
@@ -2030,7 +2030,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>Міліметри ртутного стовпця</value>
+    <value>Міліметри ртутного стовпа </value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
@@ -2042,63 +2042,63 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Centigram" xml:space="preserve">
-    <value>сантиграм</value>
+    <value>Сантиграм.</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Decagram" xml:space="preserve">
-    <value>декаграм</value>
+    <value>Декаграм</value>
     <comment>A measurement unit for weight. Note: Dekagram is spelled "decagram" everywhere except where US English is used. (EN-US dekagram, elsewhere decagram). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Decigram" xml:space="preserve">
-    <value>дециграм</value>
+    <value>Дециграм</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gram" xml:space="preserve">
-    <value>грам</value>
+    <value>Грами</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hectogram" xml:space="preserve">
-    <value>гектограм</value>
+    <value>Гектограм</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilogram" xml:space="preserve">
-    <value>кілограм</value>
+    <value>Кілограм</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_LongTon" xml:space="preserve">
-    <value>довгих тонн (Сполучене Королівство)</value>
+    <value>Довгі тони (Сполучене Королівство)</value>
     <comment>A measurement unit for weight. This is the UK version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Milligram" xml:space="preserve">
-    <value>міліграм</value>
+    <value>Міліграми</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Ounce" xml:space="preserve">
-    <value>унцій</value>
+    <value>Унцій</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pound" xml:space="preserve">
-    <value>фунтів</value>
+    <value>Фунтів</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_ShortTon" xml:space="preserve">
-    <value>коротких тонн (США)</value>
+    <value>Короткі тони (США)</value>
     <comment>A measurement unit for weight. This is the US version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Stone" xml:space="preserve">
-    <value>каменів</value>
+    <value>Стоуни</value>
     <comment>A measurement unit for weight. Equal to 14 pounds. Note that this is the plural form of the word in English (eg. "This man weighs 11 stone."). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tonne" xml:space="preserve">
-    <value>метричних тон</value>
+    <value>Метричні тони</value>
     <comment>A measurement unit for weight. This is the metric version of tonne. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CD" xml:space="preserve">
-    <value>компакт-дисків</value>
+    <value>компакт-диск.</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CD" xml:space="preserve">
-    <value>компакт-дисків</value>
+    <value>компакт-диск.</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerField" xml:space="preserve">
@@ -2134,7 +2134,7 @@
     <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paperclip" xml:space="preserve">
-    <value>скріпок</value>
+    <value>скріпки</value>
     <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Paperclip" xml:space="preserve">
@@ -2142,7 +2142,7 @@
     <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_JumboJet" xml:space="preserve">
-    <value>великих реактивних літаків</value>
+    <value>великі реактивні літаки</value>
     <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_JumboJet" xml:space="preserve">
@@ -2158,7 +2158,7 @@
     <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Horse" xml:space="preserve">
-    <value>коней</value>
+    <value>коні</value>
     <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Horse" xml:space="preserve">
@@ -2174,7 +2174,7 @@
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Snowflake" xml:space="preserve">
-    <value>сніжинок</value>
+    <value>сніжинки</value>
     <comment>A snowflake, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Snowflake" xml:space="preserve">
@@ -2222,19 +2222,19 @@
     <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SwimmingPool" xml:space="preserve">
-    <value>басейнів</value>
+    <value>басейни</value>
     <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_SwimmingPool" xml:space="preserve">
-    <value>басейнів</value>
+    <value>басейн.</value>
     <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hand" xml:space="preserve">
-    <value>долонь</value>
+    <value>дол.</value>
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Hand" xml:space="preserve">
-    <value>долонь</value>
+    <value>дол.</value>
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paper" xml:space="preserve">
@@ -2246,23 +2246,23 @@
     <comment>A sheet of 8.5 x 11 inch paper, used as a comparison measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Castle" xml:space="preserve">
-    <value>палаців</value>
+    <value>палац.</value>
     <comment>A castle, used as a comparison measurement unit for area (floorspace). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Castle" xml:space="preserve">
-    <value>палаців</value>
+    <value>палац.</value>
     <comment>A castle, used as a comparison measurement unit for area (floorspace). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Banana" xml:space="preserve">
-    <value>бананів</value>
+    <value>банан.</value>
     <comment>A banana, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Banana" xml:space="preserve">
-    <value>бананів</value>
+    <value>банан.</value>
     <comment>A banana, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SliceOfCake" xml:space="preserve">
-    <value>шматочків торта</value>
+    <value>шматочки торта</value>
     <comment>A slice of chocolate cake, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_SliceOfCake" xml:space="preserve">
@@ -2270,11 +2270,11 @@
     <comment>A slice of chocolate cake, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_TrainEngine" xml:space="preserve">
-    <value>локомотивів</value>
+    <value>локомотив.</value>
     <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TrainEngine" xml:space="preserve">
-    <value>локомотивів</value>
+    <value>локомотив.</value>
     <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerBall" xml:space="preserve">
@@ -2310,15 +2310,19 @@
     <comment>Label displayed next to upcoming features</comment>
   </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
-    <value>Декларація корпорації Майкрософт про конфіденційність</value>
+    <value>Декларація про конфіденційність корпорації Майкрософт</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
   </data>
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© Корпорація Майкрософт (Microsoft Corporation), %1. Усі права захищено.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Щоб дізнатися, як можна брати участь у калькулятор Windows, візьміть проект на редагування %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
-    <value>Про програму</value>
+    <value>Відомості</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
@@ -2350,11 +2354,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibits" xml:space="preserve">
-    <value>Кібібіти</value>
+    <value>Кібібіт.</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibytes" xml:space="preserve">
-    <value>Кібібайти</value>
+    <value>Кібібайт.</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mebibits" xml:space="preserve">
@@ -2362,7 +2366,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mebibytes" xml:space="preserve">
-    <value>Мебібайти</value>
+    <value>Мебібайт.</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pebibits" xml:space="preserve">
@@ -2370,7 +2374,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pebibytes" xml:space="preserve">
-    <value>Пебібайти</value>
+    <value>Пебібайт.</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tebibits" xml:space="preserve">
@@ -2378,11 +2382,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tebibytes" xml:space="preserve">
-    <value>Тебібайти</value>
+    <value>Тебібайт.</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabits" xml:space="preserve">
-    <value>Екзабіти</value>
+    <value>Екзабіт.</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabytes" xml:space="preserve">
@@ -2390,7 +2394,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibits" xml:space="preserve">
-    <value>Ексбібіти</value>
+    <value>Ексбібіт.</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibytes" xml:space="preserve">
@@ -2426,7 +2430,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibytes" xml:space="preserve">
-    <value>Йобібайти</value>
+    <value>Йобібайт.</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="DateCalculationModeText" xml:space="preserve">
@@ -2453,7 +2457,7 @@
     <comment>Date Difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
-    <value>дн.</value>
+    <value>Дн.</value>
     <comment>Add/Subtract Days label</comment>
   </data>
   <data name="Date_DifferenceLabel.Text" xml:space="preserve">
@@ -2465,7 +2469,7 @@
     <comment>From Date Header for Difference Date Picker</comment>
   </data>
   <data name="MonthsLabel.Text" xml:space="preserve">
-    <value>Місяці</value>
+    <value>Міс.</value>
     <comment>Add/Subtract Months label</comment>
   </data>
   <data name="SubtractOption.Content" xml:space="preserve">
@@ -2477,7 +2481,7 @@
     <comment>To Date Header for Difference Date Picker</comment>
   </data>
   <data name="YearsLabel.Text" xml:space="preserve">
-    <value>р.</value>
+    <value>Роки</value>
     <comment>Add/Subtract Years label</comment>
   </data>
   <data name="Date_OutOfBoundMessage" xml:space="preserve">
@@ -2488,13 +2492,13 @@
     <value>день</value>
   </data>
   <data name="Date_Days" xml:space="preserve">
-    <value>днів</value>
+    <value>дн.</value>
   </data>
   <data name="Date_Month" xml:space="preserve">
     <value>місяць</value>
   </data>
   <data name="Date_Months" xml:space="preserve">
-    <value>Місяці</value>
+    <value>міс.</value>
   </data>
   <data name="Date_SameDates" xml:space="preserve">
     <value>Однакові дати</value>
@@ -2503,24 +2507,24 @@
     <value>тиждень</value>
   </data>
   <data name="Date_Weeks" xml:space="preserve">
-    <value>тижнів</value>
+    <value>тижн.</value>
   </data>
   <data name="Date_Year" xml:space="preserve">
     <value>рік</value>
   </data>
   <data name="Date_Years" xml:space="preserve">
-    <value>років</value>
+    <value>р.</value>
   </data>
   <data name="Date_DifferenceResultAutomationName" xml:space="preserve">
     <value>Різниця %1</value>
     <comment>Automation name for reading out the date difference. %1 =  Date difference</comment>
   </data>
   <data name="Date_ResultingDateAutomationName" xml:space="preserve">
-    <value>Підсумкова дата %1</value>
+    <value>Підсумкова дата: %1</value>
     <comment>Automation name for reading out the resulting date in Add/Subtract mode. %1 = Resulting date</comment>
   </data>
   <data name="HeaderAutomationName_Calculator" xml:space="preserve">
-    <value>Режим калькулятора %1</value>
+    <value>Режим калькулятора – %1</value>
     <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current calculator mode: Scientific, Standard, or Programmer.</comment>
   </data>
   <data name="HeaderAutomationName_Converter" xml:space="preserve">
@@ -2532,7 +2536,7 @@
     <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Списки журналів і пам’яті</value>
+    <value>Списки журналів і елементів пам’яті</value>
     <comment>Automation name for the group of controls for history and memory lists.</comment>
   </data>
   <data name="MemoryPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2560,7 +2564,7 @@
     <comment>Automation name for the group of Scientific angle operators (Degree mode, Hyperbolic toggle, and Precision button)</comment>
   </data>
   <data name="ScientificFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Наукові функції</value>
+    <value>Інженерні функції</value>
     <comment>Automation name for the group of Scientific functions.</comment>
   </data>
   <data name="RadixGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2596,11 +2600,11 @@
     <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when user presses a button with auditory feedback. "%1" is the display value and "%2" is the button press feedback. Example, user presses "plus" and hears "Display is 7 plus".</comment>
   </data>
   <data name="Format_MemorySave" xml:space="preserve">
-    <value>%1 – збережено в пам’яті</value>
+    <value>%1 збережено в пам’яті</value>
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user stores a number to memory. The %1 is the automation name of the display. Users will hear "_current_value_ saved to memory".</comment>
   </data>
   <data name="Format_MemorySlotChanged" xml:space="preserve">
-    <value>Гніздо картки пам’яті %1 – %2</value>
+    <value>Слот пам’яті %1 – %2</value>
     <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when the user changes a memory slot. The %1 is the index of the memory slot and %2 is the new value. For example, users might hear "Memory slot 2 is 37".</comment>
   </data>
   <data name="Format_MemorySlotCleared" xml:space="preserve">
@@ -2608,11 +2612,11 @@
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user clears a memory slot. The %1 is the index of the memory slot. For example, users might hear "Memory slot 2 cleared".</comment>
   </data>
   <data name="divideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>поділити на</value>
+    <value>ділити на</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
   </data>
   <data name="multiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>помножити на</value>
+    <value>помножити</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
   </data>
   <data name="minusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2632,7 +2636,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
   </data>
   <data name="modButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>поділити по модулю</value>
+    <value>за модулем</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2644,15 +2648,15 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>OR</value>
+    <value>або</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
   </data>
   <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>XOR</value>
+    <value>x або</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>плюс</value>
+    <value>і</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="CurrencyFromToRatioFormat" xml:space="preserve">
@@ -2672,11 +2676,11 @@
     <comment>The text displayed when users are on a metered connection and using currency converter.</comment>
   </data>
   <data name="FailedToRefresh" xml:space="preserve">
-    <value>Не вдалось отримати нові тарифи. Спробуйте ще раз пізніше.</value>
+    <value>Не вдалось отримати нові курси. Повторіть спробу пізніше.</value>
     <comment>The text displayed when currency ratio data fails to load.</comment>
   </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
-    <value>Офлайн. Перевірте %HL%настройки мережі%HL%</value>
+    <value>Офлайн. Перевірте %HL%параметри мережі%HL%</value>
     <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
   </data>
   <data name="UpdatingCurrencyRates" xml:space="preserve">
@@ -2700,7 +2704,7 @@
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryButton.AccessKey" xml:space="preserve">
-    <value>M</value>
+    <value>М</value>
     <comment>Access key for the Memory button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="NavView.AccessKey" xml:space="preserve">
@@ -2724,7 +2728,7 @@
     <comment>AccessKey for the data converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_EnergyAccessKey" xml:space="preserve">
-    <value>E</value>
+    <value>Е</value>
     <comment>AccessKey for the energy converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_LengthAccessKey" xml:space="preserve">
@@ -2780,7 +2784,7 @@
     <comment>Access key for the History pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryLabel.AccessKey" xml:space="preserve">
-    <value>M</value>
+    <value>М</value>
     <comment>Access key for the Memory pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="SineDegrees" xml:space="preserve">
@@ -2988,11 +2992,11 @@
     <comment>Name for the absolute value function. Used by screen readers.</comment>
   </data>
   <data name="LeftShift" xml:space="preserve">
-    <value>зсув вліво</value>
+    <value>зсув уліво</value>
     <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
   </data>
   <data name="RightShift" xml:space="preserve">
-    <value>зсув вправо</value>
+    <value>зсув управо</value>
     <comment>Name for the programmer function that shifts bits to the right. Used by screen readers.</comment>
   </data>
   <data name="Factorial" xml:space="preserve">

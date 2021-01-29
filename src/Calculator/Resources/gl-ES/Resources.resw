@@ -718,7 +718,7 @@
     <comment>Screen reader prompt for the Calculator Backspace button</comment>
   </data>
   <data name="BinaryZero.Text" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
     <comment>Screen reader prompt for the Calculator number "0" button</comment>
   </data>
   <data name="BinaryOne.Text" xml:space="preserve">
@@ -870,7 +870,7 @@
     <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Inverse Function</value>
+    <value>Función inversa</value>
     <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
   </data>
   <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -910,7 +910,7 @@
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
   <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
-    <value>Paréntese de apertura, total de parénteses abertos %1</value>
+    <value>Paréntese de apertura. Total de parénteses abertos: %1</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1370,7 +1370,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Horsepower" xml:space="preserve">
-    <value>hp (EUA)</value>
+    <value>hp (EUA)</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Hour" xml:space="preserve">
@@ -1566,7 +1566,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Mebibits" xml:space="preserve">
-    <value>mi</value>
+    <value>Mi</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Mebibytes" xml:space="preserve">
@@ -1926,7 +1926,7 @@
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Atmosphere" xml:space="preserve">
-    <value>Caixeiro</value>
+    <value>atm</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Bar" xml:space="preserve">
@@ -2317,6 +2317,10 @@
     <value>© %1 Microsoft. Todos os dereitos reservados.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Para obter máis información sobre como podes contribuír á Calculadora de Windows, consulta o proxecto en %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Acerca de</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
@@ -2338,7 +2342,7 @@
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
   <data name="CannotPaste" xml:space="preserve">
-    <value>A expresión non se pode pegar</value>
+    <value>Esta expresión non se pode pegar</value>
     <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
   </data>
   <data name="UnitName_Gibibits" xml:space="preserve">

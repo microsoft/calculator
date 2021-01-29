@@ -126,11 +126,11 @@
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the name of the application when built by a user via GitHub. We use a different name to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="AppStoreName" xml:space="preserve">
-    <value>Windowsin laskin</value>
+    <value>Microsoftin laskin</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
   </data>
   <data name="DevAppStoreName" xml:space="preserve">
-    <value>Windowsin laskin [Dev]</value>
+    <value>Microsoftin laskin [Dev]</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps. This is the the version of the name used when the app is built by a user via GitHub.</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
@@ -418,11 +418,11 @@
     <comment>Used to describe the first bit of a binary number. Used in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
-    <value>Avaa muisti -pikaikkuna</value>
+    <value>Avaa muisti-pikaikkuna</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is closed.</comment>
   </data>
   <data name="MemoryButton_Close" xml:space="preserve">
-    <value>Sulje muisti -pikaikkuna</value>
+    <value>Sulje muisti-pikaikkuna</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
   </data>
   <data name="AlwaysOnTop_Enter" xml:space="preserve">
@@ -542,7 +542,7 @@
     <comment>Pluralized version of the calculator group text, used for the screen reader prompt.</comment>
   </data>
   <data name="Format_CalculatorResults" xml:space="preserve">
-    <value>Näyttö on %1</value>
+    <value>Näyttö on %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
@@ -550,7 +550,7 @@
     <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
-    <value>Näyttö on %1 pilkku</value>
+    <value>Näyttö on %1 pilkku</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
@@ -598,11 +598,11 @@
     <comment>Screen reader prompt for the Calculator History Hide button</comment>
   </data>
   <data name="HistoryButton_Open" xml:space="preserve">
-    <value>Avaa historia -pikaikkuna</value>
+    <value>Avaa historia-pikaikkuna</value>
     <comment>Screen reader prompt for the Calculator History button, when the flyout is closed.</comment>
   </data>
   <data name="HistoryButton_Close" xml:space="preserve">
-    <value>Sulje historia -pikaikkuna</value>
+    <value>Sulje historia-pikaikkuna</value>
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -866,7 +866,7 @@
     <comment>Screen reader prompt for the multiply button on the number pad</comment>
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>On yhtä suuri kuin</value>
+    <value>On yhtäsuuri kuin</value>
     <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -910,7 +910,7 @@
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
   <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
-    <value>Vasen sulje, avaavien sulkeiden määrä %1</value>
+    <value>Vasen kaarisulje, avaavien sulkeiden määrä %1</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1010,15 +1010,15 @@
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
   <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Logaritmi</value>
+    <value>Kirjaa lokiin</value>
     <comment>Screen reader for the log base 10  on the scientific operator keypad</comment>
   </data>
   <data name="logBaseEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Luonnollinen logaritmi</value>
+    <value>Luonnollinen loki</value>
     <comment>Screen reader for the log base e on the scientific operator keypad</comment>
   </data>
   <data name="modButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Jakojäännös</value>
+    <value>Modulo</value>
     <comment>Screen reader for the mod button on the scientific operator keypad</comment>
   </data>
   <data name="expButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1106,7 +1106,7 @@
     <comment>Screen reader prompt for the Unit Converter Units2 i.e. bottom units field.</comment>
   </data>
   <data name="CategoryName_AreaText" xml:space="preserve">
-    <value>Alue</value>
+    <value>Pinta-ala</value>
     <comment>Unit conversion category name called Area (eg. area of a sports field in square meters)</comment>
   </data>
   <data name="CategoryName_DataText" xml:space="preserve">
@@ -1278,7 +1278,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
-    <value>ac</value>
+    <value>as</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Bit" xml:space="preserve">
@@ -1294,7 +1294,7 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Byte" xml:space="preserve">
-    <value>t</value>
+    <value>B</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Calorie" xml:space="preserve">
@@ -1302,7 +1302,7 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Centimeter" xml:space="preserve">
-    <value>cm</value>
+    <value>CM</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_CentimetersPerSecond" xml:space="preserve">
@@ -1346,7 +1346,7 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Foot" xml:space="preserve">
-    <value>ft</value>
+    <value>FT</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_FeetPerSecond" xml:space="preserve">
@@ -1538,7 +1538,7 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Week" xml:space="preserve">
-    <value>vk</value>
+    <value>viikko</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Yard" xml:space="preserve">
@@ -1574,7 +1574,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
-    <value>Pi</value>
+    <value>Pii</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Pebibytes" xml:space="preserve">
@@ -1594,7 +1594,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Exabytes" xml:space="preserve">
-    <value>EB</value>
+    <value>Et</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Exbibits" xml:space="preserve">
@@ -1610,7 +1610,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Zetabytes" xml:space="preserve">
-    <value>ZB</value>
+    <value>Zt</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Zebibits" xml:space="preserve">
@@ -1630,7 +1630,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yobibits" xml:space="preserve">
-    <value>Yi</value>
+    <value>ji</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yobibytes" xml:space="preserve">
@@ -1642,7 +1642,7 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bit" xml:space="preserve">
-    <value>bittiä</value>
+    <value>BITS</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_BritishThermalUnit" xml:space="preserve">
@@ -1654,7 +1654,7 @@
     <comment>A measurement unit for power: British Thermal Units per minute. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Byte" xml:space="preserve">
-    <value>tavua</value>
+    <value>Tavua</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Calorie" xml:space="preserve">
@@ -1674,7 +1674,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicFoot" xml:space="preserve">
-    <value>kuutiojalkaa</value>
+    <value>Kuutiojalka</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicInch" xml:space="preserve">
@@ -1694,11 +1694,11 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_DegreesCelsius" xml:space="preserve">
-    <value>celsiusastetta</value>
+    <value>Celsius</value>
     <comment>An option in the unit converter to select degrees Celsius</comment>
   </data>
   <data name="UnitName_DegreesFahrenheit" xml:space="preserve">
-    <value>fahrenheit-astetta</value>
+    <value>Fahrenheit</value>
     <comment>An option in the unit converter to select degrees Fahrenheit</comment>
   </data>
   <data name="UnitName_Electron-Volt" xml:space="preserve">
@@ -1710,7 +1710,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_FeetPerSecond" xml:space="preserve">
-    <value>jalkaa sekunnissa</value>
+    <value>Jalkaa sekunnissa</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot-Pound" xml:space="preserve">
@@ -1726,11 +1726,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabyte" xml:space="preserve">
-    <value>gigatavua</value>
+    <value>Gigatavut</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hectare" xml:space="preserve">
-    <value>hehtaaria</value>
+    <value>Hehtaaria</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Horsepower" xml:space="preserve">
@@ -1750,7 +1750,7 @@
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
-    <value>kelviniä</value>
+    <value>Kelvin</value>
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
   </data>
   <data name="UnitName_Kilobit" xml:space="preserve">
@@ -1770,7 +1770,7 @@
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilometer" xml:space="preserve">
-    <value>kilometriä</value>
+    <value>Kilometriä</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_KilometersPerHour" xml:space="preserve">
@@ -1782,7 +1782,7 @@
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Knot" xml:space="preserve">
-    <value>solmua</value>
+    <value>Solmut</value>
     <comment>A nautical/aerial measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mach" xml:space="preserve">
@@ -1798,7 +1798,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Meter" xml:space="preserve">
-    <value>metriä</value>
+    <value>Metriä</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_MetersPerSecond" xml:space="preserve">
@@ -1806,11 +1806,11 @@
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Micron" xml:space="preserve">
-    <value>mikrometriä</value>
+    <value>Mikronit</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Microsecond" xml:space="preserve">
-    <value>mikrosekuntia</value>
+    <value>Mikrosekuntia</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mile" xml:space="preserve">
@@ -1826,7 +1826,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Millisecond" xml:space="preserve">
-    <value>millisekuntia</value>
+    <value>Millisekunnit</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Minute" xml:space="preserve">
@@ -1834,7 +1834,7 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
-    <value>nanometriä</value>
+    <value>Nanometrit</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
@@ -1854,7 +1854,7 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareCentimeter" xml:space="preserve">
-    <value>neliösenttimetriä</value>
+    <value>Neliösenttimetriä</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareFoot" xml:space="preserve">
@@ -1862,15 +1862,15 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareInch" xml:space="preserve">
-    <value>neliötuumaa</value>
+    <value>Neliötuumaa</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareKilometer" xml:space="preserve">
-    <value>neliökilometriä</value>
+    <value>Neliökilometriä</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareMeter" xml:space="preserve">
-    <value>neliömetriä</value>
+    <value>Neliömetriä</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareMile" xml:space="preserve">
@@ -1878,11 +1878,11 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareMillimeter" xml:space="preserve">
-    <value>neliömillimetriä</value>
+    <value>Neliömillimetriä</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareYard" xml:space="preserve">
-    <value>neliöjaardia</value>
+    <value>Neliöjaardia</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabit" xml:space="preserve">
@@ -1902,7 +1902,7 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yard" xml:space="preserve">
-    <value>jaardia</value>
+    <value>Jaardia</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Year" xml:space="preserve">
@@ -1914,19 +1914,19 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Degree" xml:space="preserve">
-    <value>°</value>
+    <value>asteet</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Radian" xml:space="preserve">
-    <value>rad</value>
+    <value>radiaani</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Gradian" xml:space="preserve">
-    <value>grad</value>
+    <value>valmistunut</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Atmosphere" xml:space="preserve">
-    <value>atm</value>
+    <value>pankkiautomaatti</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Bar" xml:space="preserve">
@@ -1946,7 +1946,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_PSI" xml:space="preserve">
-    <value>psi</value>
+    <value>psii</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Centigram" xml:space="preserve">
@@ -1994,7 +1994,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Stone" xml:space="preserve">
-    <value>st</value>
+    <value>.</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Tonne" xml:space="preserve">
@@ -2006,7 +2006,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Degree" xml:space="preserve">
-    <value>astetta</value>
+    <value>Asteet</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Radian" xml:space="preserve">
@@ -2014,7 +2014,7 @@
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Gradian" xml:space="preserve">
-    <value>uusastetta</value>
+    <value>Goonit</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Atmosphere" xml:space="preserve">
@@ -2022,15 +2022,15 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Bar" xml:space="preserve">
-    <value>baaria</value>
+    <value>Baarit</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_KiloPascal" xml:space="preserve">
-    <value>kilopascalia</value>
+    <value>kilopascal</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>elohopeamillimetriä</value>
+    <value>elohopeamillimetri </value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
@@ -2038,7 +2038,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_PSI" xml:space="preserve">
-    <value>naulaa neliötuumalla</value>
+    <value>paunaa neliötuumalla</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Centigram" xml:space="preserve">
@@ -2078,7 +2078,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pound" xml:space="preserve">
-    <value>naulaa</value>
+    <value>paunaa</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_ShortTon" xml:space="preserve">
@@ -2086,7 +2086,7 @@
     <comment>A measurement unit for weight. This is the US version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Stone" xml:space="preserve">
-    <value>stonea</value>
+    <value>Kivi</value>
     <comment>A measurement unit for weight. Equal to 14 pounds. Note that this is the plural form of the word in English (eg. "This man weighs 11 stone."). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tonne" xml:space="preserve">
@@ -2094,11 +2094,11 @@
     <comment>A measurement unit for weight. This is the metric version of tonne. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CD" xml:space="preserve">
-    <value>CD-levyä</value>
+    <value>CD-levyt</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CD" xml:space="preserve">
-    <value>CD-levyä</value>
+    <value>CD-levyt</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerField" xml:space="preserve">
@@ -2118,11 +2118,11 @@
     <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_DVD" xml:space="preserve">
-    <value>DVD-levyä</value>
+    <value>DVD-levyt</value>
     <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_DVD" xml:space="preserve">
-    <value>DVD-levyä</value>
+    <value>DVD-levyt</value>
     <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Battery" xml:space="preserve">
@@ -2230,11 +2230,11 @@
     <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hand" xml:space="preserve">
-    <value>kättä</value>
+    <value>kädet</value>
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Hand" xml:space="preserve">
-    <value>kättä</value>
+    <value>kädet</value>
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paper" xml:space="preserve">
@@ -2316,6 +2316,10 @@
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© %1 Microsoft. Kaikki oikeudet pidätetään.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
+  </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Katso, miten voit osallistua Windows-laskin, tutustu projektiin %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Tietoja</value>
@@ -2469,7 +2473,7 @@
     <comment>Add/Subtract Months label</comment>
   </data>
   <data name="SubtractOption.Content" xml:space="preserve">
-    <value>Vähennä</value>
+    <value>Erotus</value>
     <comment>Subtract toggle button text</comment>
   </data>
   <data name="DateDiff_ToHeader.Header" xml:space="preserve">
@@ -2494,7 +2498,7 @@
     <value>kuukausi</value>
   </data>
   <data name="Date_Months" xml:space="preserve">
-    <value>kuukautta</value>
+    <value>kuukaudet</value>
   </data>
   <data name="Date_SameDates" xml:space="preserve">
     <value>Samat päivämäärät</value>
@@ -2636,7 +2640,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>vasen vaihtonäppäin</value>
+    <value>bittisiirto vasemmalle</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2988,11 +2992,11 @@
     <comment>Name for the absolute value function. Used by screen readers.</comment>
   </data>
   <data name="LeftShift" xml:space="preserve">
-    <value>vasen vaihtonäppäin</value>
+    <value>bittisiirto vasemmalle</value>
     <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
   </data>
   <data name="RightShift" xml:space="preserve">
-    <value>oikea vaihtonäppäin</value>
+    <value>bittisiirto oikealle</value>
     <comment>Name for the programmer function that shifts bits to the right. Used by screen readers.</comment>
   </data>
   <data name="Factorial" xml:space="preserve">
@@ -3000,7 +3004,7 @@
     <comment>Name for the factorial function. Used by screen readers.</comment>
   </data>
   <data name="DegreeMinuteSecond" xml:space="preserve">
-    <value>aste, minuutti, sekunti</value>
+    <value>aste minuutti sekunti</value>
     <comment>Name for the degree minute second (dms) function. Used by screen readers.</comment>
   </data>
   <data name="NaturalLog" xml:space="preserve">
@@ -3020,7 +3024,7 @@
     <comment>{Locked='%1','%2'}.  Format string for the accessible name of a Calculator menu item, used by screen readers. "%1" is the item name, e.g. Standard, Programmer, etc. %2 is the category name, e.g. Calculator, Converter. An example when formatted is "Standard Calculator" or "Currency Converter".</comment>
   </data>
   <data name="NavCategoryHeader_AutomationNameFormat" xml:space="preserve">
-    <value>Luokka: %1</value>
+    <value>%1-luokka</value>
     <comment>{Locked='%1'} Format string for the accessible name of a Calculator menu category header, used by screen readers. "%1" is the pluralized category name, e.g. Calculators, Converters. An example when formatted is "Calculators category".</comment>
   </data>
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">

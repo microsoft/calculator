@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="100" xml:space="preserve">
-    <value>Ogiltiga indata</value>
+    <value>Ogiltig inmatning</value>
     <comment>Error message shown when the input makes a function fail, like log(-1)</comment>
   </data>
   <data name="101" xml:space="preserve">
@@ -142,7 +142,7 @@
     <comment>Same 101</comment>
   </data>
   <data name="119" xml:space="preserve">
-    <value>Spill</value>
+    <value>Dataspill</value>
     <comment>Same as 107</comment>
   </data>
   <data name="120" xml:space="preserve">

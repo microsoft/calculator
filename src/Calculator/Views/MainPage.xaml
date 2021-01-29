@@ -181,6 +181,7 @@
                 <muxc:NavigationViewItem x:Name="SettingsButton"
                                          x:Uid="SettingsButton"
                                          Style="{StaticResource NavViewItemStyle}"
+                                         KeyDown="OnSettingsButtonKeyDown"
                                          Tapped="OnSettingsButtonClick">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xe713;"/>
