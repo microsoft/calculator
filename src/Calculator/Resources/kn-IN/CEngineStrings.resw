@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="100" xml:space="preserve">
-    <value>ಅಮಾನ್ಯ ಇನ್‌ಪುಟ್</value>
+    <value>ಅಮಾನ್ಯ ಇನ್‍ಪುಟ್</value>
     <comment>Error message shown when the input makes a function fail, like log(-1)</comment>
   </data>
   <data name="101" xml:space="preserve">
@@ -130,7 +130,7 @@
     <comment>Error message shown when we run out of memory during a calculation.</comment>
   </data>
   <data name="107" xml:space="preserve">
-    <value>ಹೊರಚೆಲ್ಲು</value>
+    <value>ಓವರ್‌ಫ್ಲೋ</value>
     <comment>Error message shown when there's an overflow during the calculation.</comment>
   </data>
   <data name="108" xml:space="preserve">
@@ -142,11 +142,11 @@
     <comment>Same 101</comment>
   </data>
   <data name="119" xml:space="preserve">
-    <value>ಹೊರಚೆಲ್ಲು</value>
+    <value>ಓವರ್‌ಫ್ಲೋ</value>
     <comment>Same as 107</comment>
   </data>
   <data name="120" xml:space="preserve">
-    <value>ಹೊರಚೆಲ್ಲು</value>
+    <value>ಓವರ್‌ಫ್ಲೋ</value>
     <comment>Same 107</comment>
   </data>
   <data name="99" xml:space="preserve">

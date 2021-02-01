@@ -146,7 +146,7 @@
     <comment>Copy context menu string</comment>
   </data>
   <data name="pasteMenuItem" xml:space="preserve">
-    <value>جای گذاری</value>
+    <value>جایگذاری</value>
     <comment>Paste context menu string</comment>
   </data>
   <data name="SupplementaryResultsHeader.Text" xml:space="preserve">
@@ -422,7 +422,7 @@
     <comment>This is the automation name and label for the memory button when the memory flyout is closed.</comment>
   </data>
   <data name="MemoryButton_Close" xml:space="preserve">
-    <value>بستن حافظه حاشیه‌ای</value>
+    <value>بستن منوی شناور حافظه</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
   </data>
   <data name="AlwaysOnTop_Enter" xml:space="preserve">
@@ -514,7 +514,7 @@
     <comment>The text that shows in the dropdown navigation control in snapped mode when scientific calculator mode is selected.</comment>
   </data>
   <data name="ProgrammerModeText" xml:space="preserve">
-    <value>برنامه نویس</value>
+    <value>برنامه‌نویس</value>
     <comment>The text that shows in the dropdown navigation control in snapped mode when programmer calculator mode is selected.</comment>
   </data>
   <data name="ConverterModeText" xml:space="preserve">
@@ -542,7 +542,7 @@
     <comment>Pluralized version of the calculator group text, used for the screen reader prompt.</comment>
   </data>
   <data name="Format_CalculatorResults" xml:space="preserve">
-    <value>نمایشگر %1 است</value>
+    <value>مقدار نمایش %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
@@ -550,7 +550,7 @@
     <comment>{Locked="%1","%2"}. Screen reader prompt for the Calculator always-on-top expression. %1 = Expression, e.g. "50 + 2 - 60 +", %2 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorResults_Decimal" xml:space="preserve">
-    <value>نمایشگر %1 نقطه است</value>
+    <value>مقدار نمایش %1 ممیز</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
@@ -562,7 +562,7 @@
     <comment>Screen reader prompt for the Calculator display copy button, when the button is invoked.</comment>
   </data>
   <data name="HistoryPane" xml:space="preserve">
-    <value>پیشینه</value>
+    <value>تاریخچه</value>
     <comment>Screen reader prompt for the history flyout</comment>
   </data>
   <data name="MemoryPane" xml:space="preserve">
@@ -602,7 +602,7 @@
     <comment>Screen reader prompt for the Calculator History button, when the flyout is closed.</comment>
   </data>
   <data name="HistoryButton_Close" xml:space="preserve">
-    <value>بستن تاریخچه حاشیه‌ای</value>
+    <value>بستن منوی شناور تاریخچه</value>
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -662,11 +662,11 @@
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>کاهش از مورد حافظه</value>
+    <value>کم کردن از مورد حافظه</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>کاهش از مورد حافظه</value>
+    <value>کم کردن از مورد حافظه</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -714,15 +714,15 @@
     <comment>Screen reader prompt for the Calculator Delete option in the History list context menu</comment>
   </data>
   <data name="backSpaceButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Backspace</value>
+    <value>کلید پس‌برد</value>
     <comment>Screen reader prompt for the Calculator Backspace button</comment>
   </data>
   <data name="BinaryZero.Text" xml:space="preserve">
-    <value>0</value>
+    <value>۰</value>
     <comment>Screen reader prompt for the Calculator number "0" button</comment>
   </data>
   <data name="BinaryOne.Text" xml:space="preserve">
-    <value>1</value>
+    <value>۱</value>
     <comment>Screen reader prompt for the Calculator number "1" button</comment>
   </data>
   <data name="num0Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -790,7 +790,7 @@
     <comment>Screen reader prompt for the Calculator number "F" button</comment>
   </data>
   <data name="andButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>And</value>
+    <value>و</value>
     <comment>Screen reader prompt for the Calculator And button</comment>
   </data>
   <data name="orButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -822,11 +822,11 @@
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>تغییر چهار کلمه</value>
+    <value>کلید تغییر چهار کلمه</value>
     <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
   </data>
   <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>تغییر دو کلمه</value>
+    <value>کلید تغییر دو کلمه</value>
     <comment>Screen reader prompt for the Calculator dword button. Should read as "Double word toggle button".</comment>
   </data>
   <data name="wordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -846,7 +846,7 @@
     <comment>Screen reader prompt for the Calculator numberPad button</comment>
   </data>
   <data name="decimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>جداساز اعشار</value>
+    <value>جداکننده اعشار</value>
     <comment>Screen reader prompt for the "." button</comment>
   </data>
   <data name="clearEntryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -930,7 +930,7 @@
     <comment>Screen reader prompt for the Calculator F-E the scientific operator keypad</comment>
   </data>
   <data name="hyperbolicButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>تابع هایپربولیک</value>
+    <value>تابع هیپربولیک</value>
     <comment>Screen reader prompt for the Calculator button HYP in the scientific operator keypad</comment>
   </data>
   <data name="piButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -950,15 +950,15 @@
     <comment>Screen reader prompt for the Calculator tan button  on the scientific operator keypad</comment>
   </data>
   <data name="sinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>سینوس هایپربولیک</value>
+    <value>سینوس هیپربولیک</value>
     <comment>Screen reader prompt for the Calculator sinh button  on the scientific operator keypad</comment>
   </data>
   <data name="coshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>کسینوس هایپربولیک</value>
+    <value>کسینوس هیپربولیک</value>
     <comment>Screen reader prompt for the Calculator cosh button  on the scientific operator keypad</comment>
   </data>
   <data name="tanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>تانژانت هایپربولیک</value>
+    <value>تانژانت هیپربولیک</value>
     <comment>Screen reader prompt for the Calculator tanh button  on the scientific operator keypad</comment>
   </data>
   <data name="xpower2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -982,15 +982,15 @@
     <comment>Screen reader prompt for the inverted tan on the scientific operator keypad.</comment>
   </data>
   <data name="invsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>آرک سینوس هایپربولیک</value>
+    <value>آرک سینوس هیپربولیک</value>
     <comment>Screen reader prompt for the inverted sinh on the scientific operator keypad.</comment>
   </data>
   <data name="invcoshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>آرک کسینوس هایپربولیک</value>
+    <value>آرک کسینوس هیپربولیک</value>
     <comment>Screen reader prompt for the inverted cosh on the scientific operator keypad.</comment>
   </data>
   <data name="invtanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>آرک تانژانت هایپربولیک</value>
+    <value>آرک تانژانت هیپربولیک</value>
     <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
   </data>
   <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1046,7 +1046,7 @@
     <comment>Screen reader for the factorial button on the basic operator keypad</comment>
   </data>
   <data name="degButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>تغییر درجه‌ها</value>
+    <value>کلید تغییر درجه‌ها</value>
     <comment>This the Deg button's Degree mode automation nameon the scientific operator keypad. Should read as "Degrees toggle button".</comment>
   </data>
   <data name="gradButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1058,11 +1058,11 @@
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
   <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>فهرست کشویی حالت</value>
+    <value>منوی کشویی حالت</value>
     <comment>Screen reader prompt for the Mode dropdown field in Snapped and Portrait modes.</comment>
   </data>
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>فهرست کشویی دسته ها</value>
+    <value>فهرست کشویی دسته‌ها</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1082,15 +1082,15 @@
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
-    <value>از %1 %2 تبدیل کنید</value>
+    <value>تبدیل از %1 %2</value>
     <comment>Screen reader prompt for the Unit Converter Value1 i.e. top number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ValueFrom_Decimal" xml:space="preserve">
-    <value>از نقطه %1 به %2 تبدیل کنید</value>
+    <value>تبدیل از %1 ممیز %2</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Convert from 7 point _current_unit_". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_ValueTo" xml:space="preserve">
-    <value>به %1 %2 تبدیل می‌کند</value>
+    <value>تبدیل به %1 %2</value>
     <comment>Screen reader prompt for the Unit Converter Value2 i.e. bottom number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ConversionResult" xml:space="preserve">
@@ -1198,11 +1198,11 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
-    <value>میلی لیتر</value>
+    <value>میلی‌لیتر</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Milliliter" xml:space="preserve">
-    <value>میلی لیتر</value>
+    <value>میلی‌لیتر</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_PintUK" xml:space="preserve">
@@ -1222,15 +1222,15 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TablespoonUS" xml:space="preserve">
-    <value>قاشق سوپ خوری (آمریکا)</value>
+    <value>قاشق غذاخوری (آمریکا)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TablespoonUS" xml:space="preserve">
-    <value>قاشق سوپ خوری (ایالات متحده)</value>
+    <value>قاشق غذاخوری (ایالات متحده)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TeaspoonUS" xml:space="preserve">
-    <value>قاشق چای خوری (آمریکا)</value>
+    <value>قاشق چایخوری (آمریکا)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TeaspoonUS" xml:space="preserve">
@@ -1238,15 +1238,15 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TablespoonUK" xml:space="preserve">
-    <value>قاشق سوپ خوری (انگلستان)</value>
+    <value>قاشق غذاخوری (بریتانیا)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TablespoonUK" xml:space="preserve">
-    <value>قاشق سوپ خوری (انگلستان)</value>
+    <value>قاشق غذاخوری (انگلستان)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TeaspoonUK" xml:space="preserve">
-    <value>قاشق چای خوری (انگلستان)</value>
+    <value>قاشق چایخوری (بریتانیا)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TeaspoonUK" xml:space="preserve">
@@ -1286,11 +1286,11 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_BritishThermalUnit" xml:space="preserve">
-    <value>BTU</value>
+    <value>یکای بریتانیایی حرارت</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_BTUPerMinute" xml:space="preserve">
-    <value>BTU/دقیقه</value>
+    <value>یکای بریتانیایی حرارت/دقیقه</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Byte" xml:space="preserve">
@@ -1302,15 +1302,15 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Centimeter" xml:space="preserve">
-    <value>سانتی متر</value>
+    <value>سانتی‌متر</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_CentimetersPerSecond" xml:space="preserve">
-    <value>سانتی متر بر ثانیه</value>
+    <value>سانتی‌متر بر ثانیه</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_CubicCentimeter" xml:space="preserve">
-    <value>سانتی متر مکعب</value>
+    <value>سانتی‌متر مکعب</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicFoot" xml:space="preserve">
@@ -1334,7 +1334,7 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_DegreesCelsius" xml:space="preserve">
-    <value>درجه سانتی گراد</value>
+    <value>درجه سانتی‌گراد</value>
     <comment>An abbreviation for "degrees Celsius"</comment>
   </data>
   <data name="UnitAbbreviation_DegreesFahrenheit" xml:space="preserve">
@@ -1362,7 +1362,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Gigabyte" xml:space="preserve">
-    <value>گیگابایت</value>
+    <value>GB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Hectare" xml:space="preserve">
@@ -1418,7 +1418,7 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Knot" xml:space="preserve">
-    <value>نات</value>
+    <value>گره</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Mach" xml:space="preserve">
@@ -1458,11 +1458,11 @@
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Millimeter" xml:space="preserve">
-    <value>میلی متر</value>
+    <value>میلی‌متر</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Millisecond" xml:space="preserve">
-    <value>میلی ثانیه</value>
+    <value>میلی‌ثانیه</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Minute" xml:space="preserve">
@@ -1494,7 +1494,7 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_SquareCentimeter" xml:space="preserve">
-    <value>سانتی متر مربع</value>
+    <value>سانتی‌متر مربع</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareFoot" xml:space="preserve">
@@ -1518,7 +1518,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareMillimeter" xml:space="preserve">
-    <value>میلی متر مربع</value>
+    <value>میلی‌متر مربع</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareYard" xml:space="preserve">
@@ -1590,7 +1590,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Exabits" xml:space="preserve">
-    <value>اگزابیت</value>
+    <value>ژ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Exabytes" xml:space="preserve">
@@ -1646,11 +1646,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_BritishThermalUnit" xml:space="preserve">
-    <value>واحد حرارتی انگلیسی</value>
+    <value>یکای بریتانیایی حرارت</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_BTUPerMinute" xml:space="preserve">
-    <value>BTU/دقیقه</value>
+    <value>یکای بریتانیایی حرارت/دقیقه</value>
     <comment>A measurement unit for power: British Thermal Units per minute. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Byte" xml:space="preserve">
@@ -1666,11 +1666,11 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CentimetersPerSecond" xml:space="preserve">
-    <value>سانتی متر بر ثانیه</value>
+    <value>سانتی‌متر بر ثانیه</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicCentimeter" xml:space="preserve">
-    <value>سانتی متر مکعب</value>
+    <value>سانتی‌متر مکعب</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicFoot" xml:space="preserve">
@@ -1694,7 +1694,7 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_DegreesCelsius" xml:space="preserve">
-    <value>سانتیگراد</value>
+    <value>سانتی‌گراد</value>
     <comment>An option in the unit converter to select degrees Celsius</comment>
   </data>
   <data name="UnitName_DegreesFahrenheit" xml:space="preserve">
@@ -1782,7 +1782,7 @@
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Knot" xml:space="preserve">
-    <value>نات</value>
+    <value>گره</value>
     <comment>A nautical/aerial measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mach" xml:space="preserve">
@@ -1822,11 +1822,11 @@
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Millimeter" xml:space="preserve">
-    <value>میلی متر</value>
+    <value>میلی‌متر</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Millisecond" xml:space="preserve">
-    <value>میلی ثانیه</value>
+    <value>میلی‌ثانیه</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Minute" xml:space="preserve">
@@ -1854,7 +1854,7 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareCentimeter" xml:space="preserve">
-    <value>سانتی متر مربع</value>
+    <value>سانتی‌متر مربع</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareFoot" xml:space="preserve">
@@ -1878,7 +1878,7 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareMillimeter" xml:space="preserve">
-    <value>میلی متر مربع</value>
+    <value>میلی‌متر مربع</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareYard" xml:space="preserve">
@@ -1910,7 +1910,7 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Carat" xml:space="preserve">
-    <value>سی دی</value>
+    <value>قی</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Degree" xml:space="preserve">
@@ -1950,7 +1950,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Centigram" xml:space="preserve">
-    <value>سانتی گرم</value>
+    <value>سانتی‌گرم</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Decagram" xml:space="preserve">
@@ -1978,7 +1978,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Milligram" xml:space="preserve">
-    <value>میلی گرم</value>
+    <value>میلی‌گرم</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Ounce" xml:space="preserve">
@@ -1994,7 +1994,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Stone" xml:space="preserve">
-    <value>خیابان</value>
+    <value>سنگ</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Tonne" xml:space="preserve">
@@ -2018,7 +2018,7 @@
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Atmosphere" xml:space="preserve">
-    <value>فشار جو</value>
+    <value>اتمسفر</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Bar" xml:space="preserve">
@@ -2030,7 +2030,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>میلیمتر جیوه </value>
+    <value>میلی‌متر جیوه </value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
@@ -2042,7 +2042,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Centigram" xml:space="preserve">
-    <value>سانتی گرم</value>
+    <value>سانتی‌گرم</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Decagram" xml:space="preserve">
@@ -2058,7 +2058,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hectogram" xml:space="preserve">
-    <value>هکتو گرم</value>
+    <value>هکتوگرم</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilogram" xml:space="preserve">
@@ -2070,7 +2070,7 @@
     <comment>A measurement unit for weight. This is the UK version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Milligram" xml:space="preserve">
-    <value>میلی گرم</value>
+    <value>میلی‌گرم</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Ounce" xml:space="preserve">
@@ -2310,12 +2310,16 @@
     <comment>Label displayed next to upcoming features</comment>
   </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
-    <value>بیانیه حریم خصوصی Microsoft</value>
+    <value>اعلامیه حریم خصوصی Microsoft</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
   </data>
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© %1 Microsoft. کلیه حقوق محفوظ است.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
+  </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>برای یادگیری اینکه چگونه می توانید در ماشین حساب Windows مشارکت کنید، این پروژه را در %HL%GitHub%HL% بررسی کنید.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>درباره</value>
@@ -2520,7 +2524,7 @@
     <comment>Automation name for reading out the resulting date in Add/Subtract mode. %1 = Resulting date</comment>
   </data>
   <data name="HeaderAutomationName_Calculator" xml:space="preserve">
-    <value>%1 حالت ماشین حساب</value>
+    <value>حالت ماشین حساب %1</value>
     <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current calculator mode: Scientific, Standard, or Programmer.</comment>
   </data>
   <data name="HeaderAutomationName_Converter" xml:space="preserve">
@@ -2540,7 +2544,7 @@
     <comment>Automation name for the group of memory controls (Mem Clear, Mem Recall, Mem Add, Mem Subtract, Mem Store, Memory flyout toggle)</comment>
   </data>
   <data name="StandardFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>عملکردهای استاندارد</value>
+    <value>توابع استاندارد</value>
     <comment>Automation name for the group of standard function buttons (Percent, Square Root, Square, Cube, Reciprocal)</comment>
   </data>
   <data name="DisplayControls.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2560,7 +2564,7 @@
     <comment>Automation name for the group of Scientific angle operators (Degree mode, Hyperbolic toggle, and Precision button)</comment>
   </data>
   <data name="ScientificFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>عملکردهای علمی</value>
+    <value>توابع علمی</value>
     <comment>Automation name for the group of Scientific functions.</comment>
   </data>
   <data name="RadixGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2568,7 +2572,7 @@
     <comment>Automation name for the group of radices (Hexadecimal, Decimal, Octal, Binary). https://en.wikipedia.org/wiki/Radix </comment>
   </data>
   <data name="ProgrammerOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>اپراتورهای برنامه‌ریز</value>
+    <value>اپراتورهای برنامه‌نویس</value>
     <comment>Automation name for the group of programmer operators (RoL, RoR, Lsh, Rsh, OR, XOR, NOT, AND).</comment>
   </data>
   <data name="InputModeSelectionGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2588,7 +2592,7 @@
     <comment>Automation label for the "scroll right" button that appears when an expression is too large to fit in the window.</comment>
   </data>
   <data name="Format_MaxDigitsReached" xml:space="preserve">
-    <value>به حداکثر ارقام رسیدید. %1</value>
+    <value>به حداکثر تعداد ارقام مجاز رسیدید. %1</value>
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when user reaches max digits. The %1 is the automation name of the display. Users will hear "Max digits reached. Display is _current_value_".</comment>
   </data>
   <data name="Format_ButtonPressAuditoryFeedback" xml:space="preserve">
@@ -2600,7 +2604,7 @@
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user stores a number to memory. The %1 is the automation name of the display. Users will hear "_current_value_ saved to memory".</comment>
   </data>
   <data name="Format_MemorySlotChanged" xml:space="preserve">
-    <value>شیار حافظه %1 عبارت است از %2</value>
+    <value>شیار حافظه %1 %2 است</value>
     <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when the user changes a memory slot. The %1 is the index of the memory slot and %2 is the new value. For example, users might hear "Memory slot 2 is 37".</comment>
   </data>
   <data name="Format_MemorySlotCleared" xml:space="preserve">
@@ -2624,11 +2628,11 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
   </data>
   <data name="powerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>به انرژی</value>
+    <value>به توان</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
   </data>
   <data name="ySquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>ریشه «y»</value>
+    <value>ریشه y</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
   </data>
   <data name="modButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2648,7 +2652,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
   </data>
   <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>برابر یا</value>
+    <value>x یا</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2692,79 +2696,79 @@
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
   </data>
   <data name="AboutButton.AccessKey" xml:space="preserve">
-    <value>شذ</value>
+    <value>AB</value>
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
-    <value>I </value>
+    <value>ت</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryButton.AccessKey" xml:space="preserve">
-    <value>M</value>
+    <value>ظ</value>
     <comment>Access key for the Memory button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="NavView.AccessKey" xml:space="preserve">
-    <value>H</value>
+    <value>ه</value>
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AngleAccessKey" xml:space="preserve">
-    <value>AN</value>
+    <value>ز</value>
     <comment>AccessKey for the angle converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AreaAccessKey" xml:space="preserve">
-    <value>AR</value>
+    <value>مس</value>
     <comment>AccessKey for the area converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_CurrencyAccessKey" xml:space="preserve">
-    <value>C</value>
+    <value>و</value>
     <comment>AccessKey for the currency converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_DataAccessKey" xml:space="preserve">
-    <value>D</value>
+    <value>د</value>
     <comment>AccessKey for the data converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_EnergyAccessKey" xml:space="preserve">
-    <value>E</value>
+    <value>ژ</value>
     <comment>AccessKey for the energy converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_LengthAccessKey" xml:space="preserve">
-    <value>L</value>
+    <value>ط</value>
     <comment>AccessKey for the length converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_PowerAccessKey" xml:space="preserve">
-    <value>PO</value>
+    <value>تو</value>
     <comment>AccessKey for the power converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_PressureAccessKey" xml:space="preserve">
-    <value>PR</value>
+    <value>فش</value>
     <comment>AccessKey for the pressure converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_SpeedAccessKey" xml:space="preserve">
-    <value>S</value>
+    <value>ع</value>
     <comment>AccessKey for the speed converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_TimeAccessKey" xml:space="preserve">
-    <value>TI</value>
+    <value>زم</value>
     <comment>AccessKey for the time converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_VolumeAccessKey" xml:space="preserve">
-    <value>V</value>
+    <value>ح</value>
     <comment>AccessKey for the volume converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_WeightAccessKey" xml:space="preserve">
-    <value>W</value>
+    <value>ز</value>
     <comment>AccessKey for the weight converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_TemperatureAccessKey" xml:space="preserve">
-    <value>TE</value>
+    <value>دم</value>
     <comment>AccessKey for the temperature converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearHistory.AccessKey" xml:space="preserve">
-    <value>C</value>
+    <value>پ</value>
     <comment>Access key for the Clear history button.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearMemory.AccessKey" xml:space="preserve">
-    <value>C</value>
+    <value>پ</value>
     <comment>Access key for the Clear memory button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -2776,11 +2780,11 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button in the Memory Pane</comment>
   </data>
   <data name="HistoryLabel.AccessKey" xml:space="preserve">
-    <value>I </value>
+    <value>ت</value>
     <comment>Access key for the History pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryLabel.AccessKey" xml:space="preserve">
-    <value>M</value>
+    <value>ظ</value>
     <comment>Access key for the Memory pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="SineDegrees" xml:space="preserve">
@@ -3024,7 +3028,7 @@
     <comment>{Locked='%1'} Format string for the accessible name of a Calculator menu category header, used by screen readers. "%1" is the pluralized category name, e.g. Calculators, Converters. An example when formatted is "Calculators category".</comment>
   </data>
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">
-    <value>توافق‌نامه سرویس‌های Microsoft</value>
+    <value>توافق نامه سرویس های Microsoft</value>
     <comment>Displayed on a link to the Microsoft Services Agreement in the about this app information</comment>
   </data>
   <data name="UnitAbbreviation_Pyeong" xml:space="preserve">

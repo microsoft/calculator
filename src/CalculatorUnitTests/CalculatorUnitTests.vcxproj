@@ -242,6 +242,7 @@
     <ClCompile Include="LocalizationSettingsUnitTests.cpp" />
     <ClCompile Include="Mocks\CurrencyHttpClient.cpp" />
     <ClCompile Include="MultiWindowUnitTests.cpp" />
+    <ClCompile Include="NarratorAnnouncementUnitTests.cpp" />
     <ClCompile Include="NavCategoryUnitTests.cpp" />
     <ClCompile Include="RationalTest.cpp" />
     <ClCompile Include="StandardViewModelUnitTests.cpp" />

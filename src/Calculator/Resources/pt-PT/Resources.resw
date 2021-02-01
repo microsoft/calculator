@@ -606,7 +606,7 @@
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Armazenar memória</value>
+    <value>Armazenar Memória</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -646,11 +646,11 @@
     <comment>This is the tool tip automation name for the Memory Subtract (M-) button.</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Limpar item de memória</value>
+    <value>Limpar item da memória</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Limpar item de memória</value>
+    <value>Limpar item da memória</value>
     <comment>This is the tool tip automation name for the Clear Memory Item (MC) button in the Memory list.</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -674,7 +674,7 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryMenuItem.Text" xml:space="preserve">
-    <value>Limpar item de memória</value>
+    <value>Limpar item da memória</value>
     <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
   </data>
   <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -774,7 +774,7 @@
     <comment>Screen reader prompt for the Calculator number "B" button</comment>
   </data>
   <data name="cButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>C</value>
+    <value>L</value>
     <comment>Screen reader prompt for the Calculator number "C" button</comment>
   </data>
   <data name="dButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1194,7 +1194,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Liter" xml:space="preserve">
-    <value>L</value>
+    <value>P</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
@@ -2022,7 +2022,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Bar" xml:space="preserve">
-    <value>Bar</value>
+    <value>Barras</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_KiloPascal" xml:space="preserve">
@@ -2316,6 +2316,10 @@
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© %1 Microsoft. Todos os direitos reservados.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
+  </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Para saber como pode contribuir para a calculadora do Windows, dê saída do projeto no %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Acerca de</value>
@@ -2696,7 +2700,7 @@
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
-    <value>I </value>
+    <value>I</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryButton.AccessKey" xml:space="preserve">
@@ -2716,7 +2720,7 @@
     <comment>AccessKey for the area converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_CurrencyAccessKey" xml:space="preserve">
-    <value>M</value>
+    <value>L</value>
     <comment>AccessKey for the currency converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_DataAccessKey" xml:space="preserve">
@@ -2752,7 +2756,7 @@
     <comment>AccessKey for the volume converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_WeightAccessKey" xml:space="preserve">
-    <value>M</value>
+    <value>W</value>
     <comment>AccessKey for the weight converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_TemperatureAccessKey" xml:space="preserve">
@@ -2776,7 +2780,7 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button in the Memory Pane</comment>
   </data>
   <data name="HistoryLabel.AccessKey" xml:space="preserve">
-    <value>I </value>
+    <value>I</value>
     <comment>Access key for the History pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryLabel.AccessKey" xml:space="preserve">
@@ -3020,7 +3024,7 @@
     <comment>{Locked='%1','%2'}.  Format string for the accessible name of a Calculator menu item, used by screen readers. "%1" is the item name, e.g. Standard, Programmer, etc. %2 is the category name, e.g. Calculator, Converter. An example when formatted is "Standard Calculator" or "Currency Converter".</comment>
   </data>
   <data name="NavCategoryHeader_AutomationNameFormat" xml:space="preserve">
-    <value>Categoria de %1</value>
+    <value>%1 categoria</value>
     <comment>{Locked='%1'} Format string for the accessible name of a Calculator menu category header, used by screen readers. "%1" is the pluralized category name, e.g. Calculators, Converters. An example when formatted is "Calculators category".</comment>
   </data>
   <data name="AboutControlServicesAgreement.Text" xml:space="preserve">

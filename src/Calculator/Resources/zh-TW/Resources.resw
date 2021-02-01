@@ -122,7 +122,7 @@
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppName" xml:space="preserve">
-    <value>小算盤 [開發]</value>
+    <value>小算盤 [Dev]</value>
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the name of the application when built by a user via GitHub. We use a different name to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="AppStoreName" xml:space="preserve">
@@ -130,7 +130,7 @@
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
   </data>
   <data name="DevAppStoreName" xml:space="preserve">
-    <value>Windows 小算盤 [開發]</value>
+    <value>Windows 小算盤 [Dev]</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps. This is the the version of the name used when the app is built by a user via GitHub.</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
@@ -138,7 +138,7 @@
     <comment>{@Appx_Description@} This description is used for the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppDescription" xml:space="preserve">
-    <value>小算盤 [開發]</value>
+    <value>小算盤[Dev]</value>
     <comment>{@Appx_Description@} This is the description of the application when built by a user via GitHub. We use a different description to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="copyMenuItem" xml:space="preserve">
@@ -418,7 +418,7 @@
     <comment>Used to describe the first bit of a binary number. Used in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
-    <value>開啟記憶儲存飛出視窗</value>
+    <value>開啟記憶體飛出視窗</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is closed.</comment>
   </data>
   <data name="MemoryButton_Close" xml:space="preserve">
@@ -438,7 +438,7 @@
     <comment>This is the tool tip automation name for the memory button.</comment>
   </data>
   <data name="HistoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>歷程記錄 (Ctrl + H)</value>
+    <value>歷程記錄 (Ctrl+H)</value>
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -446,7 +446,7 @@
     <comment>This is the tool tip automation name for the bitFlip button.</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>完整鍵台</value>
+    <value>完整數字鍵台</value>
     <comment>This is the tool tip automation name for the numberPad button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -510,7 +510,7 @@
     <comment>The text that shows in the dropdown navigation control in snapped mode when standard calculator mode is selected.</comment>
   </data>
   <data name="ScientificModeText" xml:space="preserve">
-    <value>工程</value>
+    <value>科學</value>
     <comment>The text that shows in the dropdown navigation control in snapped mode when scientific calculator mode is selected.</comment>
   </data>
   <data name="ProgrammerModeText" xml:space="preserve">
@@ -586,7 +586,7 @@
     <comment>{Locked="%1"}. Screen reader prompt for the binary value in Programmer mode. %1 = the localized binary value, e.g. "0010 1011".</comment>
   </data>
   <data name="ClearHistory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>清除所有歷程記錄</value>
+    <value>清除所有記錄</value>
     <comment>Screen reader prompt for the Calculator History Clear button</comment>
   </data>
   <data name="HistoryList_Cleared" xml:space="preserve">
@@ -606,7 +606,7 @@
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>儲存至記憶儲存</value>
+    <value>記憶體存放區</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -614,7 +614,7 @@
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>清除所有記憶體</value>
+    <value>清除所有記憶</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="Memory_Cleared" xml:space="preserve">
@@ -634,7 +634,7 @@
     <comment>Screen reader prompt for the Calculator Memory Add button</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>記憶儲存加 (Ctrl + P)</value>
+    <value>記憶體新增 (Ctrl+P)</value>
     <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -674,7 +674,7 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryMenuItem.Text" xml:space="preserve">
-    <value>清除記憶體項目</value>
+    <value>清除記憶項目</value>
     <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
   </data>
   <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -802,11 +802,11 @@
     <comment>Screen reader prompt for the Calculator Not button</comment>
   </data>
   <data name="rolButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>靠左旋轉</value>
+    <value>向左旋轉</value>
     <comment>Screen reader prompt for the Calculator ROL button</comment>
   </data>
   <data name="rorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>靠右旋轉</value>
+    <value>向右旋轉</value>
     <comment>Screen reader prompt for the Calculator ROR button</comment>
   </data>
   <data name="lshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -838,7 +838,7 @@
     <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>位元切換鍵台</value>
+    <value>位元切換數字鍵台</value>
     <comment>Screen reader prompt for the Calculator bitFlip button</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1094,7 +1094,7 @@
     <comment>Screen reader prompt for the Unit Converter Value2 i.e. bottom number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ConversionResult" xml:space="preserve">
-    <value>%1 %2 為 %3 %4</value>
+    <value>%1 %2 等於 %3 %4</value>
     <comment>Screen reader prompt for a conversion result, ie "2 liters is 2,000 milliliters" . %1 = From unit display value, %2 = From unit, %3 = To unit display value, %4 = To unit.</comment>
   </data>
   <data name="InputUnit_Name" xml:space="preserve">
@@ -1114,7 +1114,7 @@
     <comment>Unit conversion category name called Data</comment>
   </data>
   <data name="CategoryName_EnergyText" xml:space="preserve">
-    <value>能量</value>
+    <value>能源</value>
     <comment>Unit conversion category name called Energy. (eg. the energy in a battery or in food)</comment>
   </data>
   <data name="CategoryName_LengthText" xml:space="preserve">
@@ -1282,7 +1282,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Bit" xml:space="preserve">
-    <value>位元</value>
+    <value>b</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_BritishThermalUnit" xml:space="preserve">
@@ -1294,7 +1294,7 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Byte" xml:space="preserve">
-    <value>位元組</value>
+    <value>B</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Calorie" xml:space="preserve">
@@ -1358,11 +1358,11 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Gigabit" xml:space="preserve">
-    <value>G 位元</value>
+    <value>GB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Gigabyte" xml:space="preserve">
-    <value>G 位元組</value>
+    <value>GB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Hectare" xml:space="preserve">
@@ -1378,7 +1378,7 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Inch" xml:space="preserve">
-    <value>in</value>
+    <value>於</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Joule" xml:space="preserve">
@@ -1390,7 +1390,7 @@
     <comment>An abbreviation for the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin)</comment>
   </data>
   <data name="UnitAbbreviation_Kilobit" xml:space="preserve">
-    <value>K 位元</value>
+    <value>K 位元組</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kilobyte" xml:space="preserve">
@@ -1426,11 +1426,11 @@
     <comment>An abbreviation for a measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
   </data>
   <data name="UnitAbbreviation_Megabit" xml:space="preserve">
-    <value>M 位元</value>
+    <value>Mb</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Megabyte" xml:space="preserve">
-    <value>M 位元組</value>
+    <value>MB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Meter" xml:space="preserve">
@@ -1478,7 +1478,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Petabit" xml:space="preserve">
-    <value>P 位元</value>
+    <value>Pb</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Petabyte" xml:space="preserve">
@@ -1526,11 +1526,11 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Terabit" xml:space="preserve">
-    <value>T 位元</value>
+    <value>TB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Terabyte" xml:space="preserve">
-    <value>T 位元組</value>
+    <value>TB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Watt" xml:space="preserve">
@@ -1554,7 +1554,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Gibibytes" xml:space="preserve">
-    <value>Gi 位元組</value>
+    <value>GiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kibibits" xml:space="preserve">
@@ -1562,7 +1562,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kibibytes" xml:space="preserve">
-    <value>Ki 位元組</value>
+    <value>KiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Mebibits" xml:space="preserve">
@@ -1570,7 +1570,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Mebibytes" xml:space="preserve">
-    <value>Mi 位元組</value>
+    <value>MiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
@@ -1578,7 +1578,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Pebibytes" xml:space="preserve">
-    <value>Pi 位元組</value>
+    <value>PiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Tebibits" xml:space="preserve">
@@ -1594,7 +1594,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Exabytes" xml:space="preserve">
-    <value>E 位元組</value>
+    <value>EB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Exbibits" xml:space="preserve">
@@ -1602,7 +1602,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Exbibytes" xml:space="preserve">
-    <value>Ei 位元組</value>
+    <value>EiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Zetabits" xml:space="preserve">
@@ -1618,7 +1618,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Zebibytes" xml:space="preserve">
-    <value>Zi 位元組</value>
+    <value>ZiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yottabit" xml:space="preserve">
@@ -1634,7 +1634,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Yobibytes" xml:space="preserve">
-    <value>Yi 位元組</value>
+    <value>YiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitName_Acre" xml:space="preserve">
@@ -1750,7 +1750,7 @@
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
-    <value>克氏</value>
+    <value>開氏</value>
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
   </data>
   <data name="UnitName_Kilobit" xml:space="preserve">
@@ -1794,7 +1794,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Megabyte" xml:space="preserve">
-    <value>Mega 位元組</value>
+    <value>Megabyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Meter" xml:space="preserve">
@@ -1838,11 +1838,11 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
-    <value>海里</value>
+    <value>海浬</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabit" xml:space="preserve">
-    <value>P 位元</value>
+    <value>Petabit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabyte" xml:space="preserve">
@@ -1918,11 +1918,11 @@
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Radian" xml:space="preserve">
-    <value>ra</value>
+    <value>rad</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Gradian" xml:space="preserve">
-    <value>gr</value>
+    <value>grad</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Atmosphere" xml:space="preserve">
@@ -1942,7 +1942,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Pascal" xml:space="preserve">
-    <value>pa</value>
+    <value>Pa</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_PSI" xml:space="preserve">
@@ -1990,7 +1990,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_ShortTon" xml:space="preserve">
-    <value>ton (美制)</value>
+    <value>噸 (美制)</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Stone" xml:space="preserve">
@@ -2030,7 +2030,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>毫米汞柱</value>
+    <value>毫米汞柱 </value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
@@ -2042,7 +2042,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Centigram" xml:space="preserve">
-    <value>毫克</value>
+    <value>公毫</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Decagram" xml:space="preserve">
@@ -2070,7 +2070,7 @@
     <comment>A measurement unit for weight. This is the UK version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Milligram" xml:space="preserve">
-    <value>毫克</value>
+    <value>公絲</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Ounce" xml:space="preserve">
@@ -2078,7 +2078,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pound" xml:space="preserve">
-    <value>磅</value>
+    <value>英磅</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_ShortTon" xml:space="preserve">
@@ -2098,7 +2098,7 @@
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CD" xml:space="preserve">
-    <value>張 CD</value>
+    <value>CD</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerField" xml:space="preserve">
@@ -2150,11 +2150,11 @@
     <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_LightBulb" xml:space="preserve">
-    <value>個燈泡</value>
+    <value>燈泡</value>
     <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_LightBulb" xml:space="preserve">
-    <value>個燈泡</value>
+    <value>燈泡</value>
     <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Horse" xml:space="preserve">
@@ -2170,7 +2170,7 @@
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Bathtub" xml:space="preserve">
-    <value>個浴缸</value>
+    <value>座浴缸</value>
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Snowflake" xml:space="preserve">
@@ -2317,6 +2317,10 @@
     <value>© %1 Microsoft 著作權所有，保留一切權利。</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>若要了解如何對 Windows 小算盤有所貢獻，請查看 %HL%GitHub%HL% 上的專案。</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>關於</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
@@ -2346,11 +2350,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gibibytes" xml:space="preserve">
-    <value>Gibi 位元組</value>
+    <value>Gibibyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibits" xml:space="preserve">
-    <value>Kibi 位元</value>
+    <value>Kibibit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibytes" xml:space="preserve">
@@ -2382,7 +2386,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabits" xml:space="preserve">
-    <value>Exa 位元</value>
+    <value>Exabit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabytes" xml:space="preserve">
@@ -2394,15 +2398,15 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibytes" xml:space="preserve">
-    <value>Exbi 位元組</value>
+    <value>Exbibyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabits" xml:space="preserve">
-    <value>Zeta 位元</value>
+    <value>Zetabit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabytes" xml:space="preserve">
-    <value>Zeta 位元組</value>
+    <value>Zetabyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zebibits" xml:space="preserve">
@@ -2410,7 +2414,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zebibytes" xml:space="preserve">
-    <value>Zebi 位元組</value>
+    <value>Zebibyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabit" xml:space="preserve">
@@ -2418,7 +2422,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabyte" xml:space="preserve">
-    <value>Yotta 位元組</value>
+    <value>Yottabyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibits" xml:space="preserve">
@@ -2453,7 +2457,7 @@
     <comment>Date Difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
-    <value>日</value>
+    <value>天數</value>
     <comment>Add/Subtract Days label</comment>
   </data>
   <data name="Date_DifferenceLabel.Text" xml:space="preserve">
@@ -2488,7 +2492,7 @@
     <value>日</value>
   </data>
   <data name="Date_Days" xml:space="preserve">
-    <value>日</value>
+    <value>天</value>
   </data>
   <data name="Date_Month" xml:space="preserve">
     <value>月</value>
@@ -2520,7 +2524,7 @@
     <comment>Automation name for reading out the resulting date in Add/Subtract mode. %1 = Resulting date</comment>
   </data>
   <data name="HeaderAutomationName_Calculator" xml:space="preserve">
-    <value>%1 小算盤模式</value>
+    <value>%1小算盤模式</value>
     <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current calculator mode: Scientific, Standard, or Programmer.</comment>
   </data>
   <data name="HeaderAutomationName_Converter" xml:space="preserve">
@@ -2536,7 +2540,7 @@
     <comment>Automation name for the group of controls for history and memory lists.</comment>
   </data>
   <data name="MemoryPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>記憶儲存控制</value>
+    <value>記憶儲存控制項</value>
     <comment>Automation name for the group of memory controls (Mem Clear, Mem Recall, Mem Add, Mem Subtract, Mem Store, Memory flyout toggle)</comment>
   </data>
   <data name="StandardFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2544,7 +2548,7 @@
     <comment>Automation name for the group of standard function buttons (Percent, Square Root, Square, Cube, Reciprocal)</comment>
   </data>
   <data name="DisplayControls.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>顯示控制</value>
+    <value>顯示控制項</value>
     <comment>Automation name for the group of display control buttons (Clear, Clear Entry, and Backspace)</comment>
   </data>
   <data name="StandardOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2560,7 +2564,7 @@
     <comment>Automation name for the group of Scientific angle operators (Degree mode, Hyperbolic toggle, and Precision button)</comment>
   </data>
   <data name="ScientificFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>科學記號函數</value>
+    <value>科學函數</value>
     <comment>Automation name for the group of Scientific functions.</comment>
   </data>
   <data name="RadixGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2648,7 +2652,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
   </data>
   <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>XOR</value>
+    <value>x 或</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2660,7 +2664,7 @@
     <comment>The exact ratio between converted currencies, e.g. "1 USD = 0.8885 EUR". %1 will always be '1'. %2 is the From currency code. %3 is the formatted conversion ratio. %4 is the To currency code.</comment>
   </data>
   <data name="CurrencyTimestampFormat" xml:space="preserve">
-    <value>已更新 %1 %2</value>
+    <value>更新時間: %1 %2</value>
     <comment>The timestamp of currency conversion ratios fetched from an online service. %1 is the date. %2 is the time. Example: "Updated Sep 28, 2016 5:42 PM"</comment>
   </data>
   <data name="RefreshButtonText.Content" xml:space="preserve">
@@ -2668,11 +2672,11 @@
     <comment>The text displayed for a hyperlink button that refreshes currency converter ratios.</comment>
   </data>
   <data name="DataChargesMayApply" xml:space="preserve">
-    <value>可能會收取資料傳輸費用。</value>
+    <value>可能須支付行動數據費用。</value>
     <comment>The text displayed when users are on a metered connection and using currency converter.</comment>
   </data>
   <data name="FailedToRefresh" xml:space="preserve">
-    <value>無法取得新費率。請稍後再試一次。</value>
+    <value>無法取得新匯率。請稍後再試一次。</value>
     <comment>The text displayed when currency ratio data fails to load.</comment>
   </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
@@ -2768,7 +2772,7 @@
     <comment>Access key for the Clear memory button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>清除所有記憶體 (Ctrl + L)</value>
+    <value>清除所有記憶體 (Ctrl+L)</value>
     <comment>This is the tool tip automation name for the Clear Memory button in the Memory Pane.</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">

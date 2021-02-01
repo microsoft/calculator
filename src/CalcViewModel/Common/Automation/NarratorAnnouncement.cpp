@@ -178,7 +178,7 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphViewChangedAnnouncement(S
 NarratorAnnouncement ^ CalculatorAnnouncement::GetFunctionRemovedAnnouncement(String ^ announcement)
 {
     return ref new NarratorAnnouncement(
-        announcement, CalculatorActivityIds::FunctionRemoved, AutomationNotificationKind::ItemRemoved, AutomationNotificationProcessing::MostRecent);
+        announcement, CalculatorActivityIds::FunctionRemoved, AutomationNotificationKind::ItemRemoved, AutomationNotificationProcessing::ImportantMostRecent);
 }
 
 NarratorAnnouncement ^ CalculatorAnnouncement::GetGraphViewBestFitChangedAnnouncement(Platform::String ^ announcement)

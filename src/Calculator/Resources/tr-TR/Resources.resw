@@ -810,7 +810,7 @@
     <comment>Screen reader prompt for the Calculator ROR button</comment>
   </data>
   <data name="lshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Sol üst karakter</value>
+    <value>Sol shift tuşu</value>
     <comment>Screen reader prompt for the Calculator LSH button</comment>
   </data>
   <data name="rshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1226,7 +1226,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TablespoonUS" xml:space="preserve">
-    <value>çorba kaşığı (ABD)</value>
+    <value>çorba kaşığı (ABD)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TeaspoonUS" xml:space="preserve">
@@ -1234,7 +1234,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TeaspoonUS" xml:space="preserve">
-    <value>tatlı kaşığı (ABD)</value>
+    <value>tatlı kaşığı (ABD)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TablespoonUK" xml:space="preserve">
@@ -1270,11 +1270,11 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_CupUS" xml:space="preserve">
-    <value>Kupa (ABD)</value>
+    <value>Bardak (ABD)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CupUS" xml:space="preserve">
-    <value>kupa (ABD)</value>
+    <value>Bardak (ABD)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
@@ -1290,7 +1290,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_BTUPerMinute" xml:space="preserve">
-    <value>BTU/dak</value>
+    <value>BTU/dk.</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Byte" xml:space="preserve">
@@ -1378,7 +1378,7 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Inch" xml:space="preserve">
-    <value>in</value>
+    <value>inç</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Joule" xml:space="preserve">
@@ -1454,7 +1454,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_MilesPerHour" xml:space="preserve">
-    <value>mph</value>
+    <value>mil/sa</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Millimeter" xml:space="preserve">
@@ -1466,7 +1466,7 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Minute" xml:space="preserve">
-    <value>dak</value>
+    <value>dk.</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Nanometer" xml:space="preserve">
@@ -1486,7 +1486,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Foot-PoundPerMinute" xml:space="preserve">
-    <value>ft•lb/dak</value>
+    <value>ft•lb/dk.</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Second" xml:space="preserve">
@@ -1882,7 +1882,7 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareYard" xml:space="preserve">
-    <value>Yardakare</value>
+    <value>Yarda kare</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabit" xml:space="preserve">
@@ -2038,7 +2038,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_PSI" xml:space="preserve">
-    <value>Libre / inç kare</value>
+    <value>Libre / inçkare</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Centigram" xml:space="preserve">
@@ -2078,8 +2078,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pound" xml:space="preserve">
-    <value>Libre
-</value>
+    <value>Libre</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_ShortTon" xml:space="preserve">
@@ -2087,7 +2086,7 @@
     <comment>A measurement unit for weight. This is the US version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Stone" xml:space="preserve">
-    <value>Ston</value>
+    <value>Stone</value>
     <comment>A measurement unit for weight. Equal to 14 pounds. Note that this is the plural form of the word in English (eg. "This man weighs 11 stone."). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tonne" xml:space="preserve">
@@ -2095,11 +2094,11 @@
     <comment>A measurement unit for weight. This is the metric version of tonne. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CD" xml:space="preserve">
-    <value>CD</value>
+    <value>CD'ler</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CD" xml:space="preserve">
-    <value>CD</value>
+    <value>CD'ler</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerField" xml:space="preserve">
@@ -2215,11 +2214,11 @@
     <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CoffeeCup" xml:space="preserve">
-    <value>kahve kupası</value>
+    <value>kahve fincanı</value>
     <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CoffeeCup" xml:space="preserve">
-    <value>kahve kupası</value>
+    <value>kahve fincanı</value>
     <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SwimmingPool" xml:space="preserve">
@@ -2317,6 +2316,10 @@
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© %1 Microsoft. Tüm hakları saklıdır.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
+  </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Windows hesap makinesi 'ne nasıl katkıda bulunabileceğinizi öğrenmek için %HL%GitHub%HL% projeyi kullanıma alın.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Hakkında</value>
@@ -2489,13 +2492,13 @@
     <value>gün</value>
   </data>
   <data name="Date_Days" xml:space="preserve">
-    <value>gün</value>
+    <value>günler</value>
   </data>
   <data name="Date_Month" xml:space="preserve">
     <value>ay</value>
   </data>
   <data name="Date_Months" xml:space="preserve">
-    <value>ay</value>
+    <value>aylar</value>
   </data>
   <data name="Date_SameDates" xml:space="preserve">
     <value>Aynı tarihler</value>
@@ -2504,13 +2507,13 @@
     <value>hafta</value>
   </data>
   <data name="Date_Weeks" xml:space="preserve">
-    <value>hafta</value>
+    <value>haftalar</value>
   </data>
   <data name="Date_Year" xml:space="preserve">
     <value>yıl</value>
   </data>
   <data name="Date_Years" xml:space="preserve">
-    <value>yıl</value>
+    <value>yıllar</value>
   </data>
   <data name="Date_DifferenceResultAutomationName" xml:space="preserve">
     <value>Fark %1</value>
@@ -2577,7 +2580,7 @@
     <comment>Automation name for the group of input mode toggling buttons.</comment>
   </data>
   <data name="BitFlipPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Bit değiştirme tuş takımı</value>
+    <value>Bit değiştirici klavye</value>
     <comment>Automation name for the group of bit toggling buttons.</comment>
   </data>
   <data name="scrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2637,7 +2640,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>sol üst karakter</value>
+    <value>sol shift tuşu</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2673,7 +2676,7 @@
     <comment>The text displayed when users are on a metered connection and using currency converter.</comment>
   </data>
   <data name="FailedToRefresh" xml:space="preserve">
-    <value>Yeni ücretler alınamadı. Daha sonra yeniden deneyin.</value>
+    <value>Yeni kurlar alınamadı. Daha sonra yeniden deneyin.</value>
     <comment>The text displayed when currency ratio data fails to load.</comment>
   </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
@@ -2681,7 +2684,7 @@
     <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
   </data>
   <data name="UpdatingCurrencyRates" xml:space="preserve">
-    <value>Döviz kuru güncelleştiriliyor</value>
+    <value>Döviz kuru güncelleniyor</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the "Update rates" button in the Currency Converter is clicked.</comment>
   </data>
   <data name="CurrencyRatesUpdated" xml:space="preserve">

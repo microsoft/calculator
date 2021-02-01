@@ -614,7 +614,7 @@
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ሁሉንም ማህደረ ትውስታ አጽዳ</value>
+    <value>ሁሉንም ማህደረ ትውስታ ያጽዱ</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="Memory_Cleared" xml:space="preserve">
@@ -662,27 +662,27 @@
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ከትውስታ ንጥል ቀንስ</value>
+    <value>ከማህደረ ትውስታ ንጥል ነገር ይቀንሱ</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>ከትውስታ ንጥል ቀንስ</value>
+    <value>ከማህደረ ትውስታ ንጥል ነገር ይቀንሱ</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>የማህደረ ትውስታ ንጥል ነገር ያጽዱ</value>
+    <value>የትውስታ ንጥል አጽዳ</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryMenuItem.Text" xml:space="preserve">
-    <value>የማህደረ ትውስታ ንጥል ነገር ያጽዱ</value>
+    <value>የትውስታ ንጥል አጽዳ</value>
     <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
   </data>
   <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ወደ ማህደረ ትውስታ ንጥል ነገር ያክሉ</value>
+    <value>ወደ ትውስታ ንጥል ደምር</value>
     <comment>Screen reader prompt for the Calculator Memory Add swipe button in the Memory list</comment>
   </data>
   <data name="MemPlusMenuItem.Text" xml:space="preserve">
-    <value>ወደ ማህደረ ትውስታ ንጥል ነገር ያክሉ</value>
+    <value>ወደ ትውስታ ንጥል ደምር</value>
     <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
   </data>
   <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -934,7 +934,7 @@
     <comment>Screen reader prompt for the Calculator button HYP in the scientific operator keypad</comment>
   </data>
   <data name="piButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ፓይ</value>
+    <value>Pi</value>
     <comment>Screen reader prompt for the Calculator pi button  on the scientific operator keypad</comment>
   </data>
   <data name="sinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1158,11 +1158,11 @@
     <comment>Unit conversion category name called Currency</comment>
   </data>
   <data name="UnitName_FluidOunceUK" xml:space="preserve">
-    <value>ፈሳሽ አውንስ (እንግሊዝ)</value>
+    <value>ፈሳሽ አውንስ (ዩኬ)</value>
     <comment>A measurement unit for volume, in plural. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FluidOunceUK" xml:space="preserve">
-    <value>fl oz (እንግሊዝ)</value>
+    <value>fl oz (UK)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_FluidOunceUS" xml:space="preserve">
@@ -1174,7 +1174,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUK" xml:space="preserve">
-    <value>ጋሎን (እንግሊዝ)</value>
+    <value>ጋሎን (ዩኬ)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_GallonUK" xml:space="preserve">
@@ -1194,7 +1194,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Liter" xml:space="preserve">
-    <value>ኤል</value>
+    <value>L</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
@@ -1210,7 +1210,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_PintUK" xml:space="preserve">
-    <value>ነጥብ (እንግሊዝ)</value>
+    <value>ነጥብ (ዩኬ)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_PintUS" xml:space="preserve">
@@ -1242,7 +1242,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TablespoonUK" xml:space="preserve">
-    <value>tbsp. (እንግሊዝ)</value>
+    <value>tbsp. (ዩኬ)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TeaspoonUK" xml:space="preserve">
@@ -1250,7 +1250,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TeaspoonUK" xml:space="preserve">
-    <value>tsp. (እንግሊዝ)</value>
+    <value>tsp. (ዩኬ)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_QuartUK" xml:space="preserve">
@@ -1258,7 +1258,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_QuartUK" xml:space="preserve">
-    <value>ኩንታል (እንግሊዝ)</value>
+    <value>ኩንታል (ዩኬ)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_QuartUS" xml:space="preserve">
@@ -1278,7 +1278,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
-    <value>ኤሲ</value>
+    <value>ac</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Bit" xml:space="preserve">
@@ -1286,11 +1286,11 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_BritishThermalUnit" xml:space="preserve">
-    <value>ቢቲዩ</value>
+    <value>BTU</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_BTUPerMinute" xml:space="preserve">
-    <value>ቢቲዩ/በደቂቃ</value>
+    <value>BTU/min</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Byte" xml:space="preserve">
@@ -1310,7 +1310,7 @@
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_CubicCentimeter" xml:space="preserve">
-    <value>ሴ³</value>
+    <value>cm³</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicFoot" xml:space="preserve">
@@ -1326,23 +1326,23 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicYard" xml:space="preserve">
-    <value>ያርድ ኪዩብ</value>
+    <value>yd³</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Day" xml:space="preserve">
-    <value>ዲ</value>
+    <value>d</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_DegreesCelsius" xml:space="preserve">
-    <value>°ሴንቲግሬድ</value>
+    <value>°C</value>
     <comment>An abbreviation for "degrees Celsius"</comment>
   </data>
   <data name="UnitAbbreviation_DegreesFahrenheit" xml:space="preserve">
-    <value>°ፋራናይት</value>
+    <value>°F</value>
     <comment>An abbreviation for a "degrees Fahrenheit"</comment>
   </data>
   <data name="UnitAbbreviation_Electron-Volt" xml:space="preserve">
-    <value>ኢቪ</value>
+    <value>eV</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Foot" xml:space="preserve">
@@ -1358,7 +1358,7 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Gigabit" xml:space="preserve">
-    <value>Gb</value>
+    <value>ጊባ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Gigabyte" xml:space="preserve">
@@ -1366,7 +1366,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Hectare" xml:space="preserve">
-    <value>ክ</value>
+    <value>ha</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Horsepower" xml:space="preserve">
@@ -1382,7 +1382,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Joule" xml:space="preserve">
-    <value>ጄ</value>
+    <value>J</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
@@ -1402,7 +1402,7 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Kilojoule" xml:space="preserve">
-    <value>ኪጁ</value>
+    <value>kJ</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Kilometer" xml:space="preserve">
@@ -1414,15 +1414,15 @@
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Kilowatt" xml:space="preserve">
-    <value>ኪዋ</value>
+    <value>kW</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Knot" xml:space="preserve">
-    <value>ኪኤን</value>
+    <value>kn</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Mach" xml:space="preserve">
-    <value>ኤም</value>
+    <value>M</value>
     <comment>An abbreviation for a measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
   </data>
   <data name="UnitAbbreviation_Megabit" xml:space="preserve">
@@ -1450,11 +1450,11 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Mile" xml:space="preserve">
-    <value>ማይ</value>
+    <value>mi</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_MilesPerHour" xml:space="preserve">
-    <value>ማ በሰ</value>
+    <value>mph</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Millimeter" xml:space="preserve">
@@ -1462,7 +1462,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Millisecond" xml:space="preserve">
-    <value>ሚሰ</value>
+    <value>ms</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Minute" xml:space="preserve">
@@ -1470,11 +1470,11 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Nanometer" xml:space="preserve">
-    <value>ኤንኤም</value>
+    <value>nm</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_NauticalMile" xml:space="preserve">
-    <value>ኤንኤምአይ</value>
+    <value>nmi</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Petabit" xml:space="preserve">
@@ -1490,11 +1490,11 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Second" xml:space="preserve">
-    <value>ኤስ</value>
+    <value>s</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_SquareCentimeter" xml:space="preserve">
-    <value>ካሬ ሳሜ</value>
+    <value>ሳሜ²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareFoot" xml:space="preserve">
@@ -1506,7 +1506,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareKilometer" xml:space="preserve">
-    <value>ካሬ ኪሜ</value>
+    <value>ኪሜ²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareMeter" xml:space="preserve">
@@ -1514,15 +1514,15 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareMile" xml:space="preserve">
-    <value>ማይ²</value>
+    <value>mi²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareMillimeter" xml:space="preserve">
-    <value>ካሬ ሚሊሊትር </value>
+    <value>ሚሊሜትር²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareYard" xml:space="preserve">
-    <value>ክ²</value>
+    <value>yd²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Terabit" xml:space="preserve">
@@ -1534,11 +1534,11 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Watt" xml:space="preserve">
-    <value>ደብልዩ</value>
+    <value>W</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Week" xml:space="preserve">
-    <value>ሳም</value>
+    <value>wk</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Yard" xml:space="preserve">
@@ -1638,7 +1638,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitName_Acre" xml:space="preserve">
-    <value>ኤክር</value>
+    <value>Acres</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bit" xml:space="preserve">
@@ -1662,7 +1662,7 @@
     <comment>A measurement unit for energy. Please note that this is the "small calorie" used in science for measuring heat energy, not the "large calorie" commonly used for measuring food energy. If there is a simple term to distinguish this one from the large "Food calorie", please use that. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Centimeter" xml:space="preserve">
-    <value>ሳንቲሜትር</value>
+    <value>ሴንቲ ሜትሮች</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CentimetersPerSecond" xml:space="preserve">
@@ -1702,7 +1702,7 @@
     <comment>An option in the unit converter to select degrees Fahrenheit</comment>
   </data>
   <data name="UnitName_Electron-Volt" xml:space="preserve">
-    <value>ኤሌክትሮን-ቮልት</value>
+    <value>ኤሌክትሮን ቮልቶች</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot" xml:space="preserve">
@@ -1910,7 +1910,7 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Carat" xml:space="preserve">
-    <value>ካራት</value>
+    <value>CD</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Degree" xml:space="preserve">
@@ -1930,7 +1930,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Bar" xml:space="preserve">
-    <value>ባ</value>
+    <value>ba</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_KiloPascal" xml:space="preserve">
@@ -1938,7 +1938,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_MillimeterOfMercury" xml:space="preserve">
-    <value>ሄግ</value>
+    <value>mmHg</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Pascal" xml:space="preserve">
@@ -1946,11 +1946,11 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_PSI" xml:space="preserve">
-    <value>ፒኤስአይ</value>
+    <value>psi</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Centigram" xml:space="preserve">
-    <value>ሴግ</value>
+    <value>cg</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Decagram" xml:space="preserve">
@@ -1958,7 +1958,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Decigram" xml:space="preserve">
-    <value>ዲጂ</value>
+    <value>dg</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Gram" xml:space="preserve">
@@ -1974,7 +1974,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_LongTon" xml:space="preserve">
-    <value>ቶን (እንግሊዝ)</value>
+    <value>ቶን (ዩኬ)</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Milligram" xml:space="preserve">
@@ -1982,7 +1982,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Ounce" xml:space="preserve">
-    <value>ኦዝ</value>
+    <value>oz</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Pound" xml:space="preserve">
@@ -1994,11 +1994,11 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Stone" xml:space="preserve">
-    <value>ኤስቲ</value>
+    <value>st</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Tonne" xml:space="preserve">
-    <value>ቲ</value>
+    <value>t</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitName_Carat" xml:space="preserve">
@@ -2022,7 +2022,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Bar" xml:space="preserve">
-    <value>አሞሌ</value>
+    <value>አሞሌዎች</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_KiloPascal" xml:space="preserve">
@@ -2030,7 +2030,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>የሜርኩሪ ሚሊሊትሮች</value>
+    <value>የሜርኩሪ ሚሊሊትሮች </value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
@@ -2050,7 +2050,7 @@
     <comment>A measurement unit for weight. Note: Dekagram is spelled "decagram" everywhere except where US English is used. (EN-US dekagram, elsewhere decagram). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Decigram" xml:space="preserve">
-    <value>ዲሲግራም</value>
+    <value>ዴሲግራም</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gram" xml:space="preserve">
@@ -2122,7 +2122,7 @@
     <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_DVD" xml:space="preserve">
-    <value>DVDዎች</value>
+    <value>ዲቪዲዎች</value>
     <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Battery" xml:space="preserve">
@@ -2206,11 +2206,11 @@
     <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Whale" xml:space="preserve">
-    <value>ሻርክዎች</value>
+    <value>ዓሳነባሪዎች</value>
     <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Whale" xml:space="preserve">
-    <value>ሻርክዎች</value>
+    <value>ዓሳነባሪዎች</value>
     <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CoffeeCup" xml:space="preserve">
@@ -2234,7 +2234,7 @@
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Hand" xml:space="preserve">
-    <value>ክንዶች</value>
+    <value>እጆች</value>
     <comment>A human hand, used as a comparison measurement unit for length or area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paper" xml:space="preserve">
@@ -2274,7 +2274,7 @@
     <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TrainEngine" xml:space="preserve">
-    <value>የባቡር ሞተሮች</value>
+    <value>የባቡር ሞተርዎች</value>
     <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerBall" xml:space="preserve">
@@ -2302,7 +2302,7 @@
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
   <data name="AboutFlyoutEULA.Text" xml:space="preserve">
-    <value>Microsoft ሶፍትዌር የፈቃድ ውሎች</value>
+    <value>የMicrosoft ሶፍትዌር የፈቃድ ውሎች</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
   <data name="PreviewTag.Text" xml:space="preserve">
@@ -2316,6 +2316,10 @@
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© %1 Microsoft. ሁሉም መብቶች በህግ የተከበሩ ናቸው።</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
+  </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>ለ Windows ማስሊያ እንዴት ማበርከት እንደሚችሉ ለማወቅ ፕሮጀክቱን %HL%GitHub%HL% ላይ ይመልከቱ ።</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>ስለ</value>
@@ -2338,7 +2342,7 @@
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
   <data name="CannotPaste" xml:space="preserve">
-    <value>ይህ የሒሳብ ሓረግ ሊለጥፍ አይችልም</value>
+    <value>ይህ አገላለጽ ሊለጠፍ አይችልም</value>
     <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
   </data>
   <data name="UnitName_Gibibits" xml:space="preserve">
@@ -2382,7 +2386,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabits" xml:space="preserve">
-    <value>እግዛቢቶች</value>
+    <value>ኤግዛቢቶች</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabytes" xml:space="preserve">
@@ -2465,7 +2469,7 @@
     <comment>From Date Header for Difference Date Picker</comment>
   </data>
   <data name="MonthsLabel.Text" xml:space="preserve">
-    <value>ወሮች</value>
+    <value>ወራት</value>
     <comment>Add/Subtract Months label</comment>
   </data>
   <data name="SubtractOption.Content" xml:space="preserve">
@@ -2494,10 +2498,10 @@
     <value>ወር</value>
   </data>
   <data name="Date_Months" xml:space="preserve">
-    <value>ወሮች</value>
+    <value>ወራት</value>
   </data>
   <data name="Date_SameDates" xml:space="preserve">
-    <value>ተመሳሳይ ቀናት </value>
+    <value>ተመሳሳይ ቀናት</value>
   </data>
   <data name="Date_Week" xml:space="preserve">
     <value>ሳምንት</value>
@@ -2540,7 +2544,7 @@
     <comment>Automation name for the group of memory controls (Mem Clear, Mem Recall, Mem Add, Mem Subtract, Mem Store, Memory flyout toggle)</comment>
   </data>
   <data name="StandardFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value> መደበኛ ቀመሮች</value>
+    <value>መደበኛ ቀመሮች</value>
     <comment>Automation name for the group of standard function buttons (Percent, Square Root, Square, Cube, Reciprocal)</comment>
   </data>
   <data name="DisplayControls.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2548,7 +2552,7 @@
     <comment>Automation name for the group of display control buttons (Clear, Clear Entry, and Backspace)</comment>
   </data>
   <data name="StandardOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value> መደበኛ ስሌቶች</value>
+    <value>መደበኛ ስሌቶች</value>
     <comment>Automation name for the group of standard operator buttons (Add, Subtract, Multiply, Divide, and Equals)</comment>
   </data>
   <data name="NumberPad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2576,7 +2580,7 @@
     <comment>Automation name for the group of input mode toggling buttons.</comment>
   </data>
   <data name="BitFlipPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ቢት መምረጫ ቁልፍሰሌዳ</value>
+    <value>ቢት መምረጫ ቁልፍ ሰሌዳ</value>
     <comment>Automation name for the group of bit toggling buttons.</comment>
   </data>
   <data name="scrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2696,27 +2700,27 @@
     <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
-    <value>ታ </value>
+    <value>I</value>
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryButton.AccessKey" xml:space="preserve">
-    <value>ማኅ</value>
+    <value>M</value>
     <comment>Access key for the Memory button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="NavView.AccessKey" xml:space="preserve">
-    <value>ሀ</value>
+    <value>H</value>
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AngleAccessKey" xml:space="preserve">
-    <value>ማመ</value>
+    <value>AN</value>
     <comment>AccessKey for the angle converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AreaAccessKey" xml:space="preserve">
-    <value>አመ</value>
+    <value>AR</value>
     <comment>AccessKey for the area converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_CurrencyAccessKey" xml:space="preserve">
-    <value>ም</value>
+    <value>C</value>
     <comment>AccessKey for the currency converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_DataAccessKey" xml:space="preserve">
@@ -2728,11 +2732,11 @@
     <comment>AccessKey for the energy converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_LengthAccessKey" xml:space="preserve">
-    <value>ር</value>
+    <value>L</value>
     <comment>AccessKey for the length converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_PowerAccessKey" xml:space="preserve">
-    <value>ኃ</value>
+    <value>PO</value>
     <comment>AccessKey for the power converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_PressureAccessKey" xml:space="preserve">
@@ -2744,19 +2748,19 @@
     <comment>AccessKey for the speed converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_TimeAccessKey" xml:space="preserve">
-    <value>ጊ</value>
+    <value>TI</value>
     <comment>AccessKey for the time converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_VolumeAccessKey" xml:space="preserve">
-    <value>ዕ</value>
+    <value>V</value>
     <comment>AccessKey for the volume converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_WeightAccessKey" xml:space="preserve">
-    <value>ክ</value>
+    <value>W</value>
     <comment>AccessKey for the weight converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_TemperatureAccessKey" xml:space="preserve">
-    <value>ሙ</value>
+    <value>TE</value>
     <comment>AccessKey for the temperature converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearHistory.AccessKey" xml:space="preserve">
@@ -2764,7 +2768,7 @@
     <comment>Access key for the Clear history button.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearMemory.AccessKey" xml:space="preserve">
-    <value>አጽ</value>
+    <value>C</value>
     <comment>Access key for the Clear memory button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -2776,11 +2780,11 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button in the Memory Pane</comment>
   </data>
   <data name="HistoryLabel.AccessKey" xml:space="preserve">
-    <value>ታ </value>
+    <value>I</value>
     <comment>Access key for the History pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryLabel.AccessKey" xml:space="preserve">
-    <value>ማኅ</value>
+    <value>M</value>
     <comment>Access key for the Memory pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="SineDegrees" xml:space="preserve">

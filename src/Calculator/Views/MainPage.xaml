@@ -177,6 +177,7 @@
                 <muxc:NavigationViewItem x:Name="AboutButton"
                                          x:Uid="AboutButton"
                                          Style="{StaticResource NavViewItemStyle}"
+                                         KeyDown="OnAboutButtonKeyDown"
                                          Tapped="OnAboutButtonClick">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xe946;"/>

@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="100" xml:space="preserve">
-    <value>Date de intrare incorecte</value>
+    <value>Intrare nevalidă</value>
     <comment>Error message shown when the input makes a function fail, like log(-1)</comment>
   </data>
   <data name="101" xml:space="preserve">
-    <value>Rezultatul este nedefinit</value>
+    <value>Rezultatul este indefinit</value>
     <comment>Error message shown when there's no possible value for a function.</comment>
   </data>
   <data name="105" xml:space="preserve">

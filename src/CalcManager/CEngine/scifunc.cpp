@@ -17,6 +17,7 @@
 /***                                                                    ***/
 /**************************************************************************/
 #include "Header Files/CalcEngine.h"
+#include "winerror_cross_platform.h"
 
 using namespace std;
 using namespace CalcEngine;
