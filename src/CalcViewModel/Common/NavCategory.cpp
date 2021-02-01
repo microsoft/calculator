@@ -60,7 +60,7 @@ bool IsGraphingModeAvailable()
 }
 
 Box<bool> ^ _isGraphingModeEnabledCached = nullptr;
-bool IsGraphingModeEnabled(User ^ firstUser = nullptr)
+bool IsGraphingModeEnabled(User ^ currentUser = nullptr)
 {
     if (!IsGraphingModeAvailable())
     {
@@ -72,12 +72,12 @@ bool IsGraphingModeEnabled(User ^ firstUser = nullptr)
         return _isGraphingModeEnabledCached->Value;
     }
 
-    if (!firstUser)
+    if (!currentUser)
     {
-        return false;
+        return true;
     }
 
-    auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
+    auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(currentUser, L"Education", L"AllowGraphingCalculator");
     _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
 
     return _isGraphingModeEnabledCached->Value;
@@ -280,9 +280,21 @@ static list<NavCategoryInitializer> s_categoryManifest = [] {
 
 void NavCategory::InitializeCategoryManifest(User ^ user)
 {
-    auto navCatInit = s_categoryManifest.begin();
-    std::advance(navCatInit, 2);
-    (*navCatInit).isEnabled = IsGraphingModeEnabled(user);
+    int i = 0;
+    for (NavCategoryInitializer category : s_categoryManifest)
+    {
+        if (category.viewMode == ViewMode::Graphing)
+        {
+            auto navCatInit = s_categoryManifest.begin();
+            std::advance(navCatInit, i);
+            (*navCatInit).isEnabled = IsGraphingModeEnabled(user);
+            break;
+        }
+        else
+        {
+            i++;
+        }
+    }
  }
 
 // This function should only be used when storing the mode to app data.
