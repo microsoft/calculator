@@ -72,6 +72,7 @@ MathRichEditBox::MathRichEditBox()
     {
         throw Exception::CreateException(hr);
     }
+    this->GotFocus += ref new RoutedEventHandler(this, &MathRichEditBox::OnGotFocus);
     this->LosingFocus += ref new TypedEventHandler<UIElement ^,LosingFocusEventArgs ^>(this, &MathRichEditBox::OnLosingFocus);
     this->KeyUp += ref new KeyEventHandler(this, &MathRichEditBox::OnKeyUp);
 }
@@ -112,6 +113,16 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
     this->IsReadOnly = readOnlyState;
 }
 
+void MathRichEditBox::OnGotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
+{
+    // bug: https://dev.azure.com/microsoft/OS/_workitems/edit/28498627
+    // below directives on Selection are going to engage Narrator to announce the content of this richedit
+    // this is a workaround since richedit doesn't announce its content automatically.
+    this->Document->Selection->EndKey(TextRangeUnit::Line, false);
+    this->Document->Selection->HomeKey(TextRangeUnit::Line, false);
+    this->Document->Selection->MoveLeft(TextRangeUnit::Character, 1, false);
+}
+
 void MathRichEditBox::OnLosingFocus(UIElement ^ sender, LosingFocusEventArgs ^ args)
 {
     if (this->IsReadOnly || this->ContextFlyout->IsOpen)
@@ -121,6 +132,7 @@ void MathRichEditBox::OnLosingFocus(UIElement ^ sender, LosingFocusEventArgs ^ a
 
     SubmitEquation(EquationSubmissionSource::FOCUS_LOST);
 }
+
 
 void MathRichEditBox::OnKeyUp(Object ^ sender, KeyRoutedEventArgs ^ e)
 {
