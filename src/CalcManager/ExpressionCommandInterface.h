@@ -6,6 +6,7 @@
 #include <memory> // for std::shared_ptr
 #include <vector>
 #include "Command.h"
+#include "sal_cross_platform.h"
 
 class ISerializeCommandVisitor;
 
