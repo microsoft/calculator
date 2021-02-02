@@ -115,7 +115,7 @@ void MathRichEditBox::SetMathTextProperty(String ^ newValue)
 
 void MathRichEditBox::OnGotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
-    // bug: https://dev.azure.com/microsoft/OS/_workitems/edit/28498627
+    // [BUG 28498627][GithubIssue #1380]
     // below directives on Selection are going to engage Narrator to announce the content of this richedit
     // this is a workaround since richedit doesn't announce its content automatically.
     this->Document->Selection->EndKey(TextRangeUnit::Line, false);
