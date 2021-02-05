@@ -133,7 +133,6 @@ void MathRichEditBox::OnLosingFocus(UIElement ^ sender, LosingFocusEventArgs ^ a
     SubmitEquation(EquationSubmissionSource::FOCUS_LOST);
 }
 
-
 void MathRichEditBox::OnKeyUp(Object ^ sender, KeyRoutedEventArgs ^ e)
 {
     if (!this->IsReadOnly && e->Key == VirtualKey::Enter)
