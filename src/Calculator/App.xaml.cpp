@@ -225,12 +225,12 @@ void App::OnLaunched(LaunchActivatedEventArgs ^ args)
         // If the app got pre-launch activated, then save that state in a flag
         m_preLaunched = true;
     }
+    NavCategory::InitializeCategoryManifest(args->User);
     OnAppLaunch(args, args->Arguments);
 }
 
 void App::OnAppLaunch(IActivatedEventArgs ^ args, String ^ argument)
 {
-
     // Uncomment the following lines to display frame-rate and per-frame CPU usage info.
     //#if _DEBUG
     //    if (IsDebuggerPresent())

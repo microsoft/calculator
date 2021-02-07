@@ -30,7 +30,7 @@ jobs:
     displayName: Send resources to Touchdown Build
     inputs:
       teamId: 86
-      authId: d3dd8113-65b3-4526-bdca-a00a7d1c37ba
+      authId: bf6d44ca-3210-4cfa-833f-c79f164ea27b
       authKey: $(LocServiceKey)
       isPreview: false
       relativePathRoot: src/Calculator/Resources/en-US/

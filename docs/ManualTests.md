@@ -10,7 +10,7 @@ These manual tests are run before every release of the Calculator app.
 **Test 1**
 Steps:
 1. From the Standard Calculator page, input “3”, “+”, “3”, “Enter” on the keyboard 
-Expected: “6” shows up in the display 
+*Expected: “6” shows up in the display *
 2. Input “4”, “-”, “2”, “=” using the in-app buttons 
 *Expected: “2” shows up in the display*
  
