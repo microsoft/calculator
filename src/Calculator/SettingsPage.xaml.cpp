@@ -22,7 +22,7 @@ using namespace Windows::UI::Xaml::Data;
 using namespace winrt::Windows::Storage;
 
 #ifndef BUILD_YEAR
-#define BUILD_YEAR 2020
+#define BUILD_YEAR 2021
 #endif
 
 auto resourceLoader = AppResourceProvider::GetInstance();
