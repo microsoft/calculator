@@ -4734,4 +4734,8 @@
     <value>Settings</value>
     <comment>Text for the "Settings" header</comment>
   </data>
+  <data name="SettingsContribute" xml:space="preserve">
+    <value>To learn how you can contribute to Windows Calculator, visit the project on %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}</comment>
+  </data>
 </root>

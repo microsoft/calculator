@@ -60,6 +60,8 @@ SettingsPage::SettingsPage()
     {
         SettingsSystemTheme->IsChecked = true;
     }
+
+    InitializeContributeTextBlock();
 }
 
 void SettingsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e)
@@ -69,6 +71,33 @@ void SettingsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventA
     {
         MainPageProperty = mainPage;
     }
+}
+
+void SettingsPage::InitializeContributeTextBlock()
+{
+    std::wstring contributeHyperlinkText  = resourceLoader->GetResourceString(L"SettingsContribute")->Data();
+
+    // The resource string has '%HL%' wrapped around 'GitHub'
+    // Break the string and assign pieces appropriately.
+    static const std::wstring delimiter{ L"%HL%" };
+    static const size_t delimiterLength{ delimiter.length() };
+
+    // Find the delimiters.
+    size_t firstSplitPosition = contributeHyperlinkText .find(delimiter, 0);
+    assert(firstSplitPosition != std::wstring::npos);
+    size_t secondSplitPosition = contributeHyperlinkText .find(delimiter, firstSplitPosition + 1);
+    assert(secondSplitPosition != std::wstring::npos);
+    size_t hyperlinkTextLength = secondSplitPosition - (firstSplitPosition + delimiterLength);
+
+    // Assign pieces.
+    auto contributeTextBeforeHyperlink = ref new String(contributeHyperlinkText.substr(0, firstSplitPosition).c_str());
+    auto contributeTextLink = ref new String(contributeHyperlinkText.substr(firstSplitPosition + delimiterLength, hyperlinkTextLength).c_str());
+    auto contributeTextAfterHyperlink = ref new String(contributeHyperlinkText.substr(secondSplitPosition + delimiterLength).c_str());
+
+    ContributeRunBeforeLink->Text = contributeTextBeforeHyperlink;
+    ContributeRunLink->Text = contributeTextLink;
+    ContributeRunAfterLink->Text = contributeTextAfterHyperlink;
+
 }
 
 void SettingsPage::BackButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
