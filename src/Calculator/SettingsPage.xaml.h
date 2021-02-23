@@ -19,14 +19,13 @@ namespace CalculatorApp
         virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e) override;
 
     private:
+        Platform::String ^ m_currentTheme;
         void InitializeContributeTextBlock();
         void BackButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void ColorSettingsButtonClicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SettingsFeedbackButtonClick(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
         void SetVersionString();
         void SetCopyrightString();
-        void LightChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void DarkChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
-        void SystemChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
+        void ThemeChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
     };
 }

@@ -70,20 +70,25 @@ App::App()
     this->HighContrastAdjustment = ApplicationHighContrastAdjustment::None;
 
     this->Suspending += ref new SuspendingEventHandler(this, &App::OnSuspending);
+
+    Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"restartApp", nullptr);
+
     auto value = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"themeSetting");
     auto DefaultTheme = ref new Windows::UI::ViewManagement::UISettings();
     auto uiTheme = DefaultTheme->GetColorValue(Windows::UI::ViewManagement::UIColorType::Background).ToString();
+
     if (value != nullptr)
     {
         String ^ colorSetting = safe_cast<String ^>(value);
+
         // Apply theme choice.
-        if (colorSetting == L"Dark")
-        {
-            App::Current->RequestedTheme = ApplicationTheme::Dark;
-        }
-        else if (colorSetting == L"Light")
+        if (colorSetting == L"Light")
         {
             App::Current->RequestedTheme = ApplicationTheme::Light;
+        }
+        else if (colorSetting == L"Dark")
+        {
+            App::Current->RequestedTheme = ApplicationTheme::Dark;
         }
         else if (colorSetting == L"System")
         {
@@ -97,6 +102,7 @@ App::App()
             }
         }
     }
+
 
 #if _DEBUG
     this->DebugSettings->IsBindingTracingEnabled = true;
