@@ -12,6 +12,7 @@ using namespace std;
 using namespace Windows::ApplicationModel;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Text;
@@ -118,9 +119,12 @@ void MathRichEditBox::OnGotFocus(Platform::Object ^ sender, Windows::UI::Xaml::R
     // [BUG 28498627][GithubIssue #1380]
     // below directives on Selection are going to engage Narrator to announce the content of this richedit
     // this is a workaround since richedit doesn't announce its content automatically.
-    this->Document->Selection->EndKey(TextRangeUnit::Line, false);
-    this->Document->Selection->HomeKey(TextRangeUnit::Line, false);
-    this->Document->Selection->MoveLeft(TextRangeUnit::Character, 1, false);
+    if (IsUIAccessibilityVoiceOverRunning())
+    {
+        this->Document->Selection->EndKey(TextRangeUnit::Line, false);
+        this->Document->Selection->HomeKey(TextRangeUnit::Line, false);
+        this->Document->Selection->MoveLeft(TextRangeUnit::Character, 1, false);
+    }
 }
 
 void MathRichEditBox::OnLosingFocus(UIElement ^ sender, LosingFocusEventArgs ^ args)
@@ -237,4 +241,9 @@ void MathRichEditBox::SubmitEquation(EquationSubmissionSource source)
     {
         EquationSubmitted(this, ref new MathRichEditBoxSubmission(false, source));
     }
+}
+
+bool MathRichEditBox::IsUIAccessibilityVoiceOverRunning() const
+{
+    return AutomationPeer::ListenerExists(AutomationEvents::PropertyChanged);
 }

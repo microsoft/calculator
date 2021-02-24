@@ -70,6 +70,8 @@ namespace CalculatorApp
             void OnGotFocus(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
             void OnLosingFocus(Windows::UI::Xaml::UIElement ^ sender, Windows::UI::Xaml::Input::LosingFocusEventArgs ^ args);
             void OnKeyUp(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
+
+            bool IsUIAccessibilityVoiceOverRunning() const;
         };
     }
 }
