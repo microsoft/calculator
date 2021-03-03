@@ -105,7 +105,7 @@ jobs:
   - task: MS-RDX-MRO.windows-store-publish-dev.package-task.store-package@2
     displayName: Create StoreBroker Payload
     inputs:
-      serviceEndpoint: StoreBrokerProxy
+      serviceEndpoint: Essential Experiences StoreBrokerProxy
       sbConfigPath: Tools/Build/StoreBroker/SBCalculatorConfig.json
       sourceFolder: $(Build.ArtifactStagingDirectory)/appxBundleSigned
       contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
@@ -125,7 +125,7 @@ jobs:
     displayName: 'Flight StoreBroker Payload to team ring'
     name: StoreBrokerFlight
     inputs:
-      serviceEndpoint: StoreBrokerProxy
+      serviceEndpoint: Essential Experiences StoreBrokerProxy
       appId: '$(AppId)'
       flightId: '$(FlightId)'
       inputMethod: JsonAndZip
