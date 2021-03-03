@@ -97,13 +97,15 @@
                                AutomationProperties.HeadingLevel="Level2"
                                TextTrimming="Clip"/>
 
-                    <TextBlock Margin="0,0,0,4"
-                               Style="{StaticResource BodyTextBlockStyle}"
-                               IsTextSelectionEnabled="True">
-                        <Run x:Name="SettingsVersion"/>
-                        <LineBreak/>
-                        <Run x:Name="SettingsCopyright"/>
-                    </TextBlock>
+                    <RichTextBlock Margin="0,0,0,4"
+                                   Style="{StaticResource BodyRichTextBlockStyle}"
+                                   IsTextSelectionEnabled="True">
+                        <Paragraph>
+                            <Run x:Name="SettingsVersion"/>
+                            <LineBreak/>
+                            <Run x:Name="SettingsCopyright"/>
+                        </Paragraph>
+                    </RichTextBlock>
 
                     <HyperlinkButton Margin="0,-2"
                                      HorizontalAlignment="Left"
@@ -134,20 +136,22 @@
                             Style="{StaticResource ButtonRevealStyle}"
                             Click="SettingsFeedbackButtonClick"/>
 
-                    <TextBlock x:Name="SettingsContribute"
-                               Margin="0,12,12,6"
-                               HorizontalAlignment="Left"
-                               Style="{ThemeResource BodyTextBlockStyle}"
-                               Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                               TextWrapping="Wrap">
-                        <Run x:Name="ContributeRunBeforeLink"/>
-                        <Hyperlink NavigateUri="https://go.microsoft.com/fwlink/?linkid=2099939"
-                                   TextDecorations="None"
-                                   ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?linkid=2099939">
-                            <Run x:Name="ContributeRunLink"/>
-                        </Hyperlink>
-                        <Run x:Name="ContributeRunAfterLink"/>
-                    </TextBlock>
+                    <RichTextBlock x:Name="SettingsContribute"
+                                   Margin="0,12,12,6"
+                                   HorizontalAlignment="Left"
+                                   Style="{ThemeResource BodyRichTextBlockStyle}"
+                                   Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                                   TextWrapping="Wrap">
+                        <Paragraph>
+                            <Run x:Name="ContributeRunBeforeLink"/>
+                            <Hyperlink NavigateUri="https://go.microsoft.com/fwlink/?linkid=2099939"
+                                       TextDecorations="None"
+                                       ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?linkid=2099939">
+                                <Run x:Name="ContributeRunLink"/>
+                            </Hyperlink>
+                            <Run x:Name="ContributeRunAfterLink"/>
+                        </Paragraph>
+                    </RichTextBlock>
                 </StackPanel>
             </StackPanel>
         </Grid>

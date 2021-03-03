@@ -4258,7 +4258,7 @@
     <value>Hide equation</value>
     <comment>This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator.</comment>
   </data>
-<data name="showEquationButtonAutomationName" xml:space="preserve">
+  <data name="showEquationButtonAutomationName" xml:space="preserve">
     <value>Show equation %1</value>
     <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
   </data>
@@ -4737,5 +4737,8 @@
   <data name="SettingsContribute" xml:space="preserve">
     <value>To learn how you can contribute to Windows Calculator, visit the project on%HL%GitHub%HL%.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, displayed on the settings page.</comment>
+  </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Back</value>
   </data>
 </root>

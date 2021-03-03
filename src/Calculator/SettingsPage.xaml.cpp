@@ -38,7 +38,7 @@ SettingsPage::SettingsPage()
     this->SetVersionString();
     this->SetCopyrightString();
     this->InitializeContributeTextBlock();
-    SettingsLightTheme->Focus(::FocusState::Keyboard);
+    SetDefaultFocus(); 
     
     if (themevalue != nullptr)
     {
@@ -88,6 +88,11 @@ void SettingsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventA
     {
         MainPageProperty = mainPage;
     }
+}
+
+void SettingsPage::SetDefaultFocus()
+{
+    SettingsLightTheme->Focus(::FocusState::Programmatic);
 }
 
 void SettingsPage::InitializeContributeTextBlock()

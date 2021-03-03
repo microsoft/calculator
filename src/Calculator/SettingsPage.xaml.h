@@ -20,6 +20,7 @@ namespace CalculatorApp
 
     private:
         Platform::String ^ m_currentTheme;
+        void SetDefaultFocus();
         void InitializeContributeTextBlock();
         void BackButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
         void ColorSettingsButtonClicked(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::RoutedEventArgs ^ e);
