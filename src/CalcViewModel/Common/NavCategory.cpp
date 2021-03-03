@@ -295,7 +295,7 @@ void NavCategory::InitializeCategoryManifest(User ^ user)
             i++;
         }
     }
- }
+}
 
 // This function should only be used when storing the mode to app data.
 int NavCategory::Serialize(ViewMode mode)
@@ -347,8 +347,9 @@ bool NavCategory::IsValidViewMode(ViewMode mode)
 
 bool NavCategory::IsViewModeEnabled(ViewMode mode)
 {
-    auto iter =
-        find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode](const NavCategoryInitializer& initializer) { return initializer.viewMode == mode && initializer.isEnabled; });
+    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode](const NavCategoryInitializer& initializer) {
+        return initializer.viewMode == mode && initializer.isEnabled;
+    });
 
     return iter != s_categoryManifest.end();
 }

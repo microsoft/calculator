@@ -150,8 +150,9 @@ namespace GraphControl::DX
         // Other event handlers.
         void OnCompositionScaleChanged(Windows::UI::Xaml::Controls::SwapChainPanel ^ sender, Object ^ args);
         void OnSizeChanged(Platform::Object ^ sender, Windows::UI::Xaml::SizeChangedEventArgs ^ e);
-        
+
         double GetPrecision(const double maxAxis, const double minAxis);
+
     private:
         DX::DeviceResources m_deviceResources;
         NearestPointRenderer m_nearestPointRenderer;
@@ -186,11 +187,10 @@ namespace GraphControl::DX
 
         // Track our independent input on a background worker thread.
         Windows::Foundation::IAsyncAction ^ m_inputLoopWorker = nullptr;
-        Windows::UI::Core::CoreIndependentInputSource ^ m_coreInput = nullptr;       
+        Windows::UI::Core::CoreIndependentInputSource ^ m_coreInput = nullptr;
 
         double m_XTraceValue;
         double m_YTraceValue;
-
 
         // And where is it located on screen
         Windows::Foundation::Point m_TraceLocation;
@@ -200,10 +200,10 @@ namespace GraphControl::DX
 
         Concurrency::critical_section m_criticalSection;
 
-         Windows::Foundation::IAsyncAction ^ m_renderPass = nullptr;
+        Windows::Foundation::IAsyncAction ^ m_renderPass = nullptr;
 
-         bool m_isRenderPassSuccesful;
+        bool m_isRenderPassSuccesful;
 
-         HRESULT m_HResult;
+        HRESULT m_HResult;
     };
 }

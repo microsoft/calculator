@@ -62,7 +62,7 @@ LocalizationService ^ LocalizationService::GetInstance()
 /// <remarks>
 /// Should only be used for test purpose
 /// </remarks>
-void LocalizationService::OverrideWithLanguage(_In_ const wchar_t * const language)
+void LocalizationService::OverrideWithLanguage(_In_ const wchar_t* const language)
 {
     s_singletonInstance = ref new LocalizationService(language);
 }

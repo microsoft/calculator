@@ -718,24 +718,26 @@ namespace CalculatorManagerTest
 
     void CalculatorManagerTest::CalculatorManagerTestProgrammer()
     {
-        Command commands1[] = { Command::ModeProgrammer, Command::Command5, Command::Command3, Command::CommandNand,
-            Command::Command8, Command::Command3, Command::CommandAnd, Command::CommandNULL };
+        Command commands1[] = { Command::ModeProgrammer, Command::Command5, Command::Command3,   Command::CommandNand,
+                                Command::Command8,       Command::Command3, Command::CommandAnd, Command::CommandNULL };
         TestDriver::Test(L"-18", L"53 NAND 83 AND ", commands1, true, false);
 
-        Command commands2[] = { Command::ModeProgrammer, Command::Command5, Command::Command3, Command::CommandNor,
-            Command::Command8, Command::Command3, Command::CommandAnd, Command::CommandNULL };
+        Command commands2[] = { Command::ModeProgrammer, Command::Command5, Command::Command3,   Command::CommandNor,
+                                Command::Command8,       Command::Command3, Command::CommandAnd, Command::CommandNULL };
         TestDriver::Test(L"-120", L"53 NOR 83 AND ", commands2, true, false);
 
-        Command commands3[] = { Command::ModeProgrammer, Command::Command5, Command::CommandLSHF,
-            Command::Command1, Command::CommandAnd, Command::CommandNULL };
+        Command commands3[] = {
+            Command::ModeProgrammer, Command::Command5, Command::CommandLSHF, Command::Command1, Command::CommandAnd, Command::CommandNULL
+        };
         TestDriver::Test(L"10", L"5 Lsh 1 AND ", commands3, true, false);
 
-        Command commands5[] = { Command::ModeProgrammer, Command::Command5, Command::CommandRSHFL,
-            Command::Command1, Command::CommandAnd, Command::CommandNULL };
+        Command commands5[] = {
+            Command::ModeProgrammer, Command::Command5, Command::CommandRSHFL, Command::Command1, Command::CommandAnd, Command::CommandNULL
+        };
         TestDriver::Test(L"2", L"5 Rsh 1 AND ", commands5, true, false);
 
-        Command commands6[] = { Command::ModeProgrammer, Command::CommandBINPOS63, Command::CommandRSHF,
-            Command::Command5, Command::Command6, Command::CommandAnd, Command::CommandNULL };
+        Command commands6[] = { Command::ModeProgrammer, Command::CommandBINPOS63, Command::CommandRSHF, Command::Command5,
+                                Command::Command6,       Command::CommandAnd,      Command::CommandNULL };
         TestDriver::Test(L"-128", L"-9223372036854775808 Rsh 56 AND ", commands6, true, false);
 
         Command commands7[] = { Command::ModeProgrammer, Command::Command1, Command::CommandROL, Command::CommandNULL };
@@ -1014,147 +1016,139 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(result, L"-3.432432e-09");
     }
 
-     void CalculatorManagerTest::CalculatorManagerTestBinaryOperatorReceived()
-     {
-         CalculatorManagerDisplayTester* pCalculatorDisplay = (CalculatorManagerDisplayTester *)m_calculatorDisplayTester.get();
+    void CalculatorManagerTest::CalculatorManagerTestBinaryOperatorReceived()
+    {
+        CalculatorManagerDisplayTester* pCalculatorDisplay = (CalculatorManagerDisplayTester*)m_calculatorDisplayTester.get();
 
-         VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
+        VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
 
-         m_calculatorManager->SetStandardMode();
-         ExecuteCommands({
-             Command::Command1,
-             Command::CommandADD
-         });
+        m_calculatorManager->SetStandardMode();
+        ExecuteCommands({ Command::Command1, Command::CommandADD });
 
-         wstring display = pCalculatorDisplay->GetPrimaryDisplay();
-         VERIFY_ARE_EQUAL(L"1", display);
+        wstring display = pCalculatorDisplay->GetPrimaryDisplay();
+        VERIFY_ARE_EQUAL(L"1", display);
 
-         // Verify BinaryOperatorReceived
-         VERIFY_ARE_EQUAL(1, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
-     }
+        // Verify BinaryOperatorReceived
+        VERIFY_ARE_EQUAL(1, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
+    }
 
-     void CalculatorManagerTest::CalculatorManagerTestBinaryOperatorReceived_Multiple()
-     {
-         CalculatorManagerDisplayTester* pCalculatorDisplay = (CalculatorManagerDisplayTester *)m_calculatorDisplayTester.get();
+    void CalculatorManagerTest::CalculatorManagerTestBinaryOperatorReceived_Multiple()
+    {
+        CalculatorManagerDisplayTester* pCalculatorDisplay = (CalculatorManagerDisplayTester*)m_calculatorDisplayTester.get();
 
-         VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
+        VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
 
-         m_calculatorManager->SetStandardMode();
-         ExecuteCommands({
-             Command::Command1,
-             Command::CommandADD,
-             Command::CommandSUB,
-             Command::CommandMUL
-         });
+        m_calculatorManager->SetStandardMode();
+        ExecuteCommands({ Command::Command1, Command::CommandADD, Command::CommandSUB, Command::CommandMUL });
 
-         wstring display = pCalculatorDisplay->GetPrimaryDisplay();
-         VERIFY_ARE_EQUAL(L"1", display);
+        wstring display = pCalculatorDisplay->GetPrimaryDisplay();
+        VERIFY_ARE_EQUAL(L"1", display);
 
-         // Verify BinaryOperatorReceived
-         VERIFY_ARE_EQUAL(3, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
-     }
+        // Verify BinaryOperatorReceived
+        VERIFY_ARE_EQUAL(3, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
+    }
 
-     void CalculatorManagerTest::CalculatorManagerTestBinaryOperatorReceived_LongInput()
-     {
-         CalculatorManagerDisplayTester* pCalculatorDisplay = (CalculatorManagerDisplayTester *)m_calculatorDisplayTester.get();
+    void CalculatorManagerTest::CalculatorManagerTestBinaryOperatorReceived_LongInput()
+    {
+        CalculatorManagerDisplayTester* pCalculatorDisplay = (CalculatorManagerDisplayTester*)m_calculatorDisplayTester.get();
 
-         VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
+        VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
 
-         m_calculatorManager->SetStandardMode();
-         ExecuteCommands({
-             Command::Command1,
-             Command::CommandADD,
-             Command::Command2,
-             Command::CommandMUL,
-             Command::Command1,
-             Command::Command0,
-             Command::CommandSUB,
-             Command::Command5,
-             Command::CommandDIV,
-             Command::Command5,
-             Command::CommandEQU
-         });
+        m_calculatorManager->SetStandardMode();
+        ExecuteCommands({ Command::Command1,
+                          Command::CommandADD,
+                          Command::Command2,
+                          Command::CommandMUL,
+                          Command::Command1,
+                          Command::Command0,
+                          Command::CommandSUB,
+                          Command::Command5,
+                          Command::CommandDIV,
+                          Command::Command5,
+                          Command::CommandEQU });
 
-         wstring display = pCalculatorDisplay->GetPrimaryDisplay();
-         VERIFY_ARE_EQUAL(L"5", display);
+        wstring display = pCalculatorDisplay->GetPrimaryDisplay();
+        VERIFY_ARE_EQUAL(L"5", display);
 
-         // Verify BinaryOperatorReceived
-         VERIFY_ARE_EQUAL(4, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
-     }
+        // Verify BinaryOperatorReceived
+        VERIFY_ARE_EQUAL(4, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
+    }
 
-     void CalculatorManagerTest::CalculatorManagerTestStandardOrderOfOperations()
-     {
-         Command commands1[] = { Command::Command1, Command::CommandREC, Command::CommandNULL };
-         TestDriver::Test(L"1", L"1/(1)", commands1);
+    void CalculatorManagerTest::CalculatorManagerTestStandardOrderOfOperations()
+    {
+        Command commands1[] = { Command::Command1, Command::CommandREC, Command::CommandNULL };
+        TestDriver::Test(L"1", L"1/(1)", commands1);
 
-         Command commands2[] = { Command::Command4, Command::CommandSQRT, Command::CommandNULL };
-         TestDriver::Test(L"2", L"\x221A(4)", commands2);
+        Command commands2[] = { Command::Command4, Command::CommandSQRT, Command::CommandNULL };
+        TestDriver::Test(L"2", L"\x221A(4)", commands2);
 
-         Command commands3[] = { Command::Command1, Command::CommandADD, Command::Command4, Command::CommandSQRT, Command::CommandNULL };
-         TestDriver::Test(L"2", L"1 + \x221A(4)", commands3);
+        Command commands3[] = { Command::Command1, Command::CommandADD, Command::Command4, Command::CommandSQRT, Command::CommandNULL };
+        TestDriver::Test(L"2", L"1 + \x221A(4)", commands3);
 
-         Command commands4[] = { Command::Command1, Command::CommandADD, Command::Command4, Command::CommandSQRT, Command::CommandSUB, Command::CommandNULL };
-         TestDriver::Test(L"3", L"3 - ", commands4);
+        Command commands4[] = { Command::Command1, Command::CommandADD, Command::Command4, Command::CommandSQRT, Command::CommandSUB, Command::CommandNULL };
+        TestDriver::Test(L"3", L"3 - ", commands4);
 
-         Command commands5[] = { Command::Command2, Command::CommandMUL, Command::Command4, Command::CommandREC, Command::CommandNULL };
-         TestDriver::Test(L"0.25", L"2 \x00D7 1/(4)", commands5);
+        Command commands5[] = { Command::Command2, Command::CommandMUL, Command::Command4, Command::CommandREC, Command::CommandNULL };
+        TestDriver::Test(L"0.25", L"2 \x00D7 1/(4)", commands5);
 
-         Command commands6[] = { Command::Command5, Command::CommandDIV, Command::Command6, Command::CommandPERCENT, Command::CommandNULL};
-         TestDriver::Test(L"0.06", L"5 \x00F7 0.06", commands6);
+        Command commands6[] = { Command::Command5, Command::CommandDIV, Command::Command6, Command::CommandPERCENT, Command::CommandNULL };
+        TestDriver::Test(L"0.06", L"5 \x00F7 0.06", commands6);
 
-         Command commands7[] = { Command::Command4, Command::CommandSQRT, Command::CommandSUB, Command::CommandNULL };
-         TestDriver::Test(L"2", L"\x221A(4) - ", commands7);
+        Command commands7[] = { Command::Command4, Command::CommandSQRT, Command::CommandSUB, Command::CommandNULL };
+        TestDriver::Test(L"2", L"\x221A(4) - ", commands7);
 
-         Command commands8[] = { Command::Command7, Command::CommandSQR, Command::CommandDIV, Command::CommandNULL };
-         TestDriver::Test(L"49", L"sqr(7) \x00F7 ", commands8);
+        Command commands8[] = { Command::Command7, Command::CommandSQR, Command::CommandDIV, Command::CommandNULL };
+        TestDriver::Test(L"49", L"sqr(7) \x00F7 ", commands8);
 
-         Command commands9[] = { Command::Command8, Command::CommandSQR, Command::CommandSQRT, Command::CommandNULL };
-         TestDriver::Test(L"8", L"\x221A(sqr(8))", commands9);
+        Command commands9[] = { Command::Command8, Command::CommandSQR, Command::CommandSQRT, Command::CommandNULL };
+        TestDriver::Test(L"8", L"\x221A(sqr(8))", commands9);
 
-         Command commands10[] = { Command::Command1, Command::Command0, Command::CommandADD, Command::Command2, Command::CommandSUB, Command::CommandNULL };
-         TestDriver::Test(L"12", L"12 - ", commands10);
+        Command commands10[] = { Command::Command1, Command::Command0, Command::CommandADD, Command::Command2, Command::CommandSUB, Command::CommandNULL };
+        TestDriver::Test(L"12", L"12 - ", commands10);
 
-         Command commands11[] = { Command::Command3, Command::CommandMUL, Command::Command4, Command::CommandDIV, Command::CommandNULL };
-         TestDriver::Test(L"12", L"12 \x00F7 ", commands11);
+        Command commands11[] = { Command::Command3, Command::CommandMUL, Command::Command4, Command::CommandDIV, Command::CommandNULL };
+        TestDriver::Test(L"12", L"12 \x00F7 ", commands11);
 
-         Command commands12[] = { Command::Command6, Command::CommandDIV, Command::Command3, Command::CommandSUB, Command::CommandADD, Command::CommandNULL };
-         TestDriver::Test(L"2", L"2 + ", commands12);
+        Command commands12[] = { Command::Command6, Command::CommandDIV, Command::Command3, Command::CommandSUB, Command::CommandADD, Command::CommandNULL };
+        TestDriver::Test(L"2", L"2 + ", commands12);
 
-         Command commands13[] = { Command::Command7, Command::CommandSUB, Command::Command4, Command::CommandDIV, Command::CommandMUL, Command::CommandNULL };
-         TestDriver::Test(L"3", L"3 \x00D7 ", commands13);
+        Command commands13[] = { Command::Command7, Command::CommandSUB, Command::Command4, Command::CommandDIV, Command::CommandMUL, Command::CommandNULL };
+        TestDriver::Test(L"3", L"3 \x00D7 ", commands13);
 
-         Command commands14[] = { Command::Command8, Command::CommandMUL, Command::Command2, Command::CommandADD, Command::CommandSQRT, Command::CommandNULL };
-         TestDriver::Test(L"4", L"16 + \x221A(16)", commands14);
+        Command commands14[] = { Command::Command8, Command::CommandMUL, Command::Command2, Command::CommandADD, Command::CommandSQRT, Command::CommandNULL };
+        TestDriver::Test(L"4", L"16 + \x221A(16)", commands14);
 
-         Command commands15[] = { Command::Command9, Command::CommandADD, Command::Command0, Command::CommandMUL, Command::CommandSIGN, Command::CommandNULL };
-         TestDriver::Test(L"-9", L"9 \x00D7 negate(9)", commands15);
+        Command commands15[] = { Command::Command9, Command::CommandADD, Command::Command0, Command::CommandMUL, Command::CommandSIGN, Command::CommandNULL };
+        TestDriver::Test(L"-9", L"9 \x00D7 negate(9)", commands15);
 
-         Command commands16[] = { Command::Command9, Command::CommandSIGN, Command::Command0, Command::CommandADD, Command::CommandMUL, Command::CommandNULL };
-         TestDriver::Test(L"-90", L"-90 \x00D7 ", commands16);
+        Command commands16[] = { Command::Command9, Command::CommandSIGN, Command::Command0, Command::CommandADD, Command::CommandMUL, Command::CommandNULL };
+        TestDriver::Test(L"-90", L"-90 \x00D7 ", commands16);
 
-         Command commands17[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandEQU, Command::CommandNULL };
-         TestDriver::Test(L"3", L"1 + 2=", commands17);
+        Command commands17[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"3", L"1 + 2=", commands17);
 
-         Command commands18[] = { Command::Command2, Command::Command0, Command::CommandMUL, Command::Command0, Command::Command2, Command::CommandEQU, Command::CommandNULL };
-         TestDriver::Test(L"40", L"20 \x00D7 2=", commands18);
+        Command commands18[] = { Command::Command2, Command::Command0,   Command::CommandMUL, Command::Command0,
+                                 Command::Command2, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"40", L"20 \x00D7 2=", commands18);
 
-         Command commands19[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandADD, Command::CommandBACK, Command::CommandNULL };
-         TestDriver::Test(L"3", L"3 + ", commands19);
+        Command commands19[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandADD, Command::CommandBACK, Command::CommandNULL };
+        TestDriver::Test(L"3", L"3 + ", commands19);
 
-         Command commands20[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandADD, Command::CommandCLEAR, Command::CommandNULL };
-         TestDriver::Test(L"0", L"", commands20);
+        Command commands20[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandADD, Command::CommandCLEAR, Command::CommandNULL };
+        TestDriver::Test(L"0", L"", commands20);
 
-         Command commands21[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandADD, Command::CommandCENTR, Command::CommandNULL };
-         TestDriver::Test(L"0", L"3 + ", commands21);
+        Command commands21[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandADD, Command::CommandCENTR, Command::CommandNULL };
+        TestDriver::Test(L"0", L"3 + ", commands21);
 
-         Command commands22[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandCLEAR, Command::CommandNULL };
-         TestDriver::Test(L"0", L"", commands22);
+        Command commands22[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandCLEAR, Command::CommandNULL };
+        TestDriver::Test(L"0", L"", commands22);
 
-         Command commands23[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandCENTR, Command::CommandNULL };
-         TestDriver::Test(L"0", L"1 + ", commands23);
+        Command commands23[] = { Command::Command1, Command::CommandADD, Command::Command2, Command::CommandCENTR, Command::CommandNULL };
+        TestDriver::Test(L"0", L"1 + ", commands23);
 
-         Command commands24[] = { Command::Command1, Command::CommandMUL, Command::Command2, Command::CommandMUL, Command::Command3, Command::CommandMUL, Command::Command4, Command::CommandMUL, Command::Command5, Command::CommandMUL, Command::CommandNULL };
-         TestDriver::Test(L"120", L"120 \x00D7 ", commands24);
-     }
+        Command commands24[] = { Command::Command1, Command::CommandMUL, Command::Command2, Command::CommandMUL, Command::Command3,   Command::CommandMUL,
+                                 Command::Command4, Command::CommandMUL, Command::Command5, Command::CommandMUL, Command::CommandNULL };
+        TestDriver::Test(L"120", L"120 \x00D7 ", commands24);
+    }
 
 } /* namespace CalculationManagerUnitTests */

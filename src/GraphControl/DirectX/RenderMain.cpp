@@ -33,7 +33,7 @@ namespace GraphControl::DX
         : m_deviceResources{ panel }
         , m_nearestPointRenderer{ &m_deviceResources }
         , m_backgroundColor{ {} }
-        , m_swapChainPanel{ panel }        
+        , m_swapChainPanel{ panel }
         , m_TraceLocation(Point(0, 0))
         , m_Tracing(false)
     {
@@ -159,10 +159,10 @@ namespace GraphControl::DX
             double outNearestPointValueX, outNearestPointValueY;
             float outNearestPointLocationX, outNearestPointLocationY;
             double rhoValueOut, thetaValueOut, tValueOut;
-            
+
             double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
             m_graph->GetRenderer()->GetDisplayRanges(xAxisMin, xAxisMax, yAxisMin, yAxisMax);
-            double precision = this->GetPrecision(xAxisMax, xAxisMin);     
+            double precision = this->GetPrecision(xAxisMax, xAxisMin);
 
             m_Tracing = m_graph->GetRenderer()->GetClosePointData(
                             trackPoint.X,
@@ -201,7 +201,7 @@ namespace GraphControl::DX
         double exponent = static_cast<double>(floor(log10(maxAxis - minAxis)) - 3);
         double precision = pow(10, exponent);
         return precision;
-    }   
+    }
 
     void RenderMain::SetPointRadius(float radius)
     {
@@ -319,12 +319,12 @@ namespace GraphControl::DX
                         }
 
                         int formulaId = -1;
-                        double outNearestPointValueX, outNearestPointValueY;                        
+                        double outNearestPointValueX, outNearestPointValueY;
                         double rhoValueOut, thetaValueOut, tValueOut;
                         float outNearestPointLocationX, outNearestPointLocationY;
                         double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
                         renderer->GetDisplayRanges(xAxisMin, xAxisMax, yAxisMin, yAxisMax);
-                        double precision = this->GetPrecision(xAxisMax, xAxisMin);   
+                        double precision = this->GetPrecision(xAxisMax, xAxisMin);
                         if (renderer->GetClosePointData(
                                 trackPoint.X,
                                 trackPoint.Y,
@@ -352,7 +352,7 @@ namespace GraphControl::DX
                                 m_TraceLocation = Point(outNearestPointLocationX, outNearestPointLocationY);
                                 m_nearestPointRenderer.Render(m_TraceLocation);
                                 m_Tracing = true;
-                                m_TraceLocation = Point(outNearestPointLocationX, outNearestPointLocationY);                                
+                                m_TraceLocation = Point(outNearestPointLocationX, outNearestPointLocationY);
                                 m_XTraceValue = outNearestPointValueX;
                                 m_YTraceValue = outNearestPointValueY;
                             }

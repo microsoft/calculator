@@ -241,7 +241,6 @@ namespace Utils
         };
     }
 
-
     // Regular DependencyProperty
     template <typename TOwner, typename TType>
     Windows::UI::Xaml::DependencyProperty^ RegisterDependencyProperty(

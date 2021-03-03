@@ -73,21 +73,13 @@ namespace CalculatorUnitTests
             }
             VERIFY_ARE_EQUAL(
                 m_CopyPasteManager->ValidatePasteExpression(
-                    StringReference(exp_TooLong.c_str()),
-                    ViewMode::Standard,
-                    CategoryGroupType::Calculator,
-                    NumberBase::Unknown,
-                    BitLength::BitLengthUnknown),
+                    StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, NumberBase::Unknown, BitLength::BitLengthUnknown),
                 StringReference(exp_TooLong.c_str()),
                 L"Verify ValidatePasteExpression handles expressions up to max length");
             exp_TooLong += L"1";
             VERIFY_ARE_EQUAL(
                 m_CopyPasteManager->ValidatePasteExpression(
-                    StringReference(exp_TooLong.c_str()),
-                    ViewMode::Standard,
-                    CategoryGroupType::Calculator,
-                    NumberBase::Unknown,
-                    BitLength::BitLengthUnknown),
+                    StringReference(exp_TooLong.c_str()), ViewMode::Standard, CategoryGroupType::Calculator, NumberBase::Unknown, BitLength::BitLengthUnknown),
                 StringReference(L"NoOp"),
                 L"Verify ValidatePasteExpression returns NoOp for strings over max length");
 
@@ -333,8 +325,7 @@ namespace CalculatorUnitTests
                 0,
                 L"Verify Scientific mode maximum values");
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::None, CategoryGroupType::Converter, NumberBase::Unknown, BitLength::BitLengthUnknown),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::None, CategoryGroupType::Converter, NumberBase::Unknown, BitLength::BitLengthUnknown),
                 m_CopyPasteManager->MaxConverterInputLength,
                 0,
                 L"Verify Converter mode maximum values");
@@ -345,96 +336,79 @@ namespace CalculatorUnitTests
             unsigned long long int ullByteMax = UINT8_MAX;
             Logger::WriteMessage(L"Verify Programmer Mode NumberBase::HexBase maximum values");
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::HexBase, BitLength::BitLengthQWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::HexBase, BitLength::BitLengthQWord),
                 16u,
                 ullQwordMax);
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::HexBase, BitLength::BitLengthDWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::HexBase, BitLength::BitLengthDWord),
                 8u,
                 ullDwordMax);
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::HexBase, BitLength::BitLengthWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::HexBase, BitLength::BitLengthWord),
                 4u,
                 ullWordMax);
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::HexBase, BitLength::BitLengthByte),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::HexBase, BitLength::BitLengthByte),
                 2u,
                 ullByteMax);
 
             Logger::WriteMessage(L"Verify Programmer Mode NumberBase::DecBase maximum values");
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::DecBase, BitLength::BitLengthQWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::DecBase, BitLength::BitLengthQWord),
                 19u,
                 ullQwordMax >> 1);
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::DecBase, BitLength::BitLengthDWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::DecBase, BitLength::BitLengthDWord),
                 10u,
                 ullDwordMax >> 1);
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::DecBase, BitLength::BitLengthWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::DecBase, BitLength::BitLengthWord),
                 5u,
                 ullWordMax >> 1);
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::DecBase, BitLength::BitLengthByte),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::DecBase, BitLength::BitLengthByte),
                 3u,
                 ullByteMax >> 1);
 
             Logger::WriteMessage(L"Verify Programmer Mode NumberBase::OctBase maximum values");
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::OctBase, BitLength::BitLengthQWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::OctBase, BitLength::BitLengthQWord),
                 22u,
                 ullQwordMax);
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::OctBase, BitLength::BitLengthDWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::OctBase, BitLength::BitLengthDWord),
                 11u,
                 ullDwordMax);
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::OctBase, BitLength::BitLengthWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::OctBase, BitLength::BitLengthWord),
                 6u,
                 ullWordMax);
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::OctBase, BitLength::BitLengthByte),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::OctBase, BitLength::BitLengthByte),
                 3u,
                 ullByteMax);
 
             Logger::WriteMessage(L"Verify Programmer Mode NumberBase::BinBase maximum values");
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::BinBase, BitLength::BitLengthQWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::BinBase, BitLength::BitLengthQWord),
                 64u,
                 ullQwordMax);
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::BinBase, BitLength::BitLengthDWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::BinBase, BitLength::BitLengthDWord),
                 32u,
                 ullDwordMax);
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::BinBase, BitLength::BitLengthWord),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::BinBase, BitLength::BitLengthWord),
                 16u,
                 ullWordMax);
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::Programmer, CategoryGroupType::None, NumberBase::BinBase, BitLength::BitLengthByte),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::Programmer, CategoryGroupType::None, NumberBase::BinBase, BitLength::BitLengthByte),
                 8u,
                 ullByteMax);
 
             Logger::WriteMessage(L"Verify invalid ViewModes/Categories return 0 for max values");
             VERIFY_MAXOPERANDLENGTHANDVALUE_ARE_EQUALS(
-                m_CopyPasteManager->GetMaxOperandLengthAndValue(
-                    ViewMode::None, CategoryGroupType::None, NumberBase::Unknown, BitLength::BitLengthUnknown),
+                m_CopyPasteManager->GetMaxOperandLengthAndValue(ViewMode::None, CategoryGroupType::None, NumberBase::Unknown, BitLength::BitLengthUnknown),
                 0u,
                 0ull);
         };
@@ -551,8 +525,7 @@ namespace CalculatorUnitTests
             VERIFY_IS_NULL(CopyPasteManager::TryOperandToULL(L"0xFFFFFFFFFFFFFFFFF1", NumberBase::HexBase));
             VERIFY_IS_NULL(CopyPasteManager::TryOperandToULL(L"18446744073709551616", NumberBase::DecBase));
             VERIFY_IS_NULL(CopyPasteManager::TryOperandToULL(L"2000000000000000000000", NumberBase::OctBase));
-            VERIFY_IS_NULL(
-                CopyPasteManager::TryOperandToULL(L"11111111111111111111111111111111111111111111111111111111111111111", NumberBase::BinBase));
+            VERIFY_IS_NULL(CopyPasteManager::TryOperandToULL(L"11111111111111111111111111111111111111111111111111111111111111111", NumberBase::BinBase));
             // Invalid values/characters
             VERIFY_IS_NULL(CopyPasteManager::TryOperandToULL(L"-1", NumberBase::DecBase));
             VERIFY_IS_NULL(CopyPasteManager::TryOperandToULL(L"5555", NumberBase::BinBase));
@@ -827,12 +800,17 @@ namespace CalculatorUnitTests
                                      L"61%99"
                                      L"-6.1%99",
                                      L"1.1111111111111111111111111111111e+1142" };
-        String
-            ^ negativeInput[] = { L"abcdef", L"xyz",   L"ABab", L"e+234", L"123456789123456781234567890123456" /*boundary condition: greater than 32 digits*/,
-                                  L"11.1111111111111111111111111111111e+1142",
-                                  L"1.1e+10001", /*boundary condition: exponent greater than 5 digits*/
-                                  L"0.11111111111111111111111111111111111e+111111" /*boundary condition: both exponent and non exponent exceed limits*/
-                                  L"SIN(2)", L"2+2==", L"2=+2" };
+        String ^ negativeInput[] = { L"abcdef",
+                                     L"xyz",
+                                     L"ABab",
+                                     L"e+234",
+                                     L"123456789123456781234567890123456" /*boundary condition: greater than 32 digits*/,
+                                     L"11.1111111111111111111111111111111e+1142",
+                                     L"1.1e+10001",                                   /*boundary condition: exponent greater than 5 digits*/
+                                     L"0.11111111111111111111111111111111111e+111111" /*boundary condition: both exponent and non exponent exceed limits*/
+                                     L"SIN(2)",
+                                     L"2+2==",
+                                     L"2=+2" };
 
         ASSERT_POSITIVE_TESTCASES(ValidateScientificPasteExpression, positiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateScientificPasteExpression, negativeInput);
@@ -1221,10 +1199,17 @@ namespace CalculatorUnitTests
 
     void CopyPasteManagerTest::ValidateProgrammerOctPasteExpressionTest()
     {
-        String ^ qwordPositiveInput[] = { L"123",       L"123+456", L"1,234",       L"1 2 3",   L"1'2'3'4", L"1_2_3_4", L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85",
-                                          L"\n 1+\n2 ", L"1\"2",    L"(123)+(456)", L"0t1234",  L"0T1234",  L"0o1234",  L"0O1234",      L"1234u",
-                                          L"1234ul",    L"1234ULL", L"2+2=",        L"2+2=   ",
-                                          L"127%71",    L"1777777777777777777777" /*boundary condition: the max allowed number*/ };
+        String ^ qwordPositiveInput[] = { L"123",         L"123+456",
+                                          L"1,234",       L"1 2 3",
+                                          L"1'2'3'4",     L"1_2_3_4",
+                                          L"\n\r1,234\n", L"\f\n1+2\t\r\v\x85",
+                                          L"\n 1+\n2 ",   L"1\"2",
+                                          L"(123)+(456)", L"0t1234",
+                                          L"0T1234",      L"0o1234",
+                                          L"0O1234",      L"1234u",
+                                          L"1234ul",      L"1234ULL",
+                                          L"2+2=",        L"2+2=   ",
+                                          L"127%71",      L"1777777777777777777777" /*boundary condition: the max allowed number*/ };
         String ^ qwordNegativeInput[] = { L"+123",
                                           L"1.23",
                                           L"1''2",
@@ -1514,11 +1499,9 @@ namespace CalculatorUnitTests
         ASSERT_POSITIVE_TESTCASES(ValidateProgrammerBinWordPasteExpression, wordPositiveInput);
         ASSERT_NEGATIVE_TESTCASES(ValidateProgrammerBinWordPasteExpression, wordNegativeInput);
 
-        String
-            ^ bytePositiveInput[] = { L"100",       L"100+101", L"1,001",      L"1 0 1",  L"1'0'0'1", L"1_0_0_1", L"\n\r1,010\n",
-                                      L"\n 1+\n1 ", L"1\"1",    L"(101)+(10)", L"0b1001", L"0B1111",  L"0y1001",  L"0Y1001",
-                                      L"1100b",     L"1101B",   L"1111u",      L"1111ul", L"1111ULL", L"10100010",
-                                      L"11111111" /*boundary condition: max allowed number*/ };
+        String ^ bytePositiveInput[] = { L"100",   L"100+101",    L"1,001",   L"1 0 1",    L"1'0'0'1", L"1_0_0_1", L"\n\r1,010\n", L"\n 1+\n1 ",
+                                         L"1\"1",  L"(101)+(10)", L"0b1001",  L"0B1111",   L"0y1001",  L"0Y1001",  L"1100b",       L"1101B",
+                                         L"1111u", L"1111ul",     L"1111ULL", L"10100010", L"11111111" /*boundary condition: max allowed number*/ };
         String ^ byteNegativeInput[] = { L"+10101",
                                          L"1.01",
                                          L"1''0",

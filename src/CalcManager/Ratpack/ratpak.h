@@ -20,8 +20,8 @@
 #include <algorithm>
 #include <string>
 #include "CalcErr.h"
-#include <cstring> // for memmove
-#include "sal_cross_platform.h"   // for SAL
+#include <cstring>              // for memmove
+#include "sal_cross_platform.h" // for SAL
 
 static constexpr uint32_t BASEXPWR = 31L;     // Internal log2(BASEX)
 static constexpr uint32_t BASEX = 0x80000000; // Internal radix used in calculations, hope to raise

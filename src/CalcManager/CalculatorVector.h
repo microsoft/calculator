@@ -7,8 +7,8 @@
 #include <vector>
 #include "winerror_cross_platform.h"
 #include "Ratpack/CalcErr.h"
-#include <stdexcept> // for std::out_of_range
-#include "sal_cross_platform.h"     // for SAL
+#include <stdexcept>            // for std::out_of_range
+#include "sal_cross_platform.h" // for SAL
 
 template <typename TType>
 class CalculatorVector
@@ -118,7 +118,6 @@ public:
         ResultCode hr = this->GetSize(&nTokens);
         if (SUCCEEDED(hr))
         {
-
             std::pair<std::wstring, int> currentPair;
             for (unsigned int i = 0; i < nTokens; i++)
             {
