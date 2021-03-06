@@ -85,7 +85,5 @@ namespace CalculatorApp
         void RemoveWindowFromMap(int viewId);
         int m_mainViewId;
         bool m_preLaunched;
-
-        Windows::UI::Xaml::Controls::Primitives::Popup ^ m_aboutPopup;
     };
 }
