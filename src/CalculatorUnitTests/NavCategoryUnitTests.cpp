@@ -97,7 +97,7 @@ namespace CalculatorUnitTests
 
         // Boundary testing
         VERIFY_ARE_EQUAL(ViewMode::None, NavCategory::Deserialize(ref new Box<int>(-1)));
-        VERIFY_ARE_EQUAL(ViewMode::None, NavCategory::Deserialize(ref new Box<int>(19)));
+        VERIFY_ARE_EQUAL(ViewMode::None, NavCategory::Deserialize(ref new Box<int>(18)));
     }
 
     void NavCategoryUnitTests::IsValidViewMode_AllValid()
@@ -131,15 +131,15 @@ namespace CalculatorUnitTests
 
         if (Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath"))
         {
-            // There are 19 total options so int 19 should be the first invalid
-            VERIFY_IS_TRUE(NavCategory::IsValidViewMode(static_cast<ViewMode>(18)));
-            VERIFY_IS_FALSE(NavCategory::IsValidViewMode(static_cast<ViewMode>(19)));
+            // There are 18 total options so int 18 should be the first invalid
+            VERIFY_IS_TRUE(NavCategory::IsValidViewMode(static_cast<ViewMode>(17)));
+            VERIFY_IS_FALSE(NavCategory::IsValidViewMode(static_cast<ViewMode>(18)));
         }
         else
         {
             // There are 18 total options when graphing calculator is not present, so int 18 should be the first invalid
-            VERIFY_IS_TRUE(NavCategory::IsValidViewMode(static_cast<ViewMode>(17)));
-            VERIFY_IS_FALSE(NavCategory::IsValidViewMode(static_cast<ViewMode>(18)));
+            VERIFY_IS_TRUE(NavCategory::IsValidViewMode(static_cast<ViewMode>(16)));
+            VERIFY_IS_FALSE(NavCategory::IsValidViewMode(static_cast<ViewMode>(17)));
         }
 
         // Also verify the lower bound
