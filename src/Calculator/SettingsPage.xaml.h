@@ -19,7 +19,6 @@ namespace CalculatorApp
         virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e) override;
 
     private:
-        Platform::String ^ m_currentTheme;
         void SetDefaultFocus();
         void InitializeContributeTextBlock();
         void BackButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);

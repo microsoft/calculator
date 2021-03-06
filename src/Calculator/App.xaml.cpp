@@ -71,7 +71,9 @@ App::App()
 
     this->Suspending += ref new SuspendingEventHandler(this, &App::OnSuspending);
 
+    // Reset restartApp and currentTheme
     Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"restartApp", nullptr);
+    Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"currentTheme", nullptr);
 
     auto value = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"themeSetting");
     auto DefaultTheme = ref new Windows::UI::ViewManagement::UISettings();

@@ -30,8 +30,10 @@ SettingsPage::SettingsPage()
     auto resourceLoader = AppResourceProvider::GetInstance();
     auto themevalue = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"themeSetting");
     auto restartValue = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"restartApp");
+    auto currentThemeValue = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"CurrentTheme");
     String ^ colorSetting = safe_cast<String ^>(themevalue);
     String ^ restartApp = safe_cast<String ^>(restartValue);
+    String ^ currentTheme = safe_cast<String ^>(currentThemeValue);
 
     InitializeComponent();
 
@@ -45,23 +47,35 @@ SettingsPage::SettingsPage()
         if (colorSetting == L"Light")
         {
             SettingsLightTheme->IsChecked = true;
-            m_currentTheme = "Light";
+            if (currentTheme == nullptr)
+            {
+                Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"CurrentTheme", L"Light");
+            }
         }
         else if (colorSetting == L"Dark")
         {
             SettingsDarkTheme->IsChecked = true;
-            m_currentTheme = "Dark";
+            if (currentTheme == nullptr)
+            {
+                Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"CurrentTheme", L"Dark");
+            }
         }
         else if (colorSetting == L"System")
         {
             SettingsSystemTheme->IsChecked = true;
-            m_currentTheme = "System";
+            if (currentTheme == nullptr)
+            {
+                Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"CurrentTheme", L"System");
+            }
         }
     }
     else
     {
         SettingsSystemTheme->IsChecked = true;
-        m_currentTheme = "System";
+        if (currentTheme == nullptr)
+        {
+            Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"CurrentTheme", L"System");
+        }
     }
 
     if (restartValue != nullptr)
@@ -98,7 +112,7 @@ void SettingsPage::SetDefaultFocus()
 void SettingsPage::InitializeContributeTextBlock()
 {
     auto resourceLoader = AppResourceProvider::GetInstance();
-    std::wstring contributeHyperlinkText = resourceLoader->GetResourceString(L"SettingsContribute")->Data();
+    std::wstring contributeHyperlinkText = resourceLoader->GetResourceString("SettingsContribute")->Data();
 
     // The resource string has '%HL%' wrapped around 'GitHub'
     // Break the string and assign pieces appropriately.
@@ -139,7 +153,7 @@ void SettingsPage::BackButtonClick(Platform::Object ^ sender, Windows::UI::Xaml:
 void SettingsPage::SetVersionString()
 {
     PackageVersion version = Package::Current->Id->Version;
-    String ^ appName = AppResourceProvider::GetInstance()->GetResourceString(L"AppName");
+    String ^ appName = AppResourceProvider::GetInstance()->GetResourceString("AppName");
 
     SettingsVersion->Text = appName + L" " + version.Major + L"." + version.Minor + L"." + version.Build + L"." + version.Revision;
 }
@@ -170,10 +184,13 @@ void SettingsPage::SettingsFeedbackButtonClick(_In_ Object ^ sender, _In_ Routed
 void SettingsPage::ThemeChecked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     auto resourceLoader = AppResourceProvider::GetInstance();
+    auto currentThemeValue = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"CurrentTheme");
     RadioButton ^ radioButton = safe_cast<RadioButton ^>(sender);
     String ^ tag = radioButton->Tag->ToString();
+    String ^ currentTheme = safe_cast<String ^>(currentThemeValue);
 
-    if (m_currentTheme == tag)
+    // Only display the restart app notice if the theme selected is not the current theme.
+    if (currentTheme == tag)
     {
         SettingsRestartApp->Visibility = ::Visibility::Collapsed;
     }
