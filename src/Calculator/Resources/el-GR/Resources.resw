@@ -3348,7 +3348,7 @@
     <comment>Label for the Line Style section of the style picker</comment>
   </data>
   <data name="KeyGraphFeaturesLabel.Text" xml:space="preserve">
-    <value>Ανάλυση λειτουργίας</value>
+    <value>Ανάλυση συνάρτησης</value>
     <comment>Title for KeyGraphFeatures Control</comment>
   </data>
   <data name="KGFHorizontalAsymptotesNone" xml:space="preserve">
@@ -4047,7 +4047,7 @@
     <comment>Announcement used in Graphing Calculator when a function is removed from the function list</comment>
   </data>
   <data name="KGFEquationTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Πλαίσιο εξισώσεων ανάλυσης συναρτήσεων</value>
+    <value>Πλαίσιο εξισώσεων Ανάλυση συνάρτησης</value>
     <comment>This is the automation name text for the equation box in the function analysis panel</comment>
   </data>
   <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">

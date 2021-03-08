@@ -2992,11 +2992,11 @@
     <comment>Name for the absolute value function. Used by screen readers.</comment>
   </data>
   <data name="LeftShift" xml:space="preserve">
-    <value>ឃី shift ខាងឆ្វេង</value>
+    <value>ប្តូរទៅខាងឆ្វេង</value>
     <comment>Name for the programmer function that shifts bits to the left. Used by screen readers.</comment>
   </data>
   <data name="RightShift" xml:space="preserve">
-    <value>ឃី shift ខាងស្តាំ</value>
+    <value>ប្តូរទៅខាងស្តាំ</value>
     <comment>Name for the programmer function that shifts bits to the right. Used by screen readers.</comment>
   </data>
   <data name="Factorial" xml:space="preserve">

@@ -1106,7 +1106,7 @@
     <comment>Screen reader prompt for the Unit Converter Units2 i.e. bottom units field.</comment>
   </data>
   <data name="CategoryName_AreaText" xml:space="preserve">
-    <value>Zone</value>
+    <value>Aire</value>
     <comment>Unit conversion category name called Area (eg. area of a sports field in square meters)</comment>
   </data>
   <data name="CategoryName_DataText" xml:space="preserve">
