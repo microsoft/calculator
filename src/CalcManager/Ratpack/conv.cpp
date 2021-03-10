@@ -358,10 +358,9 @@ PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
 {
     PNUMBER pnumret = i32tonum(0, BASEX); // pnumret is the number in internal form.
     PNUMBER num_radix = i32tonum(radix, BASEX);
-    MANTTYPE* ptrdigit = a->mant; // pointer to digit being worked on.
 
     // Digits are in reverse order, back over them LSD first.
-    ptrdigit += a->cdigit - 1;
+    MANTTYPE* ptrdigit = a->mant + a->cdigit - 1; // pointer to digit being worked on. 
 
     PNUMBER thisdigit = nullptr; // thisdigit holds the current digit of a
     for (int32_t idigit = 0; idigit < a->cdigit; idigit++)
@@ -992,8 +991,7 @@ int32_t numtoi32(_In_ PNUMBER pnum, uint32_t radix)
 {
     int32_t lret = 0;
 
-    MANTTYPE* pmant = pnum->mant;
-    pmant += pnum->cdigit - 1;
+    MANTTYPE* pmant = pnum->mant + pnum->cdigit - 1;
 
     int32_t expt = pnum->exp;
     for (int32_t length = pnum->cdigit; length > 0 && length + expt > 0; length--)
@@ -1002,9 +1000,10 @@ int32_t numtoi32(_In_ PNUMBER pnum, uint32_t radix)
         lret += *(pmant--);
     }
 
-    while (expt-- > 0)
+    while (expt > 0)
     {
         lret *= radix;
+        expt--;
     }
     lret *= pnum->sign;
 
@@ -1050,7 +1049,7 @@ bool stripzeroesnum(_Inout_ PNUMBER pnum, int32_t starting)
     if (fstrip)
     {
         // Remove them.
-        memmove(pnum->mant, pmant, (int)(cdigits * sizeof(MANTTYPE)));
+        memmove(pnum->mant, pmant, static_cast<int>(cdigits * sizeof(MANTTYPE)));
         // And adjust exponent and digit count accordingly.
         pnum->exp += (pnum->cdigit - cdigits);
         pnum->cdigit = cdigits;
@@ -1404,10 +1403,8 @@ PNUMBER gcd(_In_ PNUMBER a, _In_ PNUMBER b)
 PNUMBER i32factnum(int32_t ini32, uint32_t radix)
 
 {
-    PNUMBER lret = nullptr;
+    PNUMBER lret = i32tonum(1, radix);
     PNUMBER tmp = nullptr;
-
-    lret = i32tonum(1, radix);
 
     while (ini32 > 0)
     {
@@ -1434,10 +1431,8 @@ PNUMBER i32factnum(int32_t ini32, uint32_t radix)
 PNUMBER i32prodnum(int32_t start, int32_t stop, uint32_t radix)
 
 {
-    PNUMBER lret = nullptr;
+    PNUMBER lret = i32tonum(1, radix);
     PNUMBER tmp = nullptr;
-
-    lret = i32tonum(1, radix);
 
     while (start <= stop)
     {

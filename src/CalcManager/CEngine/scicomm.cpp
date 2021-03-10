@@ -610,7 +610,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         }
 
         // Set the "(=xx" indicator.
-        if (nullptr != m_pCalcDisplay)
+        if (m_pCalcDisplay != nullptr)
         {
             m_pCalcDisplay->SetParenthesisNumber(m_openParenCount >= 0 ? static_cast<unsigned int>(m_openParenCount) : 0);
         }

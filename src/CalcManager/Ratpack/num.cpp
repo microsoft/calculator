@@ -408,7 +408,7 @@ void _divnum(PNUMBER* pa, PNUMBER b, uint32_t radix, int32_t precision)
     // Build a table of multiplications of the divisor, this is quicker for
     // more than radix 'digits'
     list<PNUMBER> numberList{ i32tonum(0L, radix) };
-    for (uint32_t i = 1; i < radix; i++)
+    for (uint32_t i = radix; i > 1; i--)
     {
         PNUMBER newValue = nullptr;
         DUPNUM(newValue, numberList.front());
@@ -418,12 +418,11 @@ void _divnum(PNUMBER* pa, PNUMBER b, uint32_t radix, int32_t precision)
     }
     destroynum(tmp);
 
-    int32_t digit;
     int32_t cdigits = 0;
     while (cdigits++ < thismax && !zernum(rem))
     {
-        digit = radix - 1;
-        PNUMBER multiple = nullptr;
+        uint32_t digit = radix - 1;
+        PNUMBER multiple = rem;
         for (const auto& num : numberList)
         {
             if (!lessnum(rem, num) || !--digit)
@@ -446,7 +445,7 @@ void _divnum(PNUMBER* pa, PNUMBER b, uint32_t radix, int32_t precision)
 
     if (c->mant != ++ptrc)
     {
-        memmove(c->mant, ptrc, (int)(cdigits * sizeof(MANTTYPE)));
+        memmove(c->mant, ptrc, static_cast<int>(cdigits * sizeof(MANTTYPE)));
     }
 
     // Cleanup table structure
@@ -515,12 +514,9 @@ bool equnum(_In_ PNUMBER a, _In_ PNUMBER b)
         else
         {
             // OK the exponents match.
-            pa = a->mant;
-            pb = b->mant;
-            pa += a->cdigit - 1;
-            pb += b->cdigit - 1;
-            cdigits = max(a->cdigit, b->cdigit);
-            ccdigits = cdigits;
+            pa = a->mant + a->cdigit - 1;
+            pb = b->mant + b->cdigit - 1;
+            ccdigits = cdigits = max(a->cdigit, b->cdigit);
 
             // Loop over all digits until we run out of digits or there is a
             // difference in the digits.
@@ -602,14 +598,11 @@ bool lessnum(_In_ PNUMBER a, _In_ PNUMBER b)
 bool zernum(_In_ PNUMBER a)
 
 {
-    int32_t length;
-    MANTTYPE* pcha;
-    length = a->cdigit;
-    pcha = a->mant;
+    MANTTYPE* pcha = a->mant;
 
     // loop over all the digits until you find a nonzero or until you run
     // out of digits
-    while (length-- > 0)
+    for (auto length = a->cdigit; length > 0; length--)
     {
         if (*pcha++)
         {

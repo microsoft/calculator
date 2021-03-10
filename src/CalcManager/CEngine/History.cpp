@@ -194,7 +194,7 @@ void CHistoryCollector::AddCloseBraceToHistory()
 
 void CHistoryCollector::EnclosePrecInversionBrackets()
 {
-    // Top of the Opnd starts index or 0 is nothing is in top
+    // Top of the Opnd starts index or 0 if nothing is in top
     int ichStart = (m_curOperandIndex > 0) ? m_operandIndices[m_curOperandIndex - 1] : 0;
 
     InsertSzInEquationSz(CCalcEngine::OpCodeToString(IDC_OPENP), -1, ichStart);
@@ -203,7 +203,7 @@ void CHistoryCollector::EnclosePrecInversionBrackets()
 
 bool CHistoryCollector::FOpndAddedToHistory()
 {
-    return (-1 != m_lastOpStartIndex);
+    return (m_lastOpStartIndex != -1);
 }
 
 // AddUnaryOpToHistory
