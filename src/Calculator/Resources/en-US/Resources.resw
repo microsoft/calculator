@@ -4668,7 +4668,7 @@
     <comment>The text that shows in the dropdown navigation control to open the Settings page.</comment>
   </data>
   <data name="SettingsButton.AccessKey" xml:space="preserve">
-    <value>AB</value>
+    <value>SE</value>
     <comment>AccessKey for the Settings button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_SettingsText" xml:space="preserve">
