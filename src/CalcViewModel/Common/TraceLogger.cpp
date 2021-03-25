@@ -147,11 +147,11 @@ namespace CalculatorApp
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_EXCEPTION), fields);
     }
 
-    void TraceLogger::LogPlatformException(ViewMode mode, wstring_view functionName, Platform::Exception ^ e)
+    void TraceLogger::LogPlatformException(ViewMode mode, Platform::String ^ functionName, Platform::Exception ^ e)
     {
         auto fields = ref new LoggingFields();
         fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(mode));
-        fields->AddString(StringReference(L"FunctionName"), StringReference(functionName.data()));
+        fields->AddString(StringReference(L"FunctionName"), functionName);
         fields->AddString(StringReference(L"Message"), e->Message);
         fields->AddInt32(StringReference(L"HRESULT"), e->HResult);
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_EXCEPTION), fields);

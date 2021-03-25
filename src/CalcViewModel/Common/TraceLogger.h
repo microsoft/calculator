@@ -83,9 +83,11 @@ namespace CalculatorApp
         void LogVariableSettingsChanged(Platform::String ^ setting);
         void LogGraphSettingsChanged(GraphSettingsType settingsType, Platform::String ^ settingValue);
         void LogGraphTheme(Platform::String ^ graphTheme);
+        // CSHARP_MIGRATION: TODO:
+        void LogPlatformException(CalculatorApp::Common::ViewMode mode, Platform::String ^ functionName, Platform::Exception ^ e);
+
         internal:
         void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
-        void LogPlatformException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ Platform::Exception ^ e);
         void LogInputPasted(CalculatorApp::Common::ViewMode mode);
 
     private:

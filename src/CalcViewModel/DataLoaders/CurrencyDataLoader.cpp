@@ -300,7 +300,7 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const U
                 double ratio = (iter2->second).ratio;
                 double rounded = RoundCurrencyRatio(ratio);
 
-                auto digit = LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'1');
+                auto digit = LocalizationSettings::GetInstance()->GetDigitSymbolFromEnUsDigit(L'1');
                 auto digitSymbol = ref new String(&digit, 1);
                 auto roundedFormat = m_ratioFormatter->Format(rounded);
 

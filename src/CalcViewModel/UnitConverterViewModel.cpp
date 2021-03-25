@@ -128,7 +128,7 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
     m_decimalFormatter = localizationService->GetRegionalSettingsAwareDecimalFormatter();
     m_decimalFormatter->FractionDigits = 0;
     m_decimalFormatter->IsGrouped = true;
-    m_decimalSeparator = LocalizationSettings::GetInstance().GetDecimalSeparator();
+    m_decimalSeparator = LocalizationSettings::GetInstance()->GetDecimalSeparator();
 
     m_currencyFormatter = localizationService->GetRegionalSettingsAwareCurrencyFormatter();
     m_currencyFormatter->IsGrouped = true;
@@ -922,10 +922,10 @@ NumbersAndOperatorsEnum UnitConverterViewModel::MapCharacterToButtonId(const wch
 
     if (mappedValue == NumbersAndOperatorsEnum::None)
     {
-        if (LocalizationSettings::GetInstance().IsLocalizedDigit(ch))
+        if (LocalizationSettings::GetInstance()->IsLocalizedDigit(ch))
         {
             mappedValue = NumbersAndOperatorsEnum::Zero
-                          + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'0'));
+                          + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance()->GetDigitSymbolFromEnUsDigit(L'0'));
             canSendNegate = true;
         }
     }

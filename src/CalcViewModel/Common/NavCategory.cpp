@@ -73,10 +73,22 @@ bool IsGraphingModeEnabled()
     }
 
     User ^ firstUser;
-    create_task(User::FindAllAsync(UserType::LocalUser)).then([&firstUser](IVectorView<User ^> ^ users) {
-        firstUser = users->GetAt(0); }).wait();
-        auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
-        _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
+    std::atomic_flag finished = ATOMIC_FLAG_INIT;
+
+    finished.test_and_set(std::memory_order_acquire); // acquire
+
+    create_task(User::FindAllAsync(UserType::LocalUser)).then([&firstUser, &finished](IVectorView<User ^> ^ users) {
+        firstUser = users->GetAt(0);
+        finished.clear(std::memory_order_release);  // release
+    }, task_continuation_context::use_arbitrary());
+
+    while (finished.test_and_set(std::memory_order_acquire)) // aquire
+        ; // spin
+
+    finished.clear(std::memory_order_release); // release
+
+    auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
+    _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
 
     return _isGraphingModeEnabledCached->Value;
 }
@@ -528,3 +540,4 @@ NavCategoryGroup ^ NavCategoryGroup::CreateConverterCategory()
     return ref new NavCategoryGroup(
         NavCategoryGroupInitializer{ CategoryGroupType::Converter, L"ConverterModeTextCaps", L"ConverterModeText", L"ConverterModePluralText" });
 }
+

@@ -45,13 +45,13 @@ DateCalculatorViewModel::DateCalculatorViewModel()
     , m_StrDateResult(L"")
     , m_StrDateResultAutomationName(L"")
 {
-    const auto & localizationSettings = LocalizationSettings::GetInstance();
+    LocalizationSettings^ localizationSettings = LocalizationSettings::GetInstance();
 
     // Initialize Date Output format instances
-    InitializeDateOutputFormats(localizationSettings.GetCalendarIdentifier());
+    InitializeDateOutputFormats(localizationSettings->GetCalendarIdentifier());
 
     // Initialize Date Calc engine
-    m_dateCalcEngine = ref new DateCalculationEngine(localizationSettings.GetCalendarIdentifier());
+    m_dateCalcEngine = ref new DateCalculationEngine(localizationSettings->GetCalendarIdentifier());
     // Initialize dates of DatePicker controls to today's date
     auto calendar = ref new Calendar();
     // We force the timezone to UTC, in order to avoid being affected by Daylight Saving Time
@@ -68,7 +68,7 @@ DateCalculatorViewModel::DateCalculatorViewModel()
 
     // Initialize the list separator delimiter appended with a space at the end, e.g. ", "
     // This will be used for date difference formatting: Y years, M months, W weeks, D days
-    m_listSeparator = localizationSettings.GetListSeparator() + L" ";
+    m_listSeparator = localizationSettings->GetListSeparator() + L" ";
 
     // Initialize the output results
     UpdateDisplayResult();
@@ -77,7 +77,7 @@ DateCalculatorViewModel::DateCalculatorViewModel()
     for (int i = 0; i <= c_maxOffsetValue; i++)
     {
         wstring numberStr(to_wstring(i));
-        localizationSettings.LocalizeDisplayValue(&numberStr);
+        localizationSettings->LocalizeDisplayValue(&numberStr);
         m_offsetValues->Append(ref new String(numberStr.c_str()));
     }
 
@@ -378,7 +378,7 @@ void DateCalculatorViewModel::OnCopyCommand(Platform::Object ^ parameter)
 String ^ DateCalculatorViewModel::GetLocalizedNumberString(int value) const
 {
     wstring numberStr(to_wstring(value));
-    LocalizationSettings::GetInstance().LocalizeDisplayValue(&numberStr);
+    LocalizationSettings::GetInstance()->LocalizeDisplayValue(&numberStr);
     return ref new String(numberStr.c_str());
 }
 

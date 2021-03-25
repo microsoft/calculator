@@ -50,7 +50,10 @@ public
                 m_InEditMode = val;
             }
         }
-        internal : OBSERVABLE_PROPERTY_RW(TokenType, Type);
+
+        // CSHARP_MIGRATION: TODO: this property has been changed from Internal to Public
+        // double check if this change is reasonable
+        OBSERVABLE_PROPERTY_RW(TokenType, Type);
 
     private:
         bool m_InEditMode;

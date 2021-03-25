@@ -48,13 +48,13 @@ namespace CalculatorApp
             event HideHistoryClickedHandler ^ HideHistoryClicked;
             event HistoryItemClickedHandler ^ HistoryItemClicked;
             void ShowItem(_In_ CalculatorApp::ViewModel::HistoryItemViewModel ^ e);
+            void DeleteItem(_In_ CalculatorApp::ViewModel::HistoryItemViewModel ^ e);
 
             internal : HistoryViewModel(_In_ CalculationManager::CalculatorManager* calculatorManager);
             void SetCalculatorDisplay(CalculatorDisplay& calculatorDisplay);
             void ReloadHistory(_In_ CalculatorApp::Common::ViewMode currentMode);
             unsigned long long GetMaxItemSize();
 
-            void DeleteItem(_In_ CalculatorApp::ViewModel::HistoryItemViewModel ^ e);
 
         private:
             CalculationManager::CalculatorManager* const m_calculatorManager;

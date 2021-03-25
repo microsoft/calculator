@@ -245,7 +245,7 @@ namespace CalculatorApp::ViewModel
             return;
         }
 
-        Platform::String ^ separator = ref new String(LocalizationSettings::GetInstance().GetListSeparator().c_str());
+        Platform::String ^ separator = ref new String(LocalizationSettings::GetInstance()->GetListSeparator().c_str());
 
         wstring error;
         if ((graphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::Domain) == KeyGraphFeaturesFlag::Domain)

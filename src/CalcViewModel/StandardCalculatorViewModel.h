@@ -244,6 +244,21 @@ namespace CalculatorApp
             void ResetCalcManager(bool clearMemory);
             void SendCommandToCalcManager(int command);
 
+        public:
+            // CSHARP_MIGRATION: TODO: check if these still need to be internal
+            // Memory feature related methods. They are internal because they need to called from the MainPage code-behind
+            void OnMemoryButtonPressed();
+            void OnMemoryItemPressed(Platform::Object ^ memoryItemPosition);
+            void OnMemoryAdd(Platform::Object ^ memoryItemPosition);
+            void OnMemorySubtract(Platform::Object ^ memoryItemPosition);
+            void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
+            void SelectHistoryItem(HistoryItemViewModel ^ item);
+            void SwitchProgrammerModeBase(CalculatorApp::Common::NumberBase calculatorBase);
+            void SetBitshiftRadioButtonCheckedAnnouncement(Platform::String ^ announcement);
+            void SetOpenParenthesisCountNarratorAnnouncement();
+            void SwitchAngleType(NumbersAndOperatorsEnum num);
+            void FtoEButtonToggled();
+
         internal:
             void OnPaste(Platform::String ^ pastedString);
             void OnCopyCommand(Platform::Object ^ parameter);
@@ -251,23 +266,14 @@ namespace CalculatorApp
 
             ButtonInfo MapCharacterToButtonId(char16 ch);
 
-            // Memory feature related methods. They are internal because they need to called from the MainPage code-behind
-            void OnMemoryButtonPressed();
-            void OnMemoryItemPressed(Platform::Object ^ memoryItemPosition);
-            void OnMemoryAdd(Platform::Object ^ memoryItemPosition);
-            void OnMemorySubtract(Platform::Object ^ memoryItemPosition);
-            void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
-
             void OnInputChanged();
             void DisplayPasteError();
             void SetParenthesisCount(_In_ unsigned int parenthesisCount);
-            void SetOpenParenthesisCountNarratorAnnouncement();
             void OnNoRightParenAdded();
             void SetNoParenAddedNarratorAnnouncement();
             void OnMaxDigitsReached();
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
-            void SetBitshiftRadioButtonCheckedAnnouncement(Platform::String ^ announcement);
 
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);
@@ -276,10 +282,7 @@ namespace CalculatorApp
             Platform::String ^ GetRawDisplayValue();
             void Recalculate(bool fromHistory = false);
             bool IsOperator(CalculationManager::Command cmdenum);
-            void FtoEButtonToggled();
-            void SwitchProgrammerModeBase(CalculatorApp::Common::NumberBase calculatorBase);
-            void SetMemorizedNumbersString();
-            void SwitchAngleType(NumbersAndOperatorsEnum num);
+            void SetMemorizedNumbersString();   
             void ResetDisplay();
           
             void SetPrecision(int32_t precision);
@@ -291,7 +294,7 @@ namespace CalculatorApp
             {
                 return m_CurrentAngleType;
             }
-            void SelectHistoryItem(HistoryItemViewModel ^ item);
+            
         private:
             void SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers);
             void UpdateProgrammerPanelDisplay();

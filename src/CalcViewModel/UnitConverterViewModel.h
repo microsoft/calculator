@@ -70,6 +70,18 @@ namespace CalculatorApp
                 return AccessibleName;
             }
 
+            // CSHARP_MIGRATION: TODO:
+        public:
+            bool IsModelUnitWhimsical()
+            {
+                return m_original.isWhimsical;
+            }
+
+            int ModelUnitID()
+            {
+                return m_original.id;
+            }
+
             internal : const UnitConversionManager::Unit& GetModelUnit() const
             {
                 return m_original;
@@ -87,11 +99,14 @@ namespace CalculatorApp
             {
             }
 
-            bool IsWhimsical() const
+        // CSHARP_MIGRATION: TODO: double check below method's accessor
+        public:
+            bool IsWhimsical()
             {
                 return m_Unit->GetModelUnit().isWhimsical;
             }
 
+        public:
             Platform::String ^ GetLocalizedAutomationName();
 
         public:
