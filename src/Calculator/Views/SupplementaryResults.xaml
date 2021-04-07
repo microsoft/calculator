@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="CalculatorApp.SupplementaryResults"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:common="using:CalculatorApp.Common"
+             xmlns:controls="using:CalculatorApp.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:designdata="using:CalculatorApp.DesignData"
+             xmlns:local="using:CalculatorApp"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:CalculatorApp.ViewModel"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <DataTemplate x:Name="SupplementaryValueTemplate" x:DataType="vm:SupplementaryResult">
+            <StackPanel Margin="0" Orientation="Horizontal">
+                <TextBlock Margin="0,0,4,0"
+                           Padding="0"
+                           VerticalAlignment="Bottom"
+                           Style="{ThemeResource BaseTextBlockStyle}"
+                           Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                           AutomationProperties.AutomationId="SupplementaryResultValue"
+                           IsTextScaleFactorEnabled="False"
+                           Text="{x:Bind Value}"/>
+                <TextBlock Margin="0,0,16,0"
+                           Padding="0"
+                           VerticalAlignment="Bottom"
+                           Style="{ThemeResource BodyTextBlockStyle}"
+                           Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
+                           AutomationProperties.AutomationId="SupplementaryResultUnit"
+                           IsTextScaleFactorEnabled="False"
+                           Text="{x:Bind Unit.Abbreviation}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <local:DelighterUnitToStyleConverter x:Key="DelighterUnitStyleConverter"/>
+        <DataTemplate x:Name="DelighterValueTemplate" x:DataType="vm:SupplementaryResult">
+            <StackPanel Margin="0" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Bottom"
+                           Style="{Binding Unit, Converter={StaticResource DelighterUnitStyleConverter}, Mode=OneTime}"
+                           AutomationProperties.AutomationId="DelighterResultGlyph"/>
+                <TextBlock Margin="-2,0,4,0"
+                           Padding="0"
+                           VerticalAlignment="Bottom"
+                           Style="{ThemeResource BaseTextBlockStyle}"
+                           Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                           AutomationProperties.AutomationId="DelighterResultValue"
+                           IsTextScaleFactorEnabled="False"
+                           Text="{x:Bind Value}"/>
+                <TextBlock Margin="0"
+                           Padding="0"
+                           VerticalAlignment="Bottom"
+                           Style="{ThemeResource BodyTextBlockStyle}"
+                           Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
+                           AutomationProperties.AutomationId="DelighterResultUnit"
+                           IsTextScaleFactorEnabled="False"
+                           Text="{x:Bind Unit.Abbreviation}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <local:SupplementaryResultDataTemplateSelector x:Key="ResultTemplateSelector"
+                                                       DelighterTemplate="{StaticResource DelighterValueTemplate}"
+                                                       RegularTemplate="{StaticResource SupplementaryValueTemplate}"/>
+
+        <Style x:Key="SupplementaryValuesStyle" TargetType="controls:SupplementaryItemsControl">
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="controls:SupplementaryItemsControl">
+                        <ItemsPresenter/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemContainerTransitions">
+                <Setter.Value>
+                    <TransitionCollection/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <local:SupplementaryResultNoOverflowStackPanel/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+
+    <StackPanel>
+        <TextBlock x:Uid="SupplementaryResultsHeader"
+                   Margin="0,0,0,-6"
+                   HorizontalAlignment="Left"
+                   Style="{ThemeResource CaptionTextBlockStyle}"
+                   Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
+                   IsTextScaleFactorEnabled="False"
+                   Text="Also equal to"/>
+        <controls:SupplementaryItemsControl x:Name="SupplementaryValues"
+                                            MinHeight="27"
+                                            HorizontalAlignment="Left"
+                                            Style="{ThemeResource SupplementaryValuesStyle}"
+                                            IsTextScaleFactorEnabled="False"
+                                            ItemTemplateSelector="{StaticResource ResultTemplateSelector}"
+                                            ItemsSource="{x:Bind Results, Mode=OneWay}"/>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="CalculatorApp.NumberPad"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:common="using:CalculatorApp.Common"
+             xmlns:controls="using:CalculatorApp.Controls"
+             xmlns:converters="using:CalculatorApp.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:CalculatorApp"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Name="ControlRoot"
+             d:DesignHeight="315"
+             d:DesignWidth="235"
+             mc:Ignorable="d">
+
+    <Grid x:Name="Root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="ErrorVisualStates">
+                <VisualState x:Name="NoErrorLayout"/>
+                <VisualState x:Name="ErrorLayout">
+                    <VisualState.Setters>
+                        <Setter Target="DecimalSeparatorButton.IsEnabled" Value="false"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <controls:CalculatorButton x:Name="Num0Button"
+                                   x:Uid="num0Button"
+                                   Grid.Row="3"
+                                   Grid.Column="1"
+                                   Style="{x:Bind Path=ButtonStyle, Mode=OneWay}"
+                                   AutomationProperties.AutomationId="num0Button"
+                                   ButtonId="Zero"/>
+        <controls:CalculatorButton x:Name="Num1Button"
+                                   x:Uid="num1Button"
+                                   Grid.Row="2"
+                                   Style="{x:Bind Path=ButtonStyle, Mode=OneWay}"
+                                   AutomationProperties.AutomationId="num1Button"
+                                   ButtonId="One"/>
+        <controls:CalculatorButton x:Name="Num2Button"
+                                   x:Uid="num2Button"
+                                   Grid.Row="2"
+                                   Grid.Column="1"
+                                   Style="{x:Bind Path=ButtonStyle, Mode=OneWay}"
+                                   AutomationProperties.AutomationId="num2Button"
+                                   ButtonId="Two"/>
+        <controls:CalculatorButton x:Name="Num3Button"
+                                   x:Uid="num3Button"
+                                   Grid.Row="2"
+                                   Grid.Column="2"
+                                   Style="{x:Bind Path=ButtonStyle, Mode=OneWay}"
+                                   AutomationProperties.AutomationId="num3Button"
+                                   ButtonId="Three"/>
+        <controls:CalculatorButton x:Name="Num4Button"
+                                   x:Uid="num4Button"
+                                   Grid.Row="1"
+                                   Style="{x:Bind Path=ButtonStyle, Mode=OneWay}"
+                                   AutomationProperties.AutomationId="num4Button"
+                                   ButtonId="Four"/>
+        <controls:CalculatorButton x:Name="Num5Button"
+                                   x:Uid="num5Button"
+                                   Grid.Row="1"
+                                   Grid.Column="1"
+                                   Style="{x:Bind Path=ButtonStyle, Mode=OneWay}"
+                                   AutomationProperties.AutomationId="num5Button"
+                                   ButtonId="Five"/>
+        <controls:CalculatorButton x:Name="Num6Button"
+                                   x:Uid="num6Button"
+                                   Grid.Row="1"
+                                   Grid.Column="2"
+                                   Style="{x:Bind Path=ButtonStyle, Mode=OneWay}"
+                                   AutomationProperties.AutomationId="num6Button"
+                                   ButtonId="Six"/>
+        <controls:CalculatorButton x:Name="Num7Button"
+                                   x:Uid="num7Button"
+                                   Style="{x:Bind Path=ButtonStyle, Mode=OneWay}"
+                                   AutomationProperties.AutomationId="num7Button"
+                                   ButtonId="Seven"/>
+        <controls:CalculatorButton x:Name="Num8Button"
+                                   x:Uid="num8Button"
+                                   Grid.Column="1"
+                                   Style="{x:Bind Path=ButtonStyle, Mode=OneWay}"
+                                   AutomationProperties.AutomationId="num8Button"
+                                   ButtonId="Eight"/>
+        <controls:CalculatorButton x:Name="Num9Button"
+                                   x:Uid="num9Button"
+                                   Grid.Column="2"
+                                   Style="{x:Bind Path=ButtonStyle, Mode=OneWay}"
+                                   AutomationProperties.AutomationId="num9Button"
+                                   ButtonId="Nine"/>
+
+        <!--
+            This is the only button in all of the app that should ever have a explicit reference to KeyboardShortcutManager in Xaml
+            this is needed because we need to have at least 1 reference from Xaml so the right metadata is generated for the
+            KeyboardShortcutManager class, otherwise the Xaml will stop parsing and the app won't boot therefore:
+            DO NOT REMOVE the common:KeyboardShortcutManager.Character from this element, it's value will be overwritten by the
+            string coming from the RESW file
+        -->
+        <controls:CalculatorButton x:Name="DecimalSeparatorButton"
+                                   x:Uid="decimalSeparatorButton"
+                                   Grid.Row="3"
+                                   Grid.Column="2"
+                                   Style="{Binding ElementName=ControlRoot, Path=ButtonStyle}"
+                                   common:KeyboardShortcutManager.Character="."
+                                   AutomationProperties.AutomationId="decimalSeparatorButton"
+                                   ButtonId="Decimal"
+                                   IsEnabled="{Binding IsDecimalEnabled}"/>
+    </Grid>
+</UserControl>

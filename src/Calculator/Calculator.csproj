@@ -1,0 +1,728 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{3B773403-B0D6-4F9A-948E-512A7A5FB315}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CalculatorApp</RootNamespace>
+    <AssemblyName>CalculatorApp</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <PackageCertificateThumbprint>B06D4942DD6AAC6D5659E3AF866A11D0081C12C1</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>WindowsDev_TemporaryKey.pfx</PackageCertificateKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <OutputPath>bin\ARM64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AppVersion Condition="'$(AppVersion)' == ''">0.0.0.0</AppVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Calculator.rc" PreprocessorDefinitions="%(PreprocessorDefinitions);APP_VERSION_MAJOR=$(AppVersion.Split(`.`)[0]);APP_VERSION_MINOR=$(AppVersion.Split(`.`)[1]);APP_VERSION_BUILD=$(AppVersion.Split(`.`)[2]);APP_VERSION_REVISION=$(AppVersion.Split(`.`)[3])" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutFlyout.xaml.cs">
+      <DependentUpon>AboutFlyout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\AlwaysSelectedCollectionView.cs" />
+    <Compile Include="Common\AppLifecycleLogger.cs" />
+    <Compile Include="Common\KeyboardShortcuManager.cs" />
+    <Compile Include="Common\ValidatingConverters.cs" />
+    <Compile Include="Common\ViewState.cs" />
+    <Compile Include="Controls\CalculationResult.cs" />
+    <Compile Include="Controls\CalculationResultAutomationPeer.cs" />
+    <Compile Include="Controls\CalculatorButton.cs" />
+    <Compile Include="Controls\OperatorPanelButton.cs" />
+    <Compile Include="Controls\OperatorPanelListView.cs" />
+    <Compile Include="Controls\OverflowTextBlock.cs" />
+    <Compile Include="Controls\OverflowTextBlockAutomationPeer.cs" />
+    <Compile Include="Controls\EquationTextBox.cs" />
+    <Compile Include="Controls\FlipButtons.cs" />
+    <Compile Include="Controls\HorizontalNoOverflowStackPanel.cs" />
+    <Compile Include="Controls\MathRichEditBox.cs" />
+    <Compile Include="Controls\RadixButton.cs" />
+    <Compile Include="Controls\SupplementaryItemsControl.cs" />
+    <Compile Include="Converters\BooleanNegationConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\ExpressionItemTemplateSelector.cs" />
+    <Compile Include="Converters\ItemSizeToVisibilityConverter.cs" />
+    <Compile Include="Converters\RadixToStringConverter.cs" />
+    <Compile Include="Converters\VisibilityNegationConverter.cs" />
+    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="EquationStylePanelControl.xaml.cs">
+      <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="KeyGraphFeaturesTemplateSelector.cs" />
+    <Compile Include="Views\Calculator.xaml.cs">
+      <DependentUpon>Calculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorProgrammerBitFlipPanel.xaml.cs">
+      <DependentUpon>CalculatorProgrammerBitFlipPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorProgrammerOperators.xaml.cs">
+      <DependentUpon>CalculatorProgrammerOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorProgrammerRadixOperators.xaml.cs">
+      <DependentUpon>CalculatorProgrammerRadixOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorScientificAngleButtons.xaml.cs">
+      <DependentUpon>CalculatorScientificAngleButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorScientificOperators.xaml.cs">
+      <DependentUpon>CalculatorScientificOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorStandardOperators.xaml.cs">
+      <DependentUpon>CalculatorStandardOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DateCalculator.xaml.cs">
+      <DependentUpon>DateCalculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphingCalculator\EquationInputArea.xaml.cs">
+      <DependentUpon>EquationInputArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cs">
+      <DependentUpon>GraphingCalculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphingCalculator\GraphingNumPad.xaml.cs">
+      <DependentUpon>GraphingNumPad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphingCalculator\GraphingSettings.xaml.cs">
+      <DependentUpon>GraphingSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cs">
+      <DependentUpon>KeyGraphFeaturesPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HistoryList.xaml.cs">
+      <DependentUpon>HistoryList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\DispatcherTimerDelayer.cs" />
+    <Compile Include="Utils\VisualTree.cs" />
+    <Compile Include="Views\Memory.xaml.cs">
+      <DependentUpon>Memory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MemoryListItem.xaml.cs">
+      <DependentUpon>MemoryListItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NumberPad.xaml.cs">
+      <DependentUpon>NumberPad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OperatorsPanel.xaml.cs">
+      <DependentUpon>OperatorsPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StateTriggers\AspectRatioTrigger.cs" />
+    <Compile Include="Views\StateTriggers\CalculatorProgrammerDisplayPanel.xaml.cs">
+      <DependentUpon>CalculatorProgrammerDisplayPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StateTriggers\ControlSizeTrigger.cs" />
+    <Compile Include="Views\SupplementaryResults.xaml.cs">
+      <DependentUpon>SupplementaryResults.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TitleBar.xaml.cs">
+      <DependentUpon>TitleBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowFrameService.cs" />
+    <Compile Include="WinMeta.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\CalculatorAppList.scale-100_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.scale-100_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.scale-125_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.scale-125_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.scale-150_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.scale-150_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.scale-200_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.scale-200_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.scale-400_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.scale-400_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-16.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-16_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-16_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-16_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-16_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-16_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-16_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-20.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-20_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-20_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-20_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-20_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-20_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-20_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-24.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-24_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-24_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-24_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-24_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-24_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-256.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-256_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-256_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-256_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-256_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-30.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-30_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-30_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-30_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-30_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-30_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-30_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-32.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-32_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-32_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-32_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-32_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-32_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-32_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-36.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-36_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-36_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-36_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-36_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-36_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-36_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-40.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-40_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-40_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-40_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-40_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-40_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-40_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-48.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-48_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-48_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-48_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-48_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-48_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-60.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-60_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-60_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-60_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-60_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-60_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-60_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-64.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-64_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-64_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-64_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-64_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-64_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-64_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-72.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-72_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-72_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-72_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-72_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-72_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-72_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-80.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-80_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-80_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-80_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-80_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-80_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-80_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-96.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-96_altform-lightunplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-96_altform-unplated.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-96_altform-unplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-96_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-96_contrast-white.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-100_contrast-black.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-100_contrast-white.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-125_contrast-black.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-125_contrast-white.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-150_contrast-black.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-150_contrast-white.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-200_contrast-black.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-200_contrast-white.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-400_contrast-black.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-400_contrast-white.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-100_contrast-black.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-100_contrast-white.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-125_contrast-black.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-125_contrast-white.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-150_contrast-black.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-150_contrast-white.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-200_contrast-black.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-200_contrast-white.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-400_contrast-black.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-400_contrast-white.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-100_contrast-black.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-100_contrast-white.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-125_contrast-black.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-125_contrast-white.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-150_contrast-black.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-150_contrast-white.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-200_contrast-black.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-200_contrast-white.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-400_contrast-black.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-400_contrast-white.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-100_altform-colorful.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-100_contrast-black.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-100_contrast-white.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-125_altform-colorful.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-125_contrast-black.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-125_contrast-white.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-150_altform-colorful.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-150_contrast-black.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-150_contrast-white.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-200_altform-colorful.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-200_contrast-black.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-200_contrast-white.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-400.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-400_altform-colorful.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-400_contrast-black.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-400_contrast-white.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-100_contrast-black.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-100_contrast-white.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-200_contrast-black.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-200_contrast-white.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-100_contrast-black.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-100_contrast-white.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-125_contrast-black.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-125_contrast-white.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-150_contrast-black.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-150_contrast-white.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-200_contrast-black.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-200_contrast-white.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-400_contrast-black.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-400_contrast-white.png" />
+    <Content Include="Assets\Date.targetsize-16_contrast-black.png" />
+    <Content Include="Assets\Date.targetsize-16_contrast-white.png" />
+    <Content Include="Assets\Date.targetsize-20_contrast-black.png" />
+    <Content Include="Assets\Date.targetsize-20_contrast-white.png" />
+    <Content Include="Assets\Date.targetsize-24_contrast-black.png" />
+    <Content Include="Assets\Date.targetsize-24_contrast-white.png" />
+    <Content Include="Assets\Date.targetsize-32_contrast-black.png" />
+    <Content Include="Assets\Date.targetsize-32_contrast-white.png" />
+    <Content Include="Assets\Date.targetsize-64_contrast-black.png" />
+    <Content Include="Assets\Date.targetsize-64_contrast-white.png" />
+    <Content Include="Assets\Graphing.targetsize-16.png" />
+    <Content Include="Assets\Graphing.targetsize-16_contrast-black.png" />
+    <Content Include="Assets\Graphing.targetsize-16_contrast-white.png" />
+    <Content Include="Assets\Graphing.targetsize-20.png" />
+    <Content Include="Assets\Graphing.targetsize-20_contrast-black.png" />
+    <Content Include="Assets\Graphing.targetsize-20_contrast-white.png" />
+    <Content Include="Assets\Graphing.targetsize-24.png" />
+    <Content Include="Assets\Graphing.targetsize-24_contrast-black.png" />
+    <Content Include="Assets\Graphing.targetsize-24_contrast-white.png" />
+    <Content Include="Assets\Graphing.targetsize-32.png" />
+    <Content Include="Assets\Graphing.targetsize-32_contrast-black.png" />
+    <Content Include="Assets\Graphing.targetsize-32_contrast-white.png" />
+    <Content Include="Assets\Graphing.targetsize-64.png" />
+    <Content Include="Assets\Graphing.targetsize-64_contrast-black.png" />
+    <Content Include="Assets\Graphing.targetsize-64_contrast-white.png" />
+    <Content Include="Assets\Programmer.targetsize-16_contrast-black.png" />
+    <Content Include="Assets\Programmer.targetsize-16_contrast-white.png" />
+    <Content Include="Assets\Programmer.targetsize-20_contrast-black.png" />
+    <Content Include="Assets\Programmer.targetsize-20_contrast-white.png" />
+    <Content Include="Assets\Programmer.targetsize-24_contrast-black.png" />
+    <Content Include="Assets\Programmer.targetsize-24_contrast-white.png" />
+    <Content Include="Assets\Programmer.targetsize-32_contrast-black.png" />
+    <Content Include="Assets\Programmer.targetsize-32_contrast-white.png" />
+    <Content Include="Assets\Programmer.targetsize-64_contrast-black.png" />
+    <Content Include="Assets\Programmer.targetsize-64_contrast-white.png" />
+    <Content Include="Assets\Scientific.targetsize-16_contrast-black.png" />
+    <Content Include="Assets\Scientific.targetsize-16_contrast-white.png" />
+    <Content Include="Assets\Scientific.targetsize-20_contrast-black.png" />
+    <Content Include="Assets\Scientific.targetsize-20_contrast-white.png" />
+    <Content Include="Assets\Scientific.targetsize-24_contrast-black.png" />
+    <Content Include="Assets\Scientific.targetsize-24_contrast-white.png" />
+    <Content Include="Assets\Scientific.targetsize-32_contrast-black.png" />
+    <Content Include="Assets\Scientific.targetsize-32_contrast-white.png" />
+    <Content Include="Assets\Scientific.targetsize-64_contrast-black.png" />
+    <Content Include="Assets\Scientific.targetsize-64_contrast-white.png" />
+    <Content Include="Assets\Standard.targetsize-16_contrast-black.png" />
+    <Content Include="Assets\Standard.targetsize-16_contrast-white.png" />
+    <Content Include="Assets\Standard.targetsize-20_contrast-black.png" />
+    <Content Include="Assets\Standard.targetsize-20_contrast-white.png" />
+    <Content Include="Assets\Standard.targetsize-24_contrast-black.png" />
+    <Content Include="Assets\Standard.targetsize-24_contrast-white.png" />
+    <Content Include="Assets\Standard.targetsize-32_contrast-black.png" />
+    <Content Include="Assets\Standard.targetsize-32_contrast-white.png" />
+    <Content Include="Assets\Standard.targetsize-64_contrast-black.png" />
+    <Content Include="Assets\Standard.targetsize-64_contrast-white.png" />
+    <Content Include="Properties\Default.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resources\af-ZA\CEngineStrings.resw" />
+    <PRIResource Include="Resources\af-ZA\Resources.resw" />
+    <PRIResource Include="Resources\am-et\CEngineStrings.resw" />
+    <PRIResource Include="Resources\am-et\Resources.resw" />
+    <PRIResource Include="Resources\ar-sa\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ar-sa\Resources.resw" />
+    <PRIResource Include="Resources\az-Latn-AZ\CEngineStrings.resw" />
+    <PRIResource Include="Resources\az-Latn-AZ\Resources.resw" />
+    <PRIResource Include="Resources\bg-BG\CEngineStrings.resw" />
+    <PRIResource Include="Resources\bg-BG\Resources.resw" />
+    <PRIResource Include="Resources\ca-es\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ca-es\Resources.resw" />
+    <PRIResource Include="Resources\cs-cz\CEngineStrings.resw" />
+    <PRIResource Include="Resources\cs-cz\Resources.resw" />
+    <PRIResource Include="Resources\da-DK\CEngineStrings.resw" />
+    <PRIResource Include="Resources\da-DK\Resources.resw" />
+    <PRIResource Include="Resources\de-de\CEngineStrings.resw" />
+    <PRIResource Include="Resources\de-de\Resources.resw" />
+    <PRIResource Include="Resources\el-GR\CEngineStrings.resw" />
+    <PRIResource Include="Resources\el-GR\Resources.resw" />
+    <PRIResource Include="Resources\en-gb\CEngineStrings.resw" />
+    <PRIResource Include="Resources\en-gb\Resources.resw" />
+    <PRIResource Include="Resources\en-US\CEngineStrings.resw" />
+    <PRIResource Include="Resources\en-US\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="Resources\es-es\CEngineStrings.resw" />
+    <PRIResource Include="Resources\es-es\Resources.resw" />
+    <PRIResource Include="Resources\es-mx\CEngineStrings.resw" />
+    <PRIResource Include="Resources\es-mx\resources.resw" />
+    <PRIResource Include="Resources\et-EE\CEngineStrings.resw" />
+    <PRIResource Include="Resources\et-EE\Resources.resw" />
+    <PRIResource Include="Resources\eu-ES\CEngineStrings.resw" />
+    <PRIResource Include="Resources\eu-ES\Resources.resw" />
+    <PRIResource Include="Resources\fa-IR\CEngineStrings.resw" />
+    <PRIResource Include="Resources\fa-IR\Resources.resw" />
+    <PRIResource Include="Resources\fi-fi\CEngineStrings.resw" />
+    <PRIResource Include="Resources\fi-fi\Resources.resw" />
+    <PRIResource Include="Resources\fil-PH\CEngineStrings.resw" />
+    <PRIResource Include="Resources\fil-PH\Resources.resw" />
+    <PRIResource Include="Resources\fr-ca\CEngineStrings.resw" />
+    <PRIResource Include="Resources\fr-ca\resources.resw" />
+    <PRIResource Include="Resources\fr-fr\CEngineStrings.resw" />
+    <PRIResource Include="Resources\fr-fr\Resources.resw" />
+    <PRIResource Include="Resources\gl-ES\CEngineStrings.resw" />
+    <PRIResource Include="Resources\gl-ES\Resources.resw" />
+    <PRIResource Include="Resources\he-IL\CEngineStrings.resw" />
+    <PRIResource Include="Resources\he-IL\Resources.resw" />
+    <PRIResource Include="Resources\hi-in\CEngineStrings.resw" />
+    <PRIResource Include="Resources\hi-in\Resources.resw" />
+    <PRIResource Include="Resources\hr-HR\CEngineStrings.resw" />
+    <PRIResource Include="Resources\hr-HR\Resources.resw" />
+    <PRIResource Include="Resources\hu-HU\CEngineStrings.resw" />
+    <PRIResource Include="Resources\hu-HU\Resources.resw" />
+    <PRIResource Include="Resources\id-ID\CEngineStrings.resw" />
+    <PRIResource Include="Resources\id-ID\Resources.resw" />
+    <PRIResource Include="Resources\is-IS\CEngineStrings.resw" />
+    <PRIResource Include="Resources\is-IS\Resources.resw" />
+    <PRIResource Include="Resources\it-it\CEngineStrings.resw" />
+    <PRIResource Include="Resources\it-it\Resources.resw" />
+    <PRIResource Include="Resources\ja-jp\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ja-jp\Resources.resw" />
+    <PRIResource Include="Resources\kk-KZ\CEngineStrings.resw" />
+    <PRIResource Include="Resources\kk-KZ\Resources.resw" />
+    <PRIResource Include="Resources\km-KH\CEngineStrings.resw" />
+    <PRIResource Include="Resources\km-KH\Resources.resw" />
+    <PRIResource Include="Resources\kn-IN\CEngineStrings.resw" />
+    <PRIResource Include="Resources\kn-IN\Resources.resw" />
+    <PRIResource Include="Resources\ko-kr\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ko-kr\Resources.resw" />
+    <PRIResource Include="Resources\lo-LA\CEngineStrings.resw" />
+    <PRIResource Include="Resources\lo-LA\Resources.resw" />
+    <PRIResource Include="Resources\lt-LT\CEngineStrings.resw" />
+    <PRIResource Include="Resources\lt-LT\Resources.resw" />
+    <PRIResource Include="Resources\lv-LV\CEngineStrings.resw" />
+    <PRIResource Include="Resources\lv-LV\Resources.resw" />
+    <PRIResource Include="Resources\mk-MK\CEngineStrings.resw" />
+    <PRIResource Include="Resources\mk-MK\Resources.resw" />
+    <PRIResource Include="Resources\ml-IN\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ml-IN\Resources.resw" />
+    <PRIResource Include="Resources\ms-MY\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ms-MY\Resources.resw" />
+    <PRIResource Include="Resources\nb-NO\CEngineStrings.resw" />
+    <PRIResource Include="Resources\nb-NO\Resources.resw" />
+    <PRIResource Include="Resources\nl-nl\CEngineStrings.resw" />
+    <PRIResource Include="Resources\nl-nl\Resources.resw" />
+    <PRIResource Include="Resources\pl-pl\CEngineStrings.resw" />
+    <PRIResource Include="Resources\pl-pl\Resources.resw" />
+    <PRIResource Include="Resources\pt-br\CEngineStrings.resw" />
+    <PRIResource Include="Resources\pt-br\Resources.resw" />
+    <PRIResource Include="Resources\pt-PT\CEngineStrings.resw" />
+    <PRIResource Include="Resources\pt-PT\Resources.resw" />
+    <PRIResource Include="Resources\ro-RO\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ro-RO\Resources.resw" />
+    <PRIResource Include="Resources\ru-ru\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ru-ru\Resources.resw" />
+    <PRIResource Include="Resources\sk-SK\CEngineStrings.resw" />
+    <PRIResource Include="Resources\sk-SK\Resources.resw" />
+    <PRIResource Include="Resources\sl-SI\CEngineStrings.resw" />
+    <PRIResource Include="Resources\sl-SI\Resources.resw" />
+    <PRIResource Include="Resources\sq-AL\CEngineStrings.resw" />
+    <PRIResource Include="Resources\sq-AL\Resources.resw" />
+    <PRIResource Include="Resources\sr-Latn-RS\CEngineStrings.resw" />
+    <PRIResource Include="Resources\sr-Latn-RS\Resources.resw" />
+    <PRIResource Include="Resources\sv-se\CEngineStrings.resw" />
+    <PRIResource Include="Resources\sv-se\Resources.resw" />
+    <PRIResource Include="Resources\ta-IN\CEngineStrings.resw" />
+    <PRIResource Include="Resources\ta-IN\Resources.resw" />
+    <PRIResource Include="Resources\te-IN\CEngineStrings.resw" />
+    <PRIResource Include="Resources\te-IN\Resources.resw" />
+    <PRIResource Include="Resources\th-th\CEngineStrings.resw" />
+    <PRIResource Include="Resources\th-th\Resources.resw" />
+    <PRIResource Include="Resources\tr-tr\CEngineStrings.resw" />
+    <PRIResource Include="Resources\tr-tr\Resources.resw" />
+    <PRIResource Include="Resources\uk-UA\CEngineStrings.resw" />
+    <PRIResource Include="Resources\uk-UA\Resources.resw" />
+    <PRIResource Include="Resources\vi-vn\CEngineStrings.resw" />
+    <PRIResource Include="Resources\vi-vn\Resources.resw" />
+    <PRIResource Include="Resources\zh-cn\CEngineStrings.resw" />
+    <PRIResource Include="Resources\zh-cn\Resources.resw" />
+    <PRIResource Include="Resources\zh-tw\CEngineStrings.resw" />
+    <PRIResource Include="Resources\zh-tw\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="EquationStylePanelControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AboutFlyout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Calculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorProgrammerBitFlipPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorProgrammerOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorProgrammerRadixOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorScientificAngleButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorScientificOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorStandardOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DateCalculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphingCalculator\EquationInputArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HistoryList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Memory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MemoryListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NumberPad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OperatorsPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StateTriggers\CalculatorProgrammerDisplayPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SupplementaryResults.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TitleBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.10</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.4.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
+      <Project>{812d1a7b-b8ac-49e4-8e6d-af5d59500d56}</Project>
+      <Name>CalcViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
+      <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
+      <Name>GraphControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TraceLogging\TraceLogging.vcxproj">
+      <Project>{fc81ff41-02cd-4cd9-9bc5-45a1e39ac6ed}</Project>
+      <Name>TraceLogging</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\CalcMDL2.ttf" />
+    <None Include="WindowsDev_TemporaryKey.pfx" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

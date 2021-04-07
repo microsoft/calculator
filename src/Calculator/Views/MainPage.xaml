@@ -1,0 +1,198 @@
+<Page x:Class="CalculatorApp.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:automation="using:CalculatorApp.Common.Automation"
+      xmlns:common="using:CalculatorApp.Common"
+      xmlns:controls="using:CalculatorApp.Controls"
+      xmlns:converters="using:CalculatorApp.Converters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:CalculatorApp"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:vm="using:CalculatorApp.ViewModel"
+      x:Name="PageRoot"
+      Background="{ThemeResource AppChromeAcrylicHostBackdropMediumLowBrush}"
+      Loaded="OnPageLoaded"
+      mc:Ignorable="d">
+
+    <Page.Resources>
+        <automation:NarratorNotifier x:Name="NarratorNotifier"/>
+        <Style x:Name="CalculatorBaseStyle" TargetType="local:Calculator">
+            <Setter Property="Margin" Value="0,0,0,0"/>
+        </Style>
+        <!--<Style x:Name="UnitConverterBaseStyle" TargetType="local:UnitConverter">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+        </Style>-->
+        <Style x:Key="AboutFlyoutPresenterStyle" TargetType="FlyoutPresenter">
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        </Style>
+        <Style x:Key="NavViewItemStyle" TargetType="muxc:NavigationViewItem">
+            <Setter Property="KeyTipPlacementMode" Value="Right"/>
+        </Style>
+
+        <Style x:Key="CategoryNameTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings"/>
+        </Style>
+
+        <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
+        <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="Mode">
+                <VisualState x:Name="ConverterWide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}" MinWindowWidth="640"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="DockVisible">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}" MinWindowWidth="560"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="MinSizeLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="{StaticResource AppMinWindowHeight}" MinWindowWidth="{StaticResource AppMinWindowWidth}"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="DefaultLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <StackPanel Visibility="Collapsed">
+            <!--
+                These buttons are only here to serve as the target for copy/paste commands
+                they are not to be shown, only to have the command and shortcut assigned to them.
+            -->
+            <Button x:Name="CopyButton"
+                    x:Uid="copyButton"
+                    Command="{x:Bind Model.CopyCommand}"/>
+            <Button x:Name="PasteButton"
+                    x:Uid="pasteButton"
+                    Command="{x:Bind Model.PasteCommand}"/>
+            <Button x:Name="CopyButtonAlternate"
+                    x:Uid="copyButtonAlternate"
+                    Command="{x:Bind Model.CopyCommand}"/>
+            <Button x:Name="PasteButtonAlternate"
+                    x:Uid="pasteButtonAlternate"
+                    Command="{x:Bind Model.PasteCommand}"/>
+        </StackPanel>
+
+        <local:TitleBar Grid.Row="0"
+                        AlwaysOnTopClick="TitleBarAlwaysOnTopButtonClick"
+                        IsAlwaysOnTopMode="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
+
+        <Grid Grid.Row="1">
+            <Border x:Name="CalcHolder">
+                <!-- PLACEHOLDER!!!! This is where the calculator goes when it is delay loaded -->
+            </Border>
+            <Border x:Name="DateCalcHolder">
+                <!-- PLACEHOLDER!!!! This is where the date calculator goes when it is delay loaded -->
+            </Border>
+            <Border x:Name="GraphingCalcHolder">
+                <!-- PLACEHOLDER!!!! This is where the graphing calculator goes when it is delay loaded -->
+            </Border>
+            <Border x:Name="ConverterHolder">
+                <!-- PLACEHOLDER!!!! This is where the converter goes when it is delay loaded -->
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="1"
+              Height="{StaticResource HamburgerHeight}"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{StaticResource HamburgerHeightGridLength}"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="Header"
+                       Grid.Column="1"
+                       Margin="8,-3,0,0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource CategoryNameTextBlockStyle}"
+                       Text="{x:Bind Model.CategoryName, Mode=OneWay}"
+                       Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+
+            <Button x:Name="NormalAlwaysOnTopButton"
+                    x:Uid="EnterAlwaysOnTopButton"
+                    Grid.Column="2"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Style="{StaticResource SquareIconButtonStyle}"
+                    Background="Transparent"
+                    FontFamily="{StaticResource CalculatorFontFamily}"
+                    AutomationProperties.AutomationId="NormalAlwaysOnTopButton"
+                    Click="AlwaysOnTopButtonClick"
+                    Content="&#xEE49;"
+                    TabIndex="3"
+                    Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}">
+                <Button.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="Up" Modifiers="Menu"/>
+                </Button.KeyboardAccelerators>
+            </Button>
+        </Grid>
+
+        <muxc:NavigationView x:Name="NavView"
+                             x:Uid="NavView"
+                             Grid.Row="1"
+                             CompactModeThresholdWidth="Infinity"
+                             DataContext="{x:Bind Model}"
+                             ExpandedModeThresholdWidth="Infinity"
+                             IsBackButtonVisible="Collapsed"
+                             IsPaneToggleButtonVisible="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
+                             IsSettingsVisible="False"
+                             ItemInvoked="OnNavItemInvoked"
+                             Loaded="OnNavLoaded"
+                             MenuItemsSource="{x:Bind CreateUIElementsForCategories(Model.Categories), Mode=OneWay}"
+                             OpenPaneLength="{StaticResource SplitViewOpenPaneLength}"
+                             PaneClosed="OnNavPaneClosed"
+                             PaneOpened="OnNavPaneOpened"
+                             PaneOpening="OnNavPaneOpening"
+                             SelectionChanged="OnNavSelectionChanged"
+                             TabIndex="1"
+                             UseSystemFocusVisuals="True"
+                             IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
+                             x:Load="False">
+
+            <muxc:NavigationView.PaneFooter>
+                <muxc:NavigationViewItem x:Name="AboutButton"
+                                         x:Uid="AboutButton"
+                                         Style="{StaticResource NavViewItemStyle}"
+                                         KeyDown="OnAboutButtonKeyDown"
+                                         Tapped="OnAboutButtonClick">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xe946;"/>
+                    </muxc:NavigationViewItem.Icon>
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout x:Name="AboutPageFlyout"
+                                x:Uid="AboutPageFlyout"
+                                Closed="OnAboutFlyoutClosed"
+                                FlyoutPresenterStyle="{StaticResource AboutFlyoutPresenterStyle}"
+                                Opened="OnAboutFlyoutOpened">
+                            <local:AboutFlyout x:Name="AboutPage" x:Load="False"/>
+                        </Flyout>
+                    </FlyoutBase.AttachedFlyout>
+                </muxc:NavigationViewItem>
+            </muxc:NavigationView.PaneFooter>
+        </muxc:NavigationView>
+    </Grid>
+</Page>
