@@ -62,33 +62,12 @@ bool IsGraphingModeAvailable()
 Box<bool> ^ _isGraphingModeEnabledCached = nullptr;
 bool IsGraphingModeEnabled()
 {
-    if (!IsGraphingModeAvailable())
-    {
-        return false;
-    }
-
-    if (_isGraphingModeEnabledCached != nullptr)
-    {
-        return _isGraphingModeEnabledCached->Value;
-    }
-
-    User ^ firstUser;
-    std::atomic_flag finished = ATOMIC_FLAG_INIT;
-
-    finished.test_and_set(std::memory_order_acquire); // acquire
-
-    create_task(User::FindAllAsync(UserType::LocalUser)).then([&firstUser, &finished](IVectorView<User ^> ^ users) {
-        firstUser = users->GetAt(0);
-        finished.clear(std::memory_order_release);  // release
-    }, task_continuation_context::use_arbitrary());
-
-    while (finished.test_and_set(std::memory_order_acquire)) // aquire
-        ; // spin
-
-    finished.clear(std::memory_order_release); // release
-
-    auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
-    _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
+    // CSHARP_MIGRATION: TODO: merge PR ##1471 to fix below bug before we release to PROD
+#ifdef _DEBUG
+    _isGraphingModeEnabledCached = true;
+#else
+    throw "CSHARP_MIGRATION: EXCEPTION";
+#endif // _DEBUG
 
     return _isGraphingModeEnabledCached->Value;
 }
