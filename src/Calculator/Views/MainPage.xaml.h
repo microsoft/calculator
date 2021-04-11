@@ -39,8 +39,6 @@ public
             Platform::Object
             ^> ^ CreateUIElementsForCategories(_In_ Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup ^> ^ categories);
 
-        void CollapseSettings();
-
     protected:
         void OnNavigatedTo(_In_ Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e) override;
 

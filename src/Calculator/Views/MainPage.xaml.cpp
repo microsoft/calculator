@@ -383,10 +383,8 @@ void MainPage::EnsureConverter()
 
 void MainPage::EnsureSettings()
 {
-    SettingsHolder->Navigate((SettingsPage::typeid), this);
-    SettingsHolder->Visibility = ::Visibility::Visible;
-    NavView->IsPaneOpen = false;
-    NavView->Visibility = ::Visibility::Collapsed;
+    auto rootFrame = dynamic_cast<::Frame ^>(Window::Current->Content);
+    rootFrame->Navigate((SettingsPage::typeid), this);
 }
 
 void MainPage::OnNavLoaded(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
@@ -447,12 +445,6 @@ void MainPage::OnSettingsButtonKeyDown(Object ^ sender, KeyRoutedEventArgs ^ e)
     {
         EnsureSettings();
     }
-}
-
-void MainPage::CollapseSettings()
-{
-    SettingsHolder->Visibility = ::Visibility::Collapsed;
-    NavView->Visibility = ::Visibility::Visible;
 }
 
 void MainPage::OnNavSelectionChanged(_In_ Object ^ sender, _In_ MUXC::NavigationViewSelectionChangedEventArgs ^ e)

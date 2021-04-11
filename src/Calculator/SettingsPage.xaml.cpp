@@ -95,15 +95,6 @@ SettingsPage::SettingsPage()
     }
 }
 
-void SettingsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e)
-{
-    MainPage ^ mainPage = dynamic_cast<MainPage ^> (e->Parameter);
-    if (mainPage != nullptr)
-    {
-        MainPageProperty = mainPage;
-    }
-}
-
 void SettingsPage::SetDefaultFocus()
 {
     SettingsLightTheme->Focus(::FocusState::Programmatic);
@@ -139,6 +130,8 @@ void SettingsPage::InitializeContributeTextBlock()
 
 void SettingsPage::BackButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
+    auto rootFrame = dynamic_cast<::Frame ^>(Window::Current->Content);
+
     if (SettingsRestartApp->Visibility == ::Visibility::Visible)
     {
         Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"restartApp", L"True");
@@ -147,7 +140,7 @@ void SettingsPage::BackButtonClick(Platform::Object ^ sender, Windows::UI::Xaml:
     {
         Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"restartApp", L"False");
     }
-    MainPageProperty->CollapseSettings();
+    rootFrame->Navigate((MainPage::typeid), this);
 }
 
 void SettingsPage::SetVersionString()

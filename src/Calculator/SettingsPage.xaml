@@ -20,34 +20,41 @@
     <ScrollViewer>
         <Grid x:Name="PageGrid" AutomationProperties.LandmarkType="Main">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"
                                MinHeight="{StaticResource HamburgerHeight}"
                                MaxHeight="52"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
+            <Grid>
+                <local:TitleBar/>
+            </Grid>
+            
             <Grid Height="{StaticResource HamburgerHeight}"
                   HorizontalAlignment="Left"
-                  VerticalAlignment="Top">
+                  VerticalAlignment="Top"
+                  Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{StaticResource HamburgerHeightGridLength}"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <Button x:Name="BackButton"
-                        x:Uid="BackButton"
-                        Style="{StaticResource NavigationBackButtonNormalStyle}"
-                        Click="BackButtonClick"/>
+                            x:Uid="BackButton"
+                            Style="{StaticResource NavigationBackButtonNormalStyle}"
+                            Grid.Row="1"
+                            Click="BackButtonClick"/>
 
                 <TextBlock x:Uid="SettingsHeader"
-                           Grid.Column="1"
-                           Margin="8,-3,0,0"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center"
-                           Style="{StaticResource CategoryNameTextBlockStyle}"/>
+                                Grid.Column="1"
+                                Margin="8,-3,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource CategoryNameTextBlockStyle}"/>
             </Grid>
 
-            <StackPanel Grid.Row="1" Margin="12,0,12,0">
+            <StackPanel Grid.Row="2" Margin="12,0,12,0">
                 <StackPanel x:Name="SettingsStack"
                             AutomationProperties.LabeledBy="{Binding ElementName=SettingsAppTheme}"
                             Orientation="Vertical">
