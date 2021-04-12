@@ -80,12 +80,12 @@ namespace CalculatorApp
             {
                 m_graphingCalculator.SetDefaultFocus();
             }
-            // CSHARP_MIGRATION: TODO:
-            //if (m_converter != null && m_converter.Visibility == Visibility.Visible)
-            //{
-            //    m_converter.SetDefaultFocus();
-            //}
+            if (m_converter != null && m_converter.Visibility == Visibility.Visible)
+            {
+                m_converter.SetDefaultFocus();
+            }
         }
+
         public void SetHeaderAutomationName()
         {
             ViewMode mode = m_model.Mode;
@@ -216,12 +216,10 @@ namespace CalculatorApp
                         m_model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
                     }
 
-                    // CSHARP_MIGRATION: TODO:
-                    //EnsureConverter();
+                    EnsureConverter();
                     if (!NavCategory.IsConverterViewMode(previousMode))
                     {
-                        // CSHARP_MIGRATION: TODO:
-                        //m_converter.AnimateConverter();
+                        m_converter.AnimateConverter();
                     }
                 }
 
@@ -397,12 +395,11 @@ namespace CalculatorApp
                 m_graphingCalculator.IsEnabled = isGraphingCalcViewMode;
             }
 
-            // CSHARP_MIGRATION: TODO:
-            //if (m_converter != null)
-            //{
-            //    m_converter.Visibility = BooleanToVisibilityConverter.Convert(isConverterViewMode);
-            //    m_converter.IsEnabled = isConverterViewMode;
-            //}
+            if (m_converter != null)
+            {
+                m_converter.Visibility = BooleanToVisibilityConverter.Convert(isConverterViewMode);
+                m_converter.IsEnabled = isConverterViewMode;
+            }
         }
 
         private void UpdateViewState()
@@ -434,9 +431,7 @@ namespace CalculatorApp
 
         private void OnPageLoaded(object sender, RoutedEventArgs args)
         {
-            // CSHARP_MIGRATION: TODO:
-            //if (!m_converter && !m_calculator && !m_dateCalculator && !m_graphingCalculator)
-            if (m_calculator == null && m_dateCalculator == null && m_graphingCalculator == null)
+            if (m_converter == null && m_calculator == null && m_dateCalculator == null && m_graphingCalculator == null)
             {
                 // We have just launched into our default mode (standard calc) so ensure calc is loaded
                 EnsureCalculator();
@@ -541,20 +536,18 @@ namespace CalculatorApp
             }
         }
 
-        // CSHARP_MIGRATION: TODO:
-        //private void EnsureConverter()
-        //{
-        //    if (!m_converter)
-        //    {
-        //        // delay loading converter
-        //        m_converter = new CalculatorApp.UnitConverter();
-        //        m_converter.Name = "unitConverter";
-        //        m_converter.DataContext = m_model.ConverterViewModel;
-        //        m_converter.Style = UnitConverterBaseStyle;
-        //        ConverterHolder.Child = m_converter;
-        //    }
-
-        //}
+        private void EnsureConverter()
+        {
+            if (m_converter == null)
+            {
+                // delay loading converter
+                m_converter = new CalculatorApp.UnitConverter();
+                m_converter.Name = "unitConverter";
+                m_converter.DataContext = m_model.ConverterViewModel;
+                m_converter.Style = UnitConverterBaseStyle;
+                ConverterHolder.Child = m_converter;
+            }
+        }
 
         private void ShowAboutPage()
         {
@@ -575,8 +568,7 @@ namespace CalculatorApp
 
         private CalculatorApp.Calculator m_calculator;
         private GraphingCalculator m_graphingCalculator;
-        // CSHARP_MIGRATION: TODO:
-        //private CalculatorApp.UnitConverter m_converter;   
+        private CalculatorApp.UnitConverter m_converter;
         private CalculatorApp.DateCalculator m_dateCalculator;
         private CalculatorApp.ViewModel.ApplicationViewModel m_model;
         private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;

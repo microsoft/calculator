@@ -20,11 +20,11 @@
         <Style x:Name="CalculatorBaseStyle" TargetType="local:Calculator">
             <Setter Property="Margin" Value="0,0,0,0"/>
         </Style>
-        <!--<Style x:Name="UnitConverterBaseStyle" TargetType="local:UnitConverter">
+        <Style x:Name="UnitConverterBaseStyle" TargetType="local:UnitConverter">
             <Setter Property="Visibility" Value="Collapsed"/>
             <Setter Property="IsEnabled" Value="False"/>
             <Setter Property="Margin" Value="0,0,0,0"/>
-        </Style>-->
+        </Style>
         <Style x:Key="AboutFlyoutPresenterStyle" TargetType="FlyoutPresenter">
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>

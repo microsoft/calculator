@@ -35,6 +35,11 @@ namespace CalculatorApp
                 }
             }
 
+            int GetModelCategoryId()
+            {
+                return GetModelCategory().id;
+            }
+
             internal : const UnitConversionManager::Category& GetModelCategory() const
             {
                 return m_original;
@@ -116,7 +121,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_R(CalculatorApp::ViewModel::Unit ^, Unit);
         };
 
-        interface class IActivatable
+        public interface class IActivatable
         {
             virtual property bool IsActive;
         };
@@ -232,12 +237,14 @@ namespace CalculatorApp
 
             void AnnounceConversionResult();
 
+            void OnPaste(Platform::String ^ stringToPaste);
+            void RefreshCurrencyRatios();
+            void OnValueActivated(IActivatable ^ control);
+
             internal : void ResetView();
             void PopulateData();
             NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
             void DisplayPasteError();
-            void OnValueActivated(IActivatable ^ control);
-            void OnPaste(Platform::String ^ stringToPaste);
 
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
@@ -270,7 +277,6 @@ namespace CalculatorApp
 
             void OnCurrencyDataLoadFinished(bool didLoad);
             void OnCurrencyTimestampUpdated(_In_ const std::wstring& timestamp, bool isWeekOld);
-            void RefreshCurrencyRatios();
             void OnNetworkBehaviorChanged(_In_ CalculatorApp::NetworkAccessBehavior newBehavior);
 
             const std::wstring& GetValueFromUnlocalized() const
