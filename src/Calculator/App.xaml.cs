@@ -457,7 +457,7 @@ namespace CalculatorApp
             try
             {
                 m_secondaryWindows[frameService.GetViewId()] = frameService;
-                TraceLogger.GetInstance().UpdateWindowCount(m_secondaryWindows.size());
+                TraceLogger.GetInstance().UpdateWindowCount(Convert.ToUInt64(m_secondaryWindows.Count));
             }
             finally
             {

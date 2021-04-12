@@ -121,9 +121,6 @@
     <AppVersion Condition="'$(AppVersion)' == ''">0.0.0.0</AppVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ResourceCompile Include="Calculator.rc" PreprocessorDefinitions="%(PreprocessorDefinitions);APP_VERSION_MAJOR=$(AppVersion.Split(`.`)[0]);APP_VERSION_MINOR=$(AppVersion.Split(`.`)[1]);APP_VERSION_BUILD=$(AppVersion.Split(`.`)[2]);APP_VERSION_REVISION=$(AppVersion.Split(`.`)[3])" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="AboutFlyout.xaml.cs">
       <DependentUpon>AboutFlyout.xaml</DependentUpon>
     </Compile>
@@ -462,6 +459,7 @@
     <Content Include="Assets\Standard.targetsize-32_contrast-white.png" />
     <Content Include="Assets\Standard.targetsize-64_contrast-black.png" />
     <Content Include="Assets\Standard.targetsize-64_contrast-white.png" />
+    <Content Include="Calculator.rc" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>

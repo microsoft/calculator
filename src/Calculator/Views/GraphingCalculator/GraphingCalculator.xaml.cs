@@ -348,7 +348,8 @@ namespace CalculatorApp
                 if (ex.HResult == unchecked(rpc_e_servercall_retrylater))
                 {
                     ShowShareError();
-                    TraceLogger.GetInstance().LogPlatformException(ViewMode.Graphing, System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+                    // CSHARP_MIGRATION: TODO:
+                    //TraceLogger.GetInstance().LogPlatformException(ViewMode.Graphing, System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 }
                 else
                 {
@@ -495,8 +496,9 @@ namespace CalculatorApp
             {
                 ShowShareError();
 
-                TraceLogger.GetInstance().LogPlatformException(ViewMode.Graphing,
-                    System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+                // CSHARP_MIGRATION: TODO:
+                //TraceLogger.GetInstance().LogPlatformException(ViewMode.Graphing,
+                //    System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
         }
 

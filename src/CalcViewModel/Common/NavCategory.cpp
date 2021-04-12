@@ -449,18 +449,19 @@ ViewMode NavCategory::GetViewModeForVirtualKey(MyVirtualKey virtualKey)
     return (iter != s_categoryManifest.end()) ? iter->viewMode : ViewMode::None;
 }
 
-vector<MyVirtualKey> NavCategory::GetCategoryAcceleratorKeys()
+void NavCategory::GetCategoryAcceleratorKeys(IVector<MyVirtualKey> ^ accelerators)
 {
-    vector<MyVirtualKey> accelerators{};
-    for (auto category : s_categoryManifest)
+    if (accelerators != nullptr)
     {
-        if (category.virtualKey != MyVirtualKey::None)
+        accelerators->Clear();
+        for (auto category : s_categoryManifest)
         {
-            accelerators.push_back(category.virtualKey);
+            if (category.virtualKey != MyVirtualKey::None)
+            {
+                accelerators->Append(category.virtualKey);
+            }
         }
     }
-
-    return accelerators;
 }
 
 NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupInitializer)
