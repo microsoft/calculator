@@ -146,10 +146,6 @@
             </Button>
         </Grid>
 
-        <Grid Grid.Row="1" Canvas.ZIndex="0">
-            <Frame x:Name="SettingsHolder" Visibility="Collapsed"/>
-        </Grid>
-
         <muxc:NavigationView x:Name="NavView"
                              x:Uid="NavView"
                              Grid.Row="1"
