@@ -407,7 +407,7 @@ namespace CalculatorApp
 
         private void EquationTextBox_KeyGraphFeaturesButtonClicked(object sender, RoutedEventArgs e)
         {
-            KeyGraphFeaturesRequested(this, GetViewModelFromEquationTextBox(sender));
+            KeyGraphFeaturesRequested?.Invoke(this, GetViewModelFromEquationTextBox(sender));
         }
 
         private void EquationTextBox_EquationButtonClicked(object sender, RoutedEventArgs e)
@@ -565,7 +565,7 @@ namespace CalculatorApp
 
         private void EquationTextBox_EquationFormatRequested(object sender, MathRichEditBoxFormatRequest e)
         {
-            EquationFormatRequested(sender, e);
+            EquationFormatRequested?.Invoke(sender, e);
         }
 
         private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)

@@ -199,7 +199,7 @@ namespace CalculatorApp
 
         private void AlwaysOnTopButton_Click(object sender, RoutedEventArgs e)
         {
-            AlwaysOnTopClick(this, e);
+            AlwaysOnTopClick?.Invoke(this, e);
         }
 
         private Windows.ApplicationModel.Core.CoreApplicationViewTitleBar m_coreTitleBar;

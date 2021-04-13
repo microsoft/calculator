@@ -150,7 +150,7 @@ namespace CalculatorApp
                 {
                     // Request the final formatting of the text
                     var formatRequest = new MathRichEditBoxFormatRequest(newVal);
-                    FormatRequest(this, formatRequest);
+                    FormatRequest?.Invoke(this, formatRequest);
 
                     if (!string.IsNullOrEmpty(formatRequest.FormattedText))
                     {
@@ -158,11 +158,11 @@ namespace CalculatorApp
                     }
 
                     SetValue(MathTextProperty, newVal);
-                    EquationSubmitted(this, new MathRichEditBoxSubmission(true, source));
+                    EquationSubmitted?.Invoke(this, new MathRichEditBoxSubmission(true, source));
                 }
                 else
                 {
-                    EquationSubmitted(this, new MathRichEditBoxSubmission(false, source));
+                    EquationSubmitted?.Invoke(this, new MathRichEditBoxSubmission(false, source));
                 }
             }
 

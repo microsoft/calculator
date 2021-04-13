@@ -34,7 +34,7 @@ namespace CalculatorApp
                     if (newCurrentPosition != -1)
                     {
                         m_currentPosition = newCurrentPosition;
-                        CurrentChanged(this, null);
+                        CurrentChanged?.Invoke(this, null);
                         return true;
                     }
                 }
@@ -46,7 +46,7 @@ namespace CalculatorApp
                 {
                     Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() =>
                     {
-                        CurrentChanged(this, null);
+                        CurrentChanged?.Invoke(this, null);
                     })).AsTask().Wait();
                 }
                 return false;
@@ -60,7 +60,7 @@ namespace CalculatorApp
                 }
 
                 m_currentPosition = index;
-                CurrentChanged(this, null);
+                CurrentChanged?.Invoke(this, null);
                 return true;
             }
 
@@ -219,7 +219,7 @@ namespace CalculatorApp
             void OnSourceBindableVectorChanged(Windows.UI.Xaml.Interop.IBindableObservableVector source, object e)
             {
                 Windows.Foundation.Collections.IVectorChangedEventArgs args = (Windows.Foundation.Collections.IVectorChangedEventArgs)e;
-                VectorChanged(this, args);
+                VectorChanged?.Invoke(this, args);
             }
 
             public event EventHandler<object> CurrentChanged;

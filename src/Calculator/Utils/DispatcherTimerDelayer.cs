@@ -37,7 +37,7 @@ namespace CalculatorApp
         private void Timer_Tick(object sender, object e)
         {
             m_timer.Stop();
-            Action(this, null);
+            Action?.Invoke(this, null);
         }
 
         private DispatcherTimer m_timer;

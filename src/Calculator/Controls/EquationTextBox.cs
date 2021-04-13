@@ -406,7 +406,7 @@ namespace CalculatorApp
 
             private void OnEquationButtonClicked(object sender, RoutedEventArgs e)
             {
-                EquationButtonClicked(this, new RoutedEventArgs());
+                EquationButtonClicked?.Invoke(this, new RoutedEventArgs());
 
                 SetEquationButtonTooltipAndAutomationName();
             }
@@ -424,7 +424,7 @@ namespace CalculatorApp
                     m_richEditBox.MathText = "";
                 }
 
-                RemoveButtonClicked(this, new RoutedEventArgs());
+                RemoveButtonClicked?.Invoke(this, new RoutedEventArgs());
 
                 if (m_functionButton != null)
                 {
@@ -452,7 +452,7 @@ namespace CalculatorApp
 
             private void OnFunctionButtonClicked(object sender, RoutedEventArgs e)
             {
-                KeyGraphFeaturesButtonClicked(this, new RoutedEventArgs());
+                KeyGraphFeaturesButtonClicked?.Invoke(this, new RoutedEventArgs());
             }
 
             private void OnFunctionMenuButtonClicked(object sender, RoutedEventArgs e)
@@ -463,7 +463,7 @@ namespace CalculatorApp
                     m_richEditBox.SubmitEquation(EquationSubmissionSource.FOCUS_LOST);
                 }
 
-                KeyGraphFeaturesButtonClicked(this, new RoutedEventArgs());
+                KeyGraphFeaturesButtonClicked?.Invoke(this, new RoutedEventArgs());
             }
 
             private void OnRichEditMenuOpened(object sender, object args)
@@ -614,12 +614,12 @@ namespace CalculatorApp
                     }
                 }
 
-                EquationSubmitted(this, args);
+                EquationSubmitted?.Invoke(this, args);
             }
 
             private void OnEquationFormatRequested(object sender, MathRichEditBoxFormatRequest args)
             {
-                EquationFormatRequested(this, args);
+                EquationFormatRequested?.Invoke(this, args);
             }
         }
     }
