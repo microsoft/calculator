@@ -142,7 +142,7 @@ namespace CalculatorApp
                 if (m_IsKeyGraphFeaturesVisible != value)
                 {
                     m_IsKeyGraphFeaturesVisible = value;
-                    RaisePropertyChanged("IsKeyGraphFeaturesVisible");
+                    RaisePropertyChanged(nameof(IsKeyGraphFeaturesVisible));
                 }
             }
         }
@@ -176,7 +176,7 @@ namespace CalculatorApp
                 if (m_IsMatchAppTheme != value)
                 {
                     m_IsMatchAppTheme = value;
-                    RaisePropertyChanged("IsMatchAppTheme");
+                    RaisePropertyChanged(nameof(IsMatchAppTheme));
                 }
             }
         }
@@ -190,7 +190,7 @@ namespace CalculatorApp
                 if (m_IsManualAdjustment != value)
                 {
                     m_IsManualAdjustment = value;
-                    RaisePropertyChanged("IsManualAdjustment");
+                    RaisePropertyChanged(nameof(IsManualAdjustment));
                 }
             }
         }

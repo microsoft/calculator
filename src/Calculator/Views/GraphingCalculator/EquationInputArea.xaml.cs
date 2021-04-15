@@ -61,7 +61,7 @@ namespace CalculatorApp
                 if (m_Equations != value)
                 {
                     m_Equations = value;
-                    RaisePropertyChanged("m_Equations");
+                    RaisePropertyChanged(nameof(Equations));
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace CalculatorApp
                 if (m_Variables != value)
                 {
                     m_Variables = value;
-                    RaisePropertyChanged("m_Variables");
+                    RaisePropertyChanged(nameof(Variables));
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace CalculatorApp
                 if (m_AvailableColors != value)
                 {
                     m_AvailableColors = value;
-                    RaisePropertyChanged("m_AvailableColors");
+                    RaisePropertyChanged(nameof(AvailableColors));
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace CalculatorApp
                 if (m_IsMatchAppTheme != value)
                 {
                     m_IsMatchAppTheme = value;
-                    RaisePropertyChanged("m_IsMatchAppTheme");
+                    RaisePropertyChanged(nameof(IsMatchAppTheme));
                 }
             }
         }

@@ -39,7 +39,7 @@ namespace CalculatorApp
                 if (m_viewModel != value)
                 {
                     m_viewModel = value;
-                    RaisePropertyChanged("ViewModel");
+                    RaisePropertyChanged(nameof(ViewModel));
                 }
             }
         }
