@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,7 +8,7 @@ using Windows.UI.Core;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
-//using Microsoft.WRL;
+using Windows.ApplicationModel;
 
 namespace CalculatorApp
 {
@@ -84,6 +84,23 @@ namespace CalculatorApp
         {
             public MathRichEditBox()
             {
+                string packageName = Package.Current.Id.Name;
+
+                if(packageName == "Microsoft.WindowsCalculator.Dev")
+                {
+                    LimitedAccessFeatures.TryUnlockFeature(
+                                "com.microsoft.windows.richeditmath",
+                                "BeDD/jxKhz/yfVNA11t4uA==", // Microsoft.WindowsCalculator.Dev
+                                "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.");
+                }
+                else if(packageName == "Microsoft.WindowsCalculator")
+                {
+                    LimitedAccessFeatures.TryUnlockFeature(
+                                "com.microsoft.windows.richeditmath",
+                                "pfanNuxnzo+mAkBQ3N/rGQ==", // Microsoft.WindowsCalculator
+                                "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.");
+                }
+
                 TextDocument.SetMathMode(RichEditMathMode.MathOnly);
                 LosingFocus += OnLosingFocus;
                 KeyUp += OnKeyUp;
