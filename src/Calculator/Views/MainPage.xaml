@@ -168,6 +168,7 @@
                              PaneOpened="OnNavPaneOpened"
                              PaneOpening="OnNavPaneOpening"
                              SelectionChanged="OnNavSelectionChanged"
+                             KeyDown="OnNavPaneKeyDown"
                              TabIndex="1"
                              UseSystemFocusVisuals="True"
                              IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"

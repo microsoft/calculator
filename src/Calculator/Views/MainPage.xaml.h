@@ -53,6 +53,7 @@ public
         void OnNavItemInvoked(
             Microsoft::UI::Xaml::Controls::NavigationView ^ /*sender*/,
             _In_ Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs ^ e);
+        void OnNavPaneKeyDown(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);
 
         void OnAboutButtonClick(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Controls::ItemClickEventArgs ^ e);
         void OnAboutButtonKeyDown(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e);

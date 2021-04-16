@@ -427,6 +427,22 @@ void MainPage::OnNavPaneClosed(_In_ MUXC::NavigationView ^ sender, _In_ Object ^
     this->SetDefaultFocus();
 }
 
+void MainPage::OnNavPaneKeyDown(_In_ Platform::Object ^ sender, _In_ Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e)
+{
+    if (e->Key == VirtualKey::Space || e->Key == VirtualKey::Enter)
+    {
+        auto item = dynamic_cast<MUXC::NavigationViewItem ^>(FocusManager::GetFocusedElement());
+        if (item != nullptr && item->Name != L"About")
+        {
+            auto selectedItem = static_cast<NavCategory ^>(item->DataContext);
+            Model->Mode = selectedItem->Mode;
+
+            NavView->SelectedItem = item;
+            NavView->IsPaneOpen = false;
+        }
+    }
+}
+
 void MainPage::OnAboutButtonClick(Object ^ sender, ItemClickEventArgs ^ e)
 {
     ShowAboutPage();
