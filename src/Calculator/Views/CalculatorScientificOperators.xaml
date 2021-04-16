@@ -866,9 +866,7 @@
                       Checked="ShiftButton_Check"
                       Content="&#xF897;"
                       IsEnabledChanged="ShiftButton_IsEnabledChanged"
-                      Unchecked="ShiftButton_Check"
-                      AllowFocusOnInteraction="False"
-                      />
+                      Unchecked="ShiftButton_Check"/>
 
         <controls:CalculatorButton x:Name="PiButton"
                                    x:Uid="piButton"
