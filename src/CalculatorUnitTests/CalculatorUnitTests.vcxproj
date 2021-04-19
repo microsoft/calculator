@@ -280,8 +280,8 @@
     <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">
       <Project>{311e866d-8b93-4609-a691-265941fee101}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
-      <Project>{90e9761d-9262-4773-942d-caeae75d7140}</Project>
+    <ProjectReference Include="..\CalcViewModelCopyForUT\CalcViewModelCopyForUT.vcxproj">
+      <Project>{cc9b4fa7-d746-4f52-9401-0ad1b4d6b16d}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

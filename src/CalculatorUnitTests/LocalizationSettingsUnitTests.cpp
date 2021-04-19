@@ -57,13 +57,13 @@ namespace CalculatorUnitTests
 
         TEST_METHOD(TestIsEnUsDigit)
         {
-            auto& settings = LocalizationSettings::GetInstance();
-            VERIFY_IS_FALSE(settings.IsEnUsDigit(L'/'));
-            VERIFY_IS_TRUE(settings.IsEnUsDigit(L'0'));
-            VERIFY_IS_TRUE(settings.IsEnUsDigit(L'1'));
-            VERIFY_IS_TRUE(settings.IsEnUsDigit(L'8'));
-            VERIFY_IS_TRUE(settings.IsEnUsDigit(L'9'));
-            VERIFY_IS_FALSE(settings.IsEnUsDigit(L':'));
+            auto settings = LocalizationSettings::GetInstance();
+            VERIFY_IS_FALSE(settings->IsEnUsDigit(L'/'));
+            VERIFY_IS_TRUE(settings->IsEnUsDigit(L'0'));
+            VERIFY_IS_TRUE(settings->IsEnUsDigit(L'1'));
+            VERIFY_IS_TRUE(settings->IsEnUsDigit(L'8'));
+            VERIFY_IS_TRUE(settings->IsEnUsDigit(L'9'));
+            VERIFY_IS_FALSE(settings->IsEnUsDigit(L':'));
         }
 
         TEST_METHOD(TestIsLocalizedDigit)
