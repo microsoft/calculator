@@ -131,7 +131,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;$(SolutionDir)CalcViewModel\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
       <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
@@ -151,7 +151,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;$(SolutionDir)CalcViewModel\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
       <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
@@ -171,7 +171,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;$(SolutionDir)CalcViewModel\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
       <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
@@ -191,7 +191,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;$(SolutionDir)CalcViewModel\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
       <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
@@ -211,7 +211,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);C:\Users\zhangh\han_projects\caluimig\calculator\src\CalcViewModel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CalcViewModel\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
       <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
@@ -231,7 +231,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;$(SolutionDir)CalcViewModel\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
       <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
@@ -251,7 +251,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;$(SolutionDir)CalcViewModel\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
       <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
@@ -271,7 +271,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\src\;$(SolutionDir)CalcViewModel\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453</DisableSpecificWarnings>
       <AdditionalOptions>/bigobj /await /std:c++17 /utf-8 %(AdditionalOptions)</AdditionalOptions>
       <WarningLevel>Level4</WarningLevel>
