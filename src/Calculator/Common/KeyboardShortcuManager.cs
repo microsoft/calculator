@@ -1,9 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using CalculatorApp.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using Windows.Foundation.Collections;
@@ -621,7 +622,7 @@ namespace CalculatorApp
                     var categoryName = AppResourceProvider.GetInstance().GetResourceString("DateCalculationModeText");
                     appViewModel.CategoryName = categoryName;
 
-                    var menuItems = ((IObservableVector<object>)navView.MenuItemsSource);
+                    var menuItems = ((ObservableCollection<object>)navView.MenuItemsSource);
                     var flatIndex = NavCategory.GetFlatIndex(ViewMode.Date);
                     navView.SelectedItem = menuItems[flatIndex];
                     return;
@@ -710,7 +711,7 @@ namespace CalculatorApp
                             {
                                 var navView = item as MUXC.NavigationView; // CSHARP_MIGRATION: TODO: check if this line is still needed
 
-                                var menuItems = ((IObservableVector<object>)navView.MenuItemsSource);
+                                var menuItems = ((ObservableCollection<object>)navView.MenuItemsSource);
                                 if (menuItems != null)
                                 {
                                     var vm = (navView.DataContext as ApplicationViewModel);
