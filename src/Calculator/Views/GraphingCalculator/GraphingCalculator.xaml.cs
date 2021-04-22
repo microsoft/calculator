@@ -9,6 +9,7 @@ using CalculatorApp;
 using CalculatorApp.Common;
 using CalculatorApp.Common.Automation;
 using CalculatorApp.Controls;
+using CalculatorApp.Utils;
 using CalculatorApp.ViewModel;
 //using CalcManager.NumberFormattingUtils;
 using GraphControl;
@@ -114,7 +115,7 @@ namespace CalculatorApp
             {
                 if (donotuse_ZoomOutButtonPressed == null)
                 {
-                    donotuse_ZoomOutButtonPressed = new DelegateCommand<GraphingCalculator>(this, OnZoomOutCommand);
+                    donotuse_ZoomOutButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this, OnZoomOutCommand);
                 }
                 return donotuse_ZoomOutButtonPressed;
             }
@@ -127,7 +128,7 @@ namespace CalculatorApp
             {
                 if (donotuse_ZoomInButtonPressed == null)
                 {
-                    donotuse_ZoomInButtonPressed = new DelegateCommand<GraphingCalculator>(this, OnZoomInCommand);
+                    donotuse_ZoomInButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this, OnZoomInCommand);
                 }
                 return donotuse_ZoomInButtonPressed;
             }

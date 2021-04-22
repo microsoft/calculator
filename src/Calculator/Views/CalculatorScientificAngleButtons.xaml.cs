@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using CalculatorApp;
+using CalculatorApp.Utils;
 using CalculatorApp.ViewModel;
 
 using Windows.Foundation;
@@ -47,7 +48,7 @@ namespace CalculatorApp
             {
                 if (donotuse_ButtonPressed == null)
                 {
-                    donotuse_ButtonPressed = new CalculatorApp.Common.DelegateCommand<CalculatorScientificAngleButtons>(this, OnAngleButtonPressed);
+                    donotuse_ButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this, OnAngleButtonPressed);
                 }
                 return donotuse_ButtonPressed;
             }

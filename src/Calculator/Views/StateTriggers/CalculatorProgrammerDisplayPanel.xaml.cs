@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using CalculatorApp.Utils;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -16,8 +17,7 @@ namespace CalculatorApp
             {
                 if (donotuse_BitLengthButtonPressed == null)
                 {
-                    donotuse_BitLengthButtonPressed =
-                        new Common.DelegateCommand<CalculatorProgrammerDisplayPanel>(this, OnBitLengthButtonPressed);
+                    donotuse_BitLengthButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this, OnBitLengthButtonPressed);
                 }
                 return donotuse_BitLengthButtonPressed;
             }

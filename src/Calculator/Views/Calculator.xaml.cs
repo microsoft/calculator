@@ -9,6 +9,7 @@ using CalculatorApp;
 using CalculatorApp.Common;
 using CalculatorApp.Converters;
 using CalculatorApp.Controls;
+using CalculatorApp.Utils;
 using CalculatorApp.ViewModel;
 
 using Windows.Foundation;
@@ -140,7 +141,7 @@ namespace CalculatorApp
             {
                 if (donotuse_HistoryButtonPressed == null)
                 {
-                    donotuse_HistoryButtonPressed = new DelegateCommand<Calculator>(this, ToggleHistoryFlyout);
+                    donotuse_HistoryButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this, ToggleHistoryFlyout);
                 }
                 return donotuse_HistoryButtonPressed;
             }

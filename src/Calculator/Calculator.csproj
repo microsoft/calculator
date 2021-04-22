@@ -151,11 +151,11 @@
     <Compile Include="Converters\ItemSizeToVisibilityConverter.cs" />
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
-    <Compile Include="DelegateCommand.cs" />
     <Compile Include="EquationStylePanelControl.xaml.cs">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="KeyGraphFeaturesTemplateSelector.cs" />
+    <Compile Include="Utils\DelegateCommandUtils.cs" />
     <Compile Include="Views\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
