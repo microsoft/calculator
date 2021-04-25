@@ -122,7 +122,7 @@
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the title of the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppName" xml:space="preserve">
-    <value>ಕ್ಯಾಲ್ಕುಲೇಟರ್ [ಡೆವ್]</value>
+    <value>ಕ್ಯಾಲ್ಕುಲೇಟರ್ [Dev]</value>
     <comment>{@Appx_ShortDisplayName@}{StringCategory="Feature Title"} This is the name of the application when built by a user via GitHub. We use a different name to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="AppStoreName" xml:space="preserve">
@@ -130,7 +130,7 @@
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps.</comment>
   </data>
   <data name="DevAppStoreName" xml:space="preserve">
-    <value>Windows ಕ್ಯಾಲ್ಕುಲೇಟರ್ [ಡೆವ್]</value>
+    <value>Windows ಕ್ಯಾಲ್ಕುಲೇಟರ್ [Dev]</value>
     <comment>{@Appx_DisplayName@}{StringCategory="Feature Title"} Name that shows up in the app store. It contains "Windows" to distinguish it from 3rd party calculator apps. This is the the version of the name used when the app is built by a user via GitHub.</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
@@ -138,7 +138,7 @@
     <comment>{@Appx_Description@} This description is used for the official application when published through Windows Store.</comment>
   </data>
   <data name="DevAppDescription" xml:space="preserve">
-    <value>ಕ್ಯಾಲ್ಕುಲೇಟರ್ [ಡೆವ್]</value>
+    <value>ಕ್ಯಾಲ್ಕುಲೇಟರ್ [Dev]</value>
     <comment>{@Appx_Description@} This is the description of the application when built by a user via GitHub. We use a different description to make it easier for users to distinguish the apps when both this version and the Store version are installed on the same device.</comment>
   </data>
   <data name="copyMenuItem" xml:space="preserve">
@@ -418,7 +418,7 @@
     <comment>Used to describe the first bit of a binary number. Used in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
-    <value>ಸ್ಮರಣೆ ಫ್ಲೈಔಟ್ ತೆರೆ</value>
+    <value>ಸ್ಮರಣೆ ಫ್ಲೈಔಟ್ ತೆರೆಯಿರಿ</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is closed.</comment>
   </data>
   <data name="MemoryButton_Close" xml:space="preserve">
@@ -442,7 +442,7 @@
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>ಬಿಟ್ ಟಾಗಲ್ ಮಾಡುವ ಕೀಪ್ಯಾಡ್</value>
+    <value>ಬಿಟ್ ಟಾಗ್ಲಿಂಗ್ ಕೀಪ್ಯಾಡ್</value>
     <comment>This is the tool tip automation name for the bitFlip button.</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -538,11 +538,11 @@
     <comment>Pluralized version of the converter group text, used for the screen reader prompt.</comment>
   </data>
   <data name="CalculatorModePluralText" xml:space="preserve">
-    <value>ಕ್ಯಾಲ್ಕುಲೇಟರ್ ಗಳು</value>
+    <value>ಕ್ಯಾಲ್ಕುಲೇಟರ್‌‍ಗಳು</value>
     <comment>Pluralized version of the calculator group text, used for the screen reader prompt.</comment>
   </data>
   <data name="Format_CalculatorResults" xml:space="preserve">
-    <value>ಡಿಸ್‌ಪ್ಲೇ %1</value>
+    <value>ಡಿಸ್‍ಪ್ಲೇ %1 ಆಗಿದೆ</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
@@ -558,7 +558,7 @@
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator expression results. %1 = Localized display value, e.g. "50 + 2 - 60 +".</comment>
   </data>
   <data name="Display_Copied" xml:space="preserve">
-    <value>ಪ್ರದರ್ಶನ ಮೌಲ್ಯವನ್ನು ಕ್ಲಿಪ್ ಬೋರ್ಡ್ ಗೆ ನಕಲಿಸಲಾಗಿದೆ</value>
+    <value>ಪ್ರದರ್ಶನ ಮೌಲ್ಯವನ್ನು ಕ್ಲಿಪ್‍ಬೋರ್ಡ್‍ಗೆ ನಕಲಿಸಲಾಗಿದೆ</value>
     <comment>Screen reader prompt for the Calculator display copy button, when the button is invoked.</comment>
   </data>
   <data name="HistoryPane" xml:space="preserve">
@@ -574,7 +574,7 @@
     <comment>{Locked="%1"}. Screen reader prompt for the hexadecimal value in Programmer mode. %1 = the localized hexadecimal value, e.g. "21B4 8F73".</comment>
   </data>
   <data name="Format_DecButtonValue" xml:space="preserve">
-    <value>ಡೆಸಿಮಲ್ %1</value>
+    <value>ದಶಮಾಂಶ %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the decimal value in Programmer mode. %1 = the localized decimal value, e.g. "5,732".</comment>
   </data>
   <data name="Format_OctButtonValue" xml:space="preserve">
@@ -598,7 +598,7 @@
     <comment>Screen reader prompt for the Calculator History Hide button</comment>
   </data>
   <data name="HistoryButton_Open" xml:space="preserve">
-    <value>ಇತಿಹಾಸದ ಫ್ಲೈಔಟ್ ತೆರೆ</value>
+    <value>ಇತಿಹಾಸದ ಫ್ಲೈಔಟ್ ತೆರೆಯಿರಿ</value>
     <comment>Screen reader prompt for the Calculator History button, when the flyout is closed.</comment>
   </data>
   <data name="HistoryButton_Close" xml:space="preserve">
@@ -614,19 +614,19 @@
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಎಲ್ಲಾ ಸ್ಮರಣೆ ತೆರವುಗೊಳಿಸಿ</value>
+    <value>ಎಲ್ಲಾ ಸ್ಮರಣೆಯನ್ನು ತೆರವುಗೊಳಿಸಿ</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="Memory_Cleared" xml:space="preserve">
-    <value>ಮೆಮೊರಿ ಖಾಲಿ ಮಾಡಲಾಗಿದೆ</value>
+    <value>ಸ್ಮರಣೆ ತೆರವುಗೊಳಿಸಲಾಗಿದೆ</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button, when the button is invoked.</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಸ್ಮರಣೆ ಮರುಸಂಗ್ರಹಣೆ</value>
+    <value>ಸ್ಮರಣೆ ಮರುಪಡೆಯಿರಿ</value>
     <comment>Screen reader prompt for the Calculator Memory Recall button</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>ಸ್ಮರಣೆ ಮರುಸಂಗ್ರಹಣೆ (Ctrl+R)</value>
+    <value>ಸ್ಮರಣೆ ಮರುಪಡೆಯಿರಿ (Ctrl+R)</value>
     <comment>This is the tool tip automation name for the Memory Recall (MR) button.</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -662,35 +662,35 @@
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಸ್ಮರಣೆ ಅಂಶದಿಂದ ತೆಗೆಯಿರಿ</value>
+    <value>ಸ್ಮರಣೆ ಐಟಂನಿಂದ ಕಳೆಯಿರಿ</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>ಸ್ಮರಣೆ ಅಂಶದಿಂದ ತೆಗೆಯಿರಿ</value>
+    <value>ಸ್ಮರಣೆ ಐಟಂನಿಂದ ಕಳೆಯಿರಿ</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಮೆಮೊರಿ ಐಟಂ ತೆರವುಗೊಳಿಸಿ</value>
+    <value>ಸ್ಮರಣೆ ಅಂಶ ತೆರವುಗೊಳಿಸಿ</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryMenuItem.Text" xml:space="preserve">
-    <value>ಮೆಮೊರಿ ಐಟಂ ತೆರವುಗೊಳಿಸಿ</value>
+    <value>ಸ್ಮರಣೆ ಅಂಶ ತೆರವುಗೊಳಿಸಿ</value>
     <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
   </data>
   <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಮೆಮೊರಿ ಐಟಂಗೆ ಸೇರಿಸಿ</value>
+    <value>ಸ್ಮರಣೆ ಅಂಶಕ್ಕೆ ಸೇರಿಸಿ</value>
     <comment>Screen reader prompt for the Calculator Memory Add swipe button in the Memory list</comment>
   </data>
   <data name="MemPlusMenuItem.Text" xml:space="preserve">
-    <value>ಮೆಮೊರಿ ಐಟಂಗೆ ಸೇರಿಸಿ</value>
+    <value>ಸ್ಮರಣೆ ಅಂಶಕ್ಕೆ ಸೇರಿಸಿ</value>
     <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
   </data>
   <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಮೆಮೊರಿ ಐಟಂನಿಂದ ಕಳೆಯಿರಿ</value>
+    <value>ಸ್ಮರಣೆ ಐಟಂನಿಂದ ಕಳೆಯಿರಿ</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract swipe button in the Memory list</comment>
   </data>
   <data name="MemMinusMenuItem.Text" xml:space="preserve">
-    <value>ಮೆಮೊರಿ ಐಟಂನಿಂದ ಕಳೆಯಿರಿ</value>
+    <value>ಸ್ಮರಣೆ ಐಟಂನಿಂದ ಕಳೆಯಿರಿ</value>
     <comment>Text string for the Calculator Memory Subtract option in the Memory list context menu</comment>
   </data>
   <data name="DeleteHistorySwipeItem.Text" xml:space="preserve">
@@ -714,11 +714,11 @@
     <comment>Screen reader prompt for the Calculator Delete option in the History list context menu</comment>
   </data>
   <data name="backSpaceButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Backspace</value>
+    <value>ಬ್ಯಾಕ್ ಸ್ಪೇಸ್</value>
     <comment>Screen reader prompt for the Calculator Backspace button</comment>
   </data>
   <data name="BinaryZero.Text" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
     <comment>Screen reader prompt for the Calculator number "0" button</comment>
   </data>
   <data name="BinaryOne.Text" xml:space="preserve">
@@ -822,7 +822,7 @@
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ನಾಲ್ಕರಷ್ಟು ಪದ ಟಾಗಲ್</value>
+    <value>ನಾಲ್ಮಡಿ ಪದ ಟಾಗಲ್</value>
     <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
   </data>
   <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -838,7 +838,7 @@
     <comment>Screen reader prompt for the Calculator byte button. Should read as "Byte toggle button".</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಬಿಟ್ ಟಾಗಲ್ ಮಾಡುವ ಕೀಪ್ಯಾಡ್</value>
+    <value>ಬಿಟ್ ಟಾಗ್ಲಿಂಗ್ ಕೀಪ್ಯಾಡ್</value>
     <comment>Screen reader prompt for the Calculator bitFlip button</comment>
   </data>
   <data name="fullKeypad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -934,7 +934,7 @@
     <comment>Screen reader prompt for the Calculator button HYP in the scientific operator keypad</comment>
   </data>
   <data name="piButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಪೈ</value>
+    <value>Pi</value>
     <comment>Screen reader prompt for the Calculator pi button  on the scientific operator keypad</comment>
   </data>
   <data name="sinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -946,19 +946,19 @@
     <comment>Screen reader prompt for the Calculator cos button  on the scientific operator keypad</comment>
   </data>
   <data name="tanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಸ್ಪರ್ಶಕ</value>
+    <value>ಟ್ಯಾಂಜೆಂಟ್</value>
     <comment>Screen reader prompt for the Calculator tan button  on the scientific operator keypad</comment>
   </data>
   <data name="sinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಸಂಕೇತ</value>
+    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಸೈನ್</value>
     <comment>Screen reader prompt for the Calculator sinh button  on the scientific operator keypad</comment>
   </data>
   <data name="coshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಕೊಸೈನ್</value>
+    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಕೋಸೈನ್</value>
     <comment>Screen reader prompt for the Calculator cosh button  on the scientific operator keypad</comment>
   </data>
   <data name="tanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಸ್ಪರ್ಶಕ</value>
+    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಟ್ಯಾಂಜೆಂಟ್</value>
     <comment>Screen reader prompt for the Calculator tanh button  on the scientific operator keypad</comment>
   </data>
   <data name="xpower2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -978,7 +978,7 @@
     <comment>Screen reader prompt for the inverted cos on the scientific operator keypad.</comment>
   </data>
   <data name="invtanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಆರ್ಕ್ ಸ್ಪರ್ಶಕ</value>
+    <value>ಆರ್ಕ್ ಟ್ಯಾಂಜೆಂಟ್</value>
     <comment>Screen reader prompt for the inverted tan on the scientific operator keypad.</comment>
   </data>
   <data name="invsinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -986,11 +986,11 @@
     <comment>Screen reader prompt for the inverted sinh on the scientific operator keypad.</comment>
   </data>
   <data name="invcoshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಆರ್ಕ್ ಕೊಸೈನ್</value>
+    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಆರ್ಕ್ ಕೋಸೈನ್</value>
     <comment>Screen reader prompt for the inverted cosh on the scientific operator keypad.</comment>
   </data>
   <data name="invtanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಆರ್ಕ್ ಸ್ಪರ್ಶಕ</value>
+    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಆರ್ಕ್ ಟ್ಯಾಂಜೆಂಟ್</value>
     <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
   </data>
   <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1058,11 +1058,11 @@
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
   <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಮೋಡ್ ಡ್ರಾಪ್‌ಡೌನ್</value>
+    <value>ಮೋಡ್ ಡ್ರಾಪ್‍ಡೌನ್</value>
     <comment>Screen reader prompt for the Mode dropdown field in Snapped and Portrait modes.</comment>
   </data>
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ವರ್ಗಗಳ ಡ್ರಾಪ್‌ಡೌನ್</value>
+    <value>ವರ್ಗಗಳ ಡ್ರಾಪ್‍ಡೌನ್</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1082,11 +1082,11 @@
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
-    <value>%1 %2 ನಿಂದ ಪರಿವರ್ತಿಸುತ್ತದೆ</value>
+    <value>%1 %2 ನಿಂದ ಪರಿವರ್ತಿಸಿ</value>
     <comment>Screen reader prompt for the Unit Converter Value1 i.e. top number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ValueFrom_Decimal" xml:space="preserve">
-    <value>%1 ಪಾಯಿಂಟ್‌‌ನಿಂದ %2 ಗೆ ಪರಿವರ್ತಿಸಿ</value>
+    <value>%1 ಪಾಯಿಂಟ‍ನಿಂದ %2 ಗೆ ಪರಿವರ್ತಿಸಿ</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Convert from 7 point _current_unit_". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_ValueTo" xml:space="preserve">
@@ -1094,7 +1094,7 @@
     <comment>Screen reader prompt for the Unit Converter Value2 i.e. bottom number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ConversionResult" xml:space="preserve">
-    <value>%1 %2 ಇದೆ %3 %4</value>
+    <value>%1 %2 ಇದು %3 %4 ಆಗಿದೆ</value>
     <comment>Screen reader prompt for a conversion result, ie "2 liters is 2,000 milliliters" . %1 = From unit display value, %2 = From unit, %3 = To unit display value, %4 = To unit.</comment>
   </data>
   <data name="InputUnit_Name" xml:space="preserve">
@@ -1102,7 +1102,7 @@
     <comment>Screen reader prompt for the Unit Converter Units1 i.e. top units field.</comment>
   </data>
   <data name="OutputUnit_Name" xml:space="preserve">
-    <value>ಔಟ್‌ಪುಟ್ ಯುನಿಟ್</value>
+    <value>ಔಟ್‍ಪುಟ್ ಯುನಿಟ್</value>
     <comment>Screen reader prompt for the Unit Converter Units2 i.e. bottom units field.</comment>
   </data>
   <data name="CategoryName_AreaText" xml:space="preserve">
@@ -1162,7 +1162,7 @@
     <comment>A measurement unit for volume, in plural. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FluidOunceUK" xml:space="preserve">
-    <value>ಎಫ್ಎಲ್ ಓಜಿ (UK)</value>
+    <value>fl oz (UK)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_FluidOunceUS" xml:space="preserve">
@@ -1170,11 +1170,11 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_FluidOunceUS" xml:space="preserve">
-    <value>ಎಫ್ಎಲ್ ಓಜಿ (US)</value>
+    <value>fl oz (US)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUK" xml:space="preserve">
-    <value>ಗ್ಯಾಲನ್‌ಗಳು (UK)</value>
+    <value>ಗ್ಯಾಲನ್‍ಗಳು (UK)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_GallonUK" xml:space="preserve">
@@ -1182,7 +1182,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_GallonUS" xml:space="preserve">
-    <value>ಗ್ಯಾಲನ್‌ಗಳು (US)</value>
+    <value>ಗ್ಯಾಲನ್‍ಗಳು (US)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_GallonUS" xml:space="preserve">
@@ -1190,7 +1190,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Liter" xml:space="preserve">
-    <value>ಲೀಟರ್‌ಗಳು</value>
+    <value>ಲೀಟರ್‌‍ಗಳು</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Liter" xml:space="preserve">
@@ -1198,7 +1198,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
-    <value>ಮಿಲಿಲೀಟರ್‌ಗಳು</value>
+    <value>ಮಿಲಿಲೀಟರ್‌‍ಗಳು</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Milliliter" xml:space="preserve">
@@ -1210,7 +1210,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_PintUK" xml:space="preserve">
-    <value>ಪಿಟಿ (UK)</value>
+    <value>pt (UK)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_PintUS" xml:space="preserve">
@@ -1218,11 +1218,11 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_PintUS" xml:space="preserve">
-    <value>ಪಿಟಿ (US)</value>
+    <value>pt (US)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TablespoonUS" xml:space="preserve">
-    <value>ಟೇಬಲ್‌ಸ್ಪೂನ್‌ಗಳು (US)</value>
+    <value>ಟೇಬಲ್‍ಸ್ಪೂನ್‍ಗಳು (US)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TablespoonUS" xml:space="preserve">
@@ -1230,7 +1230,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TeaspoonUS" xml:space="preserve">
-    <value>ಟೀಸ್ಪೂನ್‌ಗಳು (US)</value>
+    <value>ಟೀಸ್ಪೂನ್‍ಗಳು (US)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TeaspoonUS" xml:space="preserve">
@@ -1238,7 +1238,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TablespoonUK" xml:space="preserve">
-    <value>ಟೇಬಲ್‌ಸ್ಪೂನ್‌ಗಳು (UK)</value>
+    <value>ಟೇಬಲ್‍ಸ್ಪೂನ್‍ಗಳು (UK)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TablespoonUK" xml:space="preserve">
@@ -1246,7 +1246,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_TeaspoonUK" xml:space="preserve">
-    <value>ಟೀಸ್ಪೂನ್‌ಗಳು (UK)</value>
+    <value>ಟೀಸ್ಪೂನ್‍ಗಳು (UK)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TeaspoonUK" xml:space="preserve">
@@ -1266,11 +1266,11 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_QuartUS" xml:space="preserve">
-    <value>ಕ್ಯೂಟಿ (US)</value>
+    <value>qt (US)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_CupUS" xml:space="preserve">
-    <value>ಕಪ್‌ಗಳು (US)</value>
+    <value>ಕಪ್‍ಗಳು (US)</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CupUS" xml:space="preserve">
@@ -1282,7 +1282,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Bit" xml:space="preserve">
-    <value>ಬಿ</value>
+    <value>b</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_BritishThermalUnit" xml:space="preserve">
@@ -1314,11 +1314,11 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicFoot" xml:space="preserve">
-    <value>ಅ³</value>
+    <value>ft³</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicInch" xml:space="preserve">
-    <value>ಇಂ³</value>
+    <value>in³</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicMeter" xml:space="preserve">
@@ -1330,15 +1330,15 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Day" xml:space="preserve">
-    <value>ದಿ</value>
+    <value>d</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_DegreesCelsius" xml:space="preserve">
-    <value>°ಸಿ</value>
+    <value>°C</value>
     <comment>An abbreviation for "degrees Celsius"</comment>
   </data>
   <data name="UnitAbbreviation_DegreesFahrenheit" xml:space="preserve">
-    <value>°ಫ್ಯಾ</value>
+    <value>°F</value>
     <comment>An abbreviation for a "degrees Fahrenheit"</comment>
   </data>
   <data name="UnitAbbreviation_Electron-Volt" xml:space="preserve">
@@ -1354,7 +1354,7 @@
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Foot-Pound" xml:space="preserve">
-    <value>ಅಡಿ•ಎಲ್‌ಬಿ</value>
+    <value>ft•lb</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Gigabit" xml:space="preserve">
@@ -1366,7 +1366,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Hectare" xml:space="preserve">
-    <value>ಹೆಚ್ಎ</value>
+    <value>ha</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Horsepower" xml:space="preserve">
@@ -1378,15 +1378,15 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Inch" xml:space="preserve">
-    <value>ಇಂ</value>
+    <value>in</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Joule" xml:space="preserve">
-    <value>ಜೌ</value>
+    <value>J</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
-    <value>ಕೆ</value>
+    <value>K</value>
     <comment>An abbreviation for the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin)</comment>
   </data>
   <data name="UnitAbbreviation_Kilobit" xml:space="preserve">
@@ -1418,11 +1418,11 @@
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Knot" xml:space="preserve">
-    <value>ಕೆಎನ್</value>
+    <value>kn</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Mach" xml:space="preserve">
-    <value>ಮ್ಯಾ</value>
+    <value>M</value>
     <comment>An abbreviation for a measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
   </data>
   <data name="UnitAbbreviation_Megabit" xml:space="preserve">
@@ -1434,27 +1434,27 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Meter" xml:space="preserve">
-    <value>ಮ್ಯಾ</value>
+    <value>m</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_MetersPerSecond" xml:space="preserve">
-    <value>ನಿಮಿ/ಸೆ</value>
+    <value>m/s</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Micron" xml:space="preserve">
-    <value>µಮೀ</value>
+    <value>µm</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Microsecond" xml:space="preserve">
-    <value>µಎಸ್</value>
+    <value>µs</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Mile" xml:space="preserve">
-    <value>ಮಿ</value>
+    <value>mi</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_MilesPerHour" xml:space="preserve">
-    <value>ಎಮ್‌ಪಿಹೆಚ್</value>
+    <value>mph</value>
     <comment>An abbreviation for a measurement unit of speed</comment>
   </data>
   <data name="UnitAbbreviation_Millimeter" xml:space="preserve">
@@ -1462,7 +1462,7 @@
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Millisecond" xml:space="preserve">
-    <value>ಮಿಸೆ</value>
+    <value>ms</value>
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Minute" xml:space="preserve">
@@ -1470,15 +1470,15 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Nanometer" xml:space="preserve">
-    <value>ಎನ್ಎಮ್</value>
+    <value>nm</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_NauticalMile" xml:space="preserve">
-    <value>ಎನ್ಎಮ್ಐ</value>
+    <value>nmi</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_Petabit" xml:space="preserve">
-    <value>ಪಿಬಿ</value>
+    <value>Pb</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Petabyte" xml:space="preserve">
@@ -1486,7 +1486,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Foot-PoundPerMinute" xml:space="preserve">
-    <value>ಅಡಿ•ಎಲ್‌ಬಿ/ನಿಮಿ</value>
+    <value>ft•lb/min</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Second" xml:space="preserve">
@@ -1502,7 +1502,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareInch" xml:space="preserve">
-    <value>ಇಂಚು²</value>
+    <value>in²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareKilometer" xml:space="preserve">
@@ -1526,7 +1526,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Terabit" xml:space="preserve">
-    <value>ಟಿಬಿ</value>
+    <value>Tb</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Terabyte" xml:space="preserve">
@@ -1534,7 +1534,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Watt" xml:space="preserve">
-    <value>ಡಬ್ಲ್ಯೂ</value>
+    <value>W</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Week" xml:space="preserve">
@@ -1654,7 +1654,7 @@
     <comment>A measurement unit for power: British Thermal Units per minute. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Byte" xml:space="preserve">
-    <value>ಬೈಟ್‌ಗಳು</value>
+    <value>ಬೈಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Calorie" xml:space="preserve">
@@ -1666,27 +1666,27 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CentimetersPerSecond" xml:space="preserve">
-    <value>ಪ್ರತಿ ಸೆಕೆಂಡಿಗೆ ಸೆಂಟಿಮೀಟರ್‌ಗಳು</value>
+    <value>ಪ್ರತಿ ಸೆಕೆಂಡಿಗೆ ಸೆಂಟಿಮೀಟರ್‌‍ಗಳು</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicCentimeter" xml:space="preserve">
-    <value>ಕ್ಯೂಬಿಕ್ ಸೆಂಟಿಮೀಟರ್‌ಗಳು</value>
+    <value>ಘನ ಸೆಂಟಿಮೀಟರ್‌‍ಗಳು</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicFoot" xml:space="preserve">
-    <value>ಕ್ಯೂಬಿಕ್ ಅಡಿ</value>
+    <value>ಘನ ಅಡಿ</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicInch" xml:space="preserve">
-    <value>ಕ್ಯೂಬಿಕ್ ಇಂಚುಗಳು</value>
+    <value>ಘನ ಇಂಚುಗಳು</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicMeter" xml:space="preserve">
-    <value>ಕ್ಯೂಬಿಕ್ ಮೀಟರ್‌ಗಳು</value>
+    <value>ಘನ ಮೀಟರ್‌‍ಗಳು</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicYard" xml:space="preserve">
-    <value>ಕ್ಯೂಬಿಕ್ ಯಾರ್ಡ್‌ಗಳು</value>
+    <value>ಘನ ಯಾರ್ಡ್‍ಗಳು</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Day" xml:space="preserve">
@@ -1698,7 +1698,7 @@
     <comment>An option in the unit converter to select degrees Celsius</comment>
   </data>
   <data name="UnitName_DegreesFahrenheit" xml:space="preserve">
-    <value>ಫ್ಯಾರೆನ್‌ಹೀಟ್</value>
+    <value>ಫ್ಯಾರೆನ್‍ಹೀಟ್</value>
     <comment>An option in the unit converter to select degrees Fahrenheit</comment>
   </data>
   <data name="UnitName_Electron-Volt" xml:space="preserve">
@@ -1714,11 +1714,11 @@
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot-Pound" xml:space="preserve">
-    <value>ಫೂಟ್-ಪೌಂಡ್‌ಗಳು</value>
+    <value>ಫೂಟ್-ಪೌಂಡ್‍ಗಳು</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot-PoundPerMinute" xml:space="preserve">
-    <value>ಫೂಟ್-ಪೌಂಡ್‌ಗಳು/ನಿಮಿಷಕ್ಕೆ</value>
+    <value>ಫೂಟ್-ಪೌಂಡ್‍ಗಳು/ನಿಮಿಷಕ್ಕೆ</value>
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabit" xml:space="preserve">
@@ -1730,11 +1730,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hectare" xml:space="preserve">
-    <value>ಹೆಕ್ಟೇರ್‌ಗಳು</value>
+    <value>ಹೆಕ್ಟೇರ್‌‍ಗಳು</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Horsepower" xml:space="preserve">
-    <value>ಹಾರ್ಸ್‌ಪವರ್ (US)</value>
+    <value>ಹಾರ್ಸ್ ಪವರ್ (US)</value>
     <comment>A measurement unit for power</comment>
   </data>
   <data name="UnitName_Hour" xml:space="preserve">
@@ -1746,7 +1746,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Joule" xml:space="preserve">
-    <value>ಜೌಲ್‌ಗಳು</value>
+    <value>ಜೌಲ್‍ಗಳು</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
@@ -1766,15 +1766,15 @@
     <comment>A measurement unit for energy. The scientific name is kilocalorie, but this is what is commonly referred to as a "calorie" or "large calorie" when talking about food. Please use the everyday-use word for food energy calories if there is one. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilojoule" xml:space="preserve">
-    <value>ಕಿಲೋಜೌಲ್‌ಗಳು</value>
+    <value>ಕಿಲೋಜೌಲ್‍ಗಳು</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilometer" xml:space="preserve">
-    <value>ಕಿಲೋಮೀಟರ್‌ಗಳು</value>
+    <value>ಕಿಲೋಮೀಟರ್‌‍ಗಳು</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_KilometersPerHour" xml:space="preserve">
-    <value>ಪ್ರತಿ ಗಂಟೆಗೆ ಕಿಲೋಮೀಟರ್‌ಗಳು</value>
+    <value>ಪ್ರತಿ ಗಂಟೆಗೆ ಕಿಲೋಮೀಟರ್‌‍ಗಳು</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilowatt" xml:space="preserve">
@@ -1802,11 +1802,11 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_MetersPerSecond" xml:space="preserve">
-    <value>ಪ್ರತಿ ಸೆಕೆಂಡಿಗೆ ಮೀಟರ್‌ಗಳು</value>
+    <value>ಪ್ರತಿ ಸೆಕೆಂಡಿಗೆ ಮೀಟರ್‌‍ಗಳು</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Micron" xml:space="preserve">
-    <value>ಮೈಕ್ರಾನ್‌ಗಳು</value>
+    <value>ಮೈಕ್ರಾನ್‍ಗಳು</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Microsecond" xml:space="preserve">
@@ -1822,7 +1822,7 @@
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Millimeter" xml:space="preserve">
-    <value>ಮಿಲಿಮೀಟರ್‌ಗಳು</value>
+    <value>ಮಿಲಿಮೀಟರ್‌‍ಗಳು</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Millisecond" xml:space="preserve">
@@ -1834,7 +1834,7 @@
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
-    <value>ನ್ಯಾನೋಮೀಟರ್‌ಗಳು</value>
+    <value>ನ್ಯಾನೋಮೀಟರ್‌‍ಗಳು</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
@@ -1850,7 +1850,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Second" xml:space="preserve">
-    <value>ಸೆಕೆಂಡ್‌ಗಳು</value>
+    <value>ಸೆಕೆಂಡ್‍ಗಳು</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareCentimeter" xml:space="preserve">
@@ -1894,7 +1894,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Watt" xml:space="preserve">
-    <value>ವ್ಯಾಟ್‌ಗಳು</value>
+    <value>ವ್ಯಾಟ್‍ಗಳು</value>
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Week" xml:space="preserve">
@@ -1930,7 +1930,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Bar" xml:space="preserve">
-    <value>ಬಿಎ</value>
+    <value>ba</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_KiloPascal" xml:space="preserve">
@@ -1950,7 +1950,7 @@
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Centigram" xml:space="preserve">
-    <value>ಸಿಜಿ</value>
+    <value>cg</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Decagram" xml:space="preserve">
@@ -1958,7 +1958,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Decigram" xml:space="preserve">
-    <value>ಡಿಜಿ</value>
+    <value>dg</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Gram" xml:space="preserve">
@@ -1966,11 +1966,11 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Hectogram" xml:space="preserve">
-    <value>ಹೆಚ್‌ಜಿ</value>
+    <value>hg</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Kilogram" xml:space="preserve">
-    <value>ಕೆಜಿ</value>
+    <value>kg</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_LongTon" xml:space="preserve">
@@ -1986,7 +1986,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Pound" xml:space="preserve">
-    <value>ಎಲ್‌ಬಿ</value>
+    <value>lb</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_ShortTon" xml:space="preserve">
@@ -1994,15 +1994,15 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Stone" xml:space="preserve">
-    <value>ಎಸ್‌ಟಿ</value>
+    <value>st</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Tonne" xml:space="preserve">
-    <value>ಟಿ</value>
+    <value>t</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitName_Carat" xml:space="preserve">
-    <value>ಕ್ಯಾರಟ್‌ಗಳು</value>
+    <value>ಕ್ಯಾರಟ್‍ಗಳು</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Degree" xml:space="preserve">
@@ -2010,7 +2010,7 @@
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Radian" xml:space="preserve">
-    <value>ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Gradian" xml:space="preserve">
@@ -2026,11 +2026,11 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_KiloPascal" xml:space="preserve">
-    <value>ಕಿಲೋಪ್ಯಾಸ್ಕಲ್‌ಗಳು</value>
+    <value>ಕಿಲೋಪ್ಯಾಸ್ಕಲ್‍ಗಳು</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>ಪಾದರಸದ ಮಿಲಿಮೀಟರ್‌ಗಳು </value>
+    <value>ಪಾದರಸದ ಮಿಲಿಮೀಟರ್‌‍ಗಳು</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
@@ -2038,7 +2038,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_PSI" xml:space="preserve">
-    <value>ಪ್ರತಿ ಚದರ ಇಂಚಿಗೆ ಪೌಂಡ್‌ಗಳು</value>
+    <value>ಪ್ರತಿ ಚದರ ಇಂಚಿಗೆ ಪೌಂಡ್‍ಗಳು</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Centigram" xml:space="preserve">
@@ -2066,7 +2066,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_LongTon" xml:space="preserve">
-    <value>ಲಾಂಗ್ ಟನ್‌ಗಳು (UK)</value>
+    <value>ಲಾಂಗ್ ಟನ್‍ಗಳು (UK)</value>
     <comment>A measurement unit for weight. This is the UK version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Milligram" xml:space="preserve">
@@ -2082,7 +2082,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_ShortTon" xml:space="preserve">
-    <value>ಶಾರ್ಟ್ ಟನ್‌ಗಳು (US)</value>
+    <value>ಶಾರ್ಟ್ ಟನ್‍ಗಳು (US)</value>
     <comment>A measurement unit for weight. This is the US version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Stone" xml:space="preserve">
@@ -2090,7 +2090,7 @@
     <comment>A measurement unit for weight. Equal to 14 pounds. Note that this is the plural form of the word in English (eg. "This man weighs 11 stone."). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tonne" xml:space="preserve">
-    <value>ಮೆಟ್ರಿಕ್ ಟನ್‌ಗಳು</value>
+    <value>ಮೆಟ್ರಿಕ್ ಟನ್‍ಗಳು</value>
     <comment>A measurement unit for weight. This is the metric version of tonne. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CD" xml:space="preserve">
@@ -2142,11 +2142,11 @@
     <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_JumboJet" xml:space="preserve">
-    <value>ಜಂಬೋ ಜೆಟ್‌ಗಳು</value>
+    <value>ಜಂಬೋ ಜೆಟ್‍ಗಳು</value>
     <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_JumboJet" xml:space="preserve">
-    <value>ಜಂಬೋ ಜೆಟ್‌ಗಳು</value>
+    <value>ಜಂಬೋ ಜೆಟ್‍ಗಳು</value>
     <comment>A jumbo jet (eg. Boeing 747), used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_LightBulb" xml:space="preserve">
@@ -2158,27 +2158,27 @@
     <comment>A light bulb, used as a comparison measurement unit for power (60 watts). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Horse" xml:space="preserve">
-    <value>ಹಾರ್ಸ್‌ಗಳು</value>
+    <value>ಹಾರ್ಸ್‍ಗಳು</value>
     <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Horse" xml:space="preserve">
-    <value>ಹಾರ್ಸ್‌ಗಳು</value>
+    <value>ಹಾರ್ಸ್‍ಗಳು</value>
     <comment>A horse, used as a comparison measurement unit for power (~1 horsepower) or speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bathtub" xml:space="preserve">
-    <value>ಬಾತ್‌ಟಬ್‌ಗಳು</value>
+    <value>ಬಾತ್‍ಟಬ್‍ಗಳು</value>
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Bathtub" xml:space="preserve">
-    <value>ಬಾತ್‌ಟಬ್‌ಗಳು</value>
+    <value>ಬಾತ್‍ಟಬ್‍ಗಳು</value>
     <comment>A bathtub full of water, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Snowflake" xml:space="preserve">
-    <value>ಸ್ನೋಫ್ಲೇಕ್‌ಗಳು</value>
+    <value>ಸ್ನೋಫ್ಲೇಕ್‍ಗಳು</value>
     <comment>A snowflake, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Snowflake" xml:space="preserve">
-    <value>ಸ್ನೋಫ್ಲೇಕ್‌ಗಳು</value>
+    <value>ಸ್ನೋಫ್ಲೇಕ್‍ಗಳು</value>
     <comment>A snowflake, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Elephant" xml:space="preserve">
@@ -2190,43 +2190,43 @@
     <comment>An elephant, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Turtle" xml:space="preserve">
-    <value>ಟರ್ಟಲ್‌ಗಳು</value>
+    <value>ಆಮೆಗಳು</value>
     <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Turtle" xml:space="preserve">
-    <value>ಟರ್ಟಲ್‌ಗಳು</value>
+    <value>ಆಮೆಗಳು</value>
     <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Jet" xml:space="preserve">
-    <value>ಜೆಟ್‌ಗಳು</value>
+    <value>ಜೆಟ್‍‍ಗಳು</value>
     <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Jet" xml:space="preserve">
-    <value>ಜೆಟ್‌ಗಳು</value>
+    <value>ಜೆಟ್‍‍ಗಳು</value>
     <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Whale" xml:space="preserve">
-    <value>ವೇಲ್‌ಗಳು</value>
+    <value>ತಿಮಿಂಗಿಲಗಳು</value>
     <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Whale" xml:space="preserve">
-    <value>ವೇಲ್‌ಗಳು</value>
+    <value>ತಿಮಿಂಗಿಲಗಳು</value>
     <comment>A blue whale, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CoffeeCup" xml:space="preserve">
-    <value>ಕಾಫಿ ಕಪ್‌ಗಳು</value>
+    <value>ಕಾಫಿ ಕಪ್‍ಗಳು</value>
     <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CoffeeCup" xml:space="preserve">
-    <value>ಕಾಫಿ ಕಪ್‌ಗಳು</value>
+    <value>ಕಾಫಿ ಕಪ್‍ಗಳು</value>
     <comment>A coffee cup, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SwimmingPool" xml:space="preserve">
-    <value>ಈಜು ಕೊಳಗಳು</value>
+    <value>ಈಜುಕೊಳಗಳು</value>
     <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_SwimmingPool" xml:space="preserve">
-    <value>ಈಜು ಕೊಳಗಳು</value>
+    <value>ಈಜುಕೊಳಗಳು</value>
     <comment>An Olympic-sized swimming pool, used as a comparison measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hand" xml:space="preserve">
@@ -2270,11 +2270,11 @@
     <comment>A slice of chocolate cake, used as a comparison measurement unit for food energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_TrainEngine" xml:space="preserve">
-    <value>ರೈಲು ಇಂಜಿನ್‌ಗಳು</value>
+    <value>ರೈಲು ಇಂಜಿನ್‍ಗಳು</value>
     <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_TrainEngine" xml:space="preserve">
-    <value>ರೈಲು ಇಂಜಿನ್‌ಗಳು</value>
+    <value>ರೈಲು ಇಂಜಿನ್‍ಗಳು</value>
     <comment>A train engine, used as a comparison measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerBall" xml:space="preserve">
@@ -2317,6 +2317,10 @@
     <value>© %1 Microsoft. ಎಲ್ಲ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>ನೀವು Windows ಕ್ಯಾಲ್ಕುಲೇಟರ್‌ಗೆ ಹೇಗೆ ಕೊಡುಗೆ ನೀಡಬಹುದು ಎಂದು ತಿಳಿಯಲು, %HL%GitHub%HL% ನಲ್ಲಿ Project ಅನ್ನು ಪರಿಶೀಲಿಸಿ.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>ಕುರಿತು</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
@@ -2342,75 +2346,75 @@
     <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
   </data>
   <data name="UnitName_Gibibits" xml:space="preserve">
-    <value>ಜಿಬಿಬಿಟ್‌ಗಳು</value>
+    <value>ಜಿಬಿಬಿಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gibibytes" xml:space="preserve">
-    <value>ಜಿಬಿಬೈಟ್‌ಗಳು</value>
+    <value>ಜಿಬಿಬೈಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibits" xml:space="preserve">
-    <value>ಕಿಬಿಬಿಟ್‌ಗಳು</value>
+    <value>ಕಿಬಿಬೈಟ್‍‌ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibytes" xml:space="preserve">
-    <value>ಕಿಬಿಬೈಟ್‌ಗಳು</value>
+    <value>ಕಿಬಿಬೈಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mebibits" xml:space="preserve">
-    <value>ಮೆಬಿಬಿಟ್‌ಗಳು</value>
+    <value>ಮೆಬಿಬಿಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mebibytes" xml:space="preserve">
-    <value>ಮೆಬಿಬೈಟ್‌ಗಳು</value>
+    <value>ಮೆಬಿಬೈಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pebibits" xml:space="preserve">
-    <value>ಪೆಬಿಬಿಟ್‌ಗಳು</value>
+    <value>ಪೆಬಿಬಿಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pebibytes" xml:space="preserve">
-    <value>ಪೆಬಿಬೈಟ್‌ಗಳು</value>
+    <value>ಪೆಬಿಬೈಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tebibits" xml:space="preserve">
-    <value>ಟೆಬಿಬಿಟ್‌ಗಳು</value>
+    <value>ಟೆಬಿಬಿಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tebibytes" xml:space="preserve">
-    <value>ಟೆಬಿಬೈಟ್‌ಗಳು</value>
+    <value>ಟೆಬಿಬೈಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabits" xml:space="preserve">
-    <value>ಎಕ್ಸಾಬಿಟ್‌ಗಳು</value>
+    <value>ಎಕ್ಸಾಬಿಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabytes" xml:space="preserve">
-    <value>ಎಕ್ಸಾಬೈಟ್‌ಗಳು</value>
+    <value>ಎಕ್ಸಾಬೈಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibits" xml:space="preserve">
-    <value>ಎಕ್ಸ್‌ಬಿಬಿಟ್‌ಗಳು</value>
+    <value>ಎಕ್ಸ್‌ಬಿ‌ಬೈಟ್‌ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibytes" xml:space="preserve">
-    <value>ಎಕ್ಸ್‌ಬಿಬೈಟ್‌ಗಳು</value>
+    <value>ಎಕ್ಸ್‌ಬಿ‌ಬೈಟ್‌ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabits" xml:space="preserve">
-    <value>ಝೆಟಾಬಿಟ್‌ಗಳು</value>
+    <value>ಝೆಟಾಬಿಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabytes" xml:space="preserve">
-    <value>ಝೆಟಾಬೈಟ್‌ಗಳು</value>
+    <value>ಝೆಟಾಬೈಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zebibits" xml:space="preserve">
-    <value>ಝೆಬಿಬಿಟ್‌ಗಳು</value>
+    <value>ಝೆಬಿಬಿಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zebibytes" xml:space="preserve">
-    <value>ಝೆಬಿಬೈಟ್‌ಗಳು</value>
+    <value>ಝೆಬಿಬೈಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabit" xml:space="preserve">
@@ -2422,11 +2426,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibits" xml:space="preserve">
-    <value>ಯೊಬಿಬಿಟ್‌ಗಳು</value>
+    <value>ಯೊಬಿಬಿಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibytes" xml:space="preserve">
-    <value>ಯೊಬಿಬೈಟ್‌ಗಳು</value>
+    <value>ಯೊಬಿಬೈಟ್‍ಗಳು</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="DateCalculationModeText" xml:space="preserve">
@@ -2532,7 +2536,7 @@
     <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಇತಿಹಾಸ ಮತ್ತು ಮೆಮೊರಿ ಪಟ್ಟಿಗಳು</value>
+    <value>ಇತಿಹಾಸ ಮತ್ತು ಸ್ಮರಣೆ ಪಟ್ಟಿಗಳು</value>
     <comment>Automation name for the group of controls for history and memory lists.</comment>
   </data>
   <data name="MemoryPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2544,11 +2548,11 @@
     <comment>Automation name for the group of standard function buttons (Percent, Square Root, Square, Cube, Reciprocal)</comment>
   </data>
   <data name="DisplayControls.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಡಿಸ್‌ಪ್ಲೇ ನಿಯಂತ್ರಣಗಳು</value>
+    <value>ಪ್ರದರ್ಶನ ನಿಯಂತ್ರಣಗಳು</value>
     <comment>Automation name for the group of display control buttons (Clear, Clear Entry, and Backspace)</comment>
   </data>
   <data name="StandardOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಪ್ರಮಾಣಿತ ಆಪರೇಟರ್‌ಗಳು</value>
+    <value>ಪ್ರಮಾಣಿತ ಆಪರೇಟರ್‌‍ಗಳು</value>
     <comment>Automation name for the group of standard operator buttons (Add, Subtract, Multiply, Divide, and Equals)</comment>
   </data>
   <data name="NumberPad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2556,7 +2560,7 @@
     <comment>Automation name for the group of NumberPad buttons (0-9, A-F and Decimal button)</comment>
   </data>
   <data name="ScientificAngleOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಕೋನ ಆಪರೇಟರ್‌ಗಳು</value>
+    <value>ಆಪರೇಟರ್‌ಗಳು</value>
     <comment>Automation name for the group of Scientific angle operators (Degree mode, Hyperbolic toggle, and Precision button)</comment>
   </data>
   <data name="ScientificFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2568,7 +2572,7 @@
     <comment>Automation name for the group of radices (Hexadecimal, Decimal, Octal, Binary). https://en.wikipedia.org/wiki/Radix </comment>
   </data>
   <data name="ProgrammerOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಪ್ರೋಗ್ರಾಮರ್ ಆಪರೇಟರ್‌ಗಳು</value>
+    <value>ಪ್ರೋಗ್ರಾಮರ್ ಆಪರೇಟರ್‌‍ಗಳು</value>
     <comment>Automation name for the group of programmer operators (RoL, RoR, Lsh, Rsh, OR, XOR, NOT, AND).</comment>
   </data>
   <data name="InputModeSelectionGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2596,7 +2600,7 @@
     <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when user presses a button with auditory feedback. "%1" is the display value and "%2" is the button press feedback. Example, user presses "plus" and hears "Display is 7 plus".</comment>
   </data>
   <data name="Format_MemorySave" xml:space="preserve">
-    <value>ಸ್ಮರಣೆ %1 ಉಳಿಸಲಾಗಿದೆ</value>
+    <value>%1 ಅನ್ನು ಸ್ಮರಣೆಗೆ ಉಳಿಸಲಾಗಿದೆ</value>
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user stores a number to memory. The %1 is the automation name of the display. Users will hear "_current_value_ saved to memory".</comment>
   </data>
   <data name="Format_MemorySlotChanged" xml:space="preserve">
@@ -2660,7 +2664,7 @@
     <comment>The exact ratio between converted currencies, e.g. "1 USD = 0.8885 EUR". %1 will always be '1'. %2 is the From currency code. %3 is the formatted conversion ratio. %4 is the To currency code.</comment>
   </data>
   <data name="CurrencyTimestampFormat" xml:space="preserve">
-    <value>ನವೀಕರಿಸಿದ ದಿನಾಂಕ %1 %2</value>
+    <value>%1 %2 ನವೀಕರಿಸಲಾಗಿದೆ</value>
     <comment>The timestamp of currency conversion ratios fetched from an online service. %1 is the date. %2 is the time. Example: "Updated Sep 28, 2016 5:42 PM"</comment>
   </data>
   <data name="RefreshButtonText.Content" xml:space="preserve">
@@ -2676,7 +2680,7 @@
     <comment>The text displayed when currency ratio data fails to load.</comment>
   </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
-    <value>ಆಫ್‌ಲೈನ್. ದಯವಿಟ್ಟು ನಿಮ್ಮ %HL%ನೆಟ್‌ವರ್ಕ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು%HL% ಪರಿಶೀಲಿಸಿ.</value>
+    <value>ಆಫ್‌ಲೈನ್. ದಯವಿಟ್ಟು ನಿಮ್ಮ %HL%ನೆಟ್‌ವರ್ಕ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳು %HL% ಅನ್ನು ಪರಿಶೀಲಿಸಿ</value>
     <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
   </data>
   <data name="UpdatingCurrencyRates" xml:space="preserve">
@@ -2728,7 +2732,7 @@
     <comment>AccessKey for the energy converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_LengthAccessKey" xml:space="preserve">
-    <value>L</value>
+    <value>ಲೀ</value>
     <comment>AccessKey for the length converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_PowerAccessKey" xml:space="preserve">
@@ -2788,11 +2792,11 @@
     <comment>Name for the sine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="SineRadians" xml:space="preserve">
-    <value>ಸೈನ್ ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ಸೈನ್ ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>Name for the sine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="SineGradians" xml:space="preserve">
-    <value>ಸೈನ್ ಗ್ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ಸೈನ್ ಗ್ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>Name for the sine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineDegrees" xml:space="preserve">
@@ -2800,11 +2804,11 @@
     <comment>Name for the inverse sine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineRadians" xml:space="preserve">
-    <value>ವಿಲೋಮ ಸೈನ್ ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ವಿಲೋಮ ಸೈನ್ ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>Name for the inverse sine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineGradians" xml:space="preserve">
-    <value>ವಿಲೋಮ ಸೈನ್ ಗ್ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ವಿಲೋಮ ಸೈನ್ ಗ್ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>Name for the inverse sine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="HyperbolicSine" xml:space="preserve">
@@ -2820,11 +2824,11 @@
     <comment>Name for the cosine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="CosineRadians" xml:space="preserve">
-    <value>ಕೊಸೈನ್ ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ಕೊಸೈನ್ ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>Name for the cosine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="CosineGradians" xml:space="preserve">
-    <value>ಕೊಸೈನ್ ಗ್ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ಕೊಸೈನ್ ಗ್ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>Name for the cosine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineDegrees" xml:space="preserve">
@@ -2832,19 +2836,19 @@
     <comment>Name for the inverse cosine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineRadians" xml:space="preserve">
-    <value>ವಿಲೋಮ ಕೊಸೈನ್ ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ವಿಲೋಮ ಕೊಸೈನ್ ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>Name for the inverse cosine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineGradians" xml:space="preserve">
-    <value>ವಿಲೋಮ ಕೋಸೈನ್ ಗ್ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ವಿಲೋಮ ಕೋಸೈನ್ ಗ್ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>Name for the inverse cosine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="HyperbolicCosine" xml:space="preserve">
-    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಕೊಸೈನ್</value>
+    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಕೋಸೈನ್</value>
     <comment>Name for the hyperbolic cosine function. Used by screen readers.</comment>
   </data>
   <data name="InverseHyperbolicCosine" xml:space="preserve">
-    <value>ವಿಲೋಮ ಹೈಪರ್‌ಬೋಲಿಕ್ ಕೊಸೈನ್</value>
+    <value>ವಿಲೋಮ ಹೈಪರ್‌ಬೋಲಿಕ್ ಕೋಸೈನ್</value>
     <comment>Name for the inverse hyperbolic cosine function. Used by screen readers.</comment>
   </data>
   <data name="TangentDegrees" xml:space="preserve">
@@ -2852,11 +2856,11 @@
     <comment>Name for the tangent function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="TangentRadians" xml:space="preserve">
-    <value>ಸ್ಪರ್ಶಕ ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ಟ್ಯಾಂಜೆಂಟ್ ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>Name for the tangent function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="TangentGradians" xml:space="preserve">
-    <value>ಸ್ಪರ್ಶಕ ಗ್ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ಟ್ಯಾಂಜೆಂಟ್ ಗ್ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>Name for the tangent function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentDegrees" xml:space="preserve">
@@ -2864,19 +2868,19 @@
     <comment>Name for the inverse tangent function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentRadians" xml:space="preserve">
-    <value>ವಿಲೋಮ ಸ್ಪರ್ಶಕ ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ವಿಲೋಮ ಸ್ಪರ್ಶಕ ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>Name for the inverse tangent function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentGradians" xml:space="preserve">
-    <value>ವಿಲೋಮ ಸ್ಪರ್ಶಕ ಗ್ರೇಡಿಯನ್‌ಗಳು</value>
+    <value>ವಿಲೋಮ ಟ್ಯಾಂಜೆಂಟ್ ಗ್ರೇಡಿಯನ್‍ಗಳು</value>
     <comment>Name for the inverse tangent function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="HyperbolicTangent" xml:space="preserve">
-    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಸ್ಪರ್ಶಕ</value>
+    <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಟ್ಯಾಂಜೆಂಟ್</value>
     <comment>Name for the hyperbolic tangent function. Used by screen readers.</comment>
   </data>
   <data name="InverseHyperbolicTangent" xml:space="preserve">
-    <value>ವಿಲೋಮ ಹೈಪರ್‌ಬೋಲಿಕ್ ಸ್ಪರ್ಶಕ</value>
+    <value>ವಿಲೋಮ ಹೈಪರ್‌ಬೋಲಿಕ್ ಟ್ಯಾಂಜೆಂಟ್</value>
     <comment>Name for the inverse hyperbolic tangent function. Used by screen readers.</comment>
   </data>
   <data name="SecantDegrees" xml:space="preserve">
