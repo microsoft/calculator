@@ -18,7 +18,7 @@ namespace CalculatorUITestFramework
         Gradians
     }
 
-    public enum fEButtonState
+    public enum FEButtonState
     {
         Normal,
         Exponential
@@ -133,7 +133,7 @@ namespace CalculatorUITestFramework
                 }
         }
 
-        public void ResetFEButton(fEButtonState value)
+        public void ResetFEButton(FEButtonState value)
         {
             if (this.FixedToExponentialButton.GetAttribute("Toggle.ToggleState") != "0")
             {

@@ -90,8 +90,7 @@ namespace CalculatorUITestFramework
             {
                 throw new NotFoundException("Could not find 'Keep on top' button or 'Back to full view' button");
             }
-            var ToolTipText = ToolTip.Text.ToString();
-            return ToolTipText;
+            return ToolTip.Text;
         }
 
         ///// <summary>

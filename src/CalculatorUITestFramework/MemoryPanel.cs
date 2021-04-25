@@ -82,7 +82,7 @@ namespace CalculatorUITestFramework
 
         /// <summary>
         /// If the Memory label is not displayed, resize the window
-        /// Two attempts are made, the the lable is not found a "not found" exception is thrown
+        /// Two attempts are made, and if the label is not found, a "not found" exception is thrown
         /// </summary>
         public void ResizeWindowToDisplayMemoryLabel()
         {

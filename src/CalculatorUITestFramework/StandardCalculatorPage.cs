@@ -20,7 +20,7 @@ namespace CalculatorUITestFramework
         private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
 
         /// <summary>
-        /// Navigates the caclulator to Standard mode and ensures that it is in standard mode
+        /// Navigates the calculator to Standard mode and ensures that it is in standard mode
         /// </summary>
         public void NavigateToStandardCalculator()
         {
