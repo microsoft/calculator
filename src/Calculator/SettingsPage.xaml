@@ -82,6 +82,7 @@
 
 
                     <TextBlock x:Name="SettingsRestartApp"
+                               x:Uid="SettingsRestartApp"
                                Style="{StaticResource CaptionTextBlockStyle}"
                                Foreground="{StaticResource SystemBaseMediumColor}"/>
 

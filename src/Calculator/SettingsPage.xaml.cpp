@@ -27,7 +27,6 @@ using namespace winrt::Windows::Storage;
 
 SettingsPage::SettingsPage()
 {
-    auto resourceLoader = AppResourceProvider::GetInstance();
     auto themevalue = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"themeSetting");
     auto restartValue = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"restartApp");
     auto currentThemeValue = Windows::Storage::ApplicationData::Current->LocalSettings->Values->Lookup(L"CurrentTheme");
@@ -44,7 +43,7 @@ SettingsPage::SettingsPage()
     
     if (themevalue != nullptr)
     {
-        if (colorSetting == L"Light")
+        if (colorSetting == ApplicationTheme::Light.ToString())
         {
             SettingsLightTheme->IsChecked = true;
             if (currentTheme == nullptr)
@@ -52,7 +51,7 @@ SettingsPage::SettingsPage()
                 Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"CurrentTheme", L"Light");
             }
         }
-        else if (colorSetting == L"Dark")
+        else if (colorSetting == ApplicationTheme::Dark.ToString())
         {
             SettingsDarkTheme->IsChecked = true;
             if (currentTheme == nullptr)
@@ -131,15 +130,6 @@ void SettingsPage::InitializeContributeTextBlock()
 void SettingsPage::BackButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e)
 {
     auto rootFrame = dynamic_cast<::Frame ^>(Window::Current->Content);
-
-    if (SettingsRestartApp->Visibility == ::Visibility::Visible)
-    {
-        Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"restartApp", L"True");
-    }
-    else
-    {
-        Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"restartApp", L"False");
-    }
     rootFrame->Navigate((MainPage::typeid), this);
 }
 
@@ -186,18 +176,19 @@ void SettingsPage::ThemeChecked(Platform::Object ^ sender, Windows::UI::Xaml::Ro
     if (currentTheme == tag)
     {
         SettingsRestartApp->Visibility = ::Visibility::Collapsed;
+        Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"restartApp", L"False");
     }
     else
     {
         SettingsRestartApp->Visibility = ::Visibility::Visible;
-        SettingsRestartApp->Text = resourceLoader->GetResourceString("SettingsRestartNotice");
+        Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"restartApp", L"True");
     }
 
-    if (tag == "Light")
+    if (tag == ApplicationTheme::Light.ToString())
     {
         Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Light.ToString());
     }
-    else if (tag == "Dark")
+    else if (tag == ApplicationTheme::Dark.ToString())
     {
         Windows::Storage::ApplicationData::Current->LocalSettings->Values->Insert(L"themeSetting", ApplicationTheme::Dark.ToString());
     }

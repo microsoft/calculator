@@ -4722,9 +4722,9 @@
     <value>Microsoft Privacy Statement</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the Settings page.</comment>
   </data>
-  <data name="SettingsRestartNotice" xml:space="preserve">
+  <data name="SettingsRestartApp.Text" xml:space="preserve">
     <value>You'll see your changes the next time you start the app.</value>
-    <comment>Notice when the user change the theme.</comment>
+    <comment>Notice prompting the user to restart the app for changes to theme to take effect.</comment>
   </data>
   <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Back</value>
