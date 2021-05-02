@@ -16,12 +16,6 @@ namespace CalculatorApp
         property MainPage ^ MainPageProperty;
 
     private:
-        enum Theme
-        {
-            Light,
-            Dark,
-            System
-        };
         void SetDefaultFocus();
         void InitializeContributeTextBlock();
         void BackButtonClick(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
