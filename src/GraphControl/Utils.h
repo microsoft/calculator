@@ -168,7 +168,7 @@ public:
     Windows::UI::Xaml::Input::ICommand^ get() {\
     if (!donotuse_##p) {\
     donotuse_##p = CalculatorApp::Common::MakeDelegate(this, &m);\
-    } return donotuse_##p; }} private: Windows::UI::Xaml::Input::ICommand^ donotuse_##p;                                                                                                         \
+    } return donotuse_##p; }} private: Windows::UI::Xaml::Input::ICommand^ donotuse_##p;                                                                                                          \
                                                                                                                                                                \
 public:
 

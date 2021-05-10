@@ -30,6 +30,6 @@ namespace Graphing
 
         virtual bool TryResetSelection() = 0;
 
-		virtual std::shared_ptr< Graphing::Analyzer::IGraphAnalyzer > GetAnalyzer() const = 0;
+        virtual std::shared_ptr<Graphing::Analyzer::IGraphAnalyzer> GetAnalyzer() const = 0;
     };
 }

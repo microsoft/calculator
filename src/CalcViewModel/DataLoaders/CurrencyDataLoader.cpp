@@ -89,7 +89,7 @@ namespace CalculatorApp
     }
 }
 
-CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> client, const wchar_t * forcedResponseLanguage)
+CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> client, const wchar_t* forcedResponseLanguage)
     : m_client(move(client))
     , m_loadStatus(CurrencyLoadStatus::NotLoaded)
     , m_responseLanguage(L"en-US")

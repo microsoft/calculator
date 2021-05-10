@@ -82,7 +82,6 @@ public enum class GraphViewChangedReason
         void ZoomFromCenter(double scale);
         void ResetGrid();
 
-
         property Windows::Foundation::Point TraceLocation
         {
             Windows::Foundation::Point get()

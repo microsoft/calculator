@@ -6,7 +6,7 @@
 
 using namespace TraceLogging;
 using namespace std;
-using namespace Platform;;
+using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Diagnostics;
 
@@ -39,9 +39,9 @@ TraceLoggingCommon::TraceLoggingCommon()
     CoCreateGuid(&sessionGuid);
 }
 
- TraceLoggingCommon ^ TraceLoggingCommon::GetInstance()
+TraceLoggingCommon ^ TraceLoggingCommon::GetInstance()
 {
-     static TraceLoggingCommon ^ s_selfInstance = ref new TraceLoggingCommon();
+    static TraceLoggingCommon ^ s_selfInstance = ref new TraceLoggingCommon();
     return s_selfInstance;
 }
 
