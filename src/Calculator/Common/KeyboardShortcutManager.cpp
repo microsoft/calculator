@@ -528,7 +528,8 @@ void KeyboardShortcutManager::OnAcceleratorKeyActivated(CoreDispatcher ^, Accele
             return;
         }
 
-        const bool controlKeyPressed = (Window::Current->CoreWindow->GetKeyState(VirtualKey::Control) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
+        const bool controlKeyPressed =
+            (Window::Current->CoreWindow->GetKeyState(VirtualKey::Control) & CoreVirtualKeyStates::Down) == CoreVirtualKeyStates::Down;
         // Ctrl is pressed in addition to alt, this means Alt Gr is intended.  do not navigate.
         if (controlKeyPressed)
         {

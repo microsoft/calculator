@@ -75,7 +75,7 @@ namespace CalculatorApp
             Windows::Foundation::EventRegistrationToken m_textContainerSizeChangedToken;
             Windows::Foundation::EventRegistrationToken m_scrollRightClickToken;
             Windows::Foundation::EventRegistrationToken m_scrollLeftClickToken;
-            Windows::Foundation::EventRegistrationToken m_textBlockSizeChangedToken;            
+            Windows::Foundation::EventRegistrationToken m_textBlockSizeChangedToken;
         };
     }
 }

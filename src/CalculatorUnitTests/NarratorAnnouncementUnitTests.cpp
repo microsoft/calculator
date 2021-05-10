@@ -4,11 +4,9 @@
 
 #include <CppUnitTest.h>
 
-
 using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace CalculatorApp::Common::Automation;
-
 
 namespace CalculatorUnitTests
 {
@@ -183,10 +181,3 @@ namespace CalculatorUnitTests
 
     const Platform::StringReference NarratorAnnouncementUnitTests::m_testAnnouncement(L"TestAnnouncement");
 }
-
-
-
-
-
-
-

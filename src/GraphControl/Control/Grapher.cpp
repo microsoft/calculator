@@ -123,8 +123,8 @@ namespace GraphControl
                 HRESULT hr;
 
                 // Reset the Grid using the m_initialDisplayRange properties when the user was last in Manual Adjustment mode and an equation was added.
-                // Reset the Grid using the TryPlotGraph method when the range is updated via Graph Settings. Return out of this block so we don't render 2 times.
-                // Reset the Grid using the ResetRange() in all other cases.
+                // Reset the Grid using the TryPlotGraph method when the range is updated via Graph Settings. Return out of this block so we don't render 2
+                // times. Reset the Grid using the ResetRange() in all other cases.
                 if (m_resetUsingInitialDisplayRange)
                 {
                     hr = renderer->SetDisplayRanges(m_initialDisplayRangeXMin, m_initialDisplayRangeXMax, m_initialDisplayRangeYMin, m_initialDisplayRangeYMax);
@@ -1123,7 +1123,8 @@ optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bo
         {
             if (IsKeepCurrentView)
             {
-                // PrepareGraph() populates the values of the graph after TryInitialize but before rendering. This allows us to get the range of the graph to be rendered.
+                // PrepareGraph() populates the values of the graph after TryInitialize but before rendering. This allows us to get the range of the graph to be
+                // rendered.
                 if (SUCCEEDED(renderer->PrepareGraph()))
                 {
                     // Get the initial display ranges from the graph that was just initialized to be used in ResetGrid if they user clicks the GraphView button.

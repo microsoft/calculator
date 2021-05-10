@@ -55,7 +55,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
 
                 uint64_t w64Bits = result.ToUInt64_t();
                 uint64_t msb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
-                w64Bits <<= 1;  // LShift by 1
+                w64Bits <<= 1; // LShift by 1
 
                 if (op == IDC_ROL)
                 {
@@ -64,7 +64,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
                 else
                 {
                     w64Bits |= m_carryBit; // Set the carry bit as the LSB
-                    m_carryBit = msb; // Store the msb as the next carry bit
+                    m_carryBit = msb;      // Store the msb as the next carry bit
                 }
 
                 result = w64Bits;
@@ -272,7 +272,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             break;
 
         case IDC_FLOOR:
-            result = (Frac(rat) < 0) ? Integer(rat - 1 ) : Integer(rat);
+            result = (Frac(rat) < 0) ? Integer(rat - 1) : Integer(rat);
             break;
 
         case IDC_ABS:

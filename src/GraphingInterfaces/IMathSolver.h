@@ -10,24 +10,24 @@
 
 namespace Graphing
 {
-	struct IGraphFunctionAnalysisData
-	{
-		std::wstring Domain;
-		std::wstring Range;
-		int Parity;
-		int PeriodicityDirection;
-		std::wstring PeriodicityExpression;
-		std::wstring Zeros;
-		std::wstring YIntercept;
-		std::vector<std::wstring> Minima;
-		std::vector<std::wstring> Maxima;
-		std::vector<std::wstring> InflectionPoints;
-		std::vector<std::wstring> VerticalAsymptotes;
-		std::vector<std::wstring> HorizontalAsymptotes;
-		std::vector<std::wstring> ObliqueAsymptotes;
-		std::map<std::wstring, int> MonotoneIntervals;
-		int TooComplexFeatures; // to-do: refactor to remove bitwise flag
-	};
+    struct IGraphFunctionAnalysisData
+    {
+        std::wstring Domain;
+        std::wstring Range;
+        int Parity;
+        int PeriodicityDirection;
+        std::wstring PeriodicityExpression;
+        std::wstring Zeros;
+        std::wstring YIntercept;
+        std::vector<std::wstring> Minima;
+        std::vector<std::wstring> Maxima;
+        std::vector<std::wstring> InflectionPoints;
+        std::vector<std::wstring> VerticalAsymptotes;
+        std::vector<std::wstring> HorizontalAsymptotes;
+        std::vector<std::wstring> ObliqueAsymptotes;
+        std::map<std::wstring, int> MonotoneIntervals;
+        int TooComplexFeatures; // to-do: refactor to remove bitwise flag
+    };
 
     struct IParsingOptions : public NonCopyable, public NonMoveable
     {
@@ -73,6 +73,6 @@ namespace Graphing
 
         virtual std::wstring Serialize(const IExpression* expression) = 0;
 
-		virtual Graphing::IGraphFunctionAnalysisData Analyze(const Graphing::Analyzer::IGraphAnalyzer* analyzer) = 0;
+        virtual Graphing::IGraphFunctionAnalysisData Analyze(const Graphing::Analyzer::IGraphAnalyzer* analyzer) = 0;
     };
 }

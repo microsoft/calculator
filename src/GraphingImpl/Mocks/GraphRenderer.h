@@ -71,7 +71,7 @@ namespace MockGraphingImpl
         virtual HRESULT ChangeRange(Graphing::Renderer::ChangeRangeAction action)
         {
             return S_OK;
-        }       
+        }
         virtual HRESULT MoveRangeByRatio(double ratioX, double ratioY)
         {
             return S_OK;
@@ -108,7 +108,6 @@ namespace MockGraphingImpl
             hasSomeMissingDataOut = false;
             return S_OK;
         }
-
 
     private:
         double m_xMin;

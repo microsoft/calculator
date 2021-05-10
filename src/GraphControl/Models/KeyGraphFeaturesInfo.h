@@ -4,7 +4,6 @@
 #pragma once
 #include "Utils.h"
 
-
 namespace Graphing
 {
     struct IGraphFunctionAnalysisData;
@@ -17,7 +16,6 @@ namespace CalculatorApp
 
 namespace GraphControl
 {
-
 public
     ref class KeyGraphFeaturesInfo sealed
     {

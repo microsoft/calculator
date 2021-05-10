@@ -23,7 +23,6 @@ namespace TraceLogging
     private:
         TraceLoggingCommon();
 
-
         Windows::Foundation::Diagnostics::LoggingChannel ^ g_calculatorProvider;
         Windows::Foundation::Diagnostics::LoggingActivity ^ m_appLaunchActivity;
         GUID sessionGuid;

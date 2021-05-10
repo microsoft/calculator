@@ -586,8 +586,7 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(m_viewModel->DecimalDisplayValue, StringReference(L"-2"));
             VERIFY_ARE_EQUAL(m_viewModel->OctalDisplayValue, StringReference(L"1 777 777 777 777 777 777 776"));
             VERIFY_ARE_EQUAL(
-                m_viewModel->BinaryDisplayValue,
-                StringReference(L"1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1110"));
+                m_viewModel->BinaryDisplayValue, StringReference(L"1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1110"));
             VERIFY_ARE_EQUAL(m_viewModel->DisplayValue, StringReference(L"-2"));
             auto val = ref new Platform::Collections::Vector<bool>(64, true);
             val->SetAt(0, false);

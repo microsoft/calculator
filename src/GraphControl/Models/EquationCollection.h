@@ -154,11 +154,12 @@ public
         event EquationChangedEventHandler ^ EquationLineEnabledChanged;
 
     private:
-        void OnEquationPropertyChanged(Object^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ args)
+        void OnEquationPropertyChanged(Object ^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs ^ args)
         {
             auto equation = static_cast<Equation ^>(sender);
             auto propertyName = args->PropertyName;
-            if (propertyName == GraphControl::Equation::LineColorPropertyName || propertyName == GraphControl::Equation::IsSelectedPropertyName || propertyName == GraphControl::Equation::EquationStylePropertyName)
+            if (propertyName == GraphControl::Equation::LineColorPropertyName || propertyName == GraphControl::Equation::IsSelectedPropertyName
+                || propertyName == GraphControl::Equation::EquationStylePropertyName)
             {
                 EquationStyleChanged(equation);
             }
