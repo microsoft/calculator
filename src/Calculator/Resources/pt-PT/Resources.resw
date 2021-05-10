@@ -2318,7 +2318,7 @@
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutFlyoutContribute" xml:space="preserve">
-    <value>Para saber como pode contribuir para a calculadora do Windows, dê saída do projeto no %HL%GitHub%HL%.</value>
+    <value>Para saber como pode contribuir para a Calculadora do Windows, consulte o projeto no %HL%GitHub%HL%.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
@@ -2572,7 +2572,7 @@
     <comment>Automation name for the group of radices (Hexadecimal, Decimal, Octal, Binary). https://en.wikipedia.org/wiki/Radix </comment>
   </data>
   <data name="ProgrammerOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Operadores do programador</value>
+    <value>Operadores de programador</value>
     <comment>Automation name for the group of programmer operators (RoL, RoR, Lsh, Rsh, OR, XOR, NOT, AND).</comment>
   </data>
   <data name="InputModeSelectionGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3280,7 +3280,7 @@
     <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set, resetting the graph</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Zoom In (Ctrl + adição)</value>
+    <value>Ampliar (Ctrl + adição)</value>
     <comment>This is the tool tip automation name for the Calculator zoom in button.</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3288,7 +3288,7 @@
     <comment>Screen reader prompt for the zoom in button.</comment>
   </data>
   <data name="zoomOutButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Zoom out (Ctrl + subtração)</value>
+    <value>Reduzir (Ctrl + subtração)</value>
     <comment>This is the tool tip automation name for the Calculator zoom out button.</comment>
   </data>
   <data name="zoomOutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
