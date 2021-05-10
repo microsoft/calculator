@@ -415,7 +415,7 @@ TEST_METHOD(MultipleStandardModesHistoryAddItemTest)
 {
     std::vector<StandardCalculatorViewModel ^> viewModels(2);
 
-    // Create 3 instances of StandardCalculatorViewModel in Standard and Scientific mode
+    // Create 2 instances of StandardCalculatorViewModel in Standard mode
     for (int i = 0; i < 2; i++)
     {
         viewModels[i] = ref new StandardCalculatorViewModel();
@@ -429,8 +429,67 @@ TEST_METHOD(MultipleStandardModesHistoryAddItemTest)
 
     // Perform Calculations on both the instances and check that the History items work independently
 
-    // Standard Mode: Expression 1+2=
-    TESTITEM standardModeTestItems[2][8] = { { { NumbersAndOperatorsEnum::IsScientificMode, L"0", L"" },
+    TESTITEM standardModeTestItems[2][8] = { { { NumbersAndOperatorsEnum::IsStandardMode, L"0", L"" },
+                                               { NumbersAndOperatorsEnum::Three, L"3", L"" },
+                                               { NumbersAndOperatorsEnum::Add, L"3", L"3 + " },
+                                               { NumbersAndOperatorsEnum::Two, L"2", L"3 + " },
+                                               { NumbersAndOperatorsEnum::Multiply, L"5", L"5 * " },
+                                               { NumbersAndOperatorsEnum::One, L"1", L"5 * " },
+                                               { NumbersAndOperatorsEnum::Equals, L"5", L"" },
+                                               { NumbersAndOperatorsEnum::None, L"", L"" } },
+                                             { { NumbersAndOperatorsEnum::IsStandardMode, L"0", L"" },
+                                               { NumbersAndOperatorsEnum::One, L"1", L"" },
+                                               { NumbersAndOperatorsEnum::Add, L"1", L"1 + " },
+                                               { NumbersAndOperatorsEnum::Two, L"2", L"1 + " },
+                                               { NumbersAndOperatorsEnum::Multiply, L"3", L"3 * " },
+                                               { NumbersAndOperatorsEnum::Three, L"3", L"3 * " },
+                                               { NumbersAndOperatorsEnum::Equals, L"9", L"" },
+                                               { NumbersAndOperatorsEnum::None, L"", L"" } } };
+
+    // Run the commands
+    for (int i = 0; i < 2; i++)
+    {
+        ValidateViewModelByCommands(viewModels[i], standardModeTestItems[i], true);
+    }
+
+    String ^ expression[2][2] = { { L"5   " + UtfUtils::MUL + L"   1 =", L"3   +   2 =" }, { L"3   " + UtfUtils::MUL + L"   3 =", L"1   +   2 =" } };
+    String ^ result[2][2] = { { L"5", L"5" }, { L"9", L"3" } };
+
+    // Assert for the history list items of the instances
+    for (int i = 0; i < 2; i++)
+    {
+        VERIFY_IS_TRUE(2 == viewModels[i]->HistoryVM->ItemsCount);
+
+        for (int j = 0; j < 2 ; j++)
+        {
+            auto item = static_cast<HistoryItemViewModel ^>(viewModels[i]->HistoryVM->Items->GetAt(j));
+
+            VERIFY_ARE_EQUAL(expression[i][j], item->Expression);
+            VERIFY_ARE_EQUAL(result[i][j], item->Result);
+        }
+    }
+}
+
+// Perform calculations on 2 separate instances of Scientific Modes and verify that their History list items are maintained separately
+TEST_METHOD(MultipleScientificModesHistoryAddItemTest)
+{
+    std::vector<StandardCalculatorViewModel ^> viewModels(2);
+
+    // Create 2 instances of StandardCalculatorViewModel in Scientific mode
+    for (int i = 0; i < 2; i++)
+    {
+        viewModels[i] = ref new StandardCalculatorViewModel();
+
+        // Scientific Mode
+        ChangeMode(viewModels[i], 1);
+
+        // Validate that the history items list is initially empty
+        VERIFY_IS_TRUE(0 == viewModels[i]->HistoryVM->ItemsCount);
+    }
+
+    // Perform Calculations on both the instances and check that the History items work independently
+
+    TESTITEM scientificModeTestItems[2][8] = { { { NumbersAndOperatorsEnum::IsScientificMode, L"0", L"" },
                                                { NumbersAndOperatorsEnum::One, L"1", L"" },
                                                { NumbersAndOperatorsEnum::Add, L"1", L"1 + " },
                                                { NumbersAndOperatorsEnum::Two, L"2", L"1 + " },
@@ -448,67 +507,11 @@ TEST_METHOD(MultipleStandardModesHistoryAddItemTest)
     // Run the commands
     for (int i = 0; i < 2; i++)
     {
-        ValidateViewModelByCommands(viewModels[i], standardModeTestItems[i], true);
+        ValidateViewModelByCommands(viewModels[i], scientificModeTestItems[i], true);
     }
 
     String ^ expression[] = { L"1   +   2 =", L"1   +   2   " + UtfUtils::MUL + L"   3 =" };
     String ^ result[] = { L"3", L"7" };
-
-    // Assert for the history list items of the instances
-    for (int i = 0; i < 2; i++)
-    {
-        VERIFY_IS_TRUE(1 == viewModels[i]->HistoryVM->ItemsCount);
-
-        auto item = static_cast<HistoryItemViewModel ^>(viewModels[i]->HistoryVM->Items->GetAt(0));
-
-        VERIFY_ARE_EQUAL(expression[i], item->Expression);
-        VERIFY_ARE_EQUAL(result[i], item->Result);
-    }
-}
-
-// Perform calculations on 2 separate instances of Scientific Modes and verify that their History list items are maintained separately
-TEST_METHOD(MultipleScientificModesHistoryAddItemTest)
-{
-    std::vector<StandardCalculatorViewModel ^> viewModels(2);
-
-    // Create 3 instances of StandardCalculatorViewModel in Standard and Scientific mode
-    for (int i = 0; i < 2; i++)
-    {
-        viewModels[i] = ref new StandardCalculatorViewModel();
-
-        // Scientific Mode
-        ChangeMode(viewModels[i], 1);
-
-        // Validate that the history items list is initially empty
-        VERIFY_IS_TRUE(0 == viewModels[i]->HistoryVM->ItemsCount);
-    }
-
-    // Perform Calculations on both the instances and check that the History items work independently
-
-    // Standard Mode: Expression 1+2=
-    TESTITEM standardModeTestItems[2][8] = { { { NumbersAndOperatorsEnum::IsStandardMode, L"0", L"" },
-                                               { NumbersAndOperatorsEnum::One, L"1", L"" },
-                                               { NumbersAndOperatorsEnum::Add, L"1", L"1 + " },
-                                               { NumbersAndOperatorsEnum::Two, L"2", L"1 + " },
-                                               { NumbersAndOperatorsEnum::Equals, L"3", L"" },
-                                               { NumbersAndOperatorsEnum::None, L"", L"" } },
-                                             { { NumbersAndOperatorsEnum::IsStandardMode, L"0", L"" },
-                                               { NumbersAndOperatorsEnum::One, L"1", L"" },
-                                               { NumbersAndOperatorsEnum::Add, L"1", L"1 + " },
-                                               { NumbersAndOperatorsEnum::Two, L"2", L"1 + " },
-                                               { NumbersAndOperatorsEnum::Multiply, L"3", L"1 + 2 * " },
-                                               { NumbersAndOperatorsEnum::Three, L"3", L"1 + 2 * " },
-                                               { NumbersAndOperatorsEnum::Equals, L"9", L"" },
-                                               { NumbersAndOperatorsEnum::None, L"", L"" } } };
-
-    // Run the commands
-    for (int i = 0; i < 2; i++)
-    {
-        ValidateViewModelByCommands(viewModels[i], standardModeTestItems[i], true);
-    }
-
-    String ^ expression[] = { L"1   +   2 =", L"1   +   2   " + UtfUtils::MUL + L"   3 =" };
-    String ^ result[] = { L"3", L"9" };
 
     // Assert for the history list items of the instances
     for (int i = 0; i < 2; i++)
