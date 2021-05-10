@@ -34,6 +34,7 @@ jobs:
     inputs:
       productName: Calculator
       disableWorkspace: true
+      useDfs: false
     env:
       XES_DISABLEPROV: true
 
