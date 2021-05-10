@@ -30,6 +30,7 @@
     <ClCompile Include="LocalizationServiceUnitTests.cpp" />
     <ClCompile Include="RationalTest.cpp" />
     <ClCompile Include="LocalizationSettingsUnitTests.cpp" />
+    <ClCompile Include="NarratorAnnouncementUnitTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DateUtils.h" />
