@@ -127,6 +127,7 @@ void CalculationResult::OnApplyTemplate()
         m_textBlock = dynamic_cast<TextBlock ^>(GetTemplateChild("NormalOutput"));
         if (m_textBlock)
         {
+            m_textBlock->ContextMenuOpening += ref new ContextMenuOpeningEventHandler(this, &CalculationResult::OnContextMenuOpening);
             m_textBlock->Visibility = ::Visibility::Visible;
             m_textBlockSizeChangedToken = m_textBlock->SizeChanged += ref new SizeChangedEventHandler(this, &CalculationResult::OnTextBlockSizeChanged);
         }
@@ -416,4 +417,9 @@ void CalculationResult::OnTextContainerOnViewChanged(Object ^ /*sender*/, Scroll
 void CalculationResult::OnTextBlockSizeChanged(Object ^ /*sender*/, SizeChangedEventArgs ^ /*e*/)
 {
     UpdateScrollButtons();
+}
+
+void CalculationResult::OnContextMenuOpening(Platform::Object ^ sender, Windows::UI::Xaml::Controls::ContextMenuEventArgs ^ e)
+{
+    e->Handled = true;
 }

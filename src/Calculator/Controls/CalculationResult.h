@@ -59,6 +59,7 @@ namespace CalculatorApp
             void OnPointerEntered(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
             void OnPointerExited(Platform::Object ^ sender, Windows::UI::Xaml::Input::PointerRoutedEventArgs ^ e);
             void ModifyFontAndMargin(Windows::UI::Xaml::Controls::TextBlock ^ textBlock, double fontChange);
+            void OnContextMenuOpening(Platform::Object ^ sender, Windows::UI::Xaml::Controls::ContextMenuEventArgs ^ e);
             void UpdateScrollButtons();
             void ScrollLeft();
             void ScrollRight();
