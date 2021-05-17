@@ -141,7 +141,11 @@ namespace CalculatorApp
             {
                 if (donotuse_HistoryButtonPressed == null)
                 {
-                    donotuse_HistoryButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this, ToggleHistoryFlyout);
+                    donotuse_HistoryButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this,
+                        (that, param) =>
+                        {
+                            that.ToggleHistoryFlyout(param);
+                        });
                 }
                 return donotuse_HistoryButtonPressed;
             }

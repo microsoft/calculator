@@ -115,7 +115,11 @@ namespace CalculatorApp
             {
                 if (donotuse_ZoomOutButtonPressed == null)
                 {
-                    donotuse_ZoomOutButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this, OnZoomOutCommand);
+                    donotuse_ZoomOutButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this,
+                        (that, param) =>
+                        {
+                            that.OnZoomOutCommand(param);
+                        });
                 }
                 return donotuse_ZoomOutButtonPressed;
             }
@@ -128,7 +132,11 @@ namespace CalculatorApp
             {
                 if (donotuse_ZoomInButtonPressed == null)
                 {
-                    donotuse_ZoomInButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this, OnZoomInCommand);
+                    donotuse_ZoomInButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this,
+                        (that, param) =>
+                        {
+                            that.OnZoomInCommand(param);
+                        });
                 }
                 return donotuse_ZoomInButtonPressed;
             }

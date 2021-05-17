@@ -8,7 +8,7 @@ namespace CalculatorApp.Utils
 {
     static class DelegateCommandUtils
     {
-        public static DelegateCommand MakeDelegateCommand<TTarget>(TTarget target, DelegateCommandHandler handler)
+        public static DelegateCommand MakeDelegateCommand<TTarget>(TTarget target, Action<TTarget, object> handler)
             where TTarget : class
         {
             WeakReference weakTarget = new WeakReference(target);
@@ -17,7 +17,7 @@ namespace CalculatorApp.Utils
                 TTarget thatTarget = weakTarget.Target as TTarget;
                 if(null != thatTarget)
                 {
-                    handler.Invoke(param);
+                    handler.Invoke(thatTarget, param);
                 }
             });
         }
