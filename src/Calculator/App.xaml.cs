@@ -86,6 +86,7 @@ namespace CalculatorApp
                 // If the app got pre-launch activated, then save that state in a flag
                 m_preLaunched = true;
             }
+            NavCategory.InitializeCategoryManifest(args.User);
             OnAppLaunch(args, args.Arguments);
         }
 
