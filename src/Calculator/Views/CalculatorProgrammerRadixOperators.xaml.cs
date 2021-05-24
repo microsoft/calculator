@@ -8,6 +8,7 @@ using System.Diagnostics;
 
 using CalculatorApp;
 using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel.Common;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

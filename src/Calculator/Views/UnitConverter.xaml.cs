@@ -1,6 +1,7 @@
 using CalculatorApp.Common;
 using CalculatorApp.Controls;
 using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel.Common;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;

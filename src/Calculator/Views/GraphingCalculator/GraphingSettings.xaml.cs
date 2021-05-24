@@ -12,6 +12,7 @@ using System.Diagnostics;
 using GraphControl;
 using CalculatorApp;
 using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel.Common;
 
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -130,7 +131,7 @@ namespace CalculatorApp
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             localSettings.Values.Add("IsGraphThemeMatchApp", isMatchAppTheme);
             GraphThemeSettingChanged?.Invoke(this, isMatchAppTheme);
-            TraceLogger.GetInstance().LogGraphSettingsChanged(GraphSettingsType.Theme, propertyName);
+            CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogGraphSettingsChanged(GraphSettingsType.Theme, propertyName);
         }
 
         private bool m_IsMatchAppTheme;

@@ -13,6 +13,7 @@ using System.Diagnostics;
 using CalculatorApp;
 using CalculatorApp.Common;
 using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel.Common;
 
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -36,7 +37,7 @@ namespace CalculatorApp
         {
             InitializeComponent();
 
-            ExpButton.SetValue(Common.KeyboardShortcutManager.VirtualKeyProperty, Common.MyVirtualKey.E);
+            ExpButton.SetValue(KeyboardShortcutManager.VirtualKeyProperty, MyVirtualKey.E);
         }
 
         public StandardCalculatorViewModel Model

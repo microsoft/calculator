@@ -9,7 +9,7 @@
 // being used. Depending on the version of the OS the app is running on,
 // the app may need a host that uses LiveRegionChanged or RaiseNotification.
 
-namespace CalculatorApp::Common::Automation
+namespace CalculatorApp::ViewModel::Common::Automation
 {
 public
     interface class INarratorAnnouncementHost

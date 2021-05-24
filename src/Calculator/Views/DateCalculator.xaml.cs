@@ -13,8 +13,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using CalculatorApp;
-using CalculatorApp.Common;
 using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel.Common;
 
 using Windows.Foundation;
 using Windows.Foundation.Collections;

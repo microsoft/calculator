@@ -1,7 +1,8 @@
 using CalculatorApp.Common;
-using CalculatorApp.Common.Automation;
 using CalculatorApp.Converters;
 using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModel.Common.Automation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -254,10 +255,10 @@ namespace CalculatorApp
 
             foreach (var accelerator in acceleratorList)
             {
-                NavView.SetValue(Common.KeyboardShortcutManager.VirtualKeyAltChordProperty, accelerator);
+                NavView.SetValue(KeyboardShortcutManager.VirtualKeyAltChordProperty, accelerator);
             }
             // Special case logic for Ctrl+E accelerator for Date Calculation Mode
-            NavView.SetValue(Common.KeyboardShortcutManager.VirtualKeyControlChordProperty, Common.MyVirtualKey.E);
+            NavView.SetValue(KeyboardShortcutManager.VirtualKeyControlChordProperty, MyVirtualKey.E);
         }
 
         private void OnNavPaneOpening(MUXC.NavigationView sender, object args)

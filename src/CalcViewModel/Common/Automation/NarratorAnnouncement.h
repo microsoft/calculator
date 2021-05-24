@@ -3,7 +3,7 @@
 
 #pragma once
 
-namespace CalculatorApp::Common::Automation
+namespace CalculatorApp::ViewModel::Common::Automation
 {
 public
     ref class NarratorAnnouncement sealed

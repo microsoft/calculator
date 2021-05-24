@@ -10,8 +10,8 @@
 #include "Common/CopyPasteManager.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
-using namespace CalculatorApp::Common::DateCalculation;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel::Common::DateCalculation;
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Platform::Collections;

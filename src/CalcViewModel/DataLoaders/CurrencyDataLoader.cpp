@@ -11,11 +11,11 @@
 #include "UnitConverterDataConstants.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
-using namespace CalculatorApp::Common::LocalizationServiceProperties;
-using namespace CalculatorApp::DataLoaders;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel::Common::LocalizationServiceProperties;
+using namespace CalculatorApp::ViewModel::DataLoaders;
 using namespace CalculatorApp::ViewModel;
-using namespace CalculatorApp::ViewModel::CurrencyDataLoaderConstants;
+using namespace CalculatorApp::ViewModel::DataLoaders::CurrencyDataLoaderConstants;
 using namespace concurrency;
 using namespace Platform;
 using namespace std;
@@ -69,7 +69,7 @@ static constexpr auto DEFAULT_TO_CURRENCY = L"EUR";
 
 namespace CalculatorApp
 {
-    namespace ViewModel
+    namespace ViewModel::DataLoaders
     {
         namespace UnitConverterResourceKeys
         {

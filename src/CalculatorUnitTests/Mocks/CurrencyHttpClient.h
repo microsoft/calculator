@@ -5,7 +5,7 @@
 
 #include "CalcViewModel/DataLoaders/ICurrencyHttpClient.h"
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
     namespace DataLoaders
     {

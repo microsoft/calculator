@@ -7,7 +7,8 @@
 #include "CalculatorButtonUser.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel;
 using namespace TraceLogging;
 using namespace Concurrency;
 using namespace std;

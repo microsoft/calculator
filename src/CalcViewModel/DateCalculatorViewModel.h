@@ -125,26 +125,26 @@ namespace CalculatorApp
                 }
             }
 
-            property CalculatorApp::Common::DateCalculation::DateDifference DateDiffResult
+            property CalculatorApp::ViewModel::Common::DateCalculation::DateDifference DateDiffResult
             {
-                CalculatorApp::Common::DateCalculation::DateDifference get()
+                CalculatorApp::ViewModel::Common::DateCalculation::DateDifference get()
                 {
                     return m_dateDiffResult;
                 }
-                void set(CalculatorApp::Common::DateCalculation::DateDifference value)
+                void set(CalculatorApp::ViewModel::Common::DateCalculation::DateDifference value)
                 {
                     m_dateDiffResult = value;
                     UpdateDisplayResult();
                 }
             }
 
-            property CalculatorApp::Common::DateCalculation::DateDifference DateDiffResultInDays
+            property CalculatorApp::ViewModel::Common::DateCalculation::DateDifference DateDiffResultInDays
             {
-                CalculatorApp::Common::DateCalculation::DateDifference get()
+                CalculatorApp::ViewModel::Common::DateCalculation::DateDifference get()
                 {
                     return m_dateDiffResultInDays;
                 }
-                void set(CalculatorApp::Common::DateCalculation::DateDifference value)
+                void set(CalculatorApp::ViewModel::Common::DateCalculation::DateDifference value)
                 {
                     m_dateDiffResultInDays = value;
                     UpdateDisplayResult();
@@ -172,13 +172,13 @@ namespace CalculatorApp
             Windows::Foundation::DateTime m_toDate;
             Windows::Foundation::DateTime m_startDate;
             Windows::Foundation::DateTime m_dateResult;
-            CalculatorApp::Common::DateCalculation::DateDifference m_dateDiffResult;
-            CalculatorApp::Common::DateCalculation::DateDifference m_dateDiffResultInDays;
+            CalculatorApp::ViewModel::Common::DateCalculation::DateDifference m_dateDiffResult;
+            CalculatorApp::ViewModel::Common::DateCalculation::DateDifference m_dateDiffResultInDays;
 
             // Private members
-            CalculatorApp::Common::DateCalculation::DateCalculationEngine ^ m_dateCalcEngine;
-            CalculatorApp::Common::DateCalculation::DateUnit m_daysOutputFormat;
-            CalculatorApp::Common::DateCalculation::DateUnit m_allDateUnitsOutputFormat;
+            CalculatorApp::ViewModel::Common::DateCalculation::DateCalculationEngine ^ m_dateCalcEngine;
+            CalculatorApp::ViewModel::Common::DateCalculation::DateUnit m_daysOutputFormat;
+            CalculatorApp::ViewModel::Common::DateCalculation::DateUnit m_allDateUnitsOutputFormat;
             Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ m_dateTimeFormatter;
             std::wstring m_listSeparator;
         };

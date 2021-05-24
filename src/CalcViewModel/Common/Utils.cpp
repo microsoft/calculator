@@ -13,7 +13,7 @@
 #include "CalcManager/NumberFormattingUtils.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace concurrency;
 using namespace Graphing::Renderer;
 using namespace Platform;
@@ -179,7 +179,7 @@ bool operator!=(const Color& color1, const Color& color2)
     return !(color1 == color2);
 }
 
-String^ CalculatorApp::Utilities::EscapeHtmlSpecialCharacters(String^ originalString)
+String^ CalculatorApp::ViewModel::Common::Utilities::EscapeHtmlSpecialCharacters(String^ originalString)
 {
     // Construct a default special characters if not provided.
     const std::vector<wchar_t> specialCharacters {L'&', L'\"', L'\'', L'<', L'>'};
@@ -236,14 +236,14 @@ String^ CalculatorApp::Utilities::EscapeHtmlSpecialCharacters(String^ originalSt
     return replaceCharacters ? replacementString : originalString;
 }
 
-Platform::String^ CalculatorApp::Utilities::TrimTrailingZeros(Platform::String^ input)
+Platform::String^ CalculatorApp::ViewModel::Common::Utilities::TrimTrailingZeros(Platform::String^ input)
 {
     std::wstring tmp(input->Data());
     CalcManager::NumberFormattingUtils::TrimTrailingZeros(tmp);
     return ref new Platform::String(tmp.c_str());
 }
 
-bool CalculatorApp::Utilities::AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2)
+bool CalculatorApp::ViewModel::Common::Utilities::AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2)
 {
     return Utils::AreColorsEqual(color1, color2);
 }
@@ -251,7 +251,7 @@ bool CalculatorApp::Utilities::AreColorsEqual(Windows::UI::Color color1, Windows
 // This method calculates the luminance ratio between White and the given background color.
 // The luminance is calculate using the RGB values and does not use the A value.
 // White or Black is returned
-SolidColorBrush ^ CalculatorApp::Utilities::GetContrastColor(Color backgroundColor)
+SolidColorBrush ^ CalculatorApp::ViewModel::Common::Utilities::GetContrastColor(Color backgroundColor)
 {
     auto luminance = 0.2126 * backgroundColor.R + 0.7152 * backgroundColor.G + 0.0722 * backgroundColor.B;
 
@@ -263,7 +263,7 @@ SolidColorBrush ^ CalculatorApp::Utilities::GetContrastColor(Color backgroundCol
     return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"BlackBrush"));
 }
 
-int CalculatorApp::Utilities::GetWindowId()
+int CalculatorApp::ViewModel::Common::Utilities::GetWindowId()
 {
     return Utils::GetWindowId();
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using CalculatorApp;
 using CalculatorApp.Controls;
-using CalculatorApp.Common;
+using CalculatorApp.ViewModel.Common;
 
 using Windows.Devices.Input;
 using Windows.Foundation;

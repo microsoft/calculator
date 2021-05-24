@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using CalculatorApp.Common;
+using CalculatorApp.ViewModel.Common;
 using System;
 using Windows.UI.Xaml;
 
@@ -17,7 +17,7 @@ namespace CalculatorApp
                 DisplayExpressionToken token = (item as DisplayExpressionToken);
                 if (token != null)
                 {
-                    Common.TokenType type = token.Type;
+                    CalculatorApp.ViewModel.Common.TokenType type = token.Type;
 
                     switch (type)
                     {

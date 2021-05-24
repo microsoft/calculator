@@ -7,8 +7,8 @@
 #include "UnitConverterDataConstants.h"
 #include "CurrencyDataLoader.h"
 
-using namespace CalculatorApp::Common;
-using namespace CalculatorApp::DataLoaders;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel::DataLoaders;
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace std;

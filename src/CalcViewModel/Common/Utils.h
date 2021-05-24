@@ -174,8 +174,8 @@ public:
         {                                                                                                                                                      \
             if (!donotuse_##p)                                                                                                                                 \
             {                                                                                                                                                  \
-                donotuse_##p = ref new CalculatorApp::Common::DelegateCommand(                                                                                 \
-                    CalculatorApp::Common::MakeDelegateCommandHandler(this, &m)                                                                                \
+                donotuse_##p = ref new CalculatorApp::ViewModel::Common::DelegateCommand(                                                                                 \
+                    CalculatorApp::ViewModel::Common::MakeDelegateCommandHandler(this, &m)                                                                                \
                 );                                                                                                                                             \
             }                                                                                                                                                  \
             return donotuse_##p;                                                                                                                               \
@@ -706,17 +706,19 @@ namespace CalculatorApp
         return to;
     }
 
-    // CSHARP_MIGRATION: TODO: Review below utils
-public
-    ref class Utilities sealed
+    namespace ViewModel::Common
     {
-    public:
-        static Platform::String ^ EscapeHtmlSpecialCharacters(Platform::String ^ originalString);
-        static Platform::String^ TrimTrailingZeros(Platform::String^ input);
-        static bool AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2);
-        static Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
-        static int GetWindowId();
-    };
+        // CSHARP_MIGRATION: TODO: Review below utils
+        public ref class Utilities sealed
+        {
+        public:
+            static Platform::String ^ EscapeHtmlSpecialCharacters(Platform::String ^ originalString);
+            static Platform::String^ TrimTrailingZeros(Platform::String^ input);
+            static bool AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2);
+            static Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
+            static int GetWindowId();
+        };
+    }
 }
 
 // There's no standard definition of equality for Windows::UI::Color structs.

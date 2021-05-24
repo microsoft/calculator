@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

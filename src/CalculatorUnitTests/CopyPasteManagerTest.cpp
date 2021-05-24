@@ -10,8 +10,8 @@
 
 using namespace CalculationManager;
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
 using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace std;

@@ -6,7 +6,7 @@
 
 #include <iterator>
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
     namespace Common
     {

@@ -6,7 +6,7 @@
 #include "CalcViewModel\Common\LocalizationSettings.h"
 #include "CalcViewModel\GraphingCalculatorEnums.h"
 
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace Graphing;
 using namespace Platform;
 using namespace Platform::Collections;

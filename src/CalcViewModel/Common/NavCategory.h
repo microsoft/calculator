@@ -17,7 +17,7 @@
 #include "Utils.h"
 #include "MyVirtualKey.h"
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
     namespace Common
     {

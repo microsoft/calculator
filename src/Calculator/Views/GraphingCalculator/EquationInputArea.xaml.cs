@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using CalculatorApp;
 using CalculatorApp.Common;
-using CalculatorApp.Common.Automation;
+using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModel.Common.Automation;
 using GraphControl;
 using CalculatorApp.ViewModel;
 using CalculatorApp.Controls;
@@ -415,7 +416,7 @@ namespace CalculatorApp
             var eq = GetViewModelFromEquationTextBox(sender);
             eq.IsLineEnabled = !eq.IsLineEnabled;
 
-            TraceLogger.GetInstance().LogShowHideButtonClicked(eq.IsLineEnabled ? false : true);
+            CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogShowHideButtonClicked(eq.IsLineEnabled ? false : true);
         }
 
         private void EquationTextBox_Loaded(object sender, RoutedEventArgs e)
@@ -510,20 +511,20 @@ namespace CalculatorApp
             {
                 val = validateDouble(sender.Text, variableViewModel.Value);
                 variableViewModel.Value = val;
-                TraceLogger.GetInstance().LogVariableChanged("ValueTextBox", variableViewModel.Name);
+                CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogVariableChanged("ValueTextBox", variableViewModel.Name);
             }
             else if (sender.Name == "MinTextBox")
             {
                 val = validateDouble(sender.Text, variableViewModel.Min);
 
                 variableViewModel.Min = val;
-                TraceLogger.GetInstance().LogVariableSettingsChanged("MinTextBox");
+                CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogVariableSettingsChanged("MinTextBox");
             }
             else if (sender.Name == "MaxTextBox")
             {
                 val = validateDouble(sender.Text, variableViewModel.Max);
                 variableViewModel.Max = val;
-                TraceLogger.GetInstance().LogVariableSettingsChanged("MaxTextBox");
+                CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogVariableSettingsChanged("MaxTextBox");
             }
             else if (sender.Name == "StepTextBox")
             {
@@ -536,7 +537,7 @@ namespace CalculatorApp
                 }
 
                 variableViewModel.Step = val;
-                TraceLogger.GetInstance().LogVariableSettingsChanged("StepTextBox");
+                CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogVariableSettingsChanged("StepTextBox");
             }
             else
             {
@@ -597,7 +598,7 @@ namespace CalculatorApp
                 TimeSpan timeSpan = new TimeSpan(10000000); // 1 tick = 100 nanoseconds, and 10000000 ticks = 1 second.
                 DispatcherTimerDelayer delayer = new DispatcherTimerDelayer(timeSpan);
                 delayer.Action += new EventHandler<object>((object s, object arg) => {
-                    TraceLogger.GetInstance().LogVariableChanged("Slider", name);
+                    CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogVariableChanged("Slider", name);
                     variableSliders.Remove(name);
                 });
                 delayer.Start();

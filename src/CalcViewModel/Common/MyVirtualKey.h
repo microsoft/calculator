@@ -3,7 +3,7 @@
 
 #pragma once
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
     namespace Common
     {

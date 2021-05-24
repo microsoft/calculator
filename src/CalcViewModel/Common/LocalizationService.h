@@ -5,7 +5,7 @@
 
 #include "Utils.h"
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
     namespace Common
     {
@@ -98,6 +98,5 @@ namespace CalculatorApp
             double m_uiCaptionFontScaleFactorOverride;
             std::locale m_locale;
         };
-
     }
 }

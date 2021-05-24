@@ -1,4 +1,5 @@
-﻿using System;
+using CalculatorApp.ViewModel.Common;
+using System;
 using Windows.ApplicationModel.Core;
 using Windows.System.Profile;
 using Windows.UI;

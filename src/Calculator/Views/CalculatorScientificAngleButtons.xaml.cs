@@ -13,6 +13,7 @@ using System.Diagnostics;
 using CalculatorApp;
 using CalculatorApp.Utils;
 using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel.Common;
 
 using Windows.Foundation;
 using Windows.Foundation.Collections;

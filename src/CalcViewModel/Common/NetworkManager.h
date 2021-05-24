@@ -3,7 +3,7 @@
 
 #pragma once
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel::Common
 {
 public
     enum class NetworkAccessBehavior

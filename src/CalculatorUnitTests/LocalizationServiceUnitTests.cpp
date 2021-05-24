@@ -7,7 +7,7 @@
 
 #include "CalcViewModel/Common/LocalizationService.h"
 
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace Platform;
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

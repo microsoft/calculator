@@ -1,3 +1,4 @@
+using CalculatorApp.ViewModel.Common;
 using System.Diagnostics;
 using System.Windows.Input;
 using Windows.UI.Xaml;
@@ -72,25 +73,25 @@ namespace CalculatorApp
             ByteButton.Visibility = Visibility.Collapsed;
             if (buttonId == "0")
             {
-                Model.ValueBitLength = Common.BitLength.BitLengthDWord;
+                Model.ValueBitLength = BitLength.BitLengthDWord;
                 DwordButton.Visibility = Visibility.Visible;
                 DwordButton.Focus(FocusState.Programmatic);
             }
             else if (buttonId == "1")
             {
-                Model.ValueBitLength = Common.BitLength.BitLengthWord;
+                Model.ValueBitLength = BitLength.BitLengthWord;
                 WordButton.Visibility = Visibility.Visible;
                 WordButton.Focus(FocusState.Programmatic);
             }
             else if (buttonId == "2")
             {
-                Model.ValueBitLength = Common.BitLength.BitLengthByte;
+                Model.ValueBitLength = BitLength.BitLengthByte;
                 ByteButton.Visibility = Visibility.Visible;
                 ByteButton.Focus(FocusState.Programmatic);
             }
             else if (buttonId == "3")
             {
-                Model.ValueBitLength = Common.BitLength.BitLengthQWord;
+                Model.ValueBitLength = BitLength.BitLengthQWord;
                 QwordButton.Visibility = Visibility.Visible;
                 QwordButton.Focus(FocusState.Programmatic);
             }

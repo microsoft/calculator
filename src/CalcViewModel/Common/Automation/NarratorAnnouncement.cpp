@@ -4,11 +4,11 @@
 #include "pch.h"
 #include "NarratorAnnouncement.h"
 
-using namespace CalculatorApp::Common::Automation;
+using namespace CalculatorApp::ViewModel::Common::Automation;
 using namespace Platform;
 using namespace Windows::UI::Xaml::Automation::Peers;
 
-namespace CalculatorApp::Common::Automation
+namespace CalculatorApp::ViewModel::Common::Automation
 {
     namespace CalculatorActivityIds
     {

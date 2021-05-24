@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using CalculatorApp;
-using CalculatorApp.Common;
 using CalculatorApp.Controls;
 using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel.Common;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;

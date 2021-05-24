@@ -6,8 +6,9 @@
 #include "LocalizationSettings.h"
 #include "AppResourceProvider.h"
 
-using namespace CalculatorApp::Common;
-using namespace CalculatorApp::Common::LocalizationServiceProperties;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel::Common::LocalizationServiceProperties;
+using namespace CalculatorApp::ViewModel;
 using namespace Concurrency;
 using namespace Platform;
 using namespace Platform::Collections;
