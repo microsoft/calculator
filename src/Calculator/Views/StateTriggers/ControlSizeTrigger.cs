@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -48,21 +48,6 @@ namespace CalculatorApp.Views.StateTriggers
         // Using a DependencyProperty as the backing store for MinWidth.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MinWidthProperty =
             DependencyProperty.Register(nameof(MinWidth), typeof(double), typeof(ControlSizeTrigger), new PropertyMetadata(-1));
-
-        ~ControlSizeTrigger()
-        {
-            // CSHARP_MIGRATION: TODO:
-            // finalization will happen on a finalizer's thread.
-            // to prevent crashing the entire app, switch to UI thread to do unregistering work
-            Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                UnregisterSizeChanged(Source);
-            })
-                .AsTask()
-                .ConfigureAwait(false)
-                .GetAwaiter()
-                .GetResult();
-        }
 
         private void OnSourcePropertyChanged(FrameworkElement oldValue, FrameworkElement newValue)
         {
