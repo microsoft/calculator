@@ -9,17 +9,36 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CalculatorApp</RootNamespace>
     <AssemblyName>CalculatorApp</AssemblyName>
+    <ApplicationType>Windows Store</ApplicationType>
+    <AppContainerApplication>true</AppContainerApplication>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.17134.0</TargetPlatformMinVersion>
+    <!-- We want to manually control the MinVersion/MaxVersionTested in the manifest so turn of the replacement. -->
+    <AppxOSMinVersionReplaceManifestVersion>false</AppxOSMinVersionReplaceManifestVersion>
+    <AppxOSMaxVersionTestedReplaceManifestVersion>false</AppxOSMaxVersionTestedReplaceManifestVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <AppxDefaultResourceQualifierUAP_Contrast>black</AppxDefaultResourceQualifierUAP_Contrast>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>B06D4942DD6AAC6D5659E3AF866A11D0081C12C1</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>WindowsDev_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <AppxBundle>Always</AppxBundle>
+    <GenerateProjectSpecificOutputFolder>true</GenerateProjectSpecificOutputFolder>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+  </PropertyGroup>
+  <!-- This has to be exactly in this place for this to work -->
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -120,6 +139,9 @@
   <PropertyGroup>
     <AppVersion Condition="'$(AppVersion)' == ''">0.0.0.0</AppVersion>
   </PropertyGroup>
+  <ItemGroup>
+      <ResourceCompile Include="Calculator.rc" PreprocessorDefinitions="%(PreprocessorDefinitions);APP_VERSION_MAJOR=$(AppVersion.Split(`.`)[0]);APP_VERSION_MINOR=$(AppVersion.Split(`.`)[1]);APP_VERSION_BUILD=$(AppVersion.Split(`.`)[2]);APP_VERSION_REVISION=$(AppVersion.Split(`.`)[3])" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutFlyout.xaml.cs">
       <DependentUpon>AboutFlyout.xaml</DependentUpon>
@@ -389,7 +411,6 @@
     <Content Include="Assets\CalculatorSplashScreen.scale-200_altform-colorful.png" />
     <Content Include="Assets\CalculatorSplashScreen.scale-200_contrast-black.png" />
     <Content Include="Assets\CalculatorSplashScreen.scale-200_contrast-white.png" />
-    <Content Include="Assets\CalculatorSplashScreen.scale-400.png" />
     <Content Include="Assets\CalculatorSplashScreen.scale-400_altform-colorful.png" />
     <Content Include="Assets\CalculatorSplashScreen.scale-400_contrast-black.png" />
     <Content Include="Assets\CalculatorSplashScreen.scale-400_contrast-white.png" />
@@ -726,6 +747,21 @@
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
+  <!-- Override MSBuild target to workaround VS bug with building using framework packages -->
+  <Target Name="_GenerateAdditionalFrameworkSDKReference">
+    <ItemGroup>
+      <_IntermediateFrameworkSdkReference Include="@(AppxPackageRegistration)" Condition="'@(AppxPackageRegistration)' != ''&#xD;&#xA;                   AND ('$(Configuration)' == '%(AppxPackageRegistration.Configuration)' OR '%(AppxPackageRegistration.Configuration)' == '')&#xD;&#xA;                   AND ('$(PlatformTarget)' == '%(AppxPackageRegistration.Architecture)' OR '%(AppxPackageRegistration.Configuration)' == '')">
+        <SDKName Condition="%(AppxPackageRegistration.Name) != ''">%(AppxPackageRegistration.Name)</SDKName>
+        <SDKName Condition="%(AppxPackageRegistration.Name) == ''">%(AppxPackageRegistration.Filename)</SDKName>
+        <TargetedSDKConfiguration>%(AppxPackageRegistration.Configuration)</TargetedSDKConfiguration>
+        <TargetedSDKArchitecture>%(AppxPackageRegistration.Architecture)</TargetedSDKArchitecture>
+        <AppxLocation>%(AppxPackageRegistration.Identity)</AppxLocation>
+      </_IntermediateFrameworkSdkReference>
+      <FrameworkSdkReference Include="@(_IntermediateFrameworkSdkReference)">
+        <FrameworkIdentity>Name = %(_IntermediateFrameworkSdkReference.SDKName), MinVersion = %(_IntermediateFrameworkSdkReference.Version), Publisher = %(_IntermediateFrameworkSdkReference.Publisher)</FrameworkIdentity>
+      </FrameworkSdkReference>
+    </ItemGroup>
+  </Target>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
