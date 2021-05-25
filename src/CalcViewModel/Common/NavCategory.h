@@ -17,7 +17,7 @@
 #include "Utils.h"
 #include "MyVirtualKey.h"
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
     namespace Common
     {
@@ -92,7 +92,7 @@ namespace CalculatorApp
             const MyVirtualKey virtualKey;
             const wchar_t* const accessKey;
             const bool supportsNegative;
-            const bool isEnabled;
+            bool isEnabled;
         };
 
     private
@@ -140,6 +140,8 @@ namespace CalculatorApp
             static bool IsDateCalculatorViewMode(ViewMode mode);
             static bool IsConverterViewMode(ViewMode mode);
 
+            static void InitializeCategoryManifest(Windows::System::User ^ user);
+
             static Platform::String ^ GetFriendlyName(ViewMode mode);
             static Platform::String ^ GetNameResourceKey(ViewMode mode);
             static CategoryGroupType GetGroupType(ViewMode mode);
@@ -151,6 +153,7 @@ namespace CalculatorApp
             static int GetPosition(ViewMode mode);
 
             static ViewMode GetViewModeForVirtualKey(MyVirtualKey virtualKey);
+            static void GetCategoryAcceleratorKeys(Windows::Foundation::Collections::IVector<MyVirtualKey> ^ resutls);
 
             internal : NavCategory(
                            Platform::String ^ name,
@@ -172,8 +175,6 @@ namespace CalculatorApp
             {
             }
 
-            static std::vector<MyVirtualKey> GetCategoryAcceleratorKeys();
-
         private:
             static bool IsModeInCategoryGroup(ViewMode mode, CategoryGroupType groupType);
 
@@ -191,7 +192,7 @@ namespace CalculatorApp
 
             static Windows::Foundation::Collections::IObservableVector<NavCategoryGroup ^> ^ CreateMenuOptions();
 
-            internal : static NavCategoryGroup ^ CreateCalculatorCategory();
+            static NavCategoryGroup ^ CreateCalculatorCategory();
             static NavCategoryGroup ^ CreateConverterCategory();
 
         private:

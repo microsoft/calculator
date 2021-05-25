@@ -13,7 +13,7 @@ const int c_unitsOfDate = 4;          // Units Year,Month,Week,Day
 const int c_unitsGreaterThanDays = 3; // Units Greater than Days (Year/Month/Week) 3
 const int c_daysInWeek = 7;
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
     namespace Common
     {
@@ -68,4 +68,4 @@ namespace CalculatorApp
     }
 }
 
-bool operator==(const CalculatorApp::Common::DateCalculation::DateDifference& l, const CalculatorApp::Common::DateCalculation::DateDifference& r);
+bool operator==(const CalculatorApp::ViewModel::Common::DateCalculation::DateDifference& l, const CalculatorApp::ViewModel::Common::DateCalculation::DateDifference& r);

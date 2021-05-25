@@ -9,7 +9,8 @@
 using namespace std;
 using namespace concurrency;
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace Windows::Foundation;
@@ -116,7 +117,7 @@ String
     }
 
     // Get english translated expression
-    String ^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pastedText);
+    String ^ englishString = LocalizationSettings::GetInstance()->GetEnglishValueFromLocalizedDigits(pastedText);
 
     // Removing the spaces, comma separator from the pasteExpression to allow pasting of expressions like 1  +     2+1,333
     auto pasteExpression = wstring(RemoveUnwantedCharsFromString(englishString)->Data());
@@ -614,7 +615,7 @@ ULONG32 CopyPasteManager::ProgrammerOperandLength(Platform::String ^ operand, Nu
 Platform::String ^ CopyPasteManager::RemoveUnwantedCharsFromString(Platform::String ^ input)
 {
     constexpr wchar_t unWantedChars[] = { L' ', L',', L'"', 165, 164, 8373, 36, 8353, 8361, 8362, 8358, 8377, 163, 8364, 8234, 8235, 8236, 8237, 160 };
-    input = CalculatorApp::Common::LocalizationSettings::GetInstance().RemoveGroupSeparators(input);
+    input = CalculatorApp::ViewModel::Common::LocalizationSettings::GetInstance()->RemoveGroupSeparators(input);
     return ref new String(Utils::RemoveUnwantedCharsFromString(input->Data(), unWantedChars).c_str());
 }
 

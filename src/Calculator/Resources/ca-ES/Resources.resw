@@ -438,7 +438,7 @@
     <comment>This is the tool tip automation name for the memory button.</comment>
   </data>
   <data name="HistoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Historial (Ctrl + H)</value>
+    <value>Historial (Ctrl+H)</value>
     <comment>This is the tool tip automation name for the history button.</comment>
   </data>
   <data name="bitFlip.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -450,7 +450,7 @@
     <comment>This is the tool tip automation name for the numberPad button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Esborra tota la memòria (Ctrl + L)</value>
+    <value>Esborra tota la memòria (Ctrl+L)</value>
     <comment>This is the tool tip automation name for the Clear Memory (MC) button.</comment>
   </data>
   <data name="MemoryLabel.Text" xml:space="preserve">
@@ -610,7 +610,7 @@
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Magatzem de memòria (Ctrl + M)</value>
+    <value>Magatzem de memòria (Ctrl+M)</value>
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -626,7 +626,7 @@
     <comment>Screen reader prompt for the Calculator Memory Recall button</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Recuperació de memòria (Ctrl + R)</value>
+    <value>Recuperació de memòria (Ctrl+R)</value>
     <comment>This is the tool tip automation name for the Memory Recall (MR) button.</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -634,7 +634,7 @@
     <comment>Screen reader prompt for the Calculator Memory Add button</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Addició de memòria (Ctrl + P)</value>
+    <value>Addició de memòria (Ctrl+P)</value>
     <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -642,7 +642,7 @@
     <comment>Screen reader prompt for the Calculator Memory Subtract button</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Eliminació de memòria (Ctrl + Q)</value>
+    <value>Eliminació de memòria (Ctrl+Q)</value>
     <comment>This is the tool tip automation name for the Memory Subtract (M-) button.</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -662,11 +662,11 @@
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Elimina de l'element de memòria</value>
+    <value>Resta-ho de l'element de memòria</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Elimina de l'element de memòria</value>
+    <value>Resta-ho de l'element de memòria</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -678,11 +678,11 @@
     <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
   </data>
   <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Suma-ho a l'element de memòria</value>
+    <value>Afegeix a l'element de memòria</value>
     <comment>Screen reader prompt for the Calculator Memory Add swipe button in the Memory list</comment>
   </data>
   <data name="MemPlusMenuItem.Text" xml:space="preserve">
-    <value>Suma-ho a l'element de memòria</value>
+    <value>Afegeix a l'element de memòria</value>
     <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
   </data>
   <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -994,7 +994,7 @@
     <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
   </data>
   <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>" e" a l'exponent</value>
+    <value>"X" a l'exponent</value>
     <comment>Screen reader prompt for x power y button on the scientific operator keypad. </comment>
   </data>
   <data name="powerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1002,7 +1002,7 @@
     <comment>Screen reader prompt for the 10 power x button on the scientific operator keypad.</comment>
   </data>
   <data name="powerOfEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>" e" a l'exponent</value>
+    <value>"e" a l'exponent</value>
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
   <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1194,7 +1194,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Liter" xml:space="preserve">
-    <value>l</value>
+    <value>L</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
@@ -2030,7 +2030,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>Mil·límetres de mercuri</value>
+    <value>Mil·límetres de mercuri </value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
@@ -2086,7 +2086,7 @@
     <comment>A measurement unit for weight. This is the US version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Stone" xml:space="preserve">
-    <value>Stone</value>
+    <value>Pedres</value>
     <comment>A measurement unit for weight. Equal to 14 pounds. Note that this is the plural form of the word in English (eg. "This man weighs 11 stone."). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tonne" xml:space="preserve">
@@ -2317,8 +2317,12 @@
     <value>© %1 Microsoft. Tots els drets reservats.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Per obtenir informació sobre com podeu contribuir a la Calculadora del Windows, doneu una ullada al projecte al %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
-    <value>Sobre</value>
+    <value>Quant a</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
@@ -2338,7 +2342,7 @@
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
   <data name="CannotPaste" xml:space="preserve">
-    <value>Aquesta expressió no es pot enganxar.</value>
+    <value>Aquesta expressió no es pot enganxar</value>
     <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
   </data>
   <data name="UnitName_Gibibits" xml:space="preserve">
@@ -2668,7 +2672,7 @@
     <comment>The text displayed for a hyperlink button that refreshes currency converter ratios.</comment>
   </data>
   <data name="DataChargesMayApply" xml:space="preserve">
-    <value>Pot ser que s'apliquin càrrecs per dades.</value>
+    <value>Pot ser que es produeixin càrrecs per l'ús de dades.</value>
     <comment>The text displayed when users are on a metered connection and using currency converter.</comment>
   </data>
   <data name="FailedToRefresh" xml:space="preserve">
@@ -2768,7 +2772,7 @@
     <comment>Access key for the Clear memory button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Esborra tota la memòria (Ctrl + L)</value>
+    <value>Esborra tota la memòria (Ctrl+L)</value>
     <comment>This is the tool tip automation name for the Clear Memory button in the Memory Pane.</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">

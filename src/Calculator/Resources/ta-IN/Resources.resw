@@ -418,11 +418,11 @@
     <comment>Used to describe the first bit of a binary number. Used in bit flip</comment>
   </data>
   <data name="MemoryButton_Open" xml:space="preserve">
-    <value>நினைவகத்தை திறக்க</value>
+    <value>நினைவக ஃப்ளைஅவுட்டைத் திற</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is closed.</comment>
   </data>
   <data name="MemoryButton_Close" xml:space="preserve">
-    <value>நினைவகத்தை மூடுக</value>
+    <value>நினைவக ஃப்ளைஅவுட்டை மூடு</value>
     <comment>This is the automation name and label for the memory button when the memory flyout is open.</comment>
   </data>
   <data name="AlwaysOnTop_Enter" xml:space="preserve">
@@ -530,7 +530,7 @@
     <comment>The text that shows in the dropdown navigation control for the converter group in upper case. The previous key for this was "ConverterMode.Text".</comment>
   </data>
   <data name="CalculatorModeTextCaps" xml:space="preserve">
-    <value>கணிப்பான்</value>
+    <value>கால்குலேட்டர்</value>
     <comment>The text that shows in the dropdown navigation control for the calculator group in upper case.</comment>
   </data>
   <data name="ConverterModePluralText" xml:space="preserve">
@@ -542,7 +542,7 @@
     <comment>Pluralized version of the calculator group text, used for the screen reader prompt.</comment>
   </data>
   <data name="Format_CalculatorResults" xml:space="preserve">
-    <value>காட்சி இது %1</value>
+    <value>காட்சி %1</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator results text block. %1 = Localized display value, e.g. "50".</comment>
   </data>
   <data name="Format_CalculatorAlwaysOnTopResults" xml:space="preserve">
@@ -554,7 +554,7 @@
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Display is 7 point". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_CalculatorExpression" xml:space="preserve">
-    <value>Expression is %1</value>
+    <value>%1 என்பது கோவை</value>
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator expression results. %1 = Localized display value, e.g. "50 + 2 - 60 +".</comment>
   </data>
   <data name="Display_Copied" xml:space="preserve">
@@ -598,15 +598,15 @@
     <comment>Screen reader prompt for the Calculator History Hide button</comment>
   </data>
   <data name="HistoryButton_Open" xml:space="preserve">
-    <value>வரலாறை திறக்க</value>
+    <value>வரலாறு ஃப்ளைஅவுட்டைத் திற</value>
     <comment>Screen reader prompt for the Calculator History button, when the flyout is closed.</comment>
   </data>
   <data name="HistoryButton_Close" xml:space="preserve">
-    <value>வரலாறை மூடுக</value>
+    <value>வரலாறை மூடு</value>
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>நினைவகத்தில் சேகரி</value>
+    <value>நினைவகச் சேமிப்பு</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -614,7 +614,7 @@
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>எல்லா நினைவகத்தை அழி</value>
+    <value>எல்லா நினைவகத்தையும் அழி</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="Memory_Cleared" xml:space="preserve">
@@ -646,27 +646,27 @@
     <comment>This is the tool tip automation name for the Memory Subtract (M-) button.</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>நினைவகத்தை அழி உருப்படி</value>
+    <value>நினைவக உருப்படியை அழி</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>நினைவகத்தை அழி உருப்படி</value>
+    <value>நினைவக உருப்படியை அழி</value>
     <comment>This is the tool tip automation name for the Clear Memory Item (MC) button in the Memory list.</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>நினைவகத்தில் சேர்த்திடுங்கள்</value>
+    <value>நினைவகத்தில் சேர்</value>
     <comment>Screen reader prompt for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>நினைவகத்தில் சேர்த்திடுங்கள்</value>
+    <value>நினைவகத்தில் சேர்</value>
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>நினைவக எண்ணிக்கையிலிருந்து கழித்திடுங்கள்</value>
+    <value>நினைவக உருப்படியிலிருந்து கழி</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>நினைவக எண்ணிக்கையிலிருந்து கழித்திடுங்கள்</value>
+    <value>நினைவக உருப்படியிலிருந்து கழி</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -678,11 +678,11 @@
     <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
   </data>
   <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>நினைவக உருப்படியில் சேர்</value>
+    <value>நினைவகத்தில் சேர்</value>
     <comment>Screen reader prompt for the Calculator Memory Add swipe button in the Memory list</comment>
   </data>
   <data name="MemPlusMenuItem.Text" xml:space="preserve">
-    <value>நினைவக உருப்படியில் சேர்</value>
+    <value>நினைவகத்தில் சேர்</value>
     <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
   </data>
   <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -726,7 +726,7 @@
     <comment>Screen reader prompt for the Calculator number "1" button</comment>
   </data>
   <data name="num0Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>பூஜ்ஜியம்</value>
+    <value>பூஜ்யம்</value>
     <comment>Screen reader prompt for the Calculator number "0" button</comment>
   </data>
   <data name="num1Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -798,7 +798,7 @@
     <comment>Screen reader prompt for the Calculator Or button</comment>
   </data>
   <data name="notButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>இன்றி</value>
+    <value>இல்லை</value>
     <comment>Screen reader prompt for the Calculator Not button</comment>
   </data>
   <data name="rolButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -866,7 +866,7 @@
     <comment>Screen reader prompt for the multiply button on the number pad</comment>
   </data>
   <data name="equalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>சமம்</value>
+    <value>சமங்கள்</value>
     <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -886,7 +886,7 @@
     <comment>Screen reader prompt for the plus button on the number pad</comment>
   </data>
   <data name="squareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>வர்க்கமூலம்</value>
+    <value>இருமடி மூலம்</value>
     <comment>Screen reader prompt for the square root button on the scientific operator keypad</comment>
   </data>
   <data name="percentButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -910,7 +910,7 @@
     <comment>Screen reader prompt for the Calculator "(" button on the scientific operator keypad</comment>
   </data>
   <data name="Format_OpenParenthesisAutomationNamePrefix" xml:space="preserve">
-    <value>இடது அடைப்புக்குறி, திறப்பு அடைப்புக்குறி கணக்கு %1</value>
+    <value>இடது அடைப்புக்குறி, திறப்பு அடைப்புக்குறி எண்ணிக்கைு %1</value>
     <comment>{Locked="%1"} Screen reader prompt for the Calculator "(" button on the scientific operator keypad. %1 is the localized count of open parenthesis, e.g. "2".</comment>
   </data>
   <data name="closeParenthesisButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -942,7 +942,7 @@
     <comment>Screen reader prompt for the Calculator sin button  on the scientific operator keypad</comment>
   </data>
   <data name="cosButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>கோசைன்</value>
+    <value>கொசைன்</value>
     <comment>Screen reader prompt for the Calculator cos button  on the scientific operator keypad</comment>
   </data>
   <data name="tanButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -966,7 +966,7 @@
     <comment>Screen reader prompt for the x squared on the scientific operator keypad. </comment>
   </data>
   <data name="xpower3Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>கன சதுரம்</value>
+    <value>கனசதுரம்</value>
     <comment>Screen reader prompt for the x cubed on the scientific operator keypad. </comment>
   </data>
   <data name="invsinButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -994,7 +994,7 @@
     <comment>Screen reader prompt for the inverted tanh on the scientific operator keypad.</comment>
   </data>
   <data name="powerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value> X'-இன் அடுக்கு</value>
+    <value>‘X'-இன் அடுக்கு</value>
     <comment>Screen reader prompt for x power y button on the scientific operator keypad. </comment>
   </data>
   <data name="powerOf10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1006,11 +1006,11 @@
     <comment>Screen reader for the e power x on the scientific operator keypad.</comment>
   </data>
   <data name="ySquareRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value> x'-இன் 'y' வர்க்கமூலம்</value>
+    <value>‘x'-இன் 'y' வர்க்கமூலம்</value>
     <comment>Screen reader for the yth root of x on the scientific operator keypad. Note: String is meant to read out whatever the "Yth root" mathematical operator sounds like.</comment>
   </data>
   <data name="logBase10Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>லாக்</value>
+    <value>பதிவு</value>
     <comment>Screen reader for the log base 10  on the scientific operator keypad</comment>
   </data>
   <data name="logBaseEButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1022,7 +1022,7 @@
     <comment>Screen reader for the mod button on the scientific operator keypad</comment>
   </data>
   <data name="expButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>அடுக்கு</value>
+    <value>அடுக்குக்குறி</value>
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
   <data name="dmsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1042,7 +1042,7 @@
     <comment>Screen reader for the frac button on the scientific operator keypad</comment>
   </data>
   <data name="factorialButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>காரணி</value>
+    <value>காரணியம்</value>
     <comment>Screen reader for the factorial button on the basic operator keypad</comment>
   </data>
   <data name="degButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1082,19 +1082,19 @@
     <comment>This is the tool tip automation name for the Always-on-Top button when in Always-on-Top mode.</comment>
   </data>
   <data name="Format_ValueFrom" xml:space="preserve">
-    <value>%1 %2- இலிருந்து மாற்று</value>
+    <value>%1 %2-இலிருந்து மாற்று</value>
     <comment>Screen reader prompt for the Unit Converter Value1 i.e. top number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ValueFrom_Decimal" xml:space="preserve">
-    <value>%1 புள்ளி %2- இலிருந்து மாற்று</value>
+    <value>%1 புள்ளி %2-இலிருந்து மாற்று</value>
     <comment>{Locked="%1"}. Automation label for the calculator display in the specific case where the user has just pressed the decimal separator button. For example, the user wants to input "7.5".  When they have input "7." they will hear "Convert from 7 point _current_unit_". "point" should be localized to the locale's appropriate decimal separator.</comment>
   </data>
   <data name="Format_ValueTo" xml:space="preserve">
-    <value>%1 %2 ஆக மாறிவிடும்</value>
+    <value>%1 %2 ஆக மாற்றும்</value>
     <comment>Screen reader prompt for the Unit Converter Value2 i.e. bottom number field. %1 = DisplayValue, %2 = Unit field localized name.</comment>
   </data>
   <data name="Format_ConversionResult" xml:space="preserve">
-    <value>%1 %2 இது %3 %4</value>
+    <value>%1 %2, %3 %4 ஆகும்</value>
     <comment>Screen reader prompt for a conversion result, ie "2 liters is 2,000 milliliters" . %1 = From unit display value, %2 = From unit, %3 = To unit display value, %4 = To unit.</comment>
   </data>
   <data name="InputUnit_Name" xml:space="preserve">
@@ -1142,7 +1142,7 @@
     <comment>Unit conversion category name called Temperature</comment>
   </data>
   <data name="CategoryName_WeightText" xml:space="preserve">
-    <value>எடை மற்றும் திணிவு</value>
+    <value>எடை மற்றும் நிறை</value>
     <comment>Unit conversion category name called Weight and Mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
   </data>
   <data name="CategoryName_PressureText" xml:space="preserve">
@@ -1198,7 +1198,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_Milliliter" xml:space="preserve">
-    <value>மில்லி லிட்டர்கள்</value>
+    <value>மில்லிலிட்டர்கள்</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Milliliter" xml:space="preserve">
@@ -1298,7 +1298,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Calorie" xml:space="preserve">
-    <value>கலோ</value>
+    <value>CAL</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Centimeter" xml:space="preserve">
@@ -1318,7 +1318,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicInch" xml:space="preserve">
-    <value>அங்³</value>
+    <value>in³</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicMeter" xml:space="preserve">
@@ -1326,7 +1326,7 @@
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_CubicYard" xml:space="preserve">
-    <value>யா³</value>
+    <value>yd³</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitAbbreviation_Day" xml:space="preserve">
@@ -1358,7 +1358,7 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Gigabit" xml:space="preserve">
-    <value>ஜி.பி</value>
+    <value>GB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Gigabyte" xml:space="preserve">
@@ -1394,7 +1394,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kilobyte" xml:space="preserve">
-    <value>கி.பை</value>
+    <value>KB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Kilocalorie" xml:space="preserve">
@@ -1402,7 +1402,7 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Kilojoule" xml:space="preserve">
-    <value>கி.ஜூ</value>
+    <value>kJ</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Kilometer" xml:space="preserve">
@@ -1434,7 +1434,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitAbbreviation_Meter" xml:space="preserve">
-    <value>m</value>
+    <value>மீ</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_MetersPerSecond" xml:space="preserve">
@@ -1498,7 +1498,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareFoot" xml:space="preserve">
-    <value>அடி²</value>
+    <value>ft²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareInch" xml:space="preserve">
@@ -1522,7 +1522,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_SquareYard" xml:space="preserve">
-    <value>யா²</value>
+    <value>yd²</value>
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Terabit" xml:space="preserve">
@@ -1722,7 +1722,7 @@
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabit" xml:space="preserve">
-    <value>கிகாபிட்ஸ்</value>
+    <value>கிகாபிட்கள்</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabyte" xml:space="preserve">
@@ -1754,7 +1754,7 @@
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
   </data>
   <data name="UnitName_Kilobit" xml:space="preserve">
-    <value>கிலோபிட்ஸ்</value>
+    <value>கிலோபைட்டுகள்</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilobyte" xml:space="preserve">
@@ -1770,11 +1770,11 @@
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilometer" xml:space="preserve">
-    <value>கிலோ மீட்டர்கள்</value>
+    <value>கிலோமீட்டர்கள்</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_KilometersPerHour" xml:space="preserve">
-    <value> கிலோ மீட்டர்/மணிநேரம் </value>
+    <value>கிலோமீட்டர்/மணிநேரம்</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilowatt" xml:space="preserve">
@@ -1810,7 +1810,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Microsecond" xml:space="preserve">
-    <value>மைக்ரோ விநாடிகள்</value>
+    <value>மைக்ரோவிநாடிகள்</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mile" xml:space="preserve">
@@ -1818,11 +1818,11 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_MilesPerHour" xml:space="preserve">
-    <value> மைல்/மணிநேரம்</value>
+    <value>மைல்/மணிநேரம்</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Millimeter" xml:space="preserve">
-    <value>மில்லிமீட்டர்</value>
+    <value>மில்லிமீட்டர்கள்</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Millisecond" xml:space="preserve">
@@ -1842,11 +1842,11 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabit" xml:space="preserve">
-    <value>பெடாபிட்ஸ்</value>
+    <value>பெடாபிட்கள்</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabyte" xml:space="preserve">
-    <value>பேடாபைட்ஸ்</value>
+    <value>பேடாபைட்கள்</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Second" xml:space="preserve">
@@ -1886,11 +1886,11 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabit" xml:space="preserve">
-    <value>டெராபிட்ஸ்</value>
+    <value>டெராபிட்கள்</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabyte" xml:space="preserve">
-    <value>டெராபைட்ஸ்</value>
+    <value>டெராபைட்டுகள்</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Watt" xml:space="preserve">
@@ -1954,7 +1954,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Decagram" xml:space="preserve">
-    <value>டெக்கி</value>
+    <value>DAG</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Decigram" xml:space="preserve">
@@ -2070,7 +2070,7 @@
     <comment>A measurement unit for weight. This is the UK version of ton. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Milligram" xml:space="preserve">
-    <value>மில்லி கிராம்கள்</value>
+    <value>மில்லிகிராம்கள்</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Ounce" xml:space="preserve">
@@ -2134,7 +2134,7 @@
     <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paperclip" xml:space="preserve">
-    <value>காகித கிளிப்புகள்</value>
+    <value>காகிதக் கிளிப்புகள்</value>
     <comment>A standard paperclip, used as a comparison measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Paperclip" xml:space="preserve">
@@ -2190,15 +2190,15 @@
     <comment>An elephant, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Turtle" xml:space="preserve">
-    <value>ஆமைகள்</value>
+    <value>டர்ட்டில்கள்</value>
     <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Turtle" xml:space="preserve">
-    <value>ஆமைகள்</value>
+    <value>டர்ட்டில்கள்</value>
     <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Jet" xml:space="preserve">
-    <value>ஜெட்ஸ்</value>
+    <value>ஜெட்கள்</value>
     <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Jet" xml:space="preserve">
@@ -2294,11 +2294,11 @@
     <comment>This string is what is read by Narrator, and other screen readers, for the supplementary value at the bottom of the converter view, %1 = the value of the supplementary unit (i.e. 0.5), %2 = the unit itself (i.e. inches, meters, etc)</comment>
   </data>
   <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>பின்</value>
+    <value>பின்செல்</value>
     <comment>Screen reader prompt for the About panel back button</comment>
   </data>
   <data name="AboutControlBackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>பின்</value>
+    <value>பின்செல்</value>
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
   <data name="AboutFlyoutEULA.Text" xml:space="preserve">
@@ -2316,6 +2316,10 @@
   <data name="AboutControlCopyright" xml:space="preserve">
     <value>© %1 Microsoft. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
+  </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>எவ்வாறு Windows கால்குலேட்டருக்கு நீங்கள் பங்களிக்க முடியும் என்பதை அறிய, %HL%GitHub%HL%-இல் திட்டப்பணியை பார்க்கவும்.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>இது பற்றி</value>
@@ -2338,7 +2342,7 @@
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
   <data name="CannotPaste" xml:space="preserve">
-    <value> இந்தக் கோவையை ஒட்ட முடியாது</value>
+    <value>இந்தக் கோவையை ஒட்ட முடியாது</value>
     <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
   </data>
   <data name="UnitName_Gibibits" xml:space="preserve">
@@ -2433,7 +2437,7 @@
     <value>தேதி கணக்கிடுதல்</value>
   </data>
   <data name="DateCalculationOption.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>கணக்கீடு பயன்முறை</value>
+    <value>கணக்கீட்டுப் பயன்முறை</value>
     <comment>Automation label for the Date Calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
   </data>
   <data name="AddOption.Content" xml:space="preserve">
@@ -2441,7 +2445,7 @@
     <comment>Add toggle button text</comment>
   </data>
   <data name="Date_AddSubtractOption.Content" xml:space="preserve">
-    <value>நாட்க சேர்க்க அல்லது கழிக்க</value>
+    <value>நாட்களைச் சேர் அல்லது கழி</value>
     <comment>Add or Subtract days option</comment>
   </data>
   <data name="DateLabel.Text" xml:space="preserve">
@@ -2481,7 +2485,7 @@
     <comment>Add/Subtract Years label</comment>
   </data>
   <data name="Date_OutOfBoundMessage" xml:space="preserve">
-    <value>எல்லைக்கு வெளியிலுள்ள தேதி</value>
+    <value>தேதி எல்லையைக் கடந்துவிட்டது</value>
     <comment>Out of bound message shown as result when the date calculation exceeds the bounds</comment>
   </data>
   <data name="Date_Day" xml:space="preserve">
@@ -2528,7 +2532,7 @@
     <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and Mass", "Energy", "Volume", etc.</comment>
   </data>
   <data name="HeaderAutomationName_Date" xml:space="preserve">
-    <value>நாள் கணக்கீடு பயன்முறை</value>
+    <value>நாள் கணக்கீட்டுப் பயன்முறை</value>
     <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2536,7 +2540,7 @@
     <comment>Automation name for the group of controls for history and memory lists.</comment>
   </data>
   <data name="MemoryPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>நினைவகம் கட்டுப்படுத்துனர்கள்</value>
+    <value>நினைவகக் கட்டுப்பாடுகள்</value>
     <comment>Automation name for the group of memory controls (Mem Clear, Mem Recall, Mem Add, Mem Subtract, Mem Store, Memory flyout toggle)</comment>
   </data>
   <data name="StandardFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2544,11 +2548,11 @@
     <comment>Automation name for the group of standard function buttons (Percent, Square Root, Square, Cube, Reciprocal)</comment>
   </data>
   <data name="DisplayControls.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>தோற்ற கட்டுப்பாடுகள்</value>
+    <value>தோற்றக் கட்டுப்பாடுகள்</value>
     <comment>Automation name for the group of display control buttons (Clear, Clear Entry, and Backspace)</comment>
   </data>
   <data name="StandardOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>நிலையான இயக்கிகள்</value>
+    <value>நிலையான ஆப்பரேட்டர்கள்</value>
     <comment>Automation name for the group of standard operator buttons (Add, Subtract, Multiply, Divide, and Equals)</comment>
   </data>
   <data name="NumberPad.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2556,11 +2560,11 @@
     <comment>Automation name for the group of NumberPad buttons (0-9, A-F and Decimal button)</comment>
   </data>
   <data name="ScientificAngleOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>கோணம் ஆப்பரேட்டர்</value>
+    <value>கோணம் ஆப்பரேட்டர்கள்</value>
     <comment>Automation name for the group of Scientific angle operators (Degree mode, Hyperbolic toggle, and Precision button)</comment>
   </data>
   <data name="ScientificFunctions.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>அறிவியல் செயல்பாடுகள்</value>
+    <value>அறிவியல் சார்ந்த செயல்பாடுகள்</value>
     <comment>Automation name for the group of Scientific functions.</comment>
   </data>
   <data name="RadixGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2568,7 +2572,7 @@
     <comment>Automation name for the group of radices (Hexadecimal, Decimal, Octal, Binary). https://en.wikipedia.org/wiki/Radix </comment>
   </data>
   <data name="ProgrammerOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>நிரலாக்க இயக்கிகள்</value>
+    <value>நிரலாக்க ஆப்பரேட்டர்கள்</value>
     <comment>Automation name for the group of programmer operators (RoL, RoR, Lsh, Rsh, OR, XOR, NOT, AND).</comment>
   </data>
   <data name="InputModeSelectionGroup.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2600,7 +2604,7 @@
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when the user stores a number to memory. The %1 is the automation name of the display. Users will hear "_current_value_ saved to memory".</comment>
   </data>
   <data name="Format_MemorySlotChanged" xml:space="preserve">
-    <value>நினைவாக ஸ்லாட் %1 ஆனது %2</value>
+    <value>நினைவக ஸ்லாட் %1 ஆனது %2</value>
     <comment>{Locked='%1','%2'} Formatting string for a Narrator announcement when the user changes a memory slot. The %1 is the index of the memory slot and %2 is the new value. For example, users might hear "Memory slot 2 is 37".</comment>
   </data>
   <data name="Format_MemorySlotCleared" xml:space="preserve">
@@ -2620,7 +2624,7 @@
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
   </data>
   <data name="plusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
-    <value>கூட்டல்குறி</value>
+    <value>கூட்டல்</value>
     <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
   </data>
   <data name="powerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
@@ -2784,23 +2788,23 @@
     <comment>Access key for the Memory pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="SineDegrees" xml:space="preserve">
-    <value>சைன் டிகிரிஸ்</value>
+    <value>சைன் டிகிரிகள்</value>
     <comment>Name for the sine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="SineRadians" xml:space="preserve">
-    <value>சைன் ரேடியன்ஸ்</value>
+    <value>சைன் ரேடியன்கள்</value>
     <comment>Name for the sine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="SineGradians" xml:space="preserve">
-    <value>சைன் கிரேடியன்</value>
+    <value>சைன் கிரேடியன்கள்</value>
     <comment>Name for the sine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineDegrees" xml:space="preserve">
-    <value>தலைகீழான சைன் டிகிரிஸ்</value>
+    <value>தலைகீழான சைன் டிகிரிகள்</value>
     <comment>Name for the inverse sine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineRadians" xml:space="preserve">
-    <value>தலைகீழான சைன் ரேடியன்ஸ்</value>
+    <value>தலைகீழான சைன் ரேடியன்கள்</value>
     <comment>Name for the inverse sine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseSineGradians" xml:space="preserve">
@@ -2816,23 +2820,23 @@
     <comment>Name for the inverse hyperbolic sine function. Used by screen readers.</comment>
   </data>
   <data name="CosineDegrees" xml:space="preserve">
-    <value>கொசைன் டிகிரிஸ்</value>
+    <value>கொசைன் டிகிரிகள்</value>
     <comment>Name for the cosine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="CosineRadians" xml:space="preserve">
-    <value>கொசைன் ரேடியன்ஸ்</value>
+    <value>கொசைன் ரேடியன்கள்</value>
     <comment>Name for the cosine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="CosineGradians" xml:space="preserve">
-    <value>கொசைன் கிரேடியன்</value>
+    <value>கொசைன் கிரேடியன்கள்</value>
     <comment>Name for the cosine function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineDegrees" xml:space="preserve">
-    <value>தலைகீழான கொசைன் டிகிரிஸ்</value>
+    <value>தலைகீழான கொசைன் டிகிரிகள்</value>
     <comment>Name for the inverse cosine function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineRadians" xml:space="preserve">
-    <value>தலைகீழான கொசைன் ரேடியன்ஸ்</value>
+    <value>தலைகீழான கொசைன் ரேடியன்கள்</value>
     <comment>Name for the inverse cosine function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseCosineGradians" xml:space="preserve">
@@ -2848,7 +2852,7 @@
     <comment>Name for the inverse hyperbolic cosine function. Used by screen readers.</comment>
   </data>
   <data name="TangentDegrees" xml:space="preserve">
-    <value>டேஞ்சன்ட் டிகிரிஸ்</value>
+    <value>டேஞ்சன்ட் டிகிரிகள்</value>
     <comment>Name for the tangent function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="TangentRadians" xml:space="preserve">
@@ -2856,7 +2860,7 @@
     <comment>Name for the tangent function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="TangentGradians" xml:space="preserve">
-    <value>டேஞ்சன்ட் கிரேடியன்</value>
+    <value>டேஞ்சன்ட் கிரேடியன்கள்</value>
     <comment>Name for the tangent function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentDegrees" xml:space="preserve">
@@ -2864,11 +2868,11 @@
     <comment>Name for the inverse tangent function in degrees mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentRadians" xml:space="preserve">
-    <value>தலைகீழான டேஞ்சன்ட் ரேடியன்ஸ்</value>
+    <value>தலைகீழான டேஞ்சன்ட் ரேடியன்கள்</value>
     <comment>Name for the inverse tangent function in radians mode. Used by screen readers.</comment>
   </data>
   <data name="InverseTangentGradians" xml:space="preserve">
-    <value>தலைகீழான டேஞ்சன்ட் கிரேடியன்</value>
+    <value>தலைகீழான டேஞ்சன்ட் கிரேடியன்கள்</value>
     <comment>Name for the inverse tangent function in gradians mode. Used by screen readers.</comment>
   </data>
   <data name="HyperbolicTangent" xml:space="preserve">
@@ -2996,7 +3000,7 @@
     <comment>Name for the programmer function that shifts bits to the right. Used by screen readers.</comment>
   </data>
   <data name="Factorial" xml:space="preserve">
-    <value>காரணியம்</value>
+    <value>இயல் எண் தொடர்பெருக்கம்</value>
     <comment>Name for the factorial function. Used by screen readers.</comment>
   </data>
   <data name="DegreeMinuteSecond" xml:space="preserve">
@@ -3012,7 +3016,7 @@
     <comment>Name for the square function. Used by screen readers.</comment>
   </data>
   <data name="YRoot" xml:space="preserve">
-    <value>y மூலம்</value>
+    <value>y வேர்</value>
     <comment>Name for the y root function. Used by screen readers.</comment>
   </data>
   <data name="NavCategoryItem_AutomationNameFormat" xml:space="preserve">

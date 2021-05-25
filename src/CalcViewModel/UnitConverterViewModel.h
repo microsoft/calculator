@@ -35,6 +35,11 @@ namespace CalculatorApp
                 }
             }
 
+            int GetModelCategoryId()
+            {
+                return GetModelCategory().id;
+            }
+
             internal : const UnitConversionManager::Category& GetModelCategory() const
             {
                 return m_original;
@@ -70,6 +75,18 @@ namespace CalculatorApp
                 return AccessibleName;
             }
 
+            // CSHARP_MIGRATION: TODO:
+        public:
+            bool IsModelUnitWhimsical()
+            {
+                return m_original.isWhimsical;
+            }
+
+            int ModelUnitID()
+            {
+                return m_original.id;
+            }
+
             internal : const UnitConversionManager::Unit& GetModelUnit() const
             {
                 return m_original;
@@ -87,11 +104,14 @@ namespace CalculatorApp
             {
             }
 
-            bool IsWhimsical() const
+        // CSHARP_MIGRATION: TODO: double check below method's accessor
+        public:
+            bool IsWhimsical()
             {
                 return m_Unit->GetModelUnit().isWhimsical;
             }
 
+        public:
             Platform::String ^ GetLocalizedAutomationName();
 
         public:
@@ -101,7 +121,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_R(CalculatorApp::ViewModel::Unit ^, Unit);
         };
 
-        interface class IActivatable
+        public interface class IActivatable
         {
             virtual property bool IsActive;
         };
@@ -143,7 +163,7 @@ namespace CalculatorApp
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
 
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Category ^> ^, Categories);
-            OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, Mode);
+            OBSERVABLE_PROPERTY_RW(CalculatorApp::ViewModel::Common::ViewMode, Mode);
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Unit ^> ^, Units);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencySymbol1);
             OBSERVABLE_PROPERTY_RW(Unit ^, Unit1);
@@ -158,7 +178,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(Platform::String ^, Value2AutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, Unit1AutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, Unit2AutomationName);
-            OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::Automation::NarratorAnnouncement ^, Announcement);
+            OBSERVABLE_PROPERTY_RW(CalculatorApp::ViewModel::Common::Automation::NarratorAnnouncement ^, Announcement);
             OBSERVABLE_PROPERTY_RW(bool, IsDecimalEnabled);
             OBSERVABLE_PROPERTY_RW(bool, IsDropDownOpen);
             OBSERVABLE_PROPERTY_RW(bool, IsDropDownEnabled);
@@ -167,7 +187,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencyRatioEquality);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencyRatioEqualityAutomationName);
             OBSERVABLE_PROPERTY_RW(Platform::String ^, CurrencyTimestamp);
-            OBSERVABLE_NAMED_PROPERTY_RW(CalculatorApp::NetworkAccessBehavior, NetworkBehavior);
+            OBSERVABLE_NAMED_PROPERTY_RW(CalculatorApp::ViewModel::Common::NetworkAccessBehavior, NetworkBehavior);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, CurrencyDataLoadFailed);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, CurrencyDataIsWeekOld);
 
@@ -185,7 +205,7 @@ namespace CalculatorApp
                     if (value != nullptr)
                     {
                         auto currentCategory = value->GetModelCategory();
-                        IsCurrencyCurrentCategory = currentCategory.id == CalculatorApp::Common::NavCategory::Serialize(CalculatorApp::Common::ViewMode::Currency);
+                        IsCurrencyCurrentCategory = currentCategory.id == CalculatorApp::ViewModel::Common::NavCategory::Serialize(CalculatorApp::ViewModel::Common::ViewMode::Currency);
                     }
                     RaisePropertyChanged("CurrentCategory");
                 }
@@ -217,12 +237,14 @@ namespace CalculatorApp
 
             void AnnounceConversionResult();
 
+            void OnPaste(Platform::String ^ stringToPaste);
+            void RefreshCurrencyRatios();
+            void OnValueActivated(IActivatable ^ control);
+
             internal : void ResetView();
             void PopulateData();
-            NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
+            CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
             void DisplayPasteError();
-            void OnValueActivated(IActivatable ^ control);
-            void OnPaste(Platform::String ^ stringToPaste);
 
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
@@ -255,8 +277,7 @@ namespace CalculatorApp
 
             void OnCurrencyDataLoadFinished(bool didLoad);
             void OnCurrencyTimestampUpdated(_In_ const std::wstring& timestamp, bool isWeekOld);
-            void RefreshCurrencyRatios();
-            void OnNetworkBehaviorChanged(_In_ CalculatorApp::NetworkAccessBehavior newBehavior);
+            void OnNetworkBehaviorChanged(_In_ CalculatorApp::ViewModel::Common::NetworkAccessBehavior newBehavior);
 
             const std::wstring& GetValueFromUnlocalized() const
             {
@@ -282,7 +303,7 @@ namespace CalculatorApp
             void OnCategoryChanged(Platform::Object ^ unused);
             void OnUnitChanged(Platform::Object ^ unused);
             void OnSwitchActive(Platform::Object ^ unused);
-            UnitConversionManager::Command CommandFromButtonId(CalculatorApp::NumbersAndOperatorsEnum button);
+            UnitConversionManager::Command CommandFromButtonId(CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum button);
             void SupplementaryResultsTimerTick(Windows::System::Threading::ThreadPoolTimer ^ timer);
             void SupplementaryResultsTimerCancel(Windows::System::Threading::ThreadPoolTimer ^ timer);
             void RefreshSupplementaryResults();
@@ -449,7 +470,7 @@ namespace CalculatorApp
 
             void NetworkBehaviorChanged(_In_ int newBehavior) override
             {
-                m_viewModel->OnNetworkBehaviorChanged(static_cast<CalculatorApp::NetworkAccessBehavior>(newBehavior));
+                m_viewModel->OnNetworkBehaviorChanged(static_cast<CalculatorApp::ViewModel::Common::NetworkAccessBehavior>(newBehavior));
             }
 
         private:

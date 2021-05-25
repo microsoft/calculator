@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="using:CalculatorApp.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="using:CalculatorApp"
+             xmlns:local="using:CalculatorApp.ViewModel.Common"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Name="ControlRoot"
              d:DesignHeight="315"
@@ -95,9 +95,9 @@
                       AutomationProperties.AutomationId="ftoeButton"
                       Checked="FToEButton_Toggled"
                       Content="F-E"
-                      IsChecked="{Binding IsFToEChecked, Mode=TwoWay}"
-                      IsEnabled="{x:Bind Model.IsFToEEnabled, Mode=OneWay}"
-                      Unchecked="FToEButton_Toggled">
+                      IsChecked="{x:Bind Model.IsFToEChecked, Mode=OneWay}"
+                      Unchecked="FToEButton_Toggled"
+                      IsEnabled="{x:Bind Model.IsFToEEnabled, Mode=OneWay}">
             <ToggleButton.CommandParameter>
                 <local:NumbersAndOperatorsEnum>FToE</local:NumbersAndOperatorsEnum>
             </ToggleButton.CommandParameter>

@@ -514,7 +514,7 @@
     <comment>The text that shows in the dropdown navigation control in snapped mode when scientific calculator mode is selected.</comment>
   </data>
   <data name="ProgrammerModeText" xml:space="preserve">
-    <value>Programátorská</value>
+    <value>Programátor</value>
     <comment>The text that shows in the dropdown navigation control in snapped mode when programmer calculator mode is selected.</comment>
   </data>
   <data name="ConverterModeText" xml:space="preserve">
@@ -626,7 +626,7 @@
     <comment>Screen reader prompt for the Calculator Memory Recall button</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Vyvolať z pamäte (Ctrl+R)</value>
+    <value>Vyvolať z pamäte (Ctrl+R)</value>
     <comment>This is the tool tip automation name for the Memory Recall (MR) button.</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -638,11 +638,11 @@
     <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Odčítať z pamäte</value>
+    <value>Odčítať z pamäte</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Odčítať z pamäte (Ctrl+Q)</value>
+    <value>Odčítať z pamäte (Ctrl+Q)</value>
     <comment>This is the tool tip automation name for the Memory Subtract (M-) button.</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -650,11 +650,11 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Vymaže položku pamäte</value>
+    <value>Vymazať položku pamäte</value>
     <comment>This is the tool tip automation name for the Clear Memory Item (MC) button in the Memory list.</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Pridať do položky pamäte</value>
+    <value>Pridá do položky pamäte</value>
     <comment>Screen reader prompt for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -662,11 +662,11 @@
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Odčítať z položky pamäte</value>
+    <value>Odčítať z položky pamäte</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Odčíta z položky pamäte</value>
+    <value>Odčítať z položky pamäte</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -678,11 +678,11 @@
     <comment>Text string for the Calculator Clear Memory option in the Memory list context menu</comment>
   </data>
   <data name="MemPlusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Pridať do položky pamäte</value>
+    <value>Pridá do položky pamäte</value>
     <comment>Screen reader prompt for the Calculator Memory Add swipe button in the Memory list</comment>
   </data>
   <data name="MemPlusMenuItem.Text" xml:space="preserve">
-    <value>Pridať do položky pamäte</value>
+    <value>Pridá do položky pamäte</value>
     <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
   </data>
   <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2317,6 +2317,10 @@
     <value>© %1 Microsoft. Všetky práva vyhradené.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Ak chcete zistiť, ako môžete prispievať do programu Windows kalkulačka, vezmite projekt na %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Informácie</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
@@ -2728,7 +2732,7 @@
     <comment>AccessKey for the energy converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_LengthAccessKey" xml:space="preserve">
-    <value>L</value>
+    <value>l</value>
     <comment>AccessKey for the length converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_PowerAccessKey" xml:space="preserve">
@@ -3012,7 +3016,7 @@
     <comment>Name for the square function. Used by screen readers.</comment>
   </data>
   <data name="YRoot" xml:space="preserve">
-    <value>y-tá odmocnina</value>
+    <value>odmocnina y</value>
     <comment>Name for the y root function. Used by screen readers.</comment>
   </data>
   <data name="NavCategoryItem_AutomationNameFormat" xml:space="preserve">

@@ -3,6 +3,7 @@
 
 using OpenQA.Selenium.Appium.Windows;
 using System;
+using System.Globalization;
 
 namespace CalculatorUITestFramework
 {
@@ -29,7 +30,7 @@ namespace CalculatorUITestFramework
         /// <param name="number">Number to be entered into the calculator.</param>
         public void Input(double number)
         {
-            string numberStr = number.ToString();
+            string numberStr = number.ToString(CultureInfo.InvariantCulture);
             if (numberStr.StartsWith("-"))
             {
                 numberStr = numberStr.Substring(1) + "-";

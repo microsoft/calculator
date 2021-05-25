@@ -7,7 +7,7 @@
 
 namespace CalculatorApp
 {
-    namespace DataLoaders
+    namespace ViewModel::DataLoaders
     {
         class CurrencyHttpClient : public ICurrencyHttpClient
         {

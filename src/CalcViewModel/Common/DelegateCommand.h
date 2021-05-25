@@ -3,22 +3,18 @@
 
 #pragma once
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
     namespace Common
     {
-        template <typename TTarget>
-        ref class DelegateCommand : public Windows::UI::Xaml::Input::ICommand
+        public delegate void DelegateCommandHandler(Platform::Object ^ parameter);
+
+        public ref class DelegateCommand sealed : public Windows::UI::Xaml::Input::ICommand
         {
-            internal :
-
-                typedef void (TTarget::*CommandHandlerFunc)(Platform::Object ^);
-
-            DelegateCommand(TTarget ^ target, CommandHandlerFunc func)
-                : m_weakTarget(target)
-                , m_function(func)
-            {
-            }
+        public:
+            DelegateCommand(DelegateCommandHandler ^ handler)
+                : m_handler(handler)
+            {}
 
         private:
             // Explicit, and private, implementation of ICommand, this way of programming makes it so
@@ -27,11 +23,7 @@ namespace CalculatorApp
             // code in the app calling Execute.
             virtual void ExecuteImpl(Platform::Object ^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::Execute
             {
-                TTarget ^ target = m_weakTarget.Resolve<TTarget>();
-                if (target)
-                {
-                    (target->*m_function)(parameter);
-                }
+                m_handler->Invoke(parameter);
             }
 
             virtual bool CanExecuteImpl(Platform::Object ^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::CanExecute
@@ -39,9 +31,9 @@ namespace CalculatorApp
                 return true;
             }
 
-            virtual event Windows::Foundation::EventHandler<Platform::Object^>^ CanExecuteChangedImpl
+            virtual event Windows::Foundation::EventHandler<Platform::Object ^> ^ CanExecuteChangedImpl
             {
-                virtual Windows::Foundation::EventRegistrationToken add(Windows::Foundation::EventHandler<Platform::Object^>^ handler) sealed = Windows::UI::Xaml::Input::ICommand::CanExecuteChanged::add
+                virtual Windows::Foundation::EventRegistrationToken add(Windows::Foundation::EventHandler<Platform::Object ^> ^ handler) sealed = Windows::UI::Xaml::Input::ICommand::CanExecuteChanged::add
                 {
                     return m_canExecuteChanged += handler;
                 }
@@ -52,17 +44,25 @@ namespace CalculatorApp
             }
 
         private:
+            DelegateCommandHandler ^ m_handler;
 
-            event Windows::Foundation::EventHandler<Platform::Object^>^ m_canExecuteChanged;
-
-            CommandHandlerFunc m_function;
-            Platform::WeakReference m_weakTarget;
+            event Windows::Foundation::EventHandler<Platform::Object ^> ^ m_canExecuteChanged;
         };
 
         template <typename TTarget, typename TFuncPtr>
-            DelegateCommand<TTarget> ^ MakeDelegate(TTarget ^ target, TFuncPtr&& function) {
-                return ref new DelegateCommand<TTarget>(target, std::forward<TFuncPtr>(function));
-            }
-
+        DelegateCommandHandler ^ MakeDelegateCommandHandler(TTarget ^ target, TFuncPtr&& function)
+        {
+            Platform::WeakReference weakTarget(target);
+            return ref new DelegateCommandHandler([weakTarget, function=std::forward<TFuncPtr>(function)](Platform::Object ^ param)
+                {
+                    TTarget ^ thatTarget = weakTarget.Resolve<TTarget>();
+                    if (nullptr != thatTarget)
+                    {
+                        (thatTarget->*function)(param);
+                    }
+                }
+            );
+        }
     }
 }
+

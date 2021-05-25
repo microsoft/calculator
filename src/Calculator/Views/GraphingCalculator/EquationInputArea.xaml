@@ -918,7 +918,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackPanel x:Name="VariableStackPanel" x:Load="{x:Bind local:EquationInputArea.ManageEditVariablesButtonLoaded(Variables.Size), Mode=OneWay}">
+            <StackPanel x:Name="VariableStackPanel" x:Load="{x:Bind local:EquationInputArea.ManageEditVariablesButtonLoaded(Variables.Count), Mode=OneWay}">
                 <Rectangle Height="1"
                            Margin="12"
                            Fill="{ThemeResource DividerBrush}"/>

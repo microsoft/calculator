@@ -5,12 +5,11 @@
 
 #include "CalcManager/Command.h"
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel::Common
 {
     namespace CM = CalculationManager;
 
-public
-    enum class NumbersAndOperatorsEnum
+    public enum class NumbersAndOperatorsEnum
     {
         Zero = (int)CM::Command::Command0,
         One = (int)CM::Command::Command1,

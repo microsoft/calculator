@@ -127,8 +127,8 @@ public
         {
             Platform::String ^ get()
             {
-                return CalculatorApp::Common::LocalizationStringUtil::GetLocalizedString(
-                           CalculatorApp::AppResourceProvider::GetInstance()->GetResourceString(L"VariableListViewItem"), Name);
+                return CalculatorApp::ViewModel::Common::LocalizationStringUtil::GetLocalizedString(
+                           CalculatorApp::ViewModel::Common::AppResourceProvider::GetInstance()->GetResourceString(L"VariableListViewItem"), Name);
             }
         }
 

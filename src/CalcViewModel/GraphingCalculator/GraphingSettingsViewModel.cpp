@@ -6,6 +6,7 @@
 #include <CalcManager\NumberFormattingUtils.h>
 
 using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace CalcManager::NumberFormattingUtils;
 using namespace GraphControl;
 using namespace std;
@@ -102,7 +103,7 @@ void GraphingSettingsViewModel::UpdateDisplayRange()
 
     m_Graph->SetDisplayRanges(m_XMinValue, m_XMaxValue, m_YMinValue, m_YMaxValue);
 
-    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Grid, L"");
+    CalculatorApp::ViewModel::Common::TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::Grid, L"");
 }
 
 bool GraphingSettingsViewModel::HasError()

@@ -1,4 +1,4 @@
-<UserControl x:Class="CalculatorApp.TitleBar"
+﻿<UserControl x:Class="CalculatorApp.TitleBar"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -26,8 +26,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Grid x:Name="BackgroundElement"
-              Background="Transparent">
+        <Grid x:Name="BackgroundElement" Background="Transparent">
             <TextBlock x:Name="AppName"
                        x:Uid="AppName"
                        Margin="12,0,12,0"
@@ -48,13 +47,13 @@
                 FontFamily="{StaticResource CalculatorFontFamily}"
                 FontSize="14"
                 FontWeight="Thin"
-                x:Load="False"
                 AutomationProperties.AutomationId="ExitAlwaysOnTopButton"
                 Click="AlwaysOnTopButton_Click"
                 Content="&#xEE47;"
-                Visibility="Collapsed">
+                Visibility="Collapsed"
+                x:Load="False">
             <Button.KeyboardAccelerators>
-                <KeyboardAccelerator Modifiers="Menu" Key="Down"/>
+                <KeyboardAccelerator Key="Down" Modifiers="Menu"/>
             </Button.KeyboardAccelerators>
         </Button>
     </Grid>

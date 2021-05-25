@@ -9,7 +9,7 @@
 // Depending on the version of the OS the app is running on, the factory will return
 // an announcement host appropriate for that version.
 
-namespace CalculatorApp::Common::Automation
+namespace CalculatorApp::ViewModel::Common::Automation
 {
     class NarratorAnnouncementHostFactory
     {

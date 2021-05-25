@@ -450,7 +450,7 @@
     <comment>This is the tool tip automation name for the numberPad button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Geheugen wissen (Ctrl+L)</value>
+    <value>Alle geheugens wissen (Ctrl+L)</value>
     <comment>This is the tool tip automation name for the Clear Memory (MC) button.</comment>
   </data>
   <data name="MemoryLabel.Text" xml:space="preserve">
@@ -470,7 +470,7 @@
     <comment>The automation name for the History pivot item that is shown when Calculator is in wide layout.</comment>
   </data>
   <data name="converterModeButton.Content" xml:space="preserve">
-    <value>Omrekenen</value>
+    <value>Conversieprogramma</value>
     <comment>Label for a control that activates the unit converter mode.</comment>
   </data>
   <data name="scientificModeButton.Content" xml:space="preserve">
@@ -514,11 +514,11 @@
     <comment>The text that shows in the dropdown navigation control in snapped mode when scientific calculator mode is selected.</comment>
   </data>
   <data name="ProgrammerModeText" xml:space="preserve">
-    <value>Programmeren</value>
+    <value>Programmeur</value>
     <comment>The text that shows in the dropdown navigation control in snapped mode when programmer calculator mode is selected.</comment>
   </data>
   <data name="ConverterModeText" xml:space="preserve">
-    <value>Omrekenen</value>
+    <value>Conversieprogramma</value>
     <comment>The text that shows in the dropdown navigation control for the converter group. The previous key for this was "ConverterMode.Text".</comment>
   </data>
   <data name="CalculatorModeText" xml:space="preserve">
@@ -526,7 +526,7 @@
     <comment>The text that shows in the dropdown navigation control for the calculator group.</comment>
   </data>
   <data name="ConverterModeTextCaps" xml:space="preserve">
-    <value>Omrekenen</value>
+    <value>Conversieprogramma</value>
     <comment>The text that shows in the dropdown navigation control for the converter group in upper case. The previous key for this was "ConverterMode.Text".</comment>
   </data>
   <data name="CalculatorModeTextCaps" xml:space="preserve">
@@ -534,7 +534,7 @@
     <comment>The text that shows in the dropdown navigation control for the calculator group in upper case.</comment>
   </data>
   <data name="ConverterModePluralText" xml:space="preserve">
-    <value>Omrekenhulpen</value>
+    <value>Conversieprogramma's</value>
     <comment>Pluralized version of the converter group text, used for the screen reader prompt.</comment>
   </data>
   <data name="CalculatorModePluralText" xml:space="preserve">
@@ -614,7 +614,7 @@
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Geheugen wissen</value>
+    <value>Alle geheugens wissen</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button</comment>
   </data>
   <data name="Memory_Cleared" xml:space="preserve">
@@ -622,15 +622,15 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button, when the button is invoked.</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Het getal ophalen dat in het geheugen is opgeslagen</value>
+    <value>Geheugengetal ophalen</value>
     <comment>Screen reader prompt for the Calculator Memory Recall button</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Geheugen ophalen (Ctrl+R)</value>
+    <value>Geheugengetal ophalen (Ctrl+R)</value>
     <comment>This is the tool tip automation name for the Memory Recall (MR) button.</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Het weergegeven getal optellen bij een getal dat in het geheugen aanwezig is</value>
+    <value>Bij geheugengetal optellen</value>
     <comment>Screen reader prompt for the Calculator Memory Add button</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -638,7 +638,7 @@
     <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Het weergegeven getal aftrekken van een getal dat in het geheugen aanwezig is</value>
+    <value>Van geheugengetal aftrekken</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -658,15 +658,15 @@
     <comment>Screen reader prompt for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemPlusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Toevoegen aan geheugenitem</value>
+    <value>Bij geheugenitem optellen</value>
     <comment>This is the tool tip automation name for the Calculator Memory Add button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Aftrekken van geheugenitem</value>
+    <value>Van geheugenitem aftrekken</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="MemMinusItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Aftrekken van geheugenitem</value>
+    <value>Van geheugenitem aftrekken</value>
     <comment>This is the tool tip automation name for the Calculator Memory Subtract button in the Memory list</comment>
   </data>
   <data name="ClearMemorySwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -682,7 +682,7 @@
     <comment>Screen reader prompt for the Calculator Memory Add swipe button in the Memory list</comment>
   </data>
   <data name="MemPlusMenuItem.Text" xml:space="preserve">
-    <value>Bij geheugenitem optellen</value>
+    <value>Toevoegen aan geheugenitem</value>
     <comment>Text string for the Calculator Memory Add option in the Memory list context menu</comment>
   </data>
   <data name="MemMinusSwipeItem.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -822,11 +822,11 @@
     <comment>Screen reader prompt for the Calculator XOR button</comment>
   </data>
   <data name="qwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Viervoudig Woorden in-/uitschakelen</value>
+    <value>Viervoudig woord in-/uitschakelen</value>
     <comment>Screen reader prompt for the Calculator qword button. Should read as "Quadruple word toggle button".</comment>
   </data>
   <data name="dwordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Dubbel Woorden in-/uitschakelen</value>
+    <value>Dubbel woord in-/uitschakelen</value>
     <comment>Screen reader prompt for the Calculator dword button. Should read as "Double word toggle button".</comment>
   </data>
   <data name="wordButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -874,7 +874,7 @@
     <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
   </data>
   <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Minus</value>
+    <value>Min</value>
     <comment>Screen reader prompt for the minus button on the number pad</comment>
   </data>
   <data name="minus" xml:space="preserve">
@@ -1202,7 +1202,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Milliliter" xml:space="preserve">
-    <value>mL</value>
+    <value>ml</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
   <data name="UnitName_PintUK" xml:space="preserve">
@@ -1346,7 +1346,7 @@
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
   <data name="UnitAbbreviation_Foot" xml:space="preserve">
-    <value>ft</value>
+    <value>voet</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_FeetPerSecond" xml:space="preserve">
@@ -1370,7 +1370,7 @@
     <comment>An abbreviation for a measurement unit of area</comment>
   </data>
   <data name="UnitAbbreviation_Horsepower" xml:space="preserve">
-    <value>pk (VS)</value>
+    <value>pk (VS)</value>
     <comment>An abbreviation for a measurement unit of power</comment>
   </data>
   <data name="UnitAbbreviation_Hour" xml:space="preserve">
@@ -1450,7 +1450,7 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Mile" xml:space="preserve">
-    <value>mi</value>
+    <value>mijl</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_MilesPerHour" xml:space="preserve">
@@ -1470,7 +1470,7 @@
     <comment>An abbreviation for a measurement unit of time</comment>
   </data>
   <data name="UnitAbbreviation_Nanometer" xml:space="preserve">
-    <value>nm</value>
+    <value>zeemijl</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
   <data name="UnitAbbreviation_NauticalMile" xml:space="preserve">
@@ -1638,7 +1638,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitName_Acre" xml:space="preserve">
-    <value>Acres</value>
+    <value>Are</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bit" xml:space="preserve">
@@ -1670,7 +1670,7 @@
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicCentimeter" xml:space="preserve">
-    <value>Kubieke centimeter</value>
+    <value>Kubieke centimeter</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicFoot" xml:space="preserve">
@@ -1686,7 +1686,7 @@
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CubicYard" xml:space="preserve">
-    <value>Kubieke yard</value>
+    <value>Kubieke yard</value>
     <comment>A measurement unit for volume. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Day" xml:space="preserve">
@@ -1710,7 +1710,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_FeetPerSecond" xml:space="preserve">
-    <value>Voet per seconde</value>
+    <value>Voet per seconde</value>
     <comment>A measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Foot-Pound" xml:space="preserve">
@@ -1722,11 +1722,11 @@
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabit" xml:space="preserve">
-    <value>Gigabits</value>
+    <value>Gigabit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabyte" xml:space="preserve">
-    <value>Gigabytes</value>
+    <value>Gigabyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hectare" xml:space="preserve">
@@ -1734,7 +1734,7 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Horsepower" xml:space="preserve">
-    <value>Paardenkracht (VS)</value>
+    <value>Paardenkracht (VS)</value>
     <comment>A measurement unit for power</comment>
   </data>
   <data name="UnitName_Hour" xml:space="preserve">
@@ -1754,11 +1754,11 @@
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
   </data>
   <data name="UnitName_Kilobit" xml:space="preserve">
-    <value>Kilobits</value>
+    <value>Kilobit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilobyte" xml:space="preserve">
-    <value>Kilobytes</value>
+    <value>Kilobyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilocalorie" xml:space="preserve">
@@ -1790,7 +1790,7 @@
     <comment>A measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
   </data>
   <data name="UnitName_Megabit" xml:space="preserve">
-    <value>Megabits</value>
+    <value>Megabit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Megabyte" xml:space="preserve">
@@ -1846,7 +1846,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabyte" xml:space="preserve">
-    <value>Petabytes</value>
+    <value>Petabyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Second" xml:space="preserve">
@@ -1862,11 +1862,11 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareInch" xml:space="preserve">
-    <value>Vierkante inch</value>
+    <value>Vierkante inch</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareKilometer" xml:space="preserve">
-    <value>Vierkante kilometer</value>
+    <value>Vierkante kilometer</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SquareMeter" xml:space="preserve">
@@ -1886,11 +1886,11 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabit" xml:space="preserve">
-    <value>Terabits</value>
+    <value>Terabit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabyte" xml:space="preserve">
-    <value>Terabytes</value>
+    <value>Terabyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Watt" xml:space="preserve">
@@ -1906,7 +1906,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Year" xml:space="preserve">
-    <value>Jaren</value>
+    <value>Jaar</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Carat" xml:space="preserve">
@@ -1914,7 +1914,7 @@
     <comment>An abbreviation for a measurement unit of weight</comment>
   </data>
   <data name="UnitAbbreviation_Degree" xml:space="preserve">
-    <value>deg</value>
+    <value>graden</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Radian" xml:space="preserve">
@@ -2030,7 +2030,7 @@
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_MillimeterOfMercury" xml:space="preserve">
-    <value>Millimeters kwik</value>
+    <value>Millimeters kwik </value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Pascal" xml:space="preserve">
@@ -2094,11 +2094,11 @@
     <comment>A measurement unit for weight. This is the metric version of tonne. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_CD" xml:space="preserve">
-    <value>Cd's</value>
+    <value>Cd’s</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_CD" xml:space="preserve">
-    <value>Cd's</value>
+    <value>Cd’s</value>
     <comment>A compact disc, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_SoccerField" xml:space="preserve">
@@ -2118,11 +2118,11 @@
     <comment>A 1.44 MB floppy disk, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_DVD" xml:space="preserve">
-    <value>Dvd's</value>
+    <value>Dvd’s</value>
     <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_DVD" xml:space="preserve">
-    <value>Dvd's</value>
+    <value>Dvd’s</value>
     <comment>A DVD, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Battery" xml:space="preserve">
@@ -2317,6 +2317,10 @@
     <value>© %1 Microsoft. Alle rechten voorbehouden.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
+  <data name="AboutFlyoutContribute" xml:space="preserve">
+    <value>Voor meer informatie over hoe u kunt bijdragen aan Windows-rekenmachine, bekijkt u het project op %HL%GitHub%HL%.</value>
+    <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
+  </data>
   <data name="AboutButton.Content" xml:space="preserve">
     <value>Info over</value>
     <comment>The text that shows in the dropdown navigation control to open About panel</comment>
@@ -2342,11 +2346,11 @@
     <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
   </data>
   <data name="UnitName_Gibibits" xml:space="preserve">
-    <value>Gibibits</value>
+    <value>Gibibit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gibibytes" xml:space="preserve">
-    <value>Gibibytes</value>
+    <value>Gibibyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibits" xml:space="preserve">
@@ -2354,31 +2358,31 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibytes" xml:space="preserve">
-    <value>Kibibytes</value>
+    <value>Kibibyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mebibits" xml:space="preserve">
-    <value>Mebibits</value>
+    <value>Mebibit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mebibytes" xml:space="preserve">
-    <value>Mebibytes</value>
+    <value>Mebibyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pebibits" xml:space="preserve">
-    <value>Pebibits</value>
+    <value>Pebibit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pebibytes" xml:space="preserve">
-    <value>Pebibytes</value>
+    <value>Pebibyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tebibits" xml:space="preserve">
-    <value>Tebibits</value>
+    <value>Tebibit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tebibytes" xml:space="preserve">
-    <value>Tebibytes</value>
+    <value>Tebibyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabits" xml:space="preserve">
@@ -2386,11 +2390,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabytes" xml:space="preserve">
-    <value>Exabytes</value>
+    <value>Exabyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibits" xml:space="preserve">
-    <value>Exbibits</value>
+    <value>Exbibit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibytes" xml:space="preserve">
@@ -2406,11 +2410,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zebibits" xml:space="preserve">
-    <value>Zebibits</value>
+    <value>Zebibit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zebibytes" xml:space="preserve">
-    <value>Zebibytes</value>
+    <value>Zebibyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabit" xml:space="preserve">
@@ -2422,11 +2426,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibits" xml:space="preserve">
-    <value>Yobibits</value>
+    <value>Yobibit</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibytes" xml:space="preserve">
-    <value>Yobibytes</value>
+    <value>Yobibyte</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="DateCalculationModeText" xml:space="preserve">
@@ -2441,7 +2445,7 @@
     <comment>Add toggle button text</comment>
   </data>
   <data name="Date_AddSubtractOption.Content" xml:space="preserve">
-    <value>Voeg dagen toe of trek dagen af</value>
+    <value>Dagen optellen of aftrekken</value>
     <comment>Add or Subtract days option</comment>
   </data>
   <data name="DateLabel.Text" xml:space="preserve">
@@ -2449,7 +2453,7 @@
     <comment>Date result label</comment>
   </data>
   <data name="Date_DifferenceOption.Content" xml:space="preserve">
-    <value>Verschil tussen data</value>
+    <value>Verschil tussen datums</value>
     <comment>Date Difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
@@ -2497,12 +2501,10 @@
     <value>maanden</value>
   </data>
   <data name="Date_SameDates" xml:space="preserve">
-    <value>Zelfde data</value>
+    <value>Dezelfde datums</value>
   </data>
   <data name="Date_Week" xml:space="preserve">
-    <value>week
-
-</value>
+    <value>week</value>
   </data>
   <data name="Date_Weeks" xml:space="preserve">
     <value>weken</value>
@@ -2518,7 +2520,7 @@
     <comment>Automation name for reading out the date difference. %1 =  Date difference</comment>
   </data>
   <data name="Date_ResultingDateAutomationName" xml:space="preserve">
-    <value>Resulterende daum %1</value>
+    <value>Resulterende datum %1</value>
     <comment>Automation name for reading out the resulting date in Add/Subtract mode. %1 = Resulting date</comment>
   </data>
   <data name="HeaderAutomationName_Calculator" xml:space="preserve">
@@ -2546,7 +2548,7 @@
     <comment>Automation name for the group of standard function buttons (Percent, Square Root, Square, Cube, Reciprocal)</comment>
   </data>
   <data name="DisplayControls.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Weergave besturingselementen</value>
+    <value>Beeldschermcontrollers</value>
     <comment>Automation name for the group of display control buttons (Clear, Clear Entry, and Backspace)</comment>
   </data>
   <data name="StandardOperators.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2590,7 +2592,7 @@
     <comment>Automation label for the "scroll right" button that appears when an expression is too large to fit in the window.</comment>
   </data>
   <data name="Format_MaxDigitsReached" xml:space="preserve">
-    <value>Max cijfers bereik. %1</value>
+    <value>Max. aantal cijfers bereikt. %1</value>
     <comment>{Locked='%1'} Formatting string for a Narrator announcement when user reaches max digits. The %1 is the automation name of the display. Users will hear "Max digits reached. Display is _current_value_".</comment>
   </data>
   <data name="Format_ButtonPressAuditoryFeedback" xml:space="preserve">
@@ -2702,7 +2704,7 @@
     <comment>Access key for the History button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryButton.AccessKey" xml:space="preserve">
-    <value>H</value>
+    <value>M</value>
     <comment>Access key for the Memory button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="NavView.AccessKey" xml:space="preserve">
@@ -2710,19 +2712,19 @@
     <comment>Access key for the Hamburger button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AngleAccessKey" xml:space="preserve">
-    <value>HO</value>
+    <value>AN</value>
     <comment>AccessKey for the angle converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_AreaAccessKey" xml:space="preserve">
-    <value>OP</value>
+    <value>AR</value>
     <comment>AccessKey for the area converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_CurrencyAccessKey" xml:space="preserve">
-    <value>V</value>
+    <value>C</value>
     <comment>AccessKey for the currency converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_DataAccessKey" xml:space="preserve">
-    <value>G</value>
+    <value>D</value>
     <comment>AccessKey for the data converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_EnergyAccessKey" xml:space="preserve">
@@ -2734,11 +2736,11 @@
     <comment>AccessKey for the length converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_PowerAccessKey" xml:space="preserve">
-    <value>VE</value>
+    <value>PO</value>
     <comment>AccessKey for the power converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_PressureAccessKey" xml:space="preserve">
-    <value>DR</value>
+    <value>PR</value>
     <comment>AccessKey for the pressure converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_SpeedAccessKey" xml:space="preserve">
@@ -2754,7 +2756,7 @@
     <comment>AccessKey for the volume converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_WeightAccessKey" xml:space="preserve">
-    <value>G</value>
+    <value>W</value>
     <comment>AccessKey for the weight converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="CategoryName_TemperatureAccessKey" xml:space="preserve">
@@ -2762,11 +2764,11 @@
     <comment>AccessKey for the temperature converter navbar item. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearHistory.AccessKey" xml:space="preserve">
-    <value>W</value>
+    <value>C</value>
     <comment>Access key for the Clear history button.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearMemory.AccessKey" xml:space="preserve">
-    <value>W</value>
+    <value>C</value>
     <comment>Access key for the Clear memory button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -2774,7 +2776,7 @@
     <comment>This is the tool tip automation name for the Clear Memory button in the Memory Pane.</comment>
   </data>
   <data name="ClearMemory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Geheugen wissen</value>
+    <value>Alle geheugens wissen</value>
     <comment>Screen reader prompt for the Calculator Clear Memory button in the Memory Pane</comment>
   </data>
   <data name="HistoryLabel.AccessKey" xml:space="preserve">
@@ -2782,7 +2784,7 @@
     <comment>Access key for the History pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="MemoryLabel.AccessKey" xml:space="preserve">
-    <value>H</value>
+    <value>M</value>
     <comment>Access key for the Memory pivot item.{StringCategory="Accelerator"}</comment>
   </data>
   <data name="SineDegrees" xml:space="preserve">
@@ -3010,7 +3012,7 @@
     <comment>Name for the natural log (ln) function. Used by screen readers.</comment>
   </data>
   <data name="Square" xml:space="preserve">
-    <value>kwadraat</value>
+    <value>vierkant</value>
     <comment>Name for the square function. Used by screen readers.</comment>
   </data>
   <data name="YRoot" xml:space="preserve">
