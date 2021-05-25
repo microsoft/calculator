@@ -552,7 +552,7 @@ namespace CalculatorApp
 
         private void ShowAboutPage()
         {
-            if (AboutPage != null)
+            if (AboutPage == null)
             {
                 FindName("AboutPage");
             }
