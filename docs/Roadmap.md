@@ -8,7 +8,7 @@ In 2021, the Windows Calculator team is focused on:
 * Iterating upon the existing app design based on the latest guidelines for [Fluent Design](https://developer.microsoft.com/en-us/windows/apps/design) and [WinUI](https://github.com/microsoft/microsoft-ui-xaml).
 * Unblocking community contributions by identifying and addressing bottlenecks affecting developers, including:
   * Migrating the codebase to C# ([#893](https://github.com/microsoft/calculator/issues/893))
-  * Releasing infinite-precision engine as standalone package and adding support for arbitrary expression parsing ([#526](https://github.com/microsoft/calculator/issues/526))
+  * Releasing infinite-precision engine as standalone package ([#1545](https://github.com/microsoft/calculator/issues/1545)) and adding support for arbitrary expression parsing ([#526](https://github.com/microsoft/calculator/issues/526))
   * Adding a settings page ([#596](https://github.com/microsoft/calculator/issues/596))
 * [Your feature idea here] - please review our [new feature development process](https://github.com/Microsoft/calculator/blob/master/docs/NewFeatureProcess.md) to get started!
 
