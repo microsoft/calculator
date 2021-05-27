@@ -33,7 +33,10 @@
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms Condition="'$(Platform)' == 'x64'">x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms Condition="'$(Platform)' == 'x86'">x86</AppxBundlePlatforms>
+    <AppxBundlePlatforms Condition="'$(Platform)' == 'ARM'">ARM</AppxBundlePlatforms>
+    <AppxBundlePlatforms Condition="'$(Platform)' == 'ARM64'">ARM64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <!-- This has to be exactly in this place for this to work -->
@@ -140,7 +143,7 @@
     <AppVersion Condition="'$(AppVersion)' == ''">0.0.0.0</AppVersion>
   </PropertyGroup>
   <ItemGroup>
-      <ResourceCompile Include="Calculator.rc" PreprocessorDefinitions="%(PreprocessorDefinitions);APP_VERSION_MAJOR=$(AppVersion.Split(`.`)[0]);APP_VERSION_MINOR=$(AppVersion.Split(`.`)[1]);APP_VERSION_BUILD=$(AppVersion.Split(`.`)[2]);APP_VERSION_REVISION=$(AppVersion.Split(`.`)[3])" />
+    <ResourceCompile Include="Calculator.rc" PreprocessorDefinitions="%(PreprocessorDefinitions);APP_VERSION_MAJOR=$(AppVersion.Split(`.`)[0]);APP_VERSION_MINOR=$(AppVersion.Split(`.`)[1]);APP_VERSION_BUILD=$(AppVersion.Split(`.`)[2]);APP_VERSION_REVISION=$(AppVersion.Split(`.`)[3])" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutFlyout.xaml.cs">
