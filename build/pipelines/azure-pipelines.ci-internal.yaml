@@ -25,10 +25,6 @@ jobs:
   parameters:
     platform: ARM
 
-- template: ./templates/build-app-internal.yaml
-  parameters:
-    platform: ARM64
-
 - template: ./templates/run-ui-tests.yaml
   parameters:
     platform: x64
