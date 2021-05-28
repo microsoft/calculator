@@ -33,7 +33,10 @@
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms Condition="'$(Platform)' == 'x64'">x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms Condition="'$(Platform)' == 'x86'">x86</AppxBundlePlatforms>
+    <AppxBundlePlatforms Condition="'$(Platform)' == 'ARM'">ARM</AppxBundlePlatforms>
+    <AppxBundlePlatforms Condition="'$(Platform)' == 'ARM64'">ARM64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <!-- This has to be exactly in this place for this to work -->
