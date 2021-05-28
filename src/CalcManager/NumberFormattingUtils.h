@@ -4,6 +4,7 @@
 #pragma once
 
 #include <string>
+#include "sal_cross_platform.h"
 
 namespace CalcManager::NumberFormattingUtils
 {
