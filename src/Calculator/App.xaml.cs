@@ -59,7 +59,6 @@ namespace CalculatorApp
 
             Suspending += OnSuspending;
 
-            // CSHARP_MIGRATION: TODO:
 #if DEBUG
             DebugSettings.IsBindingTracingEnabled = true;
             DebugSettings.BindingFailed += (sender, args) =>
