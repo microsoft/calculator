@@ -398,8 +398,6 @@ namespace CalculatorApp
             private App m_parent;
         };
 
-        // CSHARP_MIGRATION: TODO: check what is the pragma used for???
-        //#pragma optimize("", off) // Turn off optimizations to work around coroutine optimization bug
         private async Task SetupJumpList()
         {
             try
