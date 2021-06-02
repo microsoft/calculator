@@ -617,7 +617,7 @@ namespace CalculatorApp
                     }
 
                     var buttons = EqualRange(lookupMap, (MyVirtualKey)key);
-                    var navView = buttons.ElementAt(0).Target as MUXC.NavigationView; // CSHARP_MIGRATION: TODO: double check if button[0] exists
+                    var navView = buttons.ElementAt(0).Target as MUXC.NavigationView;
                     var appViewModel = (navView.DataContext as ApplicationViewModel);
                     appViewModel.Mode = ViewMode.Date;
                     var categoryName = AppResourceProvider.GetInstance().GetResourceString("DateCalculationModeText");
@@ -656,7 +656,7 @@ namespace CalculatorApp
                         }
 
                         var buttons = EqualRange(lookupMap, (MyVirtualKey)myVirtualKey);
-                        if (buttons.Count() <= 0) // CSHARP_MIGRATION: TODO: double check if this is equivalent to `if (buttons.first == buttons.second)`
+                        if (buttons.Count() <= 0)
                         {
                             return;
                         }
@@ -710,7 +710,7 @@ namespace CalculatorApp
                             var item = itemRef.Target as MUXC.NavigationView;
                             if (item != null)
                             {
-                                var navView = item as MUXC.NavigationView; // CSHARP_MIGRATION: TODO: check if this line is still needed
+                                var navView = (MUXC.NavigationView)item;
 
                                 var menuItems = ((ObservableCollection<object>)navView.MenuItemsSource);
                                 if (menuItems != null)

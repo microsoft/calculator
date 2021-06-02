@@ -402,14 +402,12 @@ namespace CalculatorApp
         {
             try
             {
-                // CSHARP_MIGRATION: TODO:
                 var calculatorOptions = NavCategoryGroup.CreateCalculatorCategory();
 
                 var jumpList = await JumpList.LoadCurrentAsync();
                 jumpList.SystemGroupKind = JumpListSystemGroupKind.None;
                 jumpList.Items.Clear();
 
-                // CSHARP_MIGRATION: TODO:
                 foreach (NavCategory option in calculatorOptions.Categories)
                 {
                     if (!option.IsEnabled)

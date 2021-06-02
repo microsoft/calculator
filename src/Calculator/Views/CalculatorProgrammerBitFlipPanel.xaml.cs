@@ -227,9 +227,6 @@ namespace CalculatorApp
             }
 
             m_updatingCheckedStates = true;
-            // CSHARP_MIGRATION:
-            // iterator and index move at the same time with same step
-            // add index validation in the loop
             int index = 0;
             bool mustUpdateTextOfMostSignificantDigits = m_currentValueBitLength != Model.ValueBitLength;
             int previousMSDPosition = GetIndexOfLastBit(m_currentValueBitLength);

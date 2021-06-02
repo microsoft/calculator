@@ -75,7 +75,6 @@ namespace CalculatorApp
                 return AccessibleName;
             }
 
-            // CSHARP_MIGRATION: TODO:
         public:
             bool IsModelUnitWhimsical()
             {
@@ -87,10 +86,11 @@ namespace CalculatorApp
                 return m_original.id;
             }
 
-            internal : const UnitConversionManager::Unit& GetModelUnit() const
-            {
-                return m_original;
-            }
+        internal:
+        const UnitConversionManager::Unit& GetModelUnit() const
+        {
+            return m_original;
+        }
 
         private:
             const UnitConversionManager::Unit m_original;
@@ -98,23 +98,21 @@ namespace CalculatorApp
 
         [Windows::UI::Xaml::Data::Bindable] public ref class SupplementaryResult sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
-            internal : SupplementaryResult(Platform::String ^ value, Unit ^ unit)
+        internal:
+            SupplementaryResult(Platform::String ^ value, Unit ^ unit)
                 : m_Value(value)
                 , m_Unit(unit)
             {
             }
 
-        // CSHARP_MIGRATION: TODO: double check below method's accessor
         public:
             bool IsWhimsical()
             {
                 return m_Unit->GetModelUnit().isWhimsical;
             }
 
-        public:
             Platform::String ^ GetLocalizedAutomationName();
 
-        public:
             OBSERVABLE_OBJECT();
 
             OBSERVABLE_PROPERTY_R(Platform::String ^, Value);
