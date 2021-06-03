@@ -43,9 +43,6 @@ namespace CalculatorApp
         public static readonly DependencyProperty RowHeightProperty =
             DependencyProperty.Register(nameof(RowHeight), typeof(Windows.UI.Xaml.GridLength), typeof(HistoryList), new PropertyMetadata(default(Windows.UI.Xaml.GridLength)));
 
-        private Windows.Foundation.Rect m_visibleBounds;
-        private Windows.Foundation.Rect m_coreBounds;
-
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             HistoryViewModel historyVM = (DataContext as HistoryViewModel);

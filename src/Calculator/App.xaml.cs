@@ -499,9 +499,6 @@ namespace CalculatorApp
         private Dictionary<int, WindowFrameService> m_secondaryWindows = new Dictionary<int, WindowFrameService>();
         private int m_mainViewId;
         private bool m_preLaunched;
-
-        // CSHARP_MIGRATION: TODO: check whether or not this field is in use.
-        private Windows.UI.Xaml.Controls.Primitives.Popup m_aboutPopup;
     }
 }
 

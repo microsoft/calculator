@@ -48,7 +48,7 @@ namespace CalculatorApp
             get => this.m_FlowDirectionHorizontalAlignment;
         }
 
-        private Windows.UI.Xaml.HorizontalAlignment m_FlowDirectionHorizontalAlignment;
+        private Windows.UI.Xaml.HorizontalAlignment m_FlowDirectionHorizontalAlignment = default(HorizontalAlignment);
 
         public void AnimateConverter()
         {
@@ -373,11 +373,11 @@ namespace CalculatorApp
         }
 
         private static Lazy<UISettings> uiSettings = new Lazy<UISettings>(true);
-        private Windows.UI.Xaml.FlowDirection m_layoutDirection;
-        private Windows.UI.Xaml.Controls.MenuFlyout m_resultsFlyout;
+        private Windows.UI.Xaml.FlowDirection m_layoutDirection = default(FlowDirection);
+        private Windows.UI.Xaml.Controls.MenuFlyout m_resultsFlyout = default(MenuFlyout);
 
-        private string m_chargesMayApplyText;
-        private string m_failedToRefreshText;
+        private string m_chargesMayApplyText = string.Empty;
+        private string m_failedToRefreshText = string.Empty;
 
         private bool m_meteredConnectionOverride;
 

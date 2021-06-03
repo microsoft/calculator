@@ -38,7 +38,6 @@ namespace CalculatorApp
             public OverflowTextBlock()
             {
                 m_isAccessibilityViewControl = false;
-                m_ignoreViewChanged = false;
                 m_expressionContent = null;
                 m_itemsControl = null;
                 m_expressionContainer = null;
@@ -322,7 +321,6 @@ namespace CalculatorApp
             private const double SCROLL_RATIO = 0.7;
 
             private bool m_isAccessibilityViewControl;
-            private bool m_ignoreViewChanged;
             private Windows.UI.Xaml.FrameworkElement m_expressionContent;
             private Windows.UI.Xaml.Controls.ItemsControl m_itemsControl;
             private Windows.UI.Xaml.Controls.ScrollViewer m_expressionContainer;

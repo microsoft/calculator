@@ -49,8 +49,6 @@ namespace CalculatorApp
             }
         }
 
-        private Windows.Foundation.Rect m_visibleBounds;
-        private Windows.Foundation.Rect m_coreBounds;
         private bool m_isErrorVisualState = false;
 
         private void MemoryListItemClick(object sender, ItemClickEventArgs e)
