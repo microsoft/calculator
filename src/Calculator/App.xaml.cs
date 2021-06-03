@@ -59,7 +59,6 @@ namespace CalculatorApp
 
             Suspending += OnSuspending;
 
-            // CSHARP_MIGRATION: TODO:
 #if DEBUG
             DebugSettings.IsBindingTracingEnabled = true;
             DebugSettings.BindingFailed += (sender, args) =>
@@ -399,20 +398,16 @@ namespace CalculatorApp
             private App m_parent;
         };
 
-        // CSHARP_MIGRATION: TODO: check what is the pragma used for???
-        //#pragma optimize("", off) // Turn off optimizations to work around coroutine optimization bug
         private async Task SetupJumpList()
         {
             try
             {
-                // CSHARP_MIGRATION: TODO:
                 var calculatorOptions = NavCategoryGroup.CreateCalculatorCategory();
 
                 var jumpList = await JumpList.LoadCurrentAsync();
                 jumpList.SystemGroupKind = JumpListSystemGroupKind.None;
                 jumpList.Items.Clear();
 
-                // CSHARP_MIGRATION: TODO:
                 foreach (NavCategory option in calculatorOptions.Categories)
                 {
                     if (!option.IsEnabled)

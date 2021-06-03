@@ -245,13 +245,13 @@ namespace CalculatorApp
             void SendCommandToCalcManager(int command);
 
         public:
-            // CSHARP_MIGRATION: TODO: check if these still need to be internal
-            // Memory feature related methods. They are internal because they need to called from the MainPage code-behind
+            // Memory feature related methods.
             void OnMemoryButtonPressed();
             void OnMemoryItemPressed(Platform::Object ^ memoryItemPosition);
             void OnMemoryAdd(Platform::Object ^ memoryItemPosition);
             void OnMemorySubtract(Platform::Object ^ memoryItemPosition);
             void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
+
             void SelectHistoryItem(HistoryItemViewModel ^ item);
             void SwitchProgrammerModeBase(CalculatorApp::ViewModel::Common::NumberBase calculatorBase);
             void SetBitshiftRadioButtonCheckedAnnouncement(Platform::String ^ announcement);

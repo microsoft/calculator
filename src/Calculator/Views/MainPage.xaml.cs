@@ -116,7 +116,7 @@ namespace CalculatorApp
 
         public ObservableCollection<object> CreateUIElementsForCategories(IObservableVector<NavCategoryGroup> categories)
         {
-            var menuCategories = new ObservableCollection<object>(); // CSHARP_MIGRATION: TODO: Check if ObservableCollection fits here
+            var menuCategories = new ObservableCollection<object>();
 
             foreach (var group in categories)
             {

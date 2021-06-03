@@ -458,8 +458,6 @@ namespace CalculatorApp
             {
                 ScientificAngleButtons.IsErrorVisualState = isError;
             }
-            // CSHARP_MIGRATION: TODO:
-            // ScientificAngleButtons works but ProgrammerDisplayPanel doesn't
             else if (IsProgrammer && ProgrammerDisplayPanel != null)
             {
                 ProgrammerDisplayPanel.IsErrorVisualState = isError;

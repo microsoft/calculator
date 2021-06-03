@@ -223,8 +223,6 @@ namespace CalculatorApp
             RaiseLiveRegionChangedAutomationEvent(false);
         }
 
-        // CSHARP_MIGRATION: TODO:
-        // can we change the calendarDatePicker.Date of in arg?
         private void ReselectCalendarDate(CalendarDatePicker calendarDatePicker, DateTimeOffset? dateTime)
         {
             // Reselect the unselected Date
