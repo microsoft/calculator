@@ -135,6 +135,7 @@
                                     Margin="8,0,8,-6"
                                     VerticalAlignment="Center"
                                     DataContext="{x:Bind}"
+                                    SmallChange="{x:Bind Step, Mode=TwoWay}"
                                     StepFrequency="{x:Bind Step, Mode=TwoWay}"
                                     ValueChanged="Slider_ValueChanged"
                                     Value="{x:Bind Value, Mode=TwoWay}"
