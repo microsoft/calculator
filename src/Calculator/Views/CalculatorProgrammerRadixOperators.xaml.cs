@@ -34,7 +34,20 @@ namespace CalculatorApp
             get { return (StandardCalculatorViewModel)this.DataContext; }
         }
 
-        public bool IsErrorVisualState { get; set; }
+        public bool IsErrorVisualState
+        {
+            get => m_isErrorVisualState;
+            set
+            {
+                if(m_isErrorVisualState != value)
+                {
+                    m_isErrorVisualState = value;
+                    string newState = m_isErrorVisualState ? "ErrorLayout" : "NoErrorLayout";
+                    VisualStateManager.GoToState(this, newState, false);
+                    NumberPad.IsErrorVisualState = m_isErrorVisualState;
+                }
+            }
+        }
 
         public string ParenthesisCountToString(uint count)
         {

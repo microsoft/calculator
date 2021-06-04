@@ -629,7 +629,6 @@ namespace CalculatorApp
             }
         }
 
-        private Windows.UI.Xaml.Controls.ListView m_tokenList;
         private Windows.UI.Xaml.Controls.MenuFlyout m_displayFlyout;
         private bool m_doAnimate;
         private bool m_resultAnimate;
@@ -646,7 +645,6 @@ namespace CalculatorApp
         private string m_dockPanelMemoryList;
 
         private Windows.UI.Xaml.Controls.PivotItem m_pivotItem;
-        private bool m_IsDigit = false;
         private Memory m_memory;
 
         private void HistoryFlyout_Opened(object sender, object args)
