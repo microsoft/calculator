@@ -6,6 +6,9 @@
 //
 
 #include "pch.h"
+
+#include <winmeta.h>
+
 #include "Utils.h"
 #include "Common/AppResourceProvider.h"
 #include "Common/ExpressionCommandSerializer.h"
@@ -266,5 +269,10 @@ SolidColorBrush ^ CalculatorApp::ViewModel::Common::Utilities::GetContrastColor(
 int CalculatorApp::ViewModel::Common::Utilities::GetWindowId()
 {
     return Utils::GetWindowId();
+}
+
+long long CalculatorApp::ViewModel::Common::Utilities::GetConst_WINEVENT_KEYWORD_RESPONSE_TIME()
+{
+    return WINEVENT_KEYWORD_RESPONSE_TIME;
 }
 

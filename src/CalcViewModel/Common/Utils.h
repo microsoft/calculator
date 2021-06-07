@@ -717,6 +717,7 @@ namespace CalculatorApp
             static bool AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2);
             static Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
             static int GetWindowId();
+            static long long GetConst_WINEVENT_KEYWORD_RESPONSE_TIME();
         };
     }
 }

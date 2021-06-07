@@ -256,7 +256,6 @@
       <DependentUpon>UnitConverter.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowFrameService.cs" />
-    <Compile Include="WinMeta.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
