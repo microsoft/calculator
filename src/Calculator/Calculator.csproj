@@ -136,6 +136,9 @@
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(IsStoreBuild)' == 'True'">
+    <DefineConstants>$(DefineConstants);SEND_DIAGNOSTICS;IS_STORE_BUILD</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
@@ -262,6 +265,77 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsStoreBuild)' == 'True'">
+    <Content Include="Assets\CalculatorAppList.scale-100.png" />
+    <Content Include="Assets\CalculatorAppList.scale-125.png" />
+    <Content Include="Assets\CalculatorAppList.scale-150.png" />
+    <Content Include="Assets\CalculatorAppList.scale-200.png" />
+    <Content Include="Assets\CalculatorAppList.scale-400.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-16_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-16_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-20_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-20_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-24_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-24_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-256_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-30_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-30_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-32_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-32_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-36_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-36_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-40_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-40_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-48_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-48_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-60_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-60_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-64_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-64_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-72_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-72_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-80_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-80_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-96_altform-lightunplated_contrast-black.png" />
+    <Content Include="Assets\CalculatorAppList.targetsize-96_altform-lightunplated_contrast-white.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-100.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-125.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-150.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-200.png" />
+    <Content Include="Assets\CalculatorLargeTile.scale-400.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-100.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-125.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-150.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-200.png" />
+    <Content Include="Assets\CalculatorMedTile.scale-400.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-100.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-125.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-150.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-200.png" />
+    <Content Include="Assets\CalculatorSmallTile.scale-400.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-100.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-125.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-150.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-200.png" />
+    <Content Include="Assets\CalculatorSplashScreen.scale-400.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-100.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-125.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-125_contrast-black.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-125_contrast-white.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-150.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-150_contrast-black.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-150_contrast-white.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-200.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-400.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-400_contrast-black.png" />
+    <Content Include="Assets\CalculatorStoreLogo.scale-400_contrast-white.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-100.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-125.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-150.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-200.png" />
+    <Content Include="Assets\CalculatorWideTile.scale-400.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\CalculatorAppList.scale-100_contrast-black.png" />
@@ -486,7 +560,6 @@
     <Content Include="Assets\Standard.targetsize-32_contrast-white.png" />
     <Content Include="Assets\Standard.targetsize-64_contrast-black.png" />
     <Content Include="Assets\Standard.targetsize-64_contrast-white.png" />
-    <Content Include="Calculator.rc" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>
