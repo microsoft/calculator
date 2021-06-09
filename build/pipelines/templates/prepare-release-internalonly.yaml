@@ -149,8 +149,3 @@ jobs:
       SubmissionDataPath: '$(SBPackagePath)\SBCalculator.json'
       PackagePath: '$(SBPackagePath)\SBCalculator.zip'
       AeroEnvironment: Production
-
-  - task: PkgESLateTasks@10
-    displayName: Run PackageES LateTasks
-    env:
-      XES_DISABLEPROV: true
