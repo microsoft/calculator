@@ -17,6 +17,13 @@ namespace CalculatorApp
         public EquationStylePanelControl()
         {
             InitializeComponent();
+
+            var allStyles = new List<EquationLineStyle>();
+            allStyles.Add(EquationLineStyle.Solid);
+            allStyles.Add(EquationLineStyle.Dash);
+            allStyles.Add(EquationLineStyle.Dot);
+
+            StyleChooserBox.ItemsSource = allStyles;
         }
 
         public Windows.UI.Color SelectedColor
@@ -85,11 +92,11 @@ namespace CalculatorApp
             switch (lineStyle)
             {
                 case EquationLineStyle.Dot:
-                    linePattern.Append(1);
+                    linePattern.Add(1);
                     break;
                 case EquationLineStyle.Dash:
-                    linePattern.Append(2);
-                    linePattern.Append(1);
+                    linePattern.Add(2);
+                    linePattern.Add(1);
                     break;
                 default:
                     break;
@@ -285,7 +292,7 @@ namespace CalculatorApp
                 var style = ((EquationLineStyle)item);
                 var comboBoxItem = (StyleChooserBox.ContainerFromItem(style) as ComboBoxItem);
 
-                if (comboBoxItem != null)
+                if (comboBoxItem == null)
                 {
                     continue;
                 }
