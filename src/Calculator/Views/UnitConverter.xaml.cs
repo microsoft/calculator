@@ -40,7 +40,32 @@ namespace CalculatorApp
     {
         public UnitConverter()
         {
-            this.InitializeComponent();
+            m_meteredConnectionOverride = false;
+            m_layoutDirection = LocalizationService.GetInstance().GetFlowDirection();
+            m_FlowDirectionHorizontalAlignment = m_layoutDirection == FlowDirection.RightToLeft ? HorizontalAlignment.Right : HorizontalAlignment.Left;
+
+            InitializeComponent();
+
+            // adding ESC key shortcut binding to clear button
+            ClearEntryButtonPos0.SetValue(KeyboardShortcutManager.VirtualKeyProperty, MyVirtualKey.Escape);
+
+            // Is currency symbol preference set to right side
+            bool preferRight = LocalizationSettings.GetInstance().GetCurrencySymbolPrecedence() == 0;
+            VisualStateManager.GoToState(this, preferRight ? "CurrencySymbolRightState" : "CurrencySymbolLeftState", false);
+
+            var resLoader = AppResourceProvider.GetInstance();
+            m_chargesMayApplyText = resLoader.GetResourceString("DataChargesMayApply");
+            m_failedToRefreshText = resLoader.GetResourceString("FailedToRefresh");
+
+            InitializeOfflineStatusTextBlock();
+
+            if (Resources.TryGetValue("CalculationResultContextMenu", out var value))
+            {
+                m_resultsFlyout = (MenuFlyout)value;
+            }
+
+            CopyMenuItem.Text = resLoader.GetResourceString("copyMenuItem");
+            PasteMenuItem.Text = resLoader.GetResourceString("pasteMenuItem");
         }
 
         public Windows.UI.Xaml.HorizontalAlignment FlowDirectionHorizontalAlignment
@@ -185,7 +210,6 @@ namespace CalculatorApp
 
         private void OnDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
-            // CSHARP_MIGRATION: TODO: double check the original code with below migrated code
             Model.PropertyChanged -= OnPropertyChanged;
             Model.PropertyChanged += OnPropertyChanged;
 
