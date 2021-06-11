@@ -134,13 +134,11 @@ namespace CalculatorApp
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ViewMode initialMode = ViewMode.Standard;
-            if (e.Parameter != null)
+
+            string stringParameter = (e.Parameter as string);
+            if (!string.IsNullOrEmpty(stringParameter))
             {
-                string stringParameter = (e.Parameter as string);
-                if (!string.IsNullOrEmpty(stringParameter))
-                {
-                    initialMode = (ViewMode)Convert.ToInt32(stringParameter);
-                }
+                initialMode = (ViewMode)Convert.ToInt32(stringParameter);
             }
             else
             {
