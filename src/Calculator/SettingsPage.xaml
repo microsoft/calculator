@@ -83,8 +83,8 @@
 
                     <TextBlock x:Name="SettingsRestartApp"
                                x:Uid="SettingsRestartApp"
-                               Style="{StaticResource CaptionTextBlockStyle}"
-                               Foreground="{StaticResource SystemBaseMediumColor}"/>
+                               Style="{ThemeResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource SystemBaseMediumColor}"/>
 
                     <HyperlinkButton x:Name="ColorSettingsButton"
                                      Margin="0,-2"
