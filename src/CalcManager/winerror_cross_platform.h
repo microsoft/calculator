@@ -20,6 +20,6 @@
 
 #define SUCCEEDED(hr) (((ResultCode)(hr)) >= 0)
 #define FAILED(hr) (((ResultCode)(hr)) < 0)
-#define SCODE_CODE(sc) ((sc) & 0xFFFF)
+#define SCODE_CODE(sc) ((sc)&0xFFFF)
 
 #endif

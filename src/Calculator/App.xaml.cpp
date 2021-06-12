@@ -472,6 +472,3 @@ void App::DismissedEventHandler(SplashScreen ^ sender, Object ^ e)
 {
     SetupJumpList();
 }
-
-
-

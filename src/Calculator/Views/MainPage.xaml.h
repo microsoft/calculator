@@ -80,7 +80,7 @@ public
         void AnnounceCategoryName();
 
         CalculatorApp::Calculator ^ m_calculator;
-		GraphingCalculator^ m_graphingCalculator;
+        GraphingCalculator ^ m_graphingCalculator;
         CalculatorApp::UnitConverter ^ m_converter;
         CalculatorApp::DateCalculator ^ m_dateCalculator;
         CalculatorApp::SettingsPage ^ m_settings;

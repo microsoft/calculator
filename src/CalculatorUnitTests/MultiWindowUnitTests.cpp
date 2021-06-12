@@ -460,7 +460,7 @@ TEST_METHOD(MultipleStandardModesHistoryAddItemTest)
     {
         VERIFY_IS_TRUE(2 == viewModels[i]->HistoryVM->ItemsCount);
 
-        for (int j = 0; j < 2 ; j++)
+        for (int j = 0; j < 2; j++)
         {
             auto item = static_cast<HistoryItemViewModel ^>(viewModels[i]->HistoryVM->Items->GetAt(j));
 
@@ -490,19 +490,19 @@ TEST_METHOD(MultipleScientificModesHistoryAddItemTest)
     // Perform Calculations on both the instances and check that the History items work independently
 
     TESTITEM scientificModeTestItems[2][8] = { { { NumbersAndOperatorsEnum::IsScientificMode, L"0", L"" },
-                                               { NumbersAndOperatorsEnum::One, L"1", L"" },
-                                               { NumbersAndOperatorsEnum::Add, L"1", L"1 + " },
-                                               { NumbersAndOperatorsEnum::Two, L"2", L"1 + " },
-                                               { NumbersAndOperatorsEnum::Equals, L"3", L"" },
-                                               { NumbersAndOperatorsEnum::None, L"", L"" } },
-                                             { { NumbersAndOperatorsEnum::IsScientificMode, L"0", L"" },
-                                               { NumbersAndOperatorsEnum::One, L"1", L"" },
-                                               { NumbersAndOperatorsEnum::Add, L"1", L"1 + " },
-                                               { NumbersAndOperatorsEnum::Two, L"2", L"1 + " },
-                                               { NumbersAndOperatorsEnum::Multiply, L"2", L"1 + 2 * " },
-                                               { NumbersAndOperatorsEnum::Three, L"3", L"1 + 2 * " },
-                                               { NumbersAndOperatorsEnum::Equals, L"7", L"" },
-                                               { NumbersAndOperatorsEnum::None, L"", L"" } } };
+                                                 { NumbersAndOperatorsEnum::One, L"1", L"" },
+                                                 { NumbersAndOperatorsEnum::Add, L"1", L"1 + " },
+                                                 { NumbersAndOperatorsEnum::Two, L"2", L"1 + " },
+                                                 { NumbersAndOperatorsEnum::Equals, L"3", L"" },
+                                                 { NumbersAndOperatorsEnum::None, L"", L"" } },
+                                               { { NumbersAndOperatorsEnum::IsScientificMode, L"0", L"" },
+                                                 { NumbersAndOperatorsEnum::One, L"1", L"" },
+                                                 { NumbersAndOperatorsEnum::Add, L"1", L"1 + " },
+                                                 { NumbersAndOperatorsEnum::Two, L"2", L"1 + " },
+                                                 { NumbersAndOperatorsEnum::Multiply, L"2", L"1 + 2 * " },
+                                                 { NumbersAndOperatorsEnum::Three, L"3", L"1 + 2 * " },
+                                                 { NumbersAndOperatorsEnum::Equals, L"7", L"" },
+                                                 { NumbersAndOperatorsEnum::None, L"", L"" } } };
 
     // Run the commands
     for (int i = 0; i < 2; i++)

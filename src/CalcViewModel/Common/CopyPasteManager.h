@@ -118,7 +118,7 @@ public
             Platform::String ^ operand,
             CalculatorApp::Common::ViewMode mode,
             CalculatorApp::Common::CategoryGroupType modeType,
-        CalculatorApp::Common::NumberBase programmerNumberBase);
+            CalculatorApp::Common::NumberBase programmerNumberBase);
         static ULONG32 ProgrammerOperandLength(Platform::String ^ operand, CalculatorApp::Common::NumberBase numberBase);
 
     private:

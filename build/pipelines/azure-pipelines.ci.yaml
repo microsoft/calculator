@@ -1,7 +1,7 @@
 #
 # Continuous Integration (CI)
-# This pipeline builds and validate the app in all supported configurations. If the build was
-# queued to validate a pull request, we build and test only x64.
+# This pipeline builds and validate the app for all supported architecutres, in a public
+# configuration. If the build was queued to validate a pull request, we build and test only x64.
 #
 
 trigger:

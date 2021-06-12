@@ -1922,7 +1922,7 @@
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Gradian" xml:space="preserve">
-    <value>대학원생</value>
+    <value>그리드</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Atmosphere" xml:space="preserve">
@@ -2006,7 +2006,7 @@
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Degree" xml:space="preserve">
-    <value>온도</value>
+    <value>도</value>
     <comment>A measurement unit for Angle.</comment>
   </data>
   <data name="UnitName_Radian" xml:space="preserve">
@@ -4023,7 +4023,7 @@
     <comment>Graph settings heading for the theme options</comment>
   </data>
   <data name="AlwaysLightTheme.Content" xml:space="preserve">
-    <value>항상 가늘게</value>
+    <value>항상 밝게</value>
     <comment>Graph settings option to set graph to light theme</comment>
   </data>
   <data name="MatchAppTheme.Content" xml:space="preserve">
@@ -4035,7 +4035,7 @@
     <comment>This is the automation name text for the Graph settings heading for the theme options</comment>
   </data>
   <data name="AlwaysLightTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>항상 가늘게</value>
+    <value>항상 밝게</value>
     <comment>This is the automation name text for the Graph settings option to set graph to light theme</comment>
   </data>
   <data name="MatchAppTheme.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">

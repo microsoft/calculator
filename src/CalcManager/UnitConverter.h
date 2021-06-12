@@ -162,8 +162,7 @@ namespace UnitConversionManager
         std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>,
         UnitConversionManager::UnitHash>
         UnitToUnitToConversionDataMap;
-    typedef std::unordered_map<int, std::vector<UnitConversionManager::Unit>>
-        CategoryToUnitVectorMap;
+    typedef std::unordered_map<int, std::vector<UnitConversionManager::Unit>> CategoryToUnitVectorMap;
 
     class IViewModelCurrencyCallback
     {

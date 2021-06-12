@@ -254,15 +254,14 @@ namespace GraphControl::DX
                 lround(m_d3dRenderTargetSize.Width),
                 lround(m_d3dRenderTargetSize.Height),
                 DXGI_FORMAT_B8G8R8A8_UNORM,
-                0
-            );
+                0);
 
             if (hr == DXGI_ERROR_DEVICE_REMOVED || hr == DXGI_ERROR_DEVICE_RESET)
             {
                 // If the device was removed for any reason, a new device and swap chain will need to be created.
                 HandleDeviceLost();
 
-                // Everything is set up now. Do not continue execution of this method. HandleDeviceLost will reenter this method 
+                // Everything is set up now. Do not continue execution of this method. HandleDeviceLost will reenter this method
                 // and correctly set up the new device.
                 return;
             }
@@ -533,8 +532,7 @@ namespace GraphControl::DX
     // This method is called in the event handler for the CompositionScaleChanged event.
     void DeviceResources::SetCompositionScale(float compositionScaleX, float compositionScaleY)
     {
-        if (m_compositionScaleX != compositionScaleX ||
-            m_compositionScaleY != compositionScaleY)
+        if (m_compositionScaleX != compositionScaleX || m_compositionScaleY != compositionScaleY)
         {
             m_compositionScaleX = compositionScaleX;
             m_compositionScaleY = compositionScaleY;
@@ -620,7 +618,7 @@ namespace GraphControl::DX
         m_deviceNotify = deviceNotify;
     }
 
-    // Call this method when the app suspends. It provides a hint to the driver that the app 
+    // Call this method when the app suspends. It provides a hint to the driver that the app
     // is entering an idle state and that temporary buffers can be reclaimed for use by other apps.
     void DeviceResources::Trim()
     {
@@ -647,7 +645,7 @@ namespace GraphControl::DX
         // Discard the contents of the depth stencil.
         m_d3dContext->DiscardView1(m_d3dDepthStencilView.Get(), nullptr, 0);
 
-        // If the device was removed either by a disconnection or a driver upgrade, we 
+        // If the device was removed either by a disconnection or a driver upgrade, we
         // must recreate all device resources.
         if (hr == DXGI_ERROR_DEVICE_REMOVED || hr == DXGI_ERROR_DEVICE_RESET)
         {

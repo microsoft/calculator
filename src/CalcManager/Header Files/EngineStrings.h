@@ -206,8 +206,7 @@ inline constexpr auto SIDS_CUBEROOT = L"CubeRoot";
 inline constexpr auto SIDS_PROGRAMMER_MOD = L"ProgrammerMod";
 
 // Include the resource key ID from above into this vector to load it into memory for the engine to use
-inline constexpr std::array<std::wstring_view, 152> g_sids =
-{
+inline constexpr std::array<std::wstring_view, 152> g_sids = {
     SIDS_PLUS_MINUS,
     SIDS_C,
     SIDS_CE,

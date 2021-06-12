@@ -293,7 +293,6 @@ namespace UnitConverterUnitTests
         VERIFY_IS_TRUE(s_testVMCallback->CheckSuggestedValues(vector<tuple<wstring, Unit>>(begin(test2), end(test2))));
     }
 
-
     // Verify a basic copy paste steam. '20.43' with backspace button pressed
     void UnitConverterTest::UnitConverterTestBackspaceBasic()
     {
@@ -359,7 +358,6 @@ namespace UnitConverterUnitTests
         VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"5"), wstring(L"11.0231")));
         VERIFY_IS_TRUE(s_testVMCallback->CheckSuggestedValues(vector<tuple<wstring, Unit>>()));
     }
-
 
     // Test input escaping
     void UnitConverterTest::UnitConverterTestQuote()

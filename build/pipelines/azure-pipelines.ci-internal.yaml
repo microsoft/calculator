@@ -1,0 +1,41 @@
+#
+# Continuous Integration (CI) - Internal
+# This pipeline builds and validate the app for all supported architectures, in a production
+# configuration. This pipeline relies on Microsoft-internal resources to run.
+#
+
+trigger:
+- master
+- release/*
+- feature/*
+pr: none
+
+name: 0.$(Date:yyMM).$(DayOfMonth)$(Rev:rr).0
+
+jobs:
+- template: ./templates/build-app-internal.yaml
+  parameters:
+    platform: x64
+
+- template: ./templates/build-app-internal.yaml
+  parameters:
+    platform: x86
+
+- template: ./templates/build-app-internal.yaml
+  parameters:
+    platform: ARM
+
+- template: ./templates/run-ui-tests.yaml
+  parameters:
+    platform: x64
+    runsettingsFileName: CalculatorUITests.release.runsettings
+
+- template: ./templates/run-unit-tests.yaml
+  parameters:
+    platform: x64
+
+- template: ./templates/run-unit-tests.yaml
+  parameters:
+    platform: x86
+
+- template: ./templates/package-appxbundle.yaml

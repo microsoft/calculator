@@ -256,7 +256,7 @@ namespace CalculatorApp
                 std::wstring destination;
                 std::copy_if(
                     begin(source), end(source), std::back_inserter(destination), [this](auto const c) { return c != L' ' && c != m_numberGroupSeparator; });
-                
+
                 return ref new Platform::String(destination.c_str());
             }
 

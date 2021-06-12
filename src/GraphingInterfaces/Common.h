@@ -54,7 +54,7 @@ namespace Graphing
     {
         virtual ~IExpressible() = default;
 
-        virtual std::shared_ptr< IExpression > GetExpression() const = 0;
+        virtual std::shared_ptr<IExpression> GetExpression() const = 0;
     };
 
     class Color

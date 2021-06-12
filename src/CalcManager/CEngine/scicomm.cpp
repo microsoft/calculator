@@ -31,17 +31,12 @@ namespace
     // 0 is returned. Higher the number, higher the precedence of the operator.
     int NPrecedenceOfOp(int nopCode)
     {
-        static uint16_t rgbPrec[] = {
-            0,0, IDC_OR,0, IDC_XOR,0,
-            IDC_AND,1, IDC_NAND,1, IDC_NOR,1,
-            IDC_ADD,2, IDC_SUB,2,
-            IDC_RSHF,3, IDC_LSHF,3, IDC_RSHFL,3,
-            IDC_MOD,3, IDC_DIV,3, IDC_MUL,3,
-            IDC_PWR,4, IDC_ROOT,4, IDC_LOGBASEY,4 };
+        static uint16_t rgbPrec[] = { 0,        0, IDC_OR,    0, IDC_XOR, 0, IDC_AND, 1, IDC_NAND, 1, IDC_NOR, 1, IDC_ADD,  2, IDC_SUB,      2, IDC_RSHF, 3,
+                                      IDC_LSHF, 3, IDC_RSHFL, 3, IDC_MOD, 3, IDC_DIV, 3, IDC_MUL,  3, IDC_PWR, 4, IDC_ROOT, 4, IDC_LOGBASEY, 4 };
 
         for (unsigned int iPrec = 0; iPrec < size(rgbPrec); iPrec += 2)
         {
-            if (nopCode == rgbPrec[iPrec]) 
+            if (nopCode == rgbPrec[iPrec])
             {
                 return rgbPrec[iPrec + 1];
             }
@@ -85,8 +80,7 @@ void CCalcEngine::ClearDisplay()
 {
     if (nullptr != m_pCalcDisplay)
     {
-        m_pCalcDisplay->SetExpressionDisplay(
-            make_shared<vector<pair<wstring, int>>>(), make_shared<vector<shared_ptr<IExpressionCommand>>>());
+        m_pCalcDisplay->SetExpressionDisplay(make_shared<vector<pair<wstring, int>>>(), make_shared<vector<shared_ptr<IExpressionCommand>>>());
     }
 }
 
@@ -142,18 +136,10 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     // Toggle Record/Display mode if appropriate.
     if (m_bRecord)
     {
-        if (IsBinOpCode(wParam) ||
-            IsUnaryOpCode(wParam) ||
-            IsOpInRange(wParam, IDC_FE, IDC_MMINUS) ||
-            IsOpInRange(wParam, IDC_OPENP, IDC_CLOSEP) ||
-            IsOpInRange(wParam, IDM_HEX, IDM_BIN) ||
-            IsOpInRange(wParam, IDM_QWORD, IDM_BYTE) ||
-            IsOpInRange(wParam, IDM_DEG, IDM_GRAD) ||
-            IsOpInRange(wParam, IDC_BINEDITSTART, IDC_BINEDITEND) ||
-            (IDC_INV == wParam) ||
-            (IDC_SIGN == wParam && 10 != m_radix) ||
-            (IDC_RAND == wParam) ||
-            (IDC_EULER == wParam))
+        if (IsBinOpCode(wParam) || IsUnaryOpCode(wParam) || IsOpInRange(wParam, IDC_FE, IDC_MMINUS) || IsOpInRange(wParam, IDC_OPENP, IDC_CLOSEP)
+            || IsOpInRange(wParam, IDM_HEX, IDM_BIN) || IsOpInRange(wParam, IDM_QWORD, IDM_BYTE) || IsOpInRange(wParam, IDM_DEG, IDM_GRAD)
+            || IsOpInRange(wParam, IDC_BINEDITSTART, IDC_BINEDITEND) || (IDC_INV == wParam) || (IDC_SIGN == wParam && 10 != m_radix) || (IDC_RAND == wParam)
+            || (IDC_EULER == wParam))
         {
             m_bRecord = false;
             m_currentVal = m_input.ToRational(m_radix, m_precision);
@@ -269,7 +255,6 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
                     DisplayNum();
                     if (!m_fPrecedence)
                     {
-
                         wstring groupedString = GroupDigitsPerRadix(m_numberString, m_radix);
                         m_HistoryCollector.CompleteEquation(groupedString);
                         m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
@@ -360,13 +345,10 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         /* reset the m_bInv flag and indicators if it is set
         and have been used */
 
-        if (m_bInv &&
-                ((wParam == IDC_CHOP) || (wParam == IDC_SIN) || (wParam == IDC_COS) ||
-                (wParam == IDC_TAN) || (wParam == IDC_LN) || (wParam == IDC_DMS) ||
-                (wParam == IDC_DEGREES) || (wParam == IDC_SINH) || (wParam == IDC_COSH) ||
-                (wParam == IDC_TANH) || (wParam == IDC_SEC) || (wParam == IDC_CSC) ||
-                (wParam == IDC_COT) || (wParam == IDC_SECH) || (wParam == IDC_CSCH) ||
-                (wParam == IDC_COTH)))
+        if (m_bInv
+            && ((wParam == IDC_CHOP) || (wParam == IDC_SIN) || (wParam == IDC_COS) || (wParam == IDC_TAN) || (wParam == IDC_LN) || (wParam == IDC_DMS)
+                || (wParam == IDC_DEGREES) || (wParam == IDC_SINH) || (wParam == IDC_COSH) || (wParam == IDC_TANH) || (wParam == IDC_SEC) || (wParam == IDC_CSC)
+                || (wParam == IDC_COT) || (wParam == IDC_SECH) || (wParam == IDC_CSCH) || (wParam == IDC_COTH)))
         {
             m_bInv = false;
         }
@@ -928,8 +910,7 @@ struct FunctionNameElement
 };
 
 // Table for each unary operator
-static const std::unordered_map<int, FunctionNameElement> operatorStringTable =
-{
+static const std::unordered_map<int, FunctionNameElement> operatorStringTable = {
     { IDC_CHOP, { L"", SIDS_FRAC } },
 
     { IDC_SIN, { SIDS_SIND, SIDS_ASIND, SIDS_SINR, SIDS_ASINR, SIDS_SING, SIDS_ASING } },

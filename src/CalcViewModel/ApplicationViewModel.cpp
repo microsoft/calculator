@@ -43,7 +43,7 @@ namespace
 ApplicationViewModel::ApplicationViewModel()
     : m_CalculatorViewModel(nullptr)
     , m_DateCalcViewModel(nullptr)
-	, m_GraphingCalcViewModel(nullptr)
+    , m_GraphingCalcViewModel(nullptr)
     , m_ConverterViewModel(nullptr)
     , m_PreviousMode(ViewMode::None)
     , m_mode(ViewMode::None)

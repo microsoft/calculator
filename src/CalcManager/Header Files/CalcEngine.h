@@ -120,7 +120,7 @@ private:
     bool m_bRecord;                // Global mode: recording or displaying
     bool m_bSetCalcState;          // Flag for setting the engine result state
     CalcEngine::CalcInput m_input; // Global calc input object for decimal strings
-    NumberFormat m_nFE;              // Scientific notation conversion flag
+    NumberFormat m_nFE;            // Scientific notation conversion flag
     CalcEngine::Rational m_maxTrigonometricNum;
     std::unique_ptr<CalcEngine::Rational> m_memoryValue; // Current memory value.
 
@@ -147,7 +147,7 @@ private:
     std::array<int, MAXPRECDEPTH> m_nPrecOp; /* Holding array for precedence  operations.    */
     size_t m_precedenceOpCount;              /* Current number of precedence ops in holding. */
     int m_nLastCom;                          // Last command entered.
-    AngleType m_angletype;                  // Current Angle type when in dec mode. one of deg, rad or grad
+    AngleType m_angletype;                   // Current Angle type when in dec mode. one of deg, rad or grad
     NUM_WIDTH m_numwidth;                    // one of qword, dword, word or byte mode.
     int32_t m_dwWordBitWidth;                // # of bits in currently selected word size
 
@@ -158,8 +158,8 @@ private:
 
     CHistoryCollector m_HistoryCollector; // Accumulator of each line of history as various commands are processed
 
-    std::array<CalcEngine::Rational, NUM_WIDTH_LENGTH> m_chopNumbers;      // word size enforcement
-    std::array<std::wstring, NUM_WIDTH_LENGTH> m_maxDecimalValueStrings;   // maximum values represented by a given word width based off m_chopNumbers
+    std::array<CalcEngine::Rational, NUM_WIDTH_LENGTH> m_chopNumbers;           // word size enforcement
+    std::array<std::wstring, NUM_WIDTH_LENGTH> m_maxDecimalValueStrings;        // maximum values represented by a given word width based off m_chopNumbers
     static std::unordered_map<std::wstring_view, std::wstring> s_engineStrings; // the string table shared across all instances
     wchar_t m_decimalSeparator;
     wchar_t m_groupSeparator;
