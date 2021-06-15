@@ -93,7 +93,7 @@
     <Grid x:Name="LayoutGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="{Binding RowHeight, ElementName=HistoryList, Mode=OneWay}"/>
+            <RowDefinition Height="{x:Bind RowHeight, Mode=OneWay}"/>
         </Grid.RowDefinitions>
 
         <VisualStateManager.VisualStateGroups>
