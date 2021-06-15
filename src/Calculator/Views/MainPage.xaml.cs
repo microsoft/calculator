@@ -463,8 +463,8 @@ namespace CalculatorApp
             if (m_model.IsAlwaysOnTop)
             {
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-                localSettings.Values.Add(ApplicationViewModel.WidthLocalSettings, ActualWidth);
-                localSettings.Values.Add(ApplicationViewModel.HeightLocalSettings, ActualHeight);
+                localSettings.Values[ApplicationViewModel.WidthLocalSettings] = ActualWidth;
+                localSettings.Values[ApplicationViewModel.HeightLocalSettings] = ActualHeight;
             }
         }
 

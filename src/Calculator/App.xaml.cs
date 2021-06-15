@@ -159,7 +159,7 @@ namespace CalculatorApp
             // For very first launch, set the size of the calc as size of the default standard mode
             if (!localSettings.Values.ContainsKey("VeryFirstLaunch"))
             {
-                localSettings.Values.Add("VeryFirstLaunch", false);
+                localSettings.Values["VeryFirstLaunch"] = false;
                 appView.SetPreferredMinSize(minWindowSize);
                 appView.TryResizeView(minWindowSize);
             }
