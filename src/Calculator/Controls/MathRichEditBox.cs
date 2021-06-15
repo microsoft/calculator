@@ -137,7 +137,7 @@ namespace CalculatorApp
                 // If the rich edit has content already, then the mathzone will already be created due to mathonly mode being set and the selection will exist inside the
                 // math zone. To handle this, we will force a math zone to be created in teh case of the text being empty and then replacing the text inside of the math
                 // zone with the newly inserted text.
-                if (GetMathTextProperty() == null)
+                if (string.IsNullOrEmpty(GetMathTextProperty()))
                 {
                     SetMathTextProperty("<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi></math>");
                     TextDocument.Selection.StartPosition = 0;
