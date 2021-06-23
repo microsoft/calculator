@@ -110,11 +110,9 @@ namespace CalculatorApp
         {
             if (e.Key == VirtualKey.Enter)
             {
-                // CSHARP_MIGRATION: TODO:
-                // check if condition
-                if (FocusManager.TryMoveFocusAsync(FocusNavigationDirection.Next).Status != AsyncStatus.Completed)
+                if (FocusManager.TryMoveFocusAsync(FocusNavigationDirection.Next) == null)
                 {
-                    IAsyncOperation<FocusMovementResult> result = FocusManager.TryMoveFocusAsync(FocusNavigationDirection.Previous);
+                    _ = FocusManager.TryMoveFocusAsync(FocusNavigationDirection.Previous);
                 }
                 e.Handled = true;
             }

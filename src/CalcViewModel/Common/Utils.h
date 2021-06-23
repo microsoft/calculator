@@ -708,7 +708,8 @@ namespace CalculatorApp
 
     namespace ViewModel::Common
     {
-        // CSHARP_MIGRATION: TODO: Review below utils
+        // below utilities are intended to support interops between C# and C++/CX
+        // they can be removed if the entire codebase has been migrated to C#
         public ref class Utilities sealed
         {
         public:

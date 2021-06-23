@@ -15,28 +15,16 @@ namespace CalculatorApp::ViewModel
         private:
             LocalizationSettings()
                 // Use DecimalFormatter as it respects the locale and the user setting
-                // CSHARP_MIGRATION: TODO:
-                //: LocalizationSettings(LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter())
             {
-                InitializeLocalizationSettings(LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter());
+                Initialize(LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter());
             }
 
         public:
             // This is only public for unit testing purposes.
             LocalizationSettings(Windows::Globalization::NumberFormatting::DecimalFormatter ^ formatter)
             {
-                InitializeLocalizationSettings(formatter);
+                Initialize(formatter);
             }
-
-            // A LocalizationSettings object is not copyable.
-            // CSHARP_MIGRATION: TODO: deleted and defaulted functions are not supported in managed/WinRT classes
-            //LocalizationSettings(const LocalizationSettings^) = delete;
-            //LocalizationSettings^ operator=(const LocalizationSettings^) = delete;
-
-            // A LocalizationSettings object is not moveable.
-            // CSHARP_MIGRATION: TODO: Double check how should we hanlde move constrcutor and move assignment
-            //LocalizationSettings(LocalizationSettings&&) = delete;
-            //LocalizationSettings& operator=(LocalizationSettings&&) = delete;
 
             // Provider of the singleton LocalizationSettings instance.
             static LocalizationSettings^ GetInstance()
@@ -202,7 +190,7 @@ namespace CalculatorApp::ViewModel
 
 
         private:
-            void InitializeLocalizationSettings(Windows::Globalization::NumberFormatting::DecimalFormatter ^ formatter)
+            void Initialize(Windows::Globalization::NumberFormatting::DecimalFormatter ^ formatter)
             {
                 formatter->FractionDigits = 0;
                 formatter->IsDecimalPointAlwaysDisplayed = false;
