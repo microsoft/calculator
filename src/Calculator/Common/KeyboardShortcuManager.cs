@@ -734,8 +734,6 @@ namespace CalculatorApp
                 }
             }
 
-            // CSHARP_MIGRATION: TODO: reinterpreted SortedDictionary<MyVirtualKey, List<WeakReference>> to SortedDictionary<char, List<WeakReference>>
-            // double check this is equivalent before and after migration
             private static SortedDictionary<MyVirtualKey, List<WeakReference>> GetCurrentKeyDictionary(bool controlKeyPressed, bool shiftKeyPressed, bool altPressed)
             {
                 int viewId = Utilities.GetWindowId();
@@ -785,7 +783,6 @@ namespace CalculatorApp
                 }
             }
 
-            // CSHARP_MIGRATION: TODO: double check below design
             // EqualRange is a helper function to pick a range from std::multimap.
             private static IEnumerable<TValue> EqualRange<TKey, TValue>(SortedDictionary<TKey, List<TValue>> source, TKey key)
             {
@@ -800,7 +797,6 @@ namespace CalculatorApp
                 }
             }
 
-            // CSHARP_MIGRATION: TODO: double check below design
             // Insert is a helper function to insert a pair into std::multimap.
             private static void Insert<Tkey, TValue>(SortedDictionary<Tkey, List<TValue>> dest, Tkey key, TValue value)
             {

@@ -353,13 +353,11 @@ namespace CalculatorApp
             catch (System.Runtime.InteropServices.COMException ex)
             {
                 // COMException and HResult, long RPC_E_SERVERCALL_RETRYLATER is out of range of int
-                // LogPlatformException is internal
                 long rpc_e_servercall_retrylater = 0x8001010A;
                 if (ex.HResult == unchecked(rpc_e_servercall_retrylater))
                 {
                     ShowShareError();
-                    // CSHARP_MIGRATION: TODO:
-                    //TraceLogger.GetInstance().LogPlatformException(ViewMode.Graphing, System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+                    CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogPlatformExceptionInfo(ViewMode.Graphing, System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, ex.HResult);
                 }
                 else
                 {
@@ -505,10 +503,7 @@ namespace CalculatorApp
             catch (Exception ex)
             {
                 ShowShareError();
-
-                // CSHARP_MIGRATION: TODO:
-                //TraceLogger.GetInstance().LogPlatformException(ViewMode.Graphing,
-                //    System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+                CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogPlatformExceptionInfo(ViewMode.Graphing, System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message, ex.HResult);
             }
         }
 
