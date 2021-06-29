@@ -544,9 +544,7 @@ namespace CalculatorApp
                 return;
             }
 
-            // CSHARP_MIGRATION: TODO:
-            // Due to different culture, some regions use comma instead of dot as the decimal point
-            sender.Text = val.ToString("0", System.Globalization.CultureInfo.InvariantCulture);
+            sender.Text = val.ToString("G", System.Globalization.CultureInfo.InvariantCulture);
         }
 
         private void VariableAreaClicked(object sender, RoutedEventArgs e)
