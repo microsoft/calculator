@@ -476,8 +476,7 @@ namespace CalculatorApp
 
         private double validateDouble(string value, double defaultValue)
         {
-            double resultValue = 0;
-            if (double.TryParse(value, out resultValue))
+            if (double.TryParse(value, out var resultValue))
             {
                 return resultValue;
             }
@@ -544,9 +543,7 @@ namespace CalculatorApp
                 return;
             }
 
-            // CSHARP_MIGRATION: TODO:
-            // Due to different culture, some regions use comma instead of dot as the decimal point
-            sender.Text = val.ToString("0", System.Globalization.CultureInfo.InvariantCulture);
+            sender.Text = val.ToString("G6", System.Globalization.CultureInfo.InvariantCulture);
         }
 
         private void VariableAreaClicked(object sender, RoutedEventArgs e)
