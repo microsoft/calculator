@@ -51,7 +51,7 @@ namespace CalculatorApp
                 // go back to the normal state.
                 // This timer will only fire once after which it will be destroyed
                 var timer = new DispatcherTimer();
-                TimeSpan lightUpTime = TimeSpan.FromMilliseconds(500); // half second
+                TimeSpan lightUpTime = TimeSpan.FromMilliseconds(50); // 5e5 100-ns
                 timer.Interval = lightUpTime;
 
                 var timerWeakReference = new WeakReference(timer);
