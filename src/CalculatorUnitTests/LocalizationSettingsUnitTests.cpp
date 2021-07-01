@@ -7,7 +7,7 @@
 
 #include "CalcViewModel/Common/LocalizationSettings.h"
 
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 static Windows::Globalization::NumberFormatting::DecimalFormatter ^ CreateDecimalFormatter(const wchar_t* language, const wchar_t* geographicRegion)

@@ -1,28 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>5f4c8558-c780-41a5-b937-f9d79ad434a0</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
     <Filter Include="Common">
-      <UniqueIdentifier>{1daab7c4-63f6-4266-a259-f34acad66d09}</UniqueIdentifier>
+      <UniqueIdentifier>{05fb7833-4679-4430-bf21-808354e815bf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common\Automation">
-      <UniqueIdentifier>{8d4edf06-c312-4312-978a-b6c2beb8295a}</UniqueIdentifier>
+      <UniqueIdentifier>{8f1ef587-e5ce-4fc2-b9b7-73326d5e779a}</UniqueIdentifier>
     </Filter>
     <Filter Include="DataLoaders">
-      <UniqueIdentifier>{0184f727-b8aa-4af8-a699-63f1b56e7853}</UniqueIdentifier>
+      <UniqueIdentifier>{70216695-3d7b-451a-98e4-cacbea3ba0a6}</UniqueIdentifier>
     </Filter>
     <Filter Include="GraphingCalculator">
-      <UniqueIdentifier>{cf7dca32-9727-4f98-83c3-1c0ca7dd1e0c}</UniqueIdentifier>
+      <UniqueIdentifier>{9b94309f-6b9b-4cbb-8584-4273061cc432}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="ApplicationViewModel.cpp" />
-    <ClCompile Include="DateCalculatorViewModel.cpp" />
-    <ClCompile Include="HistoryItemViewModel.cpp" />
-    <ClCompile Include="HistoryViewModel.cpp" />
-    <ClCompile Include="MemoryItemViewModel.cpp" />
-    <ClCompile Include="StandardCalculatorViewModel.cpp" />
-    <ClCompile Include="UnitConverterViewModel.cpp" />
     <ClCompile Include="Common\AppResourceProvider.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -56,11 +53,17 @@
     <ClCompile Include="Common\NetworkManager.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Common\RadixType.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
     <ClCompile Include="Common\TraceLogger.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\Utils.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
+      <Filter>Common\Automation</Filter>
     </ClCompile>
     <ClCompile Include="Common\Automation\NarratorNotifier.cpp">
       <Filter>Common\Automation</Filter>
@@ -80,24 +83,23 @@
     <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp">
       <Filter>GraphingCalculator</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
     <ClCompile Include="GraphingCalculator\GraphingSettingsViewModel.cpp">
       <Filter>GraphingCalculator</Filter>
     </ClCompile>
+    <ClCompile Include="ApplicationViewModel.cpp" />
+    <ClCompile Include="DateCalculatorViewModel.cpp" />
+    <ClCompile Include="HistoryItemViewModel.cpp" />
+    <ClCompile Include="HistoryViewModel.cpp" />
+    <ClCompile Include="MemoryItemViewModel.cpp" />
+    <ClCompile Include="StandardCalculatorViewModel.cpp" />
+    <ClCompile Include="UnitConverterViewModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="ApplicationViewModel.h" />
-    <ClInclude Include="DateCalculatorViewModel.h" />
-    <ClInclude Include="HistoryItemViewModel.h" />
-    <ClInclude Include="HistoryViewModel.h" />
-    <ClInclude Include="MemoryItemViewModel.h" />
-    <ClInclude Include="StandardCalculatorViewModel.h" />
-    <ClInclude Include="UnitConverterViewModel.h" />
     <ClInclude Include="Common\AppResourceProvider.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\BitLength.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\CalculatorButtonPressedEventArgs.h">
@@ -113,6 +115,9 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\DateCalculator.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\DelegateCommand.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\DisplayExpressionToken.h">
@@ -145,11 +150,20 @@
     <ClInclude Include="Common\NetworkManager.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Common\NumberBase.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\RadixType.h">
+      <Filter>Common</Filter>
+    </ClInclude>
     <ClInclude Include="Common\TraceLogger.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\Utils.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Automation\NarratorAnnouncement.h">
+      <Filter>Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="Common\Automation\NarratorNotifier.h">
       <Filter>Common\Automation</Filter>
@@ -158,6 +172,9 @@
       <Filter>DataLoaders</Filter>
     </ClInclude>
     <ClInclude Include="DataLoaders\CurrencyHttpClient.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLoaders\DataLoaderMockConstants.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
     <ClInclude Include="DataLoaders\ICurrencyHttpClient.h">
@@ -169,43 +186,31 @@
     <ClInclude Include="DataLoaders\UnitConverterDataLoader.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
-    <ClInclude Include="DataLoaders\DataLoaderMockConstants.h">
-      <Filter>DataLoaders</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Automation\NarratorAnnouncement.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\BitLength.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\NumberBase.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="GraphingCalculator\EquationViewModel.h">
       <Filter>GraphingCalculator</Filter>
     </ClInclude>
     <ClInclude Include="GraphingCalculator\GraphingCalculatorViewModel.h">
       <Filter>GraphingCalculator</Filter>
     </ClInclude>
-    <ClInclude Include="GraphingCalculatorEnums.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="GraphingCalculator\GraphingSettingsViewModel.h">
+      <Filter>GraphingCalculator</Filter>
     </ClInclude>
     <ClInclude Include="GraphingCalculator\VariableViewModel.h">
       <Filter>GraphingCalculator</Filter>
     </ClInclude>
-    <ClInclude Include="GraphingCalculator\GraphingSettingsViewModel.h">
-      <Filter>GraphingCalculator</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\DelegateCommand.h">
-      <Filter>Common</Filter>
-    </ClInclude>
+    <ClInclude Include="ApplicationViewModel.h" />
+    <ClInclude Include="DateCalculatorViewModel.h" />
+    <ClInclude Include="GraphingCalculatorEnums.h" />
+    <ClInclude Include="HistoryItemViewModel.h" />
+    <ClInclude Include="HistoryViewModel.h" />
+    <ClInclude Include="MemoryItemViewModel.h" />
+    <ClInclude Include="StandardCalculatorViewModel.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="UnitConverterViewModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json">
       <Filter>DataLoaders</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)DensityStyles\Compact.xaml" />
   </ItemGroup>
 </Project>

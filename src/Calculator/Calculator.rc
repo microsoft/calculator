@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// CSHARP_MIGRATION: TODO:
 #define APP_FILE_NAME "Calculator"
 #define APP_FILE_IS_EXE
 #define APP_PRODUCT_NAME "Microsoft Calculator"

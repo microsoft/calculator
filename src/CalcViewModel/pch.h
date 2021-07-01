@@ -49,7 +49,7 @@
 // Once the app switches to min version RS3, the namespaces can be removed.
 // TODO - MSFT 12735088
 namespace StandardPeers = Windows::UI::Xaml::Automation::Peers;
-namespace CalculatorApp::Common::Automation
+namespace CalculatorApp::ViewModel::Common::Automation
 {
 }
-namespace CustomPeers = CalculatorApp::Common::Automation;
+namespace CustomPeers = CalculatorApp::ViewModel::Common::Automation;

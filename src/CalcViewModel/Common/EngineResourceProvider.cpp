@@ -5,7 +5,7 @@
 #include "EngineResourceProvider.h"
 #include "Common/LocalizationSettings.h"
 
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace Platform;
 using namespace Windows::ApplicationModel::Resources;
 using namespace std;
@@ -19,16 +19,16 @@ namespace CalculatorApp
 
     wstring EngineResourceProvider::GetCEngineString(wstring_view id)
     {
-        const auto& localizationSettings = LocalizationSettings::GetInstance();
+        LocalizationSettings^ localizationSettings = LocalizationSettings::GetInstance();
 
         if (id.compare(L"sDecimal") == 0)
         {
-            return localizationSettings.GetDecimalSeparatorStr();
+            return localizationSettings->GetDecimalSeparatorStr();
         }
 
         if (id.compare(L"sThousand") == 0)
         {
-            return localizationSettings.GetNumberGroupingSeparatorStr();
+            return localizationSettings->GetNumberGroupingSeparatorStr();
         }
 
         if (id.compare(L"sGrouping") == 0)
@@ -39,7 +39,7 @@ namespace CalculatorApp
             //   3;2;0           0x023          - group 1st 3 and then every 2 digits
             //   4;0             0x004          - group every 4 digits
             //   5;3;2;0         0x235          - group 5, then 3, then every 2
-            wstring numberGroupingString = localizationSettings.GetNumberGroupingStr();
+            wstring numberGroupingString = localizationSettings->GetNumberGroupingStr();
             return numberGroupingString;
         }
 

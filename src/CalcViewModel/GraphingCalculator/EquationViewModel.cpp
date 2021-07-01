@@ -6,7 +6,7 @@
 #include "CalcViewModel\Common\LocalizationSettings.h"
 #include "CalcViewModel\GraphingCalculatorEnums.h"
 
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace Graphing;
 using namespace Platform;
 using namespace Platform::Collections;
@@ -245,7 +245,7 @@ namespace CalculatorApp::ViewModel
             return;
         }
 
-        Platform::String ^ separator = ref new String(LocalizationSettings::GetInstance().GetListSeparator().c_str());
+        Platform::String ^ separator = ref new String(LocalizationSettings::GetInstance()->GetListSeparator().c_str());
 
         wstring error;
         if ((graphEquation->TooComplexFeatures & KeyGraphFeaturesFlag::Domain) == KeyGraphFeaturesFlag::Domain)

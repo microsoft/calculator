@@ -5,6 +5,8 @@
 #include "NetworkManager.h"
 
 using namespace CalculatorApp;
+using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace Platform;
 using namespace Windows::Networking::Connectivity;
 

@@ -17,7 +17,7 @@
 #include "Utils.h"
 #include "MyVirtualKey.h"
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
     namespace Common
     {
@@ -153,6 +153,7 @@ namespace CalculatorApp
             static int GetPosition(ViewMode mode);
 
             static ViewMode GetViewModeForVirtualKey(MyVirtualKey virtualKey);
+            static void GetCategoryAcceleratorKeys(Windows::Foundation::Collections::IVector<MyVirtualKey> ^ resutls);
 
             internal : NavCategory(
                            Platform::String ^ name,
@@ -174,8 +175,6 @@ namespace CalculatorApp
             {
             }
 
-            static std::vector<MyVirtualKey> GetCategoryAcceleratorKeys();
-
         private:
             static bool IsModeInCategoryGroup(ViewMode mode, CategoryGroupType groupType);
 
@@ -193,7 +192,7 @@ namespace CalculatorApp
 
             static Windows::Foundation::Collections::IObservableVector<NavCategoryGroup ^> ^ CreateMenuOptions();
 
-            internal : static NavCategoryGroup ^ CreateCalculatorCategory();
+            static NavCategoryGroup ^ CreateCalculatorCategory();
             static NavCategoryGroup ^ CreateConverterCategory();
 
         private:

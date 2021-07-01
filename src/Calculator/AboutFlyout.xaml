@@ -82,11 +82,13 @@
                        FontSize="{ThemeResource BodyFontSize}"
                        TextWrapping="Wrap">
             <Paragraph>
-                <Run x:Name="ContributeRunBeforeLink"/><Hyperlink NavigateUri="https://go.microsoft.com/fwlink/?linkid=2099939"
+                <Run x:Name="ContributeRunBeforeLink"/>
+                <Hyperlink NavigateUri="https://go.microsoft.com/fwlink/?linkid=2099939"
                            TextDecorations="None"
                            ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?linkid=2099939">
                     <Run x:Name="ContributeRunLink"/>
-                </Hyperlink><Run x:Name="ContributeRunAfterLink"/>
+                </Hyperlink>
+                <Run x:Name="ContributeRunAfterLink"/>
             </Paragraph>
         </RichTextBlock>
     </Grid>
