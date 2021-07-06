@@ -276,3 +276,10 @@ long long CalculatorApp::ViewModel::Common::Utilities::GetConst_WINEVENT_KEYWORD
     return WINEVENT_KEYWORD_RESPONSE_TIME;
 }
 
+bool CalculatorApp::ViewModel::Common::Utilities::GetIntegratedDisplaySize(double* size)
+{
+    if (SUCCEEDED(::GetIntegratedDisplaySize(size)))
+        return true;
+    return false;
+}
+
