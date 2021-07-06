@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -39,16 +40,13 @@ namespace CalculatorApp
             m_model.PropertyChanged += OnAppPropertyChanged;
             m_accessibilitySettings = new AccessibilitySettings();
 
-            // CSHARP_MIGRAION: TODO: find another implementation for C#
-            //double sizeInInches = 0.0;
-
-            //if (SUCCEEDED(GetIntegratedDisplaySize(&sizeInInches)))
-            //{
-            //    if (sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
-            //    {
-            //        DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait | DisplayOrientations.PortraitFlipped;
-            //    }
-            //}
+            if(Utilities.GetIntegratedDisplaySize(out var sizeInInches))
+            {
+                if(sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
+                {
+                    DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait | DisplayOrientations.PortraitFlipped;
+                }
+            }
         }
 
         public CalculatorApp.ViewModel.ApplicationViewModel Model

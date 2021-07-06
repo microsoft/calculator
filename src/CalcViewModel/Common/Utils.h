@@ -718,6 +718,7 @@ namespace CalculatorApp
             static Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
             static int GetWindowId();
             static long long GetConst_WINEVENT_KEYWORD_RESPONSE_TIME();
+            static bool GetIntegratedDisplaySize(double* size);
         };
     }
 }
