@@ -56,20 +56,17 @@ namespace CalculatorApp
 
         public Task HandleViewRelease()
         {
-            var that = this;
-
             TaskCompletionSource<object> tsource = new TaskCompletionSource<object>();
-
             _ = m_coreDispatcher.RunAsync(CoreDispatcherPriority.Low, new DispatchedHandler(() =>
             {
-                KeyboardShortcutManager.OnWindowClosed(that.m_viewId);
+                KeyboardShortcutManager.OnWindowClosed(this.m_viewId);
                 Window.Current.Content = null;
-                that.InvokeWindowClosingHandlers();
+                this.InvokeWindowClosingHandlers();
                 // This is to ensure InvokeWindowClosingHandlers is be done before RemoveWindowFromMap
                 // If InvokeWindowClosingHandlers throws any exception we want it to crash the application
                 // so we are OK not setting closingHandlersCompletedEvent in that case
                 tsource.SetResult(new object());
-                that.m_coreDispatcher.StopProcessEvents();
+                this.m_coreDispatcher.StopProcessEvents();
                 Window.Current.Close();
             }));
 
