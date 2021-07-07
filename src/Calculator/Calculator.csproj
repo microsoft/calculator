@@ -139,12 +139,6 @@
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
-  <PropertyGroup>
-    <AppVersion Condition="'$(AppVersion)' == ''">0.0.0.0</AppVersion>
-  </PropertyGroup>
-  <ItemGroup>
-      <ResourceCompile Include="Calculator.rc" PreprocessorDefinitions="%(PreprocessorDefinitions);APP_VERSION_MAJOR=$(AppVersion.Split(`.`)[0]);APP_VERSION_MINOR=$(AppVersion.Split(`.`)[1]);APP_VERSION_BUILD=$(AppVersion.Split(`.`)[2]);APP_VERSION_REVISION=$(AppVersion.Split(`.`)[3])" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutFlyout.xaml.cs">
       <DependentUpon>AboutFlyout.xaml</DependentUpon>
@@ -835,6 +829,7 @@
     </ItemGroup>
   </Target>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="$(SolutionDir)build\Calculator.StampAssemblyInfo.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
