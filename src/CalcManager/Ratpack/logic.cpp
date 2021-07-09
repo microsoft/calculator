@@ -169,7 +169,7 @@ void boolnum(PNUMBER* pa, PNUMBER b, int func)
     c->sign = a->sign;
     while (c->cdigit > 1 && *(--pchc) == 0)
     {
-        c->cdigit--;
+        --c->cdigit;
     }
     destroynum(*pa);
     *pa = c;
