@@ -444,7 +444,7 @@ void _divnum(PNUMBER* pa, PNUMBER b, uint32_t radix, int32_t precision)
 
     if (c->mant != ++ptrc)
     {
-        memmove(c->mant, ptrc, static_cast<size_t>(cdigits) * sizeof(MANTTYPE)));
+        memmove(c->mant, ptrc, static_cast<size_t>(cdigits) * sizeof(MANTTYPE));
     }
 
     // Cleanup table structure
