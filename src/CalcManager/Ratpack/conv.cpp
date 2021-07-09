@@ -85,7 +85,7 @@ namespace
 
         if (ullOperand <= UINT32_MAX)
         {
-            *pulResult = (uint32_t)ullOperand;
+            *pulResult = static_cast<uint32_t>(ullOperand);
             hr = S_OK;
         }
 
@@ -200,7 +200,7 @@ PNUMBER _createnum(_In_ uint32_t size)
     if (SUCCEEDED(Calc_ULongAdd(size, 1, &cbAlloc)) && SUCCEEDED(Calc_ULongMult(cbAlloc, sizeof(MANTTYPE), &cbAlloc))
         && SUCCEEDED(Calc_ULongAdd(cbAlloc, sizeof(NUMBER), &cbAlloc)))
     {
-        pnumret = (PNUMBER)zmalloc(cbAlloc);
+        pnumret = reinterpret_cast<PNUMBER>(zmalloc(cbAlloc));
         if (pnumret == nullptr)
         {
             throw(CALC_E_OUTOFMEMORY);
@@ -230,9 +230,7 @@ PNUMBER _createnum(_In_ uint32_t size)
 PRAT _createrat(void)
 
 {
-    PRAT prat = nullptr;
-
-    prat = (PRAT)zmalloc(sizeof(RAT));
+    PRAT prat = reinterpret_cast<PRAT>(zmalloc(sizeof(RAT)));
 
     if (prat == nullptr)
     {
@@ -310,9 +308,9 @@ PNUMBER nRadixxtonum(_In_ PNUMBER a, uint32_t radix, int32_t precision)
     // limit the digits to the minimum of the existing precision or the
     // requested precision.
     uint32_t cdigits = precision + 1;
-    if (cdigits > (uint32_t)a->cdigit)
+    if (cdigits > static_cast<uint32_t>(a->cdigit))
     {
-        cdigits = (uint32_t)a->cdigit;
+        cdigits = static_cast<uint32_t>(a->cdigit);
     }
 
     // scale by the internal base to the internal exponent offset of the LSD
@@ -972,7 +970,7 @@ uint64_t rattoUi64(_In_ PRAT prat, uint32_t radix, int32_t precision)
     destroyrat(prat32);
     destroyrat(pint);
 
-    return (((uint64_t)hi << 32) | lo);
+    return (((static_cast<uint64_t>(hi)) << 32) | lo);
 }
 
 //-----------------------------------------------------------------------------
@@ -1032,12 +1030,12 @@ bool stripzeroesnum(_Inout_ PNUMBER pnum, int32_t starting)
     // point pmant to the LSD
     if (cdigits > starting)
     {
-        pmant += cdigits - starting;
+        pmant = pmant + cdigits - starting;
         cdigits = starting;
     }
 
     // Check we haven't gone too far, and we are still looking at zeros.
-    while ((cdigits > 0) && !(*pmant))
+    while ((cdigits > 0) && (*pmant == 0))
     {
         // move to next significant digit and keep track of digits we can
         // ignore later.
@@ -1050,7 +1048,7 @@ bool stripzeroesnum(_Inout_ PNUMBER pnum, int32_t starting)
     if (fstrip)
     {
         // Remove them.
-        memmove(pnum->mant, pmant, (int)(cdigits * sizeof(MANTTYPE)));
+        memmove(pnum->mant, pmant, static_cast<size_t>(cdigits) * sizeof(MANTTYPE)));
         // And adjust exponent and digit count accordingly.
         pnum->exp += (pnum->cdigit - cdigits);
         pnum->cdigit = cdigits;
