@@ -72,8 +72,8 @@ void _addnum(PNUMBER* pa, PNUMBER b, uint32_t radix)
     MANTTYPE da;         // da is a single 'digit' after possible padding.
     MANTTYPE db;         // db is a single 'digit' after possible padding.
     MANTTYPE cy = 0;     // cy is the value of a carry after adding two 'digits'
-    int32_t fcompla = 0; // fcompla is a flag to signal a is negative.
-    int32_t fcomplb = 0; // fcomplb is a flag to signal b is negative.
+    bool fcompla = false;// fcompla is a flag to signal a is negative.
+    bool fcomplb = false;// fcomplb is a flag to signal b is negative.
 
     a = *pa;
 
@@ -162,7 +162,7 @@ void _addnum(PNUMBER* pa, PNUMBER b, uint32_t radix)
     // increasing significance. i.e. 100 would be 0,0,1
     while (c->cdigit > 1 && *(--pchc) == 0)
     {
-        c->cdigit--;
+        --c->cdigit;
     }
     destroynum(*pa);
     *pa = c;
@@ -464,7 +464,7 @@ void _divnum(PNUMBER* pa, PNUMBER b, uint32_t radix, int32_t precision)
         c->exp -= cdigits;
         while (c->cdigit > 1 && c->mant[c->cdigit - 1] == 0)
         {
-            c->cdigit--;
+            --c->cdigit;
         }
     }
     destroynum(rem);
