@@ -279,7 +279,7 @@ void _mulnum(PNUMBER* pa, PNUMBER b, uint32_t radix)
     // digits are in order of increasing significance.
     while (c->cdigit > 1 && c->mant[c->cdigit - 1] == 0)
     {
-        c->cdigit--;
+        --c->cdigit;
     }
 
     destroynum(*pa);
