@@ -609,8 +609,8 @@ wchar_t NormalizeCharDigit(wchar_t c, uint32_t radix)
 
 PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precision)
 {
-    int32_t expSign = 1L;   // expSign is exponent sign ( +/- 1 )
-    uint32_t expValue = 0L; // expValue is exponent mantissa, should be unsigned
+    int32_t expSign = 1L;    // expSign is exponent sign ( +/- 1 )
+    uint32_t expValue = 0UL; // expValue is exponent mantissa, should be unsigned
 
     PNUMBER pnumret = nullptr;
     createnum(pnumret, static_cast<uint32_t>(numberString.length()));
@@ -723,7 +723,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
             pnumret->exp--;
         }
 
-        pnumret->exp += expSign * expValue;
+        pnumret->exp += expSign * static_cast<int32_t>(expValue);
     }
 
     // If we don't have a number, clear our result.
@@ -1000,7 +1000,7 @@ int32_t numtoi32(_In_ PNUMBER pnum, uint32_t radix)
         lret += *(pmant--);
     }
 
-    while (expt-- > 0)
+    for (; expt > 0; expt--)
     {
         lret *= radix;
     }
@@ -1229,11 +1229,12 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, NumberFormat format, uint32_t radi
     while (exponent > 0)
     {
         result += L'0';
-        exponent--;
+       
         // Be more regular in using a decimal point.
-        if (exponent == 0)
+        if (--exponent == 0)
         {
             result += g_decimalSeparator;
+            break;
         }
     }
 
