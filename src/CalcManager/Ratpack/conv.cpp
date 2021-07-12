@@ -200,7 +200,7 @@ PNUMBER _createnum(_In_ uint32_t size)
     if (SUCCEEDED(Calc_ULongAdd(size, 1, &cbAlloc)) && SUCCEEDED(Calc_ULongMult(cbAlloc, sizeof(MANTTYPE), &cbAlloc))
         && SUCCEEDED(Calc_ULongAdd(cbAlloc, sizeof(NUMBER), &cbAlloc)))
     {
-        pnumret = reinterpret_cast<PNUMBER>(zmalloc(cbAlloc));
+        pnumret = (PNUMBER)zmalloc(cbAlloc);
         if (pnumret == nullptr)
         {
             throw(CALC_E_OUTOFMEMORY);
