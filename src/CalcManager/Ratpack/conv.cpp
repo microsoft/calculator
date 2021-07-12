@@ -230,7 +230,7 @@ PNUMBER _createnum(_In_ uint32_t size)
 PRAT _createrat(void)
 
 {
-    PRAT prat = reinterpret_cast<PRAT>(zmalloc(sizeof(RAT)));
+    PRAT prat = (PRAT)zmalloc(sizeof(RAT));
 
     if (prat == nullptr)
     {
