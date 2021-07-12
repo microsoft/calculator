@@ -609,8 +609,8 @@ wchar_t NormalizeCharDigit(wchar_t c, uint32_t radix)
 
 PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precision)
 {
-    int32_t expSign = 1L;  // expSign is exponent sign ( +/- 1 )
-    int32_t expValue = 0L; // expValue is exponent mantissa, should be unsigned
+    int32_t expSign = 1L;   // expSign is exponent sign ( +/- 1 )
+    uint32_t expValue = 0L; // expValue is exponent mantissa, should be unsigned
 
     PNUMBER pnumret = nullptr;
     createnum(pnumret, static_cast<uint32_t>(numberString.length()));
@@ -671,7 +671,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
             if (pos != wstring_view::npos)
             {
                 expValue *= radix;
-                expValue += static_cast<int32_t>(pos);
+                expValue += static_cast<uint32_t>(pos);
             }
             else
             {
