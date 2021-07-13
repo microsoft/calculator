@@ -601,7 +601,7 @@ bool zernum(_In_ PNUMBER a)
 
     // loop over all the digits until you find a nonzero or until you run
     // out of digits
-    for (int32_t length = a->cdigit; length > 0; --length)
+    for (auto length = a->cdigit; length > 0; --length)
     {
         if (*pcha)
         {
