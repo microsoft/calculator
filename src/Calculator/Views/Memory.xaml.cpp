@@ -57,9 +57,28 @@ void Memory::MemoryListItemClick(_In_ Object ^ sender, _In_ ItemClickEventArgs ^
 
 void Memory::OnClearMenuItemClicked(_In_ Object ^ sender, _In_ RoutedEventArgs ^ e)
 {
+    // We are proactively hiding the context menu so that XAML focus goes back to a ListViewItem.
+    // If we let the context menu hide on its own then it would lose focus and get hidden after the
+    // coresponding memory item is removed. The XAML Focus Manager will then try to set focus to the
+    // item that no longer exists and will end up setting focus to the root of the ListView
+    // because the item that XAML wants to give focus to does not exist.
+    MemoryContextMenu->Hide();
+
     auto memoryItem = GetMemoryItemForCurrentFlyout();
     if (memoryItem != nullptr)
     {
+        // Move focus to a neighboaring item before removing memoryItem. Ideally the same index in
+        // the list will be selected after the remove operation, but if we remove the last item then
+        // we want the new last item to have focus.
+        auto items = MemoryListView->Items->GetView();
+        auto lastItem = items->GetAt(items->Size - 1);
+        auto direction = FocusNavigationDirection::Down;
+        if (lastItem == memoryItem)
+        {
+            direction = FocusNavigationDirection::Up;
+        }
+        FocusManager::TryMoveFocus(direction);
+
         memoryItem->Clear();
     }
 }
