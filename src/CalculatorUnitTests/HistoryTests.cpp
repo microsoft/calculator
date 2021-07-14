@@ -104,7 +104,7 @@ namespace CalculatorFunctionalTests
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandADD));
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command1));
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandEQU));
-            for (size_t i = 1; i < m_historyViewModel->m_calculatorManager->MaxHistorySize()); i++)
+            for (size_t i = 1; i < m_historyViewModel->m_calculatorManager->MaxHistorySize(); i++)
             {
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command1));
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandADD));
