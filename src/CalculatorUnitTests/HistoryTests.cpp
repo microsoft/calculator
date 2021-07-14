@@ -83,12 +83,12 @@ namespace CalculatorFunctionalTests
         void AddSingleHistoryItem()
         {
             Initialize();
-            int initialSize = m_historyViewModel->ItemsCount;
+            size_r initialSize = m_historyViewModel->ItemsCount;
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command1));
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandADD));
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command8));
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandEQU));
-            int sizeAfterItemAdd = m_historyViewModel->ItemsCount;
+            size_t sizeAfterItemAdd = m_historyViewModel->ItemsCount;
             auto historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(0));
             String ^ expression = L"1   +   8 =";
             VERIFY_ARE_EQUAL(initialSize + 1, sizeAfterItemAdd);
@@ -111,7 +111,7 @@ namespace CalculatorFunctionalTests
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command2));
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandEQU));
             }
-            VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemsCount, m_historyViewModel->GetMaxItemSize());
+            VERIFY_ARE_EQUAL(m_historyViewModel->ItemsCount, m_historyViewModel->GetMaxItemSize());
             String ^ expression = L"1   +   1 =";
             int output = 2;
             String ^ result = output.ToString();
