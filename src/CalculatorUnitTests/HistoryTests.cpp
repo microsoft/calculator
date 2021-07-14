@@ -83,7 +83,7 @@ namespace CalculatorFunctionalTests
         void AddSingleHistoryItem()
         {
             Initialize();
-            size_r initialSize = m_historyViewModel->ItemsCount;
+            size_t initialSize = m_historyViewModel->ItemsCount;
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command1));
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandADD));
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command8));
