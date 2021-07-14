@@ -53,6 +53,8 @@ namespace CalculatorApp
             void SetCalculatorDisplay(CalculatorDisplay& calculatorDisplay);
             void ReloadHistory(_In_ CalculatorApp::Common::ViewMode currentMode);
 
+            void size_t GetMaxItemSize();
+
             void DeleteItem(_In_ CalculatorApp::ViewModel::HistoryItemViewModel ^ e);
 
         private:
