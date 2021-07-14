@@ -112,7 +112,7 @@ namespace CalculationManager
         std::shared_ptr<HISTORYITEM> const& GetHistoryItem(_In_ unsigned int uIdx);
         bool RemoveHistoryItem(_In_ unsigned int uIdx);
         void ClearHistory();
-        size_t MaxHistorySize() const
+        unsigned int MaxHistorySize() const
         {
             return m_pHistory->MaxHistorySize();
         }
