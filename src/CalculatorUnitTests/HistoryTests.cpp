@@ -104,14 +104,14 @@ namespace CalculatorFunctionalTests
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandADD));
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command1));
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandEQU));
-            for (size_t i = 1; i < m_historyViewModel->GetMaxHistorySize(); i++)
+            for (size_t i = 1; i < m_historyViewModel->GetMaxItemSize(); i++)
             {
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command1));
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandADD));
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command2));
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandEQU));
             }
-            VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemsCount, m_historyViewModel->GetMaxHistorySize());
+            VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemsCount, m_historyViewModel->GetMaxItemSize());
             String ^ expression = L"1   +   1 =";
             int output = 2;
             String ^ result = output.ToString();
