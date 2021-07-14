@@ -53,7 +53,7 @@ void addnum(_Inout_ PNUMBER* pa, _In_ PNUMBER b, uint32_t radix)
             _addnum(pa, b, radix);
         }
         else
-        { // if pa is zero and b isn't just copy b.
+        { // if pa is zero and b isn't, just copy b.
             DUPNUM(*pa, b);
         }
     }
