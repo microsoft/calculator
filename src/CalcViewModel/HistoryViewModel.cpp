@@ -167,5 +167,5 @@ void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
 
 size_t HistoryViewModel::GetMaxItemSize()
 {
-        return m_calculatorManager->MaxHistorySize();
+    return m_calculatorManager->MaxHistorySize();
 }
