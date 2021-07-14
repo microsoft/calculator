@@ -112,7 +112,7 @@ namespace CalculatorFunctionalTests
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandEQU));
             }
 
-            VERIFY_ARE_EQUAL((size_t)
+            VERIFY_ARE_EQUAL((size_t)m_historyViewModel->ItemsCount, m_historyViewModel->MaxHistorySize());
             String ^ expression = L"1   +   1 =";
             int output = 2;
             String ^ result = output.ToString();
