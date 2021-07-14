@@ -78,7 +78,7 @@ bool UnitConverter::CheckLoad()
 {
     if (m_categories.empty())
     {
-        UnitConverter::ResetCategoriesAndRatios();
+        ResetCategoriesAndRatios();
     }
     return !m_categories.empty();
 }
