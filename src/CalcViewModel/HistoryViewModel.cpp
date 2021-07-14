@@ -164,3 +164,8 @@ void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
         HistoryAnnouncement = CalculatorAnnouncement::GetHistoryClearedAnnouncement(m_localizedHistoryCleared);
     }
 }
+
+size_t HistoryViewModel::GetMaxItemSize()
+{
+        return m_calculatorManager->MaxHistorySize();
+}
