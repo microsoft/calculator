@@ -29,9 +29,9 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<HistoryItemViewModel ^> ^, Items);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
             OBSERVABLE_PROPERTY_R(CalculatorApp::Common::Automation::NarratorAnnouncement ^, HistoryAnnouncement);
-            property int ItemsCount
+            property size_t ItemsCount
             {
-                int get()
+                size_t get()
                 {
                     return Items->Size;
                 }
