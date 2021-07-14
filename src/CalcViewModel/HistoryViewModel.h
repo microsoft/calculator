@@ -29,9 +29,9 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<HistoryItemViewModel ^> ^, Items);
             OBSERVABLE_PROPERTY_RW(bool, AreHistoryShortcutsEnabled);
             OBSERVABLE_PROPERTY_R(CalculatorApp::Common::Automation::NarratorAnnouncement ^, HistoryAnnouncement);
-            property size_t ItemsCount
+            property unsigned int ItemsCount
             {
-                size_t get()
+                unsigned int get()
                 {
                     return Items->Size;
                 }
@@ -52,7 +52,7 @@ namespace CalculatorApp
             internal : HistoryViewModel(_In_ CalculationManager::CalculatorManager* calculatorManager);
             void SetCalculatorDisplay(CalculatorDisplay& calculatorDisplay);
             void ReloadHistory(_In_ CalculatorApp::Common::ViewMode currentMode);
-            size_t GetMaxItemSize();
+            unsigned int GetMaxItemSize();
 
             void DeleteItem(_In_ CalculatorApp::ViewModel::HistoryItemViewModel ^ e);
 
