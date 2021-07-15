@@ -23,7 +23,7 @@ namespace CalculationManager
     class CalculatorHistory : public IHistoryDisplay
     {
     public:
-        CalculatorHistory(const size_t maxSize);
+        CalculatorHistory(const unsigned int maxSize);
         unsigned int AddToHistory(
             _In_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& spTokens,
             _In_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& spCommands,
