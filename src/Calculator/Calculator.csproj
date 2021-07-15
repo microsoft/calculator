@@ -142,7 +142,7 @@
     </Compile>
     <Compile Include="Common\AlwaysSelectedCollectionView.cs" />
     <Compile Include="Common\AppLifecycleLogger.cs" />
-    <Compile Include="Common\KeyboardShortcuManager.cs" />
+    <Compile Include="Common\KeyboardShortcutManager.cs" />
     <Compile Include="Common\ValidatingConverters.cs" />
     <Compile Include="Common\ViewState.cs" />
     <Compile Include="Controls\CalculationResult.cs" />
