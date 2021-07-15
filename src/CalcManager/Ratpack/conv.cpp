@@ -320,7 +320,7 @@ PNUMBER nRadixxtonum(_In_ PNUMBER a, uint32_t radix, int32_t precision)
     for (MANTTYPE* ptr = &(a->mant[a->cdigit - 1]); cdigits > 0; ptr--, cdigits--)
     {
         // Loop over all the bits from MSB to LSB
-        for (uint32_t bitmask = BASEX >> 1; bitmask > 0; bitmask >>= 1)
+        for (uint32_t bitmask = BASEX >> 1; bitmask; bitmask >>= 1)
         {
             addnum(&sum, sum, radix);
             if (*ptr & bitmask)
