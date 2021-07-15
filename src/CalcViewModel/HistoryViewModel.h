@@ -53,7 +53,7 @@ namespace CalculatorApp
 
             internal : HistoryViewModel(_In_ CalculationManager::CalculatorManager* calculatorManager);
             void SetCalculatorDisplay(Common::CalculatorDisplay& calculatorDisplay);
-            unsigned long long GetMaxItemSize();
+            size_t GetMaxItemSize();
 
 
         private:
