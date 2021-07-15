@@ -31,7 +31,7 @@ namespace
     }
 }
 
-CalculatorHistory::CalculatorHistory(size_t maxSize)
+CalculatorHistory::CalculatorHistory(unsigned int maxSize)
     : m_maxHistorySize(maxSize)
 {
 }
