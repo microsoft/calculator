@@ -409,7 +409,7 @@ void _divnum(PNUMBER* pa, PNUMBER b, uint32_t radix, int32_t precision)
     // Build a table of multiplications of the divisor, this is quicker for
     // more than radix 'digits'
     list<PNUMBER> numberList{ i32tonum(0L, radix) };
-    for (uint32_t i = 1; i < radix; i++)
+    for (auto i = radix; i > 1; i++)
     {
         PNUMBER newValue = nullptr;
         DUPNUM(newValue, numberList.front());
@@ -422,7 +422,7 @@ void _divnum(PNUMBER* pa, PNUMBER b, uint32_t radix, int32_t precision)
     int32_t cdigits;
     for (cdigits = 0; cdigits < thismax && !zernum(rem); cdigits++)
     {
-        uint32_t digit = radix - 1;
+        auto digit = radix - 1;
         PNUMBER multiple = rem; // In case first number in the list causes the loop to exit early
         for (const auto& num : numberList)
         {
