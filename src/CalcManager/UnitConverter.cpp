@@ -65,7 +65,7 @@ UnitConverter::UnitConverter(_In_ const shared_ptr<IConverterDataLoader>& dataLo
     unquoteConversions[L"{sc}"] = L';';
     unquoteConversions[L"{lb}"] = LEFTESCAPECHAR;
     unquoteConversions[L"{rb}"] = RIGHTESCAPECHAR;
-    ClearValues();
+    UnitConverter::ClearValues();
     UnitConverter::ResetCategoriesAndRatios();
 }
 
