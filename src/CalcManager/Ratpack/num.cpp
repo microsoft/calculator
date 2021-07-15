@@ -131,7 +131,7 @@ void _addnum(PNUMBER* pa, PNUMBER b, uint32_t radix)
         if (cy)
         {
            *pchc++ = cy;
-           c->digit++;
+           c->cdigit++;
         }
 
         c->sign = a->sign;
