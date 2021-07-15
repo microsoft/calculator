@@ -13,7 +13,7 @@
 
 using namespace CalculationManager;
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

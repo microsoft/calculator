@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+    For .NET Core SDK-style projects, the "Version" MSBuild property is written into assembly files
+    automatically. This target provides the same feature in non-SDK-style projects using a
+    generated file.
+  -->
+
+  <PropertyGroup Condition="'$(Version)' != ''">
+    <CompileDependsOn>StampAssemblyInfo;$(CompileDependsOn)</CompileDependsOn>
+  </PropertyGroup>
+
+  <Target Name="StampAssemblyInfo">
+    <ItemGroup>
+      <AssemblyAttributes Include="AssemblyVersion">
+        <_Parameter1>$(Version)</_Parameter1>
+      </AssemblyAttributes>
+    </ItemGroup>
+    <WriteCodeFragment AssemblyAttributes="@(AssemblyAttributes)"
+                        Language="C#"
+                        OutputDirectory="$(IntermediateOutputPath)"
+                        OutputFile="GeneratedAssemblyInfo.cs">
+        <Output TaskParameter="OutputFile" ItemName="Compile" />
+        <Output TaskParameter="OutputFile" ItemName="FileWrites" />
+    </WriteCodeFragment>
+   </Target>
+
+</Project>

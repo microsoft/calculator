@@ -9,8 +9,8 @@
 #include "StandardCalculatorViewModel.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
-using namespace CalculatorApp::Common::Automation;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel::Common::Automation;
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace std;
@@ -57,15 +57,15 @@ void HistoryViewModel::ReloadHistory(_In_ ViewMode currentMode)
 
     auto historyListModel = m_calculatorManager->GetHistoryItems(m_currentMode);
     auto historyListVM = ref new Platform::Collections::Vector<HistoryItemViewModel ^>();
-    const auto& localizer = LocalizationSettings::GetInstance();
+    LocalizationSettings^ localizer = LocalizationSettings::GetInstance();
     if (historyListModel.size() > 0)
     {
         for (auto ritr = historyListModel.rbegin(); ritr != historyListModel.rend(); ++ritr)
         {
             wstring expression = (*ritr)->historyItemVector.expression;
             wstring result = (*ritr)->historyItemVector.result;
-            localizer.LocalizeDisplayValue(&expression);
-            localizer.LocalizeDisplayValue(&result);
+            localizer->LocalizeDisplayValue(&expression);
+            localizer->LocalizeDisplayValue(&result);
 
             auto item = ref new HistoryItemViewModel(
                 ref new Platform::String(expression.c_str()),
@@ -83,11 +83,11 @@ void HistoryViewModel::ReloadHistory(_In_ ViewMode currentMode)
 void HistoryViewModel::OnHistoryItemAdded(_In_ unsigned int addedItemIndex)
 {
     auto newItem = m_calculatorManager->GetHistoryItem(addedItemIndex);
-    const auto& localizer = LocalizationSettings::GetInstance();
+    LocalizationSettings^ localizer = LocalizationSettings::GetInstance();
     wstring expression = newItem->historyItemVector.expression;
     wstring result = newItem->historyItemVector.result;
-    localizer.LocalizeDisplayValue(&expression);
-    localizer.LocalizeDisplayValue(&result);
+    localizer->LocalizeDisplayValue(&expression);
+    localizer->LocalizeDisplayValue(&result);
     auto item = ref new HistoryItemViewModel(
         ref new Platform::String(expression.c_str()),
         ref new Platform::String(result.c_str()),
@@ -133,7 +133,7 @@ void HistoryViewModel::DeleteItem(_In_ HistoryItemViewModel ^ e)
     }
     // Adding 1 to the history item index to provide 1-based numbering on announcements.
     wstring localizedIndex = to_wstring(itemIndex + 1);
-    LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
+    LocalizationSettings::GetInstance()->LocalizeDisplayValue(&localizedIndex);
     m_localizedHistorySlotCleared = AppResourceProvider::GetInstance()->GetResourceString(HistoryResourceKeys::HistorySlotCleared);
     String ^ announcement = LocalizationStringUtil::GetLocalizedString(m_localizedHistorySlotCleared, StringReference(localizedIndex.c_str()));
     HistoryAnnouncement = CalculatorAnnouncement::GetHistorySlotClearedAnnouncement(announcement);

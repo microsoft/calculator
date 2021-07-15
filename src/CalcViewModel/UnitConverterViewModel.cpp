@@ -15,9 +15,10 @@
 #include "DataLoaders/UnitConverterDataLoader.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
-using namespace CalculatorApp::Common::Automation;
 using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel::Common::Automation;
+using namespace CalculatorApp::ViewModel::DataLoaders;
 using namespace concurrency;
 using namespace Platform;
 using namespace Platform::Collections;
@@ -75,7 +76,7 @@ namespace
     StringReference SupplementaryVisibilityPropertyName(L"SupplementaryVisibility");
 }
 
-namespace CalculatorApp::ViewModel::UnitConverterResourceKeys
+namespace CalculatorApp::ViewModel::DataLoaders::UnitConverterResourceKeys
 {
     StringReference ValueFromFormat(L"Format_ValueFrom");
     StringReference ValueFromDecimalFormat(L"Format_ValueFrom_Decimal");
@@ -128,7 +129,7 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
     m_decimalFormatter = localizationService->GetRegionalSettingsAwareDecimalFormatter();
     m_decimalFormatter->FractionDigits = 0;
     m_decimalFormatter->IsGrouped = true;
-    m_decimalSeparator = LocalizationSettings::GetInstance().GetDecimalSeparator();
+    m_decimalSeparator = LocalizationSettings::GetInstance()->GetDecimalSeparator();
 
     m_currencyFormatter = localizationService->GetRegionalSettingsAwareCurrencyFormatter();
     m_currencyFormatter->IsGrouped = true;
@@ -922,10 +923,10 @@ NumbersAndOperatorsEnum UnitConverterViewModel::MapCharacterToButtonId(const wch
 
     if (mappedValue == NumbersAndOperatorsEnum::None)
     {
-        if (LocalizationSettings::GetInstance().IsLocalizedDigit(ch))
+        if (LocalizationSettings::GetInstance()->IsLocalizedDigit(ch))
         {
             mappedValue = NumbersAndOperatorsEnum::Zero
-                          + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'0'));
+                          + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance()->GetDigitSymbolFromEnUsDigit(L'0'));
             canSendNegate = true;
         }
     }

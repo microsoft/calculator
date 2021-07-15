@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "Common/ExpressionCommandSerializer.h"
 
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace Windows::Storage::Streams;
 
 SerializeCommandVisitor::SerializeCommandVisitor(_In_ DataWriter ^ dataWriter)

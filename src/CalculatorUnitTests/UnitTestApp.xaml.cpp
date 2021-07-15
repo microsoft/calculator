@@ -81,7 +81,7 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
     Window::Current->Activate();
 
     // Override the current locale to use English (US) to be compatible with all tests based on formatting
-    CalculatorApp::Common::LocalizationService::OverrideWithLanguage(L"en-US");
+    CalculatorApp::ViewModel::Common::LocalizationService::OverrideWithLanguage(L"en-US");
 
     Microsoft::VisualStudio::TestPlatform::TestExecutor::WinRTCore::UnitTestClient::Run(e->Arguments);
 }

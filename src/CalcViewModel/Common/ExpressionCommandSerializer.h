@@ -5,7 +5,7 @@
 
 #include "CalcManager/ExpressionCommand.h"
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
     namespace Common
     {

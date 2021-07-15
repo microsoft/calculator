@@ -10,6 +10,7 @@
 #include "CalcManager/NumberFormattingUtils.h"
 
 using namespace CalculatorApp;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace CalculationManager;
 using namespace CalcManager::NumberFormattingUtils;
 using namespace Platform;
@@ -1150,5 +1151,4 @@ namespace CalculatorManagerTest
                                  Command::Command4, Command::CommandMUL, Command::Command5, Command::CommandMUL, Command::CommandNULL };
         TestDriver::Test(L"120", L"120 \x00D7 ", commands24);
     }
-
 } /* namespace CalculationManagerUnitTests */

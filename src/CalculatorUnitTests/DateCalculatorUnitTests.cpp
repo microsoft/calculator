@@ -13,7 +13,7 @@ using namespace std;
 using namespace Windows::Foundation;
 using namespace Windows::Globalization;
 using namespace Windows::Globalization::DateTimeFormatting;
-using namespace CalculatorApp::Common::DateCalculation;
+using namespace CalculatorApp::ViewModel::Common::DateCalculation;
 using namespace CalculatorApp::ViewModel;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
