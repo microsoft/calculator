@@ -130,7 +130,7 @@ void* zmalloc(size_t a)
 
 void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER* const src)
 {
-    memcpy(dest, src, (int)(sizeof(NUMBER) + ((src)->cdigit) * (sizeof(MANTTYPE))));
+    memcpy(dest, src, (sizeof(NUMBER) + static_cast<size_t>((src)->cdigit) * (sizeof(MANTTYPE))));
 }
 
 //-----------------------------------------------------------------------------
@@ -1171,10 +1171,9 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, NumberFormat format, uint32_t radi
             {
                 exponent = (eout % 3);
                 eout -= exponent;
-                exponent++;
 
                 // Fix the case where 0.02e-3 should really be 2.e-6 etc.
-                if (exponent < 0)
+                if (++exponent < 0)
                 {
                     exponent += 3;
                     eout -= 3;
@@ -1215,12 +1214,11 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, NumberFormat format, uint32_t radi
 
     while (length > 0)
     {
-        exponent--;
         result += DIGITS[*pmant--];
         length--;
 
         // Be more regular in using a decimal point.
-        if (exponent == 0)
+        if (--exponent == 0)
         {
             result += g_decimalSeparator;
         }
