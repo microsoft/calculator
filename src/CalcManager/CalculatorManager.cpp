@@ -9,7 +9,7 @@
 using namespace std;
 using namespace CalcEngine;
 
-static constexpr size_t MAX_HISTORY_ITEMS = 20;
+static constexpr unsigned int MAX_HISTORY_ITEMS = 20;
 
 #ifndef _MSC_VER
 #define __pragma(x)
