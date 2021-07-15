@@ -33,13 +33,13 @@ namespace CalculationManager
         void ClearHistory();
         unsigned int AddItem(_In_ std::shared_ptr<HISTORYITEM> const& spHistoryItem);
         bool RemoveItem(unsigned int uIdx);
-        size_t MaxHistorySize() const
+        unsigned int MaxHistorySize() const
         {
             return m_maxHistorySize;
         }
 
     private:
         std::vector<std::shared_ptr<HISTORYITEM>> m_historyItems;
-        const size_t m_maxHistorySize;
+        const unsigned int m_maxHistorySize;
     };
 }
