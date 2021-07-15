@@ -231,14 +231,10 @@ namespace GraphControl
         {
             return;
         }
-        bool keepCurrentView = true;
 
         // If the equation has changed, the IsLineEnabled state is reset.
         // This checks if the equation has been reset and sets keepCurrentView to false in this case.
-        if (!equation->HasGraphError && !equation->IsValidated && equation->IsLineEnabled)
-        {
-            keepCurrentView = false;
-        }
+        const bool keepCurrentView = equation->HasGraphError || equation->IsValidated || !equation->IsLineEnabled)
 
         PlotGraph(keepCurrentView);
     }
