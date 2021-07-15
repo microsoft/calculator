@@ -136,9 +136,9 @@ namespace CalculatorFunctionalTests
             Initialize();
 
             m_standardViewModel->ResetCalcManager(false);
-            int scientificItems = 5;
+            unsigned int scientificItems = 5;
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::ModeScientific));
-            for (int i = 0; i < scientificItems; i++)
+            for (unsigned int i = 0; i < scientificItems; i++)
             {
                 Command nextCommand = Command(130 + i);
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command1));
@@ -148,8 +148,8 @@ namespace CalculatorFunctionalTests
             }
 
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::ModeBasic));
-            int standardItems = 2;
-            for (int i = 0; i < standardItems; i++)
+            unsigned int standardItems = 2;
+            for (unsigned int i = 0; i < standardItems; i++)
             {
                 Command nextCommand = Command(130 + i);
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command1));
@@ -164,7 +164,7 @@ namespace CalculatorFunctionalTests
             for (int i = 0; i < scientificItems; i++)
             {
                 wstring expr = L"1   +   " + wstring(i.ToString()->Data()) + L" =";
-                int output = 1 + i;
+                unsigned int output = 1 + i;
                 String ^ result = output.ToString();
                 auto historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(m_historyViewModel->ItemsCount - 1 - i));
                 VERIFY_ARE_EQUAL(historyItem->Expression, StringReference(expr.c_str()));
