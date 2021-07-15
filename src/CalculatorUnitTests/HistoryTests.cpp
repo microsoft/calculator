@@ -160,7 +160,7 @@ namespace CalculatorFunctionalTests
 
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::ModeScientific));
             m_historyViewModel->ReloadHistory(ViewMode::Scientific);
-            VERIFY_ARE_EQUAL(scientificItems, m_historyViewModel->ItemsCount);
+            VERIFY_ARE_EQUAL((unsigned int)scientificItems, m_historyViewModel->ItemsCount);
             for (int i = 0; i < scientificItems; i++)
             {
                 wstring expr = L"1   +   " + wstring(i.ToString()->Data()) + L" =";
@@ -173,7 +173,7 @@ namespace CalculatorFunctionalTests
 
             m_historyViewModel->ReloadHistory(ViewMode::Standard);
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::ModeBasic));
-            VERIFY_ARE_EQUAL(standardItems, m_historyViewModel->ItemsCount);
+            VERIFY_ARE_EQUAL((unsigned int)standardItems, m_historyViewModel->ItemsCount);
             for (int i = 0; i < standardItems; i++)
             {
                 wstring expr = L"1   +   " + wstring(i.ToString()->Data()) + L" =";
