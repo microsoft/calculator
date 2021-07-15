@@ -122,7 +122,7 @@ void HistoryViewModel::ShowItem(_In_ HistoryItemViewModel ^ e)
 
 void HistoryViewModel::DeleteItem(_In_ HistoryItemViewModel ^ e)
 {
-    uint32_t itemIndex;
+    unsigned int itemIndex;
     if (Items->IndexOf(e, &itemIndex))
     {
         if (m_calculatorManager->RemoveHistoryItem(itemIndex))
