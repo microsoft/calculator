@@ -123,16 +123,17 @@ void _addnum(PNUMBER* pa, PNUMBER b, uint32_t radix)
         cy /= (MANTTYPE)radix;
     }
 
-    // Handle carry from last sum as extra digit
-    if (cy && !(fcompla || fcomplb))
-    {
-        *pchc++ = cy;
-        c->cdigit++;
-    }
-
     // Compute sign of result
     if (!(fcompla || fcomplb))
     {
+        // Handle carry from last sum as extra digit
+
+        if (cy)
+        {
+           *pchc++ = cy;
+           c->digit++;
+        }
+
         c->sign = a->sign;
     }
     else
