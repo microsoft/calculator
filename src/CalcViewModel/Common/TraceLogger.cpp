@@ -7,7 +7,8 @@
 #include "CalculatorButtonUser.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel;
 using namespace TraceLogging;
 using namespace Concurrency;
 using namespace std;
@@ -147,14 +148,19 @@ namespace CalculatorApp
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_EXCEPTION), fields);
     }
 
-    void TraceLogger::LogPlatformException(ViewMode mode, wstring_view functionName, Platform::Exception ^ e)
+    void TraceLogger::LogPlatformExceptionInfo(CalculatorApp::ViewModel::Common::ViewMode mode, Platform::String ^ functionName, Platform::String^ message, int hresult)
     {
         auto fields = ref new LoggingFields();
         fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(mode));
-        fields->AddString(StringReference(L"FunctionName"), StringReference(functionName.data()));
-        fields->AddString(StringReference(L"Message"), e->Message);
-        fields->AddInt32(StringReference(L"HRESULT"), e->HResult);
+        fields->AddString(StringReference(L"FunctionName"), functionName);
+        fields->AddString(StringReference(L"Message"), message);
+        fields->AddInt32(StringReference(L"HRESULT"), hresult);
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_EXCEPTION), fields);
+    }
+
+    void TraceLogger::LogPlatformException(ViewMode mode, Platform::String ^ functionName, Platform::Exception ^ e)
+    {
+        LogPlatformExceptionInfo(mode, functionName, e->Message, e->HResult);
     }
 
     void TraceLogger::UpdateButtonUsage(NumbersAndOperatorsEnum button, ViewMode mode)

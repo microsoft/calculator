@@ -6,7 +6,7 @@
 
 #include "CalcViewModel/Common/NetworkManager.h"
 
-using namespace CalculatorApp::DataLoaders;
+using namespace CalculatorApp::ViewModel::DataLoaders;
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::System::UserProfile;

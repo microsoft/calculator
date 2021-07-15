@@ -232,7 +232,7 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeGradians");
 
-                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits, L"Radians");
+                    CalculatorApp::ViewModel::Common::TraceLogger::GetInstance()->LogGraphSettingsChanged(CalculatorApp::ViewModel::Common::GraphSettingsType::TrigUnits, L"Radians");
                 }
             }
         }
@@ -253,7 +253,7 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeRadians");
                     RaisePropertyChanged(L"TrigModeGradians");
 
-                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits, L"Degrees");
+                    CalculatorApp::ViewModel::Common::TraceLogger::GetInstance()->LogGraphSettingsChanged(CalculatorApp::ViewModel::Common::GraphSettingsType::TrigUnits, L"Degrees");
                 }
             }
         }
@@ -274,7 +274,7 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeRadians");
 
-                    TraceLogger::GetInstance()->LogGraphSettingsChanged(GraphSettingsType::TrigUnits, L"Gradians");
+                    CalculatorApp::ViewModel::Common::TraceLogger::GetInstance()->LogGraphSettingsChanged(CalculatorApp::ViewModel::Common::GraphSettingsType::TrigUnits, L"Gradians");
                 }
             }
         }

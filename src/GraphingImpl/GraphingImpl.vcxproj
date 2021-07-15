@@ -239,6 +239,12 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
   </ItemDefinitionGroup>
+  <PropertyGroup>
+    <Version Condition="'$(Version)' == ''">0.0.0.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GraphingImpl.rc" PreprocessorDefinitions="%(PreprocessorDefinitions);APP_VERSION_MAJOR=$(Version.Split(`.`)[0]);APP_VERSION_MINOR=$(Version.Split(`.`)[1]);APP_VERSION_BUILD=$(Version.Split(`.`)[2]);APP_VERSION_REVISION=$(Version.Split(`.`)[3])" />
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GraphingInterfaces\Common.h" />
     <ClInclude Include="..\GraphingInterfaces\GraphingEnums.h" />

@@ -7,7 +7,7 @@
 
 #include "CalcViewModel/Common/LocalizationSettings.h"
 
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 static Windows::Globalization::NumberFormatting::DecimalFormatter ^ CreateDecimalFormatter(const wchar_t* language, const wchar_t* geographicRegion)
@@ -52,13 +52,13 @@ TEST_METHOD(TestGetEnglishValueFromLocalizedDigits)
 
 TEST_METHOD(TestIsEnUsDigit)
 {
-    auto& settings = LocalizationSettings::GetInstance();
-    VERIFY_IS_FALSE(settings.IsEnUsDigit(L'/'));
-    VERIFY_IS_TRUE(settings.IsEnUsDigit(L'0'));
-    VERIFY_IS_TRUE(settings.IsEnUsDigit(L'1'));
-    VERIFY_IS_TRUE(settings.IsEnUsDigit(L'8'));
-    VERIFY_IS_TRUE(settings.IsEnUsDigit(L'9'));
-    VERIFY_IS_FALSE(settings.IsEnUsDigit(L':'));
+    auto settings = LocalizationSettings::GetInstance();
+    VERIFY_IS_FALSE(settings->IsEnUsDigit(L'/'));
+    VERIFY_IS_TRUE(settings->IsEnUsDigit(L'0'));
+    VERIFY_IS_TRUE(settings->IsEnUsDigit(L'1'));
+    VERIFY_IS_TRUE(settings->IsEnUsDigit(L'8'));
+    VERIFY_IS_TRUE(settings->IsEnUsDigit(L'9'));
+    VERIFY_IS_FALSE(settings->IsEnUsDigit(L':'));
 }
 
 TEST_METHOD(TestIsLocalizedDigit)

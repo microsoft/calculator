@@ -6,7 +6,7 @@
 #include "pch.h"
 #include "NarratorNotifier.h"
 
-using namespace CalculatorApp::Common::Automation;
+using namespace CalculatorApp::ViewModel::Common::Automation;
 using namespace Platform;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Automation;

@@ -6,7 +6,7 @@
 #pragma once
 #include "NarratorAnnouncement.h"
 
-namespace CalculatorApp::Common::Automation
+namespace CalculatorApp::ViewModel::Common::Automation
 {
 public
     ref class NarratorNotifier sealed : public Windows::UI::Xaml::DependencyObject

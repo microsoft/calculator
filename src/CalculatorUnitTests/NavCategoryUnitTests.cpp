@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <CppUnitTest.h>
 
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace CalculatorUnitTests;
 using namespace Platform;
 using namespace std;

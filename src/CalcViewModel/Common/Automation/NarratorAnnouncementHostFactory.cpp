@@ -6,7 +6,7 @@
 #include "NotificationHost.h"
 #include "LiveRegionHost.h"
 
-using namespace CalculatorApp::Common::Automation;
+using namespace CalculatorApp::ViewModel::Common::Automation;
 using namespace std;
 
 INarratorAnnouncementHost ^ NarratorAnnouncementHostFactory::s_hostProducer;
