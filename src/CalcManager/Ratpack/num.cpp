@@ -53,7 +53,7 @@ void addnum(_Inout_ PNUMBER* pa, _In_ PNUMBER b, uint32_t radix)
             _addnum(pa, b, radix);
         }
         else
-        { // if pa is zero and b isn't just copy b.
+        { // if pa is zero and b isn't, just copy b.
             DUPNUM(*pa, b);
         }
     }
@@ -72,8 +72,8 @@ void _addnum(PNUMBER* pa, PNUMBER b, uint32_t radix)
     MANTTYPE da;         // da is a single 'digit' after possible padding.
     MANTTYPE db;         // db is a single 'digit' after possible padding.
     MANTTYPE cy = 0;     // cy is the value of a carry after adding two 'digits'
-    int32_t fcompla = 0; // fcompla is a flag to signal a is negative.
-    int32_t fcomplb = 0; // fcomplb is a flag to signal b is negative.
+    bool fcompla = false;// fcompla is a flag to signal a is negative.
+    bool fcomplb = false;// fcomplb is a flag to signal b is negative.
 
     a = *pa;
 
@@ -162,7 +162,7 @@ void _addnum(PNUMBER* pa, PNUMBER b, uint32_t radix)
     // increasing significance. i.e. 100 would be 0,0,1
     while (c->cdigit > 1 && *(--pchc) == 0)
     {
-        c->cdigit--;
+        --c->cdigit;
     }
     destroynum(*pa);
     *pa = c;
@@ -279,7 +279,7 @@ void _mulnum(PNUMBER* pa, PNUMBER b, uint32_t radix)
     // digits are in order of increasing significance.
     while (c->cdigit > 1 && c->mant[c->cdigit - 1] == 0)
     {
-        c->cdigit--;
+        --c->cdigit;
     }
 
     destroynum(*pa);
@@ -340,7 +340,7 @@ void remnum(_Inout_ PNUMBER* pa, _In_ PNUMBER b, uint32_t radix)
         }
 
         // Subtract the working remainder from the remainder holder.
-        tmp->sign = -1 * (*pa)->sign;
+        tmp->sign = -(*pa)->sign;
         addnum(pa, tmp, radix);
 
         destroynum(tmp);
@@ -418,12 +418,11 @@ void _divnum(PNUMBER* pa, PNUMBER b, uint32_t radix, int32_t precision)
     }
     destroynum(tmp);
 
-    int32_t digit;
-    int32_t cdigits = 0;
-    while (cdigits++ < thismax && !zernum(rem))
+    int32_t cdigits;
+    for (cdigits = 0; cdigits < thismax && !zernum(rem); cdigits++)
     {
-        digit = radix - 1;
-        PNUMBER multiple = nullptr;
+        uint32_t digit = radix - 1;
+        PNUMBER multiple = rem; // In case first number in the list causes the loop to exit early
         for (const auto& num : numberList)
         {
             if (!lessnum(rem, num) || !--digit)
@@ -440,13 +439,12 @@ void _divnum(PNUMBER* pa, PNUMBER b, uint32_t radix, int32_t precision)
             multiple->sign *= -1;
         }
         rem->exp++;
-        *ptrc-- = (MANTTYPE)digit;
+        *ptrc-- = static_cast<MANTTYPE>(digit);
     }
-    cdigits--;
 
     if (c->mant != ++ptrc)
     {
-        memmove(c->mant, ptrc, (int)(cdigits * sizeof(MANTTYPE)));
+        memmove(c->mant, ptrc, static_cast<size_t>(cdigits) * sizeof(MANTTYPE));
     }
 
     // Cleanup table structure
@@ -466,7 +464,7 @@ void _divnum(PNUMBER* pa, PNUMBER b, uint32_t radix, int32_t precision)
         c->exp -= cdigits;
         while (c->cdigit > 1 && c->mant[c->cdigit - 1] == 0)
         {
-            c->cdigit--;
+            --c->cdigit;
         }
     }
     destroynum(rem);
@@ -505,38 +503,35 @@ bool equnum(_In_ PNUMBER a, _In_ PNUMBER b)
         // If the exponents are different, these are different numbers.
         return false;
     }
+    else if (diff > 0)
+    {
+        // If the exponents are different, these are different numbers.
+        return false;
+    }
     else
     {
-        if (diff > 0)
-        {
-            // If the exponents are different, these are different numbers.
-            return false;
-        }
-        else
-        {
-            // OK the exponents match.
-            pa = a->mant;
-            pb = b->mant;
-            pa += a->cdigit - 1;
-            pb += b->cdigit - 1;
-            cdigits = max(a->cdigit, b->cdigit);
-            ccdigits = cdigits;
+        // OK the exponents match.
+        pa = a->mant;
+        pb = b->mant;
+        pa += a->cdigit - 1;
+        pb += b->cdigit - 1;
+        cdigits = max(a->cdigit, b->cdigit);
+        ccdigits = cdigits;
 
-            // Loop over all digits until we run out of digits or there is a
-            // difference in the digits.
-            for (; cdigits > 0; cdigits--)
+        // Loop over all digits until we run out of digits or there is a
+        // difference in the digits.
+        for (; cdigits > 0; cdigits--)
+        {
+            da = ((cdigits > (ccdigits - a->cdigit)) ? *pa-- : 0);
+            db = ((cdigits > (ccdigits - b->cdigit)) ? *pb-- : 0);
+            if (da != db)
             {
-                da = ((cdigits > (ccdigits - a->cdigit)) ? *pa-- : 0);
-                db = ((cdigits > (ccdigits - b->cdigit)) ? *pb-- : 0);
-                if (da != db)
-                {
-                    return false;
-                }
+                return false;
             }
-
-            // In this case, they are equal.
-            return true;
         }
+
+        // In this case, they are equal.
+        return true;
     }
 }
 
@@ -602,20 +597,19 @@ bool lessnum(_In_ PNUMBER a, _In_ PNUMBER b)
 bool zernum(_In_ PNUMBER a)
 
 {
-    int32_t length;
-    MANTTYPE* pcha;
-    length = a->cdigit;
-    pcha = a->mant;
+    MANTTYPE* pcha = a->mant;
 
     // loop over all the digits until you find a nonzero or until you run
     // out of digits
-    while (length-- > 0)
+    for (auto length = a->cdigit; length > 0; --length)
     {
-        if (*pcha++)
+        if (*pcha)
         {
             // One of the digits isn't zero, therefore the number isn't zero
             return false;
         }
+
+        ++pcha;
     }
     // All of the digits are zero, therefore the number is zero
     return true;
