@@ -389,8 +389,6 @@
                                     contract7Present:CornerRadius="{TemplateBinding CornerRadius}">
                                 <Border.Resources>
                                     <ResourceDictionary>
-
-
                                         <Style x:Key="WeekDayNameStyle"
                                                BasedOn="{StaticResource CaptionTextBlockStyle}"
                                                TargetType="TextBlock">
@@ -809,16 +807,8 @@
                                         <RowDefinition Height="48"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
+
                                     <Grid>
-                                        <Grid.Resources>
-                                            <ResourceDictionary>
-                                                <ResourceDictionary.ThemeDictionaries>
-                                                    <ResourceDictionary x:Key="Default"/>
-                                                    <ResourceDictionary x:Key="Light"/>
-                                                    <ResourceDictionary x:Key="HighContrast"/>
-                                                </ResourceDictionary.ThemeDictionaries>
-                                            </ResourceDictionary>
-                                        </Grid.Resources>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="5*"/>
                                             <ColumnDefinition Width="*" MinWidth="48"/>
