@@ -3,11 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
              xmlns:common="using:CalculatorApp.Common"
+             xmlns:contract7Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)"
              xmlns:controls="using:CalculatorApp.Controls"
              xmlns:converters="using:CalculatorApp.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:triggers="using:CalculatorApp.Views.StateTriggers"
              xmlns:vm="using:CalculatorApp.ViewModel"
              d:DesignHeight="658"
@@ -36,19 +38,20 @@
         <!-- if you switch between modes when no currencies are available for example) -->
         <DataTemplate x:Key="SelectedUnitTemplate">
             <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
-                       FontWeight="SemiBold"
+                       FontWeight="Normal"
                        AutomationProperties.Name="{Binding AccessibleName, Mode=OneTime, FallbackValue=''}"
                        Text="{Binding Name, Mode=OneTime, FallbackValue=''}"
                        TextWrapping="NoWrap"/>
         </DataTemplate>
 
         <Style x:Key="ComboStyle" TargetType="ComboBox">
-            <Setter Property="Padding" Value="12,0,0,0"/>
+            <Setter Property="Margin" Value="12,0,0,0"/>
+            <Setter Property="Padding" Value="4,0,0,0"/>
             <Setter Property="MinHeight" Value="32"/>
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
             <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="{ThemeResource ControlBorderThemeThickness}"/>
             <Setter Property="TabNavigation" Value="Once"/>
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
@@ -121,7 +124,8 @@
                                         Grid.ColumnSpan="2"
                                         Background="{TemplateBinding Background}"
                                         BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"/>
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"/>
                                 <!--
                                     This first ContentPresenter must be named "ContentPresenter" because
                                     XAML expects it in the template and has dependencies. It is not used
@@ -144,18 +148,21 @@
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
                                            Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
-                                           FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                           FontFamily="{StaticResource CalculatorFontFamily}"
                                            FontSize="12"
                                            AutomationProperties.AccessibilityView="Raw"
                                            IsHitTestVisible="False"
-                                           Text="&#xE0E5;"/>
+                                           Text="&#xE70D;"/>
                                 <Popup x:Name="Popup">
                                     <Border x:Name="PopupBorder"
-                                            Margin="0,-1,0,-1"
+                                            Margin="0,-0.5,0,-1"
+                                            Padding="{ThemeResource ComboBoxDropdownBorderPadding}"
                                             HorizontalAlignment="Stretch"
-                                            Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
-                                            BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
-                                            BorderThickness="{ThemeResource ComboBoxDropdownBorderThickness}">
+                                            Background="{ThemeResource ComboBoxDropDownBackground}"
+                                            BorderBrush="{ThemeResource ComboBoxDropDownBorderBrush}"
+                                            BorderThickness="{ThemeResource ComboBoxDropdownBorderThickness}"
+                                            contract7Present:BackgroundSizing="InnerBorderEdge"
+                                            CornerRadius="{ThemeResource OverlayCornerRadius}">
                                         <ScrollViewer x:Name="ScrollViewer"
                                                       MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.DropDownContentMinWidth}"
                                                       Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
@@ -185,7 +192,7 @@
         <Style x:Key="ValueBaseStyle"
                BasedOn="{StaticResource CalculationResultStyle}"
                TargetType="controls:CalculationResult">
-            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Bottom"/>
@@ -202,7 +209,7 @@
         <Style x:Key="ValueMediumStyle"
                BasedOn="{StaticResource ValueBaseStyle}"
                TargetType="controls:CalculationResult">
-            <Setter Property="MaxFontSize" Value="34"/>
+            <Setter Property="MaxFontSize" Value="40"/>
             <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="DisplayMargin" Value="0,0,0,4"/>
         </Style>
@@ -221,7 +228,7 @@
         <Style x:Key="CurrencySymbolMediumStyle"
                BasedOn="{StaticResource CurrencySymbolBaseStyle}"
                TargetType="TextBlock">
-            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Margin" Value="0,0,0,8"/>
         </Style>
         <Style x:Key="CurrencySymbolSmallStyle"
@@ -315,8 +322,8 @@
                                                      Threshold="1"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="GutterLeft.Width" Value="48"/>
-                        <Setter Target="GutterRight.Width" Value="48"/>
+                        <Setter Target="GutterLeft.Width" Value="0"/>
+                        <Setter Target="GutterRight.Width" Value="0"/>
                         <Setter Target="ColumnLeft.Width" Value="1*"/>
                         <Setter Target="ColumnRight.Width" Value="1*"/>
                         <Setter Target="RowDisplay1.Height" Value="4*"/>
@@ -353,23 +360,6 @@
                         <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle46}"/>
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="Portrait">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="1024" MinWindowWidth="640"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SupplementaryResults.VerticalAlignment" Value="Top"/>
-                        <Setter Target="Value1.Style" Value="{ThemeResource ValueLargeStyle}"/>
-                        <Setter Target="Value2.Style" Value="{ThemeResource ValueLargeStyle}"/>
-                        <Setter Target="CurrencySymbol1Block.Style" Value="{ThemeResource CurrencySymbolLargeStyle}"/>
-                        <Setter Target="CurrencySymbol2Block.Style" Value="{ThemeResource CurrencySymbolLargeStyle}"/>
-                        <Setter Target="Units1.Height" Value="44"/>
-                        <Setter Target="Units2.Height" Value="44"/>
-                        <Setter Target="ConverterNegateButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
-                        <Setter Target="ClearEntryButtonPos0.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
-                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle34}"/>
-                    </VisualState.Setters>
-                </VisualState>
                 <VisualState x:Name="Wide640">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="640"/>
@@ -384,7 +374,7 @@
                         <Setter Target="ConverterNegateButton.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
                         <Setter Target="ClearEntryButtonPos0.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
                         <Setter Target="BackSpaceButtonSmall.FontSize" Value="{StaticResource CalcStandardOperatorCaptionSize}"/>
-                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle34}"/>
+                        <Setter Target="NumberPad.ButtonStyle" Value="{StaticResource NumericButtonStyle28}"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="MinSizeLayout">
@@ -516,14 +506,14 @@
                 <RowDefinition Height="7*"/>
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
-            <ProgressRing x:Name="CurrencyLoadingProgressRing"
-                          Grid.Row="1"
-                          Grid.Column="1"
-                          MaxWidth="140"
-                          MaxHeight="140"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          IsActive="False"/>
+            <muxc:ProgressRing x:Name="CurrencyLoadingProgressRing"
+                               Grid.Row="1"
+                               Grid.Column="1"
+                               MaxWidth="140"
+                               MaxHeight="140"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch"
+                               IsActive="False"/>
         </Grid>
 
         <Grid x:Name="Value1Container"
@@ -538,7 +528,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="CurrencySymbol1Block"
                        Grid.Column="0"
-                       Padding="12,0,0,0"
+                       Padding="16,0,0,0"
                        Style="{ThemeResource CurrencySymbolMediumStyle}"
                        AutomationProperties.AccessibilityView="Raw"
                        Text="{x:Bind Model.CurrencySymbol1, Mode=OneWay}"
@@ -587,7 +577,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="CurrencySymbol2Block"
                        Grid.Column="0"
-                       Padding="12,0,0,0"
+                       Padding="16,0,0,0"
                        Style="{ThemeResource CurrencySymbolMediumStyle}"
                        AutomationProperties.AccessibilityView="Raw"
                        Text="{x:Bind Model.CurrencySymbol2, Mode=OneWay}"
@@ -628,7 +618,7 @@
                     Grid.Row="5"
                     Grid.Column="1"
                     MinHeight="48"
-                    Padding="12,0,6,0"
+                    Padding="0,0,6,0"
                     HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
                     VerticalAlignment="Top"
                     FlowDirection="{x:Bind LayoutDirection}"
@@ -641,14 +631,17 @@
             <StackPanel Visibility="{x:Bind Model.IsCurrencyCurrentCategory, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <!-- Currency Ratio Equality -->
                 <TextBlock x:Name="CurrencyRatioEqualityBlock"
+                           Margin="16,0,0,0"
                            Style="{ThemeResource CaptionTextBlockStyle}"
-                           Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                           Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
                            AutomationProperties.Name="{x:Bind Model.CurrencyRatioEqualityAutomationName, Mode=OneWay}"
                            Text="{x:Bind Model.CurrencyRatioEquality, Mode=OneWay}"/>
 
                 <!-- Currency Timestamp -->
                 <TextBlock x:Name="CurrencyTimestampTextBlock"
+                           Margin="16,0,0,0"
                            Style="{ThemeResource CaptionTextBlockStyle}"
+                           Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
                            Text="{x:Bind Model.CurrencyTimestamp, Mode=OneWay}"/>
 
                 <!-- Currency Refresh button and additional status text -->
@@ -659,8 +652,18 @@
                     <StackPanel Orientation="Horizontal">
                         <HyperlinkButton x:Name="CurrencyRefreshBlock"
                                          x:Uid="RefreshButtonText"
-                                         Foreground="{ThemeResource SystemControlHyperlinkBaseHighBrush}"
-                                         Click="CurrencyRefreshButton_Click"/>
+                                         Margin="16,4,0,0"
+                                         Padding="0"
+                                         Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                         BorderThickness="0"
+                                         Click="CurrencyRefreshButton_Click">
+                            <HyperlinkButton.Resources>
+                                <ResourceDictionary>
+                                    <StaticResource x:Key="HyperlinkButtonBackgroundPointerOver" ResourceKey="SubtleFillColorTransparentBrush"/>
+                                    <StaticResource x:Key="HyperlinkButtonBackgroundPressed" ResourceKey="SubtleFillColorTransparentBrush"/>
+                                </ResourceDictionary>
+                            </HyperlinkButton.Resources>
+                        </HyperlinkButton>
                         <TextBlock Margin="3,7,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
                             <Run x:Name="CurrencySecondaryStatus"
                                  FontWeight="SemiBold"
@@ -671,6 +674,7 @@
 
                 <!-- Offline TextBlock -->
                 <ContentControl x:Name="OfflineBlock"
+                                Margin="16,4,0,0"
                                 IsTabStop="False"
                                 TabIndex="5"
                                 Visibility="Collapsed">
@@ -722,7 +726,7 @@
                                            x:Uid="clearEntryButton"
                                            HorizontalAlignment="Stretch"
                                            Style="{StaticResource OperatorButtonStyle}"
-                                           FontSize="16"
+                                           FontSize="14"
                                            ButtonId="Clear"
                                            Content="CE"
                                            TabIndex="7"/>
@@ -730,10 +734,9 @@
                                            x:Uid="backSpaceButton"
                                            Grid.Column="1"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
-                                           FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                           FontSize="16"
+                                           FontSize="14"
                                            ButtonId="Backspace"
-                                           Content="&#xE750;"
+                                           Content="&#xE94F;"
                                            TabIndex="8"/>
             </Grid>
 
@@ -745,7 +748,7 @@
                              Grid.ColumnSpan="3"
                              VerticalAlignment="Stretch"
                              AutomationProperties.HeadingLevel="Level1"
-                             ButtonStyle="{StaticResource NumericButtonStyle24}"
+                             ButtonStyle="{StaticResource NumericButtonStyle18}"
                              TabIndex="10"
                              TabNavigation="Local"/>
             <controls:CalculatorButton x:Name="ConverterNegateButton"

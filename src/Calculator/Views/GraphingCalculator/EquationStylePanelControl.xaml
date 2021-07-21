@@ -75,7 +75,9 @@
                 </Style>
             </GridView.Resources>
             <GridView.Header>
-                <TextBlock x:Uid="LineColorText" Margin="8,0,8,8"/>
+                <TextBlock x:Uid="LineColorText"
+                           Margin="8,0,8,8"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
             </GridView.Header>
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="Brush">
@@ -106,7 +108,9 @@
                   Visibility="Visible"
                   IsEnabled="{x:Bind EnableLineStylePicker, Mode=OneWay}">
             <ComboBox.Header>
-                <TextBlock x:Uid="StyleChooserBoxHeading" Margin="0,0,8,8"/>
+                <TextBlock x:Uid="StyleChooserBoxHeading"
+                           Margin="0,0,8,8"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
             </ComboBox.Header>
             <ComboBox.ItemTemplate>
                 <!-- Set x:DataType to be Platform::Object so that we can pass it to the x:Bind function directly since we cannot pass an enum in c++/cx -->

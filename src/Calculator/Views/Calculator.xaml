@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
              xmlns:common="using:CalculatorApp.ViewModel.Common"
+             xmlns:contract8NotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,8)"
+             xmlns:contract8Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,8)"
              xmlns:controls="using:CalculatorApp.Controls"
              xmlns:converters="using:CalculatorApp.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -74,18 +76,18 @@
                                     Grid.Column="0"
                                     Margin="-4,3,-4,0"
                                     Style="{StaticResource ScrollButtonStyle}">
-                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                <FontIcon FontFamily="{ThemeResource CalculatorFontFamily}"
                                           FontSize="12"
-                                          Glyph="&#xE26C;"/>
+                                          Glyph="&#xE96F;"/>
                             </Button>
                             <Button x:Name="ScrollRight"
                                     x:Uid="scrollRight"
                                     Grid.Column="2"
-                                    Margin="0,3,-9,0"
+                                    Margin="-4,3,-4,0"
                                     Style="{StaticResource ScrollButtonStyle}">
-                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                <FontIcon FontFamily="{ThemeResource CalculatorFontFamily}"
                                           FontSize="12"
-                                          Glyph="&#xE26B;"/>
+                                          Glyph="&#xE970;"/>
                             </Button>
                         </Grid>
                     </ControlTemplate>
@@ -183,9 +185,9 @@
                                     VerticalAlignment="Stretch"
                                     Style="{StaticResource AlwaysOnTopScrollButtonStyleS}"
                                     Background="Transparent">
-                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                <FontIcon FontFamily="{ThemeResource CalculatorFontFamily}"
                                           FontSize="{TemplateBinding ScrollButtonsFontSize}"
-                                          Glyph="&#xE26C;"/>
+                                          Glyph="&#xE96F;"/>
                             </Button>
                             <Button x:Name="ScrollRight"
                                     x:Uid="scrollRight"
@@ -195,9 +197,9 @@
                                     VerticalAlignment="Stretch"
                                     Style="{StaticResource AlwaysOnTopScrollButtonStyleS}"
                                     Background="Transparent">
-                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                <FontIcon FontFamily="{ThemeResource CalculatorFontFamily}"
                                           FontSize="{TemplateBinding ScrollButtonsFontSize}"
-                                          Glyph="&#xE26B;"/>
+                                          Glyph="&#xE970;"/>
                             </Button>
                         </Grid>
                     </ControlTemplate>
@@ -217,18 +219,22 @@
         </Style>
 
         <!-- Button Styles -->
-        <Style x:Key="ScrollButtonStyle" TargetType="Button">
+        <Style x:Key="ScrollButtonStyle"
+               BasedOn="{StaticResource SubtleButtonStyle}"
+               TargetType="Button">
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
             <Setter Property="Padding" Value="0,0,0,0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
             <Setter Property="MinWidth" Value="20"/>
-            <Setter Property="MinHeight" Value="24"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundAccentBrush}"/>
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="Background" Value="{ThemeResource ControlFillColorDefault}"/>
             <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="FontSize" Value="12"/>
         </Style>
 
         <Style x:Key="AlwaysOnTopScrollButtonStyleS" TargetType="Button">
@@ -240,7 +246,7 @@
 
         <!-- Flyout Styles -->
 
-        <Style x:Key="MemoryFlyoutStyle" TargetType="FlyoutPresenter">
+        <Style x:Key="MemoryFlyoutBaseStyle" TargetType="FlyoutPresenter">
             <Setter Property="MinWidth" Value="200"/>
             <Setter Property="MaxHeight" Value="2400"/>
             <Setter Property="MaxWidth" Value="2400"/>
@@ -255,7 +261,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="FlyoutPresenter">
                         <Grid Margin="0"
-                              Background="Transparent"
+                              Background="{ThemeResource BackgroundSmokeFillColorBrush}"
                               Tapped="OnMemoryFlyOutTapped">
                             <ContentPresenter HorizontalAlignment="Stretch"
                                               VerticalAlignment="Stretch"
@@ -268,7 +274,16 @@
             </Setter>
         </Style>
 
-        <Style x:Key="HistoryFlyoutStyle" TargetType="FlyoutPresenter">
+        <contract8Present:Style x:Key="MemoryFlyoutStyle"
+                                BasedOn="{StaticResource MemoryFlyoutBaseStyle}"
+                                TargetType="FlyoutPresenter">
+            <Setter Property="IsDefaultShadowEnabled" Value="False"/>
+        </contract8Present:Style>
+        <contract8NotPresent:Style x:Key="MemoryFlyoutStyle"
+                                   BasedOn="{StaticResource MemoryFlyoutBaseStyle}"
+                                   TargetType="FlyoutPresenter"/>
+
+        <Style x:Key="HistoryFlyoutBaseStyle" TargetType="FlyoutPresenter">
             <Setter Property="MinWidth" Value="200"/>
             <Setter Property="MaxHeight" Value="2400"/>
             <Setter Property="MaxWidth" Value="2400"/>
@@ -283,7 +298,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="FlyoutPresenter">
                         <Grid Margin="0"
-                              Background="Transparent"
+                              Background="{ThemeResource BackgroundSmokeFillColorBrush}"
                               Tapped="OnHistoryFlyOutTapped">
                             <ContentPresenter HorizontalAlignment="Stretch"
                                               VerticalAlignment="Stretch"
@@ -295,6 +310,15 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <contract8Present:Style x:Key="HistoryFlyoutStyle"
+                                BasedOn="{StaticResource HistoryFlyoutBaseStyle}"
+                                TargetType="FlyoutPresenter">
+            <Setter Property="IsDefaultShadowEnabled" Value="False"/>
+        </contract8Present:Style>
+        <contract8NotPresent:Style x:Key="HistoryFlyoutStyle"
+                                   BasedOn="{StaticResource HistoryFlyoutBaseStyle}"
+                                   TargetType="FlyoutPresenter"/>
 
         <!-- Storyboards -->
 
@@ -578,7 +602,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="RowHamburger" Height="{StaticResource HamburgerHeightGridLength}"/>
                 <RowDefinition x:Name="RowExpression"
-                               Height="20*"
+                               Height="22*"
                                MinHeight="0"/>
                 <RowDefinition x:Name="RowResult"
                                Height="72*"
@@ -705,7 +729,7 @@
                                            Style="{StaticResource CaptionButtonStyle}"
                                            AutomationProperties.AutomationId="ClearMemoryButton"
                                            Command="{x:Bind Model.ClearMemoryCommand}"
-                                           Content="MC"
+                                           Content="&#xF754;"
                                            TabIndex="10"
                                            Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
                 <controls:CalculatorButton x:Name="MemRecall"
@@ -715,7 +739,7 @@
                                            AutomationProperties.AutomationId="MemRecall"
                                            Command="{x:Bind Model.MemoryItemPressed}"
                                            CommandParameter="{StaticResource Zero}"
-                                           Content="MR"
+                                           Content="&#xF755;"
                                            TabIndex="11"
                                            Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
                 <controls:CalculatorButton x:Name="MemPlus"
@@ -725,7 +749,7 @@
                                            AutomationProperties.AutomationId="MemPlus"
                                            Command="{x:Bind Model.MemoryAdd}"
                                            CommandParameter="{StaticResource Zero}"
-                                           Content="M+"
+                                           Content="&#xF757;"
                                            TabIndex="12"
                                            Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
                 <controls:CalculatorButton x:Name="MemMinus"
@@ -735,7 +759,7 @@
                                            AutomationProperties.AutomationId="MemMinus"
                                            Command="{x:Bind Model.MemorySubtract}"
                                            CommandParameter="{StaticResource Zero}"
-                                           Content="M-"
+                                           Content="&#xF758;"
                                            TabIndex="13"
                                            Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
                 <controls:CalculatorButton x:Name="MemButton"
@@ -744,17 +768,17 @@
                                            Style="{StaticResource CaptionButtonStyle}"
                                            AutomationProperties.AutomationId="memButton"
                                            ButtonId="Memory"
-                                           Content="MS"
+                                           Content="&#xF756;"
                                            TabIndex="14"/>
                 <Button x:Name="MemoryButton"
                         x:Uid="MemoryButton"
                         Grid.Column="6"
                         MinWidth="15.5"
                         MinHeight="8.402"
-                        Style="{StaticResource PathFakeButtonStyle}"
+                        Style="{StaticResource CaptionButtonStyle}"
                         AutomationProperties.AutomationId="MemoryButton"
                         Click="ToggleMemoryFlyout"
-                        Content="M0,9.46968e-006L1.96199,9.46968e-006L4.17099,5.59502C4.33899,6.02501 4.44899,6.34502 4.5,6.55602L4.52899,6.55602C4.67299,6.11501 4.791,5.78701 4.87999,5.57201L7.12999,9.46968e-006L9.023,9.46968e-006L9.023,8.402L7.64,8.402L7.64,2.96501C7.64,2.519 7.668,1.97401 7.722,1.33L7.69899,1.33C7.613,1.697 7.53699,1.96101 7.46999,2.12102L4.96199,8.402L4.002,8.402L1.48799,2.16801C1.418,1.98399 1.34299,1.705 1.265,1.33L1.24199,1.33C1.273,1.666 1.28899,2.21501 1.28899,2.976L1.28899,8.402L0,8.402zM10.5,0L15.5,0L12.99,2.5z"
+                        Content="&#xE61D;"
                         ExitDisplayModeOnAccessKeyInvoked="False"
                         TabIndex="15"
                         IsEnabled="{x:Bind Model.IsMemoryEmpty, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
@@ -954,9 +978,9 @@
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   Foreground="{ThemeResource PivotNextButtonForeground}"
-                                                  FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                  FontFamily="{ThemeResource CalculatorFontFamily}"
                                                   FontSize="12"
-                                                  Glyph="&#xE0E3;"
+                                                  Glyph="&#xE970;"
                                                   MirroredWhenRightToLeft="True"
                                                   UseLayoutRounding="False"/>
                                     </Border>
@@ -1002,9 +1026,9 @@
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   Foreground="{ThemeResource PivotPreviousButtonForeground}"
-                                                  FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                  FontFamily="{ThemeResource CalculatorFontFamily}"
                                                   FontSize="12"
-                                                  Glyph="&#xE0E2;"
+                                                  Glyph="&#xE96F;"
                                                   MirroredWhenRightToLeft="True"
                                                   UseLayoutRounding="False"/>
                                     </Border>
@@ -1129,20 +1153,38 @@
                    Tapped="DockPanelTapped"
                    Template="{StaticResource DockPanelTemplate}">
                 <Pivot.Resources>
+                    <!--
+                        This is a copy/paste of DefaultPivotHeaderItemStyle, but
+                        1. Updated the Foreground in ViewStates.
+                        2. Updated the SelectedPipe
+                    -->
                     <Style TargetType="PivotHeaderItem">
-                        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
-                        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
+                        <Setter Property="FontSize" Value="{ThemeResource PivotHeaderItemFontSize}"/>
+                        <Setter Property="FontFamily" Value="{ThemeResource PivotHeaderItemFontFamily}"/>
+                        <Setter Property="FontWeight" Value="{ThemeResource PivotHeaderItemThemeFontWeight}"/>
+                        <Setter Property="CharacterSpacing" Value="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+                        <Setter Property="Background" Value="{ThemeResource PivotHeaderItemBackgroundUnselected}"/>
+                        <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}"/>
+                        <Setter Property="Padding" Value="{ThemeResource PivotHeaderItemMargin}"/>
+                        <Setter Property="Height" Value="48"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="IsTabStop" Value="False"/>
+                        <Setter Property="UseSystemFocusVisuals" Value="False"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="PivotHeaderItem">
                                     <Grid x:Name="Grid"
                                           Padding="{TemplateBinding Padding}"
-                                          Background="{TemplateBinding Background}">
+                                          Background="{TemplateBinding Background}"
+                                          CornerRadius="{ThemeResource ControlCornerRadius}">
+
                                         <Grid.RenderTransform>
                                             <TranslateTransform x:Name="ContentPresenterTranslateTransform"/>
                                         </Grid.RenderTransform>
+
                                         <VisualStateManager.VisualStateGroups>
                                             <VisualStateGroup x:Name="SelectionStates">
+
                                                 <VisualStateGroup.Transitions>
                                                     <VisualTransition From="Unselected"
                                                                       GeneratedDuration="0:0:0.33"
@@ -1151,37 +1193,48 @@
                                                                       GeneratedDuration="0:0:0.33"
                                                                       To="Unselected"/>
                                                 </VisualStateGroup.Transitions>
+
                                                 <VisualState x:Name="Disabled">
                                                     <VisualState.Setters>
                                                         <Setter Target="SelectedPipe.Visibility" Value="Collapsed"/>
-                                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource PivotHeaderItemForegroundDisabled}"/>
-                                                        <Setter Target="Grid.Background" Value="{ThemeResource PivotHeaderItemBackgroundDisabled}"/>
+                                                    </VisualState.Setters>
+
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextFillColorDisabledBrush}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotHeaderItemBackgroundDisabled}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Unselected">
+                                                    <VisualState.Setters>
+                                                        <Setter Target="SelectedPipe.Visibility" Value="Collapsed"/>
                                                     </VisualState.Setters>
                                                 </VisualState>
-                                                <VisualState x:Name="Unselected"/>
                                                 <VisualState x:Name="UnselectedLocked">
                                                     <VisualState.Setters>
                                                         <Setter Target="SelectedPipe.Visibility" Value="Collapsed"/>
-                                                        <Setter Target="ContentPresenter.(UIElement.Opacity)" Value="0"/>
                                                     </VisualState.Setters>
+
                                                     <Storyboard>
                                                         <DoubleAnimation Duration="0"
                                                                          Storyboard.TargetName="ContentPresenterTranslateTransform"
                                                                          Storyboard.TargetProperty="X"
                                                                          To="{ThemeResource PivotHeaderItemLockedTranslation}"/>
+                                                        <DoubleAnimation Duration="0"
+                                                                         Storyboard.TargetName="ContentPresenter"
+                                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                                         To="0"/>
                                                     </Storyboard>
                                                 </VisualState>
+
                                                 <VisualState x:Name="Selected">
-                                                    <!--
-                                                        TODO: MSFT 13767760: Need to use storyboards here because
-                                                        visualstate setters are bugged
-                                                    -->
+
                                                     <Storyboard>
-                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectedPipe" Storyboard.TargetProperty="Visibility">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                                                        </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotHeaderItemForegroundSelected}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextFillColorPrimaryBrush}"/>
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid" Storyboard.TargetProperty="Background">
                                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotHeaderItemBackgroundSelected}"/>
@@ -1191,63 +1244,82 @@
                                                 <VisualState x:Name="UnselectedPointerOver">
                                                     <VisualState.Setters>
                                                         <Setter Target="SelectedPipe.Visibility" Value="Collapsed"/>
-                                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource PivotHeaderItemForegroundUnselectedPointerOver}"/>
-                                                        <Setter Target="Grid.Background" Value="{ThemeResource PivotHeaderItemBackgroundUnselectedPointerOver}"/>
                                                     </VisualState.Setters>
+
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotHeaderItemBackgroundUnselectedPointerOver}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
                                                 </VisualState>
                                                 <VisualState x:Name="SelectedPointerOver">
-                                                    <VisualState.Setters>
-                                                        <Setter Target="SelectedPipe.Visibility" Value="Visible"/>
-                                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource PivotHeaderItemForegroundSelectedPointerOver}"/>
-                                                        <Setter Target="Grid.Background" Value="{ThemeResource PivotHeaderItemBackgroundSelectedPointerOver}"/>
-                                                    </VisualState.Setters>
+
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotHeaderItemBackgroundSelectedPointerOver}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectedPipe" Storyboard.TargetProperty="Fill">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentFillColorSecondaryBrush}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
                                                 </VisualState>
                                                 <VisualState x:Name="UnselectedPressed">
                                                     <VisualState.Setters>
                                                         <Setter Target="SelectedPipe.Visibility" Value="Collapsed"/>
-                                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource PivotHeaderItemForegroundUnselectedPressed}"/>
-                                                        <Setter Target="Grid.Background" Value="{ThemeResource PivotHeaderItemBackgroundUnselectedPressed}"/>
                                                     </VisualState.Setters>
+
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextFillColorTertiaryBrush}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotHeaderItemBackgroundUnselectedPressed}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
                                                 </VisualState>
                                                 <VisualState x:Name="SelectedPressed">
-                                                    <VisualState.Setters>
-                                                        <Setter Target="SelectedPipe.Visibility" Value="Visible"/>
-                                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource PivotHeaderItemForegroundSelectedPressed}"/>
-                                                        <Setter Target="Grid.Background" Value="{ThemeResource PivotHeaderItemBackgroundSelectedPressed}"/>
-                                                    </VisualState.Setters>
+
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextFillColorTertiaryBrush}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotHeaderItemBackgroundSelectedPressed}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectedPipe" Storyboard.TargetProperty="Fill">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentFillColorTertiaryBrush}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
                                                 </VisualState>
                                             </VisualStateGroup>
-                                            <VisualStateGroup x:Name="FocusStates">
-                                                <VisualState x:Name="Focused">
-                                                    <VisualState.Setters>
-                                                        <Setter Target="FocusPipe.Visibility" Value="Visible"/>
-                                                    </VisualState.Setters>
-                                                </VisualState>
-                                                <VisualState x:Name="Unfocused"/>
-                                            </VisualStateGroup>
+
                                         </VisualStateManager.VisualStateGroups>
-                                        <Rectangle x:Name="FocusPipe"
-                                                   Stroke="{ThemeResource SystemControlFocusVisualPrimaryBrush}"
-                                                   StrokeThickness="2"
-                                                   Visibility="Collapsed"/>
-                                        <Grid Margin="4,0,4,0">
-                                            <ContentPresenter x:Name="ContentPresenter"
-                                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                              FontFamily="{TemplateBinding FontFamily}"
-                                                              FontSize="{TemplateBinding FontSize}"
-                                                              FontWeight="{TemplateBinding FontWeight}"
-                                                              Content="{TemplateBinding Content}"
-                                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                              OpticalMarginAlignment="TrimSideBearings"/>
-                                            <Rectangle x:Name="SelectedPipe"
-                                                       Height="3"
-                                                       Margin="0,0,0,6"
-                                                       HorizontalAlignment="Stretch"
-                                                       VerticalAlignment="Bottom"
-                                                       Fill="{ThemeResource AppControlTransparentAccentColorBrush}"
-                                                       Visibility="Collapsed"/>
-                                        </Grid>
+
+                                        <ContentPresenter x:Name="ContentPresenter"
+                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                          FontFamily="{TemplateBinding FontFamily}"
+                                                          FontSize="{TemplateBinding FontSize}"
+                                                          FontWeight="{TemplateBinding FontWeight}"
+                                                          Content="{TemplateBinding Content}"
+                                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                          OpticalMarginAlignment="TrimSideBearings"/>
+                                        <Rectangle x:Name="SelectedPipe"
+                                                   Width="16"
+                                                   Height="3"
+                                                   Margin="0,0,0,2"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Bottom"
+                                                   Fill="{ThemeResource AccentFillColorDefaultBrush}"
+                                                   RadiusX="1.5"
+                                                   RadiusY="1.5"/>
+
                                     </Grid>
                                 </ControlTemplate>
                             </Setter.Value>

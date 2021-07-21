@@ -98,6 +98,26 @@ namespace CalculatorApp
             public static readonly DependencyProperty PressForegroundProperty =
                 DependencyProperty.Register(nameof(PressForeground), typeof(Windows.UI.Xaml.Media.Brush), typeof(CalculatorButton), new PropertyMetadata(default(Windows.UI.Xaml.Media.Brush)));
 
+            public Windows.UI.Xaml.Media.Brush DisabledBackground
+            {
+                get { return (Windows.UI.Xaml.Media.Brush)GetValue(DisabledBackgroundProperty); }
+                set { SetValue(DisabledBackgroundProperty, value); }
+            }
+
+            // Using a DependencyProperty as the backing store for DisabledBackground.  This enables animation, styling, binding, etc...
+            public static readonly DependencyProperty DisabledBackgroundProperty =
+                DependencyProperty.Register(nameof(DisabledBackground), typeof(Windows.UI.Xaml.Media.Brush), typeof(CalculatorButton), new PropertyMetadata(default(Windows.UI.Xaml.Media.Brush)));
+
+            public Windows.UI.Xaml.Media.Brush DisabledForeground
+            {
+                get { return (Windows.UI.Xaml.Media.Brush)GetValue(DisabledForegroundProperty); }
+                set { SetValue(DisabledForegroundProperty, value); }
+            }
+
+            // Using a DependencyProperty as the backing store for DisabledForeground.  This enables animation, styling, binding, etc...
+            public static readonly DependencyProperty DisabledForegroundProperty =
+                DependencyProperty.Register(nameof(DisabledForeground), typeof(Windows.UI.Xaml.Media.Brush), typeof(CalculatorButton), new PropertyMetadata(default(Windows.UI.Xaml.Media.Brush)));
+
             protected override void OnKeyDown(KeyRoutedEventArgs e)
             {
                 // Ignore the Enter key

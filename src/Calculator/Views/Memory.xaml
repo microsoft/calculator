@@ -86,9 +86,10 @@
                 Padding="0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Background="{ThemeResource SystemControlChromeMediumLowAcrylicElementMediumBrush}"
+                Background="{ThemeResource SolidBackgroundFillColorBase}"
                 BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
-                BorderThickness="{ThemeResource HighContrastThicknessTop}"/>
+                BorderThickness="{ThemeResource HighContrastThicknessTop}"
+                CornerRadius="{ThemeResource OverlayCornerRadius}"/>
         <Grid x:Name="MemoryPanel" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -96,14 +97,14 @@
             </Grid.RowDefinitions>
             <TextBlock x:Name="MemoryPaneEmpty"
                        x:Uid="MemoryPaneEmpty"
-                       Margin="16,14,24,0"
-                       Style="{ThemeResource BaseTextBlockStyle}"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       FontWeight="SemiLight"
+                       Margin="12,8,24,0"
+                       Style="{ThemeResource BodyTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                        TextWrapping="Wrap"
                        Visibility="{Binding IsMemoryEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <ListView x:Name="MemoryListView"
-                      Padding="0,12,0,0"
+                      Margin="4,0"
+                      Padding="0,24,0,0"
                       HorizontalAlignment="Stretch"
                       IsItemClickEnabled="true"
                       ItemClick="MemoryListItemClick"

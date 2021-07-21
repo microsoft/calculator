@@ -288,18 +288,18 @@
                         <Setter Target="OpenParenthesisButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
                         <Setter Target="CloseParenthesisButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
 
-                        <Setter Target="SinButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="CosButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="TanButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="SinhButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="CoshButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="TanhButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="InvsinButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="InvcosButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="InvtanButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="InvsinhButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="InvcoshButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="InvtanhButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
+                        <Setter Target="SinButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="CosButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="TanButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="SinhButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="CoshButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="TanhButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvsinButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvcosButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvtanButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvsinhButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvcoshButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvtanhButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
 
                         <Setter Target="PowerButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
                         <Setter Target="PowerOf10Button.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
@@ -332,24 +332,24 @@
 
                         <Setter Target="ShiftButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
                         <Setter Target="TrigShiftButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="HypButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="SecButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="CscButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="CotButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="InvsecButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="InvcscButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="InvcotButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="SechButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="CschButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="CothButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="InvsechButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="InvcschButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
-                        <Setter Target="InvcothButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
+                        <Setter Target="HypButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="SecButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="CscButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="CotButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvsecButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvcscButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvcotButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="SechButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="CschButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="CothButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvsechButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvcschButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
+                        <Setter Target="InvcothButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
 
                         <Setter Target="AbsFlyoutButton.FontSize" Value="{ThemeResource CalcOperatorTextIconCaptionSize}"/>
                         <Setter Target="FloorButton.FontSize" Value="{ThemeResource CalcOperatorTextIconCaptionSize}"/>
                         <Setter Target="CeilButton.FontSize" Value="{ThemeResource CalcOperatorTextIconCaptionSize}"/>
-                        <Setter Target="RandButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSize}"/>
+                        <Setter Target="RandButton.FontSize" Value="{ThemeResource CalcOperatorCaptionSizeSmall}"/>
                         <Setter Target="DmsButton.FontSize" Value="{ThemeResource CalcOperatorTextIconCaptionSize}"/>
                         <Setter Target="DegreesButton.FontSize" Value="{ThemeResource CalcOperatorTextIconCaptionSize}"/>
 
@@ -405,8 +405,9 @@
                             -->
                             <ToggleButton x:Name="TrigShiftButton"
                                           x:Uid="trigShiftButton"
-                                          Style="{StaticResource CaptionToggleEmphasizedButtonStyle}"
+                                          Style="{StaticResource CaptionToggleButtonStyle}"
                                           FontFamily="{StaticResource CalculatorFontFamily}"
+                                          FontSize="{StaticResource CalcOperatorCaptionSize}"
                                           AutomationProperties.AutomationId="trigShiftButton"
                                           Checked="TrigFlyoutShift_Toggle"
                                           Content="&#xF897;"
@@ -416,7 +417,7 @@
                             <ToggleButton x:Name="HypButton"
                                           x:Uid="hypButton"
                                           Grid.Row="1"
-                                          Style="{StaticResource CaptionToggleEmphasizedButtonStyle}"
+                                          Style="{StaticResource CaptionToggleButtonStyle}"
                                           AutomationProperties.AutomationId="hypShiftButton"
                                           Checked="TrigFlyoutHyp_Toggle"
                                           Content="hyp"
@@ -442,6 +443,7 @@
                                 <controls:CalculatorButton x:Name="SinButton"
                                                            x:Uid="sinButton"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="sinButton"
                                                            ButtonId="Sin"
                                                            Click="FlyoutButton_Clicked"
@@ -453,6 +455,7 @@
                                                            x:Uid="cosButton"
                                                            Grid.Column="1"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="cosButton"
                                                            ButtonId="Cos"
                                                            Click="FlyoutButton_Clicked"
@@ -464,6 +467,7 @@
                                                            x:Uid="tanButton"
                                                            Grid.Column="2"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="tanButton"
                                                            ButtonId="Tan"
                                                            Click="FlyoutButton_Clicked"
@@ -475,6 +479,7 @@
                                                            x:Uid="secButton"
                                                            Grid.Row="1"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="secButton"
                                                            ButtonId="Sec"
                                                            Click="FlyoutButton_Clicked"
@@ -487,6 +492,7 @@
                                                            Grid.Row="1"
                                                            Grid.Column="1"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="cscButton"
                                                            ButtonId="Csc"
                                                            Click="FlyoutButton_Clicked"
@@ -499,6 +505,7 @@
                                                            Grid.Row="1"
                                                            Grid.Column="2"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="cotButton"
                                                            ButtonId="Cot"
                                                            Click="FlyoutButton_Clicked"
@@ -525,6 +532,7 @@
                                 <controls:CalculatorButton x:Name="InvsinButton"
                                                            x:Uid="invsinButton"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="invsinButton"
                                                            ButtonId="InvSin"
                                                            Click="FlyoutButton_Clicked"
@@ -536,6 +544,7 @@
                                                            x:Uid="invcosButton"
                                                            Grid.Column="1"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="invcosButton"
                                                            ButtonId="InvCos"
                                                            Click="FlyoutButton_Clicked"
@@ -547,6 +556,7 @@
                                                            x:Uid="invtanButton"
                                                            Grid.Column="2"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="invtanButton"
                                                            ButtonId="InvTan"
                                                            Click="FlyoutButton_Clicked"
@@ -558,6 +568,7 @@
                                                            x:Uid="invsecButton"
                                                            Grid.Row="1"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="invsecButton"
                                                            ButtonId="InvSec"
                                                            Click="FlyoutButton_Clicked"
@@ -570,6 +581,7 @@
                                                            Grid.Row="1"
                                                            Grid.Column="1"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="invcscButton"
                                                            ButtonId="InvCsc"
                                                            Click="FlyoutButton_Clicked"
@@ -582,6 +594,7 @@
                                                            Grid.Row="1"
                                                            Grid.Column="2"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="invcotButton"
                                                            ButtonId="InvCot"
                                                            Click="FlyoutButton_Clicked"
@@ -608,6 +621,7 @@
                                 <controls:CalculatorButton x:Name="SinhButton"
                                                            x:Uid="sinhButton"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="sinhButton"
                                                            ButtonId="Sinh"
                                                            Click="FlyoutButton_Clicked"
@@ -619,6 +633,7 @@
                                                            x:Uid="coshButton"
                                                            Grid.Column="1"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="coshButton"
                                                            ButtonId="Cosh"
                                                            Click="FlyoutButton_Clicked"
@@ -630,6 +645,7 @@
                                                            x:Uid="tanhButton"
                                                            Grid.Column="2"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="tanhButton"
                                                            ButtonId="Tanh"
                                                            Click="FlyoutButton_Clicked"
@@ -641,6 +657,7 @@
                                                            x:Uid="sechButton"
                                                            Grid.Row="1"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="sechButton"
                                                            ButtonId="Sech"
                                                            Click="FlyoutButton_Clicked"
@@ -653,6 +670,7 @@
                                                            Grid.Row="1"
                                                            Grid.Column="1"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="cschButton"
                                                            ButtonId="Csch"
                                                            Click="FlyoutButton_Clicked"
@@ -665,6 +683,7 @@
                                                            Grid.Row="1"
                                                            Grid.Column="2"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="cothButton"
                                                            ButtonId="Coth"
                                                            Click="FlyoutButton_Clicked"
@@ -690,6 +709,7 @@
                                 <controls:CalculatorButton x:Name="InvsinhButton"
                                                            x:Uid="invsinhButton"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="invsinhButton"
                                                            ButtonId="InvSinh"
                                                            Click="FlyoutButton_Clicked"
@@ -701,6 +721,7 @@
                                                            x:Uid="invcoshButton"
                                                            Grid.Column="1"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="invcoshButton"
                                                            ButtonId="InvCosh"
                                                            Click="FlyoutButton_Clicked"
@@ -712,6 +733,7 @@
                                                            x:Uid="invtanhButton"
                                                            Grid.Column="2"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="invtanhButton"
                                                            ButtonId="InvTanh"
                                                            Click="FlyoutButton_Clicked"
@@ -723,6 +745,7 @@
                                                            x:Uid="invsechButton"
                                                            Grid.Row="1"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="invsechButton"
                                                            ButtonId="InvSech"
                                                            Click="FlyoutButton_Clicked"
@@ -735,6 +758,7 @@
                                                            Grid.Row="1"
                                                            Grid.Column="1"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="invcschButton"
                                                            ButtonId="InvCsch"
                                                            Click="FlyoutButton_Clicked"
@@ -747,6 +771,7 @@
                                                            Grid.Row="1"
                                                            Grid.Column="2"
                                                            Style="{StaticResource OperatorButtonStyle}"
+                                                           FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                            AutomationProperties.AutomationId="invcothButton"
                                                            ButtonId="InvCoth"
                                                            Click="FlyoutButton_Clicked"
@@ -820,6 +845,7 @@
                                                        x:Uid="randButton"
                                                        Grid.Row="1"
                                                        Style="{StaticResource OperatorButtonStyle}"
+                                                       FontSize="{StaticResource CalcOperatorCaptionSizeSmall}"
                                                        AutomationProperties.AutomationId="randButton"
                                                        ButtonId="Rand"
                                                        Click="FlyoutButton_Clicked"
@@ -861,7 +887,7 @@
                       Grid.Row="1"
                       Style="{StaticResource CaptionToggleEmphasizedButtonStyle}"
                       FontFamily="{StaticResource CalculatorFontFamily}"
-                      FontSize="20"
+                      FontSize="{StaticResource CalcOperatorCaptionSize}"
                       AutomationProperties.AutomationId="shiftButton"
                       Checked="ShiftButton_Check"
                       Content="&#xF897;"
@@ -875,7 +901,7 @@
                                    Grid.Row="1"
                                    Grid.Column="1"
                                    Style="{StaticResource SymbolOperatorButtonStyle}"
-                                   FontSize="14"
+                                   FontSize="{StaticResource CalcOperatorCaptionSize}"
                                    AutomationProperties.AutomationId="piButton"
                                    ButtonId="Pi"
                                    Content="&#xf7cf;"/>
@@ -885,7 +911,7 @@
                                    Grid.Row="1"
                                    Grid.Column="2"
                                    Style="{StaticResource OperatorButtonStyle}"
-                                   FontSize="14"
+                                   FontSize="{StaticResource CalcOperatorCaptionSize}"
                                    AutomationProperties.AutomationId="eulerButton"
                                    ButtonId="Euler"
                                    Content="e"/>
