@@ -101,7 +101,7 @@
                              ItemInvoked="OnNavItemInvoked"
                              Loaded="OnNavLoaded"
                              MenuItemsSource="{x:Bind CreateUIElementsForCategories(Model.Categories), Mode=OneWay}"
-                             OpenPaneLength="{StaticResource SplitViewOpenPaneLength}"
+                             OpenPaneLength="{x:Bind NavigationViewOpenPaneLength(Model.IsAlwaysOnTop), Mode=OneWay}"
                              PaneClosed="OnNavPaneClosed"
                              PaneOpened="OnNavPaneOpened"
                              SelectionChanged="OnNavSelectionChanged"
