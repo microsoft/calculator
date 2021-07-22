@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.UI.Core;
@@ -19,8 +18,6 @@ using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using MUXC = Microsoft.UI.Xaml.Controls;
 
@@ -272,9 +269,6 @@ namespace CalculatorApp
             }
             // Special case logic for Ctrl+E accelerator for Date Calculation Mode
             NavView.SetValue(KeyboardShortcutManager.VirtualKeyControlChordProperty, MyVirtualKey.E);
-
-            // Special case logic for Settings button access key.
-            SetSettingsButtonAccessKey(NavView);
         }
 
         private void OnNavPaneOpened(MUXC.NavigationView sender, object args)
@@ -592,16 +586,6 @@ namespace CalculatorApp
         private Visibility ShouldShowBackButton(bool isAlwaysOnTop, bool isPopupOpen)
         {
             return !isAlwaysOnTop && isPopupOpen ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private static void SetSettingsButtonAccessKey(MUXC.NavigationView navView)
-        {
-            var settingsItem = navView.SettingsItem as MUXC.NavigationViewItem;
-            if (settingsItem != null)
-            {
-                settingsItem.AccessKey = ",";
-                settingsItem.KeyTipPlacementMode = Windows.UI.Xaml.Input.KeyTipPlacementMode.Right;
-            }
         }
 
         private double NavigationViewOpenPaneLength(bool isAlwaysOnTop)
