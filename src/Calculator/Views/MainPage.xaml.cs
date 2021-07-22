@@ -606,7 +606,7 @@ namespace CalculatorApp
 
         private double NavigationViewOpenPaneLength(bool isAlwaysOnTop)
         {
-            return isAlwaysOnTop ? 0 : 256;
+            return isAlwaysOnTop ? 0 : (double)Application.Current.Resources["SplitViewOpenPaneLength"];
         }
 
         private CalculatorApp.Calculator m_calculator;
