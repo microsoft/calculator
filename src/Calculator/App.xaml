@@ -333,7 +333,6 @@
 
             <FontFamily x:Key="CalculatorFontFamily">ms-appx:///Assets/CalculatorIcons.ttf#Calculator Fluent Icons</FontFamily>
 
-            <x:Double x:Key="SplitViewOpenPaneLength">256</x:Double>
             <Thickness x:Key="PivotPortraitThemePadding">0,1,0,0</Thickness>
             <x:Double x:Key="PivotHeaderItemFontSize">14</x:Double>
             <FontWeight x:Key="PivotHeaderItemThemeFontWeight">Normal</FontWeight>

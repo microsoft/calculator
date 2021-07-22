@@ -604,6 +604,11 @@ namespace CalculatorApp
             }
         }
 
+        private double NavigationViewOpenPaneLength(bool isAlwaysOnTop)
+        {
+            return isAlwaysOnTop ? 0 : 256;
+        }
+
         private CalculatorApp.Calculator m_calculator;
         private GraphingCalculator m_graphingCalculator;
         private CalculatorApp.UnitConverter m_converter;
