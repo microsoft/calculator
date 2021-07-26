@@ -11,6 +11,9 @@
 .PARAMETER Version
     The version number to write into the file.
 
+.PARAMETER MinVersion
+    The MinVersion to write to TargetDeviceFamily element in the file.
+
 .EXAMPLE
     Update-AppxManifestVersion -AppxManifest "C:\App\Package.appxmanifest" -Version "3.2.1.0"
 #>
@@ -24,8 +27,19 @@ param(
     [Parameter(Mandatory)]
     [string]
     $Version
+
+    [ValidateScript({[version]$_})]
+    [Parameter(Mandatory=$false)]
+    [string]
+    $MinVersion
 )
 
 $xmlDoc = [XML](Get-Content $AppxManifest)
 $xmlDoc.Package.Identity.setAttribute("Version", $Version);
+
+if($MinVersion)
+{
+    $xmlDoc.Package.Dependencies.TargetDeviceFamily.setAttribute("MinVersion", $MinVersion);
+}
+
 $xmlDoc.Save($AppxManifest)

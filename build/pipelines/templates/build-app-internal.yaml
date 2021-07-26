@@ -6,6 +6,7 @@
 parameters:
   platform: ''
   condition: ''
+  isPublicRelease: false
 
 jobs:
 - job: Build${{ parameters.platform }}
@@ -32,6 +33,7 @@ jobs:
   - template: ./build-single-architecture.yaml
     parameters:
       extraMsBuildArgs: '/p:IsStoreBuild=true'
+      isPublicRelease: ${{ parameters.isPublicRelease }}
 
   - task: PublishSymbols@2
     displayName: Publish symbols
