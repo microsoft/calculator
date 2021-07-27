@@ -51,7 +51,9 @@ namespace CalculatorApp
             }));
 
         public event Windows.UI.Xaml.RoutedEventHandler AlwaysOnTopClick;
-        public event Windows.UI.Xaml.RoutedEventHandler BackButtonClick;
+
+        public delegate void BackButtonClickEventHandler(object sender);
+        public event BackButtonClickEventHandler BackButtonClick;
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -62,6 +64,11 @@ namespace CalculatorApp
             m_uiSettings.ColorValuesChanged += ColorValuesChanged;
             m_accessibilitySettings.HighContrastChanged += OnHighContrastChanged;
             Window.Current.Activated += OnWindowActivated;
+
+            // Register the system back requested event
+            SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
+            // Register the mouse back button event
+            Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
 
             // Register RequestedTheme changed callback to update title bar system button colors.
             m_rootFrameRequestedThemeCallbackToken =
@@ -87,8 +94,32 @@ namespace CalculatorApp
             m_uiSettings.ColorValuesChanged -= ColorValuesChanged;
             m_accessibilitySettings.HighContrastChanged -= OnHighContrastChanged;
             Window.Current.Activated -= OnWindowActivated;
+
+            SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
+            Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
+
             Utils.ThemeHelper.
                 UnregisterAppThemeChangedCallback(m_rootFrameRequestedThemeCallbackToken);
+        }
+
+        private void CoreWindow_PointerPressed(CoreWindow sender, PointerEventArgs e)
+        {
+            if (e.CurrentPoint.Properties.IsXButton1Pressed && BackButton.IsEnabled)
+            {
+                InvokeBackButton(sender);
+
+                e.Handled = true;
+            }
+        }
+
+        private void System_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (!e.Handled && BackButton.IsEnabled)
+            {
+                InvokeBackButton(sender) ;
+
+                e.Handled = true;
+            }
         }
 
         private void RootFrame_RequestedThemeChanged(DependencyObject sender, DependencyProperty dp)
@@ -211,6 +242,17 @@ namespace CalculatorApp
             AlwaysOnTopClick?.Invoke(this, e);
         }
 
+        // Called when BackButton invoked, for example, by clicking, access key and etc.
+        private void InvokeBackButton(object sender)
+        {
+            BackButtonClick?.Invoke(this);
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            InvokeBackButton(sender);
+        }
+
         // Dependency properties for the color of the system title bar buttons
         public Windows.UI.Xaml.Media.SolidColorBrush ButtonBackground
         {
@@ -294,10 +336,5 @@ namespace CalculatorApp
         private Windows.UI.ViewManagement.UISettings m_uiSettings;
         private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
         private Utils.ThemeHelper.ThemeChangedCallbackToken m_rootFrameRequestedThemeCallbackToken;
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            BackButtonClick?.Invoke(this, e);
-        }
     }
 }

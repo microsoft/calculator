@@ -578,7 +578,7 @@ namespace CalculatorApp
             NarratorNotifier.Announce(announcement);
         }
 
-        private void TitleBarBackButtonClick(object sender, RoutedEventArgs e)
+        private void TitleBarBackButtonClick(object sender)
         {
             CloseSettingsPopup();
         }

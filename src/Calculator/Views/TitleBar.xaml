@@ -28,6 +28,7 @@
                 <VisualState x:Name="BackButtonVisible">
                     <VisualState.Setters>
                         <Setter Target="BackButton.Visibility" Value="Visible"/>
+                        <Setter Target="BackButton.IsEnabled" Value="True"/>
                         <Setter Target="AppIcon.Margin" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -55,7 +56,12 @@
                     FontSize="12"
                     Click="BackButton_Click"
                     Content="&#xE72B;"
-                    Visibility="Collapsed"/>
+                    Visibility="Collapsed"
+                    IsEnabled="False">
+                <Button.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="Left" Modifiers="Menu"/>
+                </Button.KeyboardAccelerators>
+            </Button>
 
             <Grid x:Name="BackgroundElement"
                   Grid.Column="1"
