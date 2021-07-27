@@ -1,5 +1,6 @@
 using CalculatorApp.ViewModel.Common;
 using System;
+using System.ComponentModel;
 using Windows.ApplicationModel.Core;
 using Windows.System.Profile;
 using Windows.UI;
@@ -50,6 +51,7 @@ namespace CalculatorApp
             }));
 
         public event Windows.UI.Xaml.RoutedEventHandler AlwaysOnTopClick;
+        public event Windows.UI.Xaml.RoutedEventHandler BackButtonClick;
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -60,6 +62,10 @@ namespace CalculatorApp
             m_uiSettings.ColorValuesChanged += ColorValuesChanged;
             m_accessibilitySettings.HighContrastChanged += OnHighContrastChanged;
             Window.Current.Activated += OnWindowActivated;
+
+            // Register RequestedTheme changed callback to update title bar system button colors.
+            m_rootFrameRequestedThemeCallbackToken =
+                Utils.ThemeHelper.RegisterAppThemeChangedCallback(RootFrame_RequestedThemeChanged);
 
             // Set properties
             SetTitleBarControlColors();
@@ -81,6 +87,16 @@ namespace CalculatorApp
             m_uiSettings.ColorValuesChanged -= ColorValuesChanged;
             m_accessibilitySettings.HighContrastChanged -= OnHighContrastChanged;
             Window.Current.Activated -= OnWindowActivated;
+            Utils.ThemeHelper.
+                UnregisterAppThemeChangedCallback(m_rootFrameRequestedThemeCallbackToken);
+        }
+
+        private void RootFrame_RequestedThemeChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            if(Frame.RequestedThemeProperty == dp)
+            {
+                _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => { SetTitleBarControlColors(); }));
+            }
         }
 
         private void CoreTitleBarIsVisibleChanged(CoreApplicationViewTitleBar cTitleBar, object args)
@@ -122,7 +138,7 @@ namespace CalculatorApp
             }
 
             LayoutRoot.Padding = new Thickness(leftAddition, 0, rightAddition, 0);
-            LayoutRoot.Height = m_coreTitleBar.Height;
+            this.Height = m_coreTitleBar.Height;
         }
 
         private void ColorValuesChanged(Windows.UI.ViewManagement.UISettings sender, object e)
@@ -158,22 +174,14 @@ namespace CalculatorApp
             }
             else
             {
-                Color bgColor = Colors.Transparent;
-                Color fgColor = ((SolidColorBrush)Application.Current.Resources["SystemControlPageTextBaseHighBrush"]).Color;
-                Color inactivefgColor =
-                    ((SolidColorBrush)Application.Current.Resources["SystemControlForegroundChromeDisabledLowBrush"]).Color;
-                Color hoverbgColor = ((SolidColorBrush)Application.Current.Resources["SystemControlBackgroundListLowBrush"]).Color;
-                Color hoverfgColor = ((SolidColorBrush)Application.Current.Resources["SystemControlForegroundBaseHighBrush"]).Color;
-                Color pressedbgColor = ((SolidColorBrush)Application.Current.Resources["SystemControlBackgroundListMediumBrush"]).Color;
-                Color pressedfgCoolor = ((SolidColorBrush)Application.Current.Resources["SystemControlForegroundBaseHighBrush"]).Color;
-                applicationTitleBar.ButtonBackgroundColor = bgColor;
-                applicationTitleBar.ButtonForegroundColor = fgColor;
-                applicationTitleBar.ButtonInactiveBackgroundColor = bgColor;
-                applicationTitleBar.ButtonInactiveForegroundColor = inactivefgColor;
-                applicationTitleBar.ButtonHoverBackgroundColor = hoverbgColor;
-                applicationTitleBar.ButtonHoverForegroundColor = hoverfgColor;
-                applicationTitleBar.ButtonPressedBackgroundColor = pressedbgColor;
-                applicationTitleBar.ButtonPressedForegroundColor = pressedfgCoolor;
+                applicationTitleBar.ButtonBackgroundColor = ButtonBackground?.Color;
+                applicationTitleBar.ButtonForegroundColor = ButtonForeground?.Color;
+                applicationTitleBar.ButtonInactiveBackgroundColor = ButtonInactiveBackground?.Color;
+                applicationTitleBar.ButtonInactiveForegroundColor = ButtonInactiveForeground?.Color;
+                applicationTitleBar.ButtonHoverBackgroundColor = ButtonHoverBackground?.Color;
+                applicationTitleBar.ButtonHoverForegroundColor = ButtonHoverForeground?.Color;
+                applicationTitleBar.ButtonPressedBackgroundColor = ButtonPressedBackground?.Color;
+                applicationTitleBar.ButtonPressedForegroundColor = ButtonPressedForeground?.Color;
             }
         }
 
@@ -203,8 +211,93 @@ namespace CalculatorApp
             AlwaysOnTopClick?.Invoke(this, e);
         }
 
+        // Dependency properties for the color of the system title bar buttons
+        public Windows.UI.Xaml.Media.SolidColorBrush ButtonBackground
+        {
+            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonBackgroundProperty); }
+            set { SetValue(ButtonBackgroundProperty, value); }
+        }
+        public static readonly DependencyProperty ButtonBackgroundProperty =
+            DependencyProperty.Register(nameof(ButtonBackground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
+
+        public Windows.UI.Xaml.Media.SolidColorBrush ButtonForeground
+        {
+            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonForegroundProperty); }
+            set { SetValue(ButtonForegroundProperty, value); }
+        }
+        public static readonly DependencyProperty ButtonForegroundProperty =
+            DependencyProperty.Register(nameof(ButtonForeground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
+
+        public Windows.UI.Xaml.Media.SolidColorBrush ButtonInactiveBackground
+        {
+            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonInactiveBackgroundProperty); }
+            set { SetValue(ButtonInactiveBackgroundProperty, value); }
+        }
+        public static readonly DependencyProperty ButtonInactiveBackgroundProperty =
+            DependencyProperty.Register(nameof(ButtonInactiveBackground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
+
+        public Windows.UI.Xaml.Media.SolidColorBrush ButtonInactiveForeground
+        {
+            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonInactiveForegroundProperty); }
+            set { SetValue(ButtonInactiveForegroundProperty, value); }
+        }
+        public static readonly DependencyProperty ButtonInactiveForegroundProperty =
+            DependencyProperty.Register(nameof(ButtonInactiveForeground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
+
+        public Windows.UI.Xaml.Media.SolidColorBrush ButtonHoverBackground
+        {
+            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonHoverBackgroundProperty); }
+            set { SetValue(ButtonHoverBackgroundProperty, value); }
+        }
+        public static readonly DependencyProperty ButtonHoverBackgroundProperty =
+            DependencyProperty.Register(nameof(ButtonHoverBackground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
+
+        public Windows.UI.Xaml.Media.SolidColorBrush ButtonHoverForeground
+        {
+            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonHoverForegroundProperty); }
+            set { SetValue(ButtonHoverForegroundProperty, value); }
+        }
+        public static readonly DependencyProperty ButtonHoverForegroundProperty =
+            DependencyProperty.Register(nameof(ButtonHoverForeground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
+
+        public Windows.UI.Xaml.Media.SolidColorBrush ButtonPressedBackground
+        {
+            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonPressedBackgroundProperty); }
+            set { SetValue(ButtonPressedBackgroundProperty, value); }
+        }
+        public static readonly DependencyProperty ButtonPressedBackgroundProperty =
+            DependencyProperty.Register(nameof(ButtonPressedBackground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
+
+        public Windows.UI.Xaml.Media.SolidColorBrush ButtonPressedForeground
+        {
+            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonPressedForegroundProperty); }
+            set { SetValue(ButtonPressedForegroundProperty, value); }
+        }
+        public static readonly DependencyProperty ButtonPressedForegroundProperty =
+            DependencyProperty.Register(nameof(ButtonPressedForeground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
+
+        public Visibility BackButtonVisibility
+        {
+            get { return (Visibility)GetValue(BackButtonVisibilityProperty); }
+            set { SetValue(BackButtonVisibilityProperty, value); }
+        }
+        public static readonly DependencyProperty BackButtonVisibilityProperty =
+            DependencyProperty.Register(
+                nameof(BackButtonVisibility), typeof(Visibility), typeof(TitleBar),
+                new PropertyMetadata(false, new PropertyChangedCallback((sender, args) => {
+                    var self = sender as TitleBar;
+                    VisualStateManager.GoToState(
+                        self, (Visibility)args.NewValue == Visibility.Visible ? self.BackButtonVisible.Name : self.BackButtonCollapsed.Name, true);
+                })));
+
         private Windows.ApplicationModel.Core.CoreApplicationViewTitleBar m_coreTitleBar;
         private Windows.UI.ViewManagement.UISettings m_uiSettings;
         private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
+        private Utils.ThemeHelper.ThemeChangedCallbackToken m_rootFrameRequestedThemeCallbackToken;
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            BackButtonClick?.Invoke(this, e);
+        }
     }
 }

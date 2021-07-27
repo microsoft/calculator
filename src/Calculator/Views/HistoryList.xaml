@@ -57,7 +57,7 @@
 
             <DataTemplate x:Key="HistoryItemTemplate" x:DataType="model:HistoryItemViewModel">
                 <muxc:SwipeControl RightItems="{StaticResource HistorySwipeItems}">
-                    <StackPanel Margin="0,6,4,6" Background="Transparent">
+                    <StackPanel Margin="0,6,16,6" Background="Transparent">
                         <TextBlock x:Name="ExprTextBlock"
                                    Margin="0,0,0,4"
                                    HorizontalAlignment="Right"
@@ -70,8 +70,7 @@
                                    TextWrapping="Wrap"/>
                         <TextBlock x:Name="ResultTextBlock"
                                    HorizontalAlignment="Right"
-                                   Style="{ThemeResource TitleTextBlockStyle}"
-                                   FontWeight="SemiBold"
+                                   Style="{ThemeResource SubtitleTextBlockStyle}"
                                    AutomationProperties.AutomationId="HistoryItemValue"
                                    AutomationProperties.Name="{x:Bind AccResult}"
                                    IsTextSelectionEnabled="True"
@@ -122,9 +121,10 @@
                 Padding="0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Background="{ThemeResource SystemControlChromeMediumLowAcrylicElementMediumBrush}"
+                Background="{ThemeResource SolidBackgroundFillColorBase}"
                 BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
-                BorderThickness="{ThemeResource HighContrastThicknessTop}"/>
+                BorderThickness="{ThemeResource HighContrastThicknessTop}"
+                CornerRadius="{ThemeResource OverlayCornerRadius}"/>
 
         <Grid x:Name="HistoryListRootGrid" Grid.Row="1">
             <Grid.RowDefinitions>
@@ -133,15 +133,15 @@
             </Grid.RowDefinitions>
             <TextBlock x:Name="HistoryEmpty"
                        x:Uid="HistoryEmpty"
-                       Margin="16,14,24,0"
-                       Style="{ThemeResource BaseTextBlockStyle}"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       FontWeight="SemiLight"
+                       Margin="12,8,24,0"
+                       Style="{ThemeResource BodyTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                        TextWrapping="Wrap"
                        Visibility="{x:Bind Model.ItemsCount, Converter={StaticResource ItemSizeToVisibilityConverter}, Mode=OneWay}"/>
             <ListView x:Name="HistoryListView"
                       MinHeight="60"
-                      Padding="0,12,0,0"
+                      Margin="4,0"
+                      Padding="0,24,0,0"
                       HorizontalAlignment="Stretch"
                       AutomationProperties.AutomationId="HistoryListView"
                       IsItemClickEnabled="True"

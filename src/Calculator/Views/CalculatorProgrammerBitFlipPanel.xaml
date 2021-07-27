@@ -104,7 +104,7 @@
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
                                            FontSize="{TemplateBinding FontSize}"
-                                           FontWeight="Bold"
+                                           FontWeight="SemiBold"
                                            AutomationProperties.AccessibilityView="Raw"
                                            IsTextScaleFactorEnabled="False"/>
                                 <TextBlock x:Name="BinaryOne"
@@ -112,9 +112,9 @@
                                            Margin="{TemplateBinding Padding}"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                           Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
+                                           Foreground="{ThemeResource AccentTextFillColorTertiaryBrush}"
                                            FontSize="{TemplateBinding FontSize}"
-                                           FontWeight="Bold"
+                                           FontWeight="SemiBold"
                                            AutomationProperties.AccessibilityView="Raw"
                                            IsTextScaleFactorEnabled="False"
                                            Visibility="Collapsed"/>
@@ -139,9 +139,9 @@
     <Grid x:Name="BitFlipPanel"
           x:Uid="BitFlipPanel"
           Margin="0,1,0,1"
-          Background="{ThemeResource SystemControlAcrylicWindowBrush}"
           AutomationProperties.HeadingLevel="Level1">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
@@ -213,88 +213,98 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        <!-- Horizontal divider -->
+        <Rectangle Grid.ColumnSpan="21"
+                   Height="1"
+                   Margin="-3,4,-3,1"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Top"
+                   Fill="{ThemeResource DividerStrokeColorDefaultBrush}"
+                   RadiusX="0.5"
+                   RadiusY="0.5"/>
         <TextBlock x:Name="Label60"
-                   Grid.Row="1"
+                   Grid.Row="2"
                    Grid.Column="4"
                    Style="{StaticResource TextBlockStyle}"
                    Text="60"/>
         <TextBlock x:Name="Label56"
-                   Grid.Row="1"
+                   Grid.Row="2"
                    Grid.Column="9"
                    Style="{StaticResource TextBlockStyle}"
                    Text="56"/>
         <TextBlock x:Name="Label52"
-                   Grid.Row="1"
+                   Grid.Row="2"
                    Grid.Column="14"
                    Style="{StaticResource TextBlockStyle}"
                    Text="52"/>
         <TextBlock x:Name="Label48"
-                   Grid.Row="1"
+                   Grid.Row="2"
                    Grid.Column="19"
                    Style="{StaticResource TextBlockStyle}"
                    Text="48"/>
         <TextBlock x:Name="Label44"
-                   Grid.Row="3"
+                   Grid.Row="4"
                    Grid.Column="4"
                    Style="{StaticResource TextBlockStyle}"
                    Text="44"/>
         <TextBlock x:Name="Label40"
-                   Grid.Row="3"
+                   Grid.Row="4"
                    Grid.Column="9"
                    Style="{StaticResource TextBlockStyle}"
                    Text="40"/>
         <TextBlock x:Name="Label36"
-                   Grid.Row="3"
+                   Grid.Row="4"
                    Grid.Column="14"
                    Style="{StaticResource TextBlockStyle}"
                    Text="36"/>
         <TextBlock x:Name="Label32"
-                   Grid.Row="3"
+                   Grid.Row="4"
                    Grid.Column="19"
                    Style="{StaticResource TextBlockStyle}"
                    Text="32"/>
         <TextBlock x:Name="Label28"
-                   Grid.Row="5"
+                   Grid.Row="6"
                    Grid.Column="4"
                    Style="{StaticResource TextBlockStyle}"
                    Text="28"/>
         <TextBlock x:Name="Label24"
-                   Grid.Row="5"
+                   Grid.Row="6"
                    Grid.Column="9"
                    Style="{StaticResource TextBlockStyle}"
                    Text="24"/>
         <TextBlock x:Name="Label20"
-                   Grid.Row="5"
+                   Grid.Row="6"
                    Grid.Column="14"
                    Style="{StaticResource TextBlockStyle}"
                    Text="20"/>
         <TextBlock x:Name="Label16"
-                   Grid.Row="5"
+                   Grid.Row="6"
                    Grid.Column="19"
                    Style="{StaticResource TextBlockStyle}"
                    Text="16"/>
         <TextBlock x:Name="Label12"
-                   Grid.Row="7"
+                   Grid.Row="8"
                    Grid.Column="4"
                    Style="{StaticResource TextBlockStyle}"
                    Text="12"/>
         <TextBlock x:Name="Label8"
-                   Grid.Row="7"
+                   Grid.Row="8"
                    Grid.Column="9"
                    Style="{StaticResource TextBlockStyle}"
                    Text="8"/>
         <TextBlock x:Name="Label4"
-                   Grid.Row="7"
+                   Grid.Row="8"
                    Grid.Column="14"
                    Style="{StaticResource TextBlockStyle}"
                    Text="4"/>
         <TextBlock x:Name="Label0"
-                   Grid.Row="7"
+                   Grid.Row="8"
                    Grid.Column="19"
                    Style="{StaticResource TextBlockStyle}"
                    Text="0"/>
 
         <controls:FlipButtons x:Name="Bit63"
+                              Grid.Row="1"
                               Grid.Column="1"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS63"
@@ -306,6 +316,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit62"
+                              Grid.Row="1"
                               Grid.Column="2"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS62"
@@ -317,6 +328,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit61"
+                              Grid.Row="1"
                               Grid.Column="3"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS61"
@@ -328,6 +340,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit60"
+                              Grid.Row="1"
                               Grid.Column="4"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS60"
@@ -340,6 +353,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit59"
+                              Grid.Row="1"
                               Grid.Column="6"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS59"
@@ -351,6 +365,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit58"
+                              Grid.Row="1"
                               Grid.Column="7"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS58"
@@ -362,6 +377,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit57"
+                              Grid.Row="1"
                               Grid.Column="8"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS57"
@@ -373,6 +389,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit56"
+                              Grid.Row="1"
                               Grid.Column="9"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS56"
@@ -385,6 +402,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit55"
+                              Grid.Row="1"
                               Grid.Column="11"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS55"
@@ -396,6 +414,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit54"
+                              Grid.Row="1"
                               Grid.Column="12"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS54"
@@ -407,6 +426,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit53"
+                              Grid.Row="1"
                               Grid.Column="13"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS53"
@@ -418,6 +438,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit52"
+                              Grid.Row="1"
                               Grid.Column="14"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS52"
@@ -430,6 +451,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit51"
+                              Grid.Row="1"
                               Grid.Column="16"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS51"
@@ -441,6 +463,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit50"
+                              Grid.Row="1"
                               Grid.Column="17"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS50"
@@ -452,6 +475,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit49"
+                              Grid.Row="1"
                               Grid.Column="18"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS49"
@@ -463,6 +487,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit48"
+                              Grid.Row="1"
                               Grid.Column="19"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS48"
@@ -475,7 +500,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit47"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="1"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS47"
@@ -487,7 +512,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit46"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="2"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS46"
@@ -499,7 +524,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit45"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="3"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS45"
@@ -511,7 +536,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit44"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="4"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS44"
@@ -524,7 +549,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit43"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="6"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS43"
@@ -536,7 +561,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit42"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="7"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS42"
@@ -548,7 +573,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit41"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="8"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS41"
@@ -560,7 +585,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit40"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="9"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS40"
@@ -573,7 +598,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit39"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="11"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS39"
@@ -585,7 +610,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit38"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="12"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS38"
@@ -597,7 +622,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit37"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="13"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS37"
@@ -609,7 +634,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit36"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="14"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS36"
@@ -622,7 +647,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit35"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="16"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS35"
@@ -634,7 +659,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit34"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="17"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS34"
@@ -646,7 +671,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit33"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="18"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS33"
@@ -658,7 +683,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit32"
-                              Grid.Row="2"
+                              Grid.Row="3"
                               Grid.Column="19"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS32"
@@ -671,7 +696,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit31"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="1"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS31"
@@ -683,7 +708,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit30"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="2"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS30"
@@ -695,7 +720,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit29"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="3"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS29"
@@ -707,7 +732,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit28"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="4"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS28"
@@ -720,7 +745,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit27"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="6"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS27"
@@ -732,7 +757,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit26"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="7"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS26"
@@ -744,7 +769,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit25"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="8"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS25"
@@ -756,7 +781,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit24"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="9"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS24"
@@ -769,7 +794,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit23"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="11"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS23"
@@ -781,7 +806,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit22"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="12"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS22"
@@ -793,7 +818,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit21"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="13"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS21"
@@ -805,7 +830,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit20"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="14"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS20"
@@ -818,7 +843,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit19"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="16"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS19"
@@ -830,7 +855,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit18"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="17"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS18"
@@ -842,7 +867,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit17"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="18"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS17"
@@ -854,7 +879,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit16"
-                              Grid.Row="4"
+                              Grid.Row="5"
                               Grid.Column="19"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS16"
@@ -867,7 +892,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit15"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="1"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS15"
@@ -879,7 +904,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit14"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="2"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS14"
@@ -891,7 +916,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit13"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="3"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS13"
@@ -903,7 +928,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit12"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="4"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS12"
@@ -916,7 +941,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit11"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="6"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS11"
@@ -928,7 +953,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit10"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="7"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS10"
@@ -940,7 +965,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit9"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="8"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS9"
@@ -952,7 +977,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit8"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="9"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS8"
@@ -965,7 +990,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit7"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="11"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS7"
@@ -976,7 +1001,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit6"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="12"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS6"
@@ -987,7 +1012,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit5"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="13"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS5"
@@ -998,7 +1023,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit4"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="14"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS4"
@@ -1010,7 +1035,7 @@
         </controls:FlipButtons>
 
         <controls:FlipButtons x:Name="Bit3"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="16"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS3"
@@ -1021,7 +1046,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit2"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="17"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS2"
@@ -1032,7 +1057,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit1"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="18"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS1"
@@ -1043,7 +1068,7 @@
             </controls:FlipButtons.Tag>
         </controls:FlipButtons>
         <controls:FlipButtons x:Name="Bit0"
-                              Grid.Row="6"
+                              Grid.Row="7"
                               Grid.Column="19"
                               Style="{StaticResource FlippingToggleButtonStyle}"
                               ButtonId="BINPOS0"

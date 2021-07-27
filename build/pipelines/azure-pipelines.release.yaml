@@ -4,20 +4,13 @@
 # Store and the Windows image. This pipeline relies on Microsoft-internal resources to run.
 #
 
-schedules:
-- cron: "0 7 * * *"
-  displayName: Daily midnight build
-  branches:
-    include:
-    - master
-
 trigger: none
 pr: none
 
 variables:
   versionMajor: 10
-  versionMinor: 2108
-  versionBuild: $[counter('10.2108.*', 0)]
+  versionMinor: 2109
+  versionBuild: $[counter('10.2109.*', 0)]
   versionPatch: 0
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
@@ -26,26 +19,19 @@ jobs:
 - template: ./templates/build-app-internal.yaml
   parameters:
     platform: x64
+    isPublicRelease: true
 
 - template: ./templates/build-app-internal.yaml
   parameters:
     platform: x86
+    isPublicRelease: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/build-app-internal.yaml
   parameters:
     platform: ARM
+    isPublicRelease: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-
-- template: ./templates/run-ui-tests.yaml
-  parameters:
-    platform: x64
-    runsettingsFileName: CalculatorUITests.release.runsettings
-
-- template: ./templates/run-ui-tests.yaml
-  parameters:
-    platform: x86
-    runsettingsFileName: CalculatorUITests.release.runsettings
 
 - template: ./templates/run-unit-tests.yaml
   parameters:

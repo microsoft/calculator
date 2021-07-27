@@ -49,10 +49,9 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Margin="0,2,14,0"
+            <TextBlock Margin="0,4,20,0"
                        HorizontalAlignment="Right"
-                       Style="{ThemeResource TitleTextBlockStyle}"
-                       FontWeight="SemiBold"
+                       Style="{ThemeResource SubtitleTextBlockStyle}"
                        AutomationProperties.AutomationId="MemoryItemValue"
                        FlowDirection="LeftToRight"
                        IsTextSelectionEnabled="True"
@@ -62,7 +61,7 @@
                        TextWrapping="Wrap"/>
             <Grid x:Name="MemoryHoverButtons"
                   Grid.Row="1"
-                  Margin="0,0,10,2"
+                  Margin="0,0,16,4"
                   HorizontalAlignment="Right"
                   Opacity="0">
                 <Grid.ColumnDefinitions>
@@ -72,22 +71,19 @@
                 </Grid.ColumnDefinitions>
                 <Button x:Uid="ClearMemoryItemButton"
                         Style="{StaticResource MemoryHoverButtonStyle}"
-                        Background="{ThemeResource SystemControlBackgroundAltMediumHighBrush}"
                         AutomationProperties.AutomationId="MClearButton"
                         Click="OnClearButtonClicked"
                         Content="MC"/>
                 <Button x:Uid="MemPlusItem"
                         Grid.Column="1"
-                        Margin="0"
+                        Margin="1,0"
                         Style="{StaticResource MemoryHoverButtonStyle}"
-                        Background="{ThemeResource SystemControlBackgroundAltMediumHighBrush}"
                         AutomationProperties.AutomationId="MAddButton"
                         Click="OnMemoryAddButtonClicked"
                         Content="M+"/>
                 <Button x:Uid="MemMinusItem"
                         Grid.Column="2"
                         Style="{StaticResource MemoryHoverButtonStyle}"
-                        Background="{ThemeResource SystemControlBackgroundAltMediumHighBrush}"
                         AutomationProperties.AutomationId="MSubButton"
                         Click="OnMemorySubtractButtonClicked"
                         Content="M-"/>

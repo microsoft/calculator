@@ -14,6 +14,13 @@
         <Style x:Key="CaptionButtonSmallStyle"
                BasedOn="{StaticResource CaptionButtonStyle}"
                TargetType="Button">
+            <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style x:Key="CaptionButtonZeroMinHeightStyle"
+               BasedOn="{StaticResource CaptionButtonSmallStyle}"
+               TargetType="Button">
             <Setter Property="MinHeight" Value="0"/>
         </Style>
     </UserControl.Resources>
@@ -44,10 +51,10 @@
                         <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="DegreeButton.Style" Value="{StaticResource CaptionButtonSmallStyle}"/>
-                        <Setter Target="RadianButton.Style" Value="{StaticResource CaptionButtonSmallStyle}"/>
-                        <Setter Target="GradsButton.Style" Value="{StaticResource CaptionButtonSmallStyle}"/>
-                        <Setter Target="FtoeButton.Style" Value="{StaticResource CaptionToggleButtonSmallStyle}"/>
+                        <Setter Target="DegreeButton.Style" Value="{StaticResource CaptionButtonZeroMinHeightStyle}"/>
+                        <Setter Target="RadianButton.Style" Value="{StaticResource CaptionButtonZeroMinHeightStyle}"/>
+                        <Setter Target="GradsButton.Style" Value="{StaticResource CaptionButtonZeroMinHeightStyle}"/>
+                        <Setter Target="FtoeButton.Style" Value="{StaticResource CaptionToggleButtonWithIndicatorSmallStyle}"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -65,14 +72,14 @@
         </VisualStateManager.VisualStateGroups>
         <Button x:Name="DegreeButton"
                 x:Uid="degButton"
-                Style="{StaticResource CaptionButtonStyle}"
+                Style="{StaticResource CaptionButtonSmallStyle}"
                 AutomationProperties.AutomationId="degButton"
                 Command="{x:Bind ButtonPressed}"
                 CommandParameter="0"
                 Content="DEG"/>
         <Button x:Name="RadianButton"
                 x:Uid="radButton"
-                Style="{StaticResource CaptionButtonStyle}"
+                Style="{StaticResource CaptionButtonSmallStyle}"
                 AutomationProperties.AutomationId="radButton"
                 Command="{x:Bind ButtonPressed}"
                 CommandParameter="1"
@@ -80,7 +87,7 @@
                 Visibility="Collapsed"/>
         <Button x:Name="GradsButton"
                 x:Uid="gradButton"
-                Style="{StaticResource CaptionButtonStyle}"
+                Style="{StaticResource CaptionButtonSmallStyle}"
                 AutomationProperties.AutomationId="gradButton"
                 Command="{x:Bind ButtonPressed}"
                 CommandParameter="2"
@@ -89,9 +96,8 @@
         <ToggleButton x:Name="FtoeButton"
                       x:Uid="ftoeButton"
                       Grid.Column="1"
-                      Style="{StaticResource CaptionToggleButtonStyle}"
+                      Style="{StaticResource CaptionToggleButtonWithIndicatorStyle}"
                       Background="{ThemeResource SystemControlBackgroundTransparentBrush}"
-                      FontWeight="SemiBold"
                       AutomationProperties.AutomationId="ftoeButton"
                       Checked="FToEButton_Toggled"
                       Content="F-E"

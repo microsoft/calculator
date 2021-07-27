@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Height="32"
              mc:Ignorable="d">
     <Grid x:Name="LayoutRoot"
-          Height="32"
-          HorizontalAlignment="Stretch">
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="WindowFocusStates">
                 <VisualState x:Name="WindowFocused"/>
@@ -16,20 +17,72 @@
                 <VisualState x:Name="AOTNormalState"/>
                 <VisualState x:Name="AOTMiniState">
                     <VisualState.Setters>
-                        <Setter Target="AppName.Visibility" Value="Collapsed"/>
+                        <Setter Target="TitleHolder.Visibility" Value="Collapsed"/>
                         <Setter Target="ExitAlwaysOnTopButton.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+
+            <VisualStateGroup x:Name="BackButtonVisibilityState">
+                <VisualState x:Name="BackButtonCollapsed"/>
+                <VisualState x:Name="BackButtonVisible">
+                    <VisualState.Setters>
+                        <Setter Target="BackButton.Visibility" Value="Visible"/>
+                        <Setter Target="AppIcon.Margin" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Grid x:Name="BackgroundElement" Background="Transparent">
-            <TextBlock x:Name="AppName"
-                       x:Uid="AppName"
-                       Margin="12,0,12,0"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       FontSize="12"
-                       TextTrimming="CharacterEllipsis"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.Transitions>
+                <TransitionCollection>
+                    <RepositionThemeTransition/>
+                </TransitionCollection>
+            </Grid.Transitions>
+
+            <Button x:Name="BackButton"
+                    Width="44"
+                    Height="32"
+                    Margin="0,0,4,0"
+                    Padding="2,0,0,0"
+                    Style="{StaticResource SquareIconButtonStyle}"
+                    FontSize="12"
+                    Click="BackButton_Click"
+                    Content="&#xE72B;"
+                    Visibility="Collapsed"/>
+
+            <Grid x:Name="BackgroundElement"
+                  Grid.Column="1"
+                  Background="Transparent">
+                <Grid x:Name="TitleHolder">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image x:Name="AppIcon"
+                           Width="16"
+                           Height="16"
+                           Margin="16,0,0,0"
+                           VerticalAlignment="Center"
+                           Source="ms-appx:///Assets/CalculatorAppList.png"/>
+                    <TextBlock x:Name="AppName"
+                               x:Uid="AppName"
+                               Grid.Column="1"
+                               Margin="16,0,16,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="12"
+                               TextTrimming="CharacterEllipsis"/>
+                </Grid>
+            </Grid>
         </Grid>
         <Button x:Name="ExitAlwaysOnTopButton"
                 x:Uid="ExitAlwaysOnTopButton"

@@ -137,9 +137,6 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AboutFlyout.xaml.cs">
-      <DependentUpon>AboutFlyout.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -167,10 +164,11 @@
     <Compile Include="Converters\ItemSizeToVisibilityConverter.cs" />
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
-    <Compile Include="EquationStylePanelControl.xaml.cs">
+    <Compile Include="Utils\ThemeHelper.cs" />
+    <Compile Include="Views\GraphingCalculator\EquationStylePanelControl.xaml.cs">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="KeyGraphFeaturesTemplateSelector.cs" />
+    <Compile Include="Views\GraphingCalculator\KeyGraphFeaturesTemplateSelector.cs" />
     <Compile Include="Utils\DelegateCommandUtils.cs" />
     <Compile Include="Views\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
@@ -231,6 +229,9 @@
     </Compile>
     <Compile Include="Views\OperatorsPanel.xaml.cs">
       <DependentUpon>OperatorsPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StateTriggers\AspectRatioTrigger.cs" />
     <Compile Include="Views\StateTriggers\CalculatorProgrammerDisplayPanel.xaml.cs">
@@ -678,11 +679,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="EquationStylePanelControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="AboutFlyout.xaml">
+    <Page Include="Views\GraphingCalculator\EquationStylePanelControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -766,6 +763,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\StateTriggers\CalculatorProgrammerDisplayPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -787,7 +788,7 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.10</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.UI.Xaml" Version="2.4.3" />
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.6.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
@@ -804,7 +805,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\CalcMDL2.ttf" />
+    <Content Include="Assets\CalculatorIcons.ttf" />
     <None Include="WindowsDev_TemporaryKey.pfx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

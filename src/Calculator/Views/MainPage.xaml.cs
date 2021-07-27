@@ -18,7 +18,6 @@ using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MUXC = Microsoft.UI.Xaml.Controls;
 
@@ -150,10 +149,20 @@ namespace CalculatorApp
             m_model.Initialize(initialMode);
         }
 
+        private void UpdatePopupSize(Windows.UI.Core.WindowSizeChangedEventArgs e)
+        {
+            if(PopupContent != null)
+            {
+                PopupContent.Width = e.Size.Width;
+                PopupContent.Height = e.Size.Height - AppTitleBar.ActualHeight;
+            }
+        }
+
         private void WindowSizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
         {
             // We don't use layout aware page's view states, we have our own
             UpdateViewState();
+            UpdatePopupSize(e);
         }
 
         private void OnAppPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -232,18 +241,23 @@ namespace CalculatorApp
             }
         }
 
+        private void SelectNavigationItemByModel()
+        {
+            var menuItems = ((ObservableCollection<object>)NavView.MenuItemsSource);
+            var itemCount = ((int)menuItems.Count);
+            var flatIndex = NavCategory.GetFlatIndex(Model.Mode);
+
+            if (flatIndex >= 0 && flatIndex < itemCount)
+            {
+                NavView.SelectedItem = menuItems[flatIndex];
+            }
+        }
+
         private void OnNavLoaded(object sender, RoutedEventArgs e)
         {
             if (NavView.SelectedItem == null)
             {
-                var menuItems = ((ObservableCollection<object>)NavView.MenuItemsSource);
-                var itemCount = ((int)menuItems.Count);
-                var flatIndex = NavCategory.GetFlatIndex(Model.Mode);
-
-                if (flatIndex >= 0 && flatIndex < itemCount)
-                {
-                    NavView.SelectedItem = menuItems[flatIndex];
-                }
+                SelectNavigationItemByModel();
             }
 
             var acceleratorList = new List<MyVirtualKey>();
@@ -257,14 +271,6 @@ namespace CalculatorApp
             NavView.SetValue(KeyboardShortcutManager.VirtualKeyControlChordProperty, MyVirtualKey.E);
         }
 
-        private void OnNavPaneOpening(MUXC.NavigationView sender, object args)
-        {
-            if (AboutButton != null)
-            {
-                FindName("AboutButton");
-            }
-        }
-
         private void OnNavPaneOpened(MUXC.NavigationView sender, object args)
         {
             KeyboardShortcutManager.HonorShortcuts(false);
@@ -273,6 +279,11 @@ namespace CalculatorApp
 
         private void OnNavPaneClosed(MUXC.NavigationView sender, object args)
         {
+            if (Popup.IsOpen)
+            {
+                return;
+            }
+
             if (Model.Mode != ViewMode.Graphing)
             {
                 KeyboardShortcutManager.HonorShortcuts(true);
@@ -281,8 +292,51 @@ namespace CalculatorApp
             SetDefaultFocus();
         }
 
+        private void EnsurePopupContent()
+        {
+            if (PopupContent == null)
+            {
+                FindName("PopupContent");
+
+                var windowBounds = Window.Current.Bounds;
+                PopupContent.Width = windowBounds.Width;
+                PopupContent.Height = windowBounds.Height - AppTitleBar.ActualHeight;
+            }
+        }
+
+        private void ShowSettingsPopup()
+        {
+            EnsurePopupContent();
+            Popup.IsOpen = true;
+        }
+
+        private void CloseSettingsPopup()
+        {
+            Popup.IsOpen = false;
+            SelectNavigationItemByModel();
+            SetDefaultFocus();
+        }
+
+        private void Popup_Opened(object sender, object e)
+        {
+            KeyboardShortcutManager.IgnoreEscape(false);
+            KeyboardShortcutManager.HonorShortcuts(false);
+        }
+
+        private void Popup_Closed(object sender, object e)
+        {
+            KeyboardShortcutManager.HonorEscape();
+            KeyboardShortcutManager.HonorShortcuts(!NavView.IsPaneOpen);
+        }
+
         private void OnNavSelectionChanged(object sender, MUXC.NavigationViewSelectionChangedEventArgs e)
         {
+            if(e.IsSettingsSelected)
+            {
+                ShowSettingsPopup();
+                return;
+            }
+
             var item = (e.SelectedItemContainer as MUXC.NavigationViewItem);
             if (item != null)
             {
@@ -294,33 +348,6 @@ namespace CalculatorApp
         private void OnNavItemInvoked(MUXC.NavigationView sender, MUXC.NavigationViewItemInvokedEventArgs e)
         {
             NavView.IsPaneOpen = false;
-        }
-
-        private void OnAboutButtonClick(object sender, TappedRoutedEventArgs e)
-        {
-            ShowAboutPage();
-        }
-
-        private void OnAboutButtonKeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Space || e.Key == Windows.System.VirtualKey.Enter)
-            {
-                ShowAboutPage();
-            }
-        }
-
-        private void OnAboutFlyoutOpened(object sender, object e)
-        {
-            // Keep Ignoring Escape till the About page flyout is opened
-            KeyboardShortcutManager.IgnoreEscape(false);
-            KeyboardShortcutManager.HonorShortcuts(false);
-        }
-
-        private void OnAboutFlyoutClosed(object sender, object e)
-        {
-            // Start Honoring Escape once the About page flyout is closed
-            KeyboardShortcutManager.HonorEscape();
-            KeyboardShortcutManager.HonorShortcuts(!NavView.IsPaneOpen);
         }
 
         private void AlwaysOnTopButtonClick(object sender, RoutedEventArgs e)
@@ -451,8 +478,6 @@ namespace CalculatorApp
                         AppLifecycleLogger.GetInstance().LaunchUIResponsive();
                         AppLifecycleLogger.GetInstance().LaunchVisibleComplete();
                     }
-
-                    FindName("NavView");
                 }));
         }
 
@@ -546,21 +571,26 @@ namespace CalculatorApp
             }
         }
 
-        private void ShowAboutPage()
-        {
-            if (AboutPage == null)
-            {
-                FindName("AboutPage");
-            }
-
-            FlyoutBase.ShowAttachedFlyout(AboutButton);
-        }
-
         private void AnnounceCategoryName()
         {
             string categoryName = AutomationProperties.GetName(Header);
             NarratorAnnouncement announcement = CalculatorAnnouncement.GetCategoryNameChangedAnnouncement(categoryName);
             NarratorNotifier.Announce(announcement);
+        }
+
+        private void TitleBarBackButtonClick(object sender, RoutedEventArgs e)
+        {
+            CloseSettingsPopup();
+        }
+
+        private Visibility ShouldShowBackButton(bool isAlwaysOnTop, bool isPopupOpen)
+        {
+            return !isAlwaysOnTop && isPopupOpen ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private double NavigationViewOpenPaneLength(bool isAlwaysOnTop)
+        {
+            return isAlwaysOnTop ? 0 : (double)Application.Current.Resources["SplitViewOpenPaneLength"];
         }
 
         private CalculatorApp.Calculator m_calculator;

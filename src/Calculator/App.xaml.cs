@@ -124,7 +124,7 @@ namespace CalculatorApp
             return frame;
         }
 
-        private static void SetMinWindowSizeAndActivate(Frame rootFrame, Size minWindowSize)
+        private static void SetMinWindowSizeAndThemeAndActivate(Frame rootFrame, Size minWindowSize)
         {
             // SetPreferredMinSize should always be called before Window.Activate
             ApplicationView appView = ApplicationView.GetForCurrentView();
@@ -132,6 +132,7 @@ namespace CalculatorApp
 
             // Place the frame in the current Window
             Window.Current.Content = rootFrame;
+            CalculatorApp.Utils.ThemeHelper.InitializeAppTheme();
             Window.Current.Activate();
         }
 
@@ -199,7 +200,7 @@ namespace CalculatorApp
                     throw new SystemException();
                 }
 
-                SetMinWindowSizeAndActivate(rootFrame, minWindowSize);
+                SetMinWindowSizeAndThemeAndActivate(rootFrame, minWindowSize);
                 m_mainViewId = ApplicationView.GetForCurrentView().Id;
                 AddWindowToMap(WindowFrameService.CreateNewWindowFrameService(rootFrame, false, weak));
             }
@@ -223,7 +224,7 @@ namespace CalculatorApp
                                 {
                                     var newRootFrame = App.CreateFrame();
 
-                                    SetMinWindowSizeAndActivate(newRootFrame, minWindowSize);
+                                    SetMinWindowSizeAndThemeAndActivate(newRootFrame, minWindowSize);
 
                                     if (!newRootFrame.Navigate(typeof(MainPage), argument))
                                     {
@@ -438,6 +439,10 @@ namespace CalculatorApp
             var mainPage = (frame.Content as MainPage);
 
             mainPage.UnregisterEventHandlers();
+
+            // TODO, remove this workaround after Mica fix
+            // Workaround app crash caused by Mica in multi-view case.
+            Microsoft.UI.Xaml.Controls.BackdropMaterial.SetApplyToRootOrPageBackground(mainPage, false);
 
             await frameService.HandleViewRelease();
             await Task.Run(() =>

@@ -575,6 +575,48 @@ namespace CalculatorApp
                 }
             }
 
+            private static bool CanNavigateModeByShortcut(MUXC.NavigationView navView, MUXC.NavigationViewItem nvi
+                , ApplicationViewModel vm, ViewMode toMode)
+            {
+                return nvi != null && nvi.IsEnabled && navView.Visibility == Visibility.Visible
+                    && !vm.IsAlwaysOnTop && NavCategory.IsValidViewMode(toMode);
+            }
+
+            private static void NavigateModeByShortcut(bool controlKeyPressed, bool shiftKeyPressed, bool altPressed
+                , Windows.System.VirtualKey key, ViewMode? toMode)
+            {
+                var lookupMap = GetCurrentKeyDictionary(controlKeyPressed, shiftKeyPressed, altPressed);
+                if (lookupMap != null)
+                {
+                    var listItems = EqualRange(lookupMap, (MyVirtualKey)key);
+                    foreach (var itemRef in listItems)
+                    {
+                        var item = itemRef.Target as MUXC.NavigationView;
+                        if (item != null)
+                        {
+                            var navView = (MUXC.NavigationView)item;
+
+                            var menuItems = ((ObservableCollection<object>)navView.MenuItemsSource);
+                            if (menuItems != null)
+                            {
+                                var vm = (navView.DataContext as ApplicationViewModel);
+                                if (null != vm)
+                                {
+                                    ViewMode realToMode = toMode.HasValue ? toMode.Value : NavCategory.GetViewModeForVirtualKey(((MyVirtualKey)key));
+                                    var nvi = (menuItems[NavCategory.GetFlatIndex(realToMode)] as MUXC.NavigationViewItem);
+                                    if (CanNavigateModeByShortcut(navView, nvi, vm, realToMode))
+                                    {
+                                        vm.Mode = realToMode;
+                                        navView.SelectedItem = nvi;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
             // In the three event handlers below we will not mark the event as handled
             // because this is a supplemental operation and we don't want to interfere with
             // the normal keyboard handling.
@@ -610,22 +652,7 @@ namespace CalculatorApp
                 // Handle Ctrl + E for DateCalculator
                 if ((key == Windows.System.VirtualKey.E) && isControlKeyPressed && !isShiftKeyPressed && !isAltKeyPressed)
                 {
-                    var lookupMap = GetCurrentKeyDictionary(isControlKeyPressed, isShiftKeyPressed, false);
-                    if (lookupMap == null)
-                    {
-                        return;
-                    }
-
-                    var buttons = EqualRange(lookupMap, (MyVirtualKey)key);
-                    var navView = buttons.ElementAt(0).Target as MUXC.NavigationView;
-                    var appViewModel = (navView.DataContext as ApplicationViewModel);
-                    appViewModel.Mode = ViewMode.Date;
-                    var categoryName = AppResourceProvider.GetInstance().GetResourceString("DateCalculationModeText");
-                    appViewModel.CategoryName = categoryName;
-
-                    var menuItems = ((ObservableCollection<object>)navView.MenuItemsSource);
-                    var flatIndex = NavCategory.GetFlatIndex(ViewMode.Date);
-                    navView.SelectedItem = menuItems[flatIndex];
+                    NavigateModeByShortcut(isControlKeyPressed, isShiftKeyPressed, false, key, ViewMode.Date);
                     return;
                 }
 
@@ -701,36 +728,7 @@ namespace CalculatorApp
                     }
 
                     bool shiftKeyPressed = (Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-                    var lookupMap = GetCurrentKeyDictionary(controlKeyPressed, shiftKeyPressed, altPressed);
-                    if (lookupMap != null)
-                    {
-                        var listItems = EqualRange(lookupMap, (MyVirtualKey)key);
-                        foreach (var itemRef in listItems)
-                        {
-                            var item = itemRef.Target as MUXC.NavigationView;
-                            if (item != null)
-                            {
-                                var navView = (MUXC.NavigationView)item;
-
-                                var menuItems = ((ObservableCollection<object>)navView.MenuItemsSource);
-                                if (menuItems != null)
-                                {
-                                    var vm = (navView.DataContext as ApplicationViewModel);
-                                    if (null != vm)
-                                    {
-                                        ViewMode toMode = NavCategory.GetViewModeForVirtualKey(((MyVirtualKey)key));
-                                        var nvi = (menuItems[NavCategory.GetFlatIndex(toMode)] as MUXC.NavigationViewItem);
-                                        if (nvi != null && nvi.IsEnabled && NavCategory.IsValidViewMode(toMode))
-                                        {
-                                            vm.Mode = toMode;
-                                            navView.SelectedItem = nvi;
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                    }
+                    NavigateModeByShortcut(controlKeyPressed, shiftKeyPressed, altPressed, key, null);
                 }
             }
 

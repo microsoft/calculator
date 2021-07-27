@@ -6,6 +6,7 @@
 parameters:
   platform: ''
   condition: ''
+  isPublicRelease: false
 
 jobs:
 - job: Build${{ parameters.platform }}
@@ -27,7 +28,10 @@ jobs:
       downloadDirectory: $(Build.SourcesDirectory)
       vstsFeed: WindowsInboxApps
       vstsFeedPackage: calculator-internals
-      vstsPackageVersion: 0.0.54
+      ${{ if eq(parameters.isPublicRelease, true) }}:
+        vstsPackageVersion: 0.0.66
+      ${{ if eq(parameters.isPublicRelease, false) }}:
+        vstsPackageVersion: 0.0.65
 
   - template: ./build-single-architecture.yaml
     parameters:

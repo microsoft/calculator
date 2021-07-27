@@ -1,22 +1,34 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
+using CalculatorApp.Utils;
 using CalculatorApp.ViewModel.Common;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace CalculatorApp
 {
-    public sealed partial class AboutFlyout
+    public sealed partial class Settings : UserControl
     {
         // CSHARP_MIGRATION: TODO:
         // BUILD_YEAR was a C++/CX macro and may update the value from the pipeline
         private const string BUILD_YEAR = "2021";
 
-        public AboutFlyout()
+        public Settings()
         {
             var locService = LocalizationService.GetInstance();
             var resourceLoader = AppResourceProvider.GetInstance();
@@ -25,9 +37,7 @@ namespace CalculatorApp
 
             Language = locService.GetLanguage();
 
-            SetVersionString();
-
-            Header.Text = resourceLoader.GetResourceString("AboutButton/Content");
+            InitializeAboutContentTextBlock();
 
             var copyrightText =
                 LocalizationStringUtil.GetLocalizedString(resourceLoader.GetResourceString("AboutControlCopyright"), BUILD_YEAR);
@@ -36,9 +46,33 @@ namespace CalculatorApp
             InitializeContributeTextBlock();
         }
 
+        private void OnThemeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0 && e.AddedItems[0] is RadioButton selectItem)
+            {
+                ThemeHelper.RootTheme = ThemeHelper.GetEnum<ElementTheme>(selectItem.Tag.ToString());
+            }
+        }
+
         public void SetDefaultFocus()
         {
-            AboutFlyoutEULA.Focus(FocusState.Programmatic);
+            AppThemeExpander.Focus(FocusState.Programmatic);
+        }
+
+        // OnLoaded would be invoked by Popup several times while contructed once
+        private void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            var currentTheme = ThemeHelper.RootTheme.ToString();
+            (ThemeRadioButtons.Items.Cast<RadioButton>().FirstOrDefault(c => c?.Tag?.ToString() == currentTheme)).IsChecked = true;
+
+            SetDefaultFocus();
+        }
+
+        // OnUnloaded would be invoked by Popup several times while contructed once
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            // back to the default state
+            AppThemeExpander.IsExpanded = false;
         }
 
         private void FeedbackButton_Click(object sender, RoutedEventArgs e)
@@ -49,17 +83,33 @@ namespace CalculatorApp
             _ = Launcher.LaunchUriAsync(new Uri("windows-feedback:?contextid=130&metadata=%7B%22Metadata%22:[%7B%22AppBuild%22:%22" + versionNumber + "%22%7D]%7D"));
         }
 
+        private void InitializeAboutContentTextBlock()
+        {
+            SetVersionString();
+            SetContentLinks();
+        }
+
         private void SetVersionString()
         {
             PackageVersion version = Package.Current.Id.Version;
             string appName = AppResourceProvider.GetInstance().GetResourceString("AppName");
-            AboutFlyoutVersion.Text = appName + " " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
+            AboutBuildVersion.Text = appName + " " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
+        }
+
+        private void SetContentLinks()
+        {
+            string eula = AppResourceProvider.GetInstance().GetResourceString(AboutEULA.Name + "/Text");
+            AboutEULA.Text = eula;
+            string agreement = AppResourceProvider.GetInstance().GetResourceString(AboutControlServicesAgreement.Name + "/Text");
+            AboutControlServicesAgreement.Text = agreement;
+            string privacyState = AppResourceProvider.GetInstance().GetResourceString(AboutControlPrivacyStatement.Name + "/Text");
+            AboutControlPrivacyStatement.Text = privacyState;
         }
 
         private void InitializeContributeTextBlock()
         {
             var resProvider = AppResourceProvider.GetInstance();
-            string contributeHyperlinkText = resProvider.GetResourceString("AboutFlyoutContribute");
+            string contributeHyperlinkText = resProvider.GetResourceString("AboutControlContribute");
 
             // The resource string has the 'GitHub' hyperlink wrapped with '%HL%'.
             // Break the string and assign pieces appropriately.

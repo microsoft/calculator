@@ -87,8 +87,9 @@
                 </Setter>
             </Style>
             <Style x:Key="SubTitleTextBoxStyle" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="16"/>
-                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}"/>
             </Style>
 
             <Style x:Key="ErrorTextBoxStyle" TargetType="TextBox">
@@ -97,7 +98,9 @@
             </Style>
 
             <DataTemplate x:Key="XYTextBoxHeaderTemplate" x:DataType="x:String">
-                <TextBlock FontSize="14" Text="{x:Bind}"/>
+                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           FontSize="12"
+                           Text="{x:Bind}"/>
             </DataTemplate>
 
             <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
@@ -111,7 +114,7 @@
                        FontSize="20"
                        FontWeight="Medium"
                        AutomationProperties.HeadingLevel="Level1"/>
-            <Grid Margin="0,12,0,0">
+            <Grid Margin="0,16,0,4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
@@ -122,7 +125,18 @@
                            AutomationProperties.HeadingLevel="Level2"/>
                 <HyperlinkButton x:Uid="ResetViewButton"
                                  Grid.Column="1"
-                                 Click="ResetViewButton_Clicked"/>
+                                 Padding="0"
+                                 FontSize="12"
+                                 Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                 BorderThickness="0"
+                                 Click="ResetViewButton_Clicked">
+                    <HyperlinkButton.Resources>
+                        <ResourceDictionary>
+                            <StaticResource x:Key="HyperlinkButtonBackgroundPointerOver" ResourceKey="SubtleFillColorTransparentBrush"/>
+                            <StaticResource x:Key="HyperlinkButtonBackgroundPressed" ResourceKey="SubtleFillColorTransparentBrush"/>
+                        </ResourceDictionary>
+                    </HyperlinkButton.Resources>
+                </HyperlinkButton>
             </Grid>
             <Grid>
                 <Grid.RowDefinitions>
@@ -140,7 +154,7 @@
                          x:Uid="GraphSettingsXMin"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMinError), Mode=OneWay}"
-                         contract7Present:CornerRadius="2"
+                         contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.XMin, Mode=TwoWay}"/>
@@ -149,7 +163,7 @@
                          Grid.Column="2"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMaxError), Mode=OneWay}"
-                         contract7Present:CornerRadius="2"
+                         contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.XMax, Mode=TwoWay}"/>
@@ -158,7 +172,7 @@
                          Grid.Row="2"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMinError), Mode=OneWay}"
-                         contract7Present:CornerRadius="2"
+                         contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.YMin, Mode=TwoWay}"/>
@@ -168,7 +182,7 @@
                          Grid.Column="2"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMaxError), Mode=OneWay}"
-                         contract7Present:CornerRadius="2"
+                         contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.YMax, Mode=TwoWay}"/>
@@ -184,17 +198,18 @@
                 <RadioButton x:Name="Radians"
                              x:Uid="TrigModeRadians"
                              Style="{StaticResource TrigUnitsRadioButtonStyle}"
-                             contract7Present:CornerRadius="4,0,0,4"
+                             contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
                              IsChecked="{x:Bind ViewModel.TrigModeRadians, Mode=TwoWay}"/>
                 <RadioButton x:Name="Degrees"
                              x:Uid="TrigModeDegrees"
-                             Margin="1,0"
+                             Margin="4,0"
                              Style="{StaticResource TrigUnitsRadioButtonStyle}"
+                             contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
                              IsChecked="{x:Bind ViewModel.TrigModeDegrees, Mode=TwoWay}"/>
                 <RadioButton x:Name="Gradians"
                              x:Uid="TrigModeGradians"
                              Style="{StaticResource TrigUnitsRadioButtonStyle}"
-                             contract7Present:CornerRadius="0,4,4,0"
+                             contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
                              IsChecked="{x:Bind ViewModel.TrigModeGradians, Mode=TwoWay}"/>
             </StackPanel>
 
