@@ -26,7 +26,7 @@ param(
     [ValidateScript({[version]$_})]
     [Parameter(Mandatory)]
     [string]
-    $Version
+    $Version,
 
     [ValidateScript({[version]$_})]
     [Parameter(Mandatory=$false)]

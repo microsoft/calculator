@@ -1,10 +1,13 @@
 #
-# Continuous Integration (CI) - Internal
-# This pipeline builds and validate the app for all supported architectures, in a production
-# configuration. This pipeline relies on Microsoft-internal resources to run.
+# Release
+# This pipeline builds a version of the app in a production configuration to be released to the
+# Store and the Windows image. This pipeline relies on Microsoft-internal resources to run.
 #
 
-trigger: none
+trigger:
+- master
+- release/*
+- feature/*
 pr: none
 
 name: 0.$(Date:yyMM).$(DayOfMonth)$(Rev:rr).0
@@ -19,15 +22,20 @@ jobs:
   parameters:
     platform: x86
     isPublicRelease: true
+    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/build-app-internal.yaml
   parameters:
     platform: ARM
     isPublicRelease: true
+    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/run-ui-tests.yaml
+- template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x64
-    runsettingsFileName: CalculatorUITests.release.runsettings
+
+- template: ./templates/run-unit-tests.yaml
+  parameters:
+    platform: x86
 
 - template: ./templates/package-appxbundle.yaml
