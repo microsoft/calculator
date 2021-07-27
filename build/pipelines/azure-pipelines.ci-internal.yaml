@@ -20,12 +20,10 @@ jobs:
 - template: ./templates/build-app-internal.yaml
   parameters:
     platform: x86
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/build-app-internal.yaml
   parameters:
     platform: ARM
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/run-ui-tests.yaml
   parameters:
@@ -36,7 +34,6 @@ jobs:
   parameters:
     platform: x86
     runsettingsFileName: CalculatorUITests.release.runsettings
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/run-unit-tests.yaml
   parameters:
