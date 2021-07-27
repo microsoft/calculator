@@ -3,7 +3,6 @@
 
 parameters:
   extraMsBuildArgs: ''
-  isPublicRelease: false
 
 steps:
   - task: NuGetToolInstaller@1
@@ -23,10 +22,7 @@ steps:
     displayName: Set version number in AppxManifest
     inputs:
       filePath: $(Build.SourcesDirectory)\build\scripts\UpdateAppxManifestVersion.ps1
-      ${{ if eq(parameters.isPublicRelease, true) }}:
-        arguments: '-AppxManifest $(Build.SourcesDirectory)\src\Calculator\Package.appxmanifest -Version $(Build.BuildNumber) -MinVersion 10.0.22000.0'
-      ${{ if eq(parameters.isPublicRelease, false) }}:
-        arguments: '-AppxManifest $(Build.SourcesDirectory)\src\Calculator\Package.appxmanifest -Version $(Build.BuildNumber)'
+      arguments: '-AppxManifest $(Build.SourcesDirectory)\src\Calculator\Package.appxmanifest -Version $(Build.BuildNumber)'
 
   - task: VSBuild@1
     displayName: 'Build solution src/Calculator.sln'
