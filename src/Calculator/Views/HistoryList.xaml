@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CalculatorApp.HistoryList"
+<UserControl x:Class="CalculatorApp.HistoryList"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
@@ -81,7 +81,7 @@
                 </muxc:SwipeControl>
             </DataTemplate>
             <Style x:Key="HistoryItemContainerStyle"
-                   BasedOn="{StaticResource HistoryMemoryItemContainerStyle}"
+                   BasedOn="{StaticResource ConditionalHistoryMemoryItemContainerStyle}"
                    TargetType="ListViewItem">
                 <Setter Property="Margin" Value="0,0,0,20"/>
                 <Setter Property="ContextFlyout" Value="{StaticResource HistoryContextMenu}"/>

@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:common="using:CalculatorApp.Common"
+             xmlns:contract7NotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,7)"
              xmlns:contract7Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)"
              xmlns:controls="using:CalculatorApp.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -27,13 +28,14 @@
             <Setter Property="FontSize" Value="{ThemeResource CaptionFontSize}"/>
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="IsTextScaleFactorEnabled" Value="True"/>
+            <Setter Property="FocusVisualMargin" Value="-3"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
                         <Grid x:Name="ControlRoot"
                               VerticalAlignment="Stretch"
                               Background="{ThemeResource SubtleFillColorTransparentBrush}"
-                              contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}">
+                              contract7Present:CornerRadius="{TemplateBinding CornerRadius}">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal"/>
@@ -153,6 +155,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <contract7NotPresent:Style x:Key="ConditionalProgModeRadioButtonStyle"
+                                   BasedOn="{StaticResource ProgModeRadioButtonStyle}"
+                                   TargetType="RadioButton"/>
+        <contract7Present:Style x:Key="ConditionalProgModeRadioButtonStyle"
+                                BasedOn="{StaticResource ProgModeRadioButtonStyle}"
+                                TargetType="RadioButton">
+            <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
+        </contract7Present:Style>
 
         <MenuFlyout x:Key="ProgrammerOperatorsContextMenu" x:Name="ProgrammerOperatorsContextMenu">
             <MenuFlyoutItem x:Name="CopyMenuItem"
@@ -196,7 +206,7 @@
         <controls:RadixButton x:Name="HexButton"
                               x:Uid="hexButton"
                               HorizontalAlignment="Stretch"
-                              Style="{ThemeResource ProgModeRadioButtonStyle}"
+                              Style="{ThemeResource ConditionalProgModeRadioButtonStyle}"
                               AutomationProperties.AutomationId="hexButton"
                               AutomationProperties.Name="{x:Bind Model.HexDisplayValue_AutomationName, Mode=OneWay}"
                               Checked="HexButtonChecked"
@@ -207,7 +217,7 @@
                               x:Uid="decimalButton"
                               Grid.Row="1"
                               HorizontalAlignment="Stretch"
-                              Style="{ThemeResource ProgModeRadioButtonStyle}"
+                              Style="{ThemeResource ConditionalProgModeRadioButtonStyle}"
                               AutomationProperties.AutomationId="decimalButton"
                               AutomationProperties.Name="{x:Bind Model.DecDisplayValue_AutomationName, Mode=OneWay}"
                               Checked="DecButtonChecked"
@@ -219,7 +229,7 @@
                               x:Uid="octButton"
                               Grid.Row="2"
                               HorizontalAlignment="Stretch"
-                              Style="{ThemeResource ProgModeRadioButtonStyle}"
+                              Style="{ThemeResource ConditionalProgModeRadioButtonStyle}"
                               AutomationProperties.AutomationId="octolButton"
                               AutomationProperties.Name="{x:Bind Model.OctDisplayValue_AutomationName, Mode=OneWay}"
                               Checked="OctButtonChecked"
@@ -230,7 +240,7 @@
                               x:Uid="binaryButton"
                               Grid.Row="3"
                               HorizontalAlignment="Stretch"
-                              Style="{ThemeResource ProgModeRadioButtonStyle}"
+                              Style="{ThemeResource ConditionalProgModeRadioButtonStyle}"
                               AutomationProperties.AutomationId="binaryButton"
                               AutomationProperties.Name="{x:Bind Model.BinDisplayValue_AutomationName, Mode=OneWay}"
                               Checked="BinButtonChecked"
