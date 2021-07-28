@@ -75,5 +75,7 @@ public
         static NarratorAnnouncement ^ GetAlwaysOnTopChangedAnnouncement(Platform::String ^ announcement);
 
         static NarratorAnnouncement ^ GetBitShiftRadioButtonCheckedAnnouncement(Platform::String ^ announcement);
+
+        static NarratorAnnouncement ^ GetSettingsPageOpenedAnnouncement(Platform::String ^ announcement);
     };
 }

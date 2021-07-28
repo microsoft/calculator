@@ -177,6 +177,15 @@ namespace CalculatorUnitTests
             VERIFY_ARE_EQUAL(annoucement->Processing, AutomationNotificationProcessing::ImportantMostRecent);
         }
 
+        TEST_METHOD(TestGetSettingsPageOpenedAnnouncement)
+        {
+            auto annoucement = CalculatorAnnouncement::GetSettingsPageOpenedAnnouncement(m_testAnnouncement);
+            VERIFY_ARE_EQUAL(annoucement->Announcement, m_testAnnouncement);
+            VERIFY_ARE_EQUAL(annoucement->ActivityId, L"SettingsPageOpened");
+            VERIFY_ARE_EQUAL(annoucement->Kind, AutomationNotificationKind::ActionCompleted);
+            VERIFY_ARE_EQUAL(annoucement->Processing, AutomationNotificationProcessing::ImportantMostRecent);
+        }
+
     private:
         static const Platform::StringReference m_testAnnouncement;
     };

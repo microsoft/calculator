@@ -47,6 +47,7 @@
             </Grid.Transitions>
 
             <Button x:Name="BackButton"
+                    x:Uid="TitleBarBackButton"
                     Width="44"
                     Height="32"
                     Margin="0,0,4,0"
@@ -72,6 +73,7 @@
                            Height="16"
                            Margin="16,0,0,0"
                            VerticalAlignment="Center"
+                           AutomationProperties.AccessibilityView="Raw"
                            Source="ms-appx:///Assets/CalculatorAppList.png"/>
                     <TextBlock x:Name="AppName"
                                x:Uid="AppName"
@@ -80,6 +82,7 @@
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                FontSize="12"
+                               AutomationProperties.AccessibilityView="Raw"
                                TextTrimming="CharacterEllipsis"/>
                 </Grid>
             </Grid>
