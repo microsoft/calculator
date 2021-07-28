@@ -60,6 +60,7 @@
                     IsEnabled="False">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Key="Left" Modifiers="Menu"/>
+                    <KeyboardAccelerator Key="Escape" Modifiers="None"/>
                 </Button.KeyboardAccelerators>
             </Button>
 
