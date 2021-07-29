@@ -757,7 +757,7 @@
                                   Background="{TemplateBinding Background}"
                                   FlowDirection="LeftToRight">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="12"/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="12"/>
                                 </Grid.ColumnDefinitions>
@@ -834,6 +834,14 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <contract7NotPresent:Style x:Key="ConditionalCalculationResultStyle"
+                                       BasedOn="{StaticResource CalculationResultStyle}"
+                                       TargetType="Controls:CalculationResult"/>
+            <contract7Present:Style x:Key="ConditionalCalculationResultStyle"
+                                    BasedOn="{StaticResource CalculationResultStyle}"
+                                    TargetType="Controls:CalculationResult">
+                <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
+            </contract7Present:Style>
 
             <Style x:Key="OperatorPanelButtonSmallStyle"
                    BasedOn="{StaticResource OperatorPanelButtonStyle}"
@@ -1799,6 +1807,7 @@
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                 <Setter Property="FontFamily" Value="{StaticResource CalculatorFontFamily}"/>
                 <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FocusVisualMargin" Value="-3"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="RadioButton">
@@ -1806,7 +1815,7 @@
                                   Background="{TemplateBinding Background}"
                                   BorderBrush="{TemplateBinding BorderBrush}"
                                   BorderThickness="{ThemeResource ControlBorderThemeThickness}"
-                                  contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}">
+                                  contract7Present:CornerRadius="{TemplateBinding CornerRadius}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition Height="Auto"/>
@@ -1905,6 +1914,15 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <contract7NotPresent:Style x:Key="ConditionalProgKeypadRadioButtonStyle"
+                                       BasedOn="{StaticResource ProgKeypadRadioButtonStyle}"
+                                       TargetType="RadioButton"/>
+            <contract7Present:Style x:Key="ConditionalProgKeypadRadioButtonStyle"
+                                    BasedOn="{StaticResource ProgKeypadRadioButtonStyle}"
+                                    TargetType="RadioButton">
+                <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
+            </contract7Present:Style>
+
 
             <Style x:Key="SquareIconButtonStyle"
                    BasedOn="{StaticResource SubtleButtonStyle}"
@@ -2079,6 +2097,15 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <contract7NotPresent:Style x:Key="ConditionalHistoryMemoryItemContainerStyle"
+                                       BasedOn="{StaticResource HistoryMemoryItemContainerStyle}"
+                                       TargetType="ListViewItem"/>
+            <contract7Present:Style x:Key="ConditionalHistoryMemoryItemContainerStyle"
+                                    BasedOn="{StaticResource HistoryMemoryItemContainerStyle}"
+                                    TargetType="ListViewItem">
+                <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
+            </contract7Present:Style>
 
             <Style x:Key="OperatorPanelFlyoutStyle"
                    BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"

@@ -142,7 +142,8 @@
                                     ValueChanged="Slider_ValueChanged"
                                     Value="{x:Bind Value, Mode=TwoWay}"
                                     Maximum="{x:Bind Max, Mode=TwoWay}"
-                                    Minimum="{x:Bind Min, Mode=TwoWay}"/>
+                                    Minimum="{x:Bind Min, Mode=TwoWay}"
+                                    contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"/>
 
                             <Grid Grid.Row="1"
                                   Padding="8,0,8,8"

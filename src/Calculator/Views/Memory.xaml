@@ -39,7 +39,7 @@
             <local:MemoryListItem Model="{x:Bind Mode=OneWay}"/>
         </DataTemplate>
         <Style x:Key="MemoryItemContainerStyle"
-               BasedOn="{StaticResource HistoryMemoryItemContainerStyle}"
+               BasedOn="{StaticResource ConditionalHistoryMemoryItemContainerStyle}"
                TargetType="ListViewItem">
             <Setter Property="Margin" Value="0,0,0,8"/>
             <Setter Property="ContextFlyout" Value="{StaticResource MemoryContextMenu}"/>

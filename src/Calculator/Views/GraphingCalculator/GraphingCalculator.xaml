@@ -268,15 +268,20 @@
                                             </ControlTemplate>
                                         </Thumb.Template>
                                     </Thumb>
-
                                 </Grid>
-
                             </Grid>
-
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
+            <contract7NotPresent:Style x:Key="ConditionalGraphModeToggleSwitchStyle"
+                                       BasedOn="{StaticResource GraphModeToggleSwitchStyle}"
+                                       TargetType="ToggleSwitch"/>
+            <contract7Present:Style x:Key="ConditionalGraphModeToggleSwitchStyle"
+                                    BasedOn="{StaticResource GraphModeToggleSwitchStyle}"
+                                    TargetType="ToggleSwitch">
+                <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
+            </contract7Present:Style>
             <Style x:Name="GraphViewToggleButtonStyle"
                    BasedOn="{StaticResource GraphToggleButtonStyle}"
                    TargetType="ToggleButton">
@@ -552,7 +557,7 @@
                           Margin="0,0,12,2"
                           HorizontalAlignment="Right"
                           VerticalAlignment="Center"
-                          Style="{StaticResource GraphModeToggleSwitchStyle}"
+                          Style="{StaticResource ConditionalGraphModeToggleSwitchStyle}"
                           AutomationProperties.AutomationId="SwitchModeToggleButton"
                           AutomationProperties.Name="{x:Bind local:GraphingCalculator.GetInfoForSwitchModeToggleButton(SwitchModeToggleButton.IsOn), Mode=OneWay}"
                           Toggled="SwitchModeToggleButton_Toggled"
