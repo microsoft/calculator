@@ -834,10 +834,10 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            <contract7NotPresent:Style x:Key="ConditionalCalculationResultsStyle"
+            <contract7NotPresent:Style x:Key="ConditionalCalculationResultStyle"
                                        BasedOn="{StaticResource CalculationResultStyle}"
                                        TargetType="Controls:CalculationResult"/>
-            <contract7Present:Style x:Key="ConditionalCalculationResultsStyle"
+            <contract7Present:Style x:Key="ConditionalCalculationResultStyle"
                                     BasedOn="{StaticResource CalculationResultStyle}"
                                     TargetType="Controls:CalculationResult">
                 <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>

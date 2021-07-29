@@ -200,7 +200,7 @@
         </contract7Present:Style>
 
         <Style x:Key="ValueBaseStyle"
-               BasedOn="{StaticResource ConditionalCalculationResultsStyle}"
+               BasedOn="{StaticResource ConditionalCalculationResultStyle}"
                TargetType="controls:CalculationResult">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>

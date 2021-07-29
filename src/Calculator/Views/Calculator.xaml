@@ -210,7 +210,7 @@
 
         <!-- Calculation Result Styles -->
         <Style x:Key="ResultsStyle"
-               BasedOn="{StaticResource ConditionalCalculationResultsStyle}"
+               BasedOn="{StaticResource ConditionalCalculationResultStyle}"
                TargetType="controls:CalculationResult">
             <Setter Property="HorizontalContentAlignment" Value="Right"/>
             <Setter Property="VerticalContentAlignment" Value="Top"/>
