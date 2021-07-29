@@ -32,6 +32,10 @@
             </Style>
 
             <automation:NarratorNotifier x:Name="NarratorNotifier"/>
+
+            <!-- Override default hyperlink button background color -->
+            <StaticResource x:Key="HyperlinkButtonBackgroundPointerOver" ResourceKey="SubtleFillColorTransparentBrush"/>
+            <StaticResource x:Key="HyperlinkButtonBackgroundPressed" ResourceKey="SubtleFillColorTransparentBrush"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -173,31 +177,37 @@
                                 <LineBreak/>
                                 <Run x:Name="AboutControlCopyrightRun"/>
                             </Paragraph>
-
-                            <Paragraph Margin="0,16,0,0">
-                                <Hyperlink NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
-                                           TextDecorations="None"
-                                           ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
-                                    <Run x:Name="AboutEULA"/>
-                                </Hyperlink>
-                            </Paragraph>
-
-                            <Paragraph Margin="0,16,0,0">
-                                <Hyperlink NavigateUri="https://go.microsoft.com/fwlink/?LinkID=822631"
-                                           TextDecorations="None"
-                                           ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=822631">
-                                    <Run x:Name="AboutControlServicesAgreement"/>
-                                </Hyperlink>
-                            </Paragraph>
-
-                            <Paragraph Margin="0,16,0,0">
-                                <Hyperlink NavigateUri="https://go.microsoft.com/fwlink/?LinkID=521839"
-                                           TextDecorations="None"
-                                           ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=521839">
-                                    <Run x:Name="AboutControlPrivacyStatement"/>
-                                </Hyperlink>
-                            </Paragraph>
                         </RichTextBlock>
+
+                        <HyperlinkButton x:Name="AboutEULA"
+                                         Margin="0,16,0,0"
+                                         Padding="0"
+                                         NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
+                                         ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
+                            <TextBlock x:Uid="AboutEULA"
+                                       FontSize="{ThemeResource BodyFontSize}"
+                                       TextWrapping="Wrap"/>
+                        </HyperlinkButton>
+
+                        <HyperlinkButton x:Name="AboutControlServicesAgreement"
+                                         Margin="0,16,0,0"
+                                         Padding="0"
+                                         NavigateUri="https://go.microsoft.com/fwlink/?LinkID=822631"
+                                         ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=822631">
+                            <TextBlock x:Uid="AboutControlServicesAgreement"
+                                       FontSize="{ThemeResource BodyFontSize}"
+                                       TextWrapping="Wrap"/>
+                        </HyperlinkButton>
+
+                        <HyperlinkButton x:Name="AboutControlPrivacyStatement"
+                                         Margin="0,16,0,0"
+                                         Padding="0"
+                                         NavigateUri="https://go.microsoft.com/fwlink/?LinkID=521839"
+                                         ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=521839">
+                            <TextBlock x:Uid="AboutControlPrivacyStatement"
+                                       FontSize="{ThemeResource BodyFontSize}"
+                                       TextWrapping="Wrap"/>
+                        </HyperlinkButton>
 
                         <Button x:Name="FeedbackButton"
                                 x:Uid="FeedbackButton"
@@ -213,13 +223,17 @@
                                    Margin="0,16,0,0"
                                    Style="{StaticResource SettingsRichTextBlockStyle}">
                         <Paragraph>
-                            <Run x:Name="ContributeRunBeforeLink"/>
-                            <Hyperlink NavigateUri="https://go.microsoft.com/fwlink/?linkid=2099939"
+                            <!--
+                                Note: don't put Hyperlink element start to the next line
+                                otherwise unexpected whitespace will be add.
+                            -->
+                            <Run x:Name="ContributeRunBeforeLink"/><Hyperlink Foreground="{x:Bind AboutEULA.Foreground, Mode=OneWay}"
+                                       NavigateUri="https://go.microsoft.com/fwlink/?linkid=2099939"
                                        TextDecorations="None"
-                                       ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?linkid=2099939">
+                                       ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?linkid=2099939"
+                                       UnderlineStyle="None">
                                 <Run x:Name="ContributeRunLink"/>
-                            </Hyperlink>
-                            <Run x:Name="ContributeRunAfterLink"/>
+                            </Hyperlink><Run x:Name="ContributeRunAfterLink"/>
                         </Paragraph>
                     </RichTextBlock>
                 </Grid>

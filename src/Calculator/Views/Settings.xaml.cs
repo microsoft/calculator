@@ -96,7 +96,6 @@ namespace CalculatorApp
         private void InitializeAboutContentTextBlock()
         {
             SetVersionString();
-            SetContentLinks();
         }
 
         private void SetVersionString()
@@ -104,16 +103,6 @@ namespace CalculatorApp
             PackageVersion version = Package.Current.Id.Version;
             string appName = AppResourceProvider.GetInstance().GetResourceString("AppName");
             AboutBuildVersion.Text = appName + " " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
-        }
-
-        private void SetContentLinks()
-        {
-            string eula = AppResourceProvider.GetInstance().GetResourceString(AboutEULA.Name + "/Text");
-            AboutEULA.Text = eula;
-            string agreement = AppResourceProvider.GetInstance().GetResourceString(AboutControlServicesAgreement.Name + "/Text");
-            AboutControlServicesAgreement.Text = agreement;
-            string privacyState = AppResourceProvider.GetInstance().GetResourceString(AboutControlPrivacyStatement.Name + "/Text");
-            AboutControlPrivacyStatement.Text = privacyState;
         }
 
         private void InitializeContributeTextBlock()
