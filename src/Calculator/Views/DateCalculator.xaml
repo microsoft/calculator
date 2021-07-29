@@ -30,6 +30,7 @@
                     <StaticResource x:Key="PreviousAndNextButtonForeground" ResourceKey="ControlStrongFillColorDefaultBrush"/>
                     <StaticResource x:Key="ViewsBorderBackground" ResourceKey="LayerOnAcrylicFillColorDefaultBrush"/>
                     <StaticResource x:Key="CalendarPanelBorderBrush" ResourceKey="ControlAltFillColorSecondaryBrush"/>
+                    <StaticResource x:Key="RootBorderBackgroundPointerOverAndPressed" ResourceKey="SubtleFillColorSecondaryBrush"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
                     <StaticResource x:Key="CalendarViewBackground" ResourceKey="SystemControlBackgroundAltHighBrush"/>
@@ -40,6 +41,7 @@
                     <StaticResource x:Key="PreviousAndNextButtonForeground" ResourceKey="SystemControlHyperlinkBaseMediumHighBrush"/>
                     <StaticResource x:Key="ViewsBorderBackground" ResourceKey="SystemControlBackgroundAltHighBrush"/>
                     <StaticResource x:Key="CalendarPanelBorderBrush" ResourceKey="SystemColorButtonFaceColor"/>
+                    <StaticResource x:Key="RootBorderBackgroundPointerOverAndPressed" ResourceKey="SystemControlTransparentBrush"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <StaticResource x:Key="CalendarViewBackground" ResourceKey="AcrylicBackgroundFillColorDefaultBrush"/>
@@ -50,6 +52,7 @@
                     <StaticResource x:Key="PreviousAndNextButtonForeground" ResourceKey="ControlStrongFillColorDefaultBrush"/>
                     <StaticResource x:Key="ViewsBorderBackground" ResourceKey="LayerOnAcrylicFillColorDefaultBrush"/>
                     <StaticResource x:Key="CalendarPanelBorderBrush" ResourceKey="ControlAltFillColorTertiaryBrush"/>
+                    <StaticResource x:Key="RootBorderBackgroundPointerOverAndPressed" ResourceKey="SubtleFillColorSecondaryBrush"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
@@ -421,21 +424,7 @@
                                                                 contract7Present:BackgroundSizing="{TemplateBinding BackgroundSizing}"
                                                                 contract7Present:CornerRadius="{TemplateBinding CornerRadius}"
                                                                 AutomationProperties.AccessibilityView="Raw">
-                                                            <Border.Resources>
-                                                                <ResourceDictionary>
-                                                                    <ResourceDictionary.ThemeDictionaries>
-                                                                        <ResourceDictionary x:Key="Default">
-                                                                            <StaticResource x:Key="RootBorderBackgroundPointerOverAndPressed" ResourceKey="SubtleFillColorSecondaryBrush"/>
-                                                                        </ResourceDictionary>
-                                                                        <ResourceDictionary x:Key="Light">
-                                                                            <StaticResource x:Key="RootBorderBackgroundPointerOverAndPressed" ResourceKey="SubtleFillColorSecondaryBrush"/>
-                                                                        </ResourceDictionary>
-                                                                        <ResourceDictionary x:Key="HighContrast">
-                                                                            <StaticResource x:Key="RootBorderBackgroundPointerOverAndPressed" ResourceKey="SystemControlTransparentBrush"/>
-                                                                        </ResourceDictionary>
-                                                                    </ResourceDictionary.ThemeDictionaries>
-                                                                </ResourceDictionary>
-                                                            </Border.Resources>
+
                                                             <VisualStateManager.VisualStateGroups>
                                                                 <VisualStateGroup x:Name="CommonStates">
                                                                     <VisualState x:Name="Normal"/>
