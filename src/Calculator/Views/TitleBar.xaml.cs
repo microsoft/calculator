@@ -7,6 +7,8 @@ using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation.Peers;
+using Windows.UI.Xaml.Automation.Provider;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -51,9 +53,7 @@ namespace CalculatorApp
             }));
 
         public event Windows.UI.Xaml.RoutedEventHandler AlwaysOnTopClick;
-
-        public delegate void BackButtonClickEventHandler(object sender);
-        public event BackButtonClickEventHandler BackButtonClick;
+        public event Windows.UI.Xaml.RoutedEventHandler BackButtonClick;
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -103,7 +103,9 @@ namespace CalculatorApp
         {
             if (!e.Handled && BackButton.IsEnabled)
             {
-                InvokeBackButton(sender) ;
+                var buttonPeer = new ButtonAutomationPeer(BackButton);
+                IInvokeProvider invokeProvider = buttonPeer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                invokeProvider.Invoke();
 
                 e.Handled = true;
             }
@@ -229,15 +231,9 @@ namespace CalculatorApp
             AlwaysOnTopClick?.Invoke(this, e);
         }
 
-        // Called when BackButton invoked, for example, by clicking, access key and etc.
-        private void InvokeBackButton(object sender)
-        {
-            BackButtonClick?.Invoke(this);
-        }
-
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            InvokeBackButton(sender);
+            BackButtonClick?.Invoke(this, e);
         }
 
         // Dependency properties for the color of the system title bar buttons
