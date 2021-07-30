@@ -30,6 +30,7 @@ namespace CalculatorApp::ViewModel::Common::Automation
         StringReference GraphViewBestFitChanged(L"GraphViewBestFitChanged");
         StringReference AlwaysOnTop(L"AlwaysOnTop");
         StringReference BitShiftRadioButtonContent(L"BitShiftRadioButtonContent");
+        StringReference SettingsPageOpened(L"SettingsPageOpened");
     }
 }
 
@@ -201,6 +202,15 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetBitShiftRadioButtonCheckedAnno
     return ref new NarratorAnnouncement(
         announcement,
         CalculatorActivityIds::BitShiftRadioButtonContent,
+        AutomationNotificationKind::ActionCompleted,
+        AutomationNotificationProcessing::ImportantMostRecent);
+}
+
+NarratorAnnouncement ^ CalculatorAnnouncement::GetSettingsPageOpenedAnnouncement(Platform::String ^ announcement)
+{
+    return ref new NarratorAnnouncement(
+        announcement,
+        CalculatorActivityIds::SettingsPageOpened,
         AutomationNotificationKind::ActionCompleted,
         AutomationNotificationProcessing::ImportantMostRecent);
 }

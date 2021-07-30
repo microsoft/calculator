@@ -4705,11 +4705,11 @@
   </data>
   <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
     <value>App theme</value>
-    <comment>Title of App Theme expender</comment>
+    <comment>Title of App Theme expander</comment>
   </data>
   <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
     <value>Select which app theme to display</value>
-    <comment>Description of App Theme expender</comment>
+    <comment>Description of App Theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>Light</value>
@@ -4722,5 +4722,17 @@
   <data name="SystemThemeRadioButton.Content" xml:space="preserve">
     <value>Use system setting</value>
     <comment>Lable for the app theme option to use system setting</comment>
+  </data>
+  <data name="TitleBarBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Back</value>
+    <comment>Screen reader prompt for the Back button in title bar to back to main page</comment>
+  </data>
+  <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
+    <value>Settings Page</value>
+    <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>App theme Setting</value>
+    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>

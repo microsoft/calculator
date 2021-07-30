@@ -157,6 +157,7 @@
         </muxc:NavigationView>
 
         <Popup x:Name="Popup"
+               AutomationProperties.AccessibilityView="Raw"
                Closed="Popup_Closed"
                HorizontalOffset="0"
                IsLightDismissEnabled="False"

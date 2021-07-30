@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using CalculatorApp.ViewModel.Common.Automation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -62,10 +63,19 @@ namespace CalculatorApp
         // OnLoaded would be invoked by Popup several times while contructed once
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
+            AnnouncePageOpened();
+
             var currentTheme = ThemeHelper.RootTheme.ToString();
             (ThemeRadioButtons.Items.Cast<RadioButton>().FirstOrDefault(c => c?.Tag?.ToString() == currentTheme)).IsChecked = true;
 
             SetDefaultFocus();
+        }
+
+        private void AnnouncePageOpened()
+        {
+            string announcementText = AppResourceProvider.GetInstance().GetResourceString("SettingsPageOpenedAnnouncement");
+            NarratorAnnouncement announcement = CalculatorAnnouncement.GetSettingsPageOpenedAnnouncement(announcementText);
+            NarratorNotifier.Announce(announcement);
         }
 
         // OnUnloaded would be invoked by Popup several times while contructed once
@@ -86,7 +96,6 @@ namespace CalculatorApp
         private void InitializeAboutContentTextBlock()
         {
             SetVersionString();
-            SetContentLinks();
         }
 
         private void SetVersionString()
@@ -94,16 +103,6 @@ namespace CalculatorApp
             PackageVersion version = Package.Current.Id.Version;
             string appName = AppResourceProvider.GetInstance().GetResourceString("AppName");
             AboutBuildVersion.Text = appName + " " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
-        }
-
-        private void SetContentLinks()
-        {
-            string eula = AppResourceProvider.GetInstance().GetResourceString(AboutEULA.Name + "/Text");
-            AboutEULA.Text = eula;
-            string agreement = AppResourceProvider.GetInstance().GetResourceString(AboutControlServicesAgreement.Name + "/Text");
-            AboutControlServicesAgreement.Text = agreement;
-            string privacyState = AppResourceProvider.GetInstance().GetResourceString(AboutControlPrivacyStatement.Name + "/Text");
-            AboutControlPrivacyStatement.Text = privacyState;
         }
 
         private void InitializeContributeTextBlock()
