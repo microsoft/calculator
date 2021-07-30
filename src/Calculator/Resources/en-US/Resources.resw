@@ -4705,11 +4705,11 @@
   </data>
   <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
     <value>App theme</value>
-    <comment>Title of App Theme expender</comment>
+    <comment>Title of App Theme expander</comment>
   </data>
   <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
     <value>Select which app theme to display</value>
-    <comment>Description of App Theme expender</comment>
+    <comment>Description of App Theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>Light</value>
@@ -4734,13 +4734,5 @@
   <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>App theme Setting</value>
     <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
-  </data>
-  <data name="LightThemeRadioButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Light mode</value>
-    <comment>Screen reader prompt for the App theme Light mode radio button</comment>
-  </data>
-  <data name="DarkThemeRadioButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Dark mode</value>
-    <comment>Screen reader prompt for the App theme Dark mode radio button</comment>
   </data>
 </root>
