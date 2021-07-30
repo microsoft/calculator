@@ -7,6 +7,8 @@ using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation.Peers;
+using Windows.UI.Xaml.Automation.Provider;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -63,6 +65,9 @@ namespace CalculatorApp
             m_accessibilitySettings.HighContrastChanged += OnHighContrastChanged;
             Window.Current.Activated += OnWindowActivated;
 
+            // Register the system back requested event
+            SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
+
             // Register RequestedTheme changed callback to update title bar system button colors.
             m_rootFrameRequestedThemeCallbackToken =
                 Utils.ThemeHelper.RegisterAppThemeChangedCallback(RootFrame_RequestedThemeChanged);
@@ -87,8 +92,23 @@ namespace CalculatorApp
             m_uiSettings.ColorValuesChanged -= ColorValuesChanged;
             m_accessibilitySettings.HighContrastChanged -= OnHighContrastChanged;
             Window.Current.Activated -= OnWindowActivated;
+
+            SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
+
             Utils.ThemeHelper.
                 UnregisterAppThemeChangedCallback(m_rootFrameRequestedThemeCallbackToken);
+        }
+
+        private void System_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (!e.Handled && BackButton.IsEnabled)
+            {
+                var buttonPeer = new ButtonAutomationPeer(BackButton);
+                IInvokeProvider invokeProvider = buttonPeer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                invokeProvider.Invoke();
+
+                e.Handled = true;
+            }
         }
 
         private void RootFrame_RequestedThemeChanged(DependencyObject sender, DependencyProperty dp)
@@ -211,6 +231,11 @@ namespace CalculatorApp
             AlwaysOnTopClick?.Invoke(this, e);
         }
 
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            BackButtonClick?.Invoke(this, e);
+        }
+
         // Dependency properties for the color of the system title bar buttons
         public Windows.UI.Xaml.Media.SolidColorBrush ButtonBackground
         {
@@ -294,10 +319,5 @@ namespace CalculatorApp
         private Windows.UI.ViewManagement.UISettings m_uiSettings;
         private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
         private Utils.ThemeHelper.ThemeChangedCallbackToken m_rootFrameRequestedThemeCallbackToken;
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            BackButtonClick?.Invoke(this, e);
-        }
     }
 }
