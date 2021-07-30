@@ -67,8 +67,6 @@ namespace CalculatorApp
 
             // Register the system back requested event
             SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
-            // Register the mouse back button event
-            Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
 
             // Register RequestedTheme changed callback to update title bar system button colors.
             m_rootFrameRequestedThemeCallbackToken =
@@ -96,20 +94,9 @@ namespace CalculatorApp
             Window.Current.Activated -= OnWindowActivated;
 
             SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
-            Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
 
             Utils.ThemeHelper.
                 UnregisterAppThemeChangedCallback(m_rootFrameRequestedThemeCallbackToken);
-        }
-
-        private void CoreWindow_PointerPressed(CoreWindow sender, PointerEventArgs e)
-        {
-            if (e.CurrentPoint.Properties.IsXButton1Pressed && BackButton.IsEnabled)
-            {
-                InvokeBackButton(sender);
-
-                e.Handled = true;
-            }
         }
 
         private void System_BackRequested(object sender, BackRequestedEventArgs e)

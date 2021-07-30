@@ -57,12 +57,7 @@
                     Click="BackButton_Click"
                     Content="&#xE72B;"
                     Visibility="Collapsed"
-                    IsEnabled="False">
-                <Button.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="Left" Modifiers="Menu"/>
-                    <KeyboardAccelerator Key="Escape" Modifiers="None"/>
-                </Button.KeyboardAccelerators>
-            </Button>
+                    IsEnabled="False"/>
 
             <Grid x:Name="BackgroundElement"
                   Grid.Column="1"
