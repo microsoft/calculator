@@ -1,5 +1,12 @@
-#!/bin/bash
+#!/usr/bin/bash
 
+if [[ "$(id -u)" -ne 0 ]];
+then
+  echo "
+Please, Run This Programm as Root!
+"
+  exit 1
+fi
 function usage {
     echo "Usage: $0 DIR..."
     exit 1
