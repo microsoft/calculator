@@ -4,6 +4,7 @@
              xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
              xmlns:converters="using:CalculatorApp.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:model="using:CalculatorApp.ViewModel"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
@@ -56,14 +57,14 @@
             </MenuFlyout>
 
             <DataTemplate x:Key="HistoryItemTemplate" x:DataType="model:HistoryItemViewModel">
-                <muxc:SwipeControl RightItems="{StaticResource HistorySwipeItems}">
+                <muxc:SwipeControl AutomationProperties.Name="{x:Bind local:HistoryList.GetHistoryItemAutomationName(AccExpression, AccResult)}" RightItems="{StaticResource HistorySwipeItems}">
                     <StackPanel Margin="0,6,16,6" Background="Transparent">
                         <TextBlock x:Name="ExprTextBlock"
                                    Margin="0,0,0,4"
                                    HorizontalAlignment="Right"
                                    Style="{ThemeResource BodyTextBlockMediumStyle}"
+                                   AutomationProperties.AccessibilityView="Raw"
                                    AutomationProperties.AutomationId="HistoryItemExpression"
-                                   AutomationProperties.Name="{x:Bind AccExpression}"
                                    IsTextSelectionEnabled="True"
                                    Text="{x:Bind Expression}"
                                    TextAlignment="Right"
@@ -71,8 +72,8 @@
                         <TextBlock x:Name="ResultTextBlock"
                                    HorizontalAlignment="Right"
                                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                                   AutomationProperties.AccessibilityView="Raw"
                                    AutomationProperties.AutomationId="HistoryItemValue"
-                                   AutomationProperties.Name="{x:Bind AccResult}"
                                    IsTextSelectionEnabled="True"
                                    Text="{x:Bind Result}"
                                    TextAlignment="Right"

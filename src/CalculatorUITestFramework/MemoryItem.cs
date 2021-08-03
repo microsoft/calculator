@@ -19,7 +19,7 @@ namespace CalculatorUITestFramework
 
         public string GetValue()
         {
-            return Item.FindElementByAccessibilityId("MemoryItemValue")?.Text;
+            return Item.Text;
         }
     }
 }

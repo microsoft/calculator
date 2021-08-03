@@ -88,10 +88,10 @@ namespace CalculatorUITests
             page.StandardOperators.EqualButton.Click();
 
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyItems[0].GetValue().Equals("-1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[0].GetExpression().Equals("2   -   3 =", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].GetValue().Equals("-5.6", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].GetExpression().Equals("-3   +   -2.6 =", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].GetValue().Equals("Minus (1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].GetExpression().Equals("2 Minus ( 3=", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].GetValue().Equals("Minus (5.6", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].GetExpression().Equals("-3 + -2.6=", StringComparison.InvariantCultureIgnoreCase));
 
             Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
 
@@ -134,17 +134,17 @@ namespace CalculatorUITests
 
             var historyPanelItems = page.HistoryPanel.GetAllHistoryListViewItems();
             Assert.IsTrue(historyPanelItems[0].GetValue().Equals("-1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyPanelItems[0].GetExpression().Equals("2   -   3 =", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyPanelItems[0].GetExpression().Equals("2 - 3=", StringComparison.InvariantCultureIgnoreCase));
             Assert.IsTrue(historyPanelItems[1].GetValue().Equals("-5.6", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyPanelItems[1].GetExpression().Equals("-3   +   -2.6 =", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyPanelItems[1].GetExpression().Equals("-3 + -2.6=", StringComparison.InvariantCultureIgnoreCase));
 
             Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
 
             var historyItems = page.HistoryPanel.GetAllHistoryFlyoutListViewItems();
             Assert.IsTrue(historyItems[0].GetValue().Equals("-1", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[0].GetExpression().Equals("2   -   3 =", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[0].GetExpression().Equals("2 - 3=", StringComparison.InvariantCultureIgnoreCase));
             Assert.IsTrue(historyItems[1].GetValue().Equals("-5.6", StringComparison.InvariantCultureIgnoreCase));
-            Assert.IsTrue(historyItems[1].GetExpression().Equals("-3   +   -2.6 =", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems[1].GetExpression().Equals("-3 + -2.6=", StringComparison.InvariantCultureIgnoreCase));
 
             Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
 
