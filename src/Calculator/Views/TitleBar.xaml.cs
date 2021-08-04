@@ -154,7 +154,7 @@ namespace CalculatorApp
             else
             {
                 leftAddition = m_coreTitleBar.SystemOverlayRightInset;
-                leftAddition = m_coreTitleBar.SystemOverlayLeftInset;
+                rightAddition = m_coreTitleBar.SystemOverlayLeftInset;
             }
 
             LayoutRoot.Padding = new Thickness(leftAddition, 0, rightAddition, 0);
