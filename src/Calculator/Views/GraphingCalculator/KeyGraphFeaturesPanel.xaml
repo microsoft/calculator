@@ -143,22 +143,22 @@
             </Style>
 
             <Style x:Name="KGF_ListViewItemContainerStyle" TargetType="ListViewItem">
-                <Setter Property="IsTabStop" Value="False"/>
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>
                 <Setter Property="Padding" Value="0,10"/>
             </Style>
 
             <DataTemplate x:Key="KGFRichEditDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
-                <StackPanel>
+                <StackPanel AutomationProperties.Name="{x:Bind Title, Mode=OneWay}">
                     <TextBlock x:Name="TitleTextBlock"
                                Style="{StaticResource KGF_TitleTextBlockStyle}"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                Text="{x:Bind Title, Mode=OneWay}"/>
-                    <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}" UseSystemFocusVisuals="True">
+                    <ItemsControl IsTabStop="False" ItemsSource="{x:Bind DisplayItems, Mode=OneWay}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
-                                <controls:MathRichEditBox Style="{StaticResource KGF_RichEditBoxStyle}" MathText="{x:Bind}"/>
+                                <controls:MathRichEditBox Style="{StaticResource KGF_RichEditBoxStyle}"
+                                                          IsTabStop="False"
+                                                          MathText="{x:Bind}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -194,12 +194,12 @@
             </DataTemplate>
 
             <DataTemplate x:Key="KGFTextBlockDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
-                <StackPanel>
+                <StackPanel AutomationProperties.Name="{x:Bind Title, Mode=OneWay}">
                     <TextBlock x:Name="TitleTextBlock"
                                Style="{StaticResource KGF_TitleTextBlockStyle}"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                Text="{x:Bind Title, Mode=OneWay}"/>
-                    <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}" UseSystemFocusVisuals="True">
+                    <ItemsControl IsTabStop="False" ItemsSource="{x:Bind DisplayItems, Mode=OneWay}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
                                 <TextBlock Style="{StaticResource KGF_TextBlockStyle}" Text="{x:Bind}"/>
