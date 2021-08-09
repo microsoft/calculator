@@ -66,13 +66,12 @@
                 <Grid x:Name="TitleHolder">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
                     <Image x:Name="AppIcon"
-                           Width="16"
-                           Height="16"
+                           Width="20"
+                           Height="20"
                            Margin="16,0,0,0"
                            VerticalAlignment="Center"
                            AutomationProperties.AccessibilityView="Raw"
@@ -80,7 +79,7 @@
                     <TextBlock x:Name="AppName"
                                x:Uid="AppName"
                                Grid.Column="1"
-                               Margin="16,0,16,0"
+                               Margin="12,0,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                FontSize="12"
