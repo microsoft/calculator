@@ -3591,6 +3591,10 @@
     <value>Arc Cosecant</value>
     <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
   </data>
+  <data name="invcscButton.[using:CalculatorApp.Common]KeyboardShortcutManager.VirtualKeyShiftChord" xml:space="preserve">
+    <value>I</value>
+    <comment>{Locked}The shortcut for the inverted sec button</comment>
+  </data>
   <data name="invcschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Hyperbolic Arc Cosecant</value>
     <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
