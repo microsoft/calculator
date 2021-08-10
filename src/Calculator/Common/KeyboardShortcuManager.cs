@@ -166,7 +166,7 @@ namespace CalculatorApp
 
             public static readonly DependencyProperty VirtualKeyControlChordProperty =
                 DependencyProperty.RegisterAttached(
-                    "VirtualKey",
+                    "VirtualKeyControlChord",
                     typeof(MyVirtualKey),
                     typeof(KeyboardShortcutManager),
                     new PropertyMetadata(default(MyVirtualKey), (sender, args) =>
@@ -186,7 +186,7 @@ namespace CalculatorApp
 
             public static readonly DependencyProperty VirtualKeyShiftChordProperty =
                 DependencyProperty.RegisterAttached(
-                    "VirtualKey",
+                    "VirtualKeyShiftChord",
                     typeof(MyVirtualKey),
                     typeof(KeyboardShortcutManager),
                     new PropertyMetadata(default(MyVirtualKey), (sender, args) =>
@@ -206,7 +206,7 @@ namespace CalculatorApp
 
             public static readonly DependencyProperty VirtualKeyAltChordProperty =
                 DependencyProperty.RegisterAttached(
-                    "VirtualKey",
+                    "VirtualKeyAltChord",
                     typeof(MyVirtualKey),
                     typeof(KeyboardShortcutManager),
                     new PropertyMetadata(default(MyVirtualKey), (sender, args) =>
@@ -226,7 +226,7 @@ namespace CalculatorApp
 
             public static readonly DependencyProperty VirtualKeyControlShiftChordProperty =
                 DependencyProperty.RegisterAttached(
-                    "VirtualKey",
+                    "VirtualKeyControlShiftChord",
                     typeof(MyVirtualKey),
                     typeof(KeyboardShortcutManager),
                     new PropertyMetadata(default(MyVirtualKey), (sender, args) =>
