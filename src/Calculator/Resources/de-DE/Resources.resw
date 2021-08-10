@@ -2318,7 +2318,7 @@
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutFlyoutContribute" xml:space="preserve">
-    <value>Um zu erfahren, wie Sie dem Windows-Rechner mitwirken können, checken Sie das Projekt auf %HL%GitHub%HL% aus.</value>
+    <value>Um zu erfahren, wie Sie am Windows-Rechner mitwirken können, checken Sie das Projekt auf %HL%GitHub%HL% aus.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutButton.Content" xml:space="preserve">
@@ -3551,7 +3551,7 @@
     <comment>Error that occurs during graphing when mutually exclusive conditions are used.</comment>
   </data>
   <data name="OutOfDomain" xml:space="preserve">
-    <value>Die Gleichung lieg außerhalb des Bereichs.</value>
+    <value>Die Gleichung liegt außerhalb des Bereichs.</value>
     <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
   <data name="GE_NotSupported" xml:space="preserve">
@@ -3611,7 +3611,7 @@
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
     </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
-    <value>Eine mathematischer Operation weist die falsche Anzahl von Parametern auf.</value>
+    <value>Eine mathematische Operation weist die falsche Anzahl von Parametern auf.</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
   </data>
   <data name="InvalidVariableNameFormat" xml:space="preserve">
@@ -3639,7 +3639,7 @@
     <comment>Error that occurs during graphing when trying to use bases incorrect. Ex: base(2,1020).</comment>
   </data>
   <data name="InvalidNumberBase" xml:space="preserve">
-    <value>Die Basis muss größer als 2 und kleiner als 36</value>
+    <value>Die Basis muss größer als 2 und kleiner als 36 sein</value>
     <comment>Error that occurs during graphing when the base is out of range.</comment>
   </data>
   <data name="InvalidVariableSpecification" xml:space="preserve">
