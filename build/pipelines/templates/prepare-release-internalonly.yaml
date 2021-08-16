@@ -65,7 +65,7 @@ jobs:
       pushPkgName: calculator.app
       version: $(versionMajor).$(versionMinor).$(versionBuild)
       owner: paxeeapps
-      provData: false
+      provData: true
 
 
   - task: PublishBuildArtifacts@1
