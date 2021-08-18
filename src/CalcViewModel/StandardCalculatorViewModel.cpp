@@ -1201,7 +1201,6 @@ void StandardCalculatorViewModel::SetCalculatorType(ViewMode targetState)
 
     case ViewMode::Programmer:
         IsProgrammer = true;
-        ResetDisplay();
         SetPrecision(ProgrammerModePrecision);
         break;
     }
