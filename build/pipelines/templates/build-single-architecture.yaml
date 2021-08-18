@@ -22,6 +22,19 @@ jobs:
   - checkout: self
     fetchDepth: 1
 
+  - ${{ if eq(parameters.isReleaseBuild, true) }}:
+    - task: UniversalPackages@0
+      displayName: Download internals package
+      inputs:
+        command: download
+        downloadDirectory: $(Build.SourcesDirectory)
+        vstsFeed: WindowsInboxApps
+        vstsFeedPackage: calculator-internals
+        ${{ if eq(parameters.isPublicRelease, true) }}:
+          vstsPackageVersion: 0.0.66
+        ${{ if eq(parameters.isPublicRelease, false) }}:
+          vstsPackageVersion: 0.0.65
+
   - task: NuGetToolInstaller@1
     displayName: Use NuGet 5.x
     inputs:
@@ -58,19 +71,7 @@ jobs:
       pathToPublish: $(Build.BinariesDirectory)
       parallel: true
 
-  - ${{ if eq(parameters.isReleaseBuild, true) }}:
-    - task: UniversalPackages@0
-      displayName: Download internals package
-      inputs:
-        command: download
-        downloadDirectory: $(Build.SourcesDirectory)
-        vstsFeed: WindowsInboxApps
-        vstsFeedPackage: calculator-internals
-        ${{ if eq(parameters.isPublicRelease, true) }}:
-          vstsPackageVersion: 0.0.66
-        ${{ if eq(parameters.isPublicRelease, false) }}:
-          vstsPackageVersion: 0.0.65
-          
+  - ${{ if eq(parameters.isReleaseBuild, true) }}:          
     - task: PublishSymbols@2
       displayName: Publish symbols
       inputs:
