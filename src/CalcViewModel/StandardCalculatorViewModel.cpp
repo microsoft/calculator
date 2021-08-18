@@ -1188,14 +1188,14 @@ void StandardCalculatorViewModel::SetCalculatorType(ViewMode targetState)
     {
     case ViewMode::Standard:
         IsStandard = true;
-        ResetDisplay();
+        ResetRadix();
         SetPrecision(StandardModePrecision);
         UpdateMaxIntDigits();
         break;
 
     case ViewMode::Scientific:
         IsScientific = true;
-        ResetDisplay();
+        ResetRadix();
         SetPrecision(ScientificModePrecision);
         break;
 
@@ -1226,7 +1226,7 @@ String ^ StandardCalculatorViewModel::GetLocalizedStringFormat(String ^ format, 
     return LocalizationStringUtil::GetLocalizedString(format, displayValue);
 }
 
-void StandardCalculatorViewModel::ResetDisplay()
+void StandardCalculatorViewModel::ResetRadix()
 {
     AreHEXButtonsEnabled = false;
     CurrentRadixType = NumberBase::DecBase;
