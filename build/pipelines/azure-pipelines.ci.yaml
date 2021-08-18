@@ -16,21 +16,21 @@ pr:
 name: 0.$(Date:yyMM).$(DayOfMonth)$(Rev:rr).0
 
 jobs:
-- template: ./templates/build-app-public.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
     platform: x64
 
-- template: ./templates/build-app-public.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
     platform: x86
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/build-app-public.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
     platform: ARM
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/build-app-public.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
     platform: ARM64
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
