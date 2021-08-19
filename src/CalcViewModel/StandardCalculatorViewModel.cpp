@@ -1188,20 +1188,20 @@ void StandardCalculatorViewModel::SetCalculatorType(ViewMode targetState)
     {
     case ViewMode::Standard:
         IsStandard = true;
-        ResetDisplay();
+        ResetRadixAndUpdateMemory(true);
         SetPrecision(StandardModePrecision);
         UpdateMaxIntDigits();
         break;
 
     case ViewMode::Scientific:
         IsScientific = true;
-        ResetDisplay();
+        ResetRadixAndUpdateMemory(true);
         SetPrecision(ScientificModePrecision);
         break;
 
     case ViewMode::Programmer:
         IsProgrammer = true;
-        ResetDisplay();
+        ResetRadixAndUpdateMemory(false);
         SetPrecision(ProgrammerModePrecision);
         break;
     }
@@ -1227,11 +1227,18 @@ String ^ StandardCalculatorViewModel::GetLocalizedStringFormat(String ^ format, 
     return LocalizationStringUtil::GetLocalizedString(format, displayValue);
 }
 
-void StandardCalculatorViewModel::ResetDisplay()
+void StandardCalculatorViewModel::ResetRadixAndUpdateMemory(bool resetRadix)
 {
-    AreHEXButtonsEnabled = false;
-    CurrentRadixType = NumberBase::DecBase;
-    m_standardCalculatorManager.SetRadix(RadixType::Decimal);
+    if (resetRadix)
+    {
+        AreHEXButtonsEnabled = false;
+        CurrentRadixType = NumberBase::DecBase;
+        m_standardCalculatorManager.SetRadix(RadixType::Decimal);
+    }
+    else
+    {
+        m_standardCalculatorManager.SetMemorizedNumbersString();
+    }
 }
 
 void StandardCalculatorViewModel::SetPrecision(int32_t precision)

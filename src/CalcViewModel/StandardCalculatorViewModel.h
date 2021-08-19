@@ -283,7 +283,7 @@ namespace CalculatorApp
             void Recalculate(bool fromHistory = false);
             bool IsOperator(CalculationManager::Command cmdenum);
             void SetMemorizedNumbersString();   
-            void ResetDisplay();
+            void ResetRadixAndUpdateMemory(bool resetRadix);
           
             void SetPrecision(int32_t precision);
             void UpdateMaxIntDigits()
