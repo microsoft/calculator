@@ -803,6 +803,14 @@ namespace CalculatorUnitTests
             MemoryItemViewModel ^ memorySlotScientific = (MemoryItemViewModel ^) m_viewModel->MemorizedNumbers->GetAt(0);
             VERIFY_ARE_EQUAL(Platform::StringReference(L"1,001.1"), memorySlotScientific->Value);
             ChangeMode(m_viewModel, 2 /*Programmer*/);
+            TESTITEM items2[] = {
+                { NumbersAndOperatorsEnum::One, L"1", L"" },          { NumbersAndOperatorsEnum::Zero, L"10", L"" },
+                { NumbersAndOperatorsEnum::Zero, L"100", L"" },       { NumbersAndOperatorsEnum::One, L"1,001", L"" },
+                { NumbersAndOperatorsEnum::None, L"", L"" },
+            };
+            ValidateViewModelByCommands(m_viewModel, items2, true);
+            m_viewModel->OnMemoryButtonPressed();
+            m_viewModel->OnMemoryItemPressed(ref new Platform::Box<int>(0));
             MemoryItemViewModel ^ memorySlotProgrammer = (MemoryItemViewModel ^) m_viewModel->MemorizedNumbers->GetAt(0);
             VERIFY_ARE_EQUAL(Platform::StringReference(L"1,001"), memorySlotProgrammer->Value);
         }
