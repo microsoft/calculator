@@ -57,7 +57,7 @@ jobs:
 
   # This must be the first task in the job definition, since it modifies the build environment
   # in ways other tasks would not expect (for example, it clears the artifacts directory).
-  - task: PkgESSetupBuild@12
+  - task: PkgESSetupBuild@10
     displayName: Initialize Package ES
     inputs:
       productName: Calculator
