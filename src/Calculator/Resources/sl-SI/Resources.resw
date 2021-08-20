@@ -2301,7 +2301,7 @@
     <value>Nazaj</value>
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
-  <data name="AboutFlyoutEULA.Text" xml:space="preserve">
+  <data name="AboutEULA.Text" xml:space="preserve">
     <value>Licenčni pogoji za Microsoftovo programsko opremo  </value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
@@ -2317,13 +2317,13 @@
     <value>© %1 Microsoft. Vse pravice pridržane.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
-  <data name="AboutFlyoutContribute" xml:space="preserve">
+  <data name="AboutControlContribute" xml:space="preserve">
     <value>Če želite izvedeti, kako lahko prispeva v Windows računalo, si oglejte projekt v %HL%GitHub%HL%.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
-  <data name="AboutButton.Content" xml:space="preserve">
+  <data name="AboutGroupTitle.Text" xml:space="preserve">
     <value>Vizitka</value>
-    <comment>The text that shows in the dropdown navigation control to open About panel</comment>
+    <comment>Subtitle of about message on Settings page</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
     <value>Pošlji povratne informacije</value>
@@ -2694,10 +2694,6 @@
   <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
     <value>Menjalnih tečajev ni bilo mogoče posodobiti</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
-  </data>
-  <data name="AboutButton.AccessKey" xml:space="preserve">
-    <value>AB</value>
-    <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
@@ -4129,5 +4125,45 @@
   <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
     <value>Izbrana je možnost krožnega pomika s prenosom</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="SettingsHeader.Text" xml:space="preserve">
+    <value>Nastavitve</value>
+    <comment>Header text of Settings page</comment>
+  </data>
+  <data name="SettingsAppearance.Text" xml:space="preserve">
+    <value>Videz</value>
+    <comment>Subtitle of appearance setting on Settings page</comment>
+  </data>
+  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+    <value>Tema aplikacije</value>
+    <comment>Title of App Theme expander</comment>
+  </data>
+  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+    <value>Izberite temo aplikacije za prikaz</value>
+    <comment>Description of App Theme expander</comment>
+  </data>
+  <data name="LightThemeRadioButton.Content" xml:space="preserve">
+    <value>Svetlo</value>
+    <comment>Lable for light theme option</comment>
+  </data>
+  <data name="DarkThemeRadioButton.Content" xml:space="preserve">
+    <value>Temno</value>
+    <comment>Lable for dark theme option</comment>
+  </data>
+  <data name="SystemThemeRadioButton.Content" xml:space="preserve">
+    <value>Uporabi sistemsko nastavitev</value>
+    <comment>Lable for the app theme option to use system setting</comment>
+  </data>
+  <data name="TitleBarBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Nazaj</value>
+    <comment>Screen reader prompt for the Back button in title bar to back to main page</comment>
+  </data>
+  <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
+    <value>Stran z nastavitvami</value>
+    <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Nastavitev teme aplikacije</value>
+    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>
