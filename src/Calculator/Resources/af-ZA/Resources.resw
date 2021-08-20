@@ -2301,7 +2301,7 @@
     <value>Terug</value>
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
-  <data name="AboutFlyoutEULA.Text" xml:space="preserve">
+  <data name="AboutEULA.Text" xml:space="preserve">
     <value>Microsoft-programmatuurlisensiebepalings</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
@@ -2317,13 +2317,13 @@
     <value>© %1 Microsoft. Alle regte voorbehou.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
-  <data name="AboutFlyoutContribute" xml:space="preserve">
+  <data name="AboutControlContribute" xml:space="preserve">
     <value>Om uit te vind hoe om tot Windows-Sakrekenaar by te dra, gaan kyk na die projek op %HL%GitHub%HL%.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
-  <data name="AboutButton.Content" xml:space="preserve">
+  <data name="AboutGroupTitle.Text" xml:space="preserve">
     <value>Inligting oor</value>
-    <comment>The text that shows in the dropdown navigation control to open About panel</comment>
+    <comment>Subtitle of about message on Settings page</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
     <value>Stuur terugvoer</value>
@@ -2680,7 +2680,7 @@
     <comment>The text displayed when currency ratio data fails to load.</comment>
   </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
-    <value>Vanlyn. Kontroleer asseblief jou%HL%netwerkinstellings%HL%</value>
+    <value>Vanlyn. Kontroleer asseblief jou%HL%Netwerkinstellings%HL%</value>
     <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
   </data>
   <data name="UpdatingCurrencyRates" xml:space="preserve">
@@ -2694,10 +2694,6 @@
   <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
     <value>Kon nie tariewe bywerk nie</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
-  </data>
-  <data name="AboutButton.AccessKey" xml:space="preserve">
-    <value>AB</value>
-    <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
@@ -4129,5 +4125,45 @@
   <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
     <value>Draai deur dra-sirkelvormige skuif is gekies</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="SettingsHeader.Text" xml:space="preserve">
+    <value>Instellings</value>
+    <comment>Header text of Settings page</comment>
+  </data>
+  <data name="SettingsAppearance.Text" xml:space="preserve">
+    <value>Voorkoms</value>
+    <comment>Subtitle of appearance setting on Settings page</comment>
+  </data>
+  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+    <value>Toepassingtema</value>
+    <comment>Title of App Theme expander</comment>
+  </data>
+  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+    <value>Kies watter toepassingtema om te vertoon</value>
+    <comment>Description of App Theme expander</comment>
+  </data>
+  <data name="LightThemeRadioButton.Content" xml:space="preserve">
+    <value>Lig</value>
+    <comment>Lable for light theme option</comment>
+  </data>
+  <data name="DarkThemeRadioButton.Content" xml:space="preserve">
+    <value>Donker</value>
+    <comment>Lable for dark theme option</comment>
+  </data>
+  <data name="SystemThemeRadioButton.Content" xml:space="preserve">
+    <value>Gebruik stelselinstelling</value>
+    <comment>Lable for the app theme option to use system setting</comment>
+  </data>
+  <data name="TitleBarBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Terug</value>
+    <comment>Screen reader prompt for the Back button in title bar to back to main page</comment>
+  </data>
+  <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
+    <value>Instellings-bladsy</value>
+    <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Toepassingtema-instelling</value>
+    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>

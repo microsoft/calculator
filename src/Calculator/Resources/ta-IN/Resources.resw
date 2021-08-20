@@ -2301,7 +2301,7 @@
     <value>பின்செல்</value>
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
-  <data name="AboutFlyoutEULA.Text" xml:space="preserve">
+  <data name="AboutEULA.Text" xml:space="preserve">
     <value>Microsoft மென்பொருள் உரிம விதிமுறைகள்</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
@@ -2317,13 +2317,13 @@
     <value>© %1 Microsoft. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
-  <data name="AboutFlyoutContribute" xml:space="preserve">
+  <data name="AboutControlContribute" xml:space="preserve">
     <value>எவ்வாறு Windows கால்குலேட்டருக்கு நீங்கள் பங்களிக்க முடியும் என்பதை அறிய, %HL%GitHub%HL%-இல் திட்டப்பணியை பார்க்கவும்.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
-  <data name="AboutButton.Content" xml:space="preserve">
+  <data name="AboutGroupTitle.Text" xml:space="preserve">
     <value>இது பற்றி</value>
-    <comment>The text that shows in the dropdown navigation control to open About panel</comment>
+    <comment>Subtitle of about message on Settings page</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
     <value>பின்னூட்டம் அனுப்பு</value>
@@ -2694,10 +2694,6 @@
   <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
     <value>விகிதங்களைப் புதுப்பிக்க முடியவில்லை</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
-  </data>
-  <data name="AboutButton.AccessKey" xml:space="preserve">
-    <value>AB</value>
-    <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
@@ -4130,5 +4126,45 @@
   <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
     <value>தேர்ந்தெடுக்கப்பட்ட எடுத்துச்செல்லும் வட்ட மாற்றத்தின் வழியாக சுழற்று</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="SettingsHeader.Text" xml:space="preserve">
+    <value>அமைப்புகள்</value>
+    <comment>Header text of Settings page</comment>
+  </data>
+  <data name="SettingsAppearance.Text" xml:space="preserve">
+    <value>தோற்றம்</value>
+    <comment>Subtitle of appearance setting on Settings page</comment>
+  </data>
+  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+    <value>பயன்பாட்டு தீம்</value>
+    <comment>Title of App Theme expander</comment>
+  </data>
+  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+    <value>எந்தப் பயன்பாட்டு கருப்பொருளைக் காண்பிக்க வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும்</value>
+    <comment>Description of App Theme expander</comment>
+  </data>
+  <data name="LightThemeRadioButton.Content" xml:space="preserve">
+    <value>லைட்</value>
+    <comment>Lable for light theme option</comment>
+  </data>
+  <data name="DarkThemeRadioButton.Content" xml:space="preserve">
+    <value>இருள்</value>
+    <comment>Lable for dark theme option</comment>
+  </data>
+  <data name="SystemThemeRadioButton.Content" xml:space="preserve">
+    <value>முறைமை அமைப்பைப் பயன்படுத்தவும்</value>
+    <comment>Lable for the app theme option to use system setting</comment>
+  </data>
+  <data name="TitleBarBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>பின்செல்</value>
+    <comment>Screen reader prompt for the Back button in title bar to back to main page</comment>
+  </data>
+  <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
+    <value>அமைப்புகள் பக்கம்</value>
+    <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>பயன்பாட்டின் கருப்பொருள் அமைப்பு</value>
+    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>

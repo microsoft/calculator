@@ -2301,7 +2301,7 @@
     <value>Назад</value>
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
-  <data name="AboutFlyoutEULA.Text" xml:space="preserve">
+  <data name="AboutEULA.Text" xml:space="preserve">
     <value>Умови ліцензії на програмний продукт Microsoft</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
@@ -2317,13 +2317,13 @@
     <value>© Корпорація Майкрософт (Microsoft Corporation), %1. Усі права захищено.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
-  <data name="AboutFlyoutContribute" xml:space="preserve">
+  <data name="AboutControlContribute" xml:space="preserve">
     <value>Щоб дізнатися, як можна брати участь у калькулятор Windows, візьміть проект на редагування %HL%GitHub%HL%.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
-  <data name="AboutButton.Content" xml:space="preserve">
-    <value>Відомості</value>
-    <comment>The text that shows in the dropdown navigation control to open About panel</comment>
+  <data name="AboutGroupTitle.Text" xml:space="preserve">
+    <value>Інформація</value>
+    <comment>Subtitle of about message on Settings page</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
     <value>Надіслати відгук</value>
@@ -2694,10 +2694,6 @@
   <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
     <value>Не вдалося оновити курси</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
-  </data>
-  <data name="AboutButton.AccessKey" xml:space="preserve">
-    <value>AB</value>
-    <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
@@ -4129,5 +4125,45 @@
   <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
     <value>Вибрано циклічний зсув (поворот через перенос)</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="SettingsHeader.Text" xml:space="preserve">
+    <value>Настройки</value>
+    <comment>Header text of Settings page</comment>
+  </data>
+  <data name="SettingsAppearance.Text" xml:space="preserve">
+    <value>Вигляд</value>
+    <comment>Subtitle of appearance setting on Settings page</comment>
+  </data>
+  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+    <value>Тема програми</value>
+    <comment>Title of App Theme expander</comment>
+  </data>
+  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+    <value>Виберіть тему програми для відображення</value>
+    <comment>Description of App Theme expander</comment>
+  </data>
+  <data name="LightThemeRadioButton.Content" xml:space="preserve">
+    <value>Світла</value>
+    <comment>Lable for light theme option</comment>
+  </data>
+  <data name="DarkThemeRadioButton.Content" xml:space="preserve">
+    <value>Темна</value>
+    <comment>Lable for dark theme option</comment>
+  </data>
+  <data name="SystemThemeRadioButton.Content" xml:space="preserve">
+    <value>Використовувати системний параметр</value>
+    <comment>Lable for the app theme option to use system setting</comment>
+  </data>
+  <data name="TitleBarBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Назад</value>
+    <comment>Screen reader prompt for the Back button in title bar to back to main page</comment>
+  </data>
+  <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
+    <value>Сторінка настройок</value>
+    <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Параметр теми програми</value>
+    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>
