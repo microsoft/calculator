@@ -440,10 +440,6 @@ namespace CalculatorApp
 
             mainPage.UnregisterEventHandlers();
 
-            // TODO, remove this workaround after Mica fix
-            // Workaround app crash caused by Mica in multi-view case.
-            Microsoft.UI.Xaml.Controls.BackdropMaterial.SetApplyToRootOrPageBackground(mainPage, false);
-
             await frameService.HandleViewRelease();
             await Task.Run(() =>
             {

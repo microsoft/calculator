@@ -102,6 +102,7 @@
                              Loaded="OnNavLoaded"
                              MenuItemsSource="{x:Bind CreateUIElementsForCategories(Model.Categories), Mode=OneWay}"
                              OpenPaneLength="{x:Bind NavigationViewOpenPaneLength(Model.IsAlwaysOnTop), Mode=OneWay}"
+                             PaneDisplayMode="LeftMinimal"
                              PaneClosed="OnNavPaneClosed"
                              PaneOpened="OnNavPaneOpened"
                              SelectionChanged="OnNavSelectionChanged"
