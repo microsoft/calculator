@@ -519,6 +519,12 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 
         if (wParam == IDC_OPENP)
         {
+            // if there's an omitted multiplication sign 
+            if (IsDigitOpCode(m_nLastCom) || m_nLastCom == IDC_PNT || m_nLastCom == IDC_CLOSEP)
+            {
+                ProcessCommand(IDC_MUL);
+            }
+
             CheckAndAddLastBinOpToHistory();
             m_HistoryCollector.AddOpenBraceToHistory();
 
