@@ -18,21 +18,18 @@ name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
 jobs:
 - template: ./templates/build-single-architecture.yaml
   parameters:
-    platform: x64
-    isPublicRelease: true
+    platform: x64    
     isReleaseBuild: true
 
 - template: ./templates/build-single-architecture.yaml
   parameters:
-    platform: x86
-    isPublicRelease: true
+    platform: x86    
     isReleaseBuild: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/build-single-architecture.yaml
   parameters:
-    platform: ARM
-    isPublicRelease: true
+    platform: ARM    
     isReleaseBuild: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
