@@ -2,7 +2,7 @@
 
 parameters:
   isReleaseBuild: false
-  downloadVersion65: false
+  useTestVersionOfInternalsPackage: false
   platform: ''
   condition: ''
 
@@ -31,9 +31,9 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        ${{ if eq(parameters.downloadVersion65, false) }}:
+        ${{ if eq(parameters.useTestVersionOfInternalsPackage, false) }}:
           vstsPackageVersion: 0.0.66
-        ${{ if eq(parameters.downloadVersion65, true) }}:
+        ${{ if eq(parameters.useTestVersionOfInternalsPackage, true) }}:
           vstsPackageVersion: 0.0.65
 
   - task: NuGetToolInstaller@1
