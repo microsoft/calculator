@@ -633,16 +633,16 @@ namespace CalculatorManagerTest
 
         Command commands3[] = { Command::Command1,      Command::Command2,     Command::CommandCLOSEP,
                                 Command::CommandCLOSEP, Command::CommandOPENP, Command::CommandNULL };
-        TestDriver::Test(L"12", L"(", commands3, true, true);
+        TestDriver::Test(L"12", L"12 \x00D7 (", commands3, true, true);
 
         Command commands4[] = {
             Command::Command2, Command::CommandOPENP, Command::Command2, Command::CommandCLOSEP, Command::CommandADD, Command::CommandNULL
         };
-        TestDriver::Test(L"2", L"(2) + ", commands4, true, true);
+        TestDriver::Test(L"4", L"2 \x00D7 (2) + ", commands4, true, true);
 
         Command commands5[] = { Command::Command2,   Command::CommandOPENP, Command::Command2,   Command::CommandCLOSEP,
                                 Command::CommandADD, Command::CommandEQU,   Command::CommandNULL };
-        TestDriver::Test(L"4", L"(2) + 2=", commands5, true, true);
+        TestDriver::Test(L"8", L"2 \x00D7 (2) + 4=", commands5, true, true);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientificError()
