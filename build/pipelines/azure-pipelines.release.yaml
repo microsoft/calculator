@@ -16,21 +16,21 @@ variables:
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
 
 jobs:
-- template: ./templates/build-app-internal.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
     platform: x64
-    isPublicRelease: true
+    isReleaseBuild: true
 
-- template: ./templates/build-app-internal.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
     platform: x86
-    isPublicRelease: true
+    isReleaseBuild: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/build-app-internal.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
     platform: ARM
-    isPublicRelease: true
+    isReleaseBuild: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/run-unit-tests.yaml
@@ -44,5 +44,7 @@ jobs:
 - template: ./templates/package-appxbundle.yaml
   parameters:
     signBundle: true
+    createStoreBrokerPackages: true
 
-- template: ./templates/prepare-release-internalonly.yaml
+- template: ./templates/release-store.yaml
+- template: ./templates/release-vpack.yaml

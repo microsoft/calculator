@@ -13,16 +13,22 @@ pr: none
 name: 0.$(Date:yyMM).$(DayOfMonth)$(Rev:rr).0
 
 jobs:
-- template: ./templates/build-app-internal.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
+    isReleaseBuild: true
+    useTestVersionOfInternalsPackage: true
     platform: x64
 
-- template: ./templates/build-app-internal.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
+    isReleaseBuild: true
+    useTestVersionOfInternalsPackage: true
     platform: x86
 
-- template: ./templates/build-app-internal.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
+    isReleaseBuild: true
+    useTestVersionOfInternalsPackage: true
     platform: ARM
 
 - template: ./templates/run-ui-tests.yaml
@@ -44,3 +50,5 @@ jobs:
     platform: x86
 
 - template: ./templates/package-appxbundle.yaml
+  parameters:    
+    useTestVersionOfInternalsPackage: true
