@@ -3119,6 +3119,10 @@
     <value>Update rates</value>
     <comment>The text displayed for a hyperlink button that refreshes currency converter ratios.</comment>
   </data>
+  <data name="RefreshButtonText.[using:Windows.UI.Xaml.Automation]AutomationProperties.LocalizedControlType" xml:space="preserve" >
+    <value>Button</value>
+    <comment>Makes Narrator to read this hyperlink as a button control.</comment>
+  </data>
   <data name="DataChargesMayApply" xml:space="preserve">
     <value>Data charges may apply.</value>
     <comment>The text displayed when users are on a metered connection and using currency converter.</comment>
