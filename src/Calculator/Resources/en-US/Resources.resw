@@ -2866,11 +2866,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabit" xml:space="preserve">
-    <value>Yottabit</value>
+    <value>Yottabits</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabyte" xml:space="preserve">
-    <value>Yottabyte</value>
+    <value>Yottabytes</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibits" xml:space="preserve">
@@ -4211,7 +4211,7 @@
     <comment>Error that occurs during graphing when the base is out of range.</comment>
   </data>
   <data name="InvalidVariableSpecification" xml:space="preserve">
-    <value>A mathematical operation requires one of its paramaters to be a variable</value>
+    <value>A mathematical operation requires one of its parameters to be a variable</value>
     <comment>Error that occurs during graphing when a function requires a variable in a particular position. Ex: 2nd argument of deriv.</comment>
   </data>
   <data name="ExpectingLogicalOperands" xml:space="preserve">
@@ -4656,7 +4656,7 @@
     <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
   </data>
   <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Function Anaylsis</value>
+    <value>Function Analysis</value>
     <comment>Screen reader prompt for the function analysis grid</comment>
   </data>
   <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
