@@ -85,7 +85,7 @@ namespace
 
         if (ullOperand <= UINT32_MAX)
         {
-            *pulResult = (uint32_t)ullOperand;
+            *pulResult = static_cast<uint32_t>(ullOperand);
             hr = S_OK;
         }
 
@@ -130,7 +130,7 @@ void* zmalloc(size_t a)
 
 void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER* const src)
 {
-    memcpy(dest, src, (int)(sizeof(NUMBER) + ((src)->cdigit) * (sizeof(MANTTYPE))));
+    memcpy(dest, src, (sizeof(NUMBER) + static_cast<size_t>((src)->cdigit) * (sizeof(MANTTYPE))));
 }
 
 //-----------------------------------------------------------------------------
@@ -230,9 +230,7 @@ PNUMBER _createnum(_In_ uint32_t size)
 PRAT _createrat(void)
 
 {
-    PRAT prat = nullptr;
-
-    prat = (PRAT)zmalloc(sizeof(RAT));
+    PRAT prat = (PRAT)zmalloc(sizeof(RAT));
 
     if (prat == nullptr)
     {
@@ -310,9 +308,9 @@ PNUMBER nRadixxtonum(_In_ PNUMBER a, uint32_t radix, int32_t precision)
     // limit the digits to the minimum of the existing precision or the
     // requested precision.
     uint32_t cdigits = precision + 1;
-    if (cdigits > (uint32_t)a->cdigit)
+    if (cdigits > static_cast<uint32_t>(a->cdigit))
     {
-        cdigits = (uint32_t)a->cdigit;
+        cdigits = static_cast<uint32_t>(a->cdigit);
     }
 
     // scale by the internal base to the internal exponent offset of the LSD
@@ -322,7 +320,7 @@ PNUMBER nRadixxtonum(_In_ PNUMBER a, uint32_t radix, int32_t precision)
     for (MANTTYPE* ptr = &(a->mant[a->cdigit - 1]); cdigits > 0; ptr--, cdigits--)
     {
         // Loop over all the bits from MSB to LSB
-        for (uint32_t bitmask = BASEX / 2; bitmask > 0; bitmask /= 2)
+        for (uint32_t bitmask = BASEX >> 1; bitmask; bitmask >>= 1)
         {
             addnum(&sum, sum, radix);
             if (*ptr & bitmask)
@@ -364,7 +362,7 @@ PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix)
     ptrdigit += a->cdigit - 1;
 
     PNUMBER thisdigit = nullptr; // thisdigit holds the current digit of a
-    for (int32_t idigit = 0; idigit < a->cdigit; idigit++)
+    for (auto idigit = a->cdigit; idigit > 0; --idigit)
     {
         mulnumx(&pnumret, num_radix);
         // WARNING:
@@ -611,8 +609,8 @@ wchar_t NormalizeCharDigit(wchar_t c, uint32_t radix)
 
 PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precision)
 {
-    int32_t expSign = 1L;  // expSign is exponent sign ( +/- 1 )
-    int32_t expValue = 0L; // expValue is exponent mantissa, should be unsigned
+    int32_t expSign = 1L;    // expSign is exponent sign ( +/- 1 )
+    uint32_t expValue = 0UL; // expValue is exponent mantissa, should be unsigned
 
     PNUMBER pnumret = nullptr;
     createnum(pnumret, static_cast<uint32_t>(numberString.length()));
@@ -673,7 +671,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
             if (pos != wstring_view::npos)
             {
                 expValue *= radix;
-                expValue += static_cast<int32_t>(pos);
+                expValue += static_cast<uint32_t>(pos);
             }
             else
             {
@@ -725,7 +723,7 @@ PNUMBER StringToNumber(wstring_view numberString, uint32_t radix, int32_t precis
             pnumret->exp--;
         }
 
-        pnumret->exp += expSign * expValue;
+        pnumret->exp += expSign * static_cast<int32_t>(expValue);
     }
 
     // If we don't have a number, clear our result.
@@ -972,7 +970,7 @@ uint64_t rattoUi64(_In_ PRAT prat, uint32_t radix, int32_t precision)
     destroyrat(prat32);
     destroyrat(pint);
 
-    return (((uint64_t)hi << 32) | lo);
+    return (((static_cast<uint64_t>(hi)) << 32) | lo);
 }
 
 //-----------------------------------------------------------------------------
@@ -1002,7 +1000,7 @@ int32_t numtoi32(_In_ PNUMBER pnum, uint32_t radix)
         lret += *(pmant--);
     }
 
-    while (expt-- > 0)
+    for (; expt > 0; expt--)
     {
         lret *= radix;
     }
@@ -1032,12 +1030,12 @@ bool stripzeroesnum(_Inout_ PNUMBER pnum, int32_t starting)
     // point pmant to the LSD
     if (cdigits > starting)
     {
-        pmant += cdigits - starting;
+        pmant = pmant + cdigits - starting;
         cdigits = starting;
     }
 
     // Check we haven't gone too far, and we are still looking at zeros.
-    while ((cdigits > 0) && !(*pmant))
+    while ((cdigits > 0) && (*pmant == 0))
     {
         // move to next significant digit and keep track of digits we can
         // ignore later.
@@ -1050,7 +1048,7 @@ bool stripzeroesnum(_Inout_ PNUMBER pnum, int32_t starting)
     if (fstrip)
     {
         // Remove them.
-        memmove(pnum->mant, pmant, (int)(cdigits * sizeof(MANTTYPE)));
+        memmove(pnum->mant, pmant, static_cast<size_t>(cdigits) * sizeof(MANTTYPE));
         // And adjust exponent and digit count accordingly.
         pnum->exp += (pnum->cdigit - cdigits);
         pnum->cdigit = cdigits;
@@ -1173,10 +1171,9 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, NumberFormat format, uint32_t radi
             {
                 exponent = (eout % 3);
                 eout -= exponent;
-                exponent++;
 
                 // Fix the case where 0.02e-3 should really be 2.e-6 etc.
-                if (exponent < 0)
+                if (++exponent < 0)
                 {
                     exponent += 3;
                     eout -= 3;
@@ -1217,12 +1214,11 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, NumberFormat format, uint32_t radi
 
     while (length > 0)
     {
-        exponent--;
         result += DIGITS[*pmant--];
         length--;
 
         // Be more regular in using a decimal point.
-        if (exponent == 0)
+        if (--exponent == 0)
         {
             result += g_decimalSeparator;
         }
@@ -1231,11 +1227,12 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, NumberFormat format, uint32_t radi
     while (exponent > 0)
     {
         result += L'0';
-        exponent--;
+       
         // Be more regular in using a decimal point.
-        if (exponent == 0)
+        if (--exponent == 0)
         {
             result += g_decimalSeparator;
+            break;
         }
     }
 

@@ -122,7 +122,7 @@ void HistoryViewModel::ShowItem(_In_ HistoryItemViewModel ^ e)
 
 void HistoryViewModel::DeleteItem(_In_ HistoryItemViewModel ^ e)
 {
-    uint32_t itemIndex;
+    unsigned int itemIndex;
     if (Items->IndexOf(e, &itemIndex))
     {
         if (m_calculatorManager->RemoveHistoryItem(itemIndex))
@@ -165,7 +165,7 @@ void HistoryViewModel::OnClearCommand(_In_ Platform::Object ^ e)
     }
 }
 
-unsigned long long HistoryViewModel::GetMaxItemSize()
+size_t HistoryViewModel::GetMaxItemSize()
 {
-    return static_cast<unsigned long long>(m_calculatorManager->MaxHistorySize());
+    return m_calculatorManager->MaxHistorySize();
 }

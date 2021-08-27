@@ -111,7 +111,7 @@ namespace CalculatorApp
                     var toggle = (button as ToggleButton);
                     if (toggle != null)
                     {
-                        toggle.IsChecked = !(toggle.IsChecked != null && toggle.IsChecked.Value);
+                        toggle.IsChecked = (toggle.IsChecked == null || !toggle.IsChecked.Value);
                         return;
                     }
                 }
