@@ -664,6 +664,27 @@
                                                                   MathText="{Binding MathEquation, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                                                   MaxLength="2048"
                                                                   TextWrapping="NoWrap">
+                                            <controls:MathRichEditBox.Resources>
+                                                <ResourceDictionary>
+                                                    <ResourceDictionary.ThemeDictionaries>
+                                                        <ResourceDictionary x:Key="Default">
+                                                            <StaticResource x:Key="TextControlPlaceholderForeground" ResourceKey="TextFillColorSecondaryBrush"/>
+                                                            <StaticResource x:Key="TextControlPlaceholderForegroundPointerOver" ResourceKey="TextFillColorSecondaryBrush"/>
+                                                            <StaticResource x:Key="TextControlPlaceholderForegroundFocused" ResourceKey="TextFillColorTertiaryBrush"/>
+                                                            <StaticResource x:Key="TextControlPlaceholderForegroundDisabled" ResourceKey="TextFillColorDisabledBrush"/>
+                                                        </ResourceDictionary>
+                                                        <ResourceDictionary x:Key="Light">
+                                                            <StaticResource x:Key="TextControlPlaceholderForeground" ResourceKey="TextFillColorSecondaryBrush"/>
+                                                            <StaticResource x:Key="TextControlPlaceholderForegroundPointerOver" ResourceKey="TextFillColorSecondaryBrush"/>
+                                                            <StaticResource x:Key="TextControlPlaceholderForegroundFocused" ResourceKey="TextFillColorTertiaryBrush"/>
+                                                            <StaticResource x:Key="TextControlPlaceholderForegroundDisabled" ResourceKey="TextFillColorDisabledBrush"/>
+                                                        </ResourceDictionary>
+                                                        <ResourceDictionary x:Key="HighContrast">
+                                                            <StaticResource x:Key="TextControlPlaceholderForegroundFocused" ResourceKey="SystemControlForegroundBaseMediumLowBrush"/>
+                                                        </ResourceDictionary>
+                                                    </ResourceDictionary.ThemeDictionaries>
+                                                </ResourceDictionary>
+                                            </controls:MathRichEditBox.Resources>
                                             <controls:MathRichEditBox.ContextFlyout>
                                                 <MenuFlyout x:Name="MathRichEditContextMenu">
                                                     <MenuFlyoutItem x:Name="CutMenuItem"
