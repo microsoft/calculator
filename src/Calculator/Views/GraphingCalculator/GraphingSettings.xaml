@@ -213,12 +213,14 @@
                              IsChecked="{x:Bind ViewModel.TrigModeGradians, Mode=TwoWay}"/>
             </StackPanel>
 
-            <TextBlock x:Uid="LineThicknessBoxHeading"
+            <TextBlock x:Name="LineThicknessBoxHeading"
+                       x:Uid="LineThicknessBoxHeading"
                        Margin="0,16,0,6"
                        Style="{StaticResource SubTitleTextBoxStyle}"
                        AutomationProperties.HeadingLevel="Level2"/>
             <ComboBox MinWidth="200"
                       HorizontalAlignment="Stretch"
+                      AutomationProperties.LabeledBy="{Binding ElementName=LineThicknessBoxHeading}"
                       SelectedItem="{x:Bind ViewModel.Graph.LineWidth, Mode=TwoWay}">
                 <ComboBox.Items>
                     <x:Double>1.0</x:Double>
