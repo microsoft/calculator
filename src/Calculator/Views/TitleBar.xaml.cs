@@ -278,11 +278,6 @@ namespace CalculatorApp
         public static readonly DependencyProperty ButtonPressedForegroundProperty =
             DependencyProperty.Register(nameof(ButtonPressedForeground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
 
-        private Windows.ApplicationModel.Core.CoreApplicationViewTitleBar m_coreTitleBar;
-        private Windows.UI.ViewManagement.UISettings m_uiSettings;
-        private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
-        private Utils.ThemeHelper.ThemeChangedCallbackToken m_rootFrameRequestedThemeCallbackToken;
-
         public bool BackButtonSpaceReserved
         {
             get => (bool)GetValue(BackButtonSpaceReservedProperty);
@@ -296,5 +291,10 @@ namespace CalculatorApp
                     VisualStateManager.GoToState(
                         self, (bool)args.NewValue ? self.BackButtonVisible.Name : self.BackButtonCollapsed.Name, true);
                 })));
+
+        private Windows.ApplicationModel.Core.CoreApplicationViewTitleBar m_coreTitleBar;
+        private Windows.UI.ViewManagement.UISettings m_uiSettings;
+        private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
+        private Utils.ThemeHelper.ThemeChangedCallbackToken m_rootFrameRequestedThemeCallbackToken;
     }
 }
