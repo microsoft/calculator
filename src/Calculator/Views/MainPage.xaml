@@ -85,8 +85,7 @@
         <local:TitleBar x:Name="AppTitleBar"
                         Grid.Row="0"
                         AlwaysOnTopClick="TitleBarAlwaysOnTopButtonClick"
-                        BackButtonClick="TitleBarBackButtonClick"
-                        BackButtonVisibility="{x:Bind ShouldShowBackButton(Model.IsAlwaysOnTop, Popup.IsOpen), Mode=OneWay}"
+                        BackButtonSpaceReserved="{x:Bind ShouldShowBackButton(Model.IsAlwaysOnTop, Popup.IsOpen), Mode=OneWay}"
                         IsAlwaysOnTopMode="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
 
         <muxc:NavigationView x:Name="NavView"
@@ -102,8 +101,8 @@
                              Loaded="OnNavLoaded"
                              MenuItemsSource="{x:Bind CreateUIElementsForCategories(Model.Categories), Mode=OneWay}"
                              OpenPaneLength="{x:Bind NavigationViewOpenPaneLength(Model.IsAlwaysOnTop), Mode=OneWay}"
-                             PaneDisplayMode="LeftMinimal"
                              PaneClosed="OnNavPaneClosed"
+                             PaneDisplayMode="LeftMinimal"
                              PaneOpened="OnNavPaneOpened"
                              SelectionChanged="OnNavSelectionChanged"
                              TabIndex="1"
@@ -163,8 +162,7 @@
                HorizontalOffset="0"
                IsLightDismissEnabled="False"
                LightDismissOverlayMode="Off"
-               Opened="Popup_Opened"
-               VerticalOffset="{x:Bind AppTitleBar.Height, Mode=OneWay}">
+               Opened="Popup_Opened">
             <Popup.ChildTransitions>
                 <TransitionCollection>
                     <EntranceThemeTransition/>
@@ -172,7 +170,23 @@
             </Popup.ChildTransitions>
 
             <Grid x:Name="PopupContent" x:Load="false">
-                <local:Settings/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="BackButton"
+                        x:Uid="TitleBarBackButton"
+                        Width="44"
+                        Height="32"
+                        Margin="0,0,4,0"
+                        Padding="2,0,0,0"
+                        Style="{StaticResource SquareIconButtonStyle}"
+                        FontSize="12"
+                        Click="BackButton_Click"
+                        Content="&#xE72B;"
+                        Visibility="Visible"
+                        IsEnabled="True"/>
+                <local:Settings Grid.Row="1"/>
             </Grid>
         </Popup>
     </Grid>

@@ -27,9 +27,7 @@
                 <VisualState x:Name="BackButtonCollapsed"/>
                 <VisualState x:Name="BackButtonVisible">
                     <VisualState.Setters>
-                        <Setter Target="BackButton.Visibility" Value="Visible"/>
-                        <Setter Target="BackButton.IsEnabled" Value="True"/>
-                        <Setter Target="AppIcon.Margin" Value="0"/>
+                        <Setter Target="AppIcon.Margin" Value="0,0,48,0"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -46,19 +44,6 @@
                     <RepositionThemeTransition/>
                 </TransitionCollection>
             </Grid.Transitions>
-
-            <Button x:Name="BackButton"
-                    x:Uid="TitleBarBackButton"
-                    Width="44"
-                    Height="32"
-                    Margin="0,0,4,0"
-                    Padding="2,0,0,0"
-                    Style="{StaticResource SquareIconButtonStyle}"
-                    FontSize="12"
-                    Click="BackButton_Click"
-                    Content="&#xE72B;"
-                    Visibility="Collapsed"
-                    IsEnabled="False"/>
 
             <Grid x:Name="BackgroundElement"
                   Grid.Column="1"
