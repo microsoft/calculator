@@ -27,7 +27,7 @@
                 <VisualState x:Name="BackButtonCollapsed"/>
                 <VisualState x:Name="BackButtonVisible">
                     <VisualState.Setters>
-                        <Setter Target="AppIcon.Margin" Value="0,0,48,0"/>
+                        <Setter Target="AppIcon.Margin" Value="48,0,0,0"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
