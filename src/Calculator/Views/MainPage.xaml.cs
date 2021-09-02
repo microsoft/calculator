@@ -15,8 +15,6 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
-using Windows.UI.Xaml.Automation.Peers;
-using Windows.UI.Xaml.Automation.Provider;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
@@ -40,9 +38,6 @@ namespace CalculatorApp
             Application.Current.Suspending += App_Suspending;
             m_model.PropertyChanged += OnAppPropertyChanged;
             m_accessibilitySettings = new AccessibilitySettings();
-
-            Loaded += OnLoaded;
-            Unloaded += OnUnloaded;
 
             if(Utilities.GetIntegratedDisplaySize(out var sizeInInches))
             {
@@ -152,17 +147,6 @@ namespace CalculatorApp
             }
 
             m_model.Initialize(initialMode);
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            // Register the system back requested event
-            SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
-        }
-
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
         }
 
         private void UpdatePopupSize(Windows.UI.Core.WindowSizeChangedEventArgs e)
@@ -604,19 +588,12 @@ namespace CalculatorApp
             return isAlwaysOnTop ? 0 : (double)Application.Current.Resources["SplitViewOpenPaneLength"];
         }
 
-        private void System_BackRequested(object sender, BackRequestedEventArgs e)
+        private GridLength DoubleToGridLength(double value)
         {
-            if (!e.Handled && BackButton.IsEnabled)
-            {
-                var buttonPeer = new ButtonAutomationPeer(BackButton);
-                IInvokeProvider invokeProvider = buttonPeer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                invokeProvider.Invoke();
-
-                e.Handled = true;
-            }
+            return new GridLength(value);
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
+        private void Settings_BackButtonClick(object sender, RoutedEventArgs e)
         {
             CloseSettingsPopup();
         }

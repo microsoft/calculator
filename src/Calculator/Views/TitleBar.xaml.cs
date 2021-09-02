@@ -1,16 +1,10 @@
 using CalculatorApp.ViewModel.Common;
-using System;
-using System.ComponentModel;
 using Windows.ApplicationModel.Core;
 using Windows.System.Profile;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation.Peers;
-using Windows.UI.Xaml.Automation.Provider;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
