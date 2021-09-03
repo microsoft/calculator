@@ -2,14 +2,11 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
-      xmlns:common="using:CalculatorApp.Common"
-      xmlns:controls="using:CalculatorApp.Controls"
       xmlns:converters="using:CalculatorApp.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:CalculatorApp"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-      xmlns:vm="using:CalculatorApp.ViewModel"
       x:Name="PageRoot"
       muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
       Loaded="OnPageLoaded"
@@ -85,8 +82,7 @@
         <local:TitleBar x:Name="AppTitleBar"
                         Grid.Row="0"
                         AlwaysOnTopClick="TitleBarAlwaysOnTopButtonClick"
-                        BackButtonClick="TitleBarBackButtonClick"
-                        BackButtonVisibility="{x:Bind ShouldShowBackButton(Model.IsAlwaysOnTop, Popup.IsOpen), Mode=OneWay}"
+                        BackButtonSpaceReserved="{x:Bind ShouldShowBackButton(Model.IsAlwaysOnTop, Popup.IsOpen), Mode=OneWay}"
                         IsAlwaysOnTopMode="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
 
         <muxc:NavigationView x:Name="NavView"
@@ -163,8 +159,7 @@
                HorizontalOffset="0"
                IsLightDismissEnabled="False"
                LightDismissOverlayMode="Off"
-               Opened="Popup_Opened"
-               VerticalOffset="{x:Bind AppTitleBar.Height, Mode=OneWay}">
+               Opened="Popup_Opened">
             <Popup.ChildTransitions>
                 <TransitionCollection>
                     <EntranceThemeTransition/>
@@ -172,7 +167,7 @@
             </Popup.ChildTransitions>
 
             <Grid x:Name="PopupContent" x:Load="false">
-                <local:Settings/>
+                <local:Settings BackButtonClick="Settings_BackButtonClick" TitleBarHeight="{x:Bind DoubleToGridLength(AppTitleBar.Height), Mode=OneWay}"/>
             </Grid>
         </Popup>
     </Grid>
