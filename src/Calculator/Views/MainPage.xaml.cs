@@ -154,7 +154,7 @@ namespace CalculatorApp
             if(PopupContent != null)
             {
                 PopupContent.Width = e.Size.Width;
-                PopupContent.Height = e.Size.Height - AppTitleBar.ActualHeight;
+                PopupContent.Height = e.Size.Height;
             }
         }
 
@@ -300,7 +300,7 @@ namespace CalculatorApp
 
                 var windowBounds = Window.Current.Bounds;
                 PopupContent.Width = windowBounds.Width;
-                PopupContent.Height = windowBounds.Height - AppTitleBar.ActualHeight;
+                PopupContent.Height = windowBounds.Height;
             }
         }
 
