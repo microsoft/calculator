@@ -43,7 +43,7 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        vstsPackageVersion: 0.0.66
+        vstsPackageVersion: 0.0.67
 
   - task: PowerShell@2
     displayName: Generate AppxBundle mapping
