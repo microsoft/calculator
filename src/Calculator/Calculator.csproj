@@ -249,7 +249,12 @@
     </Compile>
     <Compile Include="WindowFrameService.cs" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(UseReleaseAppxManifest)' == 'True'">
+    <AppxManifest Include="Package.Release.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup Condition="'$(UseReleaseAppxManifest)' != 'True'">
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
