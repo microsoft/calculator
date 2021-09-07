@@ -20,17 +20,20 @@ jobs:
   parameters:
     platform: x64
     isReleaseBuild: true
+    useReleaseAppxmanifest: true
 
 - template: ./templates/build-single-architecture.yaml
   parameters:
     platform: x86
     isReleaseBuild: true
+    useReleaseAppxmanifest: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/build-single-architecture.yaml
   parameters:
     platform: ARM
     isReleaseBuild: true
+    useReleaseAppxmanifest: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/run-unit-tests.yaml

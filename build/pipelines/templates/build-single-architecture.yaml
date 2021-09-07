@@ -2,7 +2,7 @@
 
 parameters:
   isReleaseBuild: false
-  useReleaseAppxManifest: ${{ parameters.isReleaseBuild }}
+  useReleaseAppxManifest: false
   platform: ''
   condition: ''
 
