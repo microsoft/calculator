@@ -12,12 +12,10 @@ using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using CalculatorApp.ViewModel.Common.Automation;
+using Windows.UI.Core;
+using Windows.UI.Xaml.Automation.Peers;
+using Windows.UI.Xaml.Automation.Provider;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -28,6 +26,16 @@ namespace CalculatorApp
         // CSHARP_MIGRATION: TODO:
         // BUILD_YEAR was a C++/CX macro and may update the value from the pipeline
         private const string BUILD_YEAR = "2021";
+
+        public event Windows.UI.Xaml.RoutedEventHandler BackButtonClick;
+
+        public GridLength TitleBarHeight
+        {
+            get { return (GridLength)GetValue(TitleBarHeightProperty); }
+            set { SetValue(TitleBarHeightProperty, value); }
+        }
+        public static readonly DependencyProperty TitleBarHeightProperty =
+            DependencyProperty.Register(nameof(TitleBarHeight), typeof(GridLength), typeof(Settings), new PropertyMetadata(default(GridLength)));
 
         public Settings()
         {
@@ -63,6 +71,8 @@ namespace CalculatorApp
         // OnLoaded would be invoked by Popup several times while contructed once
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
+            SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
+
             AnnouncePageOpened();
 
             var currentTheme = ThemeHelper.RootTheme.ToString();
@@ -83,6 +93,8 @@ namespace CalculatorApp
         {
             // back to the default state
             AppThemeExpander.IsExpanded = false;
+
+            SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
         }
 
         private void FeedbackButton_Click(object sender, RoutedEventArgs e)
@@ -130,6 +142,23 @@ namespace CalculatorApp
             ContributeRunBeforeLink.Text = contributeTextBeforeHyperlink;
             ContributeRunLink.Text = contributeTextLink;
             ContributeRunAfterLink.Text = contributeTextAfterHyperlink;
+        }
+
+        private void System_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (!e.Handled && BackButton.IsEnabled)
+            {
+                var buttonPeer = new ButtonAutomationPeer(BackButton);
+                IInvokeProvider invokeProvider = buttonPeer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                invokeProvider.Invoke();
+
+                e.Handled = true;
+            }
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            BackButtonClick?.Invoke(this, e);
         }
     }
 }

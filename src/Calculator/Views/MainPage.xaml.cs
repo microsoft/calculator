@@ -154,7 +154,7 @@ namespace CalculatorApp
             if(PopupContent != null)
             {
                 PopupContent.Width = e.Size.Width;
-                PopupContent.Height = e.Size.Height - AppTitleBar.ActualHeight;
+                PopupContent.Height = e.Size.Height;
             }
         }
 
@@ -300,7 +300,7 @@ namespace CalculatorApp
 
                 var windowBounds = Window.Current.Bounds;
                 PopupContent.Width = windowBounds.Width;
-                PopupContent.Height = windowBounds.Height - AppTitleBar.ActualHeight;
+                PopupContent.Height = windowBounds.Height;
             }
         }
 
@@ -578,19 +578,24 @@ namespace CalculatorApp
             NarratorNotifier.Announce(announcement);
         }
 
-        private void TitleBarBackButtonClick(object sender, RoutedEventArgs e)
+        private bool ShouldShowBackButton(bool isAlwaysOnTop, bool isPopupOpen)
         {
-            CloseSettingsPopup();
-        }
-
-        private Visibility ShouldShowBackButton(bool isAlwaysOnTop, bool isPopupOpen)
-        {
-            return !isAlwaysOnTop && isPopupOpen ? Visibility.Visible : Visibility.Collapsed;
+            return !isAlwaysOnTop && isPopupOpen;
         }
 
         private double NavigationViewOpenPaneLength(bool isAlwaysOnTop)
         {
             return isAlwaysOnTop ? 0 : (double)Application.Current.Resources["SplitViewOpenPaneLength"];
+        }
+
+        private GridLength DoubleToGridLength(double value)
+        {
+            return new GridLength(value);
+        }
+
+        private void Settings_BackButtonClick(object sender, RoutedEventArgs e)
+        {
+            CloseSettingsPopup();
         }
 
         private CalculatorApp.Calculator m_calculator;

@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              Loaded="OnLoaded"
@@ -40,6 +39,10 @@
     </UserControl.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{x:Bind TitleBarHeight, Mode=OneWay}"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="LayoutVisualStates">
                 <VisualState x:Name="LargeWideView">
@@ -77,7 +80,20 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Grid Height="{StaticResource HamburgerHeight}"
+        <Button x:Name="BackButton"
+                x:Uid="TitleBarBackButton"
+                Grid.Row="0"
+                Width="44"
+                Height="{x:Bind TitleBarHeight.Value, Mode=OneWay}"
+                Margin="0,0,4,0"
+                Padding="2,0,0,0"
+                Style="{StaticResource SquareIconButtonStyle}"
+                FontSize="12"
+                Click="BackButton_Click"
+                Content="&#xE72B;"/>
+
+        <Grid Grid.Row="1"
+              Height="{StaticResource HamburgerHeight}"
               Padding="24,0"
               HorizontalAlignment="Stretch"
               VerticalAlignment="Top">
@@ -86,7 +102,8 @@
                        Style="{StaticResource CategoryNameTextBlockStyle}"/>
         </Grid>
 
-        <ScrollViewer Margin="0,60,0,0"
+        <ScrollViewer Grid.Row="1"
+                      Margin="0,60,0,0"
                       Padding="24,0,24,16"
                       Style="{StaticResource SettingsContentScrollViewStyle}">
             <Grid x:Name="ContentGrid">

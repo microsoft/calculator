@@ -1,16 +1,10 @@
 using CalculatorApp.ViewModel.Common;
-using System;
-using System.ComponentModel;
 using Windows.ApplicationModel.Core;
 using Windows.System.Profile;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation.Peers;
-using Windows.UI.Xaml.Automation.Provider;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -53,7 +47,6 @@ namespace CalculatorApp
             }));
 
         public event Windows.UI.Xaml.RoutedEventHandler AlwaysOnTopClick;
-        public event Windows.UI.Xaml.RoutedEventHandler BackButtonClick;
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -64,9 +57,6 @@ namespace CalculatorApp
             m_uiSettings.ColorValuesChanged += ColorValuesChanged;
             m_accessibilitySettings.HighContrastChanged += OnHighContrastChanged;
             Window.Current.Activated += OnWindowActivated;
-
-            // Register the system back requested event
-            SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
 
             // Register RequestedTheme changed callback to update title bar system button colors.
             m_rootFrameRequestedThemeCallbackToken =
@@ -93,22 +83,8 @@ namespace CalculatorApp
             m_accessibilitySettings.HighContrastChanged -= OnHighContrastChanged;
             Window.Current.Activated -= OnWindowActivated;
 
-            SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
-
             Utils.ThemeHelper.
                 UnregisterAppThemeChangedCallback(m_rootFrameRequestedThemeCallbackToken);
-        }
-
-        private void System_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            if (!e.Handled && BackButton.IsEnabled)
-            {
-                var buttonPeer = new ButtonAutomationPeer(BackButton);
-                IInvokeProvider invokeProvider = buttonPeer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                invokeProvider.Invoke();
-
-                e.Handled = true;
-            }
         }
 
         private void RootFrame_RequestedThemeChanged(DependencyObject sender, DependencyProperty dp)
@@ -231,11 +207,6 @@ namespace CalculatorApp
             AlwaysOnTopClick?.Invoke(this, e);
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            BackButtonClick?.Invoke(this, e);
-        }
-
         // Dependency properties for the color of the system title bar buttons
         public Windows.UI.Xaml.Media.SolidColorBrush ButtonBackground
         {
@@ -301,18 +272,18 @@ namespace CalculatorApp
         public static readonly DependencyProperty ButtonPressedForegroundProperty =
             DependencyProperty.Register(nameof(ButtonPressedForeground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
 
-        public Visibility BackButtonVisibility
+        public bool BackButtonSpaceReserved
         {
-            get { return (Visibility)GetValue(BackButtonVisibilityProperty); }
-            set { SetValue(BackButtonVisibilityProperty, value); }
+            get => (bool)GetValue(BackButtonSpaceReservedProperty);
+            set => SetValue(BackButtonSpaceReservedProperty, value);
         }
-        public static readonly DependencyProperty BackButtonVisibilityProperty =
+        public static readonly DependencyProperty BackButtonSpaceReservedProperty =
             DependencyProperty.Register(
-                nameof(BackButtonVisibility), typeof(Visibility), typeof(TitleBar),
-                new PropertyMetadata(false, new PropertyChangedCallback((sender, args) => {
+                nameof(BackButtonSpaceReserved), typeof(bool), typeof(TitleBar),
+                new PropertyMetadata(false, new PropertyChangedCallback((sender, args)=> {
                     var self = sender as TitleBar;
                     VisualStateManager.GoToState(
-                        self, (Visibility)args.NewValue == Visibility.Visible ? self.BackButtonVisible.Name : self.BackButtonCollapsed.Name, true);
+                        self, (bool)args.NewValue ? self.BackButtonVisible.Name : self.BackButtonCollapsed.Name, true);
                 })));
 
         private Windows.ApplicationModel.Core.CoreApplicationViewTitleBar m_coreTitleBar;
