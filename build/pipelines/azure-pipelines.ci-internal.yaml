@@ -34,12 +34,12 @@ jobs:
 - template: ./templates/run-ui-tests.yaml
   parameters:
     platform: x64
-    runsettingsFileName: CalculatorUITests.release.runsettings
+    runsettingsFileName: CalculatorUITests.ci.runsettings
 
 - template: ./templates/run-ui-tests.yaml
   parameters:
     platform: x86
-    runsettingsFileName: CalculatorUITests.release.runsettings
+    runsettingsFileName: CalculatorUITests.ci.runsettings
 
 - template: ./templates/run-unit-tests.yaml
   parameters:
