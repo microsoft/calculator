@@ -16,19 +16,19 @@ jobs:
 - template: ./templates/build-single-architecture.yaml
   parameters:
     isReleaseBuild: true
-    useTestVersionOfInternalsPackage: true
+    useReleaseAppxManifest: false
     platform: x64
 
 - template: ./templates/build-single-architecture.yaml
   parameters:
     isReleaseBuild: true
-    useTestVersionOfInternalsPackage: true
+    useReleaseAppxManifest: false
     platform: x86
 
 - template: ./templates/build-single-architecture.yaml
   parameters:
     isReleaseBuild: true
-    useTestVersionOfInternalsPackage: true
+    useReleaseAppxManifest: false
     platform: ARM
 
 - template: ./templates/run-ui-tests.yaml
@@ -50,5 +50,3 @@ jobs:
     platform: x86
 
 - template: ./templates/package-appxbundle.yaml
-  parameters:    
-    useTestVersionOfInternalsPackage: true

@@ -2,7 +2,7 @@
 
 parameters:
   isReleaseBuild: false
-  useTestVersionOfInternalsPackage: false
+  useReleaseAppxManifest: false
   platform: ''
   condition: ''
 
@@ -16,9 +16,15 @@ jobs:
     BuildConfiguration: Release
     BuildPlatform: ${{ parameters.platform }}
     ${{ if eq(parameters.isReleaseBuild, true) }}:
-      ExtraMSBuildArgs: '/p:IsStoreBuild=true'
+      ${{ if eq(parameters.useReleaseAppxManifest, true) }}:
+        ExtraMSBuildArgs: '/p:IsStoreBuild=true /p:UseReleaseAppxManifest=true'
+      ${{ if eq(parameters.useReleaseAppxManifest, false) }}:
+        ExtraMSBuildArgs: '/p:IsStoreBuild=true'
     ${{ if eq(parameters.isReleaseBuild, false) }}:
-      ExtraMSBuildArgs: ''
+      ${{ if eq(parameters.useReleaseAppxManifest, true) }}:
+        ExtraMSBuildArgs: '/p:UseReleaseAppxManifest=true'
+      ${{ if eq(parameters.useReleaseAppxManifest, false) }}:
+        ExtraMSBuildArgs: ''
   steps:
   - checkout: self
     fetchDepth: 1
@@ -31,10 +37,7 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        ${{ if eq(parameters.useTestVersionOfInternalsPackage, false) }}:
-          vstsPackageVersion: 0.0.66
-        ${{ if eq(parameters.useTestVersionOfInternalsPackage, true) }}:
-          vstsPackageVersion: 0.0.65
+        vstsPackageVersion: 0.0.67
 
   - task: NuGetToolInstaller@1
     displayName: Use NuGet 5.x
