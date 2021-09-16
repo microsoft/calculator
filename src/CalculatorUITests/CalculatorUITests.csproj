@@ -13,6 +13,9 @@
     <ProjectReference Include="..\CalculatorUITestFramework\CalculatorUITestFramework.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="CalculatorUITests.ci-internal.runsettings">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="CalculatorUITests.release.runsettings">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
