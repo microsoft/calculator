@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+// Licensed under the MIT License
+//  otro comentario.
 
 #include "pch.h"
 #include "CalculationResult.h"
