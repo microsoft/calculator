@@ -37,53 +37,12 @@ jobs:
       deletePackages: true
       numberOfPackagesToKeep: 0
 
-# TODO when Aero makes a new task available which does not depend on on-prem Package ES, remove this job
-# and add the Aero upload task to the "ReleaseStore" job.
-- job: ReleaseAero
-  dependsOn: ReleaseStore
-  pool:
-    name: Package ES Standard Build
-  workspace:
-    clean: outputs
-  variables:
-    skipComponentGovernanceDetection: true
-    StoreBrokerPackagePath: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
-    FlightId: 161f0975-cb5f-475b-8ef6-26383c37621f
-    AppId: 9WZDNCRFHVN5
-    ProductId: 00009007199266248474
-    SubmissionId: $[ dependencies.ReleaseStore.outputs['StoreBrokerFlight.WS_SubmissionId'] ]
-  steps:
-  - checkout: none
-
-  # This must be the first task in the job definition, since it modifies the build environment
-  # in ways other tasks would not expect (for example, it clears the artifacts directory).
-  - task: PkgESSetupBuild@10
-    displayName: Initialize Package ES
+  - task: APS-Aero-Package.aero-upload-task.AeroUploadTask.AeroUpload@0
+    displayName: Aero Upload
     inputs:
-      productName: Calculator
-      disableWorkspace: true
-      useDfs: false
-    env:
-      XES_DISABLEPROV: true
-
-  - task: NuGetToolInstaller@1
-    displayName: Use NuGet 5.x
-    inputs:
-      versionSpec: 5.x
-
-  - task: DownloadBuildArtifacts@0
-    displayName: Download storeBrokerPayload artifact
-    inputs:
-      artifactName: storeBrokerPayload
-
-  - task: PkgESStoreBrokerAeroUpload@10
-    displayName: Upload to Aero flighting dashboard
-    env:
-      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-    inputs:
-      ProductId: '$(ProductId)'
-      FlightId: '$(FlightId)'
-      SubmissionId: '$(SubmissionId)'
-      SubmissionDataPath: '$(StoreBrokerPackagePath)\SBCalculator.json'
-      PackagePath: '$(StoreBrokerPackagePath)\SBCalculator.zip'
-      AeroEnvironment: Production
+      productId: $(ProductId)
+      flightId: $(FlightId)
+      submissionId: $(StoreBrokerFlight.WS_SubmissionId)
+      submissionDataPath: $(StoreBrokerPackagePath)\SBCalculator.json
+      packagePath: $(StoreBrokerPackagePath)\SBCalculator.zip
+      serviceEndpoint: AeroUpload-APS-Calculator
