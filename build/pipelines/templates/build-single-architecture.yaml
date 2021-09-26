@@ -25,6 +25,10 @@ jobs:
         ExtraMSBuildArgs: '/p:UseReleaseAppxManifest=true'
       ${{ if eq(parameters.useReleaseAppxManifest, false) }}:
         ExtraMSBuildArgs: ''
+    ${{ if eq(parameters.useReleaseAppxManifest, false) }}:
+      ManifestFileName: 'Package.appxmanifest'
+    ${{ if eq(parameters.useReleaseAppxManifest, true) }}:
+      ManifestFileName: 'Package.Release.appxmanifest'
   steps:
   - checkout: self
     fetchDepth: 1
@@ -56,7 +60,7 @@ jobs:
     displayName: Set version number in AppxManifest
     inputs:
       filePath: $(Build.SourcesDirectory)\build\scripts\UpdateAppxManifestVersion.ps1
-      arguments: '-AppxManifest $(Build.SourcesDirectory)\src\Calculator\Package.appxmanifest -Version $(Build.BuildNumber)'
+      arguments: '-AppxManifest $(Build.SourcesDirectory)\src\Calculator\$(ManifestFileName) -Version $(Build.BuildNumber)'
 
   - task: VSBuild@1
     displayName: 'Build solution src/Calculator.sln'
