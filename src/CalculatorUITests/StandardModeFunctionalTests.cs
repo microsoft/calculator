@@ -732,7 +732,7 @@ namespace CalculatorUITests
 
             CalculatorApp.EnsureCalculatorHasFocus();
             page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.DateCalculator);
-            Assert.AreEqual("Date Calculation", CalculatorApp.GetCalculatorHeaderText());
+            Assert.AreEqual("Date calculation", CalculatorApp.GetCalculatorHeaderText());
             page.StandardAoTCalculatorPage.GetAoTPresence();
             Assert.AreEqual("False", page.StandardAoTCalculatorPage.GetAoTPresence());
 
