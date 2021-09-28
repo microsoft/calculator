@@ -53,7 +53,7 @@ jobs:
 
   - powershell: |
       $buildVersion = [version]$Env:BUILDVERSION
-      $bundleVersion = "2020.$($buildVersion.Minor).$($buildVersion.Build).$($buildVersion.Revision)"
+      $bundleVersion = "2021.$($buildVersion.Minor).$($buildVersion.Build).$($buildVersion.Revision)"
       & "C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x86\MakeAppx.exe" bundle /v /bv $bundleVersion /f $Env:MAPPINGFILEPATH /p $Env:OUTPUTPATH
     displayName: Make AppxBundle
     env:
