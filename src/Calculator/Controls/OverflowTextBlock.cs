@@ -141,7 +141,7 @@ namespace CalculatorApp
 
             public void UpdateScrollButtons()
             {
-                if (m_expressionContainer == null || m_scrollLeft == null || m_scrollRight == null)
+                if (m_expressionContent == null || m_expressionContainer == null || m_scrollLeft == null || m_scrollRight == null)
                 {
                     return;
                 }
@@ -307,13 +307,16 @@ namespace CalculatorApp
 
             private void ScrollRight()
             {
-                var realOffset = m_expressionContainer.HorizontalOffset + m_expressionContainer.Padding.Left + m_expressionContent.Margin.Left;
-                if (m_expressionContainer != null && realOffset + m_expressionContainer.ActualWidth < m_expressionContent.ActualWidth)
+                if (m_expressionContainer != null && m_expressionContent != null)
                 {
-                    double offset = m_expressionContainer.HorizontalOffset + (SCROLL_RATIO * m_expressionContainer.ViewportWidth);
-                    m_expressionContainer.ChangeView(offset, null, null);
-                    m_expressionContainer.UpdateLayout();
-                    UpdateScrollButtons();
+                    var realOffset = m_expressionContainer.HorizontalOffset + m_expressionContainer.Padding.Left + m_expressionContent.Margin.Left;
+                    if (realOffset + m_expressionContainer.ActualWidth < m_expressionContent.ActualWidth)
+                    {
+                        double offset = m_expressionContainer.HorizontalOffset + (SCROLL_RATIO * m_expressionContainer.ViewportWidth);
+                        m_expressionContainer.ChangeView(offset, null, null);
+                        m_expressionContainer.UpdateLayout();
+                        UpdateScrollButtons();
+                    }
                 }
             }
 
