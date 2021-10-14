@@ -606,11 +606,11 @@
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>메모리 저장소</value>
+    <value>메모리 값 저장</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>메모리 저장소(Ctrl + M)</value>
+    <value>메모리 값 저장(Ctrl + M)</value>
     <comment>This is the tool tip automation name for the Memory Store (MS) button.</comment>
   </data>
   <data name="ClearMemoryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -846,7 +846,7 @@
     <comment>Screen reader prompt for the Calculator numberPad button</comment>
   </data>
   <data name="decimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>소수 구분 기호</value>
+    <value>소수점 구분 기호</value>
     <comment>Screen reader prompt for the "." button</comment>
   </data>
   <data name="clearEntryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -871,7 +871,7 @@
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>역함수</value>
-    <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
+    <comment>Screen reader prompt for the shift button on the number pad in scientific mode.</comment>
   </data>
   <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>음의 값</value>
@@ -894,11 +894,11 @@
     <comment>Screen reader prompt for the percent button on the scientific operator keypad</comment>
   </data>
   <data name="negateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>양의 부정</value>
+    <value>양수 음수</value>
     <comment>Screen reader prompt for the negate button on the scientific operator keypad</comment>
   </data>
   <data name="converterNegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>양의 부정</value>
+    <value>양수 음수</value>
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
   <data name="invertButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1143,7 +1143,7 @@
   </data>
   <data name="CategoryName_WeightText" xml:space="preserve">
     <value>무게 및 질량</value>
-    <comment>Unit conversion category name called Weight and Mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
+    <comment>Unit conversion category name called Weight and mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
   </data>
   <data name="CategoryName_PressureText" xml:space="preserve">
     <value>압력</value>
@@ -1838,7 +1838,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
-    <value>해리</value>
+    <value>항해 거리</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabit" xml:space="preserve">
@@ -2438,7 +2438,7 @@
   </data>
   <data name="DateCalculationOption.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>계산 모드</value>
-    <comment>Automation label for the Date Calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
+    <comment>Automation label for the Date calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
   </data>
   <data name="AddOption.Content" xml:space="preserve">
     <value>추가</value>
@@ -2454,7 +2454,7 @@
   </data>
   <data name="Date_DifferenceOption.Content" xml:space="preserve">
     <value>날짜 간 차이</value>
-    <comment>Date Difference option</comment>
+    <comment>Date difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
     <value>일</value>
@@ -2529,11 +2529,11 @@
   </data>
   <data name="HeaderAutomationName_Converter" xml:space="preserve">
     <value>%1 변환기 모드</value>
-    <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and Mass", "Energy", "Volume", etc.</comment>
+    <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and mass", "Energy", "Volume", etc.</comment>
   </data>
   <data name="HeaderAutomationName_Date" xml:space="preserve">
     <value>날짜 계산 모드</value>
-    <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
+    <comment>Automation name for when the mode header is focused and the current mode is Date calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>기록 및 메모리 목록</value>
@@ -2613,51 +2613,51 @@
   </data>
   <data name="divideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>나누기</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
   </data>
   <data name="multiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>곱하기</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
   </data>
   <data name="minusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>빼기</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
   </data>
   <data name="plusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>더하기</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
   </data>
   <data name="powerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>의 전원에</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
   </data>
   <data name="ySquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>y 루트</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
   </data>
   <data name="modButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>mod</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>왼쪽 Shift</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>오른쪽으로 이동</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>또는</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
   </data>
   <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>x 또는</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>및</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="CurrencyFromToRatioFormat" xml:space="preserve">
     <value>%1 %2 = %3 %4</value>
@@ -2976,15 +2976,15 @@
     <comment>Name for the inverse hyperbolic cotangent function. Used by screen readers.</comment>
   </data>
   <data name="CubeRoot" xml:space="preserve">
-    <value>세제곱근</value>
+    <value>큐브 루트</value>
     <comment>Name for the cube root function. Used by screen readers.</comment>
   </data>
   <data name="Logy" xml:space="preserve">
-    <value>기준 로그</value>
+    <value>로그 기준</value>
     <comment>Name for the logbasey function. Used by screen readers.</comment>
   </data>
   <data name="AbsoluteValue" xml:space="preserve">
-    <value>절대 값</value>
+    <value>절대값</value>
     <comment>Name for the absolute value function. Used by screen readers.</comment>
   </data>
   <data name="LeftShift" xml:space="preserve">
@@ -3081,7 +3081,7 @@
   </data>
   <data name="trigShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>역함수</value>
-    <comment>Screen Reader prompt for the shift button in the trig flyout in scientific mode.</comment>
+    <comment>Screen reader prompt for the shift button in the trig flyout in scientific mode.</comment>
   </data>
   <data name="hypButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>쌍곡선 함수</value>
@@ -3096,7 +3096,7 @@
     <comment>Screen reader prompt for the Calculator button sech in the scientific flyout keypad</comment>
   </data>
   <data name="invsecButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>아크 시컨트</value>
+    <value>호 시컨트</value>
     <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
   </data>
   <data name="invsechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3112,11 +3112,11 @@
     <comment>Screen reader prompt for the Calculator button csch in the scientific flyout keypad</comment>
   </data>
   <data name="invcscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>아크 코시컨트</value>
+    <value>호 코시컨트</value>
     <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
   </data>
   <data name="invcschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>쌍곡 아크 코시컨트</value>
+    <value>쌍곡 호 코시컨트</value>
     <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
   </data>
   <data name="cotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3128,11 +3128,11 @@
     <comment>Screen reader prompt for the Calculator button coth in the scientific flyout keypad</comment>
   </data>
   <data name="invcotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>아크 코탄젠트</value>
+    <value>호 코탄젠트</value>
     <comment>Screen reader prompt for the Calculator button arc cot in the scientific flyout keypad</comment>
   </data>
   <data name="invcothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>쌍곡 아크 코탄젠트</value>
+    <value>쌍곡 호 코탄젠트</value>
     <comment>Screen reader prompt for the Calculator button arc coth in the scientific flyout keypad</comment>
   </data>
   <data name="floorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3148,7 +3148,7 @@
     <comment>Screen reader prompt for the Calculator button random in the scientific flyout keypad</comment>
   </data>
   <data name="absButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>절대 값</value>
+    <value>절대값</value>
     <comment>Screen reader prompt for the Calculator button abs in the scientific flyout keypad</comment>
   </data>
   <data name="eulerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3165,7 +3165,7 @@
   </data>
   <data name="nandButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Nand</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="norButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Nor</value>
@@ -3173,7 +3173,7 @@
   </data>
   <data name="norButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Nor</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="rolCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>자리올림으로 왼쪽으로 회전</value>
@@ -3184,12 +3184,12 @@
     <comment>Screen reader prompt for the Calculator button ror with carry in the scientific flyout keypad</comment>
   </data>
   <data name="lshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>왼쪽 시프트</value>
+    <value>왼쪽으로 시프트</value>
     <comment>Screen reader prompt for the Calculator button lshLogical in the scientific flyout keypad</comment>
   </data>
   <data name="lshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>왼쪽 시프트</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="rshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>오른쪽 시프트</value>
@@ -3197,7 +3197,7 @@
   </data>
   <data name="rshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>오른쪽 시프트</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="arithmeticShiftButton.Content" xml:space="preserve">
     <value>산술 시프트</value>
@@ -3441,11 +3441,11 @@
   </data>
   <data name="HorizontalAsymptotes" xml:space="preserve">
     <value>수평 점근선</value>
-    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Horizontal aysmptotes Property</comment>
   </data>
   <data name="InflectionPoints" xml:space="preserve">
     <value>변곡점</value>
-    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+    <comment>Title for KeyGraphFeatures Inflection points Property</comment>
   </data>
   <data name="KGFAnalysisNotSupported" xml:space="preserve">
     <value>이 함수에 대한 분석이 지원되지 않습니다.</value>
@@ -3469,7 +3469,7 @@
   </data>
   <data name="ObliqueAsymptotes" xml:space="preserve">
     <value>사선 점근선</value>
-    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Oblique asymptotes Property</comment>
   </data>
   <data name="Parity" xml:space="preserve">
     <value>패리티</value>
@@ -3485,7 +3485,7 @@
   </data>
   <data name="VerticalAsymptotes" xml:space="preserve">
     <value>수직 점근선</value>
-    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Vertical asymptotes Property</comment>
   </data>
   <data name="XIntercept" xml:space="preserve">
     <value>X절편</value>
@@ -3820,7 +3820,7 @@
   </data>
   <data name="GraphOptionsHeading.Text" xml:space="preserve">
     <value>그래프 옵션</value>
-    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+    <comment>Heading for the Graph options flyout in Graphing mode.</comment>
   </data>
   <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>변경 가능 옵션</value>
@@ -3832,7 +3832,7 @@
   </data>
   <data name="LineThicknessBoxHeading.Text" xml:space="preserve">
     <value>선 굵기</value>
-    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+    <comment>Heading for the Graph options flyout in Graphing mode.</comment>
   </data>
   <data name="LineOptionsHeading.Text" xml:space="preserve">
     <value>선 옵션</value>
@@ -3955,11 +3955,11 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor5AutomationName" xml:space="preserve">
-    <value>스프링 그린색</value>
+    <value>민트 그린</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor6AutomationName" xml:space="preserve">
-    <value>진한 녹색</value>
+    <value>어두운 녹색</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor7AutomationName" xml:space="preserve">
@@ -3983,7 +3983,7 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor12AutomationName" xml:space="preserve">
-    <value>밝은 주황색</value>
+    <value>밝은 주황</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor13AutomationName" xml:space="preserve">
@@ -4083,7 +4083,7 @@
     <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
   </data>
   <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>기능 분석</value>
+    <value>함수 분석</value>
     <comment>Screen reader prompt for the function analysis grid</comment>
   </data>
   <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4111,19 +4111,19 @@
     <comment>Announcement to indicate calculator window is now back to full view.</comment>
   </data>
   <data name="arithmeticShiftButtonSelected" xml:space="preserve">
-    <value>산술 교대 근무 선택됨</value>
+    <value>산술 시프트 선택됨</value>
     <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
   </data>
   <data name="logicalShiftButtonSelected" xml:space="preserve">
-    <value>논리 교대 근무 선택됨</value>
+    <value>논리적 시프트 선택됨</value>
     <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
   </data>
   <data name="rotateCircularButtonSelected" xml:space="preserve">
-    <value>원형 교대 근무 회전 선택됨</value>
+    <value>선택한 원형 시프트 회전</value>
     <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
   </data>
   <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
-    <value>원형 교대 근무를 통해 회전 선택됨</value>
+    <value>선택한 자리올림 원형 시프트를 통해 회전</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
   <data name="SettingsHeader.Text" xml:space="preserve">
@@ -4136,11 +4136,11 @@
   </data>
   <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
     <value>앱 테마</value>
-    <comment>Title of App Theme expander</comment>
+    <comment>Title of App theme expander</comment>
   </data>
   <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
     <value>표시할 앱 테마 선택</value>
-    <comment>Description of App Theme expander</comment>
+    <comment>Description of App theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>밝게</value>
