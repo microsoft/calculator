@@ -56,6 +56,13 @@ jobs:
       command: custom
       arguments: restore src/Calculator.sln -Verbosity Detailed
 
+  - ${{ if eq(parameters.isReleaseBuild, false) }}:
+    - task: PowerShell@2
+      displayName: Set package identity to Calculator.Dev.$(Build.BuildId)
+      inputs:
+        filePath: $(Build.SourcesDirectory)\build\scripts\UpdateAppxManifestIdentity.ps1
+        arguments: '-AppxManifest $(Build.SourcesDirectory)\src\Calculator\$(ManifestFileName) -Identity Calculator.Dev.$(Build.BuildId)'
+
   - task: PowerShell@2
     displayName: Set version number in AppxManifest
     inputs:
