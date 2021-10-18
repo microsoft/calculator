@@ -35,6 +35,7 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundlePlatforms>$(Platform)</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+    <IlcParameters>/disableStackTraceMetadata /disableExceptionMessages</IlcParameters>
   </PropertyGroup>
   <!-- This has to be exactly in this place for this to work -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
