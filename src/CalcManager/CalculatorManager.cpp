@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+// Licensed under the MIT License.xccyxcxycyxcx
 
 #include <climits> // for UCHAR_MAX
 #include "Header Files/CalcEngine.h"
