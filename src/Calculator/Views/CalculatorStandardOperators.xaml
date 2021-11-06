@@ -183,6 +183,7 @@
             </Grid.ColumnDefinitions>
             <controls:CalculatorButton x:Name="PercentButton"
                                        x:Uid="percentButton"
+                                       
                                        Grid.Column="0"
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
                                        AutomationProperties.AutomationId="percentButton"
@@ -195,7 +196,11 @@
                                        FontSize="16"
                                        AutomationProperties.AutomationId="clearEntryButton"
                                        ButtonId="ClearEntry"
-                                       Content="CE"/>
+                                       Content="CE"
+                                       ToolTipService.ToolTip ="현재 입력 지우기"
+                                       />
+
+            
             <controls:CalculatorButton x:Name="ClearButton"
                                        x:Uid="clearButton"
                                        Grid.Column="2"
@@ -203,7 +208,8 @@
                                        FontSize="16"
                                        AutomationProperties.AutomationId="clearButton"
                                        ButtonId="Clear"
-                                       Content="C"/>
+                                       Content="C"
+                                       ToolTipService.ToolTip ="전 계산과정 지우기"/>
             <controls:CalculatorButton x:Name="BackSpaceButton"
                                        x:Uid="backSpaceButton"
                                        Grid.Column="3"
@@ -287,6 +293,7 @@
             <controls:CalculatorButton x:Name="MinusButton"
                                        x:Uid="minusButton"
                                        Grid.Row="2"
+                                      
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
                                        AutomationProperties.AutomationId="minusButton"
                                        ButtonId="Subtract"

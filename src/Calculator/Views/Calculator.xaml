@@ -12,7 +12,8 @@
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Loaded="OnLoaded"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             >
 
     <UserControl.Resources>
         <!-- DataTemplates -->

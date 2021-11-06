@@ -69,6 +69,7 @@ namespace CalculatorApp
 
             private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
             {
+                
                 if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
                 {
                     UpdateScrollButtons();

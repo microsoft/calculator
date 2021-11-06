@@ -480,7 +480,7 @@
 
             <controls:CalculatorButton x:Name="ClearEntryButton"
                                        x:Uid="clearEntryButton"
-                                       Style="{StaticResource OperatorButtonStyle}"
+                                       Style="{StaticResource MemoryHoverButtonStyle}"
                                        FontSize="12"
                                        AutomationProperties.AutomationId="clearEntryButton"
                                        ButtonId="ClearEntry"

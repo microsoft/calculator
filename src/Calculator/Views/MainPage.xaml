@@ -10,7 +10,8 @@
       x:Name="PageRoot"
       muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
       Loaded="OnPageLoaded"
-      mc:Ignorable="d">
+      mc:Ignorable="d"
+      >
 
     <Page.Resources>
         <automation:NarratorNotifier x:Name="NarratorNotifier"/>

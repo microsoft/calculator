@@ -160,6 +160,7 @@ namespace CalculatorApp
         {
             if (ClearEntryButton.Visibility == Visibility.Collapsed && ClearButton.Visibility == Visibility.Visible)
             {
+                
                 ClearButton.Focus(FocusState.Programmatic);
             }
         }

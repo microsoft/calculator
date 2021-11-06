@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using CalculatorApp.Common;
 using Windows.UI.Xaml.Media;
+using Windows.Devices.Input;
 
 namespace CalculatorApp
 {
@@ -215,6 +216,7 @@ namespace CalculatorApp
             }
         }
 
+        
         private void ClearButton_LostFocus(object sender, RoutedEventArgs e)
         {
             if (ClearEntryButton.Visibility == Visibility.Visible && ClearButton.Visibility == Visibility.Collapsed)
@@ -223,7 +225,7 @@ namespace CalculatorApp
             }
         }
 
-        private void BitShiftFlyout_Opened(object sender, object e)
+            private void BitShiftFlyout_Opened(object sender, object e)
         {
             if (m_selectedShiftButtonMode == BitShiftMode.Arithmetic)
             {

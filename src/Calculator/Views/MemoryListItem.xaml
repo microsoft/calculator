@@ -65,6 +65,10 @@
                   Margin="0,0,16,4"
                   HorizontalAlignment="Right"
                   Opacity="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="17*"/>
+                    <RowDefinition Height="11*"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -74,20 +78,20 @@
                         Style="{StaticResource MemoryHoverButtonStyle}"
                         AutomationProperties.AutomationId="MClearButton"
                         Click="OnClearButtonClicked"
-                        Content="MC"/>
+                        Content="MC" Grid.RowSpan="2"/>
                 <Button x:Uid="MemPlusItem"
                         Grid.Column="1"
-                        Margin="1,0"
+                        Margin="1,0,1,0"
                         Style="{StaticResource MemoryHoverButtonStyle}"
                         AutomationProperties.AutomationId="MAddButton"
                         Click="OnMemoryAddButtonClicked"
-                        Content="M+"/>
+                        Content="M+" Grid.RowSpan="2"/>
                 <Button x:Uid="MemMinusItem"
                         Grid.Column="2"
                         Style="{StaticResource MemoryHoverButtonStyle}"
                         AutomationProperties.AutomationId="MSubButton"
                         Click="OnMemorySubtractButtonClicked"
-                        Content="M-"/>
+                        Content="M-" Grid.RowSpan="2"/>
             </Grid>
         </Grid>
     </muxc:SwipeControl>
