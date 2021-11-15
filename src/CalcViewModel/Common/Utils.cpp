@@ -239,13 +239,6 @@ String^ CalculatorApp::ViewModel::Common::Utilities::EscapeHtmlSpecialCharacters
     return replaceCharacters ? replacementString : originalString;
 }
 
-Platform::String^ CalculatorApp::ViewModel::Common::Utilities::TrimTrailingZeros(Platform::String^ input)
-{
-    std::wstring tmp(input->Data());
-    CalcManager::NumberFormattingUtils::TrimTrailingZeros(tmp);
-    return ref new Platform::String(tmp.c_str());
-}
-
 bool CalculatorApp::ViewModel::Common::Utilities::AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2)
 {
     return Utils::AreColorsEqual(color1, color2);

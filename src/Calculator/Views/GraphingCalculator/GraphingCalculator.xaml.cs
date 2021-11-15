@@ -467,8 +467,7 @@ namespace CalculatorApp
                         var value = variables[i].Value;
 
                         rawHtml += name + "=";
-                        var formattedValue = value.ToString("R");
-                        formattedValue = Utilities.TrimTrailingZeros(formattedValue);
+                        var formattedValue = value.ToString();
                         rawHtml += formattedValue;
 
                         if (variables.Count - 1 != i)
