@@ -53,7 +53,7 @@ namespace CalculatorApp::ViewModel
                 {
                     std::wistringstream input(value->Data());
                     double number;
-                    if (input >> number)
+                    if (input >> number && input.eof())
                     {
                         m_Graph->XAxisMin = m_XMinValue = number;
                         XMinError = false;
@@ -87,7 +87,7 @@ namespace CalculatorApp::ViewModel
                 {
                     std::wistringstream input(value->Data());
                     double number;
-                    if (input >> number)
+                    if (input >> number && input.eof())
                     {
                         m_Graph->XAxisMax = m_XMaxValue = number;
                         XMaxError = false;
@@ -121,7 +121,7 @@ namespace CalculatorApp::ViewModel
                 {
                     std::wistringstream input(value->Data());
                     double number;
-                    if (input >> number)
+                    if (input >> number && input.eof())
                     {
                         m_Graph->YAxisMin = m_YMinValue = number;
                         YMinError = false;
@@ -155,7 +155,7 @@ namespace CalculatorApp::ViewModel
                 {
                     std::wistringstream input(value->Data());
                     double number;
-                    if (input >> number)
+                    if (input >> number && input.eof())
                     {
                         m_Graph->YAxisMax = m_YMaxValue = number;
                         YMaxError = false;

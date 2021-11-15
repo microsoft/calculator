@@ -13,7 +13,6 @@
 #include "Common/AppResourceProvider.h"
 #include "Common/ExpressionCommandSerializer.h"
 #include "Common/ExpressionCommandDeserializer.h"
-#include "CalcManager/NumberFormattingUtils.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::ViewModel::Common;

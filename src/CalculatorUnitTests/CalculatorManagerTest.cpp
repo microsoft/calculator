@@ -12,7 +12,7 @@
 using namespace CalculatorApp;
 using namespace CalculatorApp::ViewModel::Common;
 using namespace CalculationManager;
-using namespace CalcManager::NumberFormattingUtils;
+using namespace UnitConversionManager::NumberFormattingUtils;
 using namespace Platform;
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -191,11 +191,11 @@ namespace CalculatorManagerTest
         TEST_METHOD(CalculatorManagerTestMaxDigitsReached_LeadingDecimal);
         TEST_METHOD(CalculatorManagerTestMaxDigitsReached_TrailingDecimal);
 
-        TEST_METHOD(CalculatorManagerNumberFormattingUtils_TrimTrailingZeros);
-        TEST_METHOD(CalculatorManagerNumberFormattingUtils_GetNumberDigits);
-        TEST_METHOD(CalculatorManagerNumberFormattingUtils_GetNumberDigitsWholeNumberPart);
-        TEST_METHOD(CalculatorManagerNumberFormattingUtils_RoundSignificantDigits);
-        TEST_METHOD(CalculatorManagerNumberFormattingUtils_ToScientificNumber);
+        TEST_METHOD(UnitConversionManagerNumberFormattingUtils_TrimTrailingZeros);
+        TEST_METHOD(UnitConversionManagerNumberFormattingUtils_GetNumberDigits);
+        TEST_METHOD(UnitConversionManagerNumberFormattingUtils_GetNumberDigitsWholeNumberPart);
+        TEST_METHOD(UnitConversionManagerNumberFormattingUtils_RoundSignificantDigits);
+        TEST_METHOD(UnitConversionManagerNumberFormattingUtils_ToScientificNumber);
 
         TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived);
         TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived_Multiple);
@@ -917,7 +917,7 @@ namespace CalculatorManagerTest
         TestMaxDigitsReachedScenario(L"123,456,789,101,112.13");
     }
 
-    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_TrimTrailingZeros()
+    void CalculatorManagerTest::UnitConversionManagerNumberFormattingUtils_TrimTrailingZeros()
     {
         wstring number = L"2.1032100000000";
         TrimTrailingZeros(number);
@@ -942,7 +942,7 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(number, L"322423");
     }
 
-    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_GetNumberDigits()
+    void CalculatorManagerTest::UnitConversionManagerNumberFormattingUtils_GetNumberDigits()
     {
         wstring number = L"2.10321";
         unsigned int digitsCount = GetNumberDigits(number);
@@ -961,7 +961,7 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(digitsCount, 8);
     }
 
-    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_GetNumberDigitsWholeNumberPart()
+    void CalculatorManagerTest::UnitConversionManagerNumberFormattingUtils_GetNumberDigitsWholeNumberPart()
     {
         unsigned int digitsCount = GetNumberDigitsWholeNumberPart(2.10321);
         VERIFY_ARE_EQUAL(digitsCount, 1);
@@ -981,7 +981,7 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(digitsCount, 1);
     }
 
-    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_RoundSignificantDigits()
+    void CalculatorManagerTest::UnitConversionManagerNumberFormattingUtils_RoundSignificantDigits()
     {
         wstring result = RoundSignificantDigits(12.342343242, 3);
         VERIFY_ARE_EQUAL(result, L"12.342");
@@ -997,7 +997,7 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(result, L"0.3423000");
     }
 
-    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_ToScientificNumber()
+    void CalculatorManagerTest::UnitConversionManagerNumberFormattingUtils_ToScientificNumber()
     {
         wstring result = ToScientificNumber(3423);
         VERIFY_ARE_EQUAL(result, L"3.423000e+03");
