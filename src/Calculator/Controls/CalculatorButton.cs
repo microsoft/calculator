@@ -120,23 +120,15 @@ namespace CalculatorApp
 
             protected override void OnKeyDown(KeyRoutedEventArgs e)
             {
-                // Ignore the Enter key
-                if (e.Key == VirtualKey.Enter)
-                {
-                    return;
-                }
-
+                // Ignore the Enter key.
+                if (e.Key == VirtualKey.Enter) { return; }
                 base.OnKeyDown(e);
             }
 
             protected override void OnKeyUp(KeyRoutedEventArgs e)
             {
-                // Ignore the Enter key
-                if (e.Key == VirtualKey.Enter)
-                {
-                    return;
-                }
-
+                // Ignore the Enter key.
+                if (e.Key == VirtualKey.Enter) { return; }
                 base.OnKeyUp(e);
             }
 
