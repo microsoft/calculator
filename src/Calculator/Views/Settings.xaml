@@ -89,8 +89,16 @@
                 Padding="2,0,0,0"
                 Style="{StaticResource SquareIconButtonStyle}"
                 FontSize="12"
-                Click="BackButton_Click"
-                Content="&#xE72B;"/>
+                Click="BackButton_Click">
+            <muxc:AnimatedIcon x:Name='BackAnimatedIcon'>
+                <muxc:AnimatedIcon.Source>
+                    <animatedvisuals:AnimatedBackVisualSource/>
+                </muxc:AnimatedIcon.Source>
+                <muxc:AnimatedIcon.FallbackIconSource>
+                    <muxc:SymbolIconSource Symbol='Back'/>
+                </muxc:AnimatedIcon.FallbackIconSource>
+            </muxc:AnimatedIcon>
+        </Button>
 
         <Grid Grid.Row="1"
               Height="{StaticResource HamburgerHeight}"
