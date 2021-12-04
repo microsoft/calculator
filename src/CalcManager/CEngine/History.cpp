@@ -330,10 +330,33 @@ void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, AngleType an
 // history of equations
 void CHistoryCollector::CompleteHistoryLine(wstring_view numStr)
 {
-    if (nullptr != m_pHistoryDisplay)
+    bool hasOperator = false;
+
+    for (auto const& token : *m_spTokens)
     {
-        unsigned int addedItemIndex = m_pHistoryDisplay->AddToHistory(m_spTokens, m_spCommands, numStr);
-        m_pCalcDisplay->OnHistoryItemAdded(addedItemIndex);
+        if (token.first == L"×" || token.first == L"÷" || token.first == L"+" || token.first == L"-" || token.first == L"1/(" || token.first == L"sqr("
+            || token.first == L"√(" || token.first == L"Mod" || token.first == L"fact(" || token.first == L"abs(" || token.first == L"^"
+            || token.first == L"yroot" || token.first == L"log(" || token.first == L"ln(" || token.first == L"√(" || token.first == L"fact("
+            || token.first == L"abs(" || token.first == L"10^(" || token.first == L"log(" || token.first == L"ln(" || token.first == L"cube("
+            || token.first == L"cuberoot(" || token.first == L"yroot" || token.first == L"^(" || token.first == L"log base" || token.first == L"e^("
+            || token.first == L"sin₀(" || token.first == L"cos₀(" || token.first == L"tan₀(" || token.first == L"sec₀(" || token.first == L"csc₀("
+            || token.first == L"sin₀⁻¹(" || token.first == L"cos₀⁻¹(" || token.first == L"tan₀⁻¹( " || token.first == L"sec₀⁻¹(" || token.first == L"csc₀⁻¹("
+            || token.first == L"cot₀⁻¹(" || token.first == L"sinh(" || token.first == L"cosh(" || token.first == L"tanh(" || token.first == L"sech("
+            || token.first == L"csch(" || token.first == L"coth(" || token.first == L"sinh⁻¹(" || token.first == L"cosh⁻¹(" || token.first == L"tanh⁻¹("
+            || token.first == L"sech⁻¹(" || token.first == L"csch⁻¹(" || token.first == L"coth⁻¹(" || token.first == L"floor(" || token.first == L"ceil("
+            || token.first == L"dms(" || token.first == L"degrees(")
+        {
+            hasOperator = true;
+        }
+    }
+
+    if (hasOperator)
+    {
+        if (nullptr != m_pHistoryDisplay)
+        {
+            unsigned int addedItemIndex = m_pHistoryDisplay->AddToHistory(m_spTokens, m_spCommands, numStr);
+            m_pCalcDisplay->OnHistoryItemAdded(addedItemIndex);
+        }
     }
 
     m_spTokens = nullptr;
