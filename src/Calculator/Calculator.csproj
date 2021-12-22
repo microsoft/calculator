@@ -794,7 +794,7 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.10</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.UI.Xaml" Version="2.6.2" />
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.7.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
