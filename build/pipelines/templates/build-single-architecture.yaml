@@ -72,6 +72,11 @@ jobs:
       configuration: $(BuildConfiguration)
       maximumCpuCount: true
 
+  - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+    displayName: 'SBOM Generation Task'
+    inputs:
+        BuildDropPath: $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator
+
   - task: PublishBuildArtifacts@1
     displayName: Publish drop artifact
     inputs:
