@@ -70,6 +70,14 @@ jobs:
       configuration: $(BuildConfiguration)
       maximumCpuCount: true
 
+  - ${{ if eq(parameters.isReleaseBuild, true) }}:          
+    - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+      displayName: 'Generate Software Bill of Material(SBoM)'
+      inputs:
+          BuildDropPath: $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator
+          PackageName: 'Microsoft.WindowsCalculator'
+          PackageVersion: $(Build.BuildNumber)
+
   - task: PublishBuildArtifacts@1
     displayName: Publish drop artifact
     inputs:
