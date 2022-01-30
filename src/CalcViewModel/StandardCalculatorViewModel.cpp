@@ -137,6 +137,10 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
 String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue)
 {
     wstring result(displayValue);
+    if (CurrentRadixType == NumberBase::BinBase || CurrentRadixType == NumberBase::OctBase)
+    {
+        result = AddPadding(result);
+    }
     LocalizationSettings::GetInstance()->LocalizeDisplayValue(&result);
     return ref new Platform::String(result.c_str());
 }
@@ -1544,6 +1548,24 @@ wstring StandardCalculatorViewModel::AddPadding(wstring binaryString)
     if (LocalizationSettings::GetInstance()->GetEnglishValueFromLocalizedDigits(StringReference(binaryString.c_str())) == L"0")
     {
         return binaryString;
+    }
+    if (CurrentRadixType == NumberBase::BinBase)
+    {
+        size_t pad = 4 - LengthWithoutPadding(binaryString) % 4;
+        if (pad == 4)
+        {
+            pad = 0;
+        }
+        return wstring(pad, L'0') + binaryString;
+    }
+    else if (CurrentRadixType == NumberBase::OctBase)
+    {
+        size_t pad = 3 - LengthWithoutPadding(binaryString) % 3;
+        if (pad == 3)
+        {
+            pad = 0;
+        }
+        return wstring(pad, L'0') + binaryString;
     }
     size_t pad = 4 - LengthWithoutPadding(binaryString) % 4;
     if (pad == 4)
