@@ -163,6 +163,7 @@ private:
     static std::unordered_map<std::wstring_view, std::wstring> s_engineStrings; // the string table shared across all instances
     wchar_t m_decimalSeparator;
     wchar_t m_groupSeparator;
+    int extraVariable;
 
 private:
     void ProcessCommandWorker(OpCode wParam);
