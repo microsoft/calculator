@@ -300,10 +300,10 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         /* In that case we better use the number before the operator  */
         /* was entered, otherwise, things like 5+ 1/x give Divide By  */
         /* zero.  This way 5+=gives 10 like most calculators do.      */
-        if (IsBinOpCode(m_nLastCom))
+        /* if (IsBinOpCode(m_nLastCom))
         {
             m_currentVal = m_lastVal;
-        }
+        }*/
 
         // we do not add percent sign to history or to two line display.
         // instead, we add the result of applying %.
@@ -328,7 +328,25 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             }
         }
 
-        m_currentVal = SciCalcFunctions(m_currentVal, (uint32_t)wParam);
+
+        if (wParam == IDC_LOG)
+        {
+
+           m_currentVal = 0;
+           extraVariable = 2;
+            
+           ProcessCommand(IDC_OPENP);
+        
+
+        }
+        else
+        {
+            m_currentVal = SciCalcFunctions(m_currentVal, (uint32_t)wParam);
+        }
+      
+        
+      
+       
 
         if (m_bError)
             return;
@@ -348,7 +366,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         if (m_bInv
             && ((wParam == IDC_CHOP) || (wParam == IDC_SIN) || (wParam == IDC_COS) || (wParam == IDC_TAN) || (wParam == IDC_LN) || (wParam == IDC_DMS)
                 || (wParam == IDC_DEGREES) || (wParam == IDC_SINH) || (wParam == IDC_COSH) || (wParam == IDC_TANH) || (wParam == IDC_SEC) || (wParam == IDC_CSC)
-                || (wParam == IDC_COT) || (wParam == IDC_SECH) || (wParam == IDC_CSCH) || (wParam == IDC_COTH)))
+                || (wParam == IDC_COT) || (wParam == IDC_SECH) || (wParam == IDC_CSCH) || (wParam == IDC_COTH)) || (wParam == IDC_LOG)) //Added log here
         {
             m_bInv = false;
         }
@@ -492,7 +510,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             wstring groupedString = GroupDigitsPerRadix(m_numberString, m_radix);
             m_HistoryCollector.CompleteEquation(groupedString);
         }
-
+    
         m_bChangeOp = false;
         m_nPrevOpCode = 0;
 
@@ -501,10 +519,13 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     case IDC_OPENP:
     case IDC_CLOSEP:
 
+
         // -IF- the Paren holding array is full and we try to add a paren
         // -OR- the paren holding array is empty and we try to remove a
         //      paren
         // -OR- the precedence holding array is full
+        ClearDisplay();
+
         if ((m_openParenCount >= MAXPRECDEPTH && (wParam == IDC_OPENP)) || (!m_openParenCount && (wParam != IDC_OPENP))
             || ((m_precedenceOpCount >= MAXPRECDEPTH && m_nPrecOp[m_precedenceOpCount - 1] != 0)))
         {
@@ -519,10 +540,13 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 
         if (wParam == IDC_OPENP)
         {
+            
             // if there's an omitted multiplication sign 
             if (IsDigitOpCode(m_nLastCom) || IsUnaryOpCode(m_nLastCom) || m_nLastCom == IDC_PNT || m_nLastCom == IDC_CLOSEP)
             {
+                
                 ProcessCommand(IDC_MUL);
+               
             }
 
             CheckAndAddLastBinOpToHistory();
@@ -549,11 +573,23 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             m_nTempCom = 0;
             m_nOpCode = 0;
             m_bChangeOp = false; // a ( is like starting a fresh sub equation
+
+            
         }
         else
         {
             // Last thing keyed in was an operator. Lets do the op on a duplicate of the last entry.
-            if (IsBinOpCode(m_nLastCom))
+            if (extraVariable == 2)
+            {
+                wParam = IDC_LOG;
+                m_currentVal = SciCalcFunctions(m_currentVal, (uint32_t)wParam);
+                extraVariable = 0;
+                wParam = IDC_CLOSEP;
+            }
+            
+           
+
+           if (IsBinOpCode(m_nLastCom))
             {
                 m_currentVal = m_lastVal;
             }
@@ -602,10 +638,13 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         {
             m_pCalcDisplay->SetParenthesisNumber(static_cast<unsigned int>(m_openParenCount));
         }
+            
 
         if (!m_bError)
         {
-            DisplayNum();
+           
+           DisplayNum();
+           
         }
 
         break;
