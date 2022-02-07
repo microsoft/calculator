@@ -31,7 +31,7 @@ IObservableVector<String ^> ^ KeyGraphFeaturesInfo::ConvertWStringVector(vector<
 IObservableMap<String ^, String ^> ^ KeyGraphFeaturesInfo::ConvertWStringIntMap(map<wstring, int> inMap)
 {
     Map<String ^, String ^> ^ outMap = ref new Map<String ^, String ^>();
-    ;
+    
     for (const auto& m : inMap)
     {
         outMap->Insert(ref new String(m.first.c_str()), m.second.ToString());
