@@ -8,7 +8,7 @@
         <Logo>Assets\CalculatorStoreLogo.png</Logo>
     </Properties>
     <Dependencies>
-        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.18308.0" MaxVersionTested="10.0.22000.0" />
+        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.18362.0" MaxVersionTested="10.0.22000.0" />
     </Dependencies>
     <Resources>
         <Resource Language="x-generate" />
@@ -40,7 +40,7 @@
                     <uap3:AppExtension Name="com.microsoft.windows.dontmaximizeonsmallscreen"
                                        Id="calculator"
                                        DisplayName="calculator"
-                                       Description="This app extension makes calculator no longer maximizing by default on small screen device."
+                                       Description="This app extension prevents calculator from being maximized by default on some small screen devices."
                                        PublicFolder="Public">
                         <uap3:Properties>
                             <Service>com.microsoft.windows.dontmaximizeonsmallscreen</Service>

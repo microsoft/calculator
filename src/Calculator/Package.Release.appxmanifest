@@ -40,7 +40,7 @@
                     <uap3:AppExtension Name="com.microsoft.windows.dontmaximizeonsmallscreen"
                                        Id="calculator"
                                        DisplayName="calculator"
-                                       Description="This app extension makes calculator no longer maximizing by default on small screen device."
+                                       Description="This app extension prevents calculator from being maximized by default on some small screen devices."
                                        PublicFolder="Public">
                         <uap3:Properties>
                             <Service>com.microsoft.windows.dontmaximizeonsmallscreen</Service>
