@@ -44,7 +44,6 @@ jobs:
     displayName: Run CalculatorUITests
     inputs:
       testAssemblyVer2: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/CalculatorUITests.dll
-      vsTestVersion: 17.0
       runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/${{ parameters.runsettingsFileName }}
       platform: ${{ parameters.platform }}
       configuration: Release
