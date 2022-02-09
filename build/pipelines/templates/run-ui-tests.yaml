@@ -10,7 +10,7 @@ jobs:
   dependsOn: Build${{ parameters.platform }}
   condition: succeeded()
   pool:
-    vmImage: windows-2019
+    vmImage: windows-2022
   variables:
     skipComponentGovernanceDetection: true
   steps:
@@ -21,7 +21,7 @@ jobs:
     continueOnError: true	
 
   - task: DownloadBuildArtifacts@0
-    displayName: Download AppxBundle and CalculatorUITests
+    displayName: Download MsixBundle and CalculatorUITests
     inputs:
       artifactName: drop
       itemPattern: |
@@ -44,7 +44,7 @@ jobs:
     displayName: Run CalculatorUITests
     inputs:
       testAssemblyVer2: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/CalculatorUITests.dll
-      vsTestVersion: 16.0
+      vsTestVersion: 17.0
       runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/${{ parameters.runsettingsFileName }}
       platform: ${{ parameters.platform }}
       configuration: Release
