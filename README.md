@@ -22,11 +22,11 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 
 ## Getting started
 Prerequisites:
-- Your computer must be running Windows 10, version 1803 or newer.
+- Your computer must be running Windows 10, version 1809 or newer.
 - Install the latest version of [Visual Studio](https://developer.microsoft.com/en-us/windows/downloads) (the free community edition is sufficient).
   - Install the "Universal Windows Platform Development" workload.
   - Install the optional "C++ Universal Windows Platform tools" component.
-  - Install the latest Windows 10 SDK.
+  - Install the latest Windows 11 SDK.
 
   ![Visual Studio Installation Screenshot](docs/Images/VSInstallationScreenshot.png)
 - Install the [XAML Styler](https://marketplace.visualstudio.com/items?itemName=TeamXavalon.XAMLStyler) Visual Studio extension.
