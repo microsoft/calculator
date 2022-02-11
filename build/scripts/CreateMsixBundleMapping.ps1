@@ -10,26 +10,26 @@
         ARM\
             Project\
                 AppPackages\
-                    Project_ARM.appx
-                    Project_scale-100.appx
+                    Project_ARM.msix
+                    Project_scale-100.msix
         x64\
             Project\
                 AppPackages\
-                    Project_x64.appx
-                    Project_scale-100.appx
+                    Project_x64.msix
+                    Project_scale-100.msix
 
 .PARAMETER InputPath
-    The path where appx packages to bundle are located.
+    The path where msix packages to bundle are located.
 
 .PARAMETER ProjectName
-    The folder name within each architecture to search recursively for appx packages. The appx files
+    The folder name within each architecture to search recursively for msix packages. The msix files
     must also have the ProjectName in their file names.
 
 .PARAMETER OutputFile
     The path to write the generated mapping file.
 
 .EXAMPLE
-    Create-AppxBundleMapping -InputPath "C:\drop" -ProjectName "CalculatorApp" -OutputFile "C:\Temp\AppxBundleMapping.txt"
+    Create-MsixBundleMapping -InputPath "C:\drop" -ProjectName "CalculatorApp" -OutputFile "C:\Temp\MsixBundleMapping.txt"
 #>
 param(
     [Parameter(Mandatory)]
@@ -45,7 +45,7 @@ param(
     $OutputFile
 )
 
-# List all appx packages by architecture
+# List all msix packages by architecture
 $architectures = @(Get-ChildItem -Path $InputPath -Directory | Foreach-Object Name | Foreach-Object ToLower)
 if ($architectures.Count -lt 1)
 {
@@ -57,22 +57,22 @@ $packages = @{}
 foreach ($architecture in $architectures)
 {
     $projectPath = [IO.Path]::Combine($InputPath, $architecture, $ProjectName)
-    $packages[$architecture] = Get-ChildItem -Path $projectPath -Recurse -Filter *$ProjectName*.appx
+    $packages[$architecture] = Get-ChildItem -Path $projectPath -Recurse -Filter *$ProjectName*.msix
 
     if ($packages[$architecture].Count -lt 1)
     {
-        throw "No .appx files found for architecture $architecture in $projectPath"
+        throw "No .msix files found for architecture $architecture in $projectPath"
     }
 }
 
-# List appx packages which are common to all architectures
+# List msix packages which are common to all architectures
 $commonPackages = $packages[$defaultArchitecture]
 foreach ($architecture in $architectures)
 {
     $commonPackages = $packages[$architecture] | Where {$commonPackages.Name -Contains $_.Name}
 }
 
-# List appx packages which are architecture-specific and verify that there is exactly one per
+# List msix packages which are architecture-specific and verify that there is exactly one per
 # architecture.
 $architectureSpecificPackages = @()
 if ($architectures.Count -gt 1)
