@@ -1,5 +1,5 @@
-# This template contains a job which takes .appx packages which were built separately for each
-# architecture (arm, x86, etc.) and combines them into a single .appxbundle. In release builds,
+# This template contains a job which takes .msix packages which were built separately for each
+# architecture (arm, x86, etc.) and combines them into a single .msixbundle. In release builds,
 # this job also signs the bundle and creates StoreBroker packages.
 
 parameters:
@@ -20,7 +20,7 @@ jobs:
       in(dependencies.BuildARM.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     ) 
   pool:
-    vmImage: windows-2019
+    vmImage: windows-2022
   variables:
     skipComponentGovernanceDetection: true
     StoreBrokerMediaRootPath: $(TEMP)\SBMedia
@@ -30,10 +30,10 @@ jobs:
     fetchDepth: 1
 
   - task: DownloadBuildArtifacts@0
-    displayName: Download all .appx artifacts
+    displayName: Download all .msix artifacts
     inputs:
       artifactName: drop
-      itemPattern: '**/*.appx'
+      itemPattern: '**/*.msix'
 
   - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:
     - task: UniversalPackages@0
@@ -46,41 +46,41 @@ jobs:
         vstsPackageVersion: 0.0.67
 
   - task: PowerShell@2
-    displayName: Generate AppxBundle mapping
+    displayName: Generate MsixBundle mapping
     inputs:
-      filePath: $(Build.SourcesDirectory)\build\scripts\CreateAppxBundleMapping.ps1
-      arguments: '-InputPath $(Build.ArtifactStagingDirectory)\drop\Release -ProjectName Calculator -OutputFile $(Build.BinariesDirectory)\AppxBundleMapping.txt'
+      filePath: $(Build.SourcesDirectory)\build\scripts\CreateMsixBundleMapping.ps1
+      arguments: '-InputPath $(Build.ArtifactStagingDirectory)\drop\Release -ProjectName Calculator -OutputFile $(Build.BinariesDirectory)\MsixBundleMapping.txt'
 
   - powershell: |
       $buildVersion = [version]$Env:BUILDVERSION
       $bundleVersion = "2021.$($buildVersion.Minor).$($buildVersion.Build).$($buildVersion.Revision)"
-      & "C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x86\MakeAppx.exe" bundle /v /bv $bundleVersion /f $Env:MAPPINGFILEPATH /p $Env:OUTPUTPATH
-    displayName: Make AppxBundle
+      & "C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64\MakeAppx.exe" bundle /v /bv $bundleVersion /f $Env:MAPPINGFILEPATH /p $Env:OUTPUTPATH
+    displayName: Make MsixBundle
     env:
       BUILDVERSION: $(Build.BuildNumber)
-      MAPPINGFILEPATH: $(Build.BinariesDirectory)\AppxBundleMapping.txt
-      OUTPUTPATH: $(Build.BinariesDirectory)\Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
+      MAPPINGFILEPATH: $(Build.BinariesDirectory)\MsixBundleMapping.txt
+      OUTPUTPATH: $(Build.BinariesDirectory)\Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
 
   - task: CopyFiles@2
-    displayName: Copy AppxBundle to staging directory
+    displayName: Copy MsixBundle to staging directory
     inputs:
       sourceFolder: $(Build.BinariesDirectory)
-      contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
-      targetFolder: $(Build.ArtifactStagingDirectory)\appxBundle
+      contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
+      targetFolder: $(Build.ArtifactStagingDirectory)\msixBundle
 
   - task: PublishBuildArtifacts@1
-    displayName: Publish AppxBundle artifact
+    displayName: Publish MsixBundle artifact
     inputs:
-      artifactName: appxBundle
-      pathToPublish: $(Build.ArtifactStagingDirectory)\appxBundle
+      artifactName: msixBundle
+      pathToPublish: $(Build.ArtifactStagingDirectory)\msixBundle
 
   - ${{ if eq(parameters.signBundle, true) }}:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
-      displayName: Send appxbundle to code signing service
+      displayName: Send msixbundle to code signing service
       inputs:
         ConnectedServiceName: Essential Experiences Codesign
-        FolderPath: $(Build.ArtifactStagingDirectory)\appxBundle
-        Pattern: Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
+        FolderPath: $(Build.ArtifactStagingDirectory)\msixBundle
+        Pattern: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
         signConfigType: inlineSignParams
         inlineOperation: |
           [
@@ -109,10 +109,10 @@ jobs:
             }
           ]
     - task: PublishBuildArtifacts@1
-      displayName: Publish AppxBundleSigned artifact
+      displayName: Publish MsixBundleSigned artifact
       inputs:
-        pathtoPublish: $(Build.ArtifactStagingDirectory)\appxBundle
-        artifactName: appxBundleSigned
+        pathtoPublish: $(Build.ArtifactStagingDirectory)\msixBundle
+        artifactName: msixBundleSigned
 
     - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:      
       - powershell: |
@@ -139,8 +139,8 @@ jobs:
         inputs:
           serviceEndpoint: Calculator StoreBroker Connection
           sbConfigPath: Tools/Build/StoreBroker/SBCalculatorConfig.json
-          sourceFolder: $(Build.ArtifactStagingDirectory)/appxBundle
-          contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
+          sourceFolder: $(Build.ArtifactStagingDirectory)/msixBundle
+          contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
           pdpPath: $(Build.SourcesDirectory)\PDP
           pdpInclude: PDP.xml
           pdpMediaPath: $(StoreBrokerMediaRootPath)

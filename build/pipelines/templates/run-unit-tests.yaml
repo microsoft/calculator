@@ -10,7 +10,7 @@ jobs:
   dependsOn: Build${{ parameters.platform }}
   condition: succeeded()
   pool:
-    vmImage: windows-2019
+    vmImage: windows-2022
   variables:
     skipComponentGovernanceDetection: true
   steps:
@@ -31,5 +31,5 @@ jobs:
   - task: VSTest@2
     displayName: Run CalculatorUnitTests
     inputs:
-      testAssemblyVer2: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.appx
+      testAssemblyVer2: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.msix
       otherConsoleOptions: /Platform:${{ parameters.platform }}

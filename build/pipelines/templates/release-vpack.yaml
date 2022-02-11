@@ -5,30 +5,30 @@ jobs:
 - job: ReleaseVPack
   dependsOn: Package
   pool:
-    vmImage: windows-2019
+    vmImage: windows-2022
   variables:
     skipComponentGovernanceDetection: true
   steps:
   - checkout: none
 
   - task: DownloadBuildArtifacts@0
-    displayName: Download appxBundleSigned artifact
+    displayName: Download msixBundleSigned artifact
     inputs:
-      artifactName: appxBundleSigned
+      artifactName: msixBundleSigned
 
   - task: CopyFiles@2
-    displayName: Copy signed AppxBundle to vpack staging folder
+    displayName: Copy signed MsixBundle to vpack staging folder
     inputs:
-      sourceFolder: $(Build.ArtifactStagingDirectory)\appxBundleSigned
-      contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.appxbundle
-      targetFolder: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
+      sourceFolder: $(Build.ArtifactStagingDirectory)\msixBundleSigned
+      contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
+      targetFolder: $(Build.ArtifactStagingDirectory)\vpack\msixBundle
 
   - task: PkgESVPack@12
     displayName: Create and push vpack for app
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     inputs:
-      sourceDirectory: $(Build.ArtifactStagingDirectory)\vpack\appxBundle
+      sourceDirectory: $(Build.ArtifactStagingDirectory)\vpack\msixBundle
       description: VPack for the Calculator Application
       pushPkgName: calculator.app
       version: $(versionMajor).$(versionMinor).$(versionBuild)
