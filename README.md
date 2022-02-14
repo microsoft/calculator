@@ -11,6 +11,7 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 ## Features
 - Standard Calculator functionality which offers basic operations and evaluates commands immediately as they are entered.
 - Scientific Calculator functionality which offers expanded operations and evaluates commands using order of operations.
+- Graphing Calculator functionality which offers fast and precise graphs to almost every mathematical equations in 2-D.
 - Programmer Calculator functionality which offers common mathematical operations for developers including conversion between common bases.
 - Date Calculation functionality which offers the difference between two dates, as well as the ability to add/subtract years, months and/or days to/from a given input date.
 - Calculation history and memory capabilities.
