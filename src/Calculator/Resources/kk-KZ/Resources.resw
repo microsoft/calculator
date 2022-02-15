@@ -4143,7 +4143,7 @@
     <comment>Description of App theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
-    <value>Ақшыл</value>
+    <value>Ашық</value>
     <comment>Lable for light theme option</comment>
   </data>
   <data name="DarkThemeRadioButton.Content" xml:space="preserve">

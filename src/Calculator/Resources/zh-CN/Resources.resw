@@ -3212,7 +3212,7 @@
     <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
   </data>
   <data name="rotateCarryShiftButton.Content" xml:space="preserve">
-    <value>带进位旋转循</value>
+    <value>带进位旋转循环移位</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
   <data name="cubeRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
