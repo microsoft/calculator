@@ -4143,11 +4143,11 @@
     <comment>Description of App theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
-    <value>Deschisă</value>
+    <value>Luminos</value>
     <comment>Lable for light theme option</comment>
   </data>
   <data name="DarkThemeRadioButton.Content" xml:space="preserve">
-    <value>Închisă</value>
+    <value>Întunecat</value>
     <comment>Lable for dark theme option</comment>
   </data>
   <data name="SystemThemeRadioButton.Content" xml:space="preserve">

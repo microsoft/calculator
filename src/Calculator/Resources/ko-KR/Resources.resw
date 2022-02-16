@@ -1654,7 +1654,7 @@
     <comment>A measurement unit for power: British Thermal Units per minute. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Byte" xml:space="preserve">
-    <value>바이트 수</value>
+    <value>바이트</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Calorie" xml:space="preserve">
@@ -1722,11 +1722,11 @@
     <comment>A measurement unit for power. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabit" xml:space="preserve">
-    <value>기가비트</value>
+    <value>기가비트(Gb)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gigabyte" xml:space="preserve">
-    <value>GB</value>
+    <value>기가바이트(GB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Hectare" xml:space="preserve">
@@ -1754,11 +1754,11 @@
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
   </data>
   <data name="UnitName_Kilobit" xml:space="preserve">
-    <value>Kbps</value>
+    <value>킬로비트(Kb)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilobyte" xml:space="preserve">
-    <value>킬로바이트</value>
+    <value>킬로바이트(KB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kilocalorie" xml:space="preserve">
@@ -1790,11 +1790,11 @@
     <comment>A measurement of speed (Mach is the speed of sound, Mach 2 is 2 times the speed of sound)</comment>
   </data>
   <data name="UnitName_Megabit" xml:space="preserve">
-    <value>메가비트</value>
+    <value>메가비트(Mb)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Megabyte" xml:space="preserve">
-    <value>메가바이트</value>
+    <value>메가바이트(MB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Meter" xml:space="preserve">
@@ -1810,7 +1810,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Microsecond" xml:space="preserve">
-    <value>밀리초</value>
+    <value>마이크로초</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mile" xml:space="preserve">
@@ -1842,11 +1842,11 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabit" xml:space="preserve">
-    <value>페타비트</value>
+    <value>페타비트(Pb)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabyte" xml:space="preserve">
-    <value>페타바이트</value>
+    <value>페타바이트(PB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Second" xml:space="preserve">
@@ -1886,11 +1886,11 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabit" xml:space="preserve">
-    <value>테라비트</value>
+    <value>테라비트(Tb)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabyte" xml:space="preserve">
-    <value>테라바이트</value>
+    <value>테라바이트(TB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Watt" xml:space="preserve">
@@ -1922,7 +1922,7 @@
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Gradian" xml:space="preserve">
-    <value>그리드</value>
+    <value>그레이드</value>
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Atmosphere" xml:space="preserve">
@@ -2346,91 +2346,91 @@
     <comment>The paste operation cannot be performed, if the expression is invalid.</comment>
   </data>
   <data name="UnitName_Gibibits" xml:space="preserve">
-    <value>기비비트(비트)</value>
+    <value>기비비트(Gib)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gibibytes" xml:space="preserve">
-    <value>기비바이트</value>
+    <value>기비바이트(GiB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibits" xml:space="preserve">
-    <value>키비비트</value>
+    <value>키비비트(Kib)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibytes" xml:space="preserve">
-    <value>키비바이트</value>
+    <value>키비바이트(KiB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mebibits" xml:space="preserve">
-    <value>메비바이트</value>
+    <value>메비비트(Mib)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Mebibytes" xml:space="preserve">
-    <value>메비바이트</value>
+    <value>메비바이트(MiB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pebibits" xml:space="preserve">
-    <value>페비비트</value>
+    <value>페비비트(Pib)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Pebibytes" xml:space="preserve">
-    <value>페비바이트</value>
+    <value>페비바이트(PiB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tebibits" xml:space="preserve">
-    <value>테비비트</value>
+    <value>테비비트(Tib)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Tebibytes" xml:space="preserve">
-    <value>테비바이트</value>
+    <value>테비바이트(TiB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabits" xml:space="preserve">
-    <value>엑사비트</value>
+    <value>엑사비트(Eb)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabytes" xml:space="preserve">
-    <value>엑사바이트</value>
+    <value>엑사바이트(EB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibits" xml:space="preserve">
-    <value>엑시비비트</value>
+    <value>엑스비비트(Eib)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibytes" xml:space="preserve">
-    <value>엑스비바이트</value>
+    <value>엑스비바이트(EiB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabits" xml:space="preserve">
-    <value>제타비트</value>
+    <value>제타비트(Zb)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabytes" xml:space="preserve">
-    <value>제타바이트</value>
+    <value>제타바이트(ZB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zebibits" xml:space="preserve">
-    <value>제비비트</value>
+    <value>제비비트(Zib)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zebibytes" xml:space="preserve">
-    <value>제비바이트</value>
+    <value>제비바이트(ZiB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabit" xml:space="preserve">
-    <value>요타비트</value>
+    <value>요타비트(Yb)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabyte" xml:space="preserve">
-    <value>요타바이트</value>
+    <value>요타바이트(YB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibits" xml:space="preserve">
-    <value>요비비트</value>
+    <value>요비비트(Yib)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibytes" xml:space="preserve">
-    <value>요비바이트</value>
+    <value>요비바이트(YiB)</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="DateCalculationModeText" xml:space="preserve">

@@ -4147,7 +4147,7 @@
     <comment>Lable for light theme option</comment>
   </data>
   <data name="DarkThemeRadioButton.Content" xml:space="preserve">
-    <value>Mørk</value>
+    <value>Mørkt</value>
     <comment>Lable for dark theme option</comment>
   </data>
   <data name="SystemThemeRadioButton.Content" xml:space="preserve">

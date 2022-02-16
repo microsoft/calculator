@@ -3208,11 +3208,11 @@
     <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
   </data>
   <data name="rotateCircularButton.Content" xml:space="preserve">
-    <value>Mit kreisförmiger Verschiebung drehen</value>
+    <value>Zyklische Verschiebung</value>
     <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
   </data>
   <data name="rotateCarryShiftButton.Content" xml:space="preserve">
-    <value>Drehen durch Kreisverschiebung</value>
+    <value>Zyklische Verschiebung mit Übertragsbit</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
   <data name="cubeRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
