@@ -23,7 +23,7 @@ name: $(BuildDefinitionName)_$(date:yyMM).$(date:dd)$(rev:rrr)
 jobs:
 - job: Localize
   pool:
-    vmImage: windows-2022
+    name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
   steps:
