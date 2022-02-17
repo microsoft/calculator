@@ -673,9 +673,8 @@
                                 </ResourceDictionary>
                             </HyperlinkButton.Resources>
                         </HyperlinkButton>
-                        <TextBlock Margin="3,7,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
+                        <TextBlock Margin="3,6,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
                             <Run x:Name="CurrencySecondaryStatus"
-                                 FontWeight="SemiBold"
                                  Text=""/>
                         </TextBlock>
                     </StackPanel>
