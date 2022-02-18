@@ -188,10 +188,9 @@ void CurrencyDataLoader::ResetLoadStatus()
 #pragma optimize("", off) // Turn off optimizations to work around DevDiv 393321
 void CurrencyDataLoader::LoadData()
 {
-    RegisterForNetworkBehaviorChanges();
-
     if (!LoadFinished())
     {
+        RegisterForNetworkBehaviorChanges();
         create_task([this]() -> task<bool> {
             vector<function<future<bool>()>> loadFunctions = {
                 [this]() { return TryLoadDataFromCacheAsync(); },
