@@ -3623,7 +3623,7 @@
     <comment>Error that occurs during graphing when a } is missing.</comment>
   </data>
   <data name="CannotUseIInReal" xml:space="preserve">
-    <value>"i" ve "ı" değişken adı olarak kullanılamaz</value>
+    <value>"i" ve "I" değişken adı olarak kullanılamaz</value>
     <comment>Error that occurs during graphing when i or I is used.</comment>
   </data>
   <data name="GeneralError" xml:space="preserve">
