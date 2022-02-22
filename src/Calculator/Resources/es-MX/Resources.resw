@@ -4023,7 +4023,7 @@
     <comment>Graph settings option to set graph to light theme</comment>
   </data>
   <data name="MatchAppTheme.Content" xml:space="preserve">
-    <value>Hacer coincidir con el tema de la aplicación</value>
+    <value>Coincidir con el tema de la aplicación</value>
     <comment>Graph settings option to set graph to match the app theme</comment>
   </data>
   <data name="GraphThemeHeading.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
