@@ -2,6 +2,7 @@
 
 parameters:
   isReleaseBuild: false
+  isOSSBuild: false
   useReleaseAppxManifest: false
   platform: ''
   condition: ''
@@ -11,7 +12,10 @@ jobs:
   displayName: Build ${{ parameters.platform }}
   condition: ${{ parameters.condition }}
   pool:
-    vmImage: windows-2022
+    ${{ if eq(parameters.isOSSBuild, true) }}:
+      name: EssentialExperiencesOpenSource-windows-2022
+    ${{ if eq(parameters.isOSSBuild, false) }}:
+      name: EssentialExperiences-windows-2022
   variables:
     BuildConfiguration: Release
     BuildPlatform: ${{ parameters.platform }}

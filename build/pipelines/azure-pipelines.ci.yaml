@@ -19,33 +19,42 @@ jobs:
 - template: ./templates/build-single-architecture.yaml
   parameters:
     platform: x64
+    isOSSBuild: true
 
 - template: ./templates/build-single-architecture.yaml
   parameters:
     platform: x86
+    isOSSBuild: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/build-single-architecture.yaml
   parameters:
     platform: ARM
+    isOSSBuild: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/build-single-architecture.yaml
   parameters:
     platform: ARM64
+    isOSSBuild: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/run-ui-tests.yaml
   parameters:
     platform: x64
+    isOSSBuild: true
     runsettingsFileName: CalculatorUITests.ci.runsettings
 
 - template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x64
+    isOSSBuild: true
 
 - template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x86
+    isOSSBuild: true
 
 - template: ./templates/package-msixbundle.yaml
+  parameters:
+    isOSSBuild: true
