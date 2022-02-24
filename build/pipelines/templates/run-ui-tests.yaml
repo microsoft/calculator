@@ -1,6 +1,7 @@
 # This template contains jobs to run UI tests using WinAppDriver.
 
 parameters:
+  isOSSBuild: false
   platform: ''
   runsettingsFileName: ''
 
@@ -10,7 +11,10 @@ jobs:
   dependsOn: Build${{ parameters.platform }}
   condition: succeeded()
   pool:
-    vmImage: windows-2022
+    ${{ if eq(parameters.isOSSBuild, true) }}:
+      name: EssentialExperiencesOpenSource-windows-2022
+    ${{ if eq(parameters.isOSSBuild, false) }}:
+      name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
   steps:

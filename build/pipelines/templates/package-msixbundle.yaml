@@ -3,6 +3,7 @@
 # this job also signs the bundle and creates StoreBroker packages.
 
 parameters:
+  isOSSBuild: false
   signBundle: false
   createStoreBrokerPackages: false
 
@@ -20,7 +21,10 @@ jobs:
       in(dependencies.BuildARM.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     ) 
   pool:
-    vmImage: windows-2022
+    ${{ if eq(parameters.isOSSBuild, true) }}:
+      name: EssentialExperiencesOpenSource-windows-2022
+    ${{ if eq(parameters.isOSSBuild, false) }}:
+      name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
     StoreBrokerMediaRootPath: $(TEMP)\SBMedia
