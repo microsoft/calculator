@@ -499,6 +499,9 @@
                         <Setter Target="Value1Container.Visibility" Value="Collapsed"/>
                         <Setter Target="Units2.Visibility" Value="Collapsed"/>
                         <Setter Target="Value2Container.Visibility" Value="Collapsed"/>
+                        <Setter Target="NumberPad.IsEnabled" Value="False"/>
+                        <Setter Target="ClearEntryButtonPos0.IsEnabled" Value="False"/>
+                        <Setter Target="BackSpaceButtonSmall.IsEnabled" Value="False"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="UnitLoadedState"/>
