@@ -592,6 +592,7 @@
                                   LosingFocus="GraphingControl_LosingFocus"
                                   LostFocus="GraphingControl_LostFocus"
                                   UseSystemFocusVisuals="True"
+                                  FlowDirection="LeftToRight"
                                   VariablesUpdated="GraphingControl_VariablesUpdated">
                 <graphControl:Grapher.ContextFlyout>
                     <MenuFlyout Placement="Bottom">
