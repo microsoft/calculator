@@ -8,7 +8,7 @@ using namespace std;
 using namespace CalculationManager;
 
 namespace
-{
+{   //Following Function is going to check, either the expression had executed already or not.
     static wstring GetGeneratedExpression(const vector<pair<wstring, int>>& tokens)
     {
         wstring expression;
