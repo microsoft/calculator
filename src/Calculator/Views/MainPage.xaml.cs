@@ -147,6 +147,22 @@ namespace CalculatorApp
                 NavViewCategoriesSource.Clear();
                 NavViewCategoriesSource = ExpandNavViewCategoryGroups(Model.Categories);
             };
+
+            _ = Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                var graphCategory = (NavCategory)NavViewCategoriesSource.Find(x =>
+                {
+                    if(x is NavCategory category)
+                    {
+                        return category.Mode == ViewMode.Graphing;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                });
+                graphCategory.IsEnabled = NavCategoryStates.IsViewModeEnabled(ViewMode.Graphing);
+            });
         }
 
         private List<object> ExpandNavViewCategoryGroups(IEnumerable<NavCategoryGroup> groups)

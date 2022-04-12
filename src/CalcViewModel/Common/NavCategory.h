@@ -99,7 +99,7 @@ namespace CalculatorApp::ViewModel
             PROPERTY_R(ViewMode, Mode);
             PROPERTY_R(Platform::String ^, AccessKey);
             PROPERTY_R(bool, SupportsNegative);
-            PROPERTY_R(bool, IsEnabled);
+            PROPERTY_RW(bool, IsEnabled);
 
             property Platform::String
                 ^ AutomationId { Platform::String ^ get() { return m_Mode.ToString(); } }
@@ -108,9 +108,6 @@ namespace CalculatorApp::ViewModel
             static bool IsGraphingCalculatorViewMode(ViewMode mode);
             static bool IsDateCalculatorViewMode(ViewMode mode);
             static bool IsConverterViewMode(ViewMode mode);
-
-            static void InitializeCategoryManifest(Windows::System::User ^ user);
-            static void UpdateGraphingModelManifest(Windows::System::User ^ user);
 
             internal : NavCategory(
                            Platform::String ^ name,
@@ -181,9 +178,6 @@ namespace CalculatorApp::ViewModel
             // Virtual key related
             static ViewMode GetViewModeForVirtualKey(MyVirtualKey virtualKey);
             static void GetCategoryAcceleratorKeys(Windows::Foundation::Collections::IVector<MyVirtualKey> ^ resutls);
-
-        private:
-            static Platform::Agile<Windows::System::User ^> _currentUser;
         };
     }
 }

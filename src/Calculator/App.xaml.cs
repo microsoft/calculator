@@ -19,6 +19,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
@@ -86,6 +87,10 @@ namespace CalculatorApp
                 m_preLaunched = true;
             }
             NavCategoryStates.SetCurrentUser(args.User);
+
+            // It takes time to check GraphingMode at the 1st time. So, do it in a background thread
+            Task.Run(() => NavCategoryStates.IsViewModeEnabled(ViewMode.Graphing));
+
             OnAppLaunch(args, args.Arguments);
         }
 
@@ -411,7 +416,7 @@ namespace CalculatorApp
 
                 foreach (NavCategory option in calculatorOptions.Categories)
                 {
-                    if (!option.IsEnabled)
+                    if (!NavCategoryStates.IsViewModeEnabled(option.Mode))
                     {
                         continue;
                     }

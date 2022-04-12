@@ -47,44 +47,53 @@ static constexpr int CURRENCY_ID = 16;
 static constexpr int GRAPHING_ID = 17;
 // ^^^ THESE CONSTANTS SHOULD NEVER CHANGE ^^^
 
-wchar_t* towchar_t(int number)
+namespace
 {
-    auto wstr = std::to_wstring(number);
-    return _wcsdup(wstr.c_str());
-}
+    Platform::Agile<Windows::System::User^> CurrentUser;
+    std::mutex GraphingModeCheckMutex;
 
-bool IsGraphingModeAvailable()
-{
-    static bool supportGraph = Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath");
-    return supportGraph;
-}
-
-Box<bool> ^ _isGraphingModeEnabledCached = nullptr;
-bool IsGraphingModeEnabled(User ^ currentUser = nullptr)
-{
-    if (!IsGraphingModeAvailable())
+    wchar_t* towchar_t(int number)
     {
-        return false;
+        auto wstr = std::to_wstring(number);
+        return _wcsdup(wstr.c_str());
     }
 
-    if (_isGraphingModeEnabledCached != nullptr)
+    bool IsGraphingModeAvailable()
     {
-        return _isGraphingModeEnabledCached->Value;
+        static bool supportGraph = Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath");
+        return supportGraph;
     }
 
-    if (!currentUser)
+    bool IsGraphingModeEnabled()
     {
-        return true;
+        static bool isChecked = false;
+        static bool isEnabled = false;
+
+        std::scoped_lock<std::mutex> lock(GraphingModeCheckMutex);
+        if (isChecked)
+        {
+            return isEnabled;
+        }
+        else
+        {
+            if (IsGraphingModeAvailable())
+            {
+                auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(
+                    CurrentUser.Get(),
+                    L"Education",
+                    L"AllowGraphingCalculator");
+                isEnabled = namedPolicyData->GetBoolean();
+            }
+            else
+            {
+                isEnabled = false;
+            }
+            isChecked = true;
+            return isEnabled;
+        }
     }
-
-    auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(currentUser, L"Education", L"AllowGraphingCalculator");
-    _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
-
-    return _isGraphingModeEnabledCached->Value;
 }
 
-
-Platform::Agile<Windows::System::User ^> NavCategoryStates::_currentUser;
 
 // The order of items in this list determines the order of items in the menu.
 static std::vector<NavCategoryInitializer> s_categoryManifest = [] {
@@ -280,36 +289,6 @@ static std::vector<NavCategoryInitializer> s_categoryManifest = [] {
     return res;
 }();
 
-void NavCategory::InitializeCategoryManifest(User ^ user)
-{
-    //int i = 0;
-    //for (NavCategoryInitializer category : s_categoryManifest)
-    //{
-    //    if (category.viewMode == ViewMode::Graphing)
-    //    {
-    //        auto navCatInit = s_categoryManifest.begin();
-    //        std::advance(navCatInit, i);
-    //        (*navCatInit).isEnabled = IsGraphingModeEnabled(user);
-    //        break;
-    //    }
-    //    else
-    //    {
-    //        i++;
-    //    }
-    //}
-}
-
-
-void NavCategory::UpdateGraphingModelManifest(Windows::System::User ^ user)
-{
-    static bool isEnabled = IsGraphingModeEnabled(user);
-    std::find_if(
-        s_categoryManifest.begin(),
-        s_categoryManifest.end(),
-        [](const auto& category) { return category.viewMode == ViewMode::Graphing;})
-        ->isEnabled = isEnabled;
-}
-
 bool NavCategory::IsCalculatorViewMode(ViewMode mode)
 {
     // Historically, Calculator modes are Standard, Scientific, and Programmer.
@@ -379,7 +358,8 @@ NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupIniti
 
 void NavCategoryStates::SetCurrentUser(Windows::System::User^ user)
 {
-    _currentUser = user;
+    std::scoped_lock<std::mutex> lock(GraphingModeCheckMutex);
+    CurrentUser = user;
 }
 
 IObservableVector<NavCategoryGroup ^> ^ NavCategoryStates::CreateMenuOptions()
@@ -578,11 +558,16 @@ bool NavCategoryStates::IsValidViewMode(ViewMode mode)
 
 bool NavCategoryStates::IsViewModeEnabled(ViewMode mode)
 {
-    const auto& citer = find_if(
-        cbegin(s_categoryManifest),
-        cend(s_categoryManifest),
-        [mode](const auto& initializer) { return initializer.viewMode == mode && initializer.isEnabled; });
-
-    return citer != s_categoryManifest.cend();
+    if (mode == ViewMode::Graphing)
+    {
+        return IsGraphingModeEnabled();
+    }
+    else
+    {
+        return std::any_of(
+            s_categoryManifest.cbegin(),
+            s_categoryManifest.cend(),
+            [mode](const auto& initializer) { return initializer.viewMode == mode && initializer.isEnabled; });
+    }
 }
 
