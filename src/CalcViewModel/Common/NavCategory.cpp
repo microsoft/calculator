@@ -312,11 +312,12 @@ bool NavCategory::IsConverterViewMode(ViewMode mode)
 
 bool NavCategory::IsModeInCategoryGroup(ViewMode mode, CategoryGroupType type)
 {
-    auto iter = find_if(begin(s_categoryManifest), end(s_categoryManifest), [mode, type](const NavCategoryInitializer& initializer) {
-        return initializer.viewMode == mode && initializer.groupType == type;
-    });
-
-    return iter != s_categoryManifest.end();
+    return std::any_of(
+        s_categoryManifest.cbegin(),
+        s_categoryManifest.cend(),
+        [mode, type](const auto& initializer) {
+            return initializer.viewMode == mode && initializer.groupType == type;
+        });
 }
 
 NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupInitializer)
