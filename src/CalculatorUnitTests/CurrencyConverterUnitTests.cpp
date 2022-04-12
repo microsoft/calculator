@@ -382,7 +382,7 @@ TEST_METHOD(Load_Success_LoadedFromWeb)
 
 TEST_CLASS(CurrencyConverterUnitTests)
 {
-    const UCM::Category CURRENCY_CATEGORY = { NavCategory::Serialize(ViewMode::Currency), L"Currency", false /*supportsNegative*/ };
+    const UCM::Category CURRENCY_CATEGORY = { NavCategoryStates::Serialize(ViewMode::Currency), L"Currency", false /*supportsNegative*/ };
 
     const UCM::Unit GetUnit(const vector<UCM::Unit>& unitList, const wstring& target)
     {

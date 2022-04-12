@@ -75,7 +75,7 @@ void ApplicationViewModel::Categories::set(IObservableVector<NavCategoryGroup ^>
 
 void ApplicationViewModel::Initialize(ViewMode mode)
 {
-    if (!NavCategory::IsValidViewMode(mode) || !NavCategory::IsViewModeEnabled(mode))
+    if (!NavCategoryStates::IsValidViewMode(mode) || !NavCategoryStates::IsViewModeEnabled(mode))
     {
         mode = ViewMode::Standard;
     }
@@ -124,7 +124,7 @@ bool ApplicationViewModel::TryRecoverFromNavigationModeFailure()
 
 void ApplicationViewModel::OnModeChanged()
 {
-    assert(NavCategory::IsValidViewMode(m_mode));
+    assert(NavCategoryStates::IsValidViewMode(m_mode));
     if (NavCategory::IsCalculatorViewMode(m_mode))
     {
         if (!m_CalculatorViewModel)
@@ -160,15 +160,15 @@ void ApplicationViewModel::OnModeChanged()
     }
 
     auto resProvider = AppResourceProvider::GetInstance();
-    CategoryName = resProvider->GetResourceString(NavCategory::GetNameResourceKey(m_mode));
+    CategoryName = resProvider->GetResourceString(NavCategoryStates::GetNameResourceKey(m_mode));
 
     // Cast mode to an int in order to save it to app data.
     // Save the changed mode, so that the new window launches in this mode.
     // Don't save until after we have adjusted to the new mode, so we don't save a mode that fails to load.
-    ApplicationData::Current->LocalSettings->Values->Insert(ModePropertyName, NavCategory::Serialize(m_mode));
+    ApplicationData::Current->LocalSettings->Values->Insert(ModePropertyName, NavCategoryStates::Serialize(m_mode));
 
     // Log ModeChange event when not first launch, log WindowCreated on first launch
-    if (NavCategory::IsValidViewMode(m_PreviousMode))
+    if (NavCategoryStates::IsValidViewMode(m_PreviousMode))
     {
         TraceLogger::GetInstance()->LogModeChange(m_mode);
     }
@@ -213,7 +213,7 @@ void ApplicationViewModel::SetMenuCategories()
     // Use the Categories property instead of the backing variable
     // because we want to take advantage of binding updates and
     // property setter logic.
-    Categories = NavCategoryGroup::CreateMenuOptions();
+    Categories = NavCategoryStates::CreateMenuOptions();
 }
 
 void ApplicationViewModel::ToggleAlwaysOnTop(float width, float height)

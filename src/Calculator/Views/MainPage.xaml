@@ -7,6 +7,8 @@
       xmlns:local="using:CalculatorApp"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:selectors="using:CalculatorApp.TemplateSelectors"
+      xmlns:vmcom="using:CalculatorApp.ViewModel.Common"
       x:Name="PageRoot"
       muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
       Loaded="OnPageLoaded"
@@ -25,6 +27,27 @@
         <Style x:Key="NavViewItemStyle" TargetType="muxc:NavigationViewItem">
             <Setter Property="KeyTipPlacementMode" Value="Right"/>
         </Style>
+        <DataTemplate x:Key="NavViewCategoryItemDataTemplate" x:DataType="vmcom:NavCategory">
+            <muxc:NavigationViewItem Content="{x:Bind Name}"
+                                     Tag="{x:Bind Mode}"
+                                     AccessKey="{x:Bind AccessKey}"
+                                     IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                                     Style="{StaticResource NavViewItemStyle}"
+                                     AutomationProperties.Name="{x:Bind AutomationName}"
+                                     AutomationProperties.AutomationId="{x:Bind AutomationId}">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="{x:Bind Glyph}"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
+        </DataTemplate>
+        <DataTemplate x:Key="NavViewCategoryGroupItemDataTemplate" x:DataType="vmcom:NavCategoryGroup">
+            <muxc:NavigationViewItemHeader Content="{x:Bind Name}"
+                                           AutomationProperties.Name="{x:Bind AutomationName}"
+                                           AutomationProperties.HeadingLevel="Level1"/>
+        </DataTemplate>
+        <selectors:NavViewMenuItemTemplateSelector x:Key="NavViewMenuItemTemplateSelector"
+                                                   CategoryItemTemplate="{StaticResource NavViewCategoryItemDataTemplate}"
+                                                   CategoryGroupItemTemplate="{StaticResource NavViewCategoryGroupItemDataTemplate}"/>
 
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
@@ -96,7 +119,8 @@
                              IsSettingsVisible="True"
                              ItemInvoked="OnNavItemInvoked"
                              Loaded="OnNavLoaded"
-                             MenuItemsSource="{x:Bind CreateUIElementsForCategories(Model.Categories), Mode=OneWay}"
+                             MenuItemsSource="{x:Bind NavViewCategoriesSource, Mode=OneWay}"
+                             MenuItemTemplateSelector="{StaticResource NavViewMenuItemTemplateSelector}"
                              OpenPaneLength="{x:Bind NavigationViewOpenPaneLength(Model.IsAlwaysOnTop), Mode=OneWay}"
                              PaneDisplayMode="LeftMinimal"
                              PaneClosed="OnNavPaneClosed"

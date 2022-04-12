@@ -85,7 +85,7 @@ namespace CalculatorApp
                 // If the app got pre-launch activated, then save that state in a flag
                 m_preLaunched = true;
             }
-            NavCategory.InitializeCategoryManifest(args.User);
+            NavCategoryStates.SetCurrentUser(args.User);
             OnAppLaunch(args, args.Arguments);
         }
 
@@ -403,7 +403,7 @@ namespace CalculatorApp
         {
             try
             {
-                var calculatorOptions = NavCategoryGroup.CreateCalculatorCategory();
+                var calculatorOptions = NavCategoryStates.CreateCalculatorCategoryGroup();
 
                 var jumpList = await JumpList.LoadCurrentAsync();
                 jumpList.SystemGroupKind = JumpListSystemGroupKind.None;
@@ -416,8 +416,8 @@ namespace CalculatorApp
                         continue;
                     }
                     ViewMode mode = option.Mode;
-                    var item = JumpListItem.CreateWithArguments(((int)mode).ToString(), "ms-resource:///Resources/" + NavCategory.GetNameResourceKey(mode));
-                    item.Description = "ms-resource:///Resources/" + NavCategory.GetNameResourceKey(mode);
+                    var item = JumpListItem.CreateWithArguments(((int)mode).ToString(), "ms-resource:///Resources/" + NavCategoryStates.GetNameResourceKey(mode));
+                    item.Description = "ms-resource:///Resources/" + NavCategoryStates.GetNameResourceKey(mode);
                     item.Logo = new Uri("ms-appx:///Assets/" + mode.ToString() + ".png");
 
                     jumpList.Items.Add(item);

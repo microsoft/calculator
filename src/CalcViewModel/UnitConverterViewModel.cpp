@@ -537,7 +537,7 @@ void UnitConverterViewModel::OnPasteCommand(Platform::Object ^ parameter)
     // Any converter ViewMode is fine here.
 
     auto that(this);
-    create_task(CopyPasteManager::GetStringToPaste(m_Mode, NavCategory::GetGroupType(m_Mode), NumberBase::Unknown, BitLength::BitLengthUnknown))
+    create_task(CopyPasteManager::GetStringToPaste(m_Mode, NavCategoryStates::GetGroupType(m_Mode), NumberBase::Unknown, BitLength::BitLengthUnknown))
         .then([that](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
