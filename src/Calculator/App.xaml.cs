@@ -415,11 +415,11 @@ namespace CalculatorApp
 
                 foreach (NavCategory option in calculatorOptions.Categories)
                 {
-                    if (!NavCategoryStates.IsViewModeEnabled(option.Mode))
+                    if (!NavCategoryStates.IsViewModeEnabled(option.ViewMode))
                     {
                         continue;
                     }
-                    ViewMode mode = option.Mode;
+                    ViewMode mode = option.ViewMode;
                     var item = JumpListItem.CreateWithArguments(((int)mode).ToString(), "ms-resource:///Resources/" + NavCategoryStates.GetNameResourceKey(mode));
                     item.Description = "ms-resource:///Resources/" + NavCategoryStates.GetNameResourceKey(mode);
                     item.Logo = new Uri("ms-appx:///Assets/" + mode.ToString() + ".png");

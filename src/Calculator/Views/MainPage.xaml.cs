@@ -152,7 +152,7 @@ namespace CalculatorApp
                 {
                     if(x is NavCategory category)
                     {
-                        return category.Mode == ViewMode.Graphing;
+                        return category.ViewMode == ViewMode.Graphing;
                     }
                     else
                     {

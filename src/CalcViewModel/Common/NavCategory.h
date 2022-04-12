@@ -91,23 +91,25 @@ namespace CalculatorApp::ViewModel
         [Windows::UI::Xaml::Data::Bindable]
         public ref class NavCategory sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
+        private:
+            using ViewModeType = ::CalculatorApp::ViewModel::Common::ViewMode;
         public:
             OBSERVABLE_OBJECT();
             PROPERTY_R(Platform::String ^, Name);
             PROPERTY_R(Platform::String ^, AutomationName);
             PROPERTY_R(Platform::String ^, Glyph);
-            PROPERTY_R(ViewMode, Mode);
+            PROPERTY_R(ViewModeType, ViewMode);
             PROPERTY_R(Platform::String ^, AccessKey);
             PROPERTY_R(bool, SupportsNegative);
             PROPERTY_RW(bool, IsEnabled);
 
             property Platform::String
-                ^ AutomationId { Platform::String ^ get() { return m_Mode.ToString(); } }
+                ^ AutomationId { Platform::String ^ get() { return m_ViewMode.ToString(); } }
 
-            static bool IsCalculatorViewMode(ViewMode mode);
-            static bool IsGraphingCalculatorViewMode(ViewMode mode);
-            static bool IsDateCalculatorViewMode(ViewMode mode);
-            static bool IsConverterViewMode(ViewMode mode);
+            static bool IsCalculatorViewMode(ViewModeType mode);
+            static bool IsGraphingCalculatorViewMode(ViewModeType mode);
+            static bool IsDateCalculatorViewMode(ViewModeType mode);
+            static bool IsConverterViewMode(ViewModeType mode);
 
             internal : NavCategory(
                            Platform::String ^ name,
@@ -115,7 +117,7 @@ namespace CalculatorApp::ViewModel
                            Platform::String ^ glyph,
                            Platform::String ^ accessKey,
                            Platform::String ^ mode,
-                           ViewMode viewMode,
+                           ViewModeType viewMode,
                            bool supportsNegative,
                            bool isEnabled)
                 : m_Name(name)
@@ -123,14 +125,14 @@ namespace CalculatorApp::ViewModel
                 , m_Glyph(glyph)
                 , m_AccessKey(accessKey)
                 , m_modeString(mode)
-                , m_Mode(viewMode)
+                , m_ViewMode(viewMode)
                 , m_SupportsNegative(supportsNegative)
                 , m_IsEnabled(isEnabled)
             {
             }
 
         private:
-            static bool IsModeInCategoryGroup(ViewMode mode, CategoryGroupType groupType);
+            static bool IsModeInCategoryGroup(ViewModeType mode, CategoryGroupType groupType);
 
             Platform::String ^ m_modeString;
         };

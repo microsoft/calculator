@@ -152,7 +152,7 @@ void UnitConverterDataLoader::GetCategories(_In_ shared_ptr<vector<UCM::Category
     for (auto const& category : converterCategory->Categories)
     {
         /* Id, CategoryName, SupportsNegative */
-        categoriesList->emplace_back(NavCategoryStates::Serialize(category->Mode), category->Name->Data(), category->SupportsNegative);
+        categoriesList->emplace_back(NavCategoryStates::Serialize(category->ViewMode), category->Name->Data(), category->SupportsNegative);
     }
 }
 

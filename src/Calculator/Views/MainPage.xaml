@@ -29,7 +29,7 @@
         </Style>
         <DataTemplate x:Key="NavViewCategoryItemDataTemplate" x:DataType="vmcom:NavCategory">
             <muxc:NavigationViewItem Content="{x:Bind Name}"
-                                     Tag="{x:Bind Mode}"
+                                     Tag="{x:Bind ViewMode}"
                                      AccessKey="{x:Bind AccessKey}"
                                      IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
                                      Style="{StaticResource NavViewItemStyle}"

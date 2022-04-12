@@ -407,7 +407,7 @@ namespace CalculatorUnitTests
             VERIFY_IS_GREATER_THAN(categories->Size, index);
 
             NavCategory ^ category = categories->GetAt(index);
-            VERIFY_ARE_EQUAL(expectedMode, category->Mode);
+            VERIFY_ARE_EQUAL(expectedMode, category->ViewMode);
         }
     };
 

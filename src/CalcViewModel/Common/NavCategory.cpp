@@ -289,28 +289,28 @@ static std::vector<NavCategoryInitializer> s_categoryManifest = [] {
     return res;
 }();
 
-bool NavCategory::IsCalculatorViewMode(ViewMode mode)
+bool NavCategory::IsCalculatorViewMode(ViewModeType mode)
 {
     // Historically, Calculator modes are Standard, Scientific, and Programmer.
     return !IsDateCalculatorViewMode(mode) && !IsGraphingCalculatorViewMode(mode) && IsModeInCategoryGroup(mode, CategoryGroupType::Calculator);
 }
 
-bool NavCategory::IsGraphingCalculatorViewMode(ViewMode mode)
+bool NavCategory::IsGraphingCalculatorViewMode(ViewModeType mode)
 {
-    return mode == ViewMode::Graphing;
+    return mode == ViewModeType::Graphing;
 }
 
-bool NavCategory::IsDateCalculatorViewMode(ViewMode mode)
+bool NavCategory::IsDateCalculatorViewMode(ViewModeType mode)
 {
-    return mode == ViewMode::Date;
+    return mode == ViewModeType::Date;
 }
 
-bool NavCategory::IsConverterViewMode(ViewMode mode)
+bool NavCategory::IsConverterViewMode(ViewModeType mode)
 {
     return IsModeInCategoryGroup(mode, CategoryGroupType::Converter);
 }
 
-bool NavCategory::IsModeInCategoryGroup(ViewMode mode, CategoryGroupType type)
+bool NavCategory::IsModeInCategoryGroup(ViewModeType mode, CategoryGroupType type)
 {
     return std::any_of(
         s_categoryManifest.cbegin(),
