@@ -47,22 +47,10 @@ static constexpr int CURRENCY_ID = 16;
 static constexpr int GRAPHING_ID = 17;
 // ^^^ THESE CONSTANTS SHOULD NEVER CHANGE ^^^
 
-namespace
+namespace // put the utils within this TU
 {
     Platform::Agile<Windows::System::User^> CurrentUser;
     std::mutex GraphingModeCheckMutex;
-
-    wchar_t* towchar_t(int number)
-    {
-        auto wstr = std::to_wstring(number);
-        return _wcsdup(wstr.c_str());
-    }
-
-    bool IsGraphingModeAvailable()
-    {
-        static bool supportGraph = Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath");
-        return supportGraph;
-    }
 
     bool IsGraphingModeEnabled()
     {
@@ -76,218 +64,183 @@ namespace
         }
         else
         {
-            if (IsGraphingModeAvailable())
-            {
-                auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(
-                    CurrentUser.Get(),
-                    L"Education",
-                    L"AllowGraphingCalculator");
-                isEnabled = namedPolicyData->GetBoolean();
-            }
-            else
-            {
-                isEnabled = false;
-            }
+            auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(
+                CurrentUser.Get(),
+                L"Education",
+                L"AllowGraphingCalculator");
+            isEnabled = namedPolicyData->GetBoolean();
             isChecked = true;
             return isEnabled;
         }
     }
-}
 
+    // The order of items in this list determines the order of items in the menu.
+    const std::vector<NavCategoryInitializer> s_categoryManifest {
+      NavCategoryInitializer{ ViewMode::Standard,
+          STANDARD_ID,
+          L"Standard",
+          L"StandardMode",
+          L"\uE8EF",
+          CategoryGroupType::Calculator,
+          MyVirtualKey::Number1,
+          L"1",
+          SUPPORTS_ALL },
+      NavCategoryInitializer{ ViewMode::Scientific,
+          SCIENTIFIC_ID,
+          L"Scientific",
+          L"ScientificMode",
+          L"\uF196",
+          CategoryGroupType::Calculator,
+          MyVirtualKey::Number2,
+          L"2",
+          SUPPORTS_ALL },
+      NavCategoryInitializer{ ViewMode::Graphing,
+          GRAPHING_ID,
+          L"Graphing",
+          L"GraphingCalculatorMode",
+          L"\uF770",
+          CategoryGroupType::Calculator,
+          MyVirtualKey::Number3,
+          L"3",
+          SUPPORTS_ALL },
+      NavCategoryInitializer{ ViewMode::Programmer,
+          PROGRAMMER_ID,
+          L"Programmer",
+          L"ProgrammerMode",
+          L"\uECCE",
+          CategoryGroupType::Calculator,
+          MyVirtualKey::Number4,
+          L"4",
+          SUPPORTS_ALL },
+      NavCategoryInitializer{ ViewMode::Date,
+          DATE_ID,
+          L"Date",
+          L"DateCalculationMode",
+          L"\uE787",
+          CategoryGroupType::Calculator,
+          MyVirtualKey::Number5,
+          L"5",
+          SUPPORTS_ALL },
+      NavCategoryInitializer{ ViewMode::Currency,
+          CURRENCY_ID,
+          L"Currency",
+          L"CategoryName_Currency",
+          L"\uEB0D",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          POSITIVE_ONLY },
+      NavCategoryInitializer{ ViewMode::Volume,
+          VOLUME_ID,
+          L"Volume",
+          L"CategoryName_Volume",
+          L"\uF1AA",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          POSITIVE_ONLY },
+      NavCategoryInitializer{ ViewMode::Length,
+          LENGTH_ID,
+          L"Length",
+          L"CategoryName_Length",
+          L"\uECC6",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          POSITIVE_ONLY },
+      NavCategoryInitializer{ ViewMode::Weight,
+          WEIGHT_ID,
+          L"Weight and Mass",
+          L"CategoryName_Weight",
+          L"\uF4C1",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          POSITIVE_ONLY },
+      NavCategoryInitializer{ ViewMode::Temperature,
+          TEMPERATURE_ID,
+          L"Temperature",
+          L"CategoryName_Temperature",
+          L"\uE7A3",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          SUPPORTS_NEGATIVE },
+      NavCategoryInitializer{ ViewMode::Energy,
+          ENERGY_ID,
+          L"Energy",
+          L"CategoryName_Energy",
+          L"\uECAD",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          POSITIVE_ONLY },
+      NavCategoryInitializer{ ViewMode::Area,
+          AREA_ID,
+          L"Area",
+          L"CategoryName_Area",
+          L"\uE809",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          POSITIVE_ONLY },
+      NavCategoryInitializer{ ViewMode::Speed,
+          SPEED_ID,
+          L"Speed",
+          L"CategoryName_Speed",
+          L"\uEADA",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          POSITIVE_ONLY },
+      NavCategoryInitializer{ ViewMode::Time,
+          TIME_ID,
+          L"Time",
+          L"CategoryName_Time",
+          L"\uE917",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          POSITIVE_ONLY },
+      NavCategoryInitializer{ ViewMode::Power,
+          POWER_ID,
+          L"Power",
+          L"CategoryName_Power",
+          L"\uE945",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          SUPPORTS_NEGATIVE },
+      NavCategoryInitializer{ ViewMode::Data,
+          DATA_ID,
+          L"Data",
+          L"CategoryName_Data",
+          L"\uF20F",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          POSITIVE_ONLY },
+      NavCategoryInitializer{ ViewMode::Pressure,
+          PRESSURE_ID,
+          L"Pressure",
+          L"CategoryName_Pressure",
+          L"\uEC4A",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          POSITIVE_ONLY },
+      NavCategoryInitializer{ ViewMode::Angle,
+          ANGLE_ID,
+          L"Angle",
+          L"CategoryName_Angle",
+          L"\uF515",
+          CategoryGroupType::Converter,
+          MyVirtualKey::None,
+          std::nullopt,
+          SUPPORTS_NEGATIVE },
+    };
+} // namespace unnamed
 
-// The order of items in this list determines the order of items in the menu.
-static std::vector<NavCategoryInitializer> s_categoryManifest = [] {
-    auto res = std::vector<NavCategoryInitializer>{ NavCategoryInitializer{ ViewMode::Standard,
-                                                                     STANDARD_ID,
-                                                                     L"Standard",
-                                                                     L"StandardMode",
-                                                                     L"\uE8EF",
-                                                                     CategoryGroupType::Calculator,
-                                                                     MyVirtualKey::Number1,
-                                                                     L"1",
-                                                                     SUPPORTS_ALL,
-                                                                     true },
-                                             NavCategoryInitializer{ ViewMode::Scientific,
-                                                                     SCIENTIFIC_ID,
-                                                                     L"Scientific",
-                                                                     L"ScientificMode",
-                                                                     L"\uF196",
-                                                                     CategoryGroupType::Calculator,
-                                                                     MyVirtualKey::Number2,
-                                                                     L"2",
-                                                                     SUPPORTS_ALL,
-                                                                     true } };
-
-    int currentIndex = 3;
-    bool supportGraphingCalculator = IsGraphingModeAvailable();
-    if (supportGraphingCalculator)
-    {
-        res.emplace_back(NavCategoryInitializer{ ViewMode::Graphing,
-                                              GRAPHING_ID,
-                                              L"Graphing",
-                                              L"GraphingCalculatorMode",
-                                              L"\uF770",
-                                              CategoryGroupType::Calculator,
-                                              MyVirtualKey::Number3,
-                                              L"3",
-                                              SUPPORTS_ALL,
-                                              false});
-        ++currentIndex;
-    }
-    res.insert(
-        res.cend(),
-        { NavCategoryInitializer{ ViewMode::Programmer,
-                                  PROGRAMMER_ID,
-                                  L"Programmer",
-                                  L"ProgrammerMode",
-                                  L"\uECCE",
-                                  CategoryGroupType::Calculator,
-                                  supportGraphingCalculator ? MyVirtualKey::Number4 : MyVirtualKey::Number3,
-                                  towchar_t(currentIndex++),
-                                  SUPPORTS_ALL,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Date,
-                                  DATE_ID,
-                                  L"Date",
-                                  L"DateCalculationMode",
-                                  L"\uE787",
-                                  CategoryGroupType::Calculator,
-                                  supportGraphingCalculator ? MyVirtualKey::Number5 : MyVirtualKey::Number4,
-                                  towchar_t(currentIndex++),
-                                  SUPPORTS_ALL,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Currency,
-                                  CURRENCY_ID,
-                                  L"Currency",
-                                  L"CategoryName_Currency",
-                                  L"\uEB0D",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  POSITIVE_ONLY,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Volume,
-                                  VOLUME_ID,
-                                  L"Volume",
-                                  L"CategoryName_Volume",
-                                  L"\uF1AA",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  POSITIVE_ONLY,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Length,
-                                  LENGTH_ID,
-                                  L"Length",
-                                  L"CategoryName_Length",
-                                  L"\uECC6",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  POSITIVE_ONLY,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Weight,
-                                  WEIGHT_ID,
-                                  L"Weight and Mass",
-                                  L"CategoryName_Weight",
-                                  L"\uF4C1",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  POSITIVE_ONLY,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Temperature,
-                                  TEMPERATURE_ID,
-                                  L"Temperature",
-                                  L"CategoryName_Temperature",
-                                  L"\uE7A3",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  SUPPORTS_NEGATIVE,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Energy,
-                                  ENERGY_ID,
-                                  L"Energy",
-                                  L"CategoryName_Energy",
-                                  L"\uECAD",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  POSITIVE_ONLY,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Area,
-                                  AREA_ID,
-                                  L"Area",
-                                  L"CategoryName_Area",
-                                  L"\uE809",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  POSITIVE_ONLY,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Speed,
-                                  SPEED_ID,
-                                  L"Speed",
-                                  L"CategoryName_Speed",
-                                  L"\uEADA",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  POSITIVE_ONLY,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Time,
-                                  TIME_ID,
-                                  L"Time",
-                                  L"CategoryName_Time",
-                                  L"\uE917",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  POSITIVE_ONLY,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Power,
-                                  POWER_ID,
-                                  L"Power",
-                                  L"CategoryName_Power",
-                                  L"\uE945",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  SUPPORTS_NEGATIVE,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Data,
-                                  DATA_ID,
-                                  L"Data",
-                                  L"CategoryName_Data",
-                                  L"\uF20F",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  POSITIVE_ONLY,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Pressure,
-                                  PRESSURE_ID,
-                                  L"Pressure",
-                                  L"CategoryName_Pressure",
-                                  L"\uEC4A",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  POSITIVE_ONLY,
-                                  true },
-          NavCategoryInitializer{ ViewMode::Angle,
-                                  ANGLE_ID,
-                                  L"Angle",
-                                  L"CategoryName_Angle",
-                                  L"\uF515",
-                                  CategoryGroupType::Converter,
-                                  MyVirtualKey::None,
-                                  nullptr,
-                                  SUPPORTS_NEGATIVE,
-                                  true } });
-    return res;
-}();
 
 bool NavCategory::IsCalculatorViewMode(ViewModeType mode)
 {
@@ -347,12 +300,12 @@ NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupIniti
                 categoryName,
                 categoryAutomationName,
                 StringReference(categoryInitializer.glyph),
-                categoryInitializer.accessKey != nullptr ? ref new String(categoryInitializer.accessKey)
+                categoryInitializer.accessKey.has_value() ? ref new String(categoryInitializer.accessKey->c_str())
                                                          : resProvider->GetResourceString(nameResourceKey + "AccessKey"),
                 groupMode,
                 categoryInitializer.viewMode,
                 categoryInitializer.supportsNegative,
-                categoryInitializer.isEnabled));
+                categoryInitializer.viewMode != ViewMode::Graphing));
         }
     }
 }
@@ -559,16 +512,13 @@ bool NavCategoryStates::IsValidViewMode(ViewMode mode)
 
 bool NavCategoryStates::IsViewModeEnabled(ViewMode mode)
 {
-    if (mode == ViewMode::Graphing)
+    if (mode != ViewMode::Graphing)
     {
-        return IsGraphingModeEnabled();
+        return true;
     }
     else
     {
-        return std::any_of(
-            s_categoryManifest.cbegin(),
-            s_categoryManifest.cend(),
-            [mode](const auto& initializer) { return initializer.viewMode == mode && initializer.isEnabled; });
+        return IsGraphingModeEnabled();
     }
 }
 

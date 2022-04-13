@@ -66,9 +66,8 @@ namespace CalculatorApp::ViewModel
             const wchar_t* glyph;
             CategoryGroupType groupType;
             MyVirtualKey virtualKey;
-            const wchar_t* accessKey;
+            std::optional<std::wstring> accessKey;
             bool supportsNegative;
-            bool isEnabled;
         };
 
     private
