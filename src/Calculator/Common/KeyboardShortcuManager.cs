@@ -579,7 +579,7 @@ namespace CalculatorApp
                 , ApplicationViewModel vm, ViewMode toMode)
             {
                 return nvi != null && nvi.IsEnabled && navView.Visibility == Visibility.Visible
-                    && !vm.IsAlwaysOnTop && NavCategory.IsValidViewMode(toMode);
+                    && !vm.IsAlwaysOnTop && NavCategoryStates.IsValidViewMode(toMode);
             }
 
             private static void NavigateModeByShortcut(bool controlKeyPressed, bool shiftKeyPressed, bool altPressed
@@ -602,8 +602,8 @@ namespace CalculatorApp
                                 var vm = (navView.DataContext as ApplicationViewModel);
                                 if (null != vm)
                                 {
-                                    ViewMode realToMode = toMode.HasValue ? toMode.Value : NavCategory.GetViewModeForVirtualKey(((MyVirtualKey)key));
-                                    var nvi = (menuItems[NavCategory.GetFlatIndex(realToMode)] as MUXC.NavigationViewItem);
+                                    ViewMode realToMode = toMode.HasValue ? toMode.Value : NavCategoryStates.GetViewModeForVirtualKey(((MyVirtualKey)key));
+                                    var nvi = (menuItems[NavCategoryStates.GetFlatIndex(realToMode)] as MUXC.NavigationViewItem);
                                     if (CanNavigateModeByShortcut(navView, nvi, vm, realToMode))
                                     {
                                         vm.Mode = realToMode;

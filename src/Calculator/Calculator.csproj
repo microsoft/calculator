@@ -165,11 +165,12 @@
     <Compile Include="Converters\ItemSizeToVisibilityConverter.cs" />
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
+    <Compile Include="Selectors\NavViewMenuItemTemplateSelector.cs" />
     <Compile Include="Utils\ThemeHelper.cs" />
     <Compile Include="Views\GraphingCalculator\EquationStylePanelControl.xaml.cs">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GraphingCalculator\KeyGraphFeaturesTemplateSelector.cs" />
+    <Compile Include="Selectors\KeyGraphFeaturesTemplateSelector.cs" />
     <Compile Include="Utils\DelegateCommandUtils.cs" />
     <Compile Include="Views\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
@@ -235,7 +236,7 @@
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StateTriggers\AspectRatioTrigger.cs" />
-    <Compile Include="Views\StateTriggers\CalculatorProgrammerDisplayPanel.xaml.cs">
+    <Compile Include="Views\CalculatorProgrammerDisplayPanel.xaml.cs">
       <DependentUpon>CalculatorProgrammerDisplayPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StateTriggers\ControlSizeTrigger.cs" />
@@ -773,7 +774,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StateTriggers\CalculatorProgrammerDisplayPanel.xaml">
+    <Page Include="Views\CalculatorProgrammerDisplayPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

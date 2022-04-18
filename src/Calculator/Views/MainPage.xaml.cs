@@ -5,10 +5,8 @@ using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.UI.Core;
@@ -28,9 +26,21 @@ namespace CalculatorApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static readonly DependencyProperty NavViewCategoriesSourceProperty =
+            DependencyProperty.Register(nameof(NavViewCategoriesSource), typeof(List<object>), typeof(MainPage), new PropertyMetadata(default));
+
+        public List<object> NavViewCategoriesSource
+        {
+            get { return (List<object>)GetValue(NavViewCategoriesSourceProperty); }
+            set { SetValue(NavViewCategoriesSourceProperty, value); }
+        }
+
+        public ApplicationViewModel Model => m_model;
+
         public MainPage()
         {
-            m_model = new ViewModel.ApplicationViewModel();
+            m_model = new ApplicationViewModel();
+            InitializeNavViewCategoriesSource();
             InitializeComponent();
 
             KeyboardShortcutManager.Initialize();
@@ -46,11 +56,6 @@ namespace CalculatorApp
                     DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait | DisplayOrientations.PortraitFlipped;
                 }
             }
-        }
-
-        public CalculatorApp.ViewModel.ApplicationViewModel Model
-        {
-            get => m_model;
         }
 
         public void UnregisterEventHandlers()
@@ -111,23 +116,6 @@ namespace CalculatorApp
             AutomationProperties.SetName(Header, name);
         }
 
-        public ObservableCollection<object> CreateUIElementsForCategories(IObservableVector<NavCategoryGroup> categories)
-        {
-            var menuCategories = new ObservableCollection<object>();
-
-            foreach (var group in categories)
-            {
-                menuCategories.Add(CreateNavViewHeaderFromGroup(group));
-
-                foreach (var category in group.Categories)
-                {
-                    menuCategories.Add(CreateNavViewItemFromCategory(category));
-                }
-            }
-
-            return menuCategories;
-        }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ViewMode initialMode = ViewMode.Standard;
@@ -142,11 +130,51 @@ namespace CalculatorApp
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
                 if (localSettings.Values.ContainsKey(ApplicationViewModel.ModePropertyName))
                 {
-                    initialMode = NavCategory.Deserialize(localSettings.Values[ApplicationViewModel.ModePropertyName]);
+                    initialMode = NavCategoryStates.Deserialize(localSettings.Values[ApplicationViewModel.ModePropertyName]);
                 }
             }
 
             m_model.Initialize(initialMode);
+        }
+
+        private void InitializeNavViewCategoriesSource()
+        {
+            NavViewCategoriesSource = ExpandNavViewCategoryGroups(Model.Categories);
+            Model.Categories.VectorChanged += (sender, args) =>
+            {
+                NavViewCategoriesSource.Clear();
+                NavViewCategoriesSource = ExpandNavViewCategoryGroups(Model.Categories);
+            };
+
+            _ = Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                var graphCategory = (NavCategory)NavViewCategoriesSource.Find(x =>
+                {
+                    if(x is NavCategory category)
+                    {
+                        return category.ViewMode == ViewMode.Graphing;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                });
+                graphCategory.IsEnabled = NavCategoryStates.IsViewModeEnabled(ViewMode.Graphing);
+            });
+        }
+
+        private List<object> ExpandNavViewCategoryGroups(IEnumerable<NavCategoryGroup> groups)
+        {
+            var result = new List<object>();
+            foreach(var group in groups)
+            {
+                result.Add(group);
+                foreach(var category in group.Categories)
+                {
+                    result.Add(category);
+                }
+            }
+            return result;
         }
 
         private void UpdatePopupSize(Windows.UI.Core.WindowSizeChangedEventArgs e)
@@ -243,9 +271,9 @@ namespace CalculatorApp
 
         private void SelectNavigationItemByModel()
         {
-            var menuItems = ((ObservableCollection<object>)NavView.MenuItemsSource);
-            var itemCount = ((int)menuItems.Count);
-            var flatIndex = NavCategory.GetFlatIndex(Model.Mode);
+            var menuItems = (List<object>)NavView.MenuItemsSource;
+            var itemCount = menuItems.Count;
+            var flatIndex = NavCategoryStates.GetFlatIndex(Model.Mode);
 
             if (flatIndex >= 0 && flatIndex < itemCount)
             {
@@ -261,7 +289,7 @@ namespace CalculatorApp
             }
 
             var acceleratorList = new List<MyVirtualKey>();
-            NavCategory.GetCategoryAcceleratorKeys(acceleratorList);
+            NavCategoryStates.GetCategoryAcceleratorKeys(acceleratorList);
 
             foreach (var accelerator in acceleratorList)
             {
@@ -340,8 +368,7 @@ namespace CalculatorApp
             var item = (e.SelectedItemContainer as MUXC.NavigationViewItem);
             if (item != null)
             {
-                var selectedItem = ((NavCategory)item.DataContext);
-                Model.Mode = selectedItem.Mode;
+                Model.Mode = (ViewMode)item.Tag;
             }
         }
 
@@ -359,39 +386,6 @@ namespace CalculatorApp
         {
             var bounds = Window.Current.Bounds;
             Model.ToggleAlwaysOnTop((float)bounds.Width, (float)bounds.Height);
-        }
-
-        private MUXC.NavigationViewItemHeader CreateNavViewHeaderFromGroup(NavCategoryGroup group)
-        {
-            var header = new MUXC.NavigationViewItemHeader();
-            header.DataContext = group;
-
-            header.Content = group.Name;
-            AutomationProperties.SetName(header, group.AutomationName);
-            AutomationProperties.SetHeadingLevel(header, Windows.UI.Xaml.Automation.Peers.AutomationHeadingLevel.Level1);
-
-            return header;
-        }
-
-        private MUXC.NavigationViewItem CreateNavViewItemFromCategory(NavCategory category)
-        {
-            var item = new MUXC.NavigationViewItem();
-            item.DataContext = category;
-
-            var icon = new FontIcon();
-            icon.FontFamily = (Windows.UI.Xaml.Media.FontFamily)(App.Current.Resources["CalculatorFontFamily"]);
-            icon.Glyph = category.Glyph;
-            item.Icon = icon;
-
-            item.Content = category.Name;
-            item.AccessKey = category.AccessKey;
-            item.IsEnabled = category.IsEnabled;
-            item.Style = (Windows.UI.Xaml.Style)(Resources["NavViewItemStyle"]);
-
-            AutomationProperties.SetName(item, category.AutomationName);
-            AutomationProperties.SetAutomationId(item, category.AutomationId);
-
-            return item;
         }
 
         private void ShowHideControls(ViewMode mode)
@@ -431,7 +425,7 @@ namespace CalculatorApp
             // All layout related view states are now handled only inside individual controls (standard, scientific, programmer, date, converter)
             if (NavCategory.IsConverterViewMode(m_model.Mode))
             {
-                int modeIndex = NavCategory.GetIndexInGroup(m_model.Mode, CategoryGroupType.Converter);
+                int modeIndex = NavCategoryStates.GetIndexInGroup(m_model.Mode, CategoryGroupType.Converter);
                 m_model.ConverterViewModel.CurrentCategory = m_model.ConverterViewModel.Categories[modeIndex];
             }
         }
@@ -598,11 +592,11 @@ namespace CalculatorApp
             CloseSettingsPopup();
         }
 
-        private CalculatorApp.Calculator m_calculator;
+        private Calculator m_calculator;
         private GraphingCalculator m_graphingCalculator;
-        private CalculatorApp.UnitConverter m_converter;
-        private CalculatorApp.DateCalculator m_dateCalculator;
-        private CalculatorApp.ViewModel.ApplicationViewModel m_model;
-        private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
+        private UnitConverter m_converter;
+        private DateCalculator m_dateCalculator;
+        private ApplicationViewModel m_model;
+        private AccessibilitySettings m_accessibilitySettings;
     }
 }

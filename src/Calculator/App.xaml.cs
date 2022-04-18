@@ -85,7 +85,11 @@ namespace CalculatorApp
                 // If the app got pre-launch activated, then save that state in a flag
                 m_preLaunched = true;
             }
-            NavCategory.InitializeCategoryManifest(args.User);
+            NavCategoryStates.SetCurrentUser(args.User);
+
+            // It takes time to check GraphingMode at the 1st time. So, do it in a background thread
+            Task.Run(() => NavCategoryStates.IsViewModeEnabled(ViewMode.Graphing));
+
             OnAppLaunch(args, args.Arguments);
         }
 
@@ -403,7 +407,7 @@ namespace CalculatorApp
         {
             try
             {
-                var calculatorOptions = NavCategoryGroup.CreateCalculatorCategory();
+                var calculatorOptions = NavCategoryStates.CreateCalculatorCategoryGroup();
 
                 var jumpList = await JumpList.LoadCurrentAsync();
                 jumpList.SystemGroupKind = JumpListSystemGroupKind.None;
@@ -411,13 +415,13 @@ namespace CalculatorApp
 
                 foreach (NavCategory option in calculatorOptions.Categories)
                 {
-                    if (!option.IsEnabled)
+                    if (!NavCategoryStates.IsViewModeEnabled(option.ViewMode))
                     {
                         continue;
                     }
-                    ViewMode mode = option.Mode;
-                    var item = JumpListItem.CreateWithArguments(((int)mode).ToString(), "ms-resource:///Resources/" + NavCategory.GetNameResourceKey(mode));
-                    item.Description = "ms-resource:///Resources/" + NavCategory.GetNameResourceKey(mode);
+                    ViewMode mode = option.ViewMode;
+                    var item = JumpListItem.CreateWithArguments(((int)mode).ToString(), "ms-resource:///Resources/" + NavCategoryStates.GetNameResourceKey(mode));
+                    item.Description = "ms-resource:///Resources/" + NavCategoryStates.GetNameResourceKey(mode);
                     item.Logo = new Uri("ms-appx:///Assets/" + mode.ToString() + ".png");
 
                     jumpList.Items.Add(item);

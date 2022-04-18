@@ -53,7 +53,7 @@ bool UnitConverterDataLoader::SupportsCategory(const UCM::Category& target)
         GetCategories(supportedCategories);
     }
 
-    static int currencyId = NavCategory::Serialize(ViewMode::Currency);
+    static int currencyId = NavCategoryStates::Serialize(ViewMode::Currency);
     auto itr = find_if(supportedCategories->begin(), supportedCategories->end(), [&](const UCM::Category& category) {
         return currencyId != category.id && target.id == category.id;
     });
@@ -79,7 +79,7 @@ void UnitConverterDataLoader::LoadData()
     this->m_ratioMap->clear();
     for (UCM::Category objectCategory : *m_categoryList)
     {
-        ViewMode categoryViewMode = NavCategory::Deserialize(objectCategory.id);
+        ViewMode categoryViewMode = NavCategoryStates::Deserialize(objectCategory.id);
         assert(NavCategory::IsConverterViewMode(categoryViewMode));
         if (categoryViewMode == ViewMode::Currency)
         {
@@ -148,11 +148,11 @@ void UnitConverterDataLoader::LoadData()
 void UnitConverterDataLoader::GetCategories(_In_ shared_ptr<vector<UCM::Category>> categoriesList)
 {
     categoriesList->clear();
-    auto converterCategory = NavCategoryGroup::CreateConverterCategory();
+    auto converterCategory = NavCategoryStates::CreateConverterCategoryGroup();
     for (auto const& category : converterCategory->Categories)
     {
         /* Id, CategoryName, SupportsNegative */
-        categoriesList->emplace_back(NavCategory::Serialize(category->Mode), category->Name->Data(), category->SupportsNegative);
+        categoriesList->emplace_back(NavCategoryStates::Serialize(category->ViewMode), category->Name->Data(), category->SupportsNegative);
     }
 }
 

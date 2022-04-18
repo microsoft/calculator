@@ -240,7 +240,7 @@ unordered_map<UCM::Unit, UCM::ConversionData, UCM::UnitHash> CurrencyDataLoader:
 
 bool CurrencyDataLoader::SupportsCategory(const UCM::Category& target)
 {
-    static int currencyId = NavCategory::Serialize(ViewMode::Currency);
+    static int currencyId = NavCategoryStates::Serialize(ViewMode::Currency);
     return target.id == currencyId;
 }
 

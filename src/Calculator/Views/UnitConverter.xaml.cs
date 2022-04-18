@@ -392,7 +392,7 @@ namespace CalculatorApp
 
         private void OnVisualStateChanged(object sender, Windows.UI.Xaml.VisualStateChangedEventArgs e)
         {
-            var mode = NavCategory.Deserialize(Model.CurrentCategory.GetModelCategoryId());
+            var mode = NavCategoryStates.Deserialize(Model.CurrentCategory.GetModelCategoryId());
             TraceLogger.GetInstance().LogVisualStateChanged(mode, e.NewState.Name, false);
         }
 
