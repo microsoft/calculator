@@ -575,11 +575,17 @@ namespace CalculatorApp
                 }
             }
 
-            private static bool CanNavigateModeByShortcut(MUXC.NavigationView navView, MUXC.NavigationViewItem nvi
+            private static bool CanNavigateModeByShortcut(MUXC.NavigationView navView, object nvi
                 , ApplicationViewModel vm, ViewMode toMode)
             {
-                return nvi != null && nvi.IsEnabled && navView.Visibility == Visibility.Visible
-                    && !vm.IsAlwaysOnTop && NavCategoryStates.IsValidViewMode(toMode);
+                if(nvi != null && nvi is NavCategory navCategory)
+                {
+                    return navCategory.IsEnabled
+                        && navView.Visibility == Visibility.Visible
+                        && !vm.IsAlwaysOnTop
+                        && NavCategoryStates.IsValidViewMode(toMode);
+                }
+                return false;
             }
 
             private static void NavigateModeByShortcut(bool controlKeyPressed, bool shiftKeyPressed, bool altPressed
@@ -596,14 +602,15 @@ namespace CalculatorApp
                         {
                             var navView = (MUXC.NavigationView)item;
 
-                            var menuItems = ((ObservableCollection<object>)navView.MenuItemsSource);
+                            var menuItems = ((List<object>)navView.MenuItemsSource);
                             if (menuItems != null)
                             {
                                 var vm = (navView.DataContext as ApplicationViewModel);
                                 if (null != vm)
                                 {
                                     ViewMode realToMode = toMode.HasValue ? toMode.Value : NavCategoryStates.GetViewModeForVirtualKey(((MyVirtualKey)key));
-                                    var nvi = (menuItems[NavCategoryStates.GetFlatIndex(realToMode)] as MUXC.NavigationViewItem);
+
+                                    var nvi = menuItems[NavCategoryStates.GetFlatIndex(realToMode)];
                                     if (CanNavigateModeByShortcut(navView, nvi, vm, realToMode))
                                     {
                                         vm.Mode = realToMode;
