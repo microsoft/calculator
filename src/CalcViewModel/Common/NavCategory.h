@@ -152,7 +152,7 @@ namespace CalculatorApp::ViewModel
         public ref class NavCategoryStates sealed
         {
         public:
-            static void SetCurrentUser(Windows::System::User^ user);
+            static void SetCurrentUser(Platform::String^ user);
             static Windows::Foundation::Collections::IObservableVector<NavCategoryGroup ^> ^ CreateMenuOptions();
             static NavCategoryGroup ^ CreateCalculatorCategoryGroup();
             static NavCategoryGroup ^ CreateConverterCategoryGroup();
