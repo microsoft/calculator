@@ -85,7 +85,8 @@ namespace CalculatorApp
                 // If the app got pre-launch activated, then save that state in a flag
                 m_preLaunched = true;
             }
-            NavCategoryStates.SetCurrentUser(args.User);
+
+            NavCategoryStates.SetCurrentUser(args.User.NonRoamableId);
 
             // It takes time to check GraphingMode at the 1st time. So, do it in a background thread
             Task.Run(() => NavCategoryStates.IsViewModeEnabled(ViewMode.Graphing));
