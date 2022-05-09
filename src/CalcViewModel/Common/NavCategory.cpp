@@ -49,7 +49,7 @@ static constexpr int GRAPHING_ID = 17;
 
 namespace // put the utils within this TU
 {
-    Platform::Agile<Windows::System::User^> CurrentUser;
+    Platform::String^ CurrentUserId;
     std::mutex GraphingModeCheckMutex;
 
     bool IsGraphingModeEnabled()
@@ -64,8 +64,14 @@ namespace // put the utils within this TU
         }
         else
         {
+            auto user = User::GetFromId(CurrentUserId);
+            if (user == nullptr)
+            {
+                return true;
+            }
+
             auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(
-                CurrentUser.Get(),
+                user,
                 L"Education",
                 L"AllowGraphingCalculator");
             isEnabled = namedPolicyData->GetBoolean();
@@ -310,10 +316,10 @@ NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupIniti
     }
 }
 
-void NavCategoryStates::SetCurrentUser(Windows::System::User^ user)
+void NavCategoryStates::SetCurrentUser(Platform::String^ userId)
 {
     std::scoped_lock<std::mutex> lock(GraphingModeCheckMutex);
-    CurrentUser = user;
+    CurrentUserId = userId;
 }
 
 IObservableVector<NavCategoryGroup ^> ^ NavCategoryStates::CreateMenuOptions()
