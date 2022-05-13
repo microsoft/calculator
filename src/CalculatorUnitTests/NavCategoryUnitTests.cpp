@@ -370,6 +370,12 @@ namespace CalculatorUnitTests
             }
         }
 
+        TEST_METHOD(GraphingModeIsEnabled_ShouldBeTrue_WhenNullUserAssigned)
+        {
+            NavCategoryStates::SetCurrentUser("null-user"); // make sure User::GetFromId() returns nullptr
+            VERIFY_IS_TRUE(NavCategoryStates::IsViewModeEnabled(ViewMode::Graphing));
+        }
+
     private:
         const static inline std::vector<ViewMode> _orderedModes {
             ViewMode::Standard, ViewMode::Scientific, ViewMode::Graphing, ViewMode::Programmer,  ViewMode::Date,     ViewMode::Currency,
