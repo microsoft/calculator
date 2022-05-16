@@ -36,6 +36,7 @@
     <AppxBundlePlatforms>$(Platform)</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <IlcParameters>/disableStackTraceMetadata /disableExceptionMessages</IlcParameters>
+    <EnablePGOCodeGen Condition="'$(Platform)' == 'ARM64'">false</EnablePGOCodeGen>
   </PropertyGroup>
   <!-- This has to be exactly in this place for this to work -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
