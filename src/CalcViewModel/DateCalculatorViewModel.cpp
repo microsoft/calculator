@@ -254,13 +254,13 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
         result += GetLocalizedNumberString(yearCount)->Data();
         result += L' ';
 
-        if (yearCount > 1)
+        if (yearCount == 1)
         {
-            result += resourceLoader->GetResourceString(L"Date_Years")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Year")->Data();
         }
         else
         {
-            result += resourceLoader->GetResourceString(L"Date_Year")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Years")->Data();
         }
 
         // set the flags to add a delimiter whenever the next unit is added
@@ -282,13 +282,13 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
         result += GetLocalizedNumberString(monthCount)->Data();
         result += L' ';
 
-        if (monthCount > 1)
+        if (monthCount == 1)
         {
-            result += resourceLoader->GetResourceString(L"Date_Months")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Month")->Data();
         }
         else
         {
-            result += resourceLoader->GetResourceString(L"Date_Month")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Months")->Data();
         }
     }
 
@@ -307,13 +307,13 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
         result += GetLocalizedNumberString(weekCount)->Data();
         result += L' ';
 
-        if (weekCount > 1)
+        if (weekCount == 1)
         {
-            result += resourceLoader->GetResourceString(L"Date_Weeks")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Week")->Data();
         }
         else
         {
-            result += resourceLoader->GetResourceString(L"Date_Week")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Weeks")->Data();
         }
     }
 
@@ -332,13 +332,13 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
         result += GetLocalizedNumberString(dayCount)->Data();
         result += L' ';
 
-        if (dayCount > 1)
+        if (dayCount == 1)
         {
-            result += resourceLoader->GetResourceString(L"Date_Days")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Day")->Data();
         }
         else
         {
-            result += resourceLoader->GetResourceString(L"Date_Day")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Days")->Data();
         }
     }
 
@@ -351,13 +351,13 @@ String ^ DateCalculatorViewModel::GetDateDiffStringInDays() const
     result += L' ';
 
     // Display the result as '1 day' or 'N days'
-    if (m_dateDiffResultInDays.day > 1)
+    if (m_dateDiffResultInDays.day == 1)
     {
-        result += AppResourceProvider::GetInstance()->GetResourceString(L"Date_Days")->Data();
+        result += AppResourceProvider::GetInstance()->GetResourceString(L"Date_Day")->Data();
     }
     else
     {
-        result += AppResourceProvider::GetInstance()->GetResourceString(L"Date_Day")->Data();
+        result += AppResourceProvider::GetInstance()->GetResourceString(L"Date_Days")->Data();
     }
 
     return ref new String(result.data());
@@ -393,15 +393,14 @@ DateTime DateCalculatorViewModel::ClipTime(DateTime dateTime, bool adjustUsingLo
     if (adjustUsingLocalTime)
     {
         FILETIME fileTime;
-        fileTime.dwLowDateTime = (DWORD)(dateTime.UniversalTime & 0xffffffff);
-        fileTime.dwHighDateTime = (DWORD)(dateTime.UniversalTime >> 32);
+        fileTime.dwLowDateTime = static_cast<DWORD>(dateTime.UniversalTime & 0xffffffff);
+        fileTime.dwHighDateTime = static_cast<DWORD>(dateTime.UniversalTime >> 32);
 
         FILETIME localFileTime;
         FileTimeToLocalFileTime(&fileTime, &localFileTime);
 
-        referenceDateTime.UniversalTime = (DWORD)localFileTime.dwHighDateTime;
-        referenceDateTime.UniversalTime <<= 32;
-        referenceDateTime.UniversalTime |= (DWORD)localFileTime.dwLowDateTime;
+        referenceDateTime.UniversalTime = (static_cast<INT64>(localFileTime.dwHighDateTime) << 32) | localFileTime.dwLowDateTime;
+
     }
     else
     {
