@@ -16,9 +16,7 @@ namespace DateCalculationUnitTests
             SystemTimeToFileTime(&systemTime, lpFileTime);
 
             Windows::Foundation::DateTime dateTime;
-            dateTime.UniversalTime = (DWORD)lpFileTime->dwHighDateTime;
-            dateTime.UniversalTime <<= 32;
-            dateTime.UniversalTime |= (DWORD)lpFileTime->dwLowDateTime;
+            dateTime.UniversalTime = (static_cast<INT64>(lpFileTime->dwHighDateTime) << 32) | (lpFileTime->dwLowDateTime);
 
             return dateTime;
         }
@@ -28,8 +26,8 @@ namespace DateCalculationUnitTests
         static SYSTEMTIME DateTimeToSystemTime(Windows::Foundation::DateTime dateTime)
         {
             FILETIME fileTime;
-            fileTime.dwLowDateTime = (DWORD)(dateTime.UniversalTime & 0xffffffff);
-            fileTime.dwHighDateTime = (DWORD)(dateTime.UniversalTime >> 32);
+            fileTime.dwLowDateTime = static_cast<DWORD>(dateTime.UniversalTime & 0xffffffff);
+            fileTime.dwHighDateTime = static_cast<DWORD>(dateTime.UniversalTime >> 32);
 
             SYSTEMTIME systemTime;
             FileTimeToSystemTime(&fileTime, &systemTime);
