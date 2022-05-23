@@ -249,6 +249,7 @@ namespace CalculatorApp
                 var coreWindow = Window.Current.CoreWindow;
                 coreWindow.CharacterReceived += OnCharacterReceivedHandler;
                 coreWindow.KeyDown += OnKeyDownHandler;
+                coreWindow.KeyUp += OnKeyUpHandler;
                 coreWindow.Dispatcher.AcceleratorKeyActivated += OnAcceleratorKeyActivated;
                 KeyboardShortcutManager.RegisterNewAppViewId();
             }
@@ -630,6 +631,7 @@ namespace CalculatorApp
             private static void OnCharacterReceivedHandler(CoreWindow sender, CharacterReceivedEventArgs args)
             {
                 int viewId = Utilities.GetWindowId();
+
                 bool hit = s_fHonorShortcuts.TryGetValue(viewId, out var currentHonorShortcuts);
 
                 if (!hit || currentHonorShortcuts)
@@ -644,6 +646,7 @@ namespace CalculatorApp
 
             private static void OnKeyDownHandler(CoreWindow sender, KeyEventArgs args)
             {
+                s_keyHandlerCount++;
                 if (args.Handled)
                 {
                     return;
@@ -711,6 +714,29 @@ namespace CalculatorApp
                             }
                         }
                     }
+                }
+            }
+
+            private static void OnKeyUpHandler(CoreWindow sender, KeyEventArgs args)
+            {
+                s_keyHandlerCount--;
+                if (s_keyHandlerCount == 0 && s_deferredEnableShortcut)
+                {
+                    KeyboardShortcutManager.DisableShortcuts(false);//shortcuts enabled
+                    s_deferredEnableShortcut = false;
+                }             
+
+            }
+
+            public static void TryEnableShortcut()
+            {
+                if (s_keyHandlerCount > 0)
+                {
+                    s_deferredEnableShortcut = true;
+                }
+                else
+                {
+                    KeyboardShortcutManager.DisableShortcuts(true);
                 }
             }
 
@@ -831,6 +857,10 @@ namespace CalculatorApp
 
             //private static Concurrency.reader_writer_lock s_keyboardShortcutMapLock;
             private static readonly object s_keyboardShortcutMapLockMutex = new object();
+
+
+            private static int s_keyHandlerCount;
+            private static bool s_deferredEnableShortcut;
         }
     }
 }
