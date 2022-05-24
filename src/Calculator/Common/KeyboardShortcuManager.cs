@@ -736,7 +736,7 @@ namespace CalculatorApp
                 }
                 else
                 {
-                    KeyboardShortcutManager.DisableShortcuts(true);
+                    KeyboardShortcutManager.DisableShortcuts(false);
                 }
             }
 
