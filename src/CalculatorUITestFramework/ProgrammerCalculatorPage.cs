@@ -7,7 +7,7 @@ using OpenQA.Selenium.Appium.Windows;
 namespace CalculatorUITestFramework
 {
     /// <summary>
-    /// This class contains the UI automation objects and helper methods available when the Calculator is in Scientific Mode.
+    /// This class contains the UI automation objects and helper methods available when the Calculator is in Programmer Mode.
     /// </summary>
     public class ProgrammerCalculatorPage
     {
