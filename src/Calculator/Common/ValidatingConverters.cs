@@ -46,8 +46,7 @@ namespace CalculatorApp
                 // extract that value and ensure it is valid, ie >= 0
                 if (value != null)
                 {
-                    var box = value as Windows.Foundation.IPropertyValue;
-                    if (box != null && box.Type == Windows.Foundation.PropertyType.Int32)
+                    if (value is Windows.Foundation.IPropertyValue box && box.Type == Windows.Foundation.PropertyType.Int32)
                     {
                         int index = box.GetInt32();
                         if (index >= 0)

@@ -1,8 +1,9 @@
 using CalculatorApp.ViewModel.Common;
+
 using GraphControl;
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
+
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -18,18 +19,20 @@ namespace CalculatorApp
         {
             InitializeComponent();
 
-            var allStyles = new List<EquationLineStyle>();
-            allStyles.Add(EquationLineStyle.Solid);
-            allStyles.Add(EquationLineStyle.Dash);
-            allStyles.Add(EquationLineStyle.Dot);
+            var allStyles = new List<EquationLineStyle>
+            {
+                EquationLineStyle.Solid,
+                EquationLineStyle.Dash,
+                EquationLineStyle.Dot
+            };
 
             StyleChooserBox.ItemsSource = allStyles;
         }
 
         public Windows.UI.Color SelectedColor
         {
-            get { return (Windows.UI.Color)GetValue(SelectedColorProperty); }
-            set { SetValue(SelectedColorProperty, value); }
+            get => (Windows.UI.Color)GetValue(SelectedColorProperty);
+            set => SetValue(SelectedColorProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for SelectedColor.  This enables animation, styling, binding, etc...
@@ -42,8 +45,8 @@ namespace CalculatorApp
 
         public GraphControl.EquationLineStyle SelectedStyle
         {
-            get { return (GraphControl.EquationLineStyle)GetValue(SelectedStyleProperty); }
-            set { SetValue(SelectedStyleProperty, value); }
+            get => (GraphControl.EquationLineStyle)GetValue(SelectedStyleProperty);
+            set => SetValue(SelectedStyleProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for SelectedStyle.  This enables animation, styling, binding, etc...
@@ -56,8 +59,8 @@ namespace CalculatorApp
 
         public int SelectedColorIndex
         {
-            get { return (int)GetValue(SelectedColorIndexProperty); }
-            set { SetValue(SelectedColorIndexProperty, value); }
+            get => (int)GetValue(SelectedColorIndexProperty);
+            set => SetValue(SelectedColorIndexProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for SelectedColorIndex.  This enables animation, styling, binding, etc...
@@ -66,8 +69,8 @@ namespace CalculatorApp
 
         public IList<Windows.UI.Xaml.Media.SolidColorBrush> AvailableColors
         {
-            get { return (IList<Windows.UI.Xaml.Media.SolidColorBrush>)GetValue(AvailableColorsProperty); }
-            set { SetValue(AvailableColorsProperty, value); }
+            get => (IList<Windows.UI.Xaml.Media.SolidColorBrush>)GetValue(AvailableColorsProperty);
+            set => SetValue(AvailableColorsProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for AvailableColors.  This enables animation, styling, binding, etc...
@@ -76,8 +79,8 @@ namespace CalculatorApp
 
         public bool EnableLineStylePicker
         {
-            get { return (bool)GetValue(EnableLineStylePickerProperty); }
-            set { SetValue(EnableLineStylePickerProperty, value); }
+            get => (bool)GetValue(EnableLineStylePickerProperty);
+            set => SetValue(EnableLineStylePickerProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for EnableLineStylePicker.  This enables animation, styling, binding, etc...

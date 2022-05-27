@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+
 using Windows.UI.Xaml;
 
 namespace CalculatorApp
@@ -12,8 +13,10 @@ namespace CalculatorApp
 
         public DispatcherTimerDelayer(TimeSpan timeSpan)
         {
-            m_timer = new DispatcherTimer();
-            m_timer.Interval = timeSpan;
+            m_timer = new DispatcherTimer
+            {
+                Interval = timeSpan
+            };
             var interval = m_timer.Interval;
             m_timer.Tick += Timer_Tick;
         }
@@ -40,6 +43,6 @@ namespace CalculatorApp
             Action?.Invoke(this, null);
         }
 
-        private DispatcherTimer m_timer;
+        private readonly DispatcherTimer m_timer;
     }
 }

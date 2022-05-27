@@ -1,8 +1,9 @@
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
-using System;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+
 using MUXC = Microsoft.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -19,10 +20,7 @@ namespace CalculatorApp
             HistoryEmpty.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
         }
 
-        public CalculatorApp.ViewModel.HistoryViewModel Model
-        {
-            get => (CalculatorApp.ViewModel.HistoryViewModel)DataContext;
-        }
+        public CalculatorApp.ViewModel.HistoryViewModel Model => (CalculatorApp.ViewModel.HistoryViewModel)DataContext;
 
         public void ScrollToBottom()
         {
@@ -35,8 +33,8 @@ namespace CalculatorApp
 
         public Windows.UI.Xaml.GridLength RowHeight
         {
-            get { return (Windows.UI.Xaml.GridLength)GetValue(RowHeightProperty); }
-            set { SetValue(RowHeightProperty, value); }
+            get => (Windows.UI.Xaml.GridLength)GetValue(RowHeightProperty);
+            set => SetValue(RowHeightProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for RowHeight.  This enables animation, styling, binding, etc...

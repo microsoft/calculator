@@ -8,20 +8,14 @@
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Controls;
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 
+using System.Diagnostics;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 
 
 namespace CalculatorApp
@@ -41,10 +35,7 @@ namespace CalculatorApp
             return index <= GetIndexOfLastBit(length);
         }
 
-        public StandardCalculatorViewModel Model
-        {
-            get { return (StandardCalculatorViewModel)this.DataContext; }
-        }
+        public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -276,7 +267,7 @@ namespace CalculatorApp
         }
 
         private static readonly uint s_numBits = 64;
-        private FlipButtons[] m_flipButtons = new FlipButtons[s_numBits];
+        private readonly FlipButtons[] m_flipButtons = new FlipButtons[s_numBits];
         private bool m_updatingCheckedStates;
         private BitLength m_currentValueBitLength;
     }

@@ -3,11 +3,8 @@
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Windows;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Runtime.InteropServices.ComTypes;
+
 using System;
-using System.Diagnostics;
 
 namespace CalculatorUITestFramework
 {
@@ -112,25 +109,25 @@ namespace CalculatorUITestFramework
         public void SetAngleOperator(AngleOperatorState value)
         {
             //set the desired string value for the button
-                string desiredId;
-                switch (value)
-                {
-                    case AngleOperatorState.Degrees:
-                        desiredId = "degButton";
-                        break;
-                    case AngleOperatorState.Gradians:
-                        desiredId = "gradButton";
-                        break;
-                    case AngleOperatorState.Radians:
-                        desiredId = "radButton";
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
-                while (this.DegRadGradButton.GetAttribute("AutomationId") != desiredId)
-                {
-                    this.DegRadGradButton.Click();
-                }
+            string desiredId;
+            switch (value)
+            {
+                case AngleOperatorState.Degrees:
+                    desiredId = "degButton";
+                    break;
+                case AngleOperatorState.Gradians:
+                    desiredId = "gradButton";
+                    break;
+                case AngleOperatorState.Radians:
+                    desiredId = "radButton";
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            while (this.DegRadGradButton.GetAttribute("AutomationId") != desiredId)
+            {
+                this.DegRadGradButton.Click();
+            }
         }
 
         public void ResetFEButton(FEButtonState value)

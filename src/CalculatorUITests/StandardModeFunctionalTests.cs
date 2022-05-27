@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using CalculatorUITestFramework;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using OpenQA.Selenium;
+
 using System;
 using System.Text.RegularExpressions;
 
@@ -12,7 +15,7 @@ namespace CalculatorUITests
     [TestClass]
     public class StandardModeFunctionalTests
     {
-        private static StandardCalculatorPage page = new StandardCalculatorPage();
+        private static readonly StandardCalculatorPage page = new StandardCalculatorPage();
 
         /// <summary>
         /// Initializes the WinAppDriver web driver session.

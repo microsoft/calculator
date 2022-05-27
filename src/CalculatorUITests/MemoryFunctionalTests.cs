@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using CalculatorUITestFramework;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+
 using System;
 
 namespace CalculatorUITests
@@ -12,7 +15,7 @@ namespace CalculatorUITests
     [TestClass]
     public class MemoryFunctionalTests
     {
-        private static StandardCalculatorPage page = new StandardCalculatorPage();
+        private static readonly StandardCalculatorPage page = new StandardCalculatorPage();
 
         /// <summary>
         /// Initializes the WinAppDriver web driver session.

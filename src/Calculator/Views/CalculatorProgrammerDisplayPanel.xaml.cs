@@ -1,9 +1,11 @@
+using CalculatorApp.Utils;
 using CalculatorApp.ViewModel.Common;
+
 using System.Diagnostics;
 using System.Windows.Input;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using CalculatorApp.Utils;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -41,10 +43,7 @@ namespace CalculatorApp
 
         public bool IsErrorVisualState
         {
-            get
-            {
-                return m_isErrorVisualState;
-            }
+            get => m_isErrorVisualState;
 
             set
             {

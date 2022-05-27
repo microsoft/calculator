@@ -24,10 +24,10 @@ namespace CalculatorUITestFramework
 {
     public class WindowsDriverLocalService : IDisposable
     {
-        private FileInfo FileName;
-        private string Arguments;
-        private IPAddress IP;
-        private int Port;
+        private readonly FileInfo FileName;
+        private readonly string Arguments;
+        private readonly IPAddress IP;
+        private readonly int Port;
         private TimeSpan InitializationTimeout;
         private Process Service;
 
@@ -119,11 +119,7 @@ namespace CalculatorUITestFramework
             GC.SuppressFinalize(this);
         }
 
-        public Uri ServiceUrl
-        {
-            // Note: append /wd/hub to the URL if you're directing the test at Appium
-            get { return new Uri($"http://{this.IP}:{Convert.ToString(this.Port)}"); }
-        }
+        public Uri ServiceUrl => new Uri($"http://{this.IP}:{Convert.ToString(this.Port)}");
 
         private void DestroyProcess()
         {

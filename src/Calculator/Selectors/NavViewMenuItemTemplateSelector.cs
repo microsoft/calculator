@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using CalculatorApp.ViewModel.Common;
+
 using System;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

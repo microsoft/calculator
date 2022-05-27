@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
@@ -14,7 +15,7 @@ namespace Calculator.Utils
     /// <summary>
     /// Defines a collection of extensions methods for UI.
     /// </summary>
-    sealed class VisualTree
+    internal static class VisualTree
     {
         /// <summary>
         /// Find descendant <see cref="Windows.UI.Xaml.FrameworkElement ^"/> control using its name.
@@ -29,14 +30,13 @@ namespace Calculator.Utils
                 return null;
             }
 
-            var frameworkElement = (element as FrameworkElement);
-            if (frameworkElement != null && name.Equals(frameworkElement.Name))
+            if (element is FrameworkElement frameworkElement && name.Equals(frameworkElement.Name))
             {
                 return frameworkElement;
             }
 
             var childCount = VisualTreeHelper.GetChildrenCount(element);
-            for (int i = 0; i < childCount; i++)
+            for (var i = 0; i < childCount; i++)
             {
                 var result = FindDescendantByName(VisualTreeHelper.GetChild(element, i), name);
                 if (result != null)
@@ -52,7 +52,7 @@ namespace Calculator.Utils
         /// Find first descendant control of a specified type.
         /// </summary>
         /// <param name="element">Parent element.</param>
-        /// <param name="type">Type of descendant.</param>
+        /// <param name="typeName">Type of descendant.</param>
         /// <returns>Descendant control or null if not found.</returns>
         private static DependencyObject FindDescendant(DependencyObject element, Type typeName)
         {
@@ -98,8 +98,8 @@ namespace Calculator.Utils
             {
                 return null;
             }
-            var frameworkElement = (parent as FrameworkElement);
-            if (frameworkElement != null && name.Equals(frameworkElement.Name))
+
+            if (parent is FrameworkElement frameworkElement && name.Equals(frameworkElement.Name))
             {
                 return frameworkElement;
             }

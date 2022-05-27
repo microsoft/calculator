@@ -1,6 +1,6 @@
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
-using System;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -17,18 +17,12 @@ namespace CalculatorApp
             MemoryPaneEmpty.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
         }
 
-        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model
-        {
-            get
-            {
-                return (CalculatorApp.ViewModel.StandardCalculatorViewModel)this.DataContext;
-            }
-        }
+        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model => (CalculatorApp.ViewModel.StandardCalculatorViewModel)this.DataContext;
 
         public GridLength RowHeight
         {
-            get { return (GridLength)GetValue(RowHeightProperty); }
-            set { SetValue(RowHeightProperty, value); }
+            get => (GridLength)GetValue(RowHeightProperty);
+            set => SetValue(RowHeightProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for RowHeight.  This enables animation, styling, binding, etc...

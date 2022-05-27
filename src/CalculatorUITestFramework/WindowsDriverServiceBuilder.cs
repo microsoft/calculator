@@ -39,11 +39,7 @@ namespace CalculatorUITestFramework
 
         public WindowsDriverServiceBuilder WithFileInfo(FileInfo fileInfo)
         {
-            if (fileInfo == null)
-            {
-                throw new ArgumentNullException("FileInfo should not be NULL");
-            }
-            this.FileInfo = fileInfo;
+            this.FileInfo = fileInfo ?? throw new ArgumentNullException("FileInfo should not be NULL");
             return this;
         }
 

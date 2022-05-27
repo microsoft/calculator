@@ -1,5 +1,4 @@
-﻿using System;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -16,8 +15,8 @@ namespace CalculatorApp
 
         public CalculatorApp.ViewModel.MemoryItemViewModel Model
         {
-            get { return (CalculatorApp.ViewModel.MemoryItemViewModel)GetValue(ModelProperty); }
-            set { SetValue(ModelProperty, value); }
+            get => (CalculatorApp.ViewModel.MemoryItemViewModel)GetValue(ModelProperty);
+            set => SetValue(ModelProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Model.  This enables animation, styling, binding, etc...

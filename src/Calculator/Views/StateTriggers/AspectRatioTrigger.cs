@@ -30,8 +30,8 @@ namespace CalculatorApp.Views.StateTriggers
         /* The source for which this class will respond to size changed events. */
         public FrameworkElement Source
         {
-            get { return (FrameworkElement)GetValue(SourceProperty); }
-            set { SetValue(SourceProperty, value); }
+            get => (FrameworkElement)GetValue(SourceProperty);
+            set => SetValue(SourceProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
@@ -46,8 +46,8 @@ namespace CalculatorApp.Views.StateTriggers
            the aspect ratio. */
         public Aspect NumeratorAspect
         {
-            get { return (Aspect)GetValue(NumeratorAspectProperty); }
-            set { SetValue(NumeratorAspectProperty, value); }
+            get => (Aspect)GetValue(NumeratorAspectProperty);
+            set => SetValue(NumeratorAspectProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for NumeratorAspect  This enables animation, styling, binding, etc...
@@ -57,8 +57,8 @@ namespace CalculatorApp.Views.StateTriggers
         /* The threshold that will cause the trigger to fire when the aspect ratio exceeds this value. */
         public double Threshold
         {
-            get { return (double)GetValue(ThresholdProperty); }
-            set { SetValue(ThresholdProperty, value); }
+            get => (double)GetValue(ThresholdProperty);
+            set => SetValue(ThresholdProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Threshold.  This enables animation, styling, binding, etc...
@@ -68,8 +68,8 @@ namespace CalculatorApp.Views.StateTriggers
         /* If true, the trigger will fire if the aspect ratio is greater than or equal to the threshold. */
         public bool ActiveIfEqual
         {
-            get { return (bool)GetValue(ActiveIfEqualProperty); }
-            set { SetValue(ActiveIfEqualProperty, value); }
+            get => (bool)GetValue(ActiveIfEqualProperty);
+            set => SetValue(ActiveIfEqualProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for ActiveEqual.  This enables animation, styling, binding, etc...

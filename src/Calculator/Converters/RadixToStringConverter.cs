@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using CalculatorApp.ViewModel.Common;
+
 using System;
 
 namespace CalculatorApp

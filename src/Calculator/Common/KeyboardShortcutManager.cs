@@ -3,39 +3,39 @@
 
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
+
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using Windows.Foundation.Collections;
+
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+
 using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace CalculatorApp
 {
     namespace Common
     {
-        static partial class KeyboardShortcutManagerLocals
+        internal static class KeyboardShortcutManagerLocals
         {
             // Lights up all of the buttons in the given range
             // The range is defined by a pair of iterators
-            static public void LightUpButtons(IEnumerable<WeakReference> buttons)
+            public static void LightUpButtons(IEnumerable<WeakReference> buttons)
             {
                 foreach (var button in buttons)
                 {
-                    var btn = button.Target as ButtonBase;
-                    if (btn != null && btn.IsEnabled)
+                    if (button.Target is ButtonBase btn && btn.IsEnabled)
                     {
                         LightUpButton(btn);
                     }
                 }
             }
 
-            static public void LightUpButton(ButtonBase button)
+            public static void LightUpButton(ButtonBase button)
             {
                 // If the button is a toggle button then we don't need
                 // to change the UI of the button
@@ -58,14 +58,12 @@ namespace CalculatorApp
                 var buttonWeakReference = new WeakReference(button);
                 timer.Tick += (sender, args) =>
                 {
-                    var btn = buttonWeakReference.Target as ButtonBase;
-                    if (btn != null)
+                    if (buttonWeakReference.Target is ButtonBase btn)
                     {
                         VisualStateManager.GoToState(button, "Normal", true);
                     }
 
-                    var tmr = timerWeakReference.Target as DispatcherTimer;
-                    if (tmr != null)
+                    if (timerWeakReference.Target is DispatcherTimer tmr)
                     {
                         tmr.Stop();
                     }
@@ -77,12 +75,11 @@ namespace CalculatorApp
             // and execute its command.
             // NOTE: It is assumed that all buttons associated with a particular
             // key have the same command
-            static public void RunFirstEnabledButtonCommand(IEnumerable<WeakReference> buttons)
+            public static void RunFirstEnabledButtonCommand(IEnumerable<WeakReference> buttons)
             {
                 foreach (var button in buttons)
                 {
-                    var btn = button.Target as ButtonBase;
-                    if (btn != null && btn.IsEnabled)
+                    if (button.Target is ButtonBase btn && btn.IsEnabled)
                     {
                         RunButtonCommand(btn);
                         break;
@@ -90,7 +87,7 @@ namespace CalculatorApp
                 }
             }
 
-            static public void RunButtonCommand(ButtonBase button)
+            public static void RunButtonCommand(ButtonBase button)
             {
                 if (button.IsEnabled)
                 {
@@ -101,15 +98,13 @@ namespace CalculatorApp
                         command.Execute(parameter);
                     }
 
-                    var radio = (button as RadioButton);
-                    if (radio != null)
+                    if (button is RadioButton radio)
                     {
                         radio.IsChecked = true;
                         return;
                     }
 
-                    var toggle = (button as ToggleButton);
-                    if (toggle != null)
+                    if (button is ToggleButton toggle)
                     {
                         toggle.IsChecked = !(toggle.IsChecked != null && toggle.IsChecked.Value);
                         return;
@@ -578,7 +573,7 @@ namespace CalculatorApp
             private static bool CanNavigateModeByShortcut(MUXC.NavigationView navView, object nvi
                 , ApplicationViewModel vm, ViewMode toMode)
             {
-                if(nvi != null && nvi is NavCategory navCategory)
+                if (nvi != null && nvi is NavCategory navCategory)
                 {
                     return navCategory.IsEnabled
                         && navView.Visibility == Visibility.Visible
@@ -597,10 +592,9 @@ namespace CalculatorApp
                     var listItems = EqualRange(lookupMap, (MyVirtualKey)key);
                     foreach (var itemRef in listItems)
                     {
-                        var item = itemRef.Target as MUXC.NavigationView;
-                        if (item != null)
+                        if (itemRef.Target is MUXC.NavigationView item)
                         {
-                            var navView = (MUXC.NavigationView)item;
+                            var navView = item;
 
                             var menuItems = ((List<object>)navView.MenuItemsSource);
                             if (menuItems != null)
@@ -659,7 +653,7 @@ namespace CalculatorApp
                 // Handle Ctrl + E for DateCalculator
                 if ((key == Windows.System.VirtualKey.E) && isControlKeyPressed && !isShiftKeyPressed && !isAltKeyPressed)
                 {
-                    NavigateModeByShortcut(isControlKeyPressed, isShiftKeyPressed, false, key, ViewMode.Date);
+                    NavigateModeByShortcut(true, false, false, key, ViewMode.Date);
                     return;
                 }
 
@@ -690,7 +684,7 @@ namespace CalculatorApp
                         }
 
                         var buttons = EqualRange(lookupMap, (MyVirtualKey)myVirtualKey);
-                        if (buttons.Count() <= 0)
+                        if (!buttons.Any())
                         {
                             return;
                         }
@@ -735,7 +729,7 @@ namespace CalculatorApp
                     }
 
                     bool shiftKeyPressed = (Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-                    NavigateModeByShortcut(controlKeyPressed, shiftKeyPressed, altPressed, key, null);
+                    NavigateModeByShortcut(false, shiftKeyPressed, true, key, null);
                 }
             }
 
@@ -816,18 +810,18 @@ namespace CalculatorApp
                 }
             }
 
-            private static SortedDictionary<int, SortedDictionary<char, List<WeakReference>>> s_characterForButtons = new SortedDictionary<int, SortedDictionary<char, List<WeakReference>>>();
-            private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_virtualKey = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
-            private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyControlChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
-            private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyShiftChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
-            private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyAltChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
-            private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyControlShiftChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
+            private static readonly SortedDictionary<int, SortedDictionary<char, List<WeakReference>>> s_characterForButtons = new SortedDictionary<int, SortedDictionary<char, List<WeakReference>>>();
+            private static readonly SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_virtualKey = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
+            private static readonly SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyControlChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
+            private static readonly SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyShiftChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
+            private static readonly SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyAltChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
+            private static readonly SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyControlShiftChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
 
-            private static SortedDictionary<int, bool> s_IsDropDownOpen = new SortedDictionary<int, bool>();
-            private static SortedDictionary<int, bool> s_ignoreNextEscape = new SortedDictionary<int, bool>();
-            private static SortedDictionary<int, bool> s_keepIgnoringEscape = new SortedDictionary<int, bool>();
-            private static SortedDictionary<int, bool> s_fHonorShortcuts = new SortedDictionary<int, bool>();
-            private static SortedDictionary<int, bool> s_fDisableShortcuts = new SortedDictionary<int, bool>();
+            private static readonly SortedDictionary<int, bool> s_IsDropDownOpen = new SortedDictionary<int, bool>();
+            private static readonly SortedDictionary<int, bool> s_ignoreNextEscape = new SortedDictionary<int, bool>();
+            private static readonly SortedDictionary<int, bool> s_keepIgnoringEscape = new SortedDictionary<int, bool>();
+            private static readonly SortedDictionary<int, bool> s_fHonorShortcuts = new SortedDictionary<int, bool>();
+            private static readonly SortedDictionary<int, bool> s_fDisableShortcuts = new SortedDictionary<int, bool>();
 
             //private static Concurrency.reader_writer_lock s_keyboardShortcutMapLock;
             private static readonly object s_keyboardShortcutMapLockMutex = new object();

@@ -1,9 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+using CalculatorApp.ViewModel.Common;
 
 using System;
 
-using CalculatorApp.ViewModel.Common;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Diagnostics;
@@ -11,7 +12,7 @@ using Windows.UI.ViewManagement;
 
 namespace CalculatorApp
 {
-    static public partial class Globals
+    public static class Globals
     {
 #if SEND_DIAGNOSTICS
         // c.f. WINEVENT_KEYWORD_RESERVED_63-56 0xFF00000000000000 // Bits 63-56 - channel keywords
@@ -29,7 +30,7 @@ namespace CalculatorApp
 #endif
     }
 
-    class AppLifecycleLogger
+    internal class AppLifecycleLogger
     {
         public static AppLifecycleLogger GetInstance()
         {
@@ -145,7 +146,7 @@ namespace CalculatorApp
             fields.AddString("PsmKey", psmKey);
         }
 
-        private LoggingChannel m_appLifecycleProvider;
+        private readonly LoggingChannel m_appLifecycleProvider;
         private static readonly Lazy<AppLifecycleLogger> s_selfInstance = new Lazy<AppLifecycleLogger>(() => new AppLifecycleLogger(), true);
     }
 }

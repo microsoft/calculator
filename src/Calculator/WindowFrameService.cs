@@ -3,11 +3,13 @@
 
 using CalculatorApp.Common;
 using CalculatorApp.ViewModel.Common;
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Threading.Tasks;
+
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -164,8 +166,7 @@ namespace CalculatorApp
         // Returns nullptr if no service is registered with the specified id
         private object TryResolveRuntimeWindowService(Type serviceId)
         {
-            object retval;
-            if (m_runtimeServicesMap.TryGetValue(serviceId.Name, out retval))
+            if (m_runtimeServicesMap.TryGetValue(serviceId.Name, out object retval))
             {
                 return retval;
             }
@@ -175,14 +176,14 @@ namespace CalculatorApp
             }
         }
 
-        private Windows.UI.Core.CoreWindow m_currentWindow;
-        private Windows.UI.Core.CoreDispatcher m_coreDispatcher;
+        private readonly Windows.UI.Core.CoreWindow m_currentWindow;
+        private readonly Windows.UI.Core.CoreDispatcher m_coreDispatcher;
         private Windows.UI.Xaml.Controls.Frame m_frame;
-        private int m_viewId;
-        private WeakReference m_parent;
+        private readonly int m_viewId;
+        private readonly WeakReference m_parent;
 
-        private Dictionary<string, object> m_runtimeServicesMap = new Dictionary<string, object>();
-        private List<Action> m_onWindowClosingHandlers = new List<Action>();
+        private readonly Dictionary<string, object> m_runtimeServicesMap = new Dictionary<string, object>();
+        private readonly List<Action> m_onWindowClosingHandlers = new List<Action>();
     }
 }
 

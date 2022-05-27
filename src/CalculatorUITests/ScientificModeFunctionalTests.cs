@@ -2,18 +2,15 @@
 // Licensed under the MIT License.
 
 using CalculatorUITestFramework;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Appium.Windows;
-using System;
-using System.Collections.Generic;
 
 namespace CalculatorUITests
 {
     [TestClass]
     public class ScientificModeFunctionalTests
     {
-        private static ScientificCalculatorPage page = new ScientificCalculatorPage();
+        private static readonly ScientificCalculatorPage page = new ScientificCalculatorPage();
 
         /// <summary>
         /// Initializes the WinAppDriver web driver session.

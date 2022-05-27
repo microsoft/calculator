@@ -145,7 +145,6 @@
     <Compile Include="Common\AppLifecycleLogger.cs" />
     <Compile Include="Common\KeyboardShortcutManager.cs" />
     <Compile Include="Common\ValidatingConverters.cs" />
-    <Compile Include="Common\ViewState.cs" />
     <Compile Include="Controls\CalculationResult.cs" />
     <Compile Include="Controls\CalculationResultAutomationPeer.cs" />
     <Compile Include="Controls\CalculatorButton.cs" />

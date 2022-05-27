@@ -8,10 +8,7 @@ namespace CalculatorApp
     [Windows.Foundation.Metadata.WebHostHidden]
     public sealed partial class OperatorsPanel : UserControl
     {
-        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model
-        {
-            get => (CalculatorApp.ViewModel.StandardCalculatorViewModel)DataContext;
-        }
+        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model => (CalculatorApp.ViewModel.StandardCalculatorViewModel)DataContext;
 
         public OperatorsPanel()
         {
@@ -20,8 +17,8 @@ namespace CalculatorApp
 
         public bool IsBitFlipChecked
         {
-            get { return (bool)GetValue(IsBitFlipCheckedProperty); }
-            set { SetValue(IsBitFlipCheckedProperty, value); }
+            get => (bool)GetValue(IsBitFlipCheckedProperty);
+            set => SetValue(IsBitFlipCheckedProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsBitFlipChecked.  This enables animation, styling, binding, etc...
@@ -34,8 +31,8 @@ namespace CalculatorApp
 
         public bool IsErrorVisualState
         {
-            get { return (bool)GetValue(IsErrorVisualStateProperty); }
-            set { SetValue(IsErrorVisualStateProperty, value); }
+            get => (bool)GetValue(IsErrorVisualStateProperty);
+            set => SetValue(IsErrorVisualStateProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsErrorVisualState.  This enables animation, styling, binding, etc...
@@ -46,7 +43,7 @@ namespace CalculatorApp
                 self.OnIsErrorVisualStatePropertyChanged((bool)args.OldValue, (bool)args.NewValue);
             }));
 
-        void OnIsBitFlipCheckedPropertyChanged(bool oldValue, bool newValue)
+        private void OnIsBitFlipCheckedPropertyChanged(bool oldValue, bool newValue)
         {
             if (newValue)
             {
