@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3436,7 +3436,7 @@
     <comment>Message displayed when the graph does not have any y-intercepts</comment>
   </data>
   <data name="Domain" xml:space="preserve">
-    <value>網域</value>
+    <value>定義域</value>
     <comment>Title for KeyGraphFeatures Domain Property</comment>
   </data>
   <data name="HorizontalAsymptotes" xml:space="preserve">
@@ -3499,7 +3499,7 @@
     <value>無法對該函數進行分析</value>
   </data>
   <data name="KGFDomainNone" xml:space="preserve">
-    <value>無法計算此函數的網域。</value>
+    <value>無法計算此函數的定義域。</value>
     <comment>Error displayed when Domain is not returned from the analyzer.</comment>
   </data>
   <data name="KGFRangeNone" xml:space="preserve">
