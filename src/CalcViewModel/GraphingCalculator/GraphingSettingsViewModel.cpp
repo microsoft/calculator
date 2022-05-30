@@ -3,11 +3,9 @@
 
 #include "pch.h"
 #include "GraphingSettingsViewModel.h"
-#include <CalcManager\NumberFormattingUtils.h>
 
 using namespace CalculatorApp::ViewModel;
 using namespace CalculatorApp::ViewModel::Common;
-using namespace CalcManager::NumberFormattingUtils;
 using namespace GraphControl;
 using namespace std;
 using namespace Platform;
@@ -55,21 +53,22 @@ void GraphingSettingsViewModel::InitRanges()
     m_XMaxValue = xMax;
     m_YMinValue = yMin;
     m_YMaxValue = yMax;
-    auto valueStr = to_wstring(m_XMinValue);
-    TrimTrailingZeros(valueStr);
-    XMin = ref new String(valueStr.c_str());
 
-    valueStr = to_wstring(m_XMaxValue);
-    TrimTrailingZeros(valueStr);
-    XMax = ref new String(valueStr.c_str());
+    std::wostringstream xMinStr;
+    xMinStr <<  m_XMinValue;
+    XMin = ref new String(xMinStr.str().c_str());
 
-    valueStr = to_wstring(m_YMinValue);
-    TrimTrailingZeros(valueStr);
-    YMin = ref new String(valueStr.c_str());
+    std::wostringstream xMaxStr;
+    xMaxStr << m_XMaxValue;
+    XMax = ref new String(xMaxStr.str().c_str());
 
-    valueStr = to_wstring(m_YMaxValue);
-    TrimTrailingZeros(valueStr);
-    YMax = ref new String(valueStr.c_str());
+    std::wostringstream yMinStr;
+    yMinStr << m_YMinValue;
+    YMin = ref new String(yMinStr.str().c_str());
+
+    std::wostringstream yMaxStr;
+    yMaxStr << m_YMaxValue;
+    YMax = ref new String(yMaxStr.str().c_str());
 
     m_dontUpdateDisplayRange = false;
 }
