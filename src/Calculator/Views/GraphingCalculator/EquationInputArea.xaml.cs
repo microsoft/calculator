@@ -1,29 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Calculator.Utils;
+using CalculatorApp.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Common;
-using CalculatorApp.ViewModel.Common;
-using CalculatorApp.ViewModel.Common.Automation;
-using GraphControl;
-using CalculatorApp.ViewModel;
-using CalculatorApp.Controls;
-using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Calculator.Utils;
+using Windows.UI.Xaml.Media;
 
 namespace CalculatorApp
 {
@@ -355,13 +346,14 @@ namespace CalculatorApp
         {
 
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
-                    var refThis = weakThis.Target as EquationInputArea;
-                    if (refThis != null && refThis.m_isHighContrast == refThis.m_accessibilitySettings.HighContrast)
-                    {
-                        refThis.ReloadAvailableColors(false, false);
-                    }
-                }));
+            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            {
+                var refThis = weakThis.Target as EquationInputArea;
+                if (refThis != null && refThis.m_isHighContrast == refThis.m_accessibilitySettings.HighContrast)
+                {
+                    refThis.ReloadAvailableColors(false, false);
+                }
+            }));
         }
 
         private void EquationTextBox_RemoveButtonClicked(object sender, RoutedEventArgs e)
@@ -594,7 +586,8 @@ namespace CalculatorApp
             {
                 TimeSpan timeSpan = new TimeSpan(10000000); // 1 tick = 100 nanoseconds, and 10000000 ticks = 1 second.
                 DispatcherTimerDelayer delayer = new DispatcherTimerDelayer(timeSpan);
-                delayer.Action += new EventHandler<object>((object s, object arg) => {
+                delayer.Action += new EventHandler<object>((object s, object arg) =>
+                {
                     CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogVariableChanged("Slider", name);
                     variableSliders.Remove(name);
                 });

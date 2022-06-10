@@ -6,26 +6,8 @@
 // Declaration of the CalculatorScientificOperators class
 //
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Common;
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
-
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace CalculatorApp
 {

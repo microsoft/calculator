@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation.Peers;
 

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using CalculatorApp.ViewModel.Common;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;

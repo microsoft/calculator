@@ -3,11 +3,6 @@
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Windows;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Runtime.InteropServices.ComTypes;
-using System;
-using System.Diagnostics;
 
 namespace CalculatorUITestFramework
 {
@@ -192,7 +187,7 @@ namespace CalculatorUITestFramework
             else
             {
                 throw new NotFoundException("Could not find word size buttons in page source");
-            } 
+            }
         }
         public void ResetNumberSystem()
         {

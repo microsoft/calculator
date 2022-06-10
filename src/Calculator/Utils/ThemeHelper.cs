@@ -4,8 +4,6 @@
 using System;
 using System.Reflection;
 using Windows.Storage;
-using Windows.UI;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -72,12 +70,12 @@ namespace CalculatorApp.Utils
         {
             Frame rootFrame = Window.Current.Content as Frame;
             long token = rootFrame.RegisterPropertyChangedCallback(Frame.RequestedThemeProperty, callback);
-            return new ThemeChangedCallbackToken{ RootFrame = new WeakReference(rootFrame), Token = token };
+            return new ThemeChangedCallbackToken { RootFrame = new WeakReference(rootFrame), Token = token };
         }
 
         public static void UnregisterAppThemeChangedCallback(ThemeChangedCallbackToken callbackToken)
         {
-            if(callbackToken.RootFrame.IsAlive)
+            if (callbackToken.RootFrame.IsAlive)
             {
                 Frame rootFrame = callbackToken.RootFrame.Target as Frame;
                 rootFrame.UnregisterPropertyChangedCallback(Frame.RequestedThemeProperty, callbackToken.Token);

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using CalculatorApp.ViewModel.Common;
 
 namespace CalculatorApp.Utils
 {
@@ -15,7 +14,7 @@ namespace CalculatorApp.Utils
             return new DelegateCommand(param =>
             {
                 TTarget thatTarget = weakTarget.Target as TTarget;
-                if(null != thatTarget)
+                if (null != thatTarget)
                 {
                     handler.Invoke(thatTarget, param);
                 }

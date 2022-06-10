@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-
-using CalculatorApp.ViewModel.Common;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Diagnostics;

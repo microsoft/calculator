@@ -1,8 +1,5 @@
 using CalculatorApp.Common;
 using CalculatorApp.Converters;
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
-using CalculatorApp.ViewModel.Common.Automation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -49,9 +46,9 @@ namespace CalculatorApp
             m_model.PropertyChanged += OnAppPropertyChanged;
             m_accessibilitySettings = new AccessibilitySettings();
 
-            if(Utilities.GetIntegratedDisplaySize(out var sizeInInches))
+            if (Utilities.GetIntegratedDisplaySize(out var sizeInInches))
             {
-                if(sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
+                if (sizeInInches < 7.0) // If device's display size (diagonal length) is less than 7 inches then keep the calc always in Portrait mode only
                 {
                     DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait | DisplayOrientations.PortraitFlipped;
                 }
@@ -150,7 +147,7 @@ namespace CalculatorApp
             {
                 var graphCategory = (NavCategory)NavViewCategoriesSource.Find(x =>
                 {
-                    if(x is NavCategory category)
+                    if (x is NavCategory category)
                     {
                         return category.ViewMode == ViewMode.Graphing;
                     }
@@ -166,10 +163,10 @@ namespace CalculatorApp
         private List<object> ExpandNavViewCategoryGroups(IEnumerable<NavCategoryGroup> groups)
         {
             var result = new List<object>();
-            foreach(var group in groups)
+            foreach (var group in groups)
             {
                 result.Add(group);
-                foreach(var category in group.Categories)
+                foreach (var category in group.Categories)
                 {
                     result.Add(category);
                 }
@@ -179,7 +176,7 @@ namespace CalculatorApp
 
         private void UpdatePopupSize(Windows.UI.Core.WindowSizeChangedEventArgs e)
         {
-            if(PopupContent != null)
+            if (PopupContent != null)
             {
                 PopupContent.Width = e.Size.Width;
                 PopupContent.Height = e.Size.Height;
@@ -359,7 +356,7 @@ namespace CalculatorApp
 
         private void OnNavSelectionChanged(object sender, MUXC.NavigationViewSelectionChangedEventArgs e)
         {
-            if(e.IsSettingsSelected)
+            if (e.IsSettingsSelected)
             {
                 ShowSettingsPopup();
                 return;

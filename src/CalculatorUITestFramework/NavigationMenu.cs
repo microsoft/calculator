@@ -44,7 +44,7 @@ namespace CalculatorUITestFramework
             switch (mode)
             {
                 case CalculatorMode.StandardCalculator:
-                    modeAccessibilityId =  "Standard";
+                    modeAccessibilityId = "Standard";
                     break;
                 case CalculatorMode.ScientificCalculator:
                     modeAccessibilityId = "Scientific";

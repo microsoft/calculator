@@ -1,14 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -578,7 +574,7 @@ namespace CalculatorApp
             private static bool CanNavigateModeByShortcut(MUXC.NavigationView navView, object nvi
                 , ApplicationViewModel vm, ViewMode toMode)
             {
-                if(nvi != null && nvi is NavCategory navCategory)
+                if (nvi != null && nvi is NavCategory navCategory)
                 {
                     return navCategory.IsEnabled
                         && navView.Visibility == Visibility.Visible

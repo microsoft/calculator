@@ -6,8 +6,6 @@
 // Declaration of the App class.
 //
 
-using CalculatorApp.ViewModel.Common;
-using CalculatorApp.ViewModel.Common.Automation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -1,38 +1,23 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Common;
-using CalculatorApp.ViewModel.Common;
-using CalculatorApp.ViewModel.Common.Automation;
 using CalculatorApp.Controls;
 using CalculatorApp.Utils;
-using CalculatorApp.ViewModel;
-using GraphControl;
+using System;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Core;
-using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Popups;
 
 namespace CalculatorApp
 {
@@ -755,7 +740,8 @@ namespace CalculatorApp
         private void OnColorValuesChanged(UISettings sender, object args)
         {
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
+            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            {
                 GraphingCalculator refThis = weakThis.Target as GraphingCalculator;
                 if (refThis != null && IsMatchAppTheme)
                 {

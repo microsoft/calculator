@@ -3,12 +3,12 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Windows.ApplicationModel;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
-using Windows.ApplicationModel;
 
 namespace CalculatorApp
 {
@@ -86,14 +86,14 @@ namespace CalculatorApp
             {
                 string packageName = Package.Current.Id.Name;
 
-                if(packageName == "Microsoft.WindowsCalculator.Dev")
+                if (packageName == "Microsoft.WindowsCalculator.Dev")
                 {
                     LimitedAccessFeatures.TryUnlockFeature(
                                 "com.microsoft.windows.richeditmath",
                                 "BeDD/jxKhz/yfVNA11t4uA==", // Microsoft.WindowsCalculator.Dev
                                 "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.");
                 }
-                else if(packageName == "Microsoft.WindowsCalculator")
+                else if (packageName == "Microsoft.WindowsCalculator")
                 {
                     LimitedAccessFeatures.TryUnlockFeature(
                                 "com.microsoft.windows.richeditmath",

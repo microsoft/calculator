@@ -8,20 +8,10 @@
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Controls;
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
-
+using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 
 
 namespace CalculatorApp

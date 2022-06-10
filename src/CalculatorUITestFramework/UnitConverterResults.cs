@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium.Windows;
-using System;
-using OpenQA.Selenium.Interactions;
 using System.Text.RegularExpressions;
 
 namespace CalculatorUITestFramework

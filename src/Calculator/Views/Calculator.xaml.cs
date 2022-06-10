@@ -1,33 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Converters;
-using CalculatorApp.Controls;
 using CalculatorApp.Utils;
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
-
+using System;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Globalization.NumberFormatting;
-using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
-using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.System.Threading;
-using Windows.UI.ViewManagement;
 
 namespace CalculatorApp
 {
@@ -247,7 +231,8 @@ namespace CalculatorApp
             // Delay load things later when we get a chance.
             WeakReference weakThis = new WeakReference(this);
             _ = this.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
+                CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                {
                     if (TraceLogger.GetInstance().IsWindowIdInLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
                     {
                         var refThis = weakThis.Target as Calculator;

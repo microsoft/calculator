@@ -1,19 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-
-using Windows.Foundation;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using CalculatorApp;
-using CalculatorApp.Common;
-using CalculatorApp.Controls;
 
 namespace CalculatorApp
 {

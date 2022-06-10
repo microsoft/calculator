@@ -1,4 +1,3 @@
-using CalculatorApp.ViewModel.Common;
 using Windows.ApplicationModel.Core;
 using Windows.System.Profile;
 using Windows.UI.Core;
@@ -89,7 +88,7 @@ namespace CalculatorApp
 
         private void RootFrame_RequestedThemeChanged(DependencyObject sender, DependencyProperty dp)
         {
-            if(Frame.RequestedThemeProperty == dp)
+            if (Frame.RequestedThemeProperty == dp)
             {
                 _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => { SetTitleBarControlColors(); }));
             }
@@ -280,7 +279,8 @@ namespace CalculatorApp
         public static readonly DependencyProperty BackButtonSpaceReservedProperty =
             DependencyProperty.Register(
                 nameof(BackButtonSpaceReserved), typeof(bool), typeof(TitleBar),
-                new PropertyMetadata(false, new PropertyChangedCallback((sender, args)=> {
+                new PropertyMetadata(false, new PropertyChangedCallback((sender, args) =>
+                {
                     var self = sender as TitleBar;
                     VisualStateManager.GoToState(
                         self, (bool)args.NewValue ? self.BackButtonVisible.Name : self.BackButtonCollapsed.Name, true);

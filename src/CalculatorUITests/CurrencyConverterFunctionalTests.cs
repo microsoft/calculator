@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 using CalculatorUITestFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
-using System;
 
 namespace CalculatorUITests
 {

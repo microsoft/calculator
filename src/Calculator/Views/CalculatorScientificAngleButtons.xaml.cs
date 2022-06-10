@@ -6,26 +6,8 @@
 // Declaration of the CalculatorScientificAngleButtons class
 //
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Utils;
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
-
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.ViewManagement;
-using Windows.UI.Core;
 
 namespace CalculatorApp
 {
@@ -50,7 +32,7 @@ namespace CalculatorApp
                 if (donotuse_ButtonPressed == null)
                 {
                     donotuse_ButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this,
-                        (that, param)=>
+                        (that, param) =>
                         {
                             that.OnAngleButtonPressed(param);
                         });
@@ -65,7 +47,7 @@ namespace CalculatorApp
             get => m_isErrorVisualState;
             set
             {
-                if(m_isErrorVisualState != value)
+                if (m_isErrorVisualState != value)
                 {
                     m_isErrorVisualState = value;
                     string newState = m_isErrorVisualState ? "ErrorFlyout" : "NoErrorFlyout";
