@@ -201,7 +201,7 @@ namespace CalculatorApp
                 ViewMode newValue = m_model.Mode;
                 ViewMode previousMode = m_model.PreviousMode;
 
-                KeyboardShortcutManager.TryEnableShortcut();
+                KeyboardShortcutManager.DisableShortcuts(false);
 
                 if (newValue == ViewMode.Standard)
                 {

@@ -323,14 +323,20 @@ namespace CalculatorApp
 
             public static void DisableShortcuts(bool disable)
             {
-                int viewId = Utilities.GetWindowId();
-
-                if (s_fDisableShortcuts.ContainsKey(viewId))
+                //deferredEnableShortcut is being used to prevent the mode change from happening before the user input has processed 
+                if (s_keyHandlerCount > && !disable)
                 {
-                    s_fDisableShortcuts[viewId] = disable;
+                    s_deferredEnableShortcut = true;
                 }
-
-                HonorShortcuts(!disable);
+                else
+                {
+                    int viewId = Utilities.GetWindowId();
+                    if (s_fDisableShortcuts.ContainesKey(viewId))
+                    {
+                        s_fDisableShortcuts[viewId] = disable;
+                    }
+                    HonorShortcuts(!disable);
+                }
             }
 
             public static void UpdateDropDownState(bool isOpen)
@@ -631,7 +637,6 @@ namespace CalculatorApp
             private static void OnCharacterReceivedHandler(CoreWindow sender, CharacterReceivedEventArgs args)
             {
                 int viewId = Utilities.GetWindowId();
-
                 bool hit = s_fHonorShortcuts.TryGetValue(viewId, out var currentHonorShortcuts);
 
                 if (!hit || currentHonorShortcuts)
@@ -722,22 +727,9 @@ namespace CalculatorApp
                 s_keyHandlerCount--;
                 if (s_keyHandlerCount == 0 && s_deferredEnableShortcut)
                 {
-                    KeyboardShortcutManager.DisableShortcuts(false);//shortcuts enabled
+                    DisableShortcuts(false);
                     s_deferredEnableShortcut = false;
                 }             
-
-            }
-
-            public static void TryEnableShortcut()
-            {
-                if (s_keyHandlerCount > 0)
-                {
-                    s_deferredEnableShortcut = true;
-                }
-                else
-                {
-                    KeyboardShortcutManager.DisableShortcuts(false);
-                }
             }
 
             private static void OnAcceleratorKeyActivated(CoreDispatcher dispatcher, AcceleratorKeyEventArgs args)
@@ -858,9 +850,8 @@ namespace CalculatorApp
             //private static Concurrency.reader_writer_lock s_keyboardShortcutMapLock;
             private static readonly object s_keyboardShortcutMapLockMutex = new object();
 
-
-            private static int s_keyHandlerCount;
-            private static bool s_deferredEnableShortcut;
+            private static int s_keyHandlerCount = 0;
+            private static bool s_deferredEnableShortcut = false;
         }
     }
 }
