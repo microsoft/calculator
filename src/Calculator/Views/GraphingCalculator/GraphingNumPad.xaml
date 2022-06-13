@@ -335,7 +335,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Grid x:Name="GraphingOperators" UseLayoutRounding="False">
+        <Grid x:Name="GraphingOperators">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="OperatorPanelRow" Height="Auto"/>
                 <RowDefinition Height="1*"/>

@@ -13,7 +13,6 @@
 #include "Common/AppResourceProvider.h"
 #include "Common/ExpressionCommandSerializer.h"
 #include "Common/ExpressionCommandDeserializer.h"
-#include "CalcManager/NumberFormattingUtils.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::ViewModel::Common;
@@ -237,13 +236,6 @@ String^ CalculatorApp::ViewModel::Common::Utilities::EscapeHtmlSpecialCharacters
     }
 
     return replaceCharacters ? replacementString : originalString;
-}
-
-Platform::String^ CalculatorApp::ViewModel::Common::Utilities::TrimTrailingZeros(Platform::String^ input)
-{
-    std::wstring tmp(input->Data());
-    CalcManager::NumberFormattingUtils::TrimTrailingZeros(tmp);
-    return ref new Platform::String(tmp.c_str());
 }
 
 bool CalculatorApp::ViewModel::Common::Utilities::AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2)

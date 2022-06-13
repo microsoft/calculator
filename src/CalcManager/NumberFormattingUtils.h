@@ -6,7 +6,7 @@
 #include <string>
 #include "sal_cross_platform.h"
 
-namespace CalcManager::NumberFormattingUtils
+namespace UnitConversionManager::NumberFormattingUtils
 {
     void TrimTrailingZeros(_Inout_ std::wstring& input);
     unsigned int GetNumberDigits(std::wstring value);

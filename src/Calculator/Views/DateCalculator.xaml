@@ -918,7 +918,6 @@
                                                       Margin="2"
                                                       Style="{StaticResource ScrollViewerStyle}"
                                                       IsFocusEngagementEnabled="True"
-                                                      UseLayoutRounding="False"
                                                       Visibility="Collapsed">
                                             <ScrollViewer.RenderTransform>
                                                 <ScaleTransform x:Name="YearViewTransform"
@@ -931,7 +930,6 @@
                                                       Margin="2"
                                                       Style="{StaticResource ScrollViewerStyle}"
                                                       IsFocusEngagementEnabled="True"
-                                                      UseLayoutRounding="False"
                                                       Visibility="Collapsed">
                                             <ScrollViewer.RenderTransform>
                                                 <ScaleTransform x:Name="DecadeViewTransform"

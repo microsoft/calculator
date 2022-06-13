@@ -65,9 +65,8 @@
                                              VerticalAlignment="Stretch"
                                              Fill="Transparent"
                                              Stroke="Transparent"
-                                             StrokeThickness="2"
-                                             UseLayoutRounding="false"/>
-                                    <ContentPresenter x:Name="ItemContent" UseLayoutRounding="false"/>
+                                             StrokeThickness="2"/>
+                                    <ContentPresenter x:Name="ItemContent" />
                                 </Grid>
                             </ControlTemplate>
                         </Setter.Value>
@@ -87,8 +86,7 @@
                              Fill="{x:Bind}"
                              StrokeThickness="0"
                              AutomationProperties.Name="{x:Bind local:EquationStylePanelControl.GetColorAutomationName((Brush))}"
-                             ToolTipService.ToolTip="{x:Bind local:EquationStylePanelControl.GetColorAutomationName((Brush))}"
-                             UseLayoutRounding="false"/>
+                             ToolTipService.ToolTip="{x:Bind local:EquationStylePanelControl.GetColorAutomationName((Brush))}"/>
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemsPanel>
