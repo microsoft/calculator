@@ -137,6 +137,13 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
 String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue)
 {
     wstring result(displayValue);
+
+    // Adds leading padding 0's to Programmer Mode's Binary Display
+    if (IsProgrammer && CurrentRadixType == NumberBase::BinBase)
+    {
+        result = AddPadding(result);
+    }
+
     LocalizationSettings::GetInstance()->LocalizeDisplayValue(&result);
     return ref new Platform::String(result.c_str());
 }

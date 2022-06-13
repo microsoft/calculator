@@ -18,7 +18,6 @@
 #include <sstream>
 #include "Header Files/CalcEngine.h"
 #include "Header Files/CalcUtils.h"
-#include "NumberFormattingUtils.h"
 
 using namespace std;
 using namespace CalcEngine;

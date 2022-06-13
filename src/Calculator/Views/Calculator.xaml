@@ -982,8 +982,7 @@
                                                   FontFamily="{ThemeResource CalculatorFontFamily}"
                                                   FontSize="12"
                                                   Glyph="&#xE970;"
-                                                  MirroredWhenRightToLeft="True"
-                                                  UseLayoutRounding="False"/>
+                                                  MirroredWhenRightToLeft="True"/>
                                     </Border>
                                 </ControlTemplate>
 
@@ -1030,8 +1029,7 @@
                                                   FontFamily="{ThemeResource CalculatorFontFamily}"
                                                   FontSize="12"
                                                   Glyph="&#xE96F;"
-                                                  MirroredWhenRightToLeft="True"
-                                                  UseLayoutRounding="False"/>
+                                                  MirroredWhenRightToLeft="True"/>
                                     </Border>
                                 </ControlTemplate>
                             </Grid.Resources>

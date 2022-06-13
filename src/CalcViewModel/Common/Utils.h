@@ -713,7 +713,6 @@ namespace CalculatorApp
         {
         public:
             static Platform::String ^ EscapeHtmlSpecialCharacters(Platform::String ^ originalString);
-            static Platform::String^ TrimTrailingZeros(Platform::String^ input);
             static bool AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2);
             static Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
             static int GetWindowId();

@@ -652,6 +652,7 @@ namespace CalculatorApp
             private static void OnKeyDownHandler(CoreWindow sender, KeyEventArgs args)
             {
                 s_keyHandlerCount++;
+                
                 if (args.Handled)
                 {
                     return;
@@ -731,7 +732,7 @@ namespace CalculatorApp
                     s_deferredEnableShortcut = false;
                 }             
             }
-
+            
             private static void OnAcceleratorKeyActivated(CoreDispatcher dispatcher, AcceleratorKeyEventArgs args)
             {
                 if (args.KeyStatus.IsKeyReleased)

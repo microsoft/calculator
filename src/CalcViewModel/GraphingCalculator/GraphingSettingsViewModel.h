@@ -51,21 +51,14 @@ namespace CalculatorApp::ViewModel
                 m_XIsMinLastChanged = true;
                 if (m_Graph != nullptr)
                 {
-                    try
+                    std::wistringstream input(value->Data());
+                    double number;
+                    if (input >> number && input.eof())
                     {
-                        size_t sz;
-                        auto number = std::stod(value->Data(), &sz);
-                        if (value->Length() == sz)
-                        {
-                            m_Graph->XAxisMin = m_XMinValue = number;
-                            XMinError = false;
-                        }
-                        else
-                        {
-                            XMinError = true;
-                        }
+                        m_Graph->XAxisMin = m_XMinValue = number;
+                        XMinError = false;
                     }
-                    catch (...)
+                    else
                     {
                         XMinError = true;
                     }
@@ -92,21 +85,14 @@ namespace CalculatorApp::ViewModel
                 m_XIsMinLastChanged = false;
                 if (m_Graph != nullptr)
                 {
-                    try
+                    std::wistringstream input(value->Data());
+                    double number;
+                    if (input >> number && input.eof())
                     {
-                        size_t sz;
-                        auto number = std::stod(value->Data(), &sz);
-                        if (value->Length() == sz)
-                        {
-                            m_Graph->XAxisMax = m_XMaxValue = number;
-                            XMaxError = false;
-                        }
-                        else
-                        {
-                            XMaxError = true;
-                        }
+                        m_Graph->XAxisMax = m_XMaxValue = number;
+                        XMaxError = false;
                     }
-                    catch (...)
+                    else
                     {
                         XMaxError = true;
                     }
@@ -133,21 +119,14 @@ namespace CalculatorApp::ViewModel
                 m_YIsMinLastChanged = true;
                 if (m_Graph != nullptr)
                 {
-                    try
+                    std::wistringstream input(value->Data());
+                    double number;
+                    if (input >> number && input.eof())
                     {
-                        size_t sz;
-                        auto number = std::stod(value->Data(), &sz);
-                        if (value->Length() == sz)
-                        {
-                            m_Graph->YAxisMin = m_YMinValue = number;
-                            YMinError = false;
-                        }
-                        else
-                        {
-                            YMinError = true;
-                        }
+                        m_Graph->YAxisMin = m_YMinValue = number;
+                        YMinError = false;
                     }
-                    catch (...)
+                    else
                     {
                         YMinError = true;
                     }
@@ -174,21 +153,14 @@ namespace CalculatorApp::ViewModel
                 m_YIsMinLastChanged = false;
                 if (m_Graph != nullptr)
                 {
-                    try
+                    std::wistringstream input(value->Data());
+                    double number;
+                    if (input >> number && input.eof())
                     {
-                        size_t sz;
-                        auto number = std::stod(value->Data(), &sz);
-                        if (value->Length() == sz)
-                        {
-                            m_Graph->YAxisMax = m_YMaxValue = number;
-                            YMaxError = false;
-                        }
-                        else
-                        {
-                            YMaxError = true;
-                        }
+                        m_Graph->YAxisMax = m_YMaxValue = number;
+                        YMaxError = false;
                     }
-                    catch (...)
+                    else
                     {
                         YMaxError = true;
                     }
