@@ -324,7 +324,7 @@ namespace CalculatorApp
             public static void DisableShortcuts(bool disable)
             {
                 //deferredEnableShortcut is being used to prevent the mode change from happening before the user input has processed 
-                if (s_keyHandlerCount > && !disable)
+                if (s_keyHandlerCount > 0 && !disable)
                 {
                     s_deferredEnableShortcut = true;
                 }
