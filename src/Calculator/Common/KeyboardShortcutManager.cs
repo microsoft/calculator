@@ -331,7 +331,7 @@ namespace CalculatorApp
                 else
                 {
                     int viewId = Utilities.GetWindowId();
-                    if (s_fDisableShortcuts.ContainesKey(viewId))
+                    if (s_fDisableShortcuts.ContainsKey(viewId))
                     {
                         s_fDisableShortcuts[viewId] = disable;
                     }
