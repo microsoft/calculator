@@ -1,38 +1,30 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Common;
-using CalculatorApp.ViewModel.Common;
-using CalculatorApp.ViewModel.Common.Automation;
 using CalculatorApp.Controls;
 using CalculatorApp.Utils;
 using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModel.Common.Automation;
+
 using GraphControl;
+
+using System;
+
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Core;
-using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Popups;
 
 namespace CalculatorApp
 {
@@ -62,14 +54,18 @@ namespace CalculatorApp
             GraphingControl.UseCommaDecimalSeperator = LocalizationSettings.GetInstance().GetDecimalSeparator() == ',';
 
             // OemMinus and OemAdd aren't declared in the VirtualKey enum, we can't add this accelerator XAML-side
-            var virtualKey = new KeyboardAccelerator();
-            virtualKey.Key = (VirtualKey)189; // OemPlus key
-            virtualKey.Modifiers = VirtualKeyModifiers.Control;
+            var virtualKey = new KeyboardAccelerator
+            {
+                Key = (VirtualKey)189, // OemPlus key
+                Modifiers = VirtualKeyModifiers.Control
+            };
             ZoomOutButton.KeyboardAccelerators.Add(virtualKey);
 
-            virtualKey = new KeyboardAccelerator();
-            virtualKey.Key = (VirtualKey)187; // OemAdd key
-            virtualKey.Modifiers = VirtualKeyModifiers.Control;
+            virtualKey = new KeyboardAccelerator
+            {
+                Key = (VirtualKey)187, // OemAdd key
+                Modifiers = VirtualKeyModifiers.Control
+            };
             ZoomInButton.KeyboardAccelerators.Add(virtualKey);
 
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.ThemeShadow"))
@@ -144,7 +140,7 @@ namespace CalculatorApp
 
         public bool IsKeyGraphFeaturesVisible
         {
-            get { return m_IsKeyGraphFeaturesVisible; }
+            get => m_IsKeyGraphFeaturesVisible;
             private set
             {
                 if (m_IsKeyGraphFeaturesVisible != value)
@@ -158,8 +154,8 @@ namespace CalculatorApp
 
         public bool IsSmallState
         {
-            get { return (bool)GetValue(IsSmallStateProperty); }
-            set { SetValue(IsSmallStateProperty, value); }
+            get => (bool)GetValue(IsSmallStateProperty);
+            set => SetValue(IsSmallStateProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsSmallState.  This enables animation, styling, binding, etc...
@@ -168,8 +164,8 @@ namespace CalculatorApp
 
         public string GraphControlAutomationName
         {
-            get { return (string)GetValue(GraphControlAutomationNameProperty); }
-            set { SetValue(GraphControlAutomationNameProperty, value); }
+            get => (string)GetValue(GraphControlAutomationNameProperty);
+            set => SetValue(GraphControlAutomationNameProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for GraphControlAutomationName.  This enables animation, styling, binding, etc...
@@ -178,7 +174,7 @@ namespace CalculatorApp
 
         public bool IsMatchAppTheme
         {
-            get { return m_IsMatchAppTheme; }
+            get => m_IsMatchAppTheme;
             private set
             {
                 if (m_IsMatchAppTheme != value)
@@ -192,7 +188,7 @@ namespace CalculatorApp
 
         public bool IsManualAdjustment
         {
-            get { return m_IsManualAdjustment; }
+            get => m_IsManualAdjustment;
             set
             {
                 if (m_IsManualAdjustment != value)
@@ -206,7 +202,7 @@ namespace CalculatorApp
 
         public CalculatorApp.ViewModel.GraphingCalculatorViewModel ViewModel
         {
-            get { return m_viewModel; }
+            get => m_viewModel;
             set
             {
                 if (m_viewModel != value)
@@ -239,7 +235,7 @@ namespace CalculatorApp
             return numberOfVariables == 0 ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        public static String GetTracingLegend(bool? isTracing)
+        public static string GetTracingLegend(bool? isTracing)
         {
             var resProvider = AppResourceProvider.GetInstance();
             return isTracing != null && isTracing.Value ? resProvider.GetResourceString("disableTracingButtonToolTip")
@@ -374,8 +370,7 @@ namespace CalculatorApp
 
         private void OnTracePointChanged(double xPointValue, double yPointValue)
         {
-            double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
-            GraphingControl.GetDisplayRanges(out xAxisMin, out xAxisMax, out yAxisMin, out yAxisMax);
+            GraphingControl.GetDisplayRanges(out double xAxisMin, out double xAxisMax, out double yAxisMin, out double yAxisMax);
 
             TraceValue.Text = "(" + xPointValue.ToString("R") + ", " + yPointValue.ToString("N15") + ")";
 
@@ -523,8 +518,7 @@ namespace CalculatorApp
 
         private void GraphingControl_LosingFocus(UIElement sender, LosingFocusEventArgs args)
         {
-            var newFocusElement = args.NewFocusedElement as FrameworkElement;
-            if (newFocusElement == null || newFocusElement.Name == null)
+            if (!(args.NewFocusedElement is FrameworkElement newFocusElement) || newFocusElement.Name == null)
             {
                 // Because clicking on the swap chain panel will try to move focus to a control that can't actually take focus
                 // we will get a null destination.  So we are going to try and cancel that request.
@@ -676,7 +670,7 @@ namespace CalculatorApp
         private void SwitchModeToggleButton_Toggled(object sender, RoutedEventArgs e)
         {
             var narratorNotifier = new NarratorNotifier();
-            String announcementText;
+            string announcementText;
             if (SwitchModeToggleButton.IsOn)
             {
                 announcementText = AppResourceProvider.GetInstance().GetResourceString("GraphSwitchedToEquationModeAnnouncement");
@@ -700,15 +694,19 @@ namespace CalculatorApp
 
             if (m_graphFlyout == null)
             {
-                m_graphFlyout = new Flyout();
-                m_graphFlyout.Content = m_graphSettings;
+                m_graphFlyout = new Flyout
+                {
+                    Content = m_graphSettings
+                };
             }
 
             m_graphSettings.SetGrapher(this.GraphingControl);
             m_graphSettings.IsMatchAppTheme = IsMatchAppTheme;
 
-            var options = new FlyoutShowOptions();
-            options.Placement = FlyoutPlacementMode.BottomEdgeAlignedRight;
+            var options = new FlyoutShowOptions
+            {
+                Placement = FlyoutPlacementMode.BottomEdgeAlignedRight
+            };
             m_graphFlyout.ShowAt(GraphSettingsButton, options);
         }
 
@@ -730,7 +728,6 @@ namespace CalculatorApp
         private void UpdateGraphAutomationName()
         {
             int numEquations = 0;
-            double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
 
             // Only count equations that are graphed
             foreach (var equation in ViewModel.Equations)
@@ -741,7 +738,7 @@ namespace CalculatorApp
                 }
             }
 
-            GraphingControl.GetDisplayRanges(out xAxisMin, out xAxisMax, out yAxisMin, out yAxisMax);
+            GraphingControl.GetDisplayRanges(out double xAxisMin, out double xAxisMax, out double yAxisMin, out double yAxisMax);
 
             GraphControlAutomationName = LocalizationStringUtil.GetLocalizedString(
                 AppResourceProvider.GetInstance().GetResourceString("graphAutomationName"),
@@ -755,9 +752,9 @@ namespace CalculatorApp
         private void OnColorValuesChanged(UISettings sender, object args)
         {
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
-                GraphingCalculator refThis = weakThis.Target as GraphingCalculator;
-                if (refThis != null && IsMatchAppTheme)
+            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            {
+                if (weakThis.Target is GraphingCalculator refThis && IsMatchAppTheme)
                 {
                     refThis.UpdateGraphTheme();
                 }
@@ -793,8 +790,7 @@ namespace CalculatorApp
             WeakReference weakThis = new WeakReference(this);
             _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
             {
-                var refThis = weakThis.Target as GraphingCalculator;
-                if (refThis != null)
+                if (weakThis.Target is GraphingCalculator refThis)
                 {
                     refThis.UpdateGraphTheme();
                 }
@@ -807,9 +803,9 @@ namespace CalculatorApp
         private const string sc_IsGraphThemeMatchApp = "IsGraphThemeMatchApp";
 
         private CalculatorApp.ViewModel.GraphingCalculatorViewModel m_viewModel;
-        private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
+        private readonly Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
         private bool m_cursorShadowInitialized;
-        private Windows.UI.ViewManagement.UISettings m_uiSettings;
+        private readonly Windows.UI.ViewManagement.UISettings m_uiSettings;
         private Windows.UI.Xaml.Controls.Flyout m_graphFlyout;
         private CalculatorApp.GraphingSettings m_graphSettings;
 
@@ -843,8 +839,10 @@ namespace CalculatorApp
 
         private void GraphMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            var dataPackage = new DataPackage();
-            dataPackage.RequestedOperation = DataPackageOperation.Copy;
+            var dataPackage = new DataPackage
+            {
+                RequestedOperation = DataPackageOperation.Copy
+            };
 
             var bitmapStream = GraphingControl.GetGraphBitmapStream();
             dataPackage.SetBitmap(bitmapStream);
@@ -882,9 +880,11 @@ namespace CalculatorApp
         {
             // Something went wrong, notify the user.
             var resourceLoader = ResourceLoader.GetForCurrentView();
-            var errDialog = new ContentDialog();
-            errDialog.Content = resourceLoader.GetString("ShareActionErrorMessage");
-            errDialog.CloseButtonText = resourceLoader.GetString("ShareActionErrorOk");
+            var errDialog = new ContentDialog
+            {
+                Content = resourceLoader.GetString("ShareActionErrorMessage"),
+                CloseButtonText = resourceLoader.GetString("ShareActionErrorOk")
+            };
             _ = errDialog.ShowAsync();
         }
 

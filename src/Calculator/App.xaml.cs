@@ -8,6 +8,7 @@
 
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,7 +30,7 @@ namespace CalculatorApp
 {
     namespace ApplicationResourceKeys
     {
-        static public partial class Globals
+        public static partial class Globals
         {
             public static readonly string AppMinWindowHeight = "AppMinWindowHeight";
             public static readonly string AppMinWindowWidth = "AppMinWindowWidth";
@@ -39,7 +40,7 @@ namespace CalculatorApp
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App
+    public sealed partial class App
     {
         /// <summary>
         /// Initializes the singleton application object. This is the first line of authored code
@@ -124,8 +125,10 @@ namespace CalculatorApp
 
         private static Frame CreateFrame()
         {
-            var frame = new Frame();
-            frame.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
+            var frame = new Frame
+            {
+                FlowDirection = LocalizationService.GetInstance().GetFlowDirection()
+            };
             return frame;
         }
 
@@ -224,8 +227,7 @@ namespace CalculatorApp
                         _ = newCoreAppView.Dispatcher.RunAsync(
                             CoreDispatcherPriority.Normal, async () =>
                             {
-                                var that = weak.Target as App;
-                                if (that != null)
+                                if (weak.Target is App that)
                                 {
                                     var newRootFrame = App.CreateFrame();
 
@@ -399,9 +401,9 @@ namespace CalculatorApp
                 Dispose();
             }
 
-            private WindowFrameService m_frameService;
+            private readonly WindowFrameService m_frameService;
             private bool m_frameOpenedInWindow;
-            private App m_parent;
+            private readonly App m_parent;
         };
 
         private async Task SetupJumpList()
@@ -502,7 +504,7 @@ namespace CalculatorApp
         }
 
         private readonly ReaderWriterLockSlim m_windowsMapLock = new ReaderWriterLockSlim();
-        private Dictionary<int, WindowFrameService> m_secondaryWindows = new Dictionary<int, WindowFrameService>();
+        private readonly Dictionary<int, WindowFrameService> m_secondaryWindows = new Dictionary<int, WindowFrameService>();
         private int m_mainViewId;
         private bool m_preLaunched;
     }

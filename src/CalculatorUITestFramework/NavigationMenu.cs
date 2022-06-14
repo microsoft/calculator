@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using OpenQA.Selenium.Appium.Windows;
+
 using System;
 
 namespace CalculatorUITestFramework
@@ -44,7 +45,7 @@ namespace CalculatorUITestFramework
             switch (mode)
             {
                 case CalculatorMode.StandardCalculator:
-                    modeAccessibilityId =  "Standard";
+                    modeAccessibilityId = "Standard";
                     break;
                 case CalculatorMode.ScientificCalculator:
                     modeAccessibilityId = "Scientific";

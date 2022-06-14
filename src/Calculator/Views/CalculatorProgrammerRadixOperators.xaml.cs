@@ -1,21 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-
-using CalculatorApp;
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using CalculatorApp.Common;
-using Windows.UI.Xaml.Media;
 
 namespace CalculatorApp
 {
@@ -29,17 +19,14 @@ namespace CalculatorApp
             LoadResourceStrings();
         }
 
-        public StandardCalculatorViewModel Model
-        {
-            get { return (StandardCalculatorViewModel)this.DataContext; }
-        }
+        public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
 
         public bool IsErrorVisualState
         {
             get => m_isErrorVisualState;
             set
             {
-                if(m_isErrorVisualState != value)
+                if (m_isErrorVisualState != value)
                 {
                     m_isErrorVisualState = value;
                     string newState = m_isErrorVisualState ? "ErrorLayout" : "NoErrorLayout";

@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using CalculatorUITestFramework;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
-using System;
 
 namespace CalculatorUITests
 {
     [TestClass]
     public class CurrencyConverterFunctionalTests
     {
-        private static UnitConverterPage page = new UnitConverterPage();
+        private static readonly UnitConverterPage page = new UnitConverterPage();
 
         public TestContext TestContext { get; set; }
 
@@ -64,7 +63,7 @@ namespace CalculatorUITests
             }
             else
             {
-                parts[1] = parts[1].Substring(0, fractionDigits);
+                parts[1] = parts[1][..fractionDigits];
             }
 
             return $"{parts[0]}.{parts[1]}".TrimEnd('.');

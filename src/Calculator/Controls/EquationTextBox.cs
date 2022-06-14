@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using CalculatorApp.ViewModel.Common;
-using System;
+
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
@@ -22,8 +22,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Media.SolidColorBrush EquationColor
             {
-                get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(EquationColorProperty); }
-                set { SetValue(EquationColorProperty, value); }
+                get => (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(EquationColorProperty);
+                set => SetValue(EquationColorProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for EquationColor.  This enables animation, styling, binding, etc...
@@ -32,8 +32,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Media.SolidColorBrush EquationButtonForegroundColor
             {
-                get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(EquationButtonForegroundColorProperty); }
-                set { SetValue(EquationButtonForegroundColorProperty, value); }
+                get => (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(EquationButtonForegroundColorProperty);
+                set => SetValue(EquationButtonForegroundColorProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for EquationButtonForegroundColor.  This enables animation, styling, binding, etc...
@@ -42,8 +42,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Controls.Flyout ColorChooserFlyout
             {
-                get { return (Windows.UI.Xaml.Controls.Flyout)GetValue(ColorChooserFlyoutProperty); }
-                set { SetValue(ColorChooserFlyoutProperty, value); }
+                get => (Windows.UI.Xaml.Controls.Flyout)GetValue(ColorChooserFlyoutProperty);
+                set => SetValue(ColorChooserFlyoutProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for ColorChooserFlyout.  This enables animation, styling, binding, etc...
@@ -52,8 +52,8 @@ namespace CalculatorApp
 
             public string EquationButtonContentIndex
             {
-                get { return (string)GetValue(EquationButtonContentIndexProperty); }
-                set { SetValue(EquationButtonContentIndexProperty, value); }
+                get => (string)GetValue(EquationButtonContentIndexProperty);
+                set => SetValue(EquationButtonContentIndexProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for EquationButtonContentIndex.  This enables animation, styling, binding, etc...
@@ -66,8 +66,8 @@ namespace CalculatorApp
 
             public string MathEquation
             {
-                get { return (string)GetValue(MathEquationProperty); }
-                set { SetValue(MathEquationProperty, value); }
+                get => (string)GetValue(MathEquationProperty);
+                set => SetValue(MathEquationProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for MathEquation.  This enables animation, styling, binding, etc...
@@ -76,8 +76,8 @@ namespace CalculatorApp
 
             public bool HasError
             {
-                get { return (bool)GetValue(HasErrorProperty); }
-                set { SetValue(HasErrorProperty, value); }
+                get => (bool)GetValue(HasErrorProperty);
+                set => SetValue(HasErrorProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for HasError.  This enables animation, styling, binding, etc...
@@ -90,8 +90,8 @@ namespace CalculatorApp
 
             public bool IsAddEquationMode
             {
-                get { return (bool)GetValue(IsAddEquationModeProperty); }
-                set { SetValue(IsAddEquationModeProperty, value); }
+                get => (bool)GetValue(IsAddEquationModeProperty);
+                set => SetValue(IsAddEquationModeProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for IsAddEquationMode.  This enables animation, styling, binding, etc...
@@ -104,8 +104,8 @@ namespace CalculatorApp
 
             public string ErrorText
             {
-                get { return (string)GetValue(ErrorTextProperty); }
-                set { SetValue(ErrorTextProperty, value); }
+                get => (string)GetValue(ErrorTextProperty);
+                set => SetValue(ErrorTextProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for ErrorText.  This enables animation, styling, binding, etc...
@@ -114,19 +114,15 @@ namespace CalculatorApp
 
             public bool IsEquationLineDisabled
             {
-                get { return (bool)GetValue(IsEquationLineDisabledProperty); }
-                set { SetValue(IsEquationLineDisabledProperty, value); }
+                get => (bool)GetValue(IsEquationLineDisabledProperty);
+                set => SetValue(IsEquationLineDisabledProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for IsEquationLineDisabled.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty IsEquationLineDisabledProperty =
                 DependencyProperty.Register(nameof(IsEquationLineDisabled), typeof(bool), typeof(EquationTextBox), new PropertyMetadata(default(bool)));
 
-            public bool HasFocus
-            {
-                get => m_HasFocus;
-            }
-            private bool m_HasFocus;
+            private bool HasFocus { get; set; }
 
             public event Windows.UI.Xaml.RoutedEventHandler RemoveButtonClicked;
             public event Windows.UI.Xaml.RoutedEventHandler KeyGraphFeaturesButtonClicked;
@@ -296,18 +292,18 @@ namespace CalculatorApp
 
             private void UpdateCommonVisualState()
             {
-                string state = null;
+                string state;
                 bool richEditHasContent = RichEditHasContent();
 
-                if (m_HasFocus && HasError)
+                if (HasFocus && HasError)
                 {
                     state = "FocusedError";
                 }
-                else if (IsAddEquationMode && m_HasFocus && !richEditHasContent)
+                else if (IsAddEquationMode && HasFocus && !richEditHasContent)
                 {
                     state = "AddEquationFocused";
                 }
-                else if (m_HasFocus)
+                else if (HasFocus)
                 {
                     state = "Focused";
                 }
@@ -342,7 +338,7 @@ namespace CalculatorApp
             {
                 string state;
 
-                if (m_HasFocus && RichEditHasContent())
+                if (HasFocus && RichEditHasContent())
                 {
                     state = "ButtonVisible";
                 }
@@ -361,16 +357,13 @@ namespace CalculatorApp
             private bool RichEditHasContent()
             {
                 string text = null;
-                if (m_richEditBox != null)
-                {
-                    m_richEditBox.TextDocument.GetText(Windows.UI.Text.TextGetOptions.NoHidden, out text);
-                }
+                m_richEditBox?.TextDocument.GetText(Windows.UI.Text.TextGetOptions.NoHidden, out text);
                 return !string.IsNullOrEmpty(text);
             }
 
             private void OnRichEditBoxGotFocus(object sender, RoutedEventArgs e)
             {
-                m_HasFocus = true;
+                HasFocus = true;
                 UpdateCommonVisualState();
                 UpdateButtonsVisualState();
             }
@@ -379,7 +372,7 @@ namespace CalculatorApp
             {
                 if (!m_richEditBox.ContextFlyout.IsOpen)
                 {
-                    m_HasFocus = false;
+                    HasFocus = false;
                 }
 
                 UpdateCommonVisualState();
@@ -458,10 +451,7 @@ namespace CalculatorApp
             private void OnFunctionMenuButtonClicked(object sender, RoutedEventArgs e)
             {
                 // Submit the equation before trying to analyze it if invoked from context menu
-                if (m_richEditBox != null)
-                {
-                    m_richEditBox.SubmitEquation(EquationSubmissionSource.FOCUS_LOST);
-                }
+                m_richEditBox?.SubmitEquation(EquationSubmissionSource.FOCUS_LOST);
 
                 KeyGraphFeaturesButtonClicked?.Invoke(this, new RoutedEventArgs());
             }
@@ -475,7 +465,7 @@ namespace CalculatorApp
 
                 if (m_kgfEquationMenuItem != null)
                 {
-                    m_kgfEquationMenuItem.IsEnabled = m_HasFocus && !HasError && RichEditHasContent();
+                    m_kgfEquationMenuItem.IsEnabled = HasFocus && !HasError && RichEditHasContent();
                 }
 
                 if (m_colorChooserMenuItem != null)
@@ -506,42 +496,27 @@ namespace CalculatorApp
 
             private void OnCutClicked(object sender, RoutedEventArgs e)
             {
-                if (m_richEditBox != null)
-                {
-                    m_richEditBox.TextDocument.Selection.Cut();
-                }
+                m_richEditBox?.TextDocument.Selection.Cut();
             }
 
             private void OnCopyClicked(object sender, RoutedEventArgs e)
             {
-                if (m_richEditBox != null)
-                {
-                    m_richEditBox.TextDocument.Selection.Copy();
-                }
+                m_richEditBox?.TextDocument.Selection.Copy();
             }
 
             private void OnPasteClicked(object sender, RoutedEventArgs e)
             {
-                if (m_richEditBox != null)
-                {
-                    m_richEditBox.TextDocument.Selection.Paste(0);
-                }
+                m_richEditBox?.TextDocument.Selection.Paste(0);
             }
 
             private void OnUndoClicked(object sender, RoutedEventArgs e)
             {
-                if (m_richEditBox != null)
-                {
-                    m_richEditBox.TextDocument.Undo();
-                }
+                m_richEditBox?.TextDocument.Undo();
             }
 
             private void OnSelectAllClicked(object sender, RoutedEventArgs e)
             {
-                if (m_richEditBox != null)
-                {
-                    m_richEditBox.TextDocument.Selection.SetRange(0, m_richEditBox.TextDocument.Selection.EndPosition);
-                }
+                m_richEditBox?.TextDocument.Selection.SetRange(0, m_richEditBox.TextDocument.Selection.EndPosition);
             }
 
             private void OnColorFlyoutOpened(object sender, object e)

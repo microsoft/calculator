@@ -2,10 +2,12 @@ using CalculatorApp.Common;
 using CalculatorApp.Controls;
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
+
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI.ViewManagement;
@@ -18,7 +20,7 @@ using Windows.UI.Xaml.Input;
 
 namespace CalculatorApp
 {
-    class Activatable : ViewModel.IActivatable
+    internal class Activatable : ViewModel.IActivatable
     {
         public Activatable(Func<bool> getter, Action<bool> setter)
         {
@@ -32,8 +34,8 @@ namespace CalculatorApp
             set => m_setter(value);
         }
 
-        private Func<bool> m_getter;
-        private Action<bool> m_setter;
+        private readonly Func<bool> m_getter;
+        private readonly Action<bool> m_setter;
     }
 
     public sealed partial class UnitConverter : UserControl
@@ -41,8 +43,8 @@ namespace CalculatorApp
         public UnitConverter()
         {
             m_meteredConnectionOverride = false;
-            m_layoutDirection = LocalizationService.GetInstance().GetFlowDirection();
-            m_FlowDirectionHorizontalAlignment = m_layoutDirection == FlowDirection.RightToLeft ? HorizontalAlignment.Right : HorizontalAlignment.Left;
+            LayoutDirection = LocalizationService.GetInstance().GetFlowDirection();
+            FlowDirectionHorizontalAlignment = LayoutDirection == FlowDirection.RightToLeft ? HorizontalAlignment.Right : HorizontalAlignment.Left;
 
             InitializeComponent();
 
@@ -68,12 +70,7 @@ namespace CalculatorApp
             PasteMenuItem.Text = resLoader.GetResourceString("pasteMenuItem");
         }
 
-        public Windows.UI.Xaml.HorizontalAlignment FlowDirectionHorizontalAlignment
-        {
-            get => this.m_FlowDirectionHorizontalAlignment;
-        }
-
-        private Windows.UI.Xaml.HorizontalAlignment m_FlowDirectionHorizontalAlignment = default(HorizontalAlignment);
+        public Windows.UI.Xaml.HorizontalAlignment FlowDirectionHorizontalAlignment { get; } = default;
 
         public void AnimateConverter()
         {
@@ -83,15 +80,9 @@ namespace CalculatorApp
             }
         }
 
-        public CalculatorApp.ViewModel.UnitConverterViewModel Model
-        {
-            get => (CalculatorApp.ViewModel.UnitConverterViewModel)this.DataContext;
-        }
+        public CalculatorApp.ViewModel.UnitConverterViewModel Model => (CalculatorApp.ViewModel.UnitConverterViewModel)this.DataContext;
 
-        public Windows.UI.Xaml.FlowDirection LayoutDirection
-        {
-            get => this.m_layoutDirection;
-        }
+        public Windows.UI.Xaml.FlowDirection LayoutDirection { get; } = default;
 
         public void SetDefaultFocus()
         {
@@ -121,8 +112,7 @@ namespace CalculatorApp
 
             PasteMenuItem.IsEnabled = CopyPasteManager.HasStringToPaste();
 
-            Point point;
-            if (e.TryGetPosition(requestedElement, out point))
+            if (e.TryGetPosition(requestedElement, out Point point))
             {
                 m_resultsFlyout.ShowAt(requestedElement, point);
             }
@@ -146,7 +136,7 @@ namespace CalculatorApp
             CopyPasteManager.CopyToClipboard(calcResult.GetRawDisplayValue());
         }
 
-        void OnPasteMenuItemClicked(object sender, RoutedEventArgs e)
+        private void OnPasteMenuItemClicked(object sender, RoutedEventArgs e)
         {
             UnitConverter that = this;
             _ = Task.Run(async () =>
@@ -276,7 +266,7 @@ namespace CalculatorApp
             }
         }
 
-        void OnOptInNetworkAccess()
+        private void OnOptInNetworkAccess()
         {
             CurrencyRefreshBlockControl.Visibility = Visibility.Visible;
             OfflineBlock.Visibility = Visibility.Collapsed;
@@ -291,7 +281,7 @@ namespace CalculatorApp
             }
         }
 
-        void OnOfflineNetworkAccess()
+        private void OnOfflineNetworkAccess()
         {
             CurrencyRefreshBlockControl.Visibility = Visibility.Collapsed;
             OfflineBlock.Visibility = Visibility.Visible;
@@ -361,8 +351,10 @@ namespace CalculatorApp
 
             TimeSpan delay = TimeSpan.FromMilliseconds(500);
 
-            m_delayTimer = new DispatcherTimer();
-            m_delayTimer.Interval = delay;
+            m_delayTimer = new DispatcherTimer
+            {
+                Interval = delay
+            };
             m_delayTimer.Tick += OnDelayTimerTick;
 
             m_delayTimer.Start();
@@ -396,12 +388,11 @@ namespace CalculatorApp
             TraceLogger.GetInstance().LogVisualStateChanged(mode, e.NewState.Name, false);
         }
 
-        private static Lazy<UISettings> uiSettings = new Lazy<UISettings>(true);
-        private Windows.UI.Xaml.FlowDirection m_layoutDirection = default(FlowDirection);
-        private Windows.UI.Xaml.Controls.MenuFlyout m_resultsFlyout = default(MenuFlyout);
+        private static readonly Lazy<UISettings> uiSettings = new Lazy<UISettings>(true);
+        private readonly Windows.UI.Xaml.Controls.MenuFlyout m_resultsFlyout = default;
 
-        private string m_chargesMayApplyText = string.Empty;
-        private string m_failedToRefreshText = string.Empty;
+        private readonly string m_chargesMayApplyText = string.Empty;
+        private readonly string m_failedToRefreshText = string.Empty;
 
         private bool m_meteredConnectionOverride;
 

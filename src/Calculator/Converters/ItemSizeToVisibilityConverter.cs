@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -12,8 +12,7 @@ namespace CalculatorApp
         {
             public object Convert(object value, Type targetType, object parameter, string language)
             {
-                var items = (value as int?);
-                var boolValue = (items != null && (items.Value == 0));
+                var boolValue = (value is int items && (items == 0));
                 return BooleanToVisibilityConverter.Convert(boolValue);
             }
 
@@ -27,8 +26,7 @@ namespace CalculatorApp
         {
             public object Convert(object value, Type targetType, object parameter, string language)
             {
-                var items = (value as int?);
-                var boolValue = (items != null && (items.Value > 0));
+                var boolValue = (value is int items && (items > 0));
                 return BooleanToVisibilityConverter.Convert(boolValue);
             }
 

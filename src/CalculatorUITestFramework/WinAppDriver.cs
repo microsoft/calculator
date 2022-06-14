@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
+
 using System;
-using System.Diagnostics;
 
 namespace CalculatorUITestFramework
 {
@@ -41,7 +42,7 @@ namespace CalculatorUITestFramework
             this.windowsDriverService.OutputDataReceived += (sender, e) =>
             {
                 var outputData = e.Data?.Replace("\0", string.Empty);
-                if (!String.IsNullOrEmpty(outputData))
+                if (!string.IsNullOrEmpty(outputData))
                 {
                     Console.WriteLine(outputData);
                 }

@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using CalculatorUITestFramework;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using OpenQA.Selenium;
+
 using System;
 
 namespace CalculatorUITests
@@ -11,7 +14,7 @@ namespace CalculatorUITests
     [TestClass]
     public class ProgrammerModeFunctionalTests
     {
-        private static ProgrammerCalculatorPage page = new ProgrammerCalculatorPage();
+        private static readonly ProgrammerCalculatorPage page = new ProgrammerCalculatorPage();
 
         /// <summary>
         /// Initializes the WinAppDriver web driver session.
@@ -637,7 +640,7 @@ namespace CalculatorUITests
             page.ProgrammerOperators.RightShiftLogicalButton.Click();
             page.StandardOperators.NumberPad.Input(1);
             page.StandardOperators.EqualButton.Click();
-            Assert.IsTrue(String.Equals(page.CalculatorResults.GetCalculatorResultText(), "0 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 0 1 1", StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(string.Equals(page.CalculatorResults.GetCalculatorResultText(), "0 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 0 1 1", StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

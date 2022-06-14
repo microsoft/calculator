@@ -1,4 +1,5 @@
 using CalculatorApp.ViewModel.Common;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -30,8 +31,8 @@ namespace CalculatorApp
 
         public Windows.UI.Xaml.Style ButtonStyle
         {
-            get { return (Windows.UI.Xaml.Style)GetValue(ButtonStyleProperty); }
-            set { SetValue(ButtonStyleProperty, value); }
+            get => (Windows.UI.Xaml.Style)GetValue(ButtonStyleProperty);
+            set => SetValue(ButtonStyleProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for ButtonStyle.  This enables animation, styling, binding, etc...
@@ -40,8 +41,8 @@ namespace CalculatorApp
 
         public CalculatorApp.ViewModel.Common.NumberBase CurrentRadixType
         {
-            get { return (CalculatorApp.ViewModel.Common.NumberBase)GetValue(CurrentRadixTypeProperty); }
-            set { SetValue(CurrentRadixTypeProperty, value); }
+            get => (CalculatorApp.ViewModel.Common.NumberBase)GetValue(CurrentRadixTypeProperty);
+            set => SetValue(CurrentRadixTypeProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for CurrentRadixType.  This enables animation, styling, binding, etc...
@@ -54,7 +55,7 @@ namespace CalculatorApp
 
         public bool IsErrorVisualState
         {
-            get { return m_isErrorVisualState; }
+            get => m_isErrorVisualState;
             set
             {
                 if (m_isErrorVisualState != value)

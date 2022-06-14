@@ -1,33 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Converters;
-using CalculatorApp.Controls;
 using CalculatorApp.Utils;
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 
+using System;
+
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Globalization.NumberFormatting;
-using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
-using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.System.Threading;
-using Windows.UI.ViewManagement;
 
 namespace CalculatorApp
 {
@@ -74,15 +62,12 @@ namespace CalculatorApp
             this.SizeChanged += Calculator_SizeChanged;
         }
 
-        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model
-        {
-            get => (StandardCalculatorViewModel)this.DataContext;
-        }
+        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
 
         public bool IsStandard
         {
-            get { return (bool)GetValue(IsStandardProperty); }
-            set { SetValue(IsStandardProperty, value); }
+            get => (bool)GetValue(IsStandardProperty);
+            set => SetValue(IsStandardProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsStandard.  This enables animation, styling, binding, etc...
@@ -95,8 +80,8 @@ namespace CalculatorApp
 
         public bool IsScientific
         {
-            get { return (bool)GetValue(IsScientificProperty); }
-            set { SetValue(IsScientificProperty, value); }
+            get => (bool)GetValue(IsScientificProperty);
+            set => SetValue(IsScientificProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsScientific.  This enables animation, styling, binding, etc...
@@ -109,8 +94,8 @@ namespace CalculatorApp
 
         public bool IsProgrammer
         {
-            get { return (bool)GetValue(IsProgrammerProperty); }
-            set { SetValue(IsProgrammerProperty, value); }
+            get => (bool)GetValue(IsProgrammerProperty);
+            set => SetValue(IsProgrammerProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsProgrammer.  This enables animation, styling, binding, etc...
@@ -123,8 +108,8 @@ namespace CalculatorApp
 
         public bool IsAlwaysOnTop
         {
-            get { return (bool)GetValue(IsAlwaysOnTopProperty); }
-            set { SetValue(IsAlwaysOnTopProperty, value); }
+            get => (bool)GetValue(IsAlwaysOnTopProperty);
+            set => SetValue(IsAlwaysOnTopProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsAlwaysOnTop.  This enables animation, styling, binding, etc...
@@ -152,7 +137,7 @@ namespace CalculatorApp
         }
         private System.Windows.Input.ICommand donotuse_HistoryButtonPressed;
 
-        private static UISettings uiSettings = new UISettings();
+        private static readonly UISettings uiSettings = new UISettings();
         public void AnimateCalculator(bool resultAnimate)
         {
             if (uiSettings.AnimationsEnabled)
@@ -174,8 +159,10 @@ namespace CalculatorApp
         {
             if (m_historyList == null)
             {
-                m_historyList = new HistoryList();
-                m_historyList.DataContext = historyVM;
+                m_historyList = new HistoryList
+                {
+                    DataContext = historyVM
+                };
                 historyVM.HideHistoryClicked += OnHideHistoryClicked;
                 historyVM.HistoryItemClicked += OnHistoryItemClicked;
             }
@@ -247,11 +234,11 @@ namespace CalculatorApp
             // Delay load things later when we get a chance.
             WeakReference weakThis = new WeakReference(this);
             _ = this.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
+                CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                {
                     if (TraceLogger.GetInstance().IsWindowIdInLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
                     {
-                        var refThis = weakThis.Target as Calculator;
-                        if (refThis != null)
+                        if (weakThis.Target is Calculator refThis)
                         {
                             refThis.GetMemory();
                         }
@@ -361,8 +348,7 @@ namespace CalculatorApp
 
             PasteMenuItem.IsEnabled = CopyPasteManager.HasStringToPaste();
 
-            Point point;
-            if (e.TryGetPosition(requestedElement, out point))
+            if (e.TryGetPosition(requestedElement, out Point point))
             {
                 m_displayFlyout.ShowAt(requestedElement, point);
             }
@@ -629,7 +615,7 @@ namespace CalculatorApp
             }
         }
 
-        private Windows.UI.Xaml.Controls.MenuFlyout m_displayFlyout;
+        private readonly Windows.UI.Xaml.Controls.MenuFlyout m_displayFlyout;
         private bool m_doAnimate;
         private bool m_resultAnimate;
         private bool m_isLastAnimatedInScientific;

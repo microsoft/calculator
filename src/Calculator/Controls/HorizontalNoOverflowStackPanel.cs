@@ -7,6 +7,7 @@
 //
 
 using System;
+
 using Windows.Foundation;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
