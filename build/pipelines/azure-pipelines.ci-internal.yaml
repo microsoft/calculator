@@ -5,7 +5,7 @@
 #
 
 trigger:
-- master
+- main
 - release/*
 - feature/*
 pr: none

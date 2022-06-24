@@ -5,11 +5,11 @@
 #
 
 trigger:
-- master
+- main
 - release/*
 - feature/*
 pr:
-- master
+- main
 - release/*
 - feature/*
 

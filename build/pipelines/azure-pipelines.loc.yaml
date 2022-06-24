@@ -12,7 +12,7 @@ schedules:
   displayName: Daily sync
   branches:
     include:
-    - master
+    - main
   always: true
 
 trigger: none
