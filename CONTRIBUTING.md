@@ -70,7 +70,7 @@ should be used where automated testing is not feasible.
 
 ### Git workflow
 Calculator uses the [GitHub flow](https://guides.github.com/introduction/flow/) where most
-development happens directly on the `master` branch. The `master` branch should always be in a
+development happens directly on the `main` branch. The `main` branch should always be in a
 healthy state which is ready for release.
 
 If your change is complex, please clean up the branch history before submitting a pull request.
