@@ -20,6 +20,13 @@ jobs:
   steps:
   - checkout: none
 
+  - task: ScreenResolutionUtility@1
+    displayName: Set resolution to 1920x1080
+    inputs:
+      displaySettings: 'specific'
+      width: 1920
+      height: 1080
+
   - task: DownloadBuildArtifacts@0
     displayName: Download MsixBundle and CalculatorUITests
     inputs:
