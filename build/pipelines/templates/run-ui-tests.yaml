@@ -20,10 +20,6 @@ jobs:
   steps:
   - checkout: none
 
-  - powershell: Set-DisplayResolution -Width 1920 -Height 1080 -Force
-    displayName: Set resolution to 1920x1080
-    continueOnError: true
-
   - task: DownloadBuildArtifacts@0
     displayName: Download MsixBundle and CalculatorUITests
     inputs:
