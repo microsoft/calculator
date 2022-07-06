@@ -181,10 +181,10 @@ namespace CalculatorUITests
             Assert.IsTrue(historyFlyoutItems[1].GetExpression().Equals("4 × 5=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
             page.HistoryPanel.ResizeWindowToDisplayHistoryLabel();
             var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
-            Assert.IsTrue(historyFlyoutItems[0].GetValue().Equals("3.333333333333333", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
-            Assert.IsTrue(historyFlyoutItems[0].GetExpression().Equals("20 ÷ 6=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
-            Assert.IsTrue(historyFlyoutItems[1].GetValue().Equals("20", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
-            Assert.IsTrue(historyFlyoutItems[1].GetExpression().Equals("4 × 5=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
+            Assert.IsTrue(historyItems[0].GetValue().Equals("3.333333333333333", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
+            Assert.IsTrue(historyItems[0].GetExpression().Equals("20 ÷ 6=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
+            Assert.IsTrue(historyItems[1].GetValue().Equals("20", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
+            Assert.IsTrue(historyItems[1].GetExpression().Equals("4 × 5=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
             page.HistoryPanel.ClearHistoryButton.Click();
             Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty")); //verifies the History panel's clear history button
         }
