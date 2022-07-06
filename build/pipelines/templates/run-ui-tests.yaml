@@ -18,7 +18,8 @@ jobs:
   variables:
     skipComponentGovernanceDetection: true
   steps:
-  - checkout: none
+  - checkout: self
+    fetchDepth: 1
 
   - task: ScreenResolutionUtility@1
     displayName: Set resolution to 1920x1080
@@ -26,6 +27,11 @@ jobs:
       displaySettings: 'specific'
       width: 1920
       height: 1080
+
+  - task: PowerShell@2
+    displayName: Turn off animation effects
+    inputs:
+      filePath: $(Build.SourcesDirectory)\build\scripts\TurnOffAnimationEffects.ps1
 
   - task: DownloadBuildArtifacts@0
     displayName: Download MsixBundle and CalculatorUITests
