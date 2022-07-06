@@ -68,11 +68,9 @@ namespace CalculatorUITestFramework
         {
             CalculatorApp.ClickOnWindow();
             UnitConverterOperators.Units1.SendKeys(OpenQA.Selenium.Keys.Home);
-            UnitConverterOperators.Units1.SendKeys(OpenQA.Selenium.Keys.Enter);
 
             CalculatorApp.ClickOnWindow();
             UnitConverterOperators.Units2.SendKeys(OpenQA.Selenium.Keys.Home);
-            UnitConverterOperators.Units2.SendKeys(OpenQA.Selenium.Keys.Enter);
 
             CalculatorApp.ClickOnWindow();
         }
