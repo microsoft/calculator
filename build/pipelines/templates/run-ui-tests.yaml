@@ -21,13 +21,6 @@ jobs:
   - checkout: self
     fetchDepth: 1
 
-  - task: ScreenResolutionUtility@1
-    displayName: Set resolution to 1920x1080
-    inputs:
-      displaySettings: 'specific'
-      width: 1920
-      height: 1080
-
   - task: PowerShell@2
     displayName: Turn off animation effects
     inputs:
