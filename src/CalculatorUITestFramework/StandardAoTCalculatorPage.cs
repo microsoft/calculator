@@ -95,40 +95,29 @@ namespace CalculatorUITestFramework
             return ToolTip.Text;
         }
 
-        ///// <summary>
-        ///// Checks in AoT (Keep on top) button is present
-        ///// </summary>
-        public string GetAoTPresence()
+        /// <summary>
+        /// Checks in AoT (Keep on top) button is present
+        /// </summary>
+        public bool IsKeepOnTopButtonPresent()
         {
-            bool AoTPresent;
             string source = this.session.PageSource;
-            if (source.Contains("Keep on top"))
-            {
-                AoTPresent = true;
-            }
-            else
-            {
-                AoTPresent = false;
-            }
-            return AoTPresent.ToString();
+            return source.Contains("Keep on top");
         }
 
-        ///// <summary>
-        ///// Checks Standard calculator to see if it's in AoT (Keep on top)
-        ///// </summary>
-        public string AoTModeCheck()
+        /// <summary>
+        /// Checks Standard calculator to see if it's in AoT (Keep on top)
+        /// </summary>
+        public bool IsInAlwaysOnTopMode()
         {
-            bool InAoTMode;
             string source = this.session.PageSource;
             if ((source.Contains("Keep on top")) && (source.Contains("Header")))
             {
-                InAoTMode = false;
+                return false;
             }
             else
             {
-                InAoTMode = true;
+                return true;
             }
-            return InAoTMode.ToString();
         }
 
         /// <summary>

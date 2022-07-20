@@ -724,26 +724,22 @@ namespace CalculatorUITests
         {
             page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.ScientificCalculator);
             Assert.AreEqual("Scientific", CalculatorApp.GetCalculatorHeaderText());
-            page.StandardAoTCalculatorPage.GetAoTPresence();
-            Assert.AreEqual("False", page.StandardAoTCalculatorPage.GetAoTPresence());
+            Assert.IsFalse(page.StandardAoTCalculatorPage.IsKeepOnTopButtonPresent());
 
             CalculatorApp.EnsureCalculatorHasFocus();
             page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.ProgrammerCalculator);
             Assert.AreEqual("Programmer", CalculatorApp.GetCalculatorHeaderText());
-            page.StandardAoTCalculatorPage.GetAoTPresence();
-            Assert.AreEqual("False", page.StandardAoTCalculatorPage.GetAoTPresence());
+            Assert.IsFalse(page.StandardAoTCalculatorPage.IsKeepOnTopButtonPresent());
 
             CalculatorApp.EnsureCalculatorHasFocus();
             page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.DateCalculator);
             Assert.AreEqual("Date calculation", CalculatorApp.GetCalculatorHeaderText());
-            page.StandardAoTCalculatorPage.GetAoTPresence();
-            Assert.AreEqual("False", page.StandardAoTCalculatorPage.GetAoTPresence());
+            Assert.IsFalse(page.StandardAoTCalculatorPage.IsKeepOnTopButtonPresent());
 
             CalculatorApp.EnsureCalculatorHasFocus();
             page.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
             Assert.AreEqual("Standard", CalculatorApp.GetCalculatorHeaderText());
-            page.StandardAoTCalculatorPage.GetAoTPresence();
-            Assert.AreEqual("True", page.StandardAoTCalculatorPage.GetAoTPresence());
+            Assert.IsTrue(page.StandardAoTCalculatorPage.IsKeepOnTopButtonPresent());
         }
 
         [TestMethod]
@@ -755,8 +751,7 @@ namespace CalculatorUITests
             page.StandardOperators.DivideButton.Click();
             page.StandardOperators.NumberPad.Num0Button.Click();
             page.StandardOperators.EqualButton.Click();
-            page.StandardAoTCalculatorPage.AoTModeCheck();
-            Assert.AreEqual("True", page.StandardAoTCalculatorPage.AoTModeCheck());
+            Assert.IsTrue(page.StandardAoTCalculatorPage.IsInAlwaysOnTopMode());
             Assert.AreEqual("Result is undefined", page.CalculatorResults.GetAoTCalculatorResultText());
         }
 
@@ -768,8 +763,7 @@ namespace CalculatorUITests
             page.StandardAoTCalculatorPage.ResizeAoTWindowToDisplayInvertButton();
             page.StandardOperators.ClearButton.Click();
             page.StandardOperators.InvertButton.Click();
-            page.StandardAoTCalculatorPage.AoTModeCheck();
-            Assert.AreEqual("True", page.StandardAoTCalculatorPage.AoTModeCheck());
+            Assert.IsTrue(page.StandardAoTCalculatorPage.IsInAlwaysOnTopMode());
             Assert.AreEqual("Cannot divide by zero", page.CalculatorResults.GetAoTCalculatorResultText());
         }
 
@@ -781,12 +775,10 @@ namespace CalculatorUITests
             page.StandardAoTCalculatorPage.ResizeAoTWindowToDisplayInvertButton();
             page.StandardOperators.ClearButton.Click();
             page.StandardOperators.InvertButton.Click();
-            page.StandardAoTCalculatorPage.AoTModeCheck();
-            Assert.AreEqual("True", page.StandardAoTCalculatorPage.AoTModeCheck());
+            Assert.IsTrue(page.StandardAoTCalculatorPage.IsInAlwaysOnTopMode());
             Assert.AreEqual("Cannot divide by zero", page.CalculatorResults.GetAoTCalculatorResultText());
             page.StandardAoTCalculatorPage.NavigateToStandardMode();
-            page.StandardAoTCalculatorPage.AoTModeCheck();
-            Assert.AreEqual("False", page.StandardAoTCalculatorPage.AoTModeCheck());
+            Assert.IsFalse(page.StandardAoTCalculatorPage.IsInAlwaysOnTopMode());
             Assert.AreEqual("Cannot divide by zero", page.CalculatorResults.GetCalculatorResultText());
         }
 
