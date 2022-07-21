@@ -756,6 +756,7 @@ namespace CalculatorUITests
 
         [TestMethod]
         [Priority(2)]
+        [Ignore] // TODO re-enable when we have a way to increase the screen resolution of UI test machines https://github.com/microsoft/calculator/issues/1865
         public void AoT_ErrorMessage_CannotDivideByZero()
         {
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
