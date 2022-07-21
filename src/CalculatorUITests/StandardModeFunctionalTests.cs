@@ -666,7 +666,6 @@ namespace CalculatorUITests
         {
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
             page.StandardAoTCalculatorPage.NavigateToStandardMode();
-
         }
 
         [TestMethod]
@@ -747,11 +746,11 @@ namespace CalculatorUITests
         public void AoT_ErrorMessage_ResultUndefined()
         {
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            page.StandardAoTCalculatorPage.ResizeAoTWindowToDisplayInvertButton();
+            Assert.IsTrue(page.StandardAoTCalculatorPage.IsInAlwaysOnTopMode());
+
             page.StandardOperators.DivideButton.Click();
             page.StandardOperators.NumberPad.Num0Button.Click();
             page.StandardOperators.EqualButton.Click();
-            Assert.IsTrue(page.StandardAoTCalculatorPage.IsInAlwaysOnTopMode());
             Assert.AreEqual("Result is undefined", page.CalculatorResults.GetAoTCalculatorResultText());
         }
 
@@ -760,10 +759,11 @@ namespace CalculatorUITests
         public void AoT_ErrorMessage_CannotDivideByZero()
         {
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
+            Assert.IsTrue(page.StandardAoTCalculatorPage.IsInAlwaysOnTopMode());
             page.StandardAoTCalculatorPage.ResizeAoTWindowToDisplayInvertButton();
+
             page.StandardOperators.ClearButton.Click();
             page.StandardOperators.InvertButton.Click();
-            Assert.IsTrue(page.StandardAoTCalculatorPage.IsInAlwaysOnTopMode());
             Assert.AreEqual("Cannot divide by zero", page.CalculatorResults.GetAoTCalculatorResultText());
         }
 
@@ -772,14 +772,16 @@ namespace CalculatorUITests
         public void AoT_ErrorMessage_MessageRetentionUponExitingAoT()
         {
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
-            page.StandardAoTCalculatorPage.ResizeAoTWindowToDisplayInvertButton();
-            page.StandardOperators.ClearButton.Click();
-            page.StandardOperators.InvertButton.Click();
             Assert.IsTrue(page.StandardAoTCalculatorPage.IsInAlwaysOnTopMode());
-            Assert.AreEqual("Cannot divide by zero", page.CalculatorResults.GetAoTCalculatorResultText());
+
+            page.StandardOperators.DivideButton.Click();
+            page.StandardOperators.NumberPad.Num0Button.Click();
+            page.StandardOperators.EqualButton.Click();
+            Assert.AreEqual("Result is undefined", page.CalculatorResults.GetAoTCalculatorResultText());
+
             page.StandardAoTCalculatorPage.NavigateToStandardMode();
             Assert.IsFalse(page.StandardAoTCalculatorPage.IsInAlwaysOnTopMode());
-            Assert.AreEqual("Cannot divide by zero", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("Result is undefined", page.CalculatorResults.GetCalculatorResultText());
         }
 
         #endregion
