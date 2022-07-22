@@ -389,7 +389,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     }
 
     /* Now branch off to do other commands and functions.                 */
-    switch (wParam)
+    switch (wParam)     //wParam
     {
     case IDC_CLEAR: /* Total clear.                                       */
     {
@@ -777,6 +777,11 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     case IDC_FE:
         // Toggle exponential notation display.
         m_nFE = m_nFE == NumberFormat::Float ? NumberFormat::Scientific : NumberFormat::Float;
+        DisplayNum();
+        break;
+
+    case IDC_ENG:
+        m_nFE = NumberFormat::Engineering;
         DisplayNum();
         break;
 

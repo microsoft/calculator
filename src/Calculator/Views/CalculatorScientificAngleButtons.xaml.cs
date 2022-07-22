@@ -17,15 +17,15 @@ namespace CalculatorApp
     [Windows.Foundation.Metadata.WebHostHidden]
     public sealed partial class CalculatorScientificAngleButtons
     {
-        public CalculatorScientificAngleButtons()
+        public CalculatorScientificAngleButtons()       //constructor for the class
         {
             m_isErrorVisualState = false;
-            InitializeComponent();
+            InitializeComponent();                      //initializes UI components?
         }
 
-        public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
+        public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;      //Model is an expression-bodied read-only property of StandardCalculatorViewModel type
 
-        public System.Windows.Input.ICommand ButtonPressed
+        public System.Windows.Input.ICommand ButtonPressed      //ButtonPressed is the bind source for button command? ICommand is an interface
         {
             get
             {
@@ -66,7 +66,7 @@ namespace CalculatorApp
 
             if (buttonId == "0")
             {
-                Model.SwitchAngleType(NumbersAndOperatorsEnum.Radians);
+                Model.SwitchAngleType(NumbersAndOperatorsEnum.Radians);     //Model gets a viewmodel object and SwitchAngleType is a method for that object?
                 RadianButton.Visibility = Visibility.Visible;
                 RadianButton.Focus(FocusState.Programmatic);
             }
@@ -84,10 +84,49 @@ namespace CalculatorApp
             }
         }
 
-        private void FToEButton_Toggled(object sender, RoutedEventArgs e)
+        public System.Windows.Input.ICommand NotationPressed      //ButtonPressed is the bind source for button command? ICommand is an interface
         {
-            var viewModel = (StandardCalculatorViewModel)this.DataContext;
-            viewModel.FtoEButtonToggled();
+            get
+            {
+                if (donotuse_NotationPressed == null)
+                {
+                    donotuse_NotationPressed = DelegateCommandUtils.MakeDelegateCommand(this,
+                        (that, param) =>
+                        {
+                            that.OnNotationButtonPressed(param);
+                        });
+                }
+                return donotuse_NotationPressed;
+            }
+        }
+        private System.Windows.Input.ICommand donotuse_NotationPressed;
+
+        private void OnNotationButtonPressed(object commandParameter)
+        {
+            string buttonId = (string)commandParameter;
+
+            AutoButton.Visibility = Visibility.Collapsed;
+            SciButton.Visibility = Visibility.Collapsed;
+            EngButton.Visibility = Visibility.Collapsed;
+
+            if (buttonId == "0")
+            {
+                Model.FtoEButtonToggled();
+                SciButton.Visibility = Visibility.Visible;
+                SciButton.Focus(FocusState.Programmatic);
+            }
+            else if (buttonId == "1")
+            {
+                Model.EngButton();         //update this to some new method
+                EngButton.Visibility = Visibility.Visible;
+                EngButton.Focus(FocusState.Programmatic);
+            }
+            else if (buttonId == "2")
+            {
+                Model.FtoEButtonToggled();
+                AutoButton.Visibility = Visibility.Visible;
+                AutoButton.Focus(FocusState.Programmatic);
+            }
         }
 
         private bool m_isErrorVisualState;
