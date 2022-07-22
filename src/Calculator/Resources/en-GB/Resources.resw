@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3593,7 +3593,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>Invalid expression</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>The expression is empty</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3605,7 +3605,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>Parenthesis missing after function name</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>A mathematical operation has the incorrect number of parameters</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3741,7 +3741,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>Graph viewing window, x-axis bounded by %1 and %2, y-axis bounded by %3 and %4, displaying %5 equations</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Configure slider</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3858,7 +3858,7 @@
     <value>Enter an expression</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>Copy</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
