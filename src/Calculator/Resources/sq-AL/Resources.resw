@@ -3593,7 +3593,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>Shprehje e pavlefshme</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>Shprehja është bosh</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3605,7 +3605,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>Mungojnë kllapat pas emrit të funksionit</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>Një veprim matematikor ka numrin e gabuar të parametrave</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3741,7 +3741,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>Dritarja e paraqitjes së grafikut, boshti x i kufizuar nga %1 dhe %2, boshti y i kufizuar nga %3 dhe %4, paraqiten %5 ekuacione</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Konfiguro rrëshqitësin</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3858,7 +3858,7 @@
     <value>Fut një shprehje</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>Kopjo</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3883,11 +3883,11 @@
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Njësi e listës së futjes së funksioneve</value>
+    <value>Futja e funksioneve</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Lista e futjes së funksioneve</value>
+    <value>Futja e funksioneve</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">

@@ -3593,7 +3593,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>Неприпустимий вираз</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>Вираз пустий.</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3605,7 +3605,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>Після імені функції відсутня кругла дужка</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>Ця операція містить неправильну кількість параметрів</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3741,7 +3741,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>Вікно перегляду графа, пустими осі x, а %2 також %1, пустими, %3 і %4, відображення %5 формул</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Налаштувати повзунок</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3858,7 +3858,7 @@
     <value>Введіть вираз</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>Копіювати</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3883,11 +3883,11 @@
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Елемент вхідного списку функцій</value>
+    <value>Вхідні дані функції</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Вхідний список функцій</value>
+    <value>Вхідні дані функції</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4127,7 +4127,7 @@
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
   <data name="SettingsHeader.Text" xml:space="preserve">
-    <value>Настройки</value>
+    <value>Налаштування</value>
     <comment>Header text of Settings page</comment>
   </data>
   <data name="SettingsAppearance.Text" xml:space="preserve">

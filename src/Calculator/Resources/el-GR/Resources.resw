@@ -3593,7 +3593,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>Μη έγκυρη παράσταση</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>Η παράσταση είναι κενή</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3605,7 +3605,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>Λείπει παρένθεση μετά το όνομα της συνάρτησης</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>Μια μαθηματική πράξη έχει εσφαλμένο αριθμό παραμέτρων</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3741,7 +3741,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>Παράθυρο προβολής γραφήματος, άξονας x δεσμεύεται από %1 και %2, άξονα y δεσμεύεται από %3 και %4, Εμφάνιση %5 εξισώσεων</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Ρύθμιση παραμέτρων ρυθμιστικού</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3858,7 +3858,7 @@
     <value>Εισαγάγετε μια παράσταση</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>Αντιγραφή</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3883,11 +3883,11 @@
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Στοιχείο λίστας εισόδου συναρτήσεων</value>
+    <value>Εισαγωγή συνάρτησης</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Λίστα εισόδου συναρτήσεων</value>
+    <value>Εισαγωγή συνάρτησης</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">

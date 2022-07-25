@@ -3593,7 +3593,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>កន្សោមពាក្យមិនត្រឹមត្រូវ</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>កន្សោមពាក្យទទេរ</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3605,7 +3605,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>ភ្លេច​សញ្ញា​វង់​ក្រចក​បន្ទាប់​ពី​ឈ្មោះអនុគមន៍</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>សញ្ញាគណិតវិទ្យា​មាន​លេខ​ប៉ារ៉ាម៉ែត្រ​មិន​ត្រឹម​ត្រូវ</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3741,7 +3741,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>វីនដូមើលក្រាប, អាក់ស៊ីស x ដែលភ្ជាប់ដោយ %1 និង %2, អាក់ស៊ីស y ដែលភ្ជាប់ដោយ %3 និង %4, ដែលបង្ហាញ %5 សមីការ</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>រៀបចំរបាររំកិល</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3858,7 +3858,7 @@
     <value>បញ្ចូលកន្សោមពាក្យមួយ</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>ចម្លង</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3883,11 +3883,11 @@
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ធាតុ​បញ្ជី​បញ្ចូល​ក្នុងអនុគមន៍</value>
+    <value>បញ្ចូលអនុគមន៍</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>បញ្ជី​បញ្ចូល​អនុគមន៍</value>
+    <value>បញ្ចូលអនុគមន៍</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
