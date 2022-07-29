@@ -12,17 +12,26 @@ jobs:
   condition: succeeded()
   pool:
     ${{ if eq(parameters.isOSSBuild, true) }}:
-      name: EssentialExperiencesOpenSource-windows-2022
+      name: EssentialExperiencesOpenSource-Win11
     ${{ if eq(parameters.isOSSBuild, false) }}:
-      name: EssentialExperiences-windows-2022
+      name: EssentialExperiences-Win11
   variables:
     skipComponentGovernanceDetection: true
   steps:
-  - checkout: none
+  - checkout: self
+    fetchDepth: 1
 
-  - powershell: Set-DisplayResolution -Width 1920 -Height 1080 -Force	
-    displayName: Set resolution to 1920x1080	
-    continueOnError: true	
+  - task: PowerShell@2
+    displayName: Turn off animation effects
+    inputs:
+      filePath: $(Build.SourcesDirectory)\build\scripts\TurnOffAnimationEffects.ps1
+
+  - task: ScreenResolutionUtility@1
+    displayName: Set resolution to 1920x1080
+    inputs:
+      displaySettings: 'specific'
+      width: 1920
+      height: 1080
 
   - task: DownloadBuildArtifacts@0
     displayName: Download MsixBundle and CalculatorUITests
@@ -52,4 +61,4 @@ jobs:
       platform: ${{ parameters.platform }}
       configuration: Release
       ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-        testFiltercriteria: Priority=0 
+        testFiltercriteria: Priority=0

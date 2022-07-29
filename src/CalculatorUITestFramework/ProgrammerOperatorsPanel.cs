@@ -172,17 +172,17 @@ namespace CalculatorUITestFramework
             else if (source.Contains("dwordButton"))
             {
                 DWordButton.Click();
-                WordButton.Click();
-                ByteButton.Click();
+                ResetWordSize();
             }
             else if (source.Contains("wordButton"))
             {
                 WordButton.Click();
-                ByteButton.Click();
+                ResetWordSize();
             }
             else if (source.Contains("byteButton"))
             {
                 ByteButton.Click();
+                ResetWordSize();
             }
             else
             {

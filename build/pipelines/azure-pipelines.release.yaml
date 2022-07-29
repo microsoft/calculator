@@ -36,6 +36,16 @@ jobs:
     useReleaseAppxmanifest: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
+- template: ./templates/run-ui-tests.yaml
+  parameters:
+    platform: x64
+    runsettingsFileName: CalculatorUITests.release.runsettings
+
+- template: ./templates/run-ui-tests.yaml
+  parameters:
+    platform: x86
+    runsettingsFileName: CalculatorUITests.release.runsettings
+
 - template: ./templates/run-unit-tests.yaml
   parameters:
     platform: x64
