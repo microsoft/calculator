@@ -17,15 +17,15 @@ namespace CalculatorApp
     [Windows.Foundation.Metadata.WebHostHidden]
     public sealed partial class CalculatorScientificAngleButtons
     {
-        public CalculatorScientificAngleButtons()       //constructor for the class
+        public CalculatorScientificAngleButtons()       
         {
             m_isErrorVisualState = false;
-            InitializeComponent();                      //initializes UI components?
+            InitializeComponent();                      
         }
 
-        public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;      //Model is an expression-bodied read-only property of StandardCalculatorViewModel type
+        public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
 
-        public System.Windows.Input.ICommand ButtonPressed      //ButtonPressed is the bind source for button command? ICommand is an interface
+        public System.Windows.Input.ICommand ButtonPressed
         {
             get
             {
@@ -66,7 +66,7 @@ namespace CalculatorApp
 
             if (buttonId == "0")
             {
-                Model.SwitchAngleType(NumbersAndOperatorsEnum.Radians);     //Model gets a viewmodel object and SwitchAngleType is a method for that object?
+                Model.SwitchAngleType(NumbersAndOperatorsEnum.Radians);
                 RadianButton.Visibility = Visibility.Visible;
                 RadianButton.Focus(FocusState.Programmatic);
             }
@@ -84,7 +84,7 @@ namespace CalculatorApp
             }
         }
 
-        public System.Windows.Input.ICommand NotationPressed      //ButtonPressed is the bind source for button command? ICommand is an interface
+        public System.Windows.Input.ICommand NotationPressed
         {
             get
             {
@@ -117,7 +117,7 @@ namespace CalculatorApp
             }
             else if (buttonId == "1")
             {
-                Model.EngButton();         //update this to some new method
+                Model.EngButton();
                 EngButton.Visibility = Visibility.Visible;
                 EngButton.Focus(FocusState.Programmatic);
             }

@@ -389,7 +389,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     }
 
     /* Now branch off to do other commands and functions.                 */
-    switch (wParam)     //wParam
+    switch (wParam)
     {
     case IDC_CLEAR: /* Total clear.                                       */
     {
