@@ -107,9 +107,11 @@ jobs:
         # If we put more things than we produce pdbs for and can index (such as nuget packages that ship without pdbs), binskim will fail.
         # Below are ignored files
         #   - clrcompression.dll
+        #   - WebView2Loader.dll
         Contents: |
           **\*
           !**\clrcompression.dll
+          !**\WebView2Loader.dll
         TargetFolder: '$(Agent.BuildDirectory)\binskim'
         CleanTargetFolder: true
         OverWrite: true
