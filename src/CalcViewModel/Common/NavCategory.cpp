@@ -54,6 +54,12 @@ namespace // put the utils within this TU
 
     bool IsGraphingModeEnabled()
     {
+        static bool isGraphSupported = Windows::Foundation::Metadata::ApiInformation::IsMethodPresent("Windows.UI.Text.RichEditTextDocument", "GetMath");
+        if (!isGraphSupported)
+        {
+            return false;
+        }
+
         static bool isChecked = false;
         static bool isEnabled = false;
 
