@@ -108,10 +108,12 @@ jobs:
         # Below are ignored files
         #   - clrcompression.dll
         #   - WebView2Loader.dll
+        #   - Microsoft.Web.WebView2.Core.dll
         Contents: |
           **\*
           !**\clrcompression.dll
           !**\WebView2Loader.dll
+          !**\Microsoft.Web.WebView2.Core.dll
         TargetFolder: '$(Agent.BuildDirectory)\binskim'
         CleanTargetFolder: true
         OverWrite: true
