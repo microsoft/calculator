@@ -31,6 +31,12 @@ jobs:
     useReleaseAppxManifest: false
     platform: ARM
 
+- template: ./templates/build-single-architecture.yaml
+  parameters:
+    isReleaseBuild: true
+    useReleaseAppxManifest: false
+    platform: ARM64
+
 - template: ./templates/run-ui-tests.yaml
   parameters:
     platform: x64

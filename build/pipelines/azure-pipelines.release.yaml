@@ -36,6 +36,13 @@ jobs:
     useReleaseAppxmanifest: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
+- template: ./templates/build-single-architecture.yaml
+  parameters:
+    platform: ARM64
+    isReleaseBuild: true
+    useReleaseAppxmanifest: true
+    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+
 - template: ./templates/run-ui-tests.yaml
   parameters:
     platform: x64
