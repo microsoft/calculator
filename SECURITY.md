@@ -1,6 +1,6 @@
 <!-- BEGIN MICROSOFT SECURITY.MD V0.0.1 BLOCK -->
 
-## Security
+## Security policy #google policy #microsoft security
 
 Microsoft takes the security of our software products and services seriously, which includes all
 source code repositories managed through our GitHub organizations, which include
