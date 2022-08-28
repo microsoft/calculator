@@ -235,6 +235,8 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <EnablePREfast>true</EnablePREfast>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

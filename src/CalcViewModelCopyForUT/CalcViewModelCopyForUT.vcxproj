@@ -392,6 +392,8 @@
   <ItemDefinitionGroup Condition="!Exists('..\CalcViewModel\DataLoaders\DataLoaderConstants.h')">
     <ClCompile>
       <AdditionalOptions>/DUSE_MOCK_DATA %(AdditionalOptions)</AdditionalOptions>
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Speed</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</EnableFiberSafeOptimizations>
     </ClCompile>
   </ItemDefinitionGroup>
   <Choose>
