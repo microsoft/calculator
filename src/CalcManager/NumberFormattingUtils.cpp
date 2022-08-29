@@ -8,22 +8,22 @@ namespace UnitConversionManager::NumberFormattingUtils
     /// <summary>
     /// Trims out any trailing zeros or decimals in the given input string
     /// </summary>
-    /// <param name="number">number to trim</param>
-    void TrimTrailingZeros(_Inout_ wstring& number)
+    /// <param name="input">input to trim</param>
+    void TrimTrailingZeros(_Inout_ wstring& input)
     {
-        if (number.find(L'.') == wstring::npos)
+        if (input.find(L'.') == wstring::npos)
         {
             return;
         }
 
-        if (auto i = number.find_last_not_of(L'0'); i != wstring::npos)
+        if (const auto i = input.find_last_not_of(L'0'); i != wstring::npos)
         {
-            number.erase(number.cbegin() + i + 1, number.cend());
+            input.erase(input.cbegin() + i + 1, input.cend());
         }
 
-        if (number.back() == L'.')
+        if (input.back() == L'.')
         {
-            number.pop_back();
+            input.pop_back();
         }
     }
 
@@ -56,14 +56,14 @@ namespace UnitConversionManager::NumberFormattingUtils
     /// <summary>
     /// Rounds the given double to the given number of significant digits
     /// </summary>
-    /// <param name="num">input double</param>
+    /// <param name="value">input double</param>
     /// <param name="numSignificant">unsigned int number of significant digits to round to</param>
-    wstring RoundSignificantDigits(double num, unsigned int numSignificant)
+    wstring RoundSignificantDigits(double value, unsigned int numSignificant)
     {
         wstringstream out(wstringstream::out);
         out << fixed;
         out.precision(numSignificant);
-        out << num;
+        out << value;
         return out.str();
     }
 

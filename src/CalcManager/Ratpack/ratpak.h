@@ -339,7 +339,7 @@ extern bool zerrat(_In_ PRAT a);                     // returns true if a == 0/q
 extern std::wstring NumberToString(_Inout_ PNUMBER& pnum, NumberFormat format, uint32_t radix, int32_t precision);
 
 // returns a text representation of a PRAT
-extern std::wstring RatToString(_Inout_ PRAT& prat, NumberFormat format, uint32_t radix, int32_t precision);
+extern std::wstring RatToString(_Inout_ const PRAT& prat, NumberFormat format, uint32_t radix, int32_t precision);
 // converts a PRAT into a PNUMBER
 extern PNUMBER RatToNumber(_In_ PRAT prat, uint32_t radix, int32_t precision);
 // flattens a PRAT by converting it to a PNUMBER and back to a PRAT
@@ -367,7 +367,7 @@ extern PNUMBER Ui32tonum(uint32_t ini32, uint32_t radix);
 extern PNUMBER numtonRadixx(_In_ PNUMBER a, uint32_t radix);
 
 // creates a empty/undefined rational representation (p/q)
-extern PRAT _createrat(void);
+extern PRAT _createrat();
 
 // returns a new rat structure with the acos of x->p/x->q taking into account
 // angle type
@@ -439,7 +439,7 @@ extern void tanrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
 // angle type
 extern void tananglerat(_Inout_ PRAT* px, AngleType angletype, uint32_t radix, int32_t precision);
 
-extern void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER* const src);
+extern void _dupnum(_In_ PNUMBER dest, _In_ const NUMBER* src);
 
 extern void _destroynum(_Frees_ptr_opt_ PNUMBER pnum);
 extern void _destroyrat(_Frees_ptr_opt_ PRAT prat);
@@ -480,6 +480,6 @@ extern bool rat_ge(_In_ PRAT a, _In_ PRAT b, int32_t precision);
 extern bool rat_lt(_In_ PRAT a, _In_ PRAT b, int32_t precision);
 extern bool rat_le(_In_ PRAT a, _In_ PRAT b, int32_t precision);
 extern void inbetween(_In_ PRAT* px, _In_ PRAT range, int32_t precision);
-extern void trimit(_Inout_ PRAT* px, int32_t precision);
+extern void trimit(_Inout_ const PRAT* px, int32_t precision);
 extern void _dumprawrat(_In_ const wchar_t* varname, _In_ PRAT rat, std::wostream& out);
 extern void _dumprawnum(_In_ const wchar_t* varname, _In_ PNUMBER num, std::wostream& out);

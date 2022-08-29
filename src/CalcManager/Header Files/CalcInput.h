@@ -14,18 +14,17 @@ namespace CalcEngine
     {
     public:
         CalcNumSec()
-            : value()
-            , m_isNegative(false)
+            : m_isNegative(false)
         {
         }
 
         void Clear();
-        bool IsEmpty()
+        bool IsEmpty() const
         {
             return value.empty();
         }
 
-        bool IsNegative()
+        bool IsNegative() const
         {
             return m_isNegative;
         }
@@ -53,22 +52,20 @@ namespace CalcEngine
             , m_hasDecimal(false)
             , m_decPtIndex(0)
             , m_decSymbol(decSymbol)
-            , m_base()
-            , m_exponent()
         {
         }
 
         void Clear();
         bool TryToggleSign(bool isIntegerMode, std::wstring_view maxNumStr);
-        bool TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, std::wstring_view maxNumStr, int32_t wordBitWidth, int maxDigits);
+        bool TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, std::wstring_view maxNumStr, uint32_t wordBitWidth, int maxDigits);
         bool TryAddDecimalPt();
-        bool HasDecimalPt();
+        bool HasDecimalPt() const;
         bool TryBeginExponent();
         void Backspace();
         void SetDecimalSymbol(wchar_t decSymbol);
-        bool IsEmpty();
-        std::wstring ToString(uint32_t radix);
-        Rational ToRational(uint32_t radix, int32_t precision);
+        bool IsEmpty() const;
+        std::wstring ToString(uint32_t radix) const;
+        Rational ToRational(uint32_t radix, int32_t precision) const;
 
     private:
         bool m_hasExponent;

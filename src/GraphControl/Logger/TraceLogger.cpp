@@ -31,7 +31,7 @@ namespace GraphControl
         return s_selfInstance;
     }
 
-    void TraceLogger::LogEquationCountChanged(int currentValidEquations, int currentInvalidEquations)
+    void TraceLogger::LogEquationCountChanged(unsigned int currentValidEquations, unsigned int currentInvalidEquations)
     {
         static bool firstRun = true;
         if (firstRun)
@@ -80,11 +80,11 @@ namespace GraphControl
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_FUNCTION_ANALYSIS_PERFORMED), fields);
     }
 
-    void TraceLogger::LogVariableCountChanged(int variablesCount)
+    void TraceLogger::LogVariableCountChanged(unsigned int variablesCount)
     {
         auto fields = ref new LoggingFields();
         fields->AddString(StringReference(CALC_MODE), StringReference(GRAPHING_MODE));
-        fields->AddInt64(StringReference(L"VariableCount"), variablesCount);
+        fields->AddUInt64(StringReference(L"VariableCount"), variablesCount);
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_VARIABLES_COUNT_CHANGED), fields);
     }
 

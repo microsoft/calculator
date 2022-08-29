@@ -84,9 +84,9 @@ LocalizationService::LocalizationService(_In_ const wchar_t * const overridedLan
     try
     {
         // Convert wstring to string for locale
-        int size_needed = WideCharToMultiByte(CP_UTF8, 0, &localeName[0], (int)localeName.size(), NULL, 0, NULL, NULL);
+        int size_needed = WideCharToMultiByte(CP_UTF8, 0, &localeName[0], static_cast<int>(localeName.size()), NULL, 0, NULL, NULL);
         string localeNameStr(size_needed, 0);
-        WideCharToMultiByte(CP_UTF8, 0, &localeName[0], (int)localeName.size(), &localeNameStr[0], size_needed, NULL, NULL);
+        WideCharToMultiByte(CP_UTF8, 0, &localeName[0], static_cast<int>(localeName.size()), &localeNameStr[0], size_needed, NULL, NULL);
 
         m_locale = locale(localeNameStr.data());
     }

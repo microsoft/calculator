@@ -14,7 +14,7 @@ using namespace CalcEngine;
 namespace
 {
     template <typename T>
-    static void Truncate(vector<T>& v, unsigned int index)
+    void Truncate(vector<T>& v, unsigned int index)
     {
         if (index >= v.size())
         {
@@ -45,7 +45,7 @@ void CHistoryCollector::ReinitHistory()
 // Constructor
 // Can throw Out of memory error
 CHistoryCollector::CHistoryCollector(ICalcDisplay* pCalcDisplay, std::shared_ptr<IHistoryDisplay> pHistoryDisplay, wchar_t decimalSymbol)
-    : m_pHistoryDisplay(pHistoryDisplay)
+    : m_pHistoryDisplay(std::move(pHistoryDisplay))
     , m_pCalcDisplay(pCalcDisplay)
     , m_iCurLineHistStart(-1)
     , m_decimalSymbol(decimalSymbol)
@@ -66,13 +66,13 @@ CHistoryCollector::~CHistoryCollector()
 
 void CHistoryCollector::AddOpndToHistory(wstring_view numStr, Rational const& rat, bool fRepetition)
 {
-    std::shared_ptr<std::vector<int>> commands = std::make_shared<vector<int>>();
+    auto commands = std::make_shared<vector<int>>();
     // Check for negate
-    bool fNegative = (numStr[0] == L'-');
+    bool fNegative = numStr[0] == L'-';
     bool fSciFmt = false;
     bool fDecimal = false;
 
-    for (size_t i = (fNegative ? 1 : 0); i < numStr.length(); i++)
+    for (size_t i = fNegative ? 1 : 0; i < numStr.length(); i++)
     {
         if (numStr[i] == m_decimalSymbol)
         {
@@ -98,8 +98,7 @@ void CHistoryCollector::AddOpndToHistory(wstring_view numStr, Rational const& ra
         // Number
         else
         {
-            int num = static_cast<int>(numStr[i]) - ASCII_0;
-            num += IDC_0;
+            int num = static_cast<int>(numStr[i]) - ASCII_0 + IDC_0;
             commands->push_back(num);
         }
     }
@@ -143,19 +142,19 @@ void CHistoryCollector::AddBinOpToHistory(int nOpCode, bool isIntegerMode, bool 
 // This is expected to be called when a binary op in the last say 1+2+ is changing to another one say 1+2* (+ changed to *)
 // It needs to know by this change a Precedence inversion happened. i.e. previous op was lower or equal to its previous op, but the new
 // one isn't. (Eg. 1*2* to 1*2^). It can add explicit brackets to ensure the precedence is inverted. (Eg. (1*2) ^)
-void CHistoryCollector::ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher, bool isIntgerMode)
+void CHistoryCollector::ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher, bool isIntegerMode)
 {
     TruncateEquationSzFromIch(m_lastBinOpStartIndex);
     if (fPrecInvToHigher)
     {
         EnclosePrecInversionBrackets();
     }
-    AddBinOpToHistory(nOpCode, isIntgerMode);
+    AddBinOpToHistory(nOpCode, isIntegerMode);
 }
 
 void CHistoryCollector::PushLastOpndStart(int ichOpndStart)
 {
-    int ich = (ichOpndStart == -1) ? m_lastOpStartIndex : ichOpndStart;
+    int ich = ichOpndStart == -1 ? m_lastOpStartIndex : ichOpndStart;
 
     if (m_curOperandIndex < static_cast<int>(m_operandIndices.size()))
     {
@@ -174,8 +173,7 @@ void CHistoryCollector::PopLastOpndStart()
 void CHistoryCollector::AddOpenBraceToHistory()
 {
     AddCommand(std::make_shared<CParentheses>(IDC_OPENP));
-    int ichOpndStart = IchAddSzToEquationSz(CCalcEngine::OpCodeToString(IDC_OPENP), -1);
-    PushLastOpndStart(ichOpndStart);
+    PushLastOpndStart(IchAddSzToEquationSz(CCalcEngine::OpCodeToString(IDC_OPENP), -1));
 
     SetExpressionDisplay();
     m_lastBinOpStartIndex = -1;
@@ -195,15 +193,15 @@ void CHistoryCollector::AddCloseBraceToHistory()
 void CHistoryCollector::EnclosePrecInversionBrackets()
 {
     // Top of the Opnd starts index or 0 is nothing is in top
-    int ichStart = (m_curOperandIndex > 0) ? m_operandIndices[m_curOperandIndex - 1] : 0;
+    int ichStart = m_curOperandIndex > 0 ? m_operandIndices[m_curOperandIndex - 1] : 0;
 
     InsertSzInEquationSz(CCalcEngine::OpCodeToString(IDC_OPENP), -1, ichStart);
     IchAddSzToEquationSz(CCalcEngine::OpCodeToString(IDC_CLOSEP), -1);
 }
 
-bool CHistoryCollector::FOpndAddedToHistory()
+bool CHistoryCollector::FOpndAddedToHistory() const
 {
-    return (-1 != m_lastOpStartIndex);
+    return m_lastOpStartIndex != -1;
 }
 
 // AddUnaryOpToHistory
@@ -244,7 +242,7 @@ void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, AngleType an
                 angleOpCode = CalculationManager::Command::CommandGRAD;
             }
 
-            int command = nOpCode;
+            int command;
             switch (nOpCode)
             {
             case IDC_SIN:
@@ -330,10 +328,9 @@ void CHistoryCollector::AddUnaryOpToHistory(int nOpCode, bool fInv, AngleType an
 // history of equations
 void CHistoryCollector::CompleteHistoryLine(wstring_view numStr)
 {
-    if (nullptr != m_pHistoryDisplay)
+    if (m_pHistoryDisplay != nullptr)
     {
-        unsigned int addedItemIndex = m_pHistoryDisplay->AddToHistory(m_spTokens, m_spCommands, numStr);
-        m_pCalcDisplay->OnHistoryItemAdded(addedItemIndex);
+        m_pCalcDisplay->OnHistoryItemAdded(m_pHistoryDisplay->AddToHistory(m_spTokens, m_spCommands, numStr));
     }
 
     m_spTokens = nullptr;
@@ -354,16 +351,18 @@ void CHistoryCollector::CompleteEquation(std::wstring_view numStr)
 
 void CHistoryCollector::ClearHistoryLine(wstring_view errStr)
 {
-    if (errStr.empty()) // in case of error let the display stay as it is
+    if (!errStr.empty()) // in case of error let the display stay as it is
     {
-        if (nullptr != m_pCalcDisplay)
-        {
-            m_pCalcDisplay->SetExpressionDisplay(
-                std::make_shared<std::vector<std::pair<std::wstring, int>>>(), std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>());
-        }
-        m_iCurLineHistStart = -1; // It will get recomputed at the first Opnd
-        ReinitHistory();
+        return;
     }
+
+    if (m_pCalcDisplay != nullptr)
+    {
+        m_pCalcDisplay->SetExpressionDisplay(
+            std::make_shared<std::vector<std::pair<std::wstring, int>>>(), std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>());
+    }
+    m_iCurLineHistStart = -1; // It will get recomputed at the first Opnd
+    ReinitHistory();
 }
 
 // Adds the given string psz to the globally maintained current equation string at the end.
@@ -380,25 +379,25 @@ int CHistoryCollector::IchAddSzToEquationSz(wstring_view str, int icommandIndex)
 }
 
 // Inserts a given string into the global m_pszEquation at the given index ich taking care of reallocations etc.
-void CHistoryCollector::InsertSzInEquationSz(wstring_view str, int icommandIndex, int ich)
+void CHistoryCollector::InsertSzInEquationSz(wstring_view str, int icommandIndex, int ich) const
 {
     m_spTokens->emplace(m_spTokens->begin() + ich, wstring(str), icommandIndex);
 }
 
 // Chops off the current equation string from the given index
-void CHistoryCollector::TruncateEquationSzFromIch(int ich)
+void CHistoryCollector::TruncateEquationSzFromIch(int ich) const
 {
     // Truncate commands
     int minIdx = -1;
-    unsigned int nTokens = static_cast<unsigned int>(m_spTokens->size());
+    auto nTokens = m_spTokens->size();
 
-    for (unsigned int i = ich; i < nTokens; i++)
+    for (size_t i = ich; i < nTokens; i++)
     {
         const auto& currentPair = (*m_spTokens)[i];
-        int curTokenId = currentPair.second;
+        const int curTokenId = currentPair.second;
         if (curTokenId != -1)
         {
-            if ((minIdx != -1) || (curTokenId < minIdx))
+            if (minIdx != -1 || curTokenId < minIdx)
             {
                 minIdx = curTokenId;
                 Truncate(*m_spCommands, minIdx);
@@ -410,9 +409,9 @@ void CHistoryCollector::TruncateEquationSzFromIch(int ich)
 }
 
 // Adds the m_pszEquation into the running history text
-void CHistoryCollector::SetExpressionDisplay()
+void CHistoryCollector::SetExpressionDisplay() const
 {
-    if (nullptr != m_pCalcDisplay)
+    if (m_pCalcDisplay != nullptr)
     {
         m_pCalcDisplay->SetExpressionDisplay(m_spTokens, m_spCommands);
     }
@@ -465,13 +464,13 @@ void CHistoryCollector::SetDecimalSymbol(wchar_t decimalSymbol)
 }
 
 // Update the commands corresponding to the passed string Number
-std::shared_ptr<std::vector<int>> CHistoryCollector::GetOperandCommandsFromString(wstring_view numStr)
+std::shared_ptr<std::vector<int>> CHistoryCollector::GetOperandCommandsFromString(wstring_view numStr) const
 {
     std::shared_ptr<std::vector<int>> commands = std::make_shared<std::vector<int>>();
     // Check for negate
-    bool fNegative = (numStr[0] == L'-');
+    bool fNegative = numStr[0] == L'-';
 
-    for (size_t i = (fNegative ? 1 : 0); i < numStr.length(); i++)
+    for (size_t i = fNegative ? 1 : 0; i < numStr.length(); i++)
     {
         if (numStr[i] == m_decimalSymbol)
         {
@@ -492,8 +491,7 @@ std::shared_ptr<std::vector<int>> CHistoryCollector::GetOperandCommandsFromStrin
         // Number
         else
         {
-            int num = static_cast<int>(numStr[i]) - ASCII_0;
-            num += IDC_0;
+            int num = static_cast<int>(numStr[i]) - ASCII_0 + IDC_0;
             commands->push_back(num);
         }
     }

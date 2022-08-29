@@ -231,14 +231,10 @@ namespace GraphControl
         {
             return;
         }
-        bool keepCurrentView = true;
 
         // If the equation has changed, the IsLineEnabled state is reset.
         // This checks if the equation has been reset and sets keepCurrentView to false in this case.
-        if (!equation->HasGraphError && !equation->IsValidated && equation->IsLineEnabled)
-        {
-            keepCurrentView = false;
-        }
+        const bool keepCurrentView = equation->HasGraphError || equation->IsValidated || !equation->IsLineEnabled;
 
         PlotGraph(keepCurrentView);
     }
@@ -301,8 +297,8 @@ namespace GraphControl
             }
         }
 
-        int valid = 0;
-        int invalid = 0;
+        unsigned int valid = 0;
+        unsigned int invalid = 0;
         for (Equation ^ eq : Equations)
         {
             if (eq->HasGraphError)
@@ -396,7 +392,7 @@ namespace GraphControl
                 {
                     auto graphedEquations = initResult.value();
 
-                    for (int i = 0; i < validEqs.size(); i++)
+                    for (size_t i = 0; i < validEqs.size(); i++)
                     {
                         validEqs[i]->GraphedEquation = graphedEquations[i];
                     }
@@ -557,13 +553,15 @@ namespace GraphControl
 
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
-            auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
-                m_renderMain->GetCriticalSection().lock();
-                m_graph->SetArgValue(variableName->Data(), newValue);
-                m_renderMain->GetCriticalSection().unlock();
+            auto workItemHandler = ref new WorkItemHandler(
+                [this, variableName, newValue](IAsyncAction ^ action)
+                {
+                    m_renderMain->GetCriticalSection().lock();
+                    m_graph->SetArgValue(variableName->Data(), newValue);
+                    m_renderMain->GetCriticalSection().unlock();
 
-                m_renderMain->RunRenderPass();
-            });
+                    m_renderMain->RunRenderPass();
+                });
 
             ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
         }
@@ -618,7 +616,7 @@ namespace GraphControl
         return validEqs;
     }
 
-    void Grapher::OnForceProportionalAxesPropertyChanged(bool /*oldValue*/, bool newValue)
+    void Grapher::OnForceProportionalAxesPropertyChanged(bool oldValue [[maybe_unused]], bool newValue)
     {
         m_calculatedForceProportional = newValue;
         TryUpdateGraph(false);
@@ -842,7 +840,7 @@ namespace GraphControl
                 {
                     // Get the raw data
                     vector<BYTE> byteVector = BitmapOut->GetData();
-                    auto arr = ArrayReference<BYTE>(byteVector.data(), (unsigned int)byteVector.size());
+                    auto arr = ArrayReference<BYTE>(byteVector.data(), static_cast<unsigned int>(byteVector.size()));
 
                     // create a memory stream wrapper
                     InMemoryRandomAccessStream ^ stream = ref new InMemoryRandomAccessStream();
@@ -880,18 +878,7 @@ void Grapher::OnCoreKeyUp(CoreWindow ^ sender, KeyEventArgs ^ e)
         return;
     }
 
-    switch (e->VirtualKey)
-    {
-    case VirtualKey::Left:
-    case VirtualKey::Right:
-    case VirtualKey::Down:
-    case VirtualKey::Up:
-    case VirtualKey::Shift:
-    {
-        HandleKey(false, e->VirtualKey);
-    }
-    break;
-    }
+    HandleKey(e->VirtualKey);
 }
 
 void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
@@ -904,61 +891,59 @@ void Grapher::OnCoreKeyDown(CoreWindow ^ sender, KeyEventArgs ^ e)
         return;
     }
 
-    switch (e->VirtualKey)
+    HandleKeyDown(e->VirtualKey);
+}
+
+void Grapher::HandleKey(VirtualKey key)
+{
+    switch (key)
     {
     case VirtualKey::Left:
+        m_KeysPressed[KeysPressedSlots::Left] = false;
+        break;
     case VirtualKey::Right:
-    case VirtualKey::Down:
+        m_KeysPressed[KeysPressedSlots::Right] = false;
+        break;
     case VirtualKey::Up:
+        m_KeysPressed[KeysPressedSlots::Up] = false;
+        break;
+    case VirtualKey::Down:
+        m_KeysPressed[KeysPressedSlots::Down] = false;
+        break;
     case VirtualKey::Shift:
-    {
-        HandleKey(true, e->VirtualKey);
-    }
-    break;
+        m_KeysPressed[KeysPressedSlots::Accelerator] = false;
+        break;
     }
 }
 
-void Grapher::HandleKey(bool keyDown, VirtualKey key)
+void Grapher::HandleKeyDown(VirtualKey key)
 {
-    int pressedKeys = 0;
-    if (key == VirtualKey::Left)
+    bool pressedKey;
+    switch (key)
     {
-        m_KeysPressed[KeysPressedSlots::Left] = keyDown;
-        if (keyDown)
-        {
-            pressedKeys++;
-        }
-    }
-    if (key == VirtualKey::Right)
-    {
-        m_KeysPressed[KeysPressedSlots::Right] = keyDown;
-        if (keyDown)
-        {
-            pressedKeys++;
-        }
-    }
-    if (key == VirtualKey::Up)
-    {
-        m_KeysPressed[KeysPressedSlots::Up] = keyDown;
-        if (keyDown)
-        {
-            pressedKeys++;
-        }
-    }
-    if (key == VirtualKey::Down)
-    {
-        m_KeysPressed[KeysPressedSlots::Down] = keyDown;
-        if (keyDown)
-        {
-            pressedKeys++;
-        }
-    }
-    if (key == VirtualKey::Shift)
-    {
-        m_KeysPressed[KeysPressedSlots::Accelerator] = keyDown;
+    case VirtualKey::Left:
+        m_KeysPressed[KeysPressedSlots::Left] = true;
+        pressedKey = true;
+        break;
+    case VirtualKey::Right:
+        m_KeysPressed[KeysPressedSlots::Right] = true;
+        pressedKey = true;
+        break;
+    case VirtualKey::Up:
+        m_KeysPressed[KeysPressedSlots::Up] = true;
+        pressedKey = true;
+        break;
+    case VirtualKey::Down:
+        m_KeysPressed[KeysPressedSlots::Down] = true;
+        pressedKey = true;
+        break;
+    case VirtualKey::Shift:
+        m_KeysPressed[KeysPressedSlots::Accelerator] = true;
+        pressedKey = true;
+        break;
     }
 
-    if (pressedKeys > 0 && !m_Moving)
+    if (pressedKey && !m_Moving)
     {
         m_Moving = true;
         // Key(s) we care about, so ensure we are ticking our timer (and that we have one to tick)
@@ -970,7 +955,6 @@ void Grapher::HandleKey(bool keyDown, VirtualKey key)
             TimeSpan ts;
             ts.Duration = 100000; // .1 second
             m_TracingTrackingTimer->Interval = ts;
-            auto i = m_TracingTrackingTimer->Interval;
         }
         m_TracingTrackingTimer->Start();
     }
@@ -979,7 +963,7 @@ void Grapher::HandleKey(bool keyDown, VirtualKey key)
 void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
 {
     int delta = 5;
-    int liveKeys = 0;
+    bool liveKeys = false;
 
     if (m_KeysPressed[KeysPressedSlots::Accelerator])
     {
@@ -990,7 +974,7 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
 
     if (m_KeysPressed[KeysPressedSlots::Left])
     {
-        liveKeys++;
+        liveKeys = true;
         curPos.X -= delta;
         if (curPos.X < 0)
         {
@@ -998,9 +982,9 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
         }
     }
 
-    if (m_KeysPressed[KeysPressedSlots::Right])
+    else if (m_KeysPressed[KeysPressedSlots::Right])
     {
-        liveKeys++;
+        liveKeys = true;
         curPos.X += delta;
         if (curPos.X > ActualWidth - delta)
         {
@@ -1010,7 +994,7 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
 
     if (m_KeysPressed[KeysPressedSlots::Up])
     {
-        liveKeys++;
+        liveKeys = true;
         curPos.Y -= delta;
         if (curPos.Y < 0)
         {
@@ -1018,9 +1002,9 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
         }
     }
 
-    if (m_KeysPressed[KeysPressedSlots::Down])
+    else if (m_KeysPressed[KeysPressedSlots::Down])
     {
-        liveKeys++;
+        liveKeys = true;
         curPos.Y += delta;
         if (curPos.Y > ActualHeight - delta)
         {
@@ -1028,17 +1012,17 @@ void Grapher::HandleTracingMovementTick(Object ^ sender, Object ^ e)
         }
     }
 
-    if (liveKeys == 0)
+    if (liveKeys)
+    {
+        ActiveTraceCursorPosition = curPos;
+        PointerValueChangedEvent(curPos);
+    }
+    else
     {
         m_Moving = false;
 
         // Non of the keys we care about are being hit any longer so shut down our timer
         m_TracingTrackingTimer->Stop();
-    }
-    else
-    {
-        ActiveTraceCursorPosition = curPos;
-        PointerValueChangedEvent(curPos);
     }
 }
 
@@ -1061,7 +1045,7 @@ String ^ Grapher::FormatMathML(String ^ mmlString)
     return ref new String(formattedExpression.c_str());
 }
 
-void Grapher::OnAxesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
+void Grapher::OnAxesColorPropertyChanged(Windows::UI::Color oldValue [[maybe_unused]], Windows::UI::Color newValue)
 {
     if (m_graph)
     {
@@ -1071,7 +1055,7 @@ void Grapher::OnAxesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Window
     }
 }
 
-void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
+void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color oldValue [[maybe_unused]], Windows::UI::Color newValue)
 {
     if (m_renderMain)
     {
@@ -1085,7 +1069,7 @@ void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, 
     }
 }
 
-void Grapher::OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
+void Grapher::OnGridLinesColorPropertyChanged(Windows::UI::Color oldValue [[maybe_unused]], Windows::UI::Color newValue)
 {
     if (m_renderMain != nullptr && m_graph != nullptr)
     {

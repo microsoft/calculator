@@ -117,7 +117,7 @@ void _mulnumx(PNUMBER* pa, PNUMBER b)
         for (ibdigit = b->cdigit; ibdigit > 0; ibdigit--)
         {
             cy = 0;
-            mcy = (uint64_t)da * (*ptrb);
+            mcy = static_cast<uint64_t>(da) * *ptrb;
             if (mcy)
             {
                 icdigit = 0;
@@ -131,10 +131,10 @@ void _mulnumx(PNUMBER* pa, PNUMBER b)
             while (mcy || cy)
             {
                 // update carry from addition(s) and multiply.
-                cy += (TWO_MANTTYPE)ptrc[icdigit] + ((uint32_t)mcy & ((uint32_t)~BASEX));
+                cy += static_cast<TWO_MANTTYPE>(ptrc[icdigit]) + (static_cast<uint32_t>(mcy) & ~BASEX);
 
                 // update result digit from
-                ptrc[icdigit++] = (MANTTYPE)((uint32_t)cy & ((uint32_t)~BASEX));
+                ptrc[icdigit++] = static_cast<uint32_t>(cy) & ~BASEX;
 
                 // update carries from
                 mcy >>= BASEXPWR;
@@ -286,7 +286,7 @@ void _divnumx(PNUMBER* pa, PNUMBER b, int32_t precision)
 
     // Create c (the divide answer) and set up exponent and sign.
     createnum(c, thismax + 1);
-    c->exp = (a->cdigit + a->exp) - (b->cdigit + b->exp) + 1;
+    c->exp = a->cdigit + a->exp - (b->cdigit + b->exp) + 1;
     c->sign = a->sign * b->sign;
 
     ptrc = c->mant + thismax;
@@ -298,7 +298,7 @@ void _divnumx(PNUMBER* pa, PNUMBER b, int32_t precision)
 
     while (cdigits++ < thismax && !zernum(rem))
     {
-        int32_t digit = 0;
+        uint32_t digit = 0;
         *ptrc = 0;
         while (!lessnum(rem, b))
         {
@@ -334,7 +334,7 @@ void _divnumx(PNUMBER* pa, PNUMBER b, int32_t precision)
     cdigits--;
     if (c->mant != ++ptrc)
     {
-        memmove(c->mant, ptrc, (int)(cdigits * sizeof(MANTTYPE)));
+        memmove(c->mant, ptrc, cdigits * sizeof(MANTTYPE));
     }
 
     if (!cdigits)

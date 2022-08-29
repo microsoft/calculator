@@ -136,12 +136,12 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
     {
         addrat(pn, rat_two, precision);
 
-        // WARNING: mixing numbers and  rationals here.
+        // WARNING: mixing numbers and rationals here.
         // for speed and efficiency.
         INC(count);
-        mulnumx(&(factorial->pp), count);
+        mulnumx(&factorial->pp, count);
         INC(count)
-        mulnumx(&(factorial->pp), count);
+        mulnumx(&factorial->pp, count);
 
         divrat(&factorial, a2, precision);
 
@@ -207,11 +207,11 @@ void factrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     fracrat(&frac, radix, precision);
 
     // Check for negative integers and throw an error.
-    if ((zerrat(frac) || (LOGRATRADIX(frac) <= -precision)) && (SIGN(*px) == -1))
+    if ((zerrat(frac) || LOGRATRADIX(frac) <= -precision) && SIGN(*px) == -1)
     {
         throw CALC_E_DOMAIN;
     }
-    while (rat_gt(*px, rat_zero, precision) && (LOGRATRADIX(*px) > -precision))
+    while (rat_gt(*px, rat_zero, precision) && LOGRATRADIX(*px) > -precision)
     {
         mulrat(&fact, *px, precision);
         subrat(px, rat_one, precision);

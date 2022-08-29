@@ -728,7 +728,7 @@ namespace CalculatorUnitTests
             viewModel->DisplayValue = L"1001";
             viewModel->OnMemoryButtonPressed();
             viewModel->OnMemoryButtonPressed();
-            VERIFY_ARE_EQUAL((int)viewModel->MemorizedNumbers->Size, 2);
+            VERIFY_ARE_EQUAL(viewModel->MemorizedNumbers->Size, 2);
         }
 
         // When memory list is empty and M+ is pressed
@@ -900,7 +900,7 @@ namespace CalculatorUnitTests
             {
                 viewModel->OnMemoryButtonPressed();
             }
-            VERIFY_ARE_EQUAL((int)viewModel->MemorizedNumbers->Size, 100);
+            VERIFY_ARE_EQUAL(viewModel->MemorizedNumbers->Size, 100);
         }
 
         // When memory slot is pressed verify if the display value is updated correctly

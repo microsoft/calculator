@@ -250,7 +250,7 @@ void _tanrat(PRAT* px, uint32_t radix, int32_t precision)
     if (zerrat(ptmp))
     {
         destroyrat(ptmp);
-        throw(CALC_E_DOMAIN);
+        throw CALC_E_DOMAIN;
     }
     divrat(px, ptmp, precision);
 

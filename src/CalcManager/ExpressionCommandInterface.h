@@ -33,7 +33,7 @@ public:
 class IBinaryCommand : public IOperatorCommand
 {
 public:
-    virtual void SetCommand(int command) override = 0;
+    void SetCommand(int command) override = 0;
     virtual int GetCommand() const = 0;
 };
 

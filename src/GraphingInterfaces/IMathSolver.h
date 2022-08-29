@@ -31,7 +31,7 @@ namespace Graphing
 
     struct IParsingOptions : public NonCopyable, public NonMoveable
     {
-        virtual ~IParsingOptions() = default;
+        ~IParsingOptions() override = default;
 
         virtual void SetFormatType(FormatType type) = 0;
         virtual void SetLocalizationType(LocalizationType value) = 0;
@@ -39,7 +39,7 @@ namespace Graphing
 
     struct IEvalOptions : public NonCopyable, public NonMoveable
     {
-        virtual ~IEvalOptions() = default;
+        ~IEvalOptions() override = default;
 
         virtual EvalTrigUnitMode GetTrigUnitMode() const = 0;
         virtual void SetTrigUnitMode(EvalTrigUnitMode value) = 0;
@@ -47,7 +47,7 @@ namespace Graphing
 
     struct IFormatOptions : public NonCopyable, public NonMoveable
     {
-        virtual ~IFormatOptions() = default;
+        ~IFormatOptions() override = default;
 
         virtual void SetFormatType(FormatType type) = 0;
         virtual void SetMathMLPrefix(const std::wstring& value) = 0;
@@ -56,7 +56,7 @@ namespace Graphing
 
     struct IMathSolver : public NonCopyable, public NonMoveable
     {
-        virtual ~IMathSolver() = default;
+        ~IMathSolver() override = default;
 
         static GRAPHINGAPI std::unique_ptr<IMathSolver> CreateMathSolver();
 

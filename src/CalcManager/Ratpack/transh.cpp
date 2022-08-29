@@ -70,7 +70,7 @@ void _sinhrat(PRAT* px, int32_t precision)
     if (!IsValidForHypFunc(*px, precision))
     {
         // Don't attempt exp of anything large or small
-        throw(CALC_E_DOMAIN);
+        throw CALC_E_DOMAIN;
     }
 
     CREATETAYLOR();
@@ -149,7 +149,7 @@ void _coshrat(PRAT* px, uint32_t radix, int32_t precision)
     if (!IsValidForHypFunc(*px, precision))
     {
         // Don't attempt exp of anything large or small
-        throw(CALC_E_DOMAIN);
+        throw CALC_E_DOMAIN;
     }
 
     CREATETAYLOR();
@@ -219,8 +219,8 @@ void tanhrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     DUPRAT(ptmp, *px);
     sinhrat(px, radix, precision);
     coshrat(&ptmp, radix, precision);
-    mulnumx(&((*px)->pp), ptmp->pq);
-    mulnumx(&((*px)->pq), ptmp->pp);
+    mulnumx(&(*px)->pp, ptmp->pq);
+    mulnumx(&(*px)->pq, ptmp->pp);
 
     destroyrat(ptmp);
 }

@@ -39,8 +39,7 @@ namespace CalculatorApp
             //   3;2;0           0x023          - group 1st 3 and then every 2 digits
             //   4;0             0x004          - group every 4 digits
             //   5;3;2;0         0x235          - group 5, then 3, then every 2
-            wstring numberGroupingString = localizationSettings->GetNumberGroupingStr();
-            return numberGroupingString;
+            return localizationSettings->GetNumberGroupingStr();
         }
 
         StringReference idRef(id.data(), id.length());

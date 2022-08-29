@@ -1552,7 +1552,7 @@ wstring StandardCalculatorViewModel::AddPadding(wstring binaryString)
     {
         return binaryString;
     }
-    size_t pad = 4 - LengthWithoutPadding(binaryString) % 4;
+    size_t pad = 4 - (LengthWithoutPadding(binaryString) & 3);
     if (pad == 4)
     {
         pad = 0;

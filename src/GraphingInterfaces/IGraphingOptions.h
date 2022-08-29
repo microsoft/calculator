@@ -12,7 +12,7 @@ namespace Graphing
 {
     struct IGraphingOptions : public NonCopyable, public NonMoveable
     {
-        virtual ~IGraphingOptions() = default;
+        ~IGraphingOptions() override = default;
 
         virtual void ResetMarkKeyGraphFeaturesData() = 0;
 

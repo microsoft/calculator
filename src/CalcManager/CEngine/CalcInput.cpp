@@ -56,11 +56,11 @@ bool CalcInput::TryToggleSign(bool isIntegerMode, wstring_view maxNumStr)
     return true;
 }
 
-bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, wstring_view maxNumStr, int32_t wordBitWidth, int maxDigits)
+bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, wstring_view maxNumStr, uint32_t wordBitWidth, int maxDigits)
 {
     // Convert from an integer into a character
     // This includes both normal digits and alpha 'digits' for radixes > 10
-    auto chDigit = static_cast<wchar_t>((value < 10) ? (L'0' + value) : (L'A' + value - 10));
+    auto chDigit = static_cast<wchar_t>(value < 10 ? L'0' + value : L'A' + value - 10);
 
     CalcNumSec* pNumSec;
     size_t maxCount;
@@ -89,7 +89,7 @@ bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMo
     }
 
     // Ignore leading zeros
-    if (pNumSec->IsEmpty() && (value == 0))
+    if (pNumSec->IsEmpty() && value == 0)
     {
         return true;
     }
@@ -108,17 +108,16 @@ bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMo
 
         if (radix == 8)
         {
-            switch (wordBitWidth % 3)
+            const auto modResult = wordBitWidth % 3;
+            if (modResult == 1)
             {
-            case 1:
                 // in 16 or 64bit word size, if the first digit is a 1 we can enter 6 (16bit) or 22 (64bit) digits
-                allowExtraDigit = (pNumSec->value.front() == L'1');
-                break;
-
-            case 2:
+                allowExtraDigit = pNumSec->value.front() == L'1';
+            }
+            else if (modResult == 2)
+            {
                 // in 8 or 32bit word size, if the first digit is a 3 or less we can enter 3 (8bit) or 11 (32bit) digits
-                allowExtraDigit = (pNumSec->value.front() <= L'3');
-                break;
+                allowExtraDigit = pNumSec->value.front() <= L'3';
             }
         }
         else if (radix == 10)
@@ -137,14 +136,14 @@ bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMo
 
                 // If cmpResult == 0:
                 // Undecided still. The case when max is "127", and current number is "12". Look for the new number being 7 or less to allow
-                auto cmpResult = pNumSec->value.compare(0, wstring::npos, maxNumStr, 0, pNumSec->value.size());
+                const auto cmpResult = pNumSec->value.compare(0, wstring::npos, maxNumStr, 0, pNumSec->value.size());
                 if (cmpResult < 0)
                 {
                     allowExtraDigit = true;
                 }
                 else if (cmpResult == 0)
                 {
-                    auto lastChar = maxNumStr[pNumSec->value.size()];
+                    const auto lastChar = maxNumStr[pNumSec->value.size()];
                     if (chDigit <= lastChar)
                     {
                         allowExtraDigit = true;
@@ -189,7 +188,7 @@ bool CalcInput::TryAddDecimalPt()
     return true;
 }
 
-bool CalcInput::HasDecimalPt()
+bool CalcInput::HasDecimalPt() const
 {
     return m_hasDecimal;
 }
@@ -253,29 +252,31 @@ void CalcInput::Backspace()
 
 void CalcInput::SetDecimalSymbol(wchar_t decSymbol)
 {
-    if (m_decSymbol != decSymbol)
+    if (m_decSymbol == decSymbol)
     {
-        m_decSymbol = decSymbol;
+        return;
+    }
 
-        if (m_hasDecimal)
-        {
-            // Change to new decimal pt
-            m_base.value[m_decPtIndex] = m_decSymbol;
-        }
+    m_decSymbol = decSymbol;
+
+    if (m_hasDecimal)
+    {
+        // Change to new decimal pt
+        m_base.value[m_decPtIndex] = m_decSymbol;
     }
 }
 
-bool CalcInput::IsEmpty()
+bool CalcInput::IsEmpty() const
 {
     return m_base.IsEmpty() && !m_hasExponent && m_exponent.IsEmpty() && !m_hasDecimal;
 }
 
-wstring CalcInput::ToString(uint32_t radix)
+wstring CalcInput::ToString(uint32_t radix) const
 {
     // In theory both the base and exponent could be C_NUM_MAX_DIGITS long.
-    if ((m_base.value.size() > MAX_STRLEN) || (m_hasExponent && m_exponent.value.size() > MAX_STRLEN))
+    if (m_base.value.size() > MAX_STRLEN || m_hasExponent && m_exponent.value.size() > MAX_STRLEN)
     {
-        return wstring();
+        return {};
     }
 
     wstring result;
@@ -302,8 +303,8 @@ wstring CalcInput::ToString(uint32_t radix)
             result += m_decSymbol;
         }
 
-        result += ((radix == 10) ? L'e' : L'^');
-        result += (m_exponent.IsNegative() ? L'-' : L'+');
+        result += radix == 10 ? L'e' : L'^';
+        result += m_exponent.IsNegative() ? L'-' : L'+';
 
         if (m_exponent.IsEmpty())
         {
@@ -318,13 +319,13 @@ wstring CalcInput::ToString(uint32_t radix)
     // Base and Exp can each be up to C_NUM_MAX_DIGITS in length, plus 4 characters for sign, dec, exp, and expSign.
     if (result.size() > C_NUM_MAX_DIGITS * 2 + 4)
     {
-        return wstring();
+        return {};
     }
 
     return result;
 }
 
-Rational CalcInput::ToRational(uint32_t radix, int32_t precision)
+Rational CalcInput::ToRational(uint32_t radix, int32_t precision) const
 {
     PRAT rat = StringToRat(m_base.IsNegative(), m_base.value, m_exponent.IsNegative(), m_exponent.value, radix, precision);
     if (rat == nullptr)

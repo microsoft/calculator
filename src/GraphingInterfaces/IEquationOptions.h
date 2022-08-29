@@ -10,7 +10,7 @@ namespace Graphing
 {
     struct IEquationOptions : public NonCopyable, public NonMoveable
     {
-        virtual ~IEquationOptions() = default;
+        ~IEquationOptions() override = default;
 
         virtual Graphing::Color GetGraphColor() const = 0;
         virtual void SetGraphColor(const Graphing::Color& color) = 0;

@@ -44,8 +44,8 @@ void _exprat(_Inout_ PRAT* px, int32_t precision)
 {
     CREATETAYLOR();
 
-    addnum(&(pret->pp), num_one, BASEX);
-    addnum(&(pret->pq), num_one, BASEX);
+    addnum(&pret->pp, num_one, BASEX);
+    addnum(&pret->pq, num_one, BASEX);
     DUPRAT(thisterm, pret);
 
     n2 = i32tonum(0L, BASEX);
@@ -67,7 +67,7 @@ void exprat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     if (rat_gt(*px, rat_max_exp, precision) || rat_lt(*px, rat_min_exp, precision))
     {
         // Don't attempt exp of anything large.
-        throw(CALC_E_DOMAIN);
+        throw CALC_E_DOMAIN;
     }
 
     DUPRAT(pwr, rat_exp);
@@ -131,7 +131,7 @@ void _lograt(PRAT* px, int32_t precision)
 
     // sub one from x
     (*px)->pq->sign *= -1;
-    addnum(&((*px)->pp), (*px)->pq, BASEX);
+    addnum(&(*px)->pp, (*px)->pq, BASEX);
     (*px)->pq->sign *= -1;
 
     DUPRAT(pret, *px);
@@ -158,7 +158,7 @@ void lograt(_Inout_ PRAT* px, int32_t precision)
     // Check for someone taking the log of zero or a negative number.
     if (rat_le(*px, rat_zero, precision))
     {
-        throw(CALC_E_DOMAIN);
+        throw CALC_E_DOMAIN;
     }
 
     // Get number > 1, for scaling
@@ -409,7 +409,7 @@ void powratcomp(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, int32_t precision
         // *px is zero.
         if (rat_lt(y, rat_zero, precision))
         {
-            throw(CALC_E_DOMAIN);
+            throw CALC_E_DOMAIN;
         }
         else if (zerrat(y))
         {
@@ -424,7 +424,7 @@ void powratcomp(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, int32_t precision
         PRAT pxint = nullptr;
         DUPRAT(pxint, *px);
         subrat(&pxint, rat_one, precision);
-        if (rat_gt(pxint, rat_negsmallest, precision) && rat_lt(pxint, rat_smallest, precision) && (sign == 1))
+        if (rat_gt(pxint, rat_negsmallest, precision) && rat_lt(pxint, rat_smallest, precision) && sign == 1)
         {
             // *px is one, special case a 1 return.
             DUPRAT(*px, rat_one);
@@ -456,7 +456,7 @@ void powratcomp(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, int32_t precision
                     destroyrat(iy);
                     destroyrat(pxint);
                     destroyrat(podd);
-                    throw(CALC_E_DOMAIN);
+                    throw CALC_E_DOMAIN;
                 }
                 destroyrat(plnx);
                 ratpowi32(px, inty, precision);
@@ -506,7 +506,7 @@ void powratcomp(_Inout_ PRAT* px, _In_ PRAT y, uint32_t radix, int32_t precision
 
                     if (fBadExponent)
                     {
-                        throw(CALC_E_DOMAIN);
+                        throw CALC_E_DOMAIN;
                     }
                 }
                 else

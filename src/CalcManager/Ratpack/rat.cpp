@@ -40,16 +40,13 @@ using namespace std;
 void gcdrat(_Inout_ PRAT* pa, int32_t precision)
 
 {
-    PNUMBER pgcd = nullptr;
-    PRAT a = nullptr;
-
-    a = *pa;
-    pgcd = gcd(a->pp, a->pq);
+    PRAT a = *pa;
+    PNUMBER pgcd = gcd(a->pp, a->pq);
 
     if (!zernum(pgcd))
     {
-        divnumx(&(a->pp), pgcd, precision);
-        divnumx(&(a->pq), pgcd, precision);
+        divnumx(&a->pp, pgcd, precision);
+        divnumx(&a->pq, pgcd, precision);
     }
 
     destroynum(pgcd);
@@ -79,7 +76,7 @@ void fracrat(_Inout_ PRAT* pa, uint32_t radix, int32_t precision)
         flatrat(*pa, radix, precision);
     }
 
-    remnum(&((*pa)->pp), (*pa)->pq, BASEX);
+    remnum(&(*pa)->pp, (*pa)->pq, BASEX);
 
     // Get *pa back in the integer over integer form.
     RENORMALIZE(*pa);
@@ -104,8 +101,8 @@ void mulrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision)
     // Only do the multiply if it isn't zero.
     if (!zernum((*pa)->pp))
     {
-        mulnumx(&((*pa)->pp), b->pp);
-        mulnumx(&((*pa)->pq), b->pq);
+        mulnumx(&(*pa)->pp, b->pp);
+        mulnumx(&(*pa)->pq, b->pq);
         trimit(pa, precision);
     }
     else
@@ -138,13 +135,13 @@ void divrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision)
     if (!zernum((*pa)->pp))
     {
         // Only do the divide if the top isn't zero.
-        mulnumx(&((*pa)->pp), b->pq);
-        mulnumx(&((*pa)->pq), b->pp);
+        mulnumx(&(*pa)->pp, b->pq);
+        mulnumx(&(*pa)->pq, b->pp);
 
         if (zernum((*pa)->pq))
         {
             // raise an exception if the bottom is 0.
-            throw(CALC_E_DIVIDEBYZERO);
+            throw CALC_E_DIVIDEBYZERO;
         }
         trimit(pa, precision);
     }
@@ -155,7 +152,7 @@ void divrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision)
         {
             // If bottom is zero
             // 0 / 0 is indefinite, raise an exception.
-            throw(CALC_E_INDEFINITE);
+            throw CALC_E_INDEFINITE;
         }
         else
         {
@@ -218,16 +215,16 @@ void addrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision)
         (*pa)->pq->sign = 1;
         b->pp->sign *= b->pq->sign;
         b->pq->sign = 1;
-        addnum(&((*pa)->pp), b->pp, BASEX);
+        addnum(&(*pa)->pp, b->pp, BASEX);
     }
     else
     {
         // Usual case q's aren't the same.
         DUPNUM(bot, (*pa)->pq);
         mulnumx(&bot, b->pq);
-        mulnumx(&((*pa)->pp), b->pq);
-        mulnumx(&((*pa)->pq), b->pp);
-        addnum(&((*pa)->pp), (*pa)->pq, BASEX);
+        mulnumx(&(*pa)->pp, b->pq);
+        mulnumx(&(*pa)->pq, b->pp);
+        addnum(&(*pa)->pp, (*pa)->pq, BASEX);
         destroynum((*pa)->pq);
         (*pa)->pq = bot;
         trimit(pa, precision);
@@ -283,5 +280,5 @@ void rootrat(_Inout_ PRAT* py, _In_ PRAT n, uint32_t radix, int32_t precision)
 bool zerrat(_In_ PRAT a)
 
 {
-    return (zernum(a->pp));
+    return zernum(a->pp);
 }

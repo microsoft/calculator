@@ -16,49 +16,50 @@ namespace MockGraphingImpl
         {
             m_graphRenderer = std::make_shared<GraphRenderer>();
         }
-        virtual std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitialize(const Graphing::IExpression* graphingExp = nullptr)
+
+        std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitialize(const Graphing::IExpression* graphingExp = nullptr) override
         {
             if (graphingExp != nullptr)
             {
                 std::vector<std::shared_ptr<Graphing::IEquation>> equations;
                 equations.push_back(nullptr);
                 m_variables.push_back(std::make_shared<MockVariable>(MockVariable{}));
-                return std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>>(equations);
+                return std::optional(equations);
             }
 
             return std::nullopt;
         }
 
-        HRESULT GetInitializationError()
+        HRESULT GetInitializationError() override
         {
             return S_OK;
         }
 
-        virtual Graphing::IGraphingOptions& GetOptions()
+        Graphing::IGraphingOptions& GetOptions() override
         {
             return m_graphingOptions;
         }
 
-        virtual std::vector<std::shared_ptr<Graphing::IVariable>> GetVariables()
+        std::vector<std::shared_ptr<Graphing::IVariable>> GetVariables() override
         {
             return m_variables;
         }
 
-        virtual void SetArgValue(std::wstring variableName, double value)
+        void SetArgValue(std::wstring variableName, double value) override
         {
         }
 
-        virtual std::shared_ptr<Graphing::Renderer::IGraphRenderer> GetRenderer() const
+        std::shared_ptr<Graphing::Renderer::IGraphRenderer> GetRenderer() const override
         {
             return m_graphRenderer;
         }
 
-        virtual bool TryResetSelection()
+        bool TryResetSelection() override
         {
             return true;
         }
 
-        virtual std::shared_ptr<Graphing::Analyzer::IGraphAnalyzer> GetAnalyzer() const
+        std::shared_ptr<Graphing::Analyzer::IGraphAnalyzer> GetAnalyzer() const override
         {
             return nullptr;
         }

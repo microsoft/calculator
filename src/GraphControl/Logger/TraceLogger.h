@@ -15,9 +15,9 @@ namespace GraphControl
     internal:
         static TraceLogger ^ GetInstance();
 
-        void LogEquationCountChanged(int currentValidEquations, int currentInvalidEquations);
+        void LogEquationCountChanged(unsigned int currentValidEquations, unsigned int currentInvalidEquations);
         void LogFunctionAnalysisPerformed(int analysisErrorType, uint32 tooComplexFlag);
-        void LogVariableCountChanged(int variablesCount);
+        void LogVariableCountChanged(unsigned int variablesCount);
         void LogLineWidthChanged();
 
     private:

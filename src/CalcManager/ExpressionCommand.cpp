@@ -104,7 +104,6 @@ COpndCommand::COpndCommand(shared_ptr<vector<int>> const& commands, bool fNegati
     , m_fSciFmt(fSciFmt)
     , m_fDecimal(fDecimal)
     , m_fInitialized(false)
-    , m_value{}
 {
 }
 
@@ -143,7 +142,7 @@ void COpndCommand::AppendCommand(int command)
 
 void COpndCommand::ToggleSign()
 {
-    for (int nOpCode : *m_commands)
+    for (const int nOpCode : *m_commands)
     {
         if (nOpCode != IDC_0)
         {
@@ -169,9 +168,7 @@ void COpndCommand::RemoveFromEnd()
         }
         else
         {
-            int nOpCode = m_commands->at(nCommands - 1);
-
-            if (nOpCode == IDC_PNT)
+            if (m_commands->at(nCommands - 1) == IDC_PNT)
             {
                 m_fDecimal = false;
             }
@@ -212,14 +209,14 @@ void COpndCommand::ClearAllAndAppendCommand(CalculationManager::Command command)
 
 const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
 {
-    static const wchar_t chZero = L'0';
+    static constexpr wchar_t chZero = L'0';
 
     const size_t nCommands = m_commands->size();
     m_token.clear();
 
     for (size_t i = 0; i < nCommands; i++)
     {
-        int nOpCode = (*m_commands)[i];
+        auto nOpCode = (*m_commands)[i];
 
         if (nOpCode == IDC_PNT)
         {
@@ -228,8 +225,7 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
         else if (nOpCode == IDC_EXP)
         {
             m_token += chExp;
-            int nextOpCode = m_commands->at(i + 1);
-            if (nextOpCode != IDC_SIGN)
+            if (m_commands->at(i + 1) != IDC_SIGN)
             {
                 m_token += chPlus;
             }
@@ -240,8 +236,7 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
         }
         else
         {
-            wstring num = to_wstring(nOpCode - IDC_0);
-            m_token.append(num);
+            m_token.append(to_wstring(nOpCode - IDC_0));
         }
     }
 
@@ -273,7 +268,7 @@ const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
     return m_token;
 }
 
-wstring COpndCommand::GetString(uint32_t radix, int32_t precision)
+wstring COpndCommand::GetString(uint32_t radix, int32_t precision) const
 {
     if (m_fInitialized)
     {

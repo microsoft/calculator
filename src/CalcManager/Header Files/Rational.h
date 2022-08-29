@@ -19,7 +19,7 @@ namespace CalcEngine
     public:
         Rational() noexcept;
         Rational(Number const& n) noexcept;
-        Rational(Number const& p, Number const& q) noexcept;
+        Rational(Number p, Number q) noexcept;
         Rational(int32_t i);
         Rational(uint32_t ui);
         Rational(uint64_t ui);

@@ -188,7 +188,6 @@ namespace CalculatorApp::ViewModel
                 return m_listSeparator;
             }
 
-
         private:
             void Initialize(Windows::Globalization::NumberFormatting::DecimalFormatter ^ formatter)
             {
@@ -346,7 +345,7 @@ namespace CalculatorApp::ViewModel
             int m_currencySymbolPrecedence;
             Platform::String ^ m_resolvedName;
             int m_currencyTrailingDigits;
-            static const unsigned int LocaleSettingBufferSize = 16;
+            static constexpr unsigned int LocaleSettingBufferSize = 16;
         };
     }
 }

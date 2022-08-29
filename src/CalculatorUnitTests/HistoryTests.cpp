@@ -83,12 +83,12 @@ namespace CalculatorFunctionalTests
         void AddSingleHistoryItem()
         {
             Initialize();
-            int initialSize = m_historyViewModel->ItemsCount;
+            auto initialSize = m_historyViewModel->ItemsCount;
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command1));
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandADD));
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command8));
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandEQU));
-            int sizeAfterItemAdd = m_historyViewModel->ItemsCount;
+            auto sizeAfterItemAdd = m_historyViewModel->ItemsCount;
             auto historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(0));
             String ^ expression = L"1   +   8 =";
             VERIFY_ARE_EQUAL(initialSize + 1, sizeAfterItemAdd);
@@ -143,7 +143,7 @@ namespace CalculatorFunctionalTests
                 Command nextCommand = Command(130 + i);
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command1));
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandADD));
-                m_standardViewModel->SendCommandToCalcManager((int)nextCommand);
+                m_standardViewModel->SendCommandToCalcManager(static_cast<int>(nextCommand));
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandEQU));
             }
 
@@ -154,7 +154,7 @@ namespace CalculatorFunctionalTests
                 Command nextCommand = Command(130 + i);
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command1));
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandADD));
-                m_standardViewModel->SendCommandToCalcManager((int)nextCommand);
+                m_standardViewModel->SendCommandToCalcManager(static_cast<int>(nextCommand));
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::CommandEQU));
             }
 
@@ -164,7 +164,7 @@ namespace CalculatorFunctionalTests
             for (int i = 0; i < scientificItems; i++)
             {
                 wstring expr = L"1   +   " + wstring(i.ToString()->Data()) + L" =";
-                int output = 1 + i;
+                auto output = 1 + i;
                 String ^ result = output.ToString();
                 auto historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(m_historyViewModel->ItemsCount - 1 - i));
                 VERIFY_ARE_EQUAL(historyItem->Expression, StringReference(expr.c_str()));
@@ -177,7 +177,7 @@ namespace CalculatorFunctionalTests
             for (int i = 0; i < standardItems; i++)
             {
                 wstring expr = L"1   +   " + wstring(i.ToString()->Data()) + L" =";
-                int output = 1 + i;
+                auto output = 1 + i;
                 String ^ result = output.ToString();
                 auto historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(m_historyViewModel->ItemsCount - 1 - i));
                 VERIFY_ARE_EQUAL(historyItem->Expression, StringReference(expr.c_str()));
@@ -210,16 +210,16 @@ namespace CalculatorFunctionalTests
             Command commands[] = { Command::CommandSIN,  Command::CommandCOS,  Command::CommandTAN,
                                    Command::CommandASIN, Command::CommandACOS, Command::CommandATAN };
             Command mode[] = { Command::CommandDEG, Command::CommandRAD, Command::CommandGRAD };
-            int modes = sizeof(mode) / sizeof(Command);
-            int commandsSize = sizeof(commands) / sizeof(Command);
+            size_t modes = sizeof(mode) / sizeof(Command);
+            size_t commandsSize = sizeof(commands) / sizeof(Command);
             ResourceLoader ^ m_uiResourceLoader = ResourceLoader::GetForViewIndependentUse(L"CEngineStrings");
             int itemIndex = 0;
             int commandResource = 67;
             m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::ModeScientific));
-            for (int index = 0; index < modes; index++)
+            for (size_t index = 0; index < modes; index++)
             {
-                m_standardViewModel->SendCommandToCalcManager((int)mode[index]);
-                for (int command = 0; command < commandsSize; command++)
+                m_standardViewModel->SendCommandToCalcManager(static_cast<int>(mode[index]));
+                for (size_t command = 0; command < commandsSize; command++)
                 {
                     m_standardViewModel->SendCommandToCalcManager(static_cast<int>(Command::Command1));
                     m_standardViewModel->SendCommandToCalcManager(static_cast<int>(commands[command]));
@@ -390,13 +390,13 @@ namespace CalculatorFunctionalTests
         void HistoryStandardOrderOfOperationsHelper(String ^ expectedResult, String ^ expectedExpression, Command testCommands[])
         {
             Initialize();
-            int initialSize = m_historyViewModel->ItemsCount;
+            auto initialSize = m_historyViewModel->ItemsCount;
             Command* currentCommand = testCommands;
             while (*currentCommand != Command::CommandNULL)
             {
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(*currentCommand++));
             }
-            int sizeAfterCommandsAdd = m_historyViewModel->ItemsCount;
+            auto sizeAfterCommandsAdd = m_historyViewModel->ItemsCount;
             if (expectedResult->IsEmpty())
             {
                 VERIFY_ARE_EQUAL(initialSize, sizeAfterCommandsAdd);
@@ -554,13 +554,13 @@ namespace CalculatorFunctionalTests
             Initialize();
             Command commands[] = { Command::Command1,   Command::CommandMUL, Command::Command2,   Command::CommandMUL, Command::Command3,
                                    Command::CommandMUL, Command::Command4,   Command::CommandMUL, Command::Command5,   Command::CommandMUL, Command::CommandNULL };
-            int initialSize = m_historyViewModel->ItemsCount;
+            auto initialSize = m_historyViewModel->ItemsCount;
             Command* currentCommand = commands;
             while (*currentCommand != Command::CommandNULL)
             {
                 m_standardViewModel->SendCommandToCalcManager(static_cast<int>(*currentCommand++));
             }
-            int sizeAfterCommandsAdd = m_historyViewModel->ItemsCount;
+            auto sizeAfterCommandsAdd = m_historyViewModel->ItemsCount;
             VERIFY_ARE_EQUAL(initialSize + 4, sizeAfterCommandsAdd);
             auto historyItem = static_cast<HistoryItemViewModel ^>(m_historyViewModel->Items->GetAt(0));
             VERIFY_ARE_EQUAL(historyItem->Expression, L"24   \x00D7   5 =");

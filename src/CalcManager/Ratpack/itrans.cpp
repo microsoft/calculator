@@ -86,7 +86,6 @@ void asinanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t
 void asinrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 
 {
-    PRAT pret = nullptr;
     PRAT phack = nullptr;
     int32_t sgn = SIGN(*px);
 
@@ -107,12 +106,13 @@ void asinrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
         destroyrat(phack);
         if (rat_gt(*px, pt_eight_five, precision))
         {
+            PRAT pret = nullptr;
             if (rat_gt(*px, rat_one, precision))
             {
                 subrat(px, rat_one, precision);
                 if (rat_gt(*px, rat_smallest, precision))
                 {
-                    throw(CALC_E_DOMAIN);
+                    throw CALC_E_DOMAIN;
                 }
                 else
                 {
@@ -285,14 +285,14 @@ void atanrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     (*px)->pp->sign = 1;
     (*px)->pq->sign = 1;
 
-    if (rat_gt((*px), pt_eight_five, precision))
+    if (rat_gt(*px, pt_eight_five, precision))
     {
-        if (rat_gt((*px), rat_two, precision))
+        if (rat_gt(*px, rat_two, precision))
         {
             (*px)->pp->sign = sgn;
             (*px)->pq->sign = 1;
             DUPRAT(tmpx, rat_one);
-            divrat(&tmpx, (*px), precision);
+            divrat(&tmpx, *px, precision);
             _atanrat(&tmpx, precision);
             tmpx->pp->sign = sgn;
             tmpx->pq->sign = 1;

@@ -277,7 +277,7 @@ double CurrencyDataLoader::RoundCurrencyRatio(double ratio)
     {
         numberDecimals = max(
             FORMATTER_RATE_MIN_DECIMALS,
-            (int)(-log10(ratio)) + FORMATTER_RATE_MIN_SIGNIFICANT_DECIMALS);
+            static_cast<int>(-log10(ratio)) + FORMATTER_RATE_MIN_SIGNIFICANT_DECIMALS);
     }
 
     unsigned long long scale = (unsigned long long)powl(10l, numberDecimals);

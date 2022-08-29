@@ -20,17 +20,7 @@ namespace MockGraphingImpl
             , m_markHorizontalAsymptotes(false)
             , m_markObliqueAsymptotes(false)
             , m_maxExecutionTime(0)
-            , m_colors()
-            , m_backColor()
             , m_allowKeyGraphFeaturesForFunctionsWithParameters(false)
-            , m_zerosColor()
-            , m_extremaColor()
-            , m_inflectionPointsColor()
-            , m_asymptotesColor()
-            , m_axisColor()
-            , m_boxColor()
-            , m_gridColor()
-            , m_fontColor()
             , m_showAxis(true)
             , m_showGrid(true)
             , m_showBox(true)
@@ -43,358 +33,404 @@ namespace MockGraphingImpl
         {
         }
 
-        virtual void ResetMarkKeyGraphFeaturesData()
+        void ResetMarkKeyGraphFeaturesData() override
         {
         }
 
-        virtual bool GetMarkZeros() const
+        bool GetMarkZeros() const override
         {
             return m_markZeros;
         }
-        virtual void SetMarkZeros(bool value)
+
+        void SetMarkZeros(bool value) override
         {
             m_markZeros = value;
         }
 
-        virtual bool GetMarkYIntercept() const
+        bool GetMarkYIntercept() const override
         {
             return m_markYIntercept;
         }
-        virtual void SetMarkYIntercept(bool value)
+
+        void SetMarkYIntercept(bool value) override
         {
             m_markYIntercept = value;
         }
 
-        virtual bool GetMarkMinima() const
+        bool GetMarkMinima() const override
         {
             return m_markMinima;
         }
-        virtual void SetMarkMinima(bool value)
+
+        void SetMarkMinima(bool value) override
         {
             m_markMinima = value;
         }
 
-        virtual bool GetMarkMaxima() const
+        bool GetMarkMaxima() const override
         {
             return m_markMaxima;
         }
-        virtual void SetMarkMaxima(bool value)
+
+        void SetMarkMaxima(bool value) override
         {
             m_markMaxima = value;
         }
 
-        virtual bool GetMarkInflectionPoints() const
+        bool GetMarkInflectionPoints() const override
         {
             return m_markInflectionPoints;
         }
-        virtual void SetMarkInflectionPoints(bool value)
+
+        void SetMarkInflectionPoints(bool value) override
         {
             m_markInflectionPoints = value;
         }
 
-        virtual bool GetMarkVerticalAsymptotes() const
+        bool GetMarkVerticalAsymptotes() const override
         {
             return m_markVerticalAsymptotes;
         }
-        virtual void SetMarkVerticalAsymptotes(bool value)
+
+        void SetMarkVerticalAsymptotes(bool value) override
         {
             m_markVerticalAsymptotes = value;
         }
 
-        virtual bool GetMarkHorizontalAsymptotes() const
+        bool GetMarkHorizontalAsymptotes() const override
         {
             return m_markHorizontalAsymptotes;
         }
-        virtual void SetMarkHorizontalAsymptotes(bool value)
+
+        void SetMarkHorizontalAsymptotes(bool value) override
         {
             m_markHorizontalAsymptotes = value;
         }
 
-        virtual bool GetMarkObliqueAsymptotes() const
+        bool GetMarkObliqueAsymptotes() const override
         {
             return m_markObliqueAsymptotes;
         }
-        virtual void SetMarkObliqueAsymptotes(bool value)
+
+        void SetMarkObliqueAsymptotes(bool value) override
         {
             m_markObliqueAsymptotes = value;
         }
 
-        virtual unsigned long long GetMaxExecutionTime() const
+        unsigned long long GetMaxExecutionTime() const override
         {
             return m_maxExecutionTime;
         }
-        virtual void SetMaxExecutionTime(unsigned long long value)
+
+        void SetMaxExecutionTime(unsigned long long value) override
         {
             m_maxExecutionTime = value;
         }
 
-        virtual void ResetMaxExecutionTime()
+        void ResetMaxExecutionTime() override
         {
             m_maxExecutionTime = 0;
-        };
+        }
 
-        virtual std::vector<Graphing::Color> GetGraphColors() const
+        std::vector<Graphing::Color> GetGraphColors() const override
         {
             return m_colors;
         }
-        virtual bool SetGraphColors(const std::vector<Graphing::Color>& colors)
+
+        bool SetGraphColors(const std::vector<Graphing::Color>& colors) override
         {
             m_colors = colors;
             return true;
         }
-        virtual void ResetGraphColors()
+
+        void ResetGraphColors() override
         {
             m_colors.clear();
         }
 
-        virtual Graphing::Color GetBackColor() const
+        Graphing::Color GetBackColor() const override
         {
             return m_backColor;
         }
-        virtual void SetBackColor(const Graphing::Color& value)
+
+        void SetBackColor(const Graphing::Color& value) override
         {
             m_backColor = value;
         }
 
-        virtual void ResetBackColor()
+        void ResetBackColor() override
         {
             m_backColor = Graphing::Color();
         }
 
-        virtual void SetAllowKeyGraphFeaturesForFunctionsWithParameters(bool kgf)
+        void SetAllowKeyGraphFeaturesForFunctionsWithParameters(bool kgf) override
         {
             m_allowKeyGraphFeaturesForFunctionsWithParameters = kgf;
         }
-        virtual bool GetAllowKeyGraphFeaturesForFunctionsWithParameters() const
+
+        bool GetAllowKeyGraphFeaturesForFunctionsWithParameters() const override
         {
             return m_allowKeyGraphFeaturesForFunctionsWithParameters;
         }
-        virtual void ResetAllowKeyGraphFeaturesForFunctionsWithParameters()
+
+        void ResetAllowKeyGraphFeaturesForFunctionsWithParameters() override
         {
             m_allowKeyGraphFeaturesForFunctionsWithParameters = true;
         }
 
-        virtual Graphing::Color GetZerosColor() const
+        Graphing::Color GetZerosColor() const override
         {
             return m_zerosColor;
         }
-        virtual void SetZerosColor(const Graphing::Color& value)
+
+        void SetZerosColor(const Graphing::Color& value) override
         {
             m_zerosColor = value;
         }
-        virtual void ResetZerosColor()
+
+        void ResetZerosColor() override
         {
             m_zerosColor = Graphing::Color();
         }
 
-        virtual Graphing::Color GetExtremaColor() const
+        Graphing::Color GetExtremaColor() const override
         {
             return m_extremaColor;
         }
-        virtual void SetExtremaColor(const Graphing::Color& value)
+
+        void SetExtremaColor(const Graphing::Color& value) override
         {
             m_extremaColor = value;
         }
-        virtual void ResetExtremaColor()
+
+        void ResetExtremaColor() override
         {
             m_extremaColor = Graphing::Color();
         }
 
-        virtual Graphing::Color GetInflectionPointsColor() const
+        Graphing::Color GetInflectionPointsColor() const override
         {
             return m_inflectionPointsColor;
         }
-        virtual void SetInflectionPointsColor(const Graphing::Color& value)
+
+        void SetInflectionPointsColor(const Graphing::Color& value) override
         {
             m_inflectionPointsColor = value;
         }
-        virtual void ResetInflectionPointsColor()
+
+        void ResetInflectionPointsColor() override
         {
             m_inflectionPointsColor = Graphing::Color();
         }
 
-        virtual Graphing::Color GetAsymptotesColor() const
+        Graphing::Color GetAsymptotesColor() const override
         {
             return m_asymptotesColor;
         }
-        virtual void SetAsymptotesColor(const Graphing::Color& value)
+
+        void SetAsymptotesColor(const Graphing::Color& value) override
         {
             m_asymptotesColor = value;
         }
-        virtual void ResetAsymptotesColor()
+
+        void ResetAsymptotesColor() override
         {
             m_asymptotesColor = Graphing::Color();
         }
 
-        virtual Graphing::Color GetAxisColor() const
+        Graphing::Color GetAxisColor() const override
         {
             return m_axisColor;
         }
-        virtual void SetAxisColor(const Graphing::Color& value)
+
+        void SetAxisColor(const Graphing::Color& value) override
         {
             m_axisColor = value;
         }
-        virtual void ResetAxisColor()
+
+        void ResetAxisColor() override
         {
             m_axisColor = Graphing::Color();
         }
 
-        virtual Graphing::Color GetBoxColor() const
+        Graphing::Color GetBoxColor() const override
         {
             return m_boxColor;
         }
-        virtual void SetBoxColor(const Graphing::Color& value)
+
+        void SetBoxColor(const Graphing::Color& value) override
         {
             m_boxColor = value;
         }
-        virtual void ResetBoxColor()
+
+        void ResetBoxColor() override
         {
             m_boxColor = Graphing::Color();
         }
 
-        virtual Graphing::Color GetGridColor() const
+        Graphing::Color GetGridColor() const override
         {
             return m_gridColor;
         }
-        virtual void SetGridColor(const Graphing::Color& value)
+
+        void SetGridColor(const Graphing::Color& value) override
         {
             m_gridColor = value;
         }
-        virtual void ResetGridColor()
+
+        void ResetGridColor() override
         {
             m_gridColor = Graphing::Color();
         }
 
-        virtual Graphing::Color GetFontColor() const
+        Graphing::Color GetFontColor() const override
         {
             return m_fontColor;
         }
-        virtual void SetFontColor(const Graphing::Color& value)
+
+        void SetFontColor(const Graphing::Color& value) override
         {
             m_fontColor = value;
         }
-        virtual void ResetFontColor()
+
+        void ResetFontColor() override
         {
             m_fontColor = Graphing::Color();
         }
 
-        virtual bool GetShowAxis() const
+        bool GetShowAxis() const override
         {
             return m_showAxis;
         }
-        virtual void SetShowAxis(bool value)
+
+        void SetShowAxis(bool value) override
         {
             m_showAxis = value;
         }
-        virtual void ResetShowAxis()
+
+        void ResetShowAxis() override
         {
             m_showAxis = true;
         }
 
-        virtual bool GetShowGrid() const
+        bool GetShowGrid() const override
         {
             return m_showGrid;
         }
-        virtual void SetShowGrid(bool value)
+
+        void SetShowGrid(bool value) override
         {
             m_showGrid = value;
         }
-        virtual void ResetShowGrid()
+
+        void ResetShowGrid() override
         {
             m_showGrid = true;
         }
 
-        virtual bool GetShowBox() const
+        bool GetShowBox() const override
         {
             return m_showBox;
         }
-        virtual void SetShowBox(bool value)
+
+        void SetShowBox(bool value) override
         {
             m_showBox = value;
         }
-        virtual void ResetShowBox()
+
+        void ResetShowBox() override
         {
             m_showBox = true;
         }
 
-        virtual bool GetForceProportional() const
+        bool GetForceProportional() const override
         {
             return m_forceProportional;
         }
-        virtual void SetForceProportional(bool value)
+
+        void SetForceProportional(bool value) override
         {
             m_forceProportional = value;
         }
-        virtual void ResetForceProportional()
+
+        void ResetForceProportional() override
         {
             m_forceProportional = false;
         }
 
-        virtual std::wstring GetAliasX() const
+        std::wstring GetAliasX() const override
         {
             return m_aliasX;
         }
-        virtual void SetAliasX(const std::wstring& value)
+
+        void SetAliasX(const std::wstring& value) override
         {
             m_aliasX = value;
         }
-        virtual void ResetAliasX()
+
+        void ResetAliasX() override
         {
             m_aliasX = L"";
         }
 
-        virtual std::wstring GetAliasY() const
+        std::wstring GetAliasY() const override
         {
             return m_aliasY;
         }
-        virtual void SetAliasY(const std::wstring& value)
+
+        void SetAliasY(const std::wstring& value) override
         {
             m_aliasY = value;
         }
-        virtual void ResetAliasY()
+
+        void ResetAliasY() override
         {
             m_aliasY = L"";
         }
 
-        virtual Graphing::Renderer::LineStyle GetLineStyle() const
+        Graphing::Renderer::LineStyle GetLineStyle() const override
         {
             return m_lineStyle;
         }
-        virtual void SetLineStyle(Graphing::Renderer::LineStyle value)
+
+        void SetLineStyle(Graphing::Renderer::LineStyle value) override
         {
             m_lineStyle = value;
         }
-        virtual void ResetLineStyle()
+
+        void ResetLineStyle() override
         {
             m_lineStyle = Graphing::Renderer::LineStyle::Solid;
         }
 
-        virtual std::pair<double, double> GetDefaultXRange() const
+        std::pair<double, double> GetDefaultXRange() const override
         {
             return m_XRange;
         }
 
-        virtual bool SetDefaultXRange(const std::pair<double, double>& minmax)
+        bool SetDefaultXRange(const std::pair<double, double>& minmax) override
         {
             m_XRange = minmax;
             return true;
         }
-        virtual void ResetDefaultXRange()
+
+        void ResetDefaultXRange() override
         {
             m_XRange = { 0, 0 };
         }
 
-        virtual std::pair<double, double> GetDefaultYRange() const
+        std::pair<double, double> GetDefaultYRange() const override
         {
             return m_YRange;
         }
 
-        virtual bool SetDefaultYRange(const std::pair<double, double>& minmax)
+        bool SetDefaultYRange(const std::pair<double, double>& minmax) override
         {
             m_YRange = minmax;
             return true;
         }
-        virtual void ResetDefaultYRange()
+
+        void ResetDefaultYRange() override
         {
             m_YRange = { 0, 0 };
         }

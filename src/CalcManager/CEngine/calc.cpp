@@ -74,19 +74,14 @@ CCalcEngine::CCalcEngine(
     , m_bSetCalcState(false)
     , m_input(DEFAULT_DEC_SEPARATOR)
     , m_nFE(NumberFormat::Float)
+    , m_maxTrigonometricNum(RationalMath::Pow(10, 100))
     , m_memoryValue{ make_unique<Rational>() }
-    , m_holdVal{}
-    , m_currentVal{}
-    , m_lastVal{}
-    , m_parenVals{}
-    , m_precedenceVals{}
     , m_bError(false)
     , m_bInv(false)
     , m_bNoPrevEqu(true)
     , m_radix(DEFAULT_RADIX)
     , m_precision(DEFAULT_PRECISION)
     , m_cIntDigitsSav(DEFAULT_MAX_DIGITS)
-    , m_decGrouping()
     , m_numberString(DEFAULT_NUMBER_STR)
     , m_nTempCom(0)
     , m_openParenCount(0)
@@ -96,14 +91,11 @@ CCalcEngine::CCalcEngine(
     , m_nLastCom(0)
     , m_angletype(AngleType::Degrees)
     , m_numwidth(NUM_WIDTH::QWORD_WIDTH)
-    , m_HistoryCollector(pCalcDisplay, pHistoryDisplay, DEFAULT_DEC_SEPARATOR)
+    , m_dwWordBitWidth(DwWordBitWidthFromNumWidth(m_numwidth))
+    , m_HistoryCollector(pCalcDisplay, std::move(pHistoryDisplay), DEFAULT_DEC_SEPARATOR)
     , m_groupSeparator(DEFAULT_GRP_SEPARATOR)
 {
     InitChopNumbers();
-
-    m_dwWordBitWidth = DwWordBitWidthFromeNumWidth(m_numwidth);
-
-    m_maxTrigonometricNum = RationalMath::Pow(10, 100);
 
     SetRadixTypeAndNumWidth(RadixType::Decimal, m_numwidth);
     SettingsChanged();
@@ -125,14 +117,14 @@ void CCalcEngine::InitChopNumbers()
     assert(m_chopNumbers.size() == m_maxDecimalValueStrings.size());
     for (size_t i = 0; i < m_chopNumbers.size(); i++)
     {
-        auto maxVal = m_chopNumbers[i] / 2;
+        auto maxVal = m_chopNumbers[i] >> 1;
         maxVal = RationalMath::Integer(maxVal);
 
         m_maxDecimalValueStrings[i] = maxVal.ToString(10, NumberFormat::Float, m_precision);
     }
 }
 
-CalcEngine::Rational CCalcEngine::GetChopNumber() const
+Rational CCalcEngine::GetChopNumber() const
 {
     return m_chopNumbers[static_cast<int>(m_numwidth)];
 }
@@ -170,14 +162,6 @@ void CCalcEngine::SettingsChanged()
     wstring grpStr = m_resourceProvider->GetCEngineString(L"sGrouping");
     m_decGrouping = DigitGroupingStringToGroupingVector(grpStr.empty() ? DEFAULT_GRP_STR : grpStr);
 
-    bool numChanged = false;
-
-    // if the grouping pattern or thousands symbol changed we need to refresh the display
-    if (m_decGrouping != lastDecGrouping || m_groupSeparator != lastSep)
-    {
-        numChanged = true;
-    }
-
     // if the decimal symbol has changed we always do the following things
     if (m_decimalSeparator != lastDec)
     {
@@ -189,10 +173,10 @@ void CCalcEngine::SettingsChanged()
         s_engineStrings[SIDS_DECIMAL_SEPARATOR] = m_decimalSeparator;
 
         // we need to redraw to update the decimal point button
-        numChanged = true;
+        DisplayNum();
     }
-
-    if (numChanged)
+    // if the grouping pattern or thousands symbol changed we need to refresh the display
+    else if (m_decGrouping != lastDecGrouping || m_groupSeparator != lastSep)
     {
         DisplayNum();
     }

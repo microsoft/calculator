@@ -22,22 +22,23 @@ namespace MockGraphingImpl
         {
         }
 
-        virtual HRESULT SetGraphSize(unsigned int width, unsigned int height)
-        {
-            return S_OK;
-        }
-        virtual HRESULT SetDpi(float dpiX, float dpiY)
+        HRESULT SetGraphSize(unsigned int width, unsigned int height) override
         {
             return S_OK;
         }
 
-        virtual HRESULT DrawD2D1(ID2D1Factory* pDirect2dFactory, ID2D1RenderTarget* pRenderTarget, bool& hasSomeMissingDataOut)
+        HRESULT SetDpi(float dpiX, float dpiY) override
+        {
+            return S_OK;
+        }
+
+        HRESULT DrawD2D1(ID2D1Factory* pDirect2dFactory, ID2D1RenderTarget* pRenderTarget, bool& hasSomeMissingDataOut) override
         {
             hasSomeMissingDataOut = false;
             return S_OK;
         }
 
-        virtual HRESULT GetClosePointData(
+        HRESULT GetClosePointData(
             double inScreenPointX,
             double inScreenPointY,
             double precision,
@@ -48,7 +49,7 @@ namespace MockGraphingImpl
             double& yValueOut,
             double& rhoValueOut,
             double& thetaValueOut,
-            double& tValueOut)
+            double& tValueOut) override
         {
             formulaIdOut = 0;
             xScreenPointOut = 0;
@@ -59,7 +60,7 @@ namespace MockGraphingImpl
             return S_OK;
         }
 
-        virtual HRESULT ScaleRange(double centerX, double centerY, double scale)
+        HRESULT ScaleRange(double centerX, double centerY, double scale) override
         {
             m_xMin = scale * (m_xMin - centerX) + centerX;
             m_xMax = scale * (m_xMax - centerX) + centerX;
@@ -68,19 +69,22 @@ namespace MockGraphingImpl
             return S_OK;
         }
 
-        virtual HRESULT ChangeRange(Graphing::Renderer::ChangeRangeAction action)
+        HRESULT ChangeRange(Graphing::Renderer::ChangeRangeAction action) override
         {
             return S_OK;
         }
-        virtual HRESULT MoveRangeByRatio(double ratioX, double ratioY)
+
+        HRESULT MoveRangeByRatio(double ratioX, double ratioY) override
         {
             return S_OK;
         }
-        virtual HRESULT ResetRange()
+
+        HRESULT ResetRange() override
         {
             return S_OK;
         }
-        virtual HRESULT GetDisplayRanges(double& xMin, double& xMax, double& yMin, double& yMax)
+
+        HRESULT GetDisplayRanges(double& xMin, double& xMax, double& yMin, double& yMax) override
         {
             xMin = m_xMin;
             xMax = m_xMax;
@@ -88,7 +92,8 @@ namespace MockGraphingImpl
             yMax = m_yMax;
             return S_OK;
         }
-        virtual HRESULT SetDisplayRanges(double xMin, double xMax, double yMin, double yMax)
+
+        HRESULT SetDisplayRanges(double xMin, double xMax, double yMin, double yMax) override
         {
             m_xMin = xMin;
             m_xMax = xMax;
@@ -97,12 +102,12 @@ namespace MockGraphingImpl
             return S_OK;
         }
 
-        virtual HRESULT PrepareGraph()
+        HRESULT PrepareGraph() override
         {
             return S_OK;
         }
 
-        virtual HRESULT GetBitmap(std::shared_ptr<Graphing::IBitmap>& bitmapOut, bool& hasSomeMissingDataOut)
+        HRESULT GetBitmap(std::shared_ptr<Graphing::IBitmap>& bitmapOut, bool& hasSomeMissingDataOut) override
         {
             bitmapOut = std::make_shared<Bitmap>();
             hasSomeMissingDataOut = false;

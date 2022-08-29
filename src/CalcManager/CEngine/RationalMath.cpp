@@ -16,7 +16,7 @@ Rational RationalMath::Frac(Rational const& rat)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -35,7 +35,7 @@ Rational RationalMath::Integer(Rational const& rat)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -58,7 +58,7 @@ Rational RationalMath::Pow(Rational const& base, Rational const& pow)
     {
         destroyrat(baseRat);
         destroyrat(powRat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ baseRat };
@@ -83,7 +83,7 @@ Rational RationalMath::Fact(Rational const& rat)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -103,7 +103,7 @@ Rational RationalMath::Exp(Rational const& rat)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -123,7 +123,7 @@ Rational RationalMath::Log(Rational const& rat)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -158,7 +158,7 @@ Rational RationalMath::Sin(Rational const& rat, AngleType angletype)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -178,7 +178,7 @@ Rational RationalMath::Cos(Rational const& rat, AngleType angletype)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -198,7 +198,7 @@ Rational RationalMath::Tan(Rational const& rat, AngleType angletype)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -218,7 +218,7 @@ Rational RationalMath::ASin(Rational const& rat, AngleType angletype)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -238,7 +238,7 @@ Rational RationalMath::ACos(Rational const& rat, AngleType angletype)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -258,7 +258,7 @@ Rational RationalMath::ATan(Rational const& rat, AngleType angletype)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -278,7 +278,7 @@ Rational RationalMath::Sinh(Rational const& rat)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -298,7 +298,7 @@ Rational RationalMath::Cosh(Rational const& rat)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -318,7 +318,7 @@ Rational RationalMath::Tanh(Rational const& rat)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -338,7 +338,7 @@ Rational RationalMath::ASinh(Rational const& rat)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -358,7 +358,7 @@ Rational RationalMath::ACosh(Rational const& rat)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -378,7 +378,7 @@ Rational RationalMath::ATanh(Rational const& rat)
     catch (uint32_t error)
     {
         destroyrat(prat);
-        throw(error);
+        throw error;
     }
 
     Rational result{ prat };
@@ -409,7 +409,7 @@ Rational RationalMath::Mod(Rational const& a, Rational const& b)
     {
         destroyrat(prat);
         destroyrat(pn);
-        throw(error);
+        throw error;
     }
 
     auto res = Rational{ prat };

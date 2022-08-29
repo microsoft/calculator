@@ -30,9 +30,9 @@ void GraphingSettingsViewModel::SetGrapher(Grapher ^ grapher)
 {
     if (grapher != nullptr)
     {
-        if (grapher->TrigUnitMode == (int)Graphing::EvalTrigUnitMode::Invalid)
+        if (grapher->TrigUnitMode == static_cast<int>(Graphing::EvalTrigUnitMode::Invalid))
         {
-            grapher->TrigUnitMode = (int)Graphing::EvalTrigUnitMode::Radians;
+            grapher->TrigUnitMode = static_cast<int>(Graphing::EvalTrigUnitMode::Radians);
         }
     }
     Graph = grapher;

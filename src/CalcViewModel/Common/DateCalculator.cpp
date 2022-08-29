@@ -171,7 +171,6 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
 
                 if (static_cast<int>(outputFormat & dateUnit))
                 {
-                    bool isEndDateHit = false;
                     differenceInDates[unitIndex] = (daysDiff / daysIn[unitIndex]);
 
                     if (differenceInDates[unitIndex] != 0)
@@ -188,11 +187,12 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
                         }
                     }
 
-                    int tempDaysDiff;
-
-                    do
+                    for (;;)
                     {
-                        tempDaysDiff = GetDifferenceInDays(pivotDate, endDate);
+                        int tempDaysDiff = GetDifferenceInDays(pivotDate, endDate);
+
+                        if (tempDaysDiff == 0)
+                            break;
 
                         if (tempDaysDiff < 0)
                         {
@@ -205,30 +205,23 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
                             differenceInDates[unitIndex] -= 1;
                             pivotDate = tempPivotDate;
                             pivotDate = AdjustCalendarDate(pivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));
-                            isEndDateHit = true;
+                            // This is the closest the pivot can get to the end date for this unit
+                            break;
                         }
-                        else if (tempDaysDiff > 0)
-                        {
-                            if (isEndDateHit)
-                            {
-                                // This is the closest the pivot can get to the end date for this unit
-                                break;
-                            }
 
-                            // pivotDate is still below the end date
-                            try
-                            {
-                                pivotDate = AdjustCalendarDate(tempPivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex] + 1));
-                                differenceInDates[unitIndex] += 1;
-                            }
-                            catch (Platform::InvalidArgumentException ^)
-                            {
-                                // Operation failed due to out of bound result
-                                // For example: 31st Dec, 9999 - last valid date
-                                return nullptr;
-                            }
+                        // pivotDate is still below the end date
+                        try
+                        {
+                            pivotDate = AdjustCalendarDate(tempPivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex] + 1));
+                            differenceInDates[unitIndex] += 1;
                         }
-                    } while (tempDaysDiff != 0); // dates are the same - exit the loop
+                        catch (Platform::InvalidArgumentException ^)
+                        {
+                            // Operation failed due to out of bound result
+                            // For example: 31st Dec, 9999 - last valid date
+                            return nullptr;
+                        }
+                    }
 
                     tempPivotDate = AdjustCalendarDate(tempPivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));
                     pivotDate = tempPivotDate;
@@ -269,60 +262,52 @@ int DateCalculationEngine::GetDifferenceInDays(DateTime date1, DateTime date2)
 // Returns true if successful, false otherwise.
 bool DateCalculationEngine::TryGetCalendarDaysInMonth(_In_ DateTime date, _Out_ UINT& daysInMonth)
 {
-    bool result = false;
     m_calendar->SetDateTime(date);
 
     // NumberOfDaysInThisMonth returns -1 if unknown.
     int daysInThisMonth = m_calendar->NumberOfDaysInThisMonth;
-    if (daysInThisMonth != -1)
+    if (daysInThisMonth == -1)
     {
-        daysInMonth = static_cast<UINT>(daysInThisMonth);
-        result = true;
+        return false;
     }
 
-    return result;
+    daysInMonth = static_cast<UINT>(daysInThisMonth);
+    return true;
 }
 
 // Gets number of Calendar days in the year in which this date falls.
 // Returns true if successful, false otherwise.
 bool DateCalculationEngine::TryGetCalendarDaysInYear(_In_ DateTime date, _Out_ UINT& daysInYear)
 {
-    bool result = false;
     UINT days = 0;
 
     m_calendar->SetDateTime(date);
 
     // NumberOfMonthsInThisYear returns -1 if unknown.
     int monthsInYear = m_calendar->NumberOfMonthsInThisYear;
-    if (monthsInYear != -1)
+    if (monthsInYear == -1)
     {
-        bool monthResult = true;
-
-        // Not all years begin with Month 1.
-        int firstMonthThisYear = m_calendar->FirstMonthInThisYear;
-        for (int month = 0; month < monthsInYear; month++)
-        {
-            m_calendar->Month = firstMonthThisYear + month;
-
-            // NumberOfDaysInThisMonth returns -1 if unknown.
-            int daysInMonth = m_calendar->NumberOfDaysInThisMonth;
-            if (daysInMonth == -1)
-            {
-                monthResult = false;
-                break;
-            }
-
-            days += daysInMonth;
-        }
-
-        if (monthResult)
-        {
-            daysInYear = days;
-            result = true;
-        }
+        return false;
     }
 
-    return result;
+    // Not all years begin with Month 1.
+    int firstMonthThisYear = m_calendar->FirstMonthInThisYear;
+    for (int month = 0; month < monthsInYear; month++)
+    {
+        m_calendar->Month = firstMonthThisYear + month;
+
+        // NumberOfDaysInThisMonth returns -1 if unknown.
+        int daysInMonth = m_calendar->NumberOfDaysInThisMonth;
+        if (daysInMonth == -1)
+        {
+            return false;
+        }
+
+        days += daysInMonth;
+    }
+
+    daysInYear = days;
+    return true;
 }
 
 // Adds/Subtracts certain value for a particular date unit
@@ -342,17 +327,17 @@ DateTime DateCalculationEngine::AdjustCalendarDate(Windows::Foundation::DateTime
         m_calendar->ChangeCalendarSystem(CalendarIdentifiers::Gregorian);
     }
 
-    switch (dateUnit)
+    if (dateUnit == DateUnit::Year)
     {
-    case DateUnit::Year:
         m_calendar->AddYears(difference);
-        break;
-    case DateUnit::Month:
+    }
+    else if (dateUnit == DateUnit::Month)
+    {
         m_calendar->AddMonths(difference);
-        break;
-    case DateUnit::Week:
+    }
+    else if (dateUnit == DateUnit::Week)
+    {
         m_calendar->AddWeeks(difference);
-        break;
     }
 
     m_calendar->ChangeCalendarSystem(currentCalendarSystem);

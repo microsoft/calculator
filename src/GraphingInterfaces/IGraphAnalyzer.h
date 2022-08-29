@@ -11,14 +11,14 @@
 
 namespace Graphing::Analyzer
 {
-    typedef unsigned int NativeAnalysisType; // PerformAnalysisType
+    using NativeAnalysisType = unsigned int; // PerformAnalysisType
 
     struct IGraphAnalyzer : public NonCopyable, public NonMoveable
     {
-        virtual ~IGraphAnalyzer() = default;
+        ~IGraphAnalyzer() override = default;
         virtual bool CanFunctionAnalysisBePerformed(bool& variableIsNotX) = 0;
         virtual HRESULT PerformFunctionAnalysis(NativeAnalysisType analysisType) = 0;
-        virtual HRESULT GetAnalysisTypeCaption(const AnalysisType type, std::wstring& captionOut) const = 0;
-        virtual HRESULT GetMessage(const GraphAnalyzerMessage msg, std::wstring& msgOut) const = 0;
+        virtual HRESULT GetAnalysisTypeCaption(AnalysisType type, std::wstring& captionOut) const = 0;
+        virtual HRESULT GetMessage(GraphAnalyzerMessage msg, std::wstring& msgOut) const = 0;
     };
 }

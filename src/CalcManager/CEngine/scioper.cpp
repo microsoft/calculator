@@ -10,7 +10,7 @@ using namespace CalcEngine::RationalMath;
 CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs)
 {
     // Remove any variance in how 0 could be represented in rat e.g. -0, 0/n, etc.
-    auto result = (lhs != 0 ? lhs : 0);
+    auto result = lhs != 0 ? lhs : 0;
 
     try
     {
@@ -29,7 +29,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             break;
 
         case IDC_NAND:
-            result = (result & rhs) ^ GetChopNumber();
+            result = result & rhs ^ GetChopNumber();
             break;
 
         case IDC_NOR:
@@ -43,20 +43,18 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
                 throw CALC_E_NORESULT;
             }
 
-            uint64_t w64Bits = rhs.ToUInt64_t();
-            bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
-
             Rational holdVal = result;
             result = rhs >> holdVal;
 
-            if (fMsb)
+            if ((rhs.ToUInt64_t() & (1ULL << (m_dwWordBitWidth - 1))) != 0)
             {
                 result = Integer(result);
+                const auto chopNumber = GetChopNumber();
 
-                auto tempRat = GetChopNumber() >> holdVal;
+                auto tempRat = chopNumber >> holdVal;
                 tempRat = Integer(tempRat);
 
-                result |= tempRat ^ GetChopNumber();
+                result |= tempRat ^ chopNumber;
             }
             break;
         }
@@ -94,59 +92,55 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
         case IDC_DIV:
         case IDC_MOD:
         {
-            int iNumeratorSign = 1, iDenominatorSign = 1;
+            bool isNumeratorNegative = false, isDenominatorNegative = false;
             auto temp = result;
             result = rhs;
 
             if (m_fIntegerMode)
             {
                 uint64_t w64Bits = rhs.ToUInt64_t();
-                bool fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
-
-                if (fMsb)
+                const uint64_t mask = 1ULL << (m_dwWordBitWidth - 1);
+                if ((w64Bits & mask) != 0)
                 {
                     result = (rhs ^ GetChopNumber()) + 1;
 
-                    iNumeratorSign = -1;
+                    isNumeratorNegative = true;
                 }
 
                 w64Bits = temp.ToUInt64_t();
-                fMsb = (w64Bits >> (m_dwWordBitWidth - 1)) & 1;
 
-                if (fMsb)
+                if ((w64Bits & mask) != 0)
                 {
                     temp = (temp ^ GetChopNumber()) + 1;
 
-                    iDenominatorSign = -1;
+                    isDenominatorNegative = true;
                 }
             }
 
             if (operation == IDC_DIV)
             {
                 result /= temp;
-                if (m_fIntegerMode && (iNumeratorSign * iDenominatorSign) == -1)
+                if (m_fIntegerMode && isNumeratorNegative != isDenominatorNegative)
                 {
-                    result = -(Integer(result));
+                    result = -Integer(result);
+                }
+            }
+            else if (m_fIntegerMode)
+            {
+                // Programmer mode, use remrat (remainder after division)
+                result %= temp;
+
+                if (isNumeratorNegative)
+                {
+                    result = -Integer(result);
                 }
             }
             else
             {
-                if (m_fIntegerMode)
-                {
-                    // Programmer mode, use remrat (remainder after division)
-                    result %= temp;
-
-                    if (iNumeratorSign == -1)
-                    {
-                        result = -(Integer(result));
-                    }
-                }
-                else
-                {
-                    // other modes, use modrat (modulus after division)
-                    result = Mod(result, temp);
-                }
+                // other modes, use modrat (modulus after division)
+                result = Mod(result, temp);
             }
+
             break;
         }
 
@@ -159,7 +153,7 @@ CalcEngine::Rational CCalcEngine::DoOperation(int operation, CalcEngine::Rationa
             break;
 
         case IDC_LOGBASEY:
-            result = (Log(rhs) / Log(result));
+            result = Log(rhs) / Log(result);
             break;
         }
     }

@@ -116,13 +116,13 @@ void HistoryViewModel::ShowItem(_In_ HistoryItemViewModel ^ e)
 {
     unsigned int index;
     Items->IndexOf(e, &index);
-    TraceLogger::GetInstance()->LogHistoryItemLoad((ViewMode)m_currentMode, Items->Size, (int)(index));
+    TraceLogger::GetInstance()->LogHistoryItemLoad((ViewMode)m_currentMode, Items->Size, static_cast<int>(index));
     HistoryItemClicked(e);
 }
 
 void HistoryViewModel::DeleteItem(_In_ HistoryItemViewModel ^ e)
 {
-    uint32_t itemIndex;
+    unsigned int itemIndex;
     if (Items->IndexOf(e, &itemIndex))
     {
         if (m_calculatorManager->RemoveHistoryItem(itemIndex))

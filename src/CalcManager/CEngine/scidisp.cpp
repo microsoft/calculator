@@ -48,10 +48,10 @@ typedef struct
     bool bUseSep;
 } LASTDISP;
 
-static LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
+static LASTDISP gldPrevious = { 0, -1, 0, -1, static_cast<NUM_WIDTH>(-1), false, false, false };
 
 // Truncates if too big, makes it a non negative - the number in rat. Doesn't do anything if not in INT mode
-CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational const& rat)
+CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational const& rat) const
 {
     if (!m_fIntegerMode)
     {
@@ -60,22 +60,23 @@ CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational con
 
     // Truncate to an integer. Do not round here.
     auto result = RationalMath::Integer(rat);
+    const auto chopNumber = GetChopNumber();
 
     // Can be converting a dec negative number to Hex/Oct/Bin rep. Use 2's complement form
     // Check the range.
     if (result < 0)
     {
         // if negative make positive by doing a twos complement
-        result = -(result)-1;
-        result ^= GetChopNumber();
+        result = -result-1;
+        result ^= chopNumber;
     }
 
-    result &= GetChopNumber();
+    result &= chopNumber;
 
     return result;
 }
 
-void CCalcEngine::DisplayNum(void)
+void CCalcEngine::DisplayNum()
 {
     //
     // Only change the display if
@@ -84,12 +85,13 @@ void CCalcEngine::DisplayNum(void)
     //  something important has changed since the last time DisplayNum was
     //  called.
     //
-    if (m_bRecord || gldPrevious.value != m_currentVal || gldPrevious.precision != m_precision || gldPrevious.radix != m_radix || gldPrevious.nFE != (int)m_nFE
-        || !gldPrevious.bUseSep || gldPrevious.numwidth != m_numwidth || gldPrevious.fIntMath != m_fIntegerMode || gldPrevious.bRecord != m_bRecord)
+    if (m_bRecord || gldPrevious.value != m_currentVal || gldPrevious.precision != m_precision || gldPrevious.radix != m_radix
+        || gldPrevious.nFE != static_cast<int>(m_nFE) || !gldPrevious.bUseSep || gldPrevious.numwidth != m_numwidth || gldPrevious.fIntMath != m_fIntegerMode
+        || gldPrevious.bRecord != m_bRecord)
     {
         gldPrevious.precision = m_precision;
         gldPrevious.radix = m_radix;
-        gldPrevious.nFE = (int)m_nFE;
+        gldPrevious.nFE = static_cast<int>(m_nFE);
         gldPrevious.numwidth = m_numwidth;
 
         gldPrevious.fIntMath = m_fIntegerMode;
@@ -114,7 +116,7 @@ void CCalcEngine::DisplayNum(void)
         // Displayed number can go through transformation. So copy it after transformation
         gldPrevious.value = m_currentVal;
 
-        if ((m_radix == 10) && IsNumberInvalid(m_numberString, MAX_EXPONENT, m_precision, m_radix))
+        if (m_radix == 10 && (IsNumberInvalid(m_numberString, MAX_EXPONENT, m_precision, m_radix) != 0))
         {
             DisplayError(CALC_E_OVERFLOW);
         }
@@ -156,7 +158,7 @@ int CCalcEngine::IsNumberInvalid(const wstring& numberString, int iMaxExp, int i
                 auto intEnd = exp.end();
                 while (intItr != intEnd && *intItr == L'0')
                 {
-                    intItr++;
+                    ++intItr;
                 }
 
                 auto iMantissa = distance(intItr, intEnd) + matches.length(2);
@@ -177,7 +179,7 @@ int CCalcEngine::IsNumberInvalid(const wstring& numberString, int iMaxExp, int i
         {
             if (radix == 16)
             {
-                if (!(iswdigit(c) || (c >= L'A' && c <= L'F')))
+                if (!(iswdigit(c) || c >= L'A' && c <= L'F'))
                 {
                     iError = IDS_ERR_UNK_CH;
                 }
@@ -234,7 +236,7 @@ vector<uint32_t> CCalcEngine::DigitGroupingStringToGroupingVector(wstring_view g
         // If we found a grouping and aren't at the end of the string yet,
         // jump to the next position in the string (the ';').
         // The loop will then increment us to the next character, which should be a number.
-        if (next && (static_cast<size_t>(next - begin) < groupingString.length()))
+        if (next && static_cast<size_t>(next - begin) < groupingString.length())
         {
             itr = next;
         }
@@ -243,7 +245,7 @@ vector<uint32_t> CCalcEngine::DigitGroupingStringToGroupingVector(wstring_view g
     return grouping;
 }
 
-wstring CCalcEngine::GroupDigitsPerRadix(wstring_view numberString, uint32_t radix)
+wstring CCalcEngine::GroupDigitsPerRadix(wstring_view numberString, uint32_t radix) const
 {
     if (numberString.empty())
     {
@@ -253,7 +255,7 @@ wstring CCalcEngine::GroupDigitsPerRadix(wstring_view numberString, uint32_t rad
     switch (radix)
     {
     case 10:
-        return GroupDigits(wstring{ m_groupSeparator }, m_decGrouping, numberString, (L'-' == numberString[0]));
+        return GroupDigits(wstring{ m_groupSeparator }, m_decGrouping, numberString, L'-' == numberString[0]);
     case 8:
         return GroupDigits(L" ", { 3, 0 }, numberString);
     case 2:
@@ -283,7 +285,7 @@ wstring CCalcEngine::GroupDigitsPerRadix(wstring_view numberString, uint32_t rad
 *   5,3,2    - group 5, then 3, then 2, then no grouping after
 *
 \***************************************************************************/
-wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const& grouping, wstring_view displayString, bool isNumNegative)
+wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const& grouping, wstring_view displayString, bool isNumNegative) const
 {
     // if there's nothing to do, bail
     if (delimiter.empty() || grouping.empty())
@@ -293,11 +295,11 @@ wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const&
 
     // Find the position of exponential 'e' in the string
     size_t exp = displayString.find(L'e');
-    bool hasExponent = (exp != wstring_view::npos);
+    bool hasExponent = exp != wstring_view::npos;
 
     // Find the position of decimal point in the string
     size_t dec = displayString.find(m_decimalSeparator);
-    bool hasDecimal = (dec != wstring_view::npos);
+    bool hasDecimal = dec != wstring_view::npos;
 
     // Create an iterator that points to the end of the portion of the number subject to grouping (i.e. left of the decimal)
     auto ritr = displayString.rend();
@@ -332,7 +334,7 @@ wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const&
         // Do not add a separator if:
         // - grouping size is 0
         // - we are at the end of the digit string
-        if (currGrouping != 0 && (groupingSize % currGrouping) == 0 && ritr != reverse_end)
+        if (currGrouping != 0 && groupingSize % currGrouping == 0 && ritr != reverse_end)
         {
             result += delimiter;
             groupingSize = 0; // reset for a new group
@@ -340,14 +342,13 @@ wstring CCalcEngine::GroupDigits(wstring_view delimiter, vector<uint32_t> const&
             // Shift the grouping to next values if they exist
             if (groupItr != grouping.end())
             {
-                ++groupItr;
-
                 // Loop through grouping vector until we find a non-zero value.
                 // "0" values may appear in a form of either e.g. "3;0" or "3;0;0".
                 // A 0 in the last position means repeat the previous grouping.
                 // A 0 in another position is a group. So, "3;0;0" means "group 3, then group 0 repeatedly"
                 // This could be expressed as just "3" but GetLocaleInfo is returning 3;0;0 in some cases instead.
-                for (currGrouping = 0; groupItr != grouping.end(); ++groupItr)
+                currGrouping = 0;
+                while (++groupItr != grouping.end())
                 {
                     // If it's a non-zero value, that's our new group
                     if (*groupItr != 0)

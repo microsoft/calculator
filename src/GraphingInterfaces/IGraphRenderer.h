@@ -17,7 +17,7 @@ namespace Graphing::Renderer
 {
     struct IGraphRenderer : public NonCopyable, public NonMoveable
     {
-        virtual ~IGraphRenderer() = default;
+        ~IGraphRenderer() override = default;
 
         virtual HRESULT SetGraphSize(unsigned int width, unsigned int height) = 0;
         virtual HRESULT SetDpi(float dpiX, float dpiY) = 0;

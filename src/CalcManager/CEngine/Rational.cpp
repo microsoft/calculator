@@ -7,8 +7,7 @@ using namespace std;
 namespace CalcEngine
 {
     Rational::Rational() noexcept
-        : m_p{}
-        , m_q{ 1, 0, { 1 } }
+        : m_q{ 1, 0, { 1 } }
     {
     }
 
@@ -24,15 +23,15 @@ namespace CalcEngine
         m_q = Number(1, qExp, { 1 });
     }
 
-    Rational::Rational(Number const& p, Number const& q) noexcept
-        : m_p{ p }
-        , m_q{ q }
+    Rational::Rational(Number p, Number q) noexcept
+        : m_p{ std::move(p) }
+        , m_q{ std::move(q) }
     {
     }
 
     Rational::Rational(int32_t i)
     {
-        PRAT pr = i32torat(static_cast<int32_t>(i));
+        PRAT pr = i32torat(i);
 
         m_p = Number{ pr->pp };
         m_q = Number{ pr->pq };
@@ -42,7 +41,7 @@ namespace CalcEngine
 
     Rational::Rational(uint32_t ui)
     {
-        PRAT pr = Ui32torat(static_cast<uint32_t>(ui));
+        PRAT pr = Ui32torat(ui);
 
         m_p = Number{ pr->pp };
         m_q = Number{ pr->pq };
@@ -52,8 +51,8 @@ namespace CalcEngine
 
     Rational::Rational(uint64_t ui)
     {
-        uint32_t hi = (uint32_t)(((ui) >> 32) & 0xffffffff);
-        uint32_t lo = (uint32_t)ui;
+        uint32_t hi = static_cast<uint32_t>(ui >> 32);
+        uint32_t lo = static_cast<uint32_t>(ui & 0xffffffff);
 
         Rational temp = (Rational{ hi } << 32) | lo;
 
@@ -106,7 +105,7 @@ namespace CalcEngine
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
-            throw(error);
+            throw error;
         }
 
         *this = Rational{ lhsRat };
@@ -129,7 +128,7 @@ namespace CalcEngine
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
-            throw(error);
+            throw error;
         }
 
         *this = Rational{ lhsRat };
@@ -152,7 +151,7 @@ namespace CalcEngine
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
-            throw(error);
+            throw error;
         }
 
         *this = Rational{ lhsRat };
@@ -175,7 +174,7 @@ namespace CalcEngine
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
-            throw(error);
+            throw error;
         }
 
         *this = Rational{ lhsRat };
@@ -205,7 +204,7 @@ namespace CalcEngine
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
-            throw(error);
+            throw error;
         }
 
         *this = Rational{ lhsRat };
@@ -228,7 +227,7 @@ namespace CalcEngine
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
-            throw(error);
+            throw error;
         }
 
         *this = Rational{ lhsRat };
@@ -251,7 +250,7 @@ namespace CalcEngine
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
-            throw(error);
+            throw error;
         }
 
         *this = Rational{ lhsRat };
@@ -274,7 +273,7 @@ namespace CalcEngine
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
-            throw(error);
+            throw error;
         }
 
         *this = Rational{ lhsRat };
@@ -296,7 +295,7 @@ namespace CalcEngine
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
-            throw(error);
+            throw error;
         }
 
         *this = Rational{ lhsRat };
@@ -318,7 +317,7 @@ namespace CalcEngine
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
-            throw(error);
+            throw error;
         }
 
         *this = Rational{ lhsRat };
@@ -399,7 +398,7 @@ namespace CalcEngine
         PRAT lhsRat = lhs.ToPRAT();
         PRAT rhsRat = rhs.ToPRAT();
 
-        bool result = false;
+        bool result;
         try
         {
             result = rat_equ(lhsRat, rhsRat, RATIONAL_PRECISION);
@@ -408,7 +407,7 @@ namespace CalcEngine
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
-            throw(error);
+            throw error;
         }
 
         destroyrat(lhsRat);
@@ -427,7 +426,7 @@ namespace CalcEngine
         PRAT lhsRat = lhs.ToPRAT();
         PRAT rhsRat = rhs.ToPRAT();
 
-        bool result = false;
+        bool result;
         try
         {
             result = rat_lt(lhsRat, rhsRat, RATIONAL_PRECISION);
@@ -436,7 +435,7 @@ namespace CalcEngine
         {
             destroyrat(lhsRat);
             destroyrat(rhsRat);
-            throw(error);
+            throw error;
         }
 
         destroyrat(lhsRat);
@@ -460,19 +459,19 @@ namespace CalcEngine
         return !(lhs < rhs);
     }
 
-    wstring Rational::ToString(uint32_t radix, NumberFormat fmt, int32_t precision) const
+    wstring Rational::ToString(uint32_t radix, NumberFormat format, int32_t precision) const
     {
         PRAT rat = this->ToPRAT();
-        wstring result{};
+        wstring result;
 
         try
         {
-            result = RatToString(rat, fmt, radix, precision);
+            result = RatToString(rat, format, radix, precision);
         }
         catch (uint32_t error)
         {
             destroyrat(rat);
-            throw(error);
+            throw error;
         }
 
         destroyrat(rat);
@@ -491,7 +490,7 @@ namespace CalcEngine
         catch (uint32_t error)
         {
             destroyrat(rat);
-            throw(error);
+            throw error;
         }
 
         destroyrat(rat);

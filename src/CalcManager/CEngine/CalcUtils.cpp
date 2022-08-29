@@ -6,7 +6,7 @@
 
 bool IsOpInRange(OpCode op, uint32_t x, uint32_t y)
 {
-    return ((op >= x) && (op <= y));
+    return op >= x && op <= y;
 }
 
 bool IsBinOpCode(OpCode opCode)
@@ -18,7 +18,7 @@ bool IsBinOpCode(OpCode opCode)
 // of it and catch it themselves or not needing this
 bool IsUnaryOpCode(OpCode opCode)
 {
-    return (IsOpInRange(opCode, IDC_UNARYFIRST, IDC_UNARYLAST) || IsOpInRange(opCode, IDC_UNARYEXTENDEDFIRST, IDC_UNARYEXTENDEDLAST));
+    return IsOpInRange(opCode, IDC_UNARYFIRST, IDC_UNARYLAST) || IsOpInRange(opCode, IDC_UNARYEXTENDEDFIRST, IDC_UNARYEXTENDEDLAST);
 }
 
 bool IsDigitOpCode(OpCode opCode)
@@ -49,8 +49,8 @@ bool IsGuiSettingOpCode(OpCode opCode)
     case IDC_MPLUS:
     case IDC_MMINUS:
         return true;
+    default:
+        // most of the commands
+        return false;
     }
-
-    // most of the commands
-    return false;
 }

@@ -44,7 +44,7 @@ namespace CalculationManager
     class CalculatorManager final : public ICalcDisplay
     {
     private:
-        static const unsigned int m_maximumMemorySize = 100;
+        static constexpr unsigned int m_maximumMemorySize = 100;
         ICalcDisplay* const m_displayCallback;
         CCalcEngine* m_currentCalculatorEngine;
         std::unique_ptr<CCalcEngine> m_scientificCalculatorEngine;
@@ -58,7 +58,7 @@ namespace CalculationManager
         bool m_isExponentialFormat;
         Command m_currentDegreeMode;
 
-        void MemorizedNumberSelect(_In_ unsigned int);
+        void MemorizedNumberSelect(_In_ unsigned int) const;
         void MemorizedNumberChanged(_In_ unsigned int);
 
         void LoadPersistedPrimaryValue();
@@ -78,7 +78,7 @@ namespace CalculationManager
         void OnHistoryItemAdded(_In_ unsigned int addedItemIndex) override;
         void SetParenthesisNumber(_In_ unsigned int parenthesisCount) override;
         void OnNoRightParenAdded() override;
-        void DisplayPasteError();
+        void DisplayPasteError() const;
         void MaxDigitsReached() override;
         void BinaryOperatorReceived() override;
         void MemoryItemChanged(unsigned int indexOfMemory) override;
@@ -98,20 +98,20 @@ namespace CalculationManager
         void MemorizedNumberClear(_In_ unsigned int);
         void MemorizedNumberClearAll();
 
-        bool IsEngineRecording();
-        bool IsInputEmpty();
-        void SetRadix(RadixType iRadixType);
-        void SetMemorizedNumbersString();
-        std::wstring GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix);
-        void SetPrecision(int32_t precision);
-        void UpdateMaxIntDigits();
-        wchar_t DecimalSeparator();
+        bool IsEngineRecording() const;
+        bool IsInputEmpty() const;
+        void SetRadix(RadixType iRadixType) const;
+        void SetMemorizedNumbersString() const;
+        std::wstring GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix) const;
+        void SetPrecision(int32_t precision) const;
+        void UpdateMaxIntDigits() const;
+        wchar_t DecimalSeparator() const;
 
-        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems();
-        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems(_In_ CalculatorMode mode);
-        std::shared_ptr<HISTORYITEM> const& GetHistoryItem(_In_ unsigned int uIdx);
-        bool RemoveHistoryItem(_In_ unsigned int uIdx);
-        void ClearHistory();
+        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems() const;
+        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems(_In_ CalculatorMode mode) const;
+        std::shared_ptr<HISTORYITEM> const& GetHistoryItem(_In_ unsigned int uIdx) const;
+        bool RemoveHistoryItem(_In_ unsigned int uIdx) const;
+        void ClearHistory() const;
         size_t MaxHistorySize() const
         {
             return m_pHistory->MaxHistorySize();

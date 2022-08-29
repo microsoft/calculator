@@ -9,7 +9,7 @@ using namespace CalculationManager;
 
 namespace
 {
-    static wstring GetGeneratedExpression(const vector<pair<wstring, int>>& tokens)
+    wstring GetGeneratedExpression(const vector<pair<wstring, int>>& tokens)
     {
         wstring expression;
         bool isFirst = true;
@@ -41,7 +41,7 @@ unsigned int CalculatorHistory::AddToHistory(
     _In_ shared_ptr<vector<shared_ptr<IExpressionCommand>>> const& commands,
     wstring_view result)
 {
-    shared_ptr<HISTORYITEM> spHistoryItem = make_shared<HISTORYITEM>();
+    const auto spHistoryItem = make_shared<HISTORYITEM>();
 
     spHistoryItem->historyItemVector.spTokens = tokens;
     spHistoryItem->historyItemVector.spCommands = commands;

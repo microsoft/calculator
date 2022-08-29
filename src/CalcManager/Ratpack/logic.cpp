@@ -29,7 +29,7 @@ void lshrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision)
         if (rat_gt(b, rat_max_exp, precision))
         {
             // Don't attempt lsh of anything big
-            throw(CALC_E_DOMAIN);
+            throw CALC_E_DOMAIN;
         }
         const int32_t intb = rattoi32(b, radix, precision);
         DUPRAT(pwr, rat_two);
@@ -51,7 +51,7 @@ void rshrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision)
         if (rat_lt(b, rat_min_exp, precision))
         {
             // Don't attempt rsh of anything big and negative.
-            throw(CALC_E_DOMAIN);
+            throw CALC_E_DOMAIN;
         }
         const int32_t intb = rattoi32(b, radix, precision);
         DUPRAT(pwr, rat_two);
@@ -109,7 +109,7 @@ void boolrat(PRAT* pa, PRAT b, int func, uint32_t radix, int32_t precision)
     DUPRAT(tmp, b);
     intrat(&tmp, radix, precision);
 
-    boolnum(&((*pa)->pp), tmp->pp, func);
+    boolnum(&(*pa)->pp, tmp->pp, func);
     destroyrat(tmp);
 }
 
@@ -151,8 +151,8 @@ void boolnum(PNUMBER* pa, PNUMBER b, int func)
     pchc = c->mant;
     for (; cdigits > 0; cdigits--, mexp++)
     {
-        da = (((mexp >= a->exp) && (cdigits + a->exp - c->exp > (c->cdigit - a->cdigit))) ? *pcha++ : 0);
-        db = (((mexp >= b->exp) && (cdigits + b->exp - c->exp > (c->cdigit - b->cdigit))) ? *pchb++ : 0);
+        da = mexp >= a->exp && cdigits + a->exp - c->exp > c->cdigit - a->cdigit ? *pcha++ : 0;
+        db = mexp >= b->exp && cdigits + b->exp - c->exp > c->cdigit - b->cdigit ? *pchb++ : 0;
         switch (func)
         {
         case FUNC_AND:
@@ -167,7 +167,7 @@ void boolnum(PNUMBER* pa, PNUMBER b, int func)
         }
     }
     c->sign = a->sign;
-    while (c->cdigit > 1 && *(--pchc) == 0)
+    while (c->cdigit > 1 && *--pchc == 0)
     {
         c->cdigit--;
     }
@@ -200,10 +200,10 @@ void remrat(_Inout_ PRAT* pa, _In_ PRAT b)
     PRAT tmp = nullptr;
     DUPRAT(tmp, b);
 
-    mulnumx(&((*pa)->pp), tmp->pq);
-    mulnumx(&(tmp->pp), (*pa)->pq);
-    remnum(&((*pa)->pp), tmp->pp, BASEX);
-    mulnumx(&((*pa)->pq), tmp->pq);
+    mulnumx(&(*pa)->pp, tmp->pq);
+    mulnumx(&tmp->pp, (*pa)->pq);
+    remnum(&(*pa)->pp, tmp->pp, BASEX);
+    mulnumx(&(*pa)->pq, tmp->pq);
 
     // Get *pa back in the integer over integer form.
     RENORMALIZE(*pa);
@@ -237,12 +237,12 @@ void modrat(_Inout_ PRAT* pa, _In_ PRAT b)
     PRAT tmp = nullptr;
     DUPRAT(tmp, b);
 
-    auto needAdjust = (SIGN(*pa) == -1 ? (SIGN(b) == 1) : (SIGN(b) == -1));
+    const auto needAdjust = SIGN(*pa) == -1 ? SIGN(b) == 1 : SIGN(b) == -1;
 
-    mulnumx(&((*pa)->pp), tmp->pq);
-    mulnumx(&(tmp->pp), (*pa)->pq);
-    remnum(&((*pa)->pp), tmp->pp, BASEX);
-    mulnumx(&((*pa)->pq), tmp->pq);
+    mulnumx(&(*pa)->pp, tmp->pq);
+    mulnumx(&tmp->pp, (*pa)->pq);
+    remnum(&(*pa)->pp, tmp->pp, BASEX);
+    mulnumx(&(*pa)->pq, tmp->pq);
 
     if (needAdjust && !zerrat(*pa))
     {

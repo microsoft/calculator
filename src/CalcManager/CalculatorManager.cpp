@@ -22,7 +22,6 @@ namespace CalculationManager
         , m_currentCalculatorEngine(nullptr)
         , m_resourceProvider(resourceProvider)
         , m_inHistoryItemLoadMode(false)
-        , m_persistedPrimaryValue()
         , m_isExponentialFormat(false)
         , m_currentDegreeMode(Command::CommandNULL)
         , m_pStdHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
@@ -50,7 +49,7 @@ namespace CalculationManager
         m_displayCallback->SetIsInError(isError);
     }
 
-    void CalculatorManager::DisplayPasteError()
+    void CalculatorManager::DisplayPasteError() const
     {
         m_currentCalculatorEngine->DisplayError(CALC_E_DOMAIN /*code for "Invalid input" error*/);
     }
@@ -212,37 +211,39 @@ namespace CalculationManager
     /// <param name="command">Enum Command</command>
     void CalculatorManager::SendCommand(_In_ Command command)
     {
-        // When the expression line is cleared, we save the current state, which includes,
-        // primary display, memory, and degree mode
-        if (command == Command::CommandCLEAR || command == Command::CommandEQU || command == Command::ModeBasic || command == Command::ModeScientific
-            || command == Command::ModeProgrammer)
-        {
-            switch (command)
-            {
-            case Command::ModeBasic:
-                this->SetStandardMode();
-                break;
-            case Command::ModeScientific:
-                this->SetScientificMode();
-                break;
-            case Command::ModeProgrammer:
-                this->SetProgrammerMode();
-                break;
-            default:
-                m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(command));
-            }
-
-            InputChanged();
-            return;
-        }
-
-        if (command == Command::CommandDEG || command == Command::CommandRAD || command == Command::CommandGRAD)
-        {
-            m_currentDegreeMode = command;
-        }
-
         switch (command)
         {
+        case Command::CommandCLEAR:
+            // When the expression line is cleared, we save the current state, which includes,
+            // primary display, memory, and degree mode
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandCLEAR));
+            break;
+        case Command::CommandEQU:
+            // When the expression line is cleared, we save the current state, which includes,
+            // primary display, memory, and degree mode
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandEQU));
+            break;
+        case Command::ModeBasic:
+            this->SetStandardMode();
+            break;
+        case Command::ModeScientific:
+            this->SetScientificMode();
+            break;
+        case Command::ModeProgrammer:
+            this->SetProgrammerMode();
+            break;
+        case Command::CommandDEG:
+            m_currentDegreeMode = Command::CommandDEG;
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandDEG));
+            break;
+        case Command::CommandRAD:
+            m_currentDegreeMode = Command::CommandRAD;
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandRAD));
+            break;
+        case Command::CommandGRAD:
+            m_currentDegreeMode = Command::CommandGRAD;
+            m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandGRAD));
+            break;
         case Command::CommandASIN:
             m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
             m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandSIN));
@@ -329,7 +330,7 @@ namespace CalculationManager
 
         m_currentCalculatorEngine->ProcessCommand(IDC_STORE);
 
-        auto memoryObjectPtr = m_currentCalculatorEngine->PersistedMemObject();
+        const auto memoryObjectPtr = m_currentCalculatorEngine->PersistedMemObject();
         if (memoryObjectPtr != nullptr)
         {
             m_memorizedNumbers.insert(m_memorizedNumbers.begin(), *memoryObjectPtr);
@@ -447,7 +448,7 @@ namespace CalculationManager
     /// Saved RAT number needs to be copied and passed in, as CCalcEngine destroyed the passed in RAT
     /// </summary>
     /// <param name="indexOfMemory">Index of the target memory</param>
-    void CalculatorManager::MemorizedNumberSelect(_In_ unsigned int indexOfMemory)
+    void CalculatorManager::MemorizedNumberSelect(_In_ unsigned int indexOfMemory) const
     {
         if (m_currentCalculatorEngine->FInErrorState())
         {
@@ -471,23 +472,25 @@ namespace CalculationManager
         }
 
         auto memoryObject = m_currentCalculatorEngine->PersistedMemObject();
-        if (memoryObject != nullptr)
+        if (memoryObject == nullptr)
         {
-            m_memorizedNumbers.at(indexOfMemory) = *memoryObject;
+            return;
         }
+
+        m_memorizedNumbers.at(indexOfMemory) = *memoryObject;
     }
 
-    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems()
+    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems() const
     {
         return m_pHistory->GetHistory();
     }
 
-    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems(_In_ CalculatorMode mode)
+    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems(_In_ CalculatorMode mode) const
     {
-        return (mode == CalculatorMode::Standard) ? m_pStdHistory->GetHistory() : m_pSciHistory->GetHistory();
+        return mode == CalculatorMode::Standard ? m_pStdHistory->GetHistory() : m_pSciHistory->GetHistory();
     }
 
-    shared_ptr<HISTORYITEM> const& CalculatorManager::GetHistoryItem(_In_ unsigned int uIdx)
+    shared_ptr<HISTORYITEM> const& CalculatorManager::GetHistoryItem(_In_ unsigned int uIdx) const
     {
         return m_pHistory->GetHistoryItem(uIdx);
     }
@@ -497,17 +500,17 @@ namespace CalculationManager
         m_displayCallback->OnHistoryItemAdded(addedItemIndex);
     }
 
-    bool CalculatorManager::RemoveHistoryItem(_In_ unsigned int uIdx)
+    bool CalculatorManager::RemoveHistoryItem(_In_ unsigned int uIdx) const
     {
         return m_pHistory->RemoveItem(uIdx);
     }
 
-    void CalculatorManager::ClearHistory()
+    void CalculatorManager::ClearHistory() const
     {
         m_pHistory->ClearHistory();
     }
 
-    void CalculatorManager::SetRadix(RadixType iRadixType)
+    void CalculatorManager::SetRadix(RadixType iRadixType) const
     {
         switch (iRadixType)
         {
@@ -529,7 +532,7 @@ namespace CalculationManager
         SetMemorizedNumbersString();
     }
 
-    void CalculatorManager::SetMemorizedNumbersString()
+    void CalculatorManager::SetMemorizedNumbersString() const
     {
         vector<wstring> resultVector;
         for (auto const& memoryItem : m_memorizedNumbers)
@@ -545,7 +548,7 @@ namespace CalculationManager
         m_displayCallback->SetMemorizedNumbers(resultVector);
     }
 
-    CalculationManager::Command CalculatorManager::GetCurrentDegreeMode()
+    Command CalculatorManager::GetCurrentDegreeMode()
     {
         if (m_currentDegreeMode == Command::CommandNULL)
         {
@@ -554,32 +557,32 @@ namespace CalculationManager
         return m_currentDegreeMode;
     }
 
-    wstring CalculatorManager::GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix)
+    wstring CalculatorManager::GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix) const
     {
-        return m_currentCalculatorEngine ? m_currentCalculatorEngine->GetCurrentResultForRadix(radix, precision, groupDigitsPerRadix) : L"";
+        return m_currentCalculatorEngine != nullptr ? m_currentCalculatorEngine->GetCurrentResultForRadix(radix, precision, groupDigitsPerRadix) : L"";
     }
 
-    void CalculatorManager::SetPrecision(int32_t precision)
+    void CalculatorManager::SetPrecision(int32_t precision) const
     {
         m_currentCalculatorEngine->ChangePrecision(precision);
     }
 
-    void CalculatorManager::UpdateMaxIntDigits()
+    void CalculatorManager::UpdateMaxIntDigits() const
     {
         m_currentCalculatorEngine->UpdateMaxIntDigits();
     }
 
-    wchar_t CalculatorManager::DecimalSeparator()
+    wchar_t CalculatorManager::DecimalSeparator() const
     {
-        return m_currentCalculatorEngine ? m_currentCalculatorEngine->DecimalSeparator() : m_resourceProvider->GetCEngineString(L"sDecimal")[0];
+        return m_currentCalculatorEngine != nullptr ? m_currentCalculatorEngine->DecimalSeparator() : m_resourceProvider->GetCEngineString(L"sDecimal")[0];
     }
 
-    bool CalculatorManager::IsEngineRecording()
+    bool CalculatorManager::IsEngineRecording() const
     {
         return m_currentCalculatorEngine->FInRecordingState();
     }
 
-    bool CalculatorManager::IsInputEmpty()
+    bool CalculatorManager::IsInputEmpty() const
     {
         return m_currentCalculatorEngine->IsInputEmpty();
     }

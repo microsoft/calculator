@@ -21,10 +21,10 @@
 
 using namespace std;
 using namespace CalcEngine;
-using namespace CalcEngine::RationalMath;
+using namespace RationalMath;
 
 /* Routines for more complex mathematical functions/error checking. */
-CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op)
+Rational CCalcEngine::SciCalcFunctions(Rational const& rat, uint32_t op)
 {
     Rational result{};
     try
@@ -39,7 +39,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         case IDC_COM:
             if (m_radix == 10 && !m_fIntegerMode)
             {
-                result = -(RationalMath::Integer(rat) + 1);
+                result = -(Integer(rat) + 1);
             }
             else
             {
@@ -78,16 +78,16 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
                 result = Integer(rat);
 
                 uint64_t w64Bits = result.ToUInt64_t();
-                uint64_t lsb = ((w64Bits & 0x01) == 1) ? 1 : 0;
+                uint64_t lsb = w64Bits & 0x01;
                 w64Bits >>= 1; // RShift by 1
 
                 if (op == IDC_ROR)
                 {
-                    w64Bits |= (lsb << (m_dwWordBitWidth - 1));
+                    w64Bits |= lsb << (m_dwWordBitWidth - 1);
                 }
                 else
                 {
-                    w64Bits |= (m_carryBit << (m_dwWordBitWidth - 1));
+                    w64Bits |= m_carryBit << (m_dwWordBitWidth - 1);
                     m_carryBit = lsb;
                 }
 
@@ -268,11 +268,11 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
             break;
         }
         case IDC_CEIL:
-            result = (Frac(rat) > 0) ? Integer(rat + 1) : Integer(rat);
+            result = Frac(rat) > 0 ? Integer(rat + 1) : Integer(rat);
             break;
 
         case IDC_FLOOR:
-            result = (Frac(rat) < 0) ? Integer(rat - 1) : Integer(rat);
+            result = Frac(rat) < 0 ? Integer(rat - 1) : Integer(rat);
             break;
 
         case IDC_ABS:

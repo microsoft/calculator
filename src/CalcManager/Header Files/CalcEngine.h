@@ -56,14 +56,14 @@ public:
     CCalcEngine(
         bool fPrecedence,
         bool fIntegerMode,
-        CalculationManager::IResourceProvider* const pResourceProvider,
+        CalculationManager::IResourceProvider* pResourceProvider,
         __in_opt ICalcDisplay* pCalcDisplay,
         __in_opt std::shared_ptr<IHistoryDisplay> pHistoryDisplay);
     void ProcessCommand(OpCode wID);
     void DisplayError(uint32_t nError);
     std::unique_ptr<CalcEngine::Rational> PersistedMemObject();
     void PersistedMemObject(CalcEngine::Rational const& memObject);
-    bool FInErrorState()
+    bool FInErrorState() const
     {
         return m_bError;
     }
@@ -71,21 +71,21 @@ public:
     {
         return m_input.IsEmpty() && (m_numberString.empty() || m_numberString == L"0");
     }
-    bool FInRecordingState()
+    bool FInRecordingState() const
     {
         return m_bRecord;
     }
     void SettingsChanged();
-    bool IsCurrentTooBigForTrig();
-    uint32_t GetCurrentRadix();
+    bool IsCurrentTooBigForTrig() const;
+    uint32_t GetCurrentRadix() const;
     std::wstring GetCurrentResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix);
     void ChangePrecision(int32_t precision)
     {
         m_precision = precision;
         ChangeConstants(m_radix, precision);
     }
-    std::wstring GroupDigitsPerRadix(std::wstring_view numberString, uint32_t radix);
-    std::wstring GetStringForDisplay(CalcEngine::Rational const& rat, uint32_t radix);
+    std::wstring GroupDigitsPerRadix(std::wstring_view numberString, uint32_t radix) const;
+    std::wstring GetStringForDisplay(CalcEngine::Rational const& rat, uint32_t radix) const;
     void UpdateMaxIntDigits();
     wchar_t DecimalSeparator() const;
 
@@ -149,38 +149,38 @@ private:
     int m_nLastCom;                          // Last command entered.
     AngleType m_angletype;                   // Current Angle type when in dec mode. one of deg, rad or grad
     NUM_WIDTH m_numwidth;                    // one of qword, dword, word or byte mode.
-    int32_t m_dwWordBitWidth;                // # of bits in currently selected word size
+    uint32_t m_dwWordBitWidth;                // # of bits in currently selected word size
 
     std::unique_ptr<std::mt19937> m_randomGeneratorEngine;
     std::unique_ptr<std::uniform_real_distribution<>> m_distr;
 
-    uint64_t m_carryBit;
+    uint64_t m_carryBit{};
 
     CHistoryCollector m_HistoryCollector; // Accumulator of each line of history as various commands are processed
 
     std::array<CalcEngine::Rational, NUM_WIDTH_LENGTH> m_chopNumbers;           // word size enforcement
     std::array<std::wstring, NUM_WIDTH_LENGTH> m_maxDecimalValueStrings;        // maximum values represented by a given word width based off m_chopNumbers
     static std::unordered_map<std::wstring_view, std::wstring> s_engineStrings; // the string table shared across all instances
-    wchar_t m_decimalSeparator;
+    wchar_t m_decimalSeparator{};
     wchar_t m_groupSeparator;
 
 private:
     void ProcessCommandWorker(OpCode wParam);
     void ResolveHighestPrecedenceOperation();
     void HandleErrorCommand(OpCode idc);
-    void HandleMaxDigitsReached();
-    void DisplayNum(void);
+    void HandleMaxDigitsReached() const;
+    void DisplayNum();
     int IsNumberInvalid(const std::wstring& numberString, int iMaxExp, int iMaxMantissa, uint32_t radix) const;
-    void DisplayAnnounceBinaryOperator();
-    void SetPrimaryDisplay(const std::wstring& szText, bool isError = false);
+    void DisplayAnnounceBinaryOperator() const;
+    void SetPrimaryDisplay(const std::wstring& szText, bool isError = false) const;
     void ClearTemporaryValues();
-    void ClearDisplay();
-    CalcEngine::Rational TruncateNumForIntMath(CalcEngine::Rational const& rat);
+    void ClearDisplay() const;
+    CalcEngine::Rational TruncateNumForIntMath(CalcEngine::Rational const& rat) const;
     CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op);
     CalcEngine::Rational DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs);
     void SetRadixTypeAndNumWidth(RadixType radixtype, NUM_WIDTH numwidth);
-    int32_t DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
-    uint32_t NRadixFromRadixType(RadixType radixtype);
+    static uint32_t DwWordBitWidthFromNumWidth(NUM_WIDTH numwidth);
+    static uint32_t NRadixFromRadixType(RadixType radixtype);
     double GenerateRandomNumber();
 
     bool TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno);
@@ -197,7 +197,7 @@ private:
     }
 
     static std::vector<uint32_t> DigitGroupingStringToGroupingVector(std::wstring_view groupingString);
-    std::wstring GroupDigits(std::wstring_view delimiter, std::vector<uint32_t> const& grouping, std::wstring_view displayString, bool isNumNegative = false);
+    std::wstring GroupDigits(std::wstring_view delimiter, std::vector<uint32_t> const& grouping, std::wstring_view displayString, bool isNumNegative = false) const;
 
     static int QuickLog2(int iNum);
     static void ChangeBaseConstants(uint32_t radix, int maxIntDigits, int32_t precision);

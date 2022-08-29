@@ -14,7 +14,7 @@ namespace Graphing
 {
     struct IGraph : public NonCopyable, public NonMoveable
     {
-        virtual ~IGraph() = default;
+        ~IGraph() override = default;
 
         virtual std::optional<std::vector<std::shared_ptr<IEquation>>> TryInitialize(const IExpression* graphingExp = nullptr) = 0;
 

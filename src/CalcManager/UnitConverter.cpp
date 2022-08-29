@@ -24,8 +24,8 @@ static constexpr uint32_t OPTIMALDIGITSALLOWED = 7U;
 static constexpr wchar_t LEFTESCAPECHAR = L'{';
 static constexpr wchar_t RIGHTESCAPECHAR = L'}';
 
-static const double OPTIMALDECIMALALLOWED = 1e-6;  // pow(10, -1 * (OPTIMALDIGITSALLOWED - 1));
-static const double MINIMUMDECIMALALLOWED = 1e-14; // pow(10, -1 * (MAXIMUMDIGITSALLOWED - 1));
+static constexpr double OPTIMALDECIMALALLOWED = 1e-6;  // pow(10, -1 * (OPTIMALDIGITSALLOWED - 1));
+static constexpr double MINIMUMDECIMALALLOWED = 1e-14; // pow(10, -1 * (MAXIMUMDIGITSALLOWED - 1));
 
 unordered_map<wchar_t, wstring> quoteConversions;
 unordered_map<wstring, wchar_t> unquoteConversions;
@@ -65,8 +65,8 @@ UnitConverter::UnitConverter(_In_ const shared_ptr<IConverterDataLoader>& dataLo
     unquoteConversions[L"{sc}"] = L';';
     unquoteConversions[L"{lb}"] = LEFTESCAPECHAR;
     unquoteConversions[L"{rb}"] = RIGHTESCAPECHAR;
-    ClearValues();
-    ResetCategoriesAndRatios();
+    UnitConverter::ClearValues();
+    UnitConverter::ResetCategoriesAndRatios();
 }
 
 void UnitConverter::Initialize()
@@ -76,10 +76,12 @@ void UnitConverter::Initialize()
 
 bool UnitConverter::CheckLoad()
 {
-    if (m_categories.empty())
+    if (!m_categories.empty())
     {
-        ResetCategoriesAndRatios();
+        return true;
     }
+
+    ResetCategoriesAndRatios();
     return !m_categories.empty();
 }
 
@@ -111,8 +113,8 @@ CategorySelectionInitializer UnitConverter::SetCurrentCategory(const Category& i
         {
             for (auto& unit : m_categoryToUnits[m_currentCategory.id])
             {
-                unit.isConversionSource = (unit.id == m_fromType.id);
-                unit.isConversionTarget = (unit.id == m_toType.id);
+                unit.isConversionSource = unit.id == m_fromType.id;
+                unit.isConversionTarget = unit.id == m_toType.id;
             }
             m_currentCategory = input;
             if (!m_currentCategory.supportsNegative && m_currentDisplay.front() == L'-')
@@ -184,7 +186,7 @@ void UnitConverter::SwitchActive(const wstring& newValue)
     swap(m_currentHasDecimal, m_returnHasDecimal);
     m_returnDisplay = m_currentDisplay;
     m_currentDisplay = newValue;
-    m_currentHasDecimal = (m_currentDisplay.find(L'.') != wstring::npos);
+    m_currentHasDecimal = m_currentDisplay.find(L'.') != wstring::npos;
     m_switchedActive = true;
 
     if (m_currencyDataLoader != nullptr && m_vmCurrencyCallback != nullptr)
@@ -196,12 +198,12 @@ void UnitConverter::SwitchActive(const wstring& newValue)
     }
 }
 
-bool UnitConversionManager::UnitConverter::IsSwitchedActive() const
+bool UnitConverter::IsSwitchedActive() const
 {
     return m_switchedActive;
 }
 
-wstring UnitConverter::CategoryToString(const Category& c, wstring_view delimiter)
+wstring UnitConverter::CategoryToString(const Category& c, wstring_view delimiter) const
 {
     return Quote(std::to_wstring(c.id))
         .append(delimiter)
@@ -229,7 +231,7 @@ vector<wstring> UnitConverter::StringToVector(wstring_view w, wstring_view delim
     }
     return serializedTokens;
 }
-wstring UnitConverter::UnitToString(const Unit& u, wstring_view delimiter)
+wstring UnitConverter::UnitToString(const Unit& u, wstring_view delimiter) const
 {
     return Quote(std::to_wstring(u.id))
         .append(delimiter)
@@ -247,26 +249,26 @@ wstring UnitConverter::UnitToString(const Unit& u, wstring_view delimiter)
 
 Unit UnitConverter::StringToUnit(wstring_view w)
 {
-    vector<wstring> tokenList = StringToVector(w, L";");
+    const vector<wstring> tokenList = StringToVector(w, L";");
     assert(tokenList.size() == EXPECTEDSERIALIZEDUNITTOKENCOUNT);
     Unit serializedUnit;
     serializedUnit.id = wcstol(Unquote(tokenList[0]).c_str(), nullptr, 10);
     serializedUnit.name = Unquote(tokenList[1]);
     serializedUnit.accessibleName = serializedUnit.name;
     serializedUnit.abbreviation = Unquote(tokenList[2]);
-    serializedUnit.isConversionSource = (tokenList[3] == L"1");
-    serializedUnit.isConversionTarget = (tokenList[4] == L"1");
-    serializedUnit.isWhimsical = (tokenList[5] == L"1");
+    serializedUnit.isConversionSource = tokenList[3] == L"1";
+    serializedUnit.isConversionTarget = tokenList[4] == L"1";
+    serializedUnit.isWhimsical = tokenList[5] == L"1";
     return serializedUnit;
 }
 
 Category UnitConverter::StringToCategory(wstring_view w)
 {
-    vector<wstring> tokenList = StringToVector(w, L";");
+    const vector<wstring> tokenList = StringToVector(w, L";");
     assert(tokenList.size() == EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT);
     Category serializedCategory;
     serializedCategory.id = wcstol(Unquote(tokenList[0]).c_str(), nullptr, 10);
-    serializedCategory.supportsNegative = (tokenList[1] == L"1");
+    serializedCategory.supportsNegative = tokenList[1] == L"1";
     serializedCategory.name = Unquote(tokenList[2]);
     return serializedCategory;
 }
@@ -282,18 +284,18 @@ void UnitConverter::RestoreUserPreferences(wstring_view userPreferences)
         return;
     }
 
-    vector<wstring> outerTokens = StringToVector(userPreferences, L"|");
+    const vector<wstring> outerTokens = StringToVector(userPreferences, L"|");
     if (outerTokens.size() != 3)
     {
         return;
     }
 
-    auto fromType = StringToUnit(outerTokens[0]);
-    auto toType = StringToUnit(outerTokens[1]);
+    const auto fromType = StringToUnit(outerTokens[0]);
+    const auto toType = StringToUnit(outerTokens[1]);
     m_currentCategory = StringToCategory(outerTokens[2]);
 
     // Only restore from the saved units if they are valid in the current available units.
-    auto itr = m_categoryToUnits.find(m_currentCategory.id);
+    const auto itr = m_categoryToUnits.find(m_currentCategory.id);
     if (itr != m_categoryToUnits.end())
     {
         const auto& curUnits = itr->second;
@@ -398,8 +400,8 @@ void UnitConverter::SendCommand(Command command)
     }
 
     // TODO: Localization of characters
-    bool clearFront = false;
-    bool clearBack = false;
+    bool clearFront;
+    bool clearBack;
     if (command != Command::Negate && m_switchedActive)
     {
         ClearValues();
@@ -409,10 +411,10 @@ void UnitConverter::SendCommand(Command command)
     }
     else
     {
-        clearFront = (m_currentDisplay == L"0");
+        clearFront = m_currentDisplay == L"0";
         clearBack =
-            ((m_currentHasDecimal && m_currentDisplay.size() - 1 >= MAXIMUMDIGITSALLOWED)
-             || (!m_currentHasDecimal && m_currentDisplay.size() >= MAXIMUMDIGITSALLOWED));
+            m_currentHasDecimal && m_currentDisplay.size() - 1 >= MAXIMUMDIGITSALLOWED
+            || !m_currentHasDecimal && m_currentDisplay.size() >= MAXIMUMDIGITSALLOWED;
     }
 
     switch (command)
@@ -470,7 +472,7 @@ void UnitConverter::SendCommand(Command command)
     case Command::Backspace:
         clearFront = false;
         clearBack = false;
-        if ((m_currentDisplay.front() != L'-' && m_currentDisplay.size() > 1) || m_currentDisplay.size() > 2)
+        if (m_currentDisplay.front() != L'-' && m_currentDisplay.size() > 1 || m_currentDisplay.size() > 2)
         {
             if (m_currentDisplay.back() == L'.')
             {
@@ -514,6 +516,7 @@ void UnitConverter::SendCommand(Command command)
         ResetCategoriesAndRatios();
         break;
 
+    case Command::None:
     default:
         break;
     }
@@ -548,7 +551,7 @@ void UnitConverter::SetViewModelCurrencyCallback(_In_ const shared_ptr<IViewMode
 {
     m_vmCurrencyCallback = newCallback;
 
-    shared_ptr<ICurrencyConverterDataLoader> currencyDataLoader = GetCurrencyConverterDataLoader();
+    const shared_ptr<ICurrencyConverterDataLoader> currencyDataLoader = GetCurrencyConverterDataLoader();
     if (currencyDataLoader != nullptr)
     {
         currencyDataLoader->SetViewModelCallback(newCallback);
@@ -582,7 +585,7 @@ future<pair<bool, wstring>> UnitConverter::RefreshCurrencyRatios()
     });
 }
 
-shared_ptr<ICurrencyConverterDataLoader> UnitConverter::GetCurrencyConverterDataLoader()
+shared_ptr<ICurrencyConverterDataLoader> UnitConverter::GetCurrencyConverterDataLoader() const
 {
     return dynamic_pointer_cast<ICurrencyConverterDataLoader>(m_currencyDataLoader);
 }
@@ -600,7 +603,7 @@ double UnitConverter::Convert(double value, const ConversionData& conversionData
     }
     else
     {
-        return (value * conversionData.ratio) + conversionData.offset;
+        return value * conversionData.ratio + conversionData.offset;
     }
 }
 
@@ -636,7 +639,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
     }
 
     // Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
-    sort(intermediateVector.begin(), intermediateVector.end(), [](SuggestedValueIntermediate first, SuggestedValueIntermediate second) {
+    sort(intermediateVector.begin(), intermediateVector.end(), [](SuggestedValueIntermediate first, const SuggestedValueIntermediate second) {
         if (abs(first.magnitude) == abs(second.magnitude))
         {
             return first.magnitude > second.magnitude;
@@ -672,7 +675,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
 
     // The Whimsicals are determined differently
     // Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
-    sort(intermediateWhimsicalVector.begin(), intermediateWhimsicalVector.end(), [](SuggestedValueIntermediate first, SuggestedValueIntermediate second) {
+    sort(intermediateWhimsicalVector.begin(), intermediateWhimsicalVector.end(), [](const SuggestedValueIntermediate first, const SuggestedValueIntermediate second) {
         if (abs(first.magnitude) == abs(second.magnitude))
         {
             return first.magnitude > second.magnitude;
@@ -797,7 +800,7 @@ void UnitConverter::InitializeSelectedUnits()
         return;
     }
 
-    auto itr = m_categoryToUnits.find(m_currentCategory.id);
+    const auto itr = m_categoryToUnits.find(m_currentCategory.id);
     if (itr == m_categoryToUnits.end())
     {
         return;
@@ -856,7 +859,7 @@ void UnitConverter::ClearValues()
 /// <summary>
 /// Checks if either unit is EMPTY_UNIT.
 /// </summary>
-bool UnitConverter::AnyUnitIsEmpty()
+bool UnitConverter::AnyUnitIsEmpty() const
 {
     return m_fromType == EMPTY_UNIT || m_toType == EMPTY_UNIT;
 }
@@ -876,7 +879,7 @@ void UnitConverter::Calculate()
     }
 
     unordered_map<Unit, ConversionData, UnitHash> conversionTable = m_ratioMap[m_fromType];
-    if (AnyUnitIsEmpty() || (conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0))
+    if (AnyUnitIsEmpty() || conversionTable[m_toType].ratio == 1.0 && conversionTable[m_toType].offset == 0.0)
     {
         m_returnDisplay = m_currentDisplay;
         m_returnHasDecimal = m_currentHasDecimal;
@@ -884,11 +887,10 @@ void UnitConverter::Calculate()
     }
     else
     {
-        double currentValue = stod(m_currentDisplay);
+        const double currentValue = stod(m_currentDisplay);
         const double returnValue = Convert(currentValue, conversionTable[m_toType]);
 
-        const auto isCurrencyConverter = m_currencyDataLoader != nullptr && m_currencyDataLoader->SupportsCategory(this->m_currentCategory);
-        if (isCurrencyConverter)
+        if (const auto isCurrencyConverter = m_currencyDataLoader != nullptr && m_currencyDataLoader->SupportsCategory(this->m_currentCategory))
         {
             // We don't need to trim the value when it's a currency.
             m_returnDisplay = RoundSignificantDigits(returnValue, MAXIMUMDIGITSALLOWED);
@@ -897,7 +899,7 @@ void UnitConverter::Calculate()
         else
         {
             const unsigned int numPreDecimal = GetNumberDigitsWholeNumberPart(returnValue);
-            if (numPreDecimal > MAXIMUMDIGITSALLOWED || (returnValue != 0 && abs(returnValue) < MINIMUMDECIMALALLOWED))
+            if (numPreDecimal > MAXIMUMDIGITSALLOWED || returnValue != 0 && abs(returnValue) < MINIMUMDECIMALALLOWED)
             {
                 m_returnDisplay = ToScientificNumber(returnValue);
             }
@@ -913,30 +915,31 @@ void UnitConverter::Calculate()
                 {
                     // Fewer digits are needed following the decimal if the number is large,
                     // we calculate the number of decimals necessary based on the number of digits in the integer part.
-                    auto numberDigits = max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits));
+                    const auto numberDigits = max(OPTIMALDIGITSALLOWED, min(MAXIMUMDIGITSALLOWED, currentNumberSignificantDigits));
                     precision = numberDigits > numPreDecimal ? numberDigits - numPreDecimal : 0;
                 }
 
                 m_returnDisplay = RoundSignificantDigits(returnValue, precision);
                 TrimTrailingZeros(m_returnDisplay);
             }
-            m_returnHasDecimal = (m_returnDisplay.find(L'.') != wstring::npos);
+            m_returnHasDecimal = m_returnDisplay.find(L'.') != wstring::npos;
         }
     }
     UpdateViewModel();
 }
 
-void UnitConverter::UpdateCurrencySymbols()
+void UnitConverter::UpdateCurrencySymbols() const
 {
-    if (m_currencyDataLoader != nullptr && m_vmCurrencyCallback != nullptr)
+    if (m_currencyDataLoader == nullptr || m_vmCurrencyCallback == nullptr)
     {
-        shared_ptr<ICurrencyConverterDataLoader> currencyDataLoader = GetCurrencyConverterDataLoader();
-        const pair<wstring, wstring> currencySymbols = currencyDataLoader->GetCurrencySymbols(m_fromType, m_toType);
-        const pair<wstring, wstring> currencyRatios = currencyDataLoader->GetCurrencyRatioEquality(m_fromType, m_toType);
-
-        m_vmCurrencyCallback->CurrencySymbolsCallback(currencySymbols.first, currencySymbols.second);
-        m_vmCurrencyCallback->CurrencyRatiosCallback(currencyRatios.first, currencyRatios.second);
+        return;
     }
+    const shared_ptr<ICurrencyConverterDataLoader> currencyDataLoader = GetCurrencyConverterDataLoader();
+    const pair<wstring, wstring> currencySymbols = currencyDataLoader->GetCurrencySymbols(m_fromType, m_toType);
+    const pair<wstring, wstring> currencyRatios = currencyDataLoader->GetCurrencyRatioEquality(m_fromType, m_toType);
+
+    m_vmCurrencyCallback->CurrencySymbolsCallback(currencySymbols.first, currencySymbols.second);
+    m_vmCurrencyCallback->CurrencyRatiosCallback(currencyRatios.first, currencyRatios.second);
 }
 
 void UnitConverter::UpdateViewModel()

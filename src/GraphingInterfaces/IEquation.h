@@ -10,7 +10,7 @@ namespace Graphing
 {
     struct IEquation : public NonCopyable, public NonMoveable
     {
-        virtual ~IEquation() = default;
+        ~IEquation() override = default;
 
         virtual std::shared_ptr<IEquationOptions> GetGraphEquationOptions() const = 0;
 

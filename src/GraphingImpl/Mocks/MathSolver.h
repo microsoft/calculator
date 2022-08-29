@@ -59,15 +59,13 @@ namespace MockGraphingImpl
     class MockExpression : public Graphing::IExpression
     {
     public:
-        MockExpression()
-        {
-        }
+        MockExpression() = default;
 
         unsigned int GetExpressionID() const override
         {
             return 0;
         }
-        bool IsEmptySet() const
+        bool IsEmptySet() const override
         {
             return false;
         }
@@ -76,9 +74,7 @@ namespace MockGraphingImpl
     class MockVariable : public Graphing::IVariable
     {
     public:
-        MockVariable()
-        {
-        }
+        MockVariable() = default;
 
         int GetVariableID() const override
         {
@@ -96,9 +92,7 @@ namespace MockGraphingImpl
     class MathSolver : public Graphing::IMathSolver
     {
     public:
-        MathSolver()
-        {
-        }
+        MathSolver() = default;
 
         Graphing::IParsingOptions& ParsingOptions() override
         {
@@ -125,7 +119,7 @@ namespace MockGraphingImpl
             return std::make_unique<MockExpression>(MockExpression{});
         }
 
-        void HRErrorToErrorInfo(HRESULT hr, int& errorCodeOut, int& errorTypeOut)
+        void HRErrorToErrorInfo(HRESULT hr, int& errorCodeOut, int& errorTypeOut) override
         {
         }
 
@@ -138,7 +132,7 @@ namespace MockGraphingImpl
             return L"";
         }
 
-        Graphing::IGraphFunctionAnalysisData IMathSolver::Analyze(const Graphing::Analyzer::IGraphAnalyzer* analyzer)
+        Graphing::IGraphFunctionAnalysisData IMathSolver::Analyze(const Graphing::Analyzer::IGraphAnalyzer* analyzer) override
         {
             return Graphing::IGraphFunctionAnalysisData{};
         }

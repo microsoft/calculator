@@ -104,7 +104,6 @@ namespace CalculatorApp
         if (NavCategoryStates::IsValidViewMode(mode))
         {
             auto fields = ref new LoggingFields();
-            ;
             fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
             TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_MODE_CHANGED), fields);
         }

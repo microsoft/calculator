@@ -277,7 +277,7 @@ void UnitConverterViewModel::OnSwitchActive(Platform::Object ^ unused)
 
 String ^ UnitConverterViewModel::ConvertToLocalizedString(const std::wstring& stringToLocalize, bool allowPartialStrings, CurrencyFormatterParameter cfp)
 {
-    Platform::String ^ result;
+    Platform::String ^ result = nullptr;
 
     if (stringToLocalize.empty())
     {
@@ -693,7 +693,8 @@ void UnitConverterViewModel::RefreshCurrencyRatios()
     auto that(this);
     auto refreshTask = create_task([that] { return that->m_model->RefreshCurrencyRatios().get(); });
     refreshTask.then(
-        [that](const pair<bool, wstring>& refreshResult) {
+        [that](const pair<bool, wstring>& refreshResult)
+        {
             bool didLoad = refreshResult.first;
             wstring timestamp = refreshResult.second;
 

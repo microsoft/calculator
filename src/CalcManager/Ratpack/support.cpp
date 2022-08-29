@@ -25,7 +25,7 @@
 
 using namespace std;
 
-void _readconstants(void);
+void _readconstants();
 
 #if defined(GEN_CONST)
 static int cbitsofprecision = 0;
@@ -136,19 +136,20 @@ void ChangeConstants(uint32_t radix, int32_t precision)
     // in the internal BASEX radix, this is important for length calculations
     // in translating from radix to BASEX and back.
 
-    uint64_t limit = static_cast<uint64_t>(BASEX) / static_cast<uint64_t>(radix);
+    const uint32_t limit = BASEX / radix;
     g_ratio = 0;
     for (uint32_t digit = 1; digit < limit; digit *= radix)
     {
         g_ratio++;
     }
-    g_ratio += !g_ratio;
+    if (g_ratio == 0)
+        g_ratio = 1; // g_ratio is always at least 1
 
     destroyrat(rat_nRadix);
     rat_nRadix = i32torat(radix);
 
     // Check to see what we have to recalculate and what we don't
-    if (cbitsofprecision < (g_ratio * static_cast<int32_t>(radix) * precision))
+    if (cbitsofprecision < g_ratio * static_cast<int32_t>(radix) * precision)
     {
         g_ftrueinfinite = false;
 
@@ -202,17 +203,17 @@ void ChangeConstants(uint32_t radix, int32_t precision)
         }
 
         DUPRAT(rat_qword, rat_two);
-        numpowi32(&(rat_qword->pp), 64, BASEX, precision);
+        numpowi32(&rat_qword->pp, 64, BASEX, precision);
         subrat(&rat_qword, rat_one, precision);
         DUMPRAWRAT(rat_qword);
 
         DUPRAT(rat_dword, rat_two);
-        numpowi32(&(rat_dword->pp), 32, BASEX, precision);
+        numpowi32(&rat_dword->pp, 32, BASEX, precision);
         subrat(&rat_dword, rat_one, precision);
         DUMPRAWRAT(rat_dword);
 
         DUPRAT(rat_max_i32, rat_two);
-        numpowi32(&(rat_max_i32->pp), 31, BASEX, precision);
+        numpowi32(&rat_max_i32->pp, 31, BASEX, precision);
         DUPRAT(rat_min_i32, rat_max_i32);
         subrat(&rat_max_i32, rat_one, precision); // rat_max_i32 = 2^31 -1
         DUMPRAWRAT(rat_max_i32);
@@ -337,7 +338,7 @@ bool rat_equ(_In_ PRAT a, _In_ PRAT b, int32_t precision)
     addrat(&rattmp, b, precision);
     bool bret = zernum(rattmp->pp);
     destroyrat(rattmp);
-    return (bret);
+    return bret;
 }
 
 //---------------------------------------------------------------------------
@@ -359,9 +360,9 @@ bool rat_ge(_In_ PRAT a, _In_ PRAT b, int32_t precision)
     b->pp->sign *= -1;
     addrat(&rattmp, b, precision);
     b->pp->sign *= -1;
-    bool bret = (zernum(rattmp->pp) || SIGN(rattmp) == 1);
+    bool bret = zernum(rattmp->pp) || SIGN(rattmp) == 1;
     destroyrat(rattmp);
-    return (bret);
+    return bret;
 }
 
 //---------------------------------------------------------------------------
@@ -383,9 +384,9 @@ bool rat_gt(_In_ PRAT a, _In_ PRAT b, int32_t precision)
     b->pp->sign *= -1;
     addrat(&rattmp, b, precision);
     b->pp->sign *= -1;
-    bool bret = (!zernum(rattmp->pp) && SIGN(rattmp) == 1);
+    bool bret = !zernum(rattmp->pp) && SIGN(rattmp) == 1;
     destroyrat(rattmp);
-    return (bret);
+    return bret;
 }
 
 //---------------------------------------------------------------------------
@@ -407,9 +408,9 @@ bool rat_le(_In_ PRAT a, _In_ PRAT b, int32_t precision)
     b->pp->sign *= -1;
     addrat(&rattmp, b, precision);
     b->pp->sign *= -1;
-    bool bret = (zernum(rattmp->pp) || SIGN(rattmp) == -1);
+    bool bret = zernum(rattmp->pp) || SIGN(rattmp) == -1;
     destroyrat(rattmp);
-    return (bret);
+    return bret;
 }
 
 //---------------------------------------------------------------------------
@@ -431,9 +432,9 @@ bool rat_lt(_In_ PRAT a, _In_ PRAT b, int32_t precision)
     b->pp->sign *= -1;
     addrat(&rattmp, b, precision);
     b->pp->sign *= -1;
-    bool bret = (!zernum(rattmp->pp) && SIGN(rattmp) == -1);
+    bool bret = !zernum(rattmp->pp) && SIGN(rattmp) == -1;
     destroyrat(rattmp);
-    return (bret);
+    return bret;
 }
 
 //---------------------------------------------------------------------------
@@ -454,9 +455,9 @@ bool rat_neq(_In_ PRAT a, _In_ PRAT b, int32_t precision)
     DUPRAT(rattmp, a);
     rattmp->pp->sign *= -1;
     addrat(&rattmp, b, precision);
-    bool bret = !(zernum(rattmp->pp));
+    bool bret = !zernum(rattmp->pp);
     destroyrat(rattmp);
-    return (bret);
+    return bret;
 }
 
 //---------------------------------------------------------------------------
@@ -477,7 +478,7 @@ void scale(_Inout_ PRAT* px, _In_ PRAT scalefact, uint32_t radix, int32_t precis
 
     // Logscale is a quick way to tell how much extra precision is needed for
     // scaling by scalefact.
-    int32_t logscale = g_ratio * ((pret->pp->cdigit + pret->pp->exp) - (pret->pq->cdigit + pret->pq->exp));
+    int32_t logscale = g_ratio * (pret->pp->cdigit + pret->pp->exp - (pret->pq->cdigit + pret->pq->exp));
     if (logscale > 0)
     {
         precision += logscale;
@@ -511,7 +512,7 @@ void scale2pi(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 
     // Logscale is a quick way to tell how much extra precision is needed for
     // scaling by 2 pi.
-    int32_t logscale = g_ratio * ((pret->pp->cdigit + pret->pp->exp) - (pret->pq->cdigit + pret->pq->exp));
+    int32_t logscale = g_ratio * (pret->pp->cdigit + pret->pp->exp - (pret->pq->cdigit + pret->pq->exp));
     if (logscale > 0)
     {
         precision += logscale;
@@ -610,7 +611,7 @@ void _dumprawnum(_In_ const wchar_t* varname, _In_ PNUMBER num, wostream& out)
     out << L"};\n";
 }
 
-void _readconstants(void)
+void _readconstants()
 
 {
     READRAWNUM(num_one);
@@ -674,14 +675,14 @@ void _readconstants(void)
 //
 //---------------------------------------------------------------------------
 
-void trimit(_Inout_ PRAT* px, int32_t precision)
+void trimit(_Inout_ const PRAT* px, int32_t precision)
 
 {
     if (!g_ftrueinfinite)
     {
         PNUMBER pp = (*px)->pp;
         PNUMBER pq = (*px)->pq;
-        int32_t trim = g_ratio * (min((pp->cdigit + pp->exp), (pq->cdigit + pq->exp)) - 1) - precision;
+        int32_t trim = g_ratio * (min(pp->cdigit + pp->exp, pq->cdigit + pq->exp) - 1) - precision;
         if (trim > g_ratio)
         {
             trim /= g_ratio;
@@ -692,7 +693,7 @@ void trimit(_Inout_ PRAT* px, int32_t precision)
             }
             else
             {
-                memmove(pp->mant, &(pp->mant[trim - pp->exp]), sizeof(MANTTYPE) * (pp->cdigit - trim + pp->exp));
+                memmove(pp->mant, &pp->mant[trim - pp->exp], sizeof(MANTTYPE) * (pp->cdigit - trim + pp->exp));
                 pp->cdigit -= trim - pp->exp;
                 pp->exp = 0;
             }
@@ -703,7 +704,7 @@ void trimit(_Inout_ PRAT* px, int32_t precision)
             }
             else
             {
-                memmove(pq->mant, &(pq->mant[trim - pq->exp]), sizeof(MANTTYPE) * (pq->cdigit - trim + pq->exp));
+                memmove(pq->mant, &pq->mant[trim - pq->exp], sizeof(MANTTYPE) * (pq->cdigit - trim + pq->exp));
                 pq->cdigit -= trim - pq->exp;
                 pq->exp = 0;
             }

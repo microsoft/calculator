@@ -23,11 +23,11 @@ namespace CalculationManager
     class CalculatorHistory : public IHistoryDisplay
     {
     public:
-        CalculatorHistory(const size_t maxSize);
+        CalculatorHistory(size_t maxSize);
         unsigned int AddToHistory(
             _In_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& spTokens,
             _In_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& spCommands,
-            std::wstring_view result);
+            std::wstring_view result) override;
         std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistory();
         std::shared_ptr<HISTORYITEM> const& GetHistoryItem(unsigned int uIdx);
         void ClearHistory();

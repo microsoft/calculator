@@ -45,7 +45,7 @@ DateCalculatorViewModel::DateCalculatorViewModel()
     , m_StrDateResult(L"")
     , m_StrDateResultAutomationName(L"")
 {
-    LocalizationSettings^ localizationSettings = LocalizationSettings::GetInstance();
+    LocalizationSettings ^ localizationSettings = LocalizationSettings::GetInstance();
 
     // Initialize Date Output format instances
     InitializeDateOutputFormats(localizationSettings->GetCalendarIdentifier());
@@ -74,7 +74,7 @@ DateCalculatorViewModel::DateCalculatorViewModel()
     UpdateDisplayResult();
 
     m_offsetValues = ref new Vector<String ^>();
-    for (int i = 0; i <= c_maxOffsetValue; i++)
+    for (unsigned int i = 0; i <= c_maxOffsetValue; i++)
     {
         wstring numberStr(to_wstring(i));
         localizationSettings->LocalizeDisplayValue(&numberStr);
@@ -157,10 +157,14 @@ void DateCalculatorViewModel::OnInputsChanged()
             // Subtract number of Days, Months and Years from a Date
             dateTimeResult = m_dateCalcEngine->SubtractDuration(StartDate, dateDiff);
         }
-        IsOutOfBound = dateTimeResult == nullptr;
 
-        if (!m_isOutOfBound)
+        if (dateTimeResult == nullptr)
         {
+            IsOutOfBound = true;
+        }
+        else
+        {
+            IsOutOfBound = false;
             DateResult = dateTimeResult->Value;
         }
     }
@@ -254,13 +258,13 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
         result += GetLocalizedNumberString(yearCount)->Data();
         result += L' ';
 
-        if (yearCount > 1)
+        if (yearCount == 1)
         {
-            result += resourceLoader->GetResourceString(L"Date_Years")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Year")->Data();
         }
         else
         {
-            result += resourceLoader->GetResourceString(L"Date_Year")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Years")->Data();
         }
 
         // set the flags to add a delimiter whenever the next unit is added
@@ -282,13 +286,13 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
         result += GetLocalizedNumberString(monthCount)->Data();
         result += L' ';
 
-        if (monthCount > 1)
+        if (monthCount == 1)
         {
-            result += resourceLoader->GetResourceString(L"Date_Months")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Month")->Data();
         }
         else
         {
-            result += resourceLoader->GetResourceString(L"Date_Month")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Months")->Data();
         }
     }
 
@@ -307,13 +311,13 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
         result += GetLocalizedNumberString(weekCount)->Data();
         result += L' ';
 
-        if (weekCount > 1)
+        if (weekCount == 1)
         {
-            result += resourceLoader->GetResourceString(L"Date_Weeks")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Week")->Data();
         }
         else
         {
-            result += resourceLoader->GetResourceString(L"Date_Week")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Weeks")->Data();
         }
     }
 
@@ -332,13 +336,13 @@ String ^ DateCalculatorViewModel::GetDateDiffString() const
         result += GetLocalizedNumberString(dayCount)->Data();
         result += L' ';
 
-        if (dayCount > 1)
+        if (dayCount == 1)
         {
-            result += resourceLoader->GetResourceString(L"Date_Days")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Day")->Data();
         }
         else
         {
-            result += resourceLoader->GetResourceString(L"Date_Day")->Data();
+            result += resourceLoader->GetResourceString(L"Date_Days")->Data();
         }
     }
 
@@ -351,13 +355,13 @@ String ^ DateCalculatorViewModel::GetDateDiffStringInDays() const
     result += L' ';
 
     // Display the result as '1 day' or 'N days'
-    if (m_dateDiffResultInDays.day > 1)
+    if (m_dateDiffResultInDays.day == 1)
     {
-        result += AppResourceProvider::GetInstance()->GetResourceString(L"Date_Days")->Data();
+        result += AppResourceProvider::GetInstance()->GetResourceString(L"Date_Day")->Data();
     }
     else
     {
-        result += AppResourceProvider::GetInstance()->GetResourceString(L"Date_Day")->Data();
+        result += AppResourceProvider::GetInstance()->GetResourceString(L"Date_Days")->Data();
     }
 
     return ref new String(result.data());
@@ -365,14 +369,7 @@ String ^ DateCalculatorViewModel::GetDateDiffStringInDays() const
 
 void DateCalculatorViewModel::OnCopyCommand(Platform::Object ^ parameter)
 {
-    if (m_IsDateDiffMode)
-    {
-        CopyPasteManager::CopyToClipboard(m_StrDateDiffResult);
-    }
-    else
-    {
-        CopyPasteManager::CopyToClipboard(m_StrDateResult);
-    }
+    CopyPasteManager::CopyToClipboard(m_IsDateDiffMode ? m_StrDateDiffResult : m_StrDateResult);
 }
 
 String ^ DateCalculatorViewModel::GetLocalizedNumberString(int value) const
@@ -393,15 +390,13 @@ DateTime DateCalculatorViewModel::ClipTime(DateTime dateTime, bool adjustUsingLo
     if (adjustUsingLocalTime)
     {
         FILETIME fileTime;
-        fileTime.dwLowDateTime = (DWORD)(dateTime.UniversalTime & 0xffffffff);
-        fileTime.dwHighDateTime = (DWORD)(dateTime.UniversalTime >> 32);
+        fileTime.dwLowDateTime = static_cast<DWORD>(dateTime.UniversalTime & 0xffffffff);
+        fileTime.dwHighDateTime = static_cast<DWORD>(dateTime.UniversalTime >> 32);
 
         FILETIME localFileTime;
         FileTimeToLocalFileTime(&fileTime, &localFileTime);
 
-        referenceDateTime.UniversalTime = (DWORD)localFileTime.dwHighDateTime;
-        referenceDateTime.UniversalTime <<= 32;
-        referenceDateTime.UniversalTime |= (DWORD)localFileTime.dwLowDateTime;
+        referenceDateTime.UniversalTime = (static_cast<INT64>(localFileTime.dwHighDateTime) << 32) | localFileTime.dwLowDateTime;
     }
     else
     {

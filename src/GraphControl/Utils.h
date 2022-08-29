@@ -180,7 +180,7 @@ namespace Utils
         template <typename T>
         struct IsRefClass
         {
-            static const bool value = __is_ref_class(T);
+            static constexpr bool value = __is_ref_class(T);
         };
 
         template <typename T>

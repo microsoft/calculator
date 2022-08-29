@@ -29,7 +29,7 @@ public enum class GraphViewChangedReason
 {
     Manipulation,
     Reset
-};  
+};
 
     [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed
         : public Windows::UI::Xaml::Controls::Control,
@@ -126,7 +126,7 @@ public enum class GraphViewChangedReason
         {
             void set(int value)
             {
-                if (value != (int)m_solver->EvalOptions().GetTrigUnitMode())
+                if (value != static_cast<int>(m_solver->EvalOptions().GetTrigUnitMode()))
                 {
                     m_solver->EvalOptions().SetTrigUnitMode((Graphing::EvalTrigUnitMode)value);
                     m_trigUnitsChanged = true;
@@ -136,7 +136,7 @@ public enum class GraphViewChangedReason
 
             int get()
             {
-                return (int)m_solver->EvalOptions().GetTrigUnitMode();
+                return static_cast<int>(m_solver->EvalOptions().GetTrigUnitMode());
             }
         }
 
@@ -275,12 +275,12 @@ public enum class GraphViewChangedReason
 #pragma endregion
 
     private:
-        void OnForceProportionalAxesPropertyChanged(bool oldValue, bool newValue);
+        void OnForceProportionalAxesPropertyChanged(bool oldValue [[maybe_unused]], bool newValue);
         void OnUseCommaDecimalSeperatorPropertyChanged(bool oldValue, bool newValue);
         void OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue);
-        void OnAxesColorPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
-        void OnGraphBackgroundPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
-        void OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue);
+        void OnAxesColorPropertyChanged(Windows::UI::Color oldValue [[maybe_unused]], Windows::UI::Color newValue);
+        void OnGraphBackgroundPropertyChanged(Windows::UI::Color oldValue [[maybe_unused]], Windows::UI::Color newValue);
+        void OnGridLinesColorPropertyChanged(Windows::UI::Color oldValue [[maybe_unused]], Windows::UI::Color newValue);
         void OnLineWidthPropertyChanged(double oldValue, double newValue);
         void OnEquationChanged(Equation ^ equation);
         void OnEquationStyleChanged(Equation ^ equation);
@@ -300,12 +300,12 @@ public enum class GraphViewChangedReason
 
         void UpdateTracingChanged();
         void HandleTracingMovementTick(Object ^ sender, Object ^ e);
-        void HandleKey(bool keyDown, Windows::System::VirtualKey key);
+        void HandleKey(Windows::System::VirtualKey key);
+        void HandleKeyDown(Windows::System::VirtualKey key);
 
         void SetEquationsAsValid();
         void SetEquationErrors();
         std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitializeGraph(bool keepCurrentView, _In_ const Graphing::IExpression* graphingExp = nullptr);
-
 
     private:
         DX::RenderMain ^ m_renderMain = nullptr;

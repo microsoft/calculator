@@ -21,15 +21,15 @@ public:
     ~CHistoryCollector();
     void AddOpndToHistory(std::wstring_view numStr, CalcEngine::Rational const& rat, bool fRepetition = false);
     void RemoveLastOpndFromHistory();
-    void AddBinOpToHistory(int nOpCode, bool isIntgerMode, bool fNoRepetition = true);
-    void ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher, bool isIntgerMode);
+    void AddBinOpToHistory(int nOpCode, bool isIntegerMode, bool fNoRepetition = true);
+    void ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher, bool isIntegerMode);
     void AddUnaryOpToHistory(int nOpCode, bool fInv, AngleType angletype);
     void AddOpenBraceToHistory();
     void AddCloseBraceToHistory();
     void PushLastOpndStart(int ichOpndStart = -1);
     void PopLastOpndStart();
     void EnclosePrecInversionBrackets();
-    bool FOpndAddedToHistory();
+    bool FOpndAddedToHistory() const;
     void CompleteHistoryLine(std::wstring_view numStr);
     void CompleteEquation(std::wstring_view numStr);
     void ClearHistoryLine(std::wstring_view errStr);
@@ -44,12 +44,12 @@ private:
     int m_iCurLineHistStart; // index of the beginning of the current equation
     // a sort of state, set to the index before 2 after 2 in the expression 2 + 3 say. Useful for auto correct portion of history and for
     // attaching the unary op around the last operand
-    int m_lastOpStartIndex;    // index of the beginning of the last operand added to the history
-    int m_lastBinOpStartIndex; // index of the beginning of the last binary operator added to the history
+    int m_lastOpStartIndex{};    // index of the beginning of the last operand added to the history
+    int m_lastBinOpStartIndex{}; // index of the beginning of the last binary operator added to the history
     std::array<int, MAXPRECDEPTH>
-        m_operandIndices;  // Stack of index of opnd's beginning for each '('. A parallel array to m_hnoParNum, but abstracted independently of that
-    int m_curOperandIndex; // Stack index for the above stack
-    bool m_bLastOpndBrace; // iff the last opnd in history is already braced so we can avoid putting another one for unary operator
+        m_operandIndices{};  // Stack of index of opnd's beginning for each '('. A parallel array to m_hnoParNum, but abstracted independently of that
+    int m_curOperandIndex{}; // Stack index for the above stack
+    bool m_bLastOpndBrace{}; // iff the last opnd in history is already braced so we can avoid putting another one for unary operator
     wchar_t m_decimalSymbol;
     std::shared_ptr<std::vector<std::pair<std::wstring, int>>> m_spTokens;
     std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> m_spCommands;
@@ -57,8 +57,8 @@ private:
 private:
     void ReinitHistory();
     int IchAddSzToEquationSz(std::wstring_view str, int icommandIndex);
-    void TruncateEquationSzFromIch(int ich);
-    void SetExpressionDisplay();
-    void InsertSzInEquationSz(std::wstring_view str, int icommandIndex, int ich);
-    std::shared_ptr<std::vector<int>> GetOperandCommandsFromString(std::wstring_view numStr);
+    void TruncateEquationSzFromIch(int ich) const;
+    void SetExpressionDisplay() const;
+    void InsertSzInEquationSz(std::wstring_view str, int icommandIndex, int ich) const;
+    std::shared_ptr<std::vector<int>> GetOperandCommandsFromString(std::wstring_view numStr) const;
 };

@@ -33,7 +33,7 @@ TEST_METHOD(IsLastCharacterFailureEmptyInput)
 
 TEST_METHOD(IsLastCharacterFailureNullTarget)
 {
-    VERIFY_IS_FALSE(Utils::IsLastCharacterTarget({}, NULL));
+    VERIFY_IS_FALSE(Utils::IsLastCharacterTarget({}, L'\0'));
 }
 }
 ;

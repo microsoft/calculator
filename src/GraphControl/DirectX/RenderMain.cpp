@@ -58,7 +58,7 @@ namespace GraphControl::DX
         {
             if (auto renderer = m_graph->GetRenderer())
             {
-                float dpi = m_deviceResources.GetDpi();
+                auto dpi = m_deviceResources.GetDpi();
                 renderer->SetDpi(dpi, dpi);
 
                 renderer->SetGraphSize(static_cast<unsigned int>(m_swapChainPanel->ActualWidth), static_cast<unsigned int>(m_swapChainPanel->ActualHeight));
@@ -78,41 +78,45 @@ namespace GraphControl::DX
 
     void RenderMain::DrawNearestPoint::set(bool value)
     {
-        if (m_drawNearestPoint != value)
+        if (m_drawNearestPoint == value)
         {
-            m_drawNearestPoint = value;
-            if (!m_drawNearestPoint)
-            {
-                m_Tracing = false;
-            }
+            return;
+        }
+        m_drawNearestPoint = value;
+
+        if (!m_drawNearestPoint)
+        {
+            m_Tracing = false;
         }
     }
 
     void RenderMain::PointerLocation::set(Point location)
     {
-        if (m_pointerLocation != location)
+        if (m_pointerLocation == location)
         {
-            m_pointerLocation = location;
+            return;
+        }
+        m_pointerLocation = location;
 
-            bool wasPointRendered = m_Tracing;
-            if (CanRenderPoint() || wasPointRendered)
-            {
-                RunRenderPassAsync();
-            }
+        bool wasPointRendered = m_Tracing;
+        if (CanRenderPoint() || wasPointRendered)
+        {
+            RunRenderPassAsync();
         }
     }
 
     void RenderMain::ActiveTracing::set(bool value)
     {
-        if (m_drawActiveTracing != value)
+        if (m_drawActiveTracing == value)
         {
-            m_drawActiveTracing = value;
+            return;
+        }
+        m_drawActiveTracing = value;
 
-            bool wasPointRendered = m_Tracing;
-            if (CanRenderPoint() || wasPointRendered)
-            {
-                RunRenderPassAsync();
-            }
+        bool wasPointRendered = m_Tracing;
+        if (CanRenderPoint() || wasPointRendered)
+        {
+            RunRenderPassAsync();
         }
     }
 
@@ -232,18 +236,20 @@ namespace GraphControl::DX
         }
 
         auto device = m_deviceResources;
-        auto workItemHandler = ref new WorkItemHandler([this, allowCancel](IAsyncAction ^ action) {
-            critical_section::scoped_lock lock(m_criticalSection);
-
-            // allowCancel is passed as false when the grapher relies on the render pass to validate that an equation can be succesfully rendered.
-            // Passing false garauntees that another render pass doesn't cancel this one.
-            if (allowCancel && action->Status == ::AsyncStatus::Canceled)
+        auto workItemHandler = ref new WorkItemHandler(
+            [this, allowCancel](IAsyncAction ^ action)
             {
-                return;
-            }
+                critical_section::scoped_lock lock(m_criticalSection);
 
-            RunRenderPassInternal();
-        });
+                // allowCancel is passed as false when the grapher relies on the render pass to validate that an equation can be succesfully rendered.
+                // Passing false garauntees that another render pass doesn't cancel this one.
+                if (allowCancel && action->Status == ::AsyncStatus::Canceled)
+                {
+                    return;
+                }
+
+                RunRenderPassInternal();
+            });
 
         m_renderPass = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
 
@@ -277,8 +283,6 @@ namespace GraphControl::DX
     // Returns true if the frame was rendered and is ready to be displayed.
     bool RenderMain::Render()
     {
-        bool successful = true;
-
         // Must call BeginDraw before any draw commands.
         ID2D1Factory3* pFactory = m_deviceResources.GetD2DFactory();
         ID2D1DeviceContext* pRenderTarget = m_deviceResources.GetD2DDeviceContext();
@@ -288,88 +292,91 @@ namespace GraphControl::DX
         // Clear the back buffer and set the background color.
         context->ClearRenderTargetView(m_deviceResources.GetBackBufferRenderTargetView(), m_backgroundColor);
 
-        if (m_graph)
+        if (!m_graph)
         {
-            if (auto renderer = m_graph->GetRenderer())
+            // Nothing else to render
+            return true;
+        }
+
+        bool successful = true;
+        if (auto renderer = m_graph->GetRenderer())
+        {
+            pRenderTarget->BeginDraw();
+
+            bool hasMissingData = false;
+            m_HResult = renderer->DrawD2D1(pFactory, pRenderTarget, hasMissingData);
+
+            successful = SUCCEEDED(m_HResult);
+
+            // We ignore D2DERR_RECREATE_TARGET here. This error indicates that the device
+            // is lost. It will be handled during the next call to Present.
+            HRESULT endDraw = pRenderTarget->EndDraw();
+            if (endDraw != D2DERR_RECREATE_TARGET)
             {
-                pRenderTarget->BeginDraw();
+                DX::ThrowIfFailed(endDraw);
+            }
 
-                bool hasMissingData = false;
-                m_HResult = renderer->DrawD2D1(pFactory, pRenderTarget, hasMissingData);
-
-                successful = SUCCEEDED(m_HResult);
-
-                // We ignore D2DERR_RECREATE_TARGET here. This error indicates that the device
-                // is lost. It will be handled during the next call to Present.
-                HRESULT endDraw = pRenderTarget->EndDraw();
-                if (endDraw != D2DERR_RECREATE_TARGET)
+            if (successful)
+            {
+                if (m_drawNearestPoint || m_drawActiveTracing)
                 {
-                    DX::ThrowIfFailed(endDraw);
-                }
-
-                if (successful)
-                {
-                    if (m_drawNearestPoint || m_drawActiveTracing)
+                    Point trackPoint = m_pointerLocation;
+                    if (m_drawActiveTracing)
                     {
-                        Point trackPoint = m_pointerLocation;
-                        if (m_drawActiveTracing)
+                        // Active tracing takes over for draw nearest point input from the mouse pointer.
+                        trackPoint = m_activeTracingPointerLocation;
+                    }
+
+                    int formulaId = -1;
+                    double outNearestPointValueX, outNearestPointValueY;
+                    double rhoValueOut, thetaValueOut, tValueOut;
+                    float outNearestPointLocationX, outNearestPointLocationY;
+                    double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
+                    renderer->GetDisplayRanges(xAxisMin, xAxisMax, yAxisMin, yAxisMax);
+                    double precision = this->GetPrecision(xAxisMax, xAxisMin);
+                    if (renderer->GetClosePointData(
+                            trackPoint.X,
+                            trackPoint.Y,
+                            precision,
+                            formulaId,
+                            outNearestPointLocationX,
+                            outNearestPointLocationY,
+                            outNearestPointValueX,
+                            outNearestPointValueY,
+                            rhoValueOut,
+                            thetaValueOut,
+                            tValueOut)
+                        == S_OK)
+                    {
+                        if (!isnan(outNearestPointLocationX) && !isnan(outNearestPointLocationY))
                         {
-                            // Active tracing takes over for draw nearest point input from the mouse pointer.
-                            trackPoint = m_activeTracingPointerLocation;
-                        }
+                            auto lineColors = m_graph->GetOptions().GetGraphColors();
 
-                        int formulaId = -1;
-                        double outNearestPointValueX, outNearestPointValueY;
-                        double rhoValueOut, thetaValueOut, tValueOut;
-                        float outNearestPointLocationX, outNearestPointLocationY;
-                        double xAxisMin, xAxisMax, yAxisMin, yAxisMax;
-                        renderer->GetDisplayRanges(xAxisMin, xAxisMax, yAxisMin, yAxisMax);
-                        double precision = this->GetPrecision(xAxisMax, xAxisMin);
-                        if (renderer->GetClosePointData(
-                                trackPoint.X,
-                                trackPoint.Y,
-                                precision,
-                                formulaId,
-                                outNearestPointLocationX,
-                                outNearestPointLocationY,
-                                outNearestPointValueX,
-                                outNearestPointValueY,
-                                rhoValueOut,
-                                thetaValueOut,
-                                tValueOut)
-                            == S_OK)
-                        {
-                            if (!isnan(outNearestPointLocationX) && !isnan(outNearestPointLocationY))
+                            if (formulaId >= 0 && static_cast<unsigned int>(formulaId) < lineColors.size())
                             {
-                                auto lineColors = m_graph->GetOptions().GetGraphColors();
-
-                                if (formulaId >= 0 && static_cast<unsigned int>(formulaId) < lineColors.size())
-                                {
-                                    auto dotColor = lineColors[formulaId];
-                                    m_nearestPointRenderer.SetColor(D2D1::ColorF(dotColor.R * 65536 + dotColor.G * 256 + dotColor.B, 1.0));
-                                }
-
-                                m_TraceLocation = Point(outNearestPointLocationX, outNearestPointLocationY);
-                                m_nearestPointRenderer.Render(m_TraceLocation);
-                                m_Tracing = true;
-                                m_TraceLocation = Point(outNearestPointLocationX, outNearestPointLocationY);
-                                m_XTraceValue = outNearestPointValueX;
-                                m_YTraceValue = outNearestPointValueY;
+                                auto dotColor = lineColors[formulaId];
+                                m_nearestPointRenderer.SetColor(D2D1::ColorF(dotColor.R * 65536 + dotColor.G * 256 + dotColor.B, 1.0));
                             }
-                            else
-                            {
-                                m_Tracing = false;
-                            }
+
+                            m_TraceLocation = Point(outNearestPointLocationX, outNearestPointLocationY);
+                            m_nearestPointRenderer.Render(m_TraceLocation);
+                            m_Tracing = true;
+                            m_TraceLocation = Point(outNearestPointLocationX, outNearestPointLocationY);
+                            m_XTraceValue = outNearestPointValueX;
+                            m_YTraceValue = outNearestPointValueY;
                         }
                         else
                         {
                             m_Tracing = false;
                         }
                     }
+                    else
+                    {
+                        m_Tracing = false;
+                    }
                 }
             }
         }
-
         return successful;
     }
 
@@ -473,10 +480,12 @@ namespace GraphControl::DX
 
     void RenderMain::OnVisibilityChanged(CoreWindow ^ sender, VisibilityChangedEventArgs ^ args)
     {
-        if (args->Visible)
+        if (!args->Visible)
         {
-            RunRenderPass();
+            return;
         }
+
+        RunRenderPass();
     }
 
     void RenderMain::OnDpiChanged(DisplayInformation ^ sender, Object ^ args)
@@ -491,7 +500,7 @@ namespace GraphControl::DX
         {
             if (auto renderer = m_graph->GetRenderer())
             {
-                float dpi = m_deviceResources.GetDpi();
+                auto dpi = m_deviceResources.GetDpi();
                 renderer->SetDpi(dpi, dpi);
             }
         }
