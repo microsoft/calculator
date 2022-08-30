@@ -12,10 +12,6 @@ namespace CalculatorApp
     {
         public sealed class OperatorPanelListView : Windows.UI.Xaml.Controls.ListView
         {
-            public OperatorPanelListView()
-            {
-            }
-
             protected override void OnApplyTemplate()
             {
                 m_scrollViewer = GetTemplateChild("ScrollViewer") as ScrollViewer;

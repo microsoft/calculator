@@ -18,6 +18,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 
 namespace CalculatorUITestFramework
@@ -143,11 +144,11 @@ namespace CalculatorUITestFramework
 
         private bool Ping()
         {
-            bool pinged = false;
-
             Uri status;
-
             Uri service = this.ServiceUrl;
+            var httpClient = new HttpClient();
+            httpClient.Timeout = this.InitializationTimeout;
+
             if (service.IsLoopback)
             {
                 status = new Uri("http://localhost:" + Convert.ToString(this.Port) + "/status");
@@ -157,31 +158,8 @@ namespace CalculatorUITestFramework
                 status = new Uri(service + "/status");
             }
 
-            DateTime endTime = DateTime.Now.Add(this.InitializationTimeout);
-            while (!pinged & DateTime.Now < endTime)
-            {
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(status);
-                HttpWebResponse response = null;
-                try
-                {
-                    using (response = (HttpWebResponse)request.GetResponse())
-                    {
-                        pinged = true;
-                    }
-                }
-                catch (Exception)
-                {
-                    pinged = false;
-                }
-                finally
-                {
-                    if (response != null)
-                    {
-                        response.Close();
-                    }
-                }
-            }
-            return pinged;
+            var httpResponse = httpClient.GetAsync(status);
+            return httpResponse.Result.IsSuccessStatusCode;
         }
     }
 }

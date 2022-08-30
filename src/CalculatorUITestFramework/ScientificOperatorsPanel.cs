@@ -109,21 +109,13 @@ namespace CalculatorUITestFramework
         public void SetAngleOperator(AngleOperatorState value)
         {
             //set the desired string value for the button
-            string desiredId;
-            switch (value)
+            string desiredId = value switch
             {
-                case AngleOperatorState.Degrees:
-                    desiredId = "degButton";
-                    break;
-                case AngleOperatorState.Gradians:
-                    desiredId = "gradButton";
-                    break;
-                case AngleOperatorState.Radians:
-                    desiredId = "radButton";
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
+                AngleOperatorState.Degrees => "degButton",
+                AngleOperatorState.Gradians => "gradButton",
+                AngleOperatorState.Radians => "radButton",
+                _ => throw new NotImplementedException()
+            };
             while (this.DegRadGradButton.GetAttribute("AutomationId") != desiredId)
             {
                 this.DegRadGradButton.Click();

@@ -230,14 +230,7 @@ namespace CalculatorApp
             if (e.AddedItems.Count > 0)
             {
                 var brush = (e.AddedItems[0] as SolidColorBrush);
-                if (brush == null)
-                {
-                    SelectedColor = Colors.Black;
-                }
-                else
-                {
-                    SelectedColor = brush.Color;
-                }
+                SelectedColor = brush?.Color ?? Colors.Black;
 
                 CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogGraphLineStyleChanged(LineStyleType.Color);
             }
@@ -293,9 +286,8 @@ namespace CalculatorApp
             foreach (var item in StyleChooserBox.Items)
             {
                 var style = ((EquationLineStyle)item);
-                var comboBoxItem = (StyleChooserBox.ContainerFromItem(style) as ComboBoxItem);
 
-                if (comboBoxItem == null)
+                if (!(StyleChooserBox.ContainerFromItem(style) is ComboBoxItem comboBoxItem))
                 {
                     continue;
                 }

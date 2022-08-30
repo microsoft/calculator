@@ -103,11 +103,11 @@ namespace CalculatorApp
             {
                 InverseHyperbolicTrigFunctions.Visibility = Visibility.Visible;
             }
-            else if (isShiftChecked && !isHypeChecked)
+            else if (isShiftChecked)
             {
                 InverseTrigFunctions.Visibility = Visibility.Visible;
             }
-            else if (!isShiftChecked && isHypeChecked)
+            else if (isHypeChecked)
             {
                 HyperbolicTrigFunctions.Visibility = Visibility.Visible;
             }

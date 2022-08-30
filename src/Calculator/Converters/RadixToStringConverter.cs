@@ -42,8 +42,6 @@ namespace CalculatorApp
                             convertedValue = resourceLoader.GetResourceString("Hex");
                             break;
                         }
-                    default:
-                        break;
                 }
 
                 return convertedValue;

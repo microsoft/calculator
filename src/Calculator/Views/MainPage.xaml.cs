@@ -66,10 +66,7 @@ namespace CalculatorApp
             Window.Current.SizeChanged -= WindowSizeChanged;
             m_accessibilitySettings.HighContrastChanged -= OnHighContrastChanged;
 
-            if (m_calculator != null)
-            {
-                m_calculator.UnregisterEventHandlers();
-            }
+            m_calculator?.UnregisterEventHandlers();
         }
 
         public void SetDefaultFocus()
@@ -368,8 +365,7 @@ namespace CalculatorApp
                 return;
             }
 
-            var item = (e.SelectedItemContainer as MUXC.NavigationViewItem);
-            if (item != null)
+            if (e.SelectedItemContainer is MUXC.NavigationViewItem item)
             {
                 Model.Mode = (ViewMode)item.Tag;
             }
@@ -435,10 +431,7 @@ namespace CalculatorApp
 
         private void UpdatePanelViewState()
         {
-            if (m_calculator != null)
-            {
-                m_calculator.UpdatePanelViewState();
-            }
+            m_calculator?.UpdatePanelViewState();
         }
 
         private void OnHighContrastChanged(AccessibilitySettings sender, object args)
@@ -468,14 +461,14 @@ namespace CalculatorApp
 
             // Delay load things later when we get a chance.
             _ = Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                CoreDispatcherPriority.Normal, () =>
                 {
                     if (TraceLogger.GetInstance().IsWindowIdInLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
                     {
                         AppLifecycleLogger.GetInstance().LaunchUIResponsive();
                         AppLifecycleLogger.GetInstance().LaunchVisibleComplete();
                     }
-                }));
+                });
         }
 
         private void App_Suspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
@@ -528,10 +521,7 @@ namespace CalculatorApp
                 ShowHideControls(Model.Mode);
             }
 
-            if (m_dateCalculator != null)
-            {
-                m_dateCalculator.CloseCalendarFlyout();
-            }
+            m_dateCalculator?.CloseCalendarFlyout();
         }
 
         private void EnsureDateCalculator()

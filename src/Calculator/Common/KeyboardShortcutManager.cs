@@ -115,10 +115,6 @@ namespace CalculatorApp
 
         public sealed class KeyboardShortcutManager : DependencyObject
         {
-            public KeyboardShortcutManager()
-            {
-            }
-
             public static readonly DependencyProperty CharacterProperty =
                 DependencyProperty.RegisterAttached(
                     "Character",
@@ -484,13 +480,8 @@ namespace CalculatorApp
                 // Writer lock for the static maps
                 lock (s_keyboardShortcutMapLockMutex)
                 {
-                    Control control = (target as ButtonBase);
-
-                    if (control == null)
-                    {
-                        // Handling Ctrl+E shortcut for Date Calc, target would be NavigationView^ in that case
-                        control = (target as MUXC.NavigationView);
-                    }
+                    // Handling Ctrl+E shortcut for Date Calc, target would be NavigationView^ in that case
+                    Control control = (target as ButtonBase) ?? (Control)(target as MUXC.NavigationView);
 
                     int viewId = Utilities.GetWindowId();
 
@@ -580,7 +571,7 @@ namespace CalculatorApp
             private static bool CanNavigateModeByShortcut(MUXC.NavigationView navView, object nvi
                 , ApplicationViewModel vm, ViewMode toMode)
             {
-                if (nvi != null && nvi is NavCategory navCategory)
+                if (nvi is NavCategory navCategory)
                 {
                     return navCategory.IsEnabled
                         && navView.Visibility == Visibility.Visible
@@ -601,21 +592,18 @@ namespace CalculatorApp
                     {
                         if (itemRef.Target is MUXC.NavigationView item)
                         {
-                            var navView = item;
-
-                            var menuItems = ((List<object>)navView.MenuItemsSource);
+                            var menuItems = ((List<object>)item.MenuItemsSource);
                             if (menuItems != null)
                             {
-                                var vm = (navView.DataContext as ApplicationViewModel);
-                                if (null != vm)
+                                if (item.DataContext is ApplicationViewModel vm)
                                 {
-                                    ViewMode realToMode = toMode.HasValue ? toMode.Value : NavCategoryStates.GetViewModeForVirtualKey(((MyVirtualKey)key));
+                                    ViewMode realToMode = toMode ?? NavCategoryStates.GetViewModeForVirtualKey(((MyVirtualKey)key));
 
                                     var nvi = menuItems[NavCategoryStates.GetFlatIndex(realToMode)];
-                                    if (CanNavigateModeByShortcut(navView, nvi, vm, realToMode))
+                                    if (CanNavigateModeByShortcut(item, nvi, vm, realToMode))
                                     {
                                         vm.Mode = realToMode;
-                                        navView.SelectedItem = nvi;
+                                        item.SelectedItem = nvi;
                                     }
                                 }
                             }

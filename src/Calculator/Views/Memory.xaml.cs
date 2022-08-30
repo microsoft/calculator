@@ -60,28 +60,19 @@ namespace CalculatorApp
         private void OnClearMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var memoryItem = GetMemoryItemForCurrentFlyout();
-            if (memoryItem != null)
-            {
-                memoryItem.Clear();
-            }
+            memoryItem?.Clear();
         }
 
         private void OnMemoryAddMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var memoryItem = GetMemoryItemForCurrentFlyout();
-            if (memoryItem != null)
-            {
-                memoryItem.MemoryAdd();
-            }
+            memoryItem?.MemoryAdd();
         }
 
         private void OnMemorySubtractMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var memoryItem = GetMemoryItemForCurrentFlyout();
-            if (memoryItem != null)
-            {
-                memoryItem.MemorySubtract();
-            }
+            memoryItem?.MemorySubtract();
         }
 
         private MemoryItemViewModel GetMemoryItemForCurrentFlyout()

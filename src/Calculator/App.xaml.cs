@@ -30,7 +30,7 @@ namespace CalculatorApp
 {
     namespace ApplicationResourceKeys
     {
-        public static partial class Globals
+        public static class Globals
         {
             public static readonly string AppMinWindowHeight = "AppMinWindowHeight";
             public static readonly string AppMinWindowWidth = "AppMinWindowWidth";
@@ -253,8 +253,7 @@ namespace CalculatorApp
                                         int newWindowId = ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread());
 
                                         ActivationViewSwitcher activationViewSwitcher = null;
-                                        var activateEventArgs = (args as IViewSwitcherProvider);
-                                        if (activateEventArgs != null)
+                                        if (args is IViewSwitcherProvider activateEventArgs)
                                         {
                                             activationViewSwitcher = activateEventArgs.ViewSwitcher;
                                         }
@@ -266,8 +265,7 @@ namespace CalculatorApp
                                         }
                                         else
                                         {
-                                            var activatedEventArgs = (args as IApplicationViewActivatedEventArgs);
-                                            if ((activatedEventArgs != null) && (activatedEventArgs.CurrentlyShownApplicationViewId != 0))
+                                            if ((args is IApplicationViewActivatedEventArgs activatedEventArgs) && (activatedEventArgs.CurrentlyShownApplicationViewId != 0))
                                             {
                                                 // CSHARP_MIGRATION_ANNOTATION:
                                                 // here we don't use ContinueWith() to interpret origin code because we would like to 
@@ -294,8 +292,7 @@ namespace CalculatorApp
                     else
                     {
                         ActivationViewSwitcher activationViewSwitcher = null;
-                        var activateEventArgs = (args as IViewSwitcherProvider);
-                        if (activateEventArgs != null)
+                        if (args is IViewSwitcherProvider activateEventArgs)
                         {
                             activationViewSwitcher = activateEventArgs.ViewSwitcher;
                         }
@@ -334,14 +331,13 @@ namespace CalculatorApp
                             // for tablet mode: since system view activation policy is disabled so do ShowAsStandaloneAsync if activationViewSwitcher exists in
                             // activationArgs
                             ActivationViewSwitcher activationViewSwitcher = null;
-                            var activateEventArgs = (args as IViewSwitcherProvider);
-                            if (activateEventArgs != null)
+                            if (args is IViewSwitcherProvider activateEventArgs)
                             {
                                 activationViewSwitcher = activateEventArgs.ViewSwitcher;
                             }
                             if (activationViewSwitcher != null)
                             {
-                                var viewId = (args as IApplicationViewActivatedEventArgs).CurrentlyShownApplicationViewId;
+                                var viewId = ((IApplicationViewActivatedEventArgs)args).CurrentlyShownApplicationViewId;
                                 if (viewId != 0)
                                 {
                                     _ = activationViewSwitcher.ShowAsStandaloneAsync(viewId);
@@ -495,7 +491,7 @@ namespace CalculatorApp
             try
             {
                 bool removed = m_secondaryWindows.Remove(viewId);
-                Debug.Assert(removed != false, "Window does not exist in the list");
+                Debug.Assert(removed, "Window does not exist in the list");
             }
             finally
             {
