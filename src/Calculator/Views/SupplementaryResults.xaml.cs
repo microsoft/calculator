@@ -1,4 +1,4 @@
-﻿using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel;
 
 using System;
 using System.Collections.Generic;
@@ -46,9 +46,6 @@ namespace CalculatorApp
 
     public sealed class SupplementaryResultDataTemplateSelector : Windows.UI.Xaml.Controls.DataTemplateSelector
     {
-        public SupplementaryResultDataTemplateSelector()
-        { }
-
         public Windows.UI.Xaml.DataTemplate RegularTemplate { get; set; }
 
         public Windows.UI.Xaml.DataTemplate DelighterTemplate { get; set; }

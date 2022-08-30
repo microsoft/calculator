@@ -25,7 +25,7 @@ namespace CalculatorApp
             InitializeComponent();
         }
 
-        public CalculatorApp.ViewModel.GraphingSettingsViewModel ViewModel { get; set; }
+        public CalculatorApp.ViewModel.GraphingSettingsViewModel ViewModel { get; }
 
         public bool IsMatchAppTheme
         {
@@ -116,5 +116,5 @@ namespace CalculatorApp
         }
 
         private bool m_IsMatchAppTheme;
-    };
+    }
 }

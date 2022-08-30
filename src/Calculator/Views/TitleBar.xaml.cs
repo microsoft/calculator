@@ -92,7 +92,7 @@ namespace CalculatorApp
         {
             if (Frame.RequestedThemeProperty == dp)
             {
-                _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => { SetTitleBarControlColors(); }));
+                _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, SetTitleBarControlColors);
             }
         }
 
@@ -120,8 +120,8 @@ namespace CalculatorApp
                 return;
             }
 
-            double leftAddition = 0;
-            double rightAddition = 0;
+            double leftAddition;
+            double rightAddition;
 
             if (FlowDirection == FlowDirection.LeftToRight)
             {
@@ -140,18 +140,14 @@ namespace CalculatorApp
 
         private void ColorValuesChanged(Windows.UI.ViewManagement.UISettings sender, object e)
         {
-            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => { SetTitleBarControlColors(); }));
+            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, SetTitleBarControlColors);
         }
 
         private void SetTitleBarControlColors()
         {
             var applicationView = ApplicationView.GetForCurrentView();
-            if (applicationView == null)
-            {
-                return;
-            }
 
-            var applicationTitleBar = applicationView.TitleBar;
+            var applicationTitleBar = applicationView?.TitleBar;
             if (applicationTitleBar == null)
             {
                 return;
@@ -184,11 +180,11 @@ namespace CalculatorApp
 
         private void OnHighContrastChanged(Windows.UI.ViewManagement.AccessibilitySettings sender, object args)
         {
-            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 SetTitleBarControlColors();
                 SetTitleBarVisibility(false);
-            }));
+            });
         }
 
         private void OnWindowActivated(object sender, WindowActivatedEventArgs e)
@@ -281,12 +277,12 @@ namespace CalculatorApp
         public static readonly DependencyProperty BackButtonSpaceReservedProperty =
             DependencyProperty.Register(
                 nameof(BackButtonSpaceReserved), typeof(bool), typeof(TitleBar),
-                new PropertyMetadata(false, new PropertyChangedCallback((sender, args) =>
+                new PropertyMetadata(false, (sender, args) =>
                 {
                     var self = sender as TitleBar;
                     VisualStateManager.GoToState(
                         self, (bool)args.NewValue ? self.BackButtonVisible.Name : self.BackButtonCollapsed.Name, true);
-                })));
+                }));
 
         private readonly Windows.ApplicationModel.Core.CoreApplicationViewTitleBar m_coreTitleBar;
         private readonly Windows.UI.ViewManagement.UISettings m_uiSettings;

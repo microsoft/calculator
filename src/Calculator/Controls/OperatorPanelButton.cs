@@ -10,10 +10,6 @@ namespace CalculatorApp
     {
         public sealed class OperatorPanelButton : Windows.UI.Xaml.Controls.Primitives.ToggleButton
         {
-            public OperatorPanelButton()
-            {
-            }
-
             public string Text
             {
                 get => (string)GetValue(TextProperty);

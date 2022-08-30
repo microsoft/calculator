@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -44,10 +44,10 @@ namespace CalculatorApp
                 // restore the selection to the way we wanted it to begin with
                 if (CurrentPosition >= 0 && CurrentPosition < m_source.Count)
                 {
-                    Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() =>
+                    Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
                         CurrentChanged?.Invoke(this, null);
-                    })).AsTask().Wait();
+                    }).AsTask().Wait();
                 }
                 return false;
             }
@@ -196,10 +196,6 @@ namespace CalculatorApp
 
         public sealed class AlwaysSelectedCollectionViewConverter : Windows.UI.Xaml.Data.IValueConverter
         {
-            public AlwaysSelectedCollectionViewConverter()
-            {
-            }
-
             public object Convert(object value, Type targetType, object parameter, string language)
             {
                 if (value is IList result)

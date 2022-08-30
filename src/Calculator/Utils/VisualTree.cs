@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -54,7 +54,7 @@ namespace Calculator.Utils
         /// <param name="element">Parent element.</param>
         /// <param name="typeName">Type of descendant.</param>
         /// <returns>Descendant control or null if not found.</returns>
-        private static DependencyObject FindDescendant(DependencyObject element, Type typeName)
+        internal static DependencyObject FindDescendant(DependencyObject element, Type typeName)
         {
             DependencyObject retValue = null;
             var childrenCount = VisualTreeHelper.GetChildrenCount(element);
@@ -85,7 +85,7 @@ namespace Calculator.Utils
         /// <param name="element">Parent element.</param>
         /// <param name="name">Name of the control to find</param>
         /// <returns>Descendant control or null if not found.</returns>
-        private static FrameworkElement FindAscendantByName(DependencyObject element, string name)
+        internal static FrameworkElement FindAscendantByName(DependencyObject element, string name)
         {
             if (element == null || name == null || name.Length == 0)
             {
@@ -113,7 +113,7 @@ namespace Calculator.Utils
         /// <param name="element">Child element.</param>
         /// <param name="type">Type of ascendant to look for.</param>
         /// <returns>Ascendant control or null if not found.</returns>
-        private static object FindAscendant(DependencyObject element, Type typeName)
+        internal static object FindAscendant(DependencyObject element, Type typeName)
         {
             var parent = VisualTreeHelper.GetParent(element);
 

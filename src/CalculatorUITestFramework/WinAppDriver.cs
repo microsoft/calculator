@@ -16,18 +16,7 @@ namespace CalculatorUITestFramework
         public MemoryPanel MemoryPanel = new MemoryPanel();
         private const string defaultAppId = "Microsoft.WindowsCalculator.Dev_8wekyb3d8bbwe!App";
         private static WinAppDriver instance = null;
-        public static WinAppDriver Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new WinAppDriver();
-                }
-                return instance;
-            }
-
-        }
+        public static WinAppDriver Instance => instance ??= new WinAppDriver();
 
         public WindowsDriver<WindowsElement> CalculatorSession { get; private set; }
 

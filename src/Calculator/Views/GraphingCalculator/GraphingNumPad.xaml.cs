@@ -103,11 +103,11 @@ namespace CalculatorApp
             {
                 InverseHyperbolicTrigFunctions.Visibility = Visibility.Visible;
             }
-            else if (isShiftChecked && !isHypeChecked)
+            else if (isShiftChecked)
             {
                 InverseTrigFunctions.Visibility = Visibility.Visible;
             }
-            else if (!isShiftChecked && isHypeChecked)
+            else if (isHypeChecked)
             {
                 HyperbolicTrigFunctions.Visibility = Visibility.Visible;
             }
@@ -187,7 +187,7 @@ namespace CalculatorApp
             }
         }
 
-        private static readonly Dictionary<NumbersAndOperatorsEnum, Tuple<string, int, int>> buttonOutput = new Dictionary<NumbersAndOperatorsEnum, Tuple<string, int, int>>()
+        private static readonly Dictionary<NumbersAndOperatorsEnum, Tuple<string, int, int>> buttonOutput = new Dictionary<NumbersAndOperatorsEnum, Tuple<string, int, int>>
         {
             { NumbersAndOperatorsEnum.Sin, Tuple.Create("sin()", 4, 0) },
             { NumbersAndOperatorsEnum.Cos, Tuple.Create("cos()", 4, 0) },

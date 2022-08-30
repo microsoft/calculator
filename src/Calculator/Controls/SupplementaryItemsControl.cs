@@ -16,10 +16,6 @@ namespace CalculatorApp
     {
         public sealed class SupplementaryItemsControl : ItemsControl
         {
-            public SupplementaryItemsControl()
-            {
-            }
-
             protected override DependencyObject GetContainerForItemOverride()
             {
                 return new SupplementaryContentPresenter();
@@ -38,10 +34,6 @@ namespace CalculatorApp
 
         public sealed class SupplementaryContentPresenter : ContentPresenter
         {
-            public SupplementaryContentPresenter()
-            {
-            }
-
             protected override AutomationPeer OnCreateAutomationPeer()
             {
                 return new SupplementaryContentPresenterAP(this);

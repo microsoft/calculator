@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using CalculatorApp.ViewModel.Common;
@@ -16,8 +16,7 @@ namespace CalculatorApp
         {
             protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
             {
-                DisplayExpressionToken token = (item as DisplayExpressionToken);
-                if (token != null)
+                if (item is DisplayExpressionToken token)
                 {
                     CalculatorApp.ViewModel.Common.TokenType type = token.Type;
 

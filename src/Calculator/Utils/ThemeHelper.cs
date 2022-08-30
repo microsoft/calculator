@@ -79,7 +79,7 @@ namespace CalculatorApp.Utils
             if (callbackToken.RootFrame.IsAlive)
             {
                 Frame rootFrame = callbackToken.RootFrame.Target as Frame;
-                rootFrame.UnregisterPropertyChangedCallback(Frame.RequestedThemeProperty, callbackToken.Token);
+                rootFrame.UnregisterPropertyChangedCallback(FrameworkElement.RequestedThemeProperty, callbackToken.Token);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using CalculatorApp.ViewModel.Common;
@@ -16,10 +16,6 @@ namespace CalculatorApp
     {
         public sealed class EquationTextBox : Windows.UI.Xaml.Controls.Control
         {
-            public EquationTextBox()
-            {
-            }
-
             public Windows.UI.Xaml.Media.SolidColorBrush EquationColor
             {
                 get => (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(EquationColorProperty);

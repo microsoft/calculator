@@ -40,7 +40,7 @@ namespace CalculatorApp
             DependencyProperty.Register(nameof(SelectedColor), typeof(Windows.UI.Color), typeof(EquationStylePanelControl), new PropertyMetadata(Windows.UI.Colors.Black, (sender, args) =>
             {
                 var self = (EquationStylePanelControl)sender;
-                self.OnSelectedColorPropertyChanged((Windows.UI.Color)args.OldValue, (Windows.UI.Color)args.NewValue);
+                self.OnSelectedColorPropertyChanged((Windows.UI.Color)args.NewValue);
             }));
 
         public GraphControl.EquationLineStyle SelectedStyle
@@ -92,17 +92,14 @@ namespace CalculatorApp
             var lineStyle = ((EquationLineStyle?)line).Value;
 
             var linePattern = new DoubleCollection();
-            switch (lineStyle)
+            if (lineStyle == EquationLineStyle.Dot)
             {
-                case EquationLineStyle.Dot:
-                    linePattern.Add(1);
-                    break;
-                case EquationLineStyle.Dash:
-                    linePattern.Add(2);
-                    linePattern.Add(1);
-                    break;
-                default:
-                    break;
+                linePattern.Add(1);
+            }
+            else if (lineStyle == EquationLineStyle.Dash)
+            {
+                linePattern.Add(2);
+                linePattern.Add(1);
             }
 
             return linePattern;
@@ -230,20 +227,13 @@ namespace CalculatorApp
             if (e.AddedItems.Count > 0)
             {
                 var brush = (e.AddedItems[0] as SolidColorBrush);
-                if (brush == null)
-                {
-                    SelectedColor = Colors.Black;
-                }
-                else
-                {
-                    SelectedColor = brush.Color;
-                }
+                SelectedColor = brush?.Color ?? Colors.Black;
 
                 CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogGraphLineStyleChanged(LineStyleType.Color);
             }
         }
 
-        private void OnSelectedColorPropertyChanged(Color oldColor, Color newColor)
+        private void OnSelectedColorPropertyChanged(Color newColor)
         {
             SelectColor(newColor);
         }
@@ -272,10 +262,8 @@ namespace CalculatorApp
                     SelectedColorIndex = i;
                     return;
                 }
-                else
-                {
-                    gridViewItem.IsSelected = false;
-                }
+
+                gridViewItem.IsSelected = false;
             }
         }
 
@@ -293,9 +281,8 @@ namespace CalculatorApp
             foreach (var item in StyleChooserBox.Items)
             {
                 var style = ((EquationLineStyle)item);
-                var comboBoxItem = (StyleChooserBox.ContainerFromItem(style) as ComboBoxItem);
 
-                if (comboBoxItem == null)
+                if (!(StyleChooserBox.ContainerFromItem(style) is ComboBoxItem comboBoxItem))
                 {
                     continue;
                 }
@@ -305,10 +292,8 @@ namespace CalculatorApp
                     comboBoxItem.IsSelected = true;
                     return;
                 }
-                else
-                {
-                    comboBoxItem.IsSelected = false;
-                }
+
+                comboBoxItem.IsSelected = false;
             }
         }
 

@@ -33,11 +33,11 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for ButtonId.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ButtonIdProperty =
-                DependencyProperty.Register(nameof(ButtonId), typeof(NumbersAndOperatorsEnum), typeof(CalculatorButton), new PropertyMetadata(default(NumbersAndOperatorsEnum), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(ButtonId), typeof(NumbersAndOperatorsEnum), typeof(CalculatorButton), new PropertyMetadata(default(NumbersAndOperatorsEnum), (sender, args) =>
                 {
                     var self = (CalculatorButton)sender;
                     self.OnButtonIdPropertyChanged((NumbersAndOperatorsEnum)args.OldValue, (NumbersAndOperatorsEnum)args.NewValue);
-                })));
+                }));
 
             public string AuditoryFeedback
             {
@@ -47,11 +47,11 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for AuditoryFeedback.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty AuditoryFeedbackProperty =
-                DependencyProperty.Register(nameof(AuditoryFeedback), typeof(string), typeof(CalculatorButton), new PropertyMetadata(string.Empty, new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(AuditoryFeedback), typeof(string), typeof(CalculatorButton), new PropertyMetadata(string.Empty, (sender, args) =>
                 {
                     var self = (CalculatorButton)sender;
                     self.OnAuditoryFeedbackPropertyChanged((string)args.OldValue, (string)args.NewValue);
-                })));
+                }));
 
             public Windows.UI.Xaml.Media.Brush HoverBackground
             {

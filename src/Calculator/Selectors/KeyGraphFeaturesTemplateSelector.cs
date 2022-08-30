@@ -11,10 +11,6 @@ namespace CalculatorApp
     {
         public sealed class KeyGraphFeaturesTemplateSelector : Windows.UI.Xaml.Controls.DataTemplateSelector
         {
-            public KeyGraphFeaturesTemplateSelector()
-            {
-            }
-
             public Windows.UI.Xaml.DataTemplate RichEditTemplate { get; set; }
             public Windows.UI.Xaml.DataTemplate GridTemplate { get; set; }
             public Windows.UI.Xaml.DataTemplate TextBlockTemplate { get; set; }

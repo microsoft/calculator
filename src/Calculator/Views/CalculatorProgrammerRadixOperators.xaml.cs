@@ -65,7 +65,7 @@ namespace CalculatorApp
             LogicalShift,
             RotateCircular,
             RotateCarry
-        };
+        }
 
         private void BitshiftFlyout_Checked(object sender, RoutedEventArgs e)
         {

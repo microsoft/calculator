@@ -33,11 +33,11 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for MinFontSize.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty MinFontSizeProperty =
-                DependencyProperty.Register(nameof(MinFontSize), typeof(double), typeof(CalculationResult), new PropertyMetadata(0.0, new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(MinFontSize), typeof(double), typeof(CalculationResult), new PropertyMetadata(0.0, (sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnMinFontSizePropertyChanged((double)args.OldValue, (double)args.NewValue);
-                })));
+                }));
 
             public double MaxFontSize
             {
@@ -47,11 +47,11 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for MaxFontSize.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty MaxFontSizeProperty =
-                DependencyProperty.Register(nameof(MaxFontSize), typeof(double), typeof(CalculationResult), new PropertyMetadata(30.0, new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(MaxFontSize), typeof(double), typeof(CalculationResult), new PropertyMetadata(30.0, (sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnMaxFontSizePropertyChanged((double)args.OldValue, (double)args.NewValue);
-                })));
+                }));
 
             public Thickness DisplayMargin
             {
@@ -71,11 +71,11 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for IsActive.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty IsActiveProperty =
-                DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(CalculationResult), new PropertyMetadata(default(bool), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(CalculationResult), new PropertyMetadata(default(bool), (sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnIsActivePropertyChanged((bool)args.OldValue, (bool)args.NewValue);
-                })));
+                }));
 
             public string DisplayValue
             {
@@ -85,11 +85,11 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for DisplayValue.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty DisplayValueProperty =
-                DependencyProperty.Register(nameof(DisplayValue), typeof(string), typeof(CalculationResult), new PropertyMetadata(string.Empty, new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(DisplayValue), typeof(string), typeof(CalculationResult), new PropertyMetadata(string.Empty, (sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnDisplayValuePropertyChanged((string)args.OldValue, (string)args.NewValue);
-                })));
+                }));
 
             public bool IsInError
             {
@@ -99,11 +99,11 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for IsInError.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty IsInErrorProperty =
-                DependencyProperty.Register(nameof(IsInError), typeof(bool), typeof(CalculationResult), new PropertyMetadata(default(bool), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(IsInError), typeof(bool), typeof(CalculationResult), new PropertyMetadata(default(bool), (sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnIsInErrorPropertyChanged((bool)args.OldValue, (bool)args.NewValue);
-                })));
+                }));
 
             public bool IsOperatorCommand
             {
@@ -151,7 +151,7 @@ namespace CalculatorApp
 
                     if (widthDiff > WIDTHCUTOFF)
                     {
-                        fontSizeChange = Math.Min((double)Math.Max((double)Math.Floor(WIDTHTOFONTSCALAR * widthDiff) - WIDTHTOFONTOFFSET, INCREMENTOFFSET), MAXFONTINCREMENT);
+                        fontSizeChange = Math.Min(Math.Max(Math.Floor(WIDTHTOFONTSCALAR * widthDiff) - WIDTHTOFONTOFFSET, INCREMENTOFFSET), MAXFONTINCREMENT);
                     }
                     if (m_textBlock.ActualWidth < containerSize && Math.Abs(m_textBlock.FontSize - MaxFontSize) > FONTTOLERANCE && !m_haveCalculatedMax)
                     {

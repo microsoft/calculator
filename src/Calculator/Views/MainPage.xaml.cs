@@ -16,7 +16,6 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Navigation;
 
@@ -66,10 +65,7 @@ namespace CalculatorApp
             Window.Current.SizeChanged -= WindowSizeChanged;
             m_accessibilitySettings.HighContrastChanged -= OnHighContrastChanged;
 
-            if (m_calculator != null)
-            {
-                m_calculator.UnregisterEventHandlers();
-            }
+            m_calculator?.UnregisterEventHandlers();
         }
 
         public void SetDefaultFocus()
@@ -206,58 +202,67 @@ namespace CalculatorApp
 
                 KeyboardShortcutManager.DisableShortcuts(false);
 
-                if (newValue == ViewMode.Standard)
+                switch (newValue)
                 {
-                    EnsureCalculator();
-                    Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = true;
-                    m_calculator.AnimateCalculator(NavCategory.IsConverterViewMode(previousMode));
-                    Model.CalculatorViewModel.HistoryVM.ReloadHistory(newValue);
-                }
-                else if (newValue == ViewMode.Scientific)
-                {
-                    EnsureCalculator();
-                    Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = true;
-                    if (Model.PreviousMode != ViewMode.Scientific)
-                    {
+                    case ViewMode.Standard:
+                        EnsureCalculator();
+                        Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = true;
                         m_calculator.AnimateCalculator(NavCategory.IsConverterViewMode(previousMode));
-                    }
+                        Model.CalculatorViewModel.HistoryVM.ReloadHistory(newValue);
+                        break;
+                    case ViewMode.Scientific:
+                        {
+                            EnsureCalculator();
+                            Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = true;
+                            if (Model.PreviousMode != ViewMode.Scientific)
+                            {
+                                m_calculator.AnimateCalculator(NavCategory.IsConverterViewMode(previousMode));
+                            }
 
-                    Model.CalculatorViewModel.HistoryVM.ReloadHistory(newValue);
-                }
-                else if (newValue == ViewMode.Programmer)
-                {
-                    Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
-                    EnsureCalculator();
-                    if (Model.PreviousMode != ViewMode.Programmer)
-                    {
-                        m_calculator.AnimateCalculator(NavCategory.IsConverterViewMode(previousMode));
-                    }
-                }
-                else if (NavCategory.IsDateCalculatorViewMode(newValue))
-                {
-                    if (Model.CalculatorViewModel != null)
-                    {
-                        Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
-                    }
-                    EnsureDateCalculator();
-                }
-                else if (newValue == ViewMode.Graphing)
-                {
-                    EnsureGraphingCalculator();
-                    KeyboardShortcutManager.DisableShortcuts(true);
-                }
-                else if (NavCategory.IsConverterViewMode(newValue))
-                {
-                    if (Model.CalculatorViewModel != null)
-                    {
-                        Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
-                    }
+                            Model.CalculatorViewModel.HistoryVM.ReloadHistory(newValue);
+                            break;
+                        }
+                    case ViewMode.Programmer:
+                        {
+                            Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
+                            EnsureCalculator();
+                            if (Model.PreviousMode != ViewMode.Programmer)
+                            {
+                                m_calculator.AnimateCalculator(NavCategory.IsConverterViewMode(previousMode));
+                            }
 
-                    EnsureConverter();
-                    if (!NavCategory.IsConverterViewMode(previousMode))
-                    {
-                        m_converter.AnimateConverter();
-                    }
+                            break;
+                        }
+                    case ViewMode.Graphing:
+                        EnsureGraphingCalculator();
+                        KeyboardShortcutManager.DisableShortcuts(true);
+                        break;
+                    default:
+                        {
+                            if (NavCategory.IsDateCalculatorViewMode(newValue))
+                            {
+                                if (Model.CalculatorViewModel != null)
+                                {
+                                    Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
+                                }
+                                EnsureDateCalculator();
+                            }
+                            else if (NavCategory.IsConverterViewMode(newValue))
+                            {
+                                if (Model.CalculatorViewModel != null)
+                                {
+                                    Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
+                                }
+
+                                EnsureConverter();
+                                if (!NavCategory.IsConverterViewMode(previousMode))
+                                {
+                                    m_converter.AnimateConverter();
+                                }
+                            }
+
+                            break;
+                        }
                 }
 
                 ShowHideControls(newValue);
@@ -368,8 +373,7 @@ namespace CalculatorApp
                 return;
             }
 
-            var item = (e.SelectedItemContainer as MUXC.NavigationViewItem);
-            if (item != null)
+            if (e.SelectedItemContainer is MUXC.NavigationViewItem item)
             {
                 Model.Mode = (ViewMode)item.Tag;
             }
@@ -435,10 +439,7 @@ namespace CalculatorApp
 
         private void UpdatePanelViewState()
         {
-            if (m_calculator != null)
-            {
-                m_calculator.UpdatePanelViewState();
-            }
+            m_calculator?.UpdatePanelViewState();
         }
 
         private void OnHighContrastChanged(AccessibilitySettings sender, object args)
@@ -468,14 +469,14 @@ namespace CalculatorApp
 
             // Delay load things later when we get a chance.
             _ = Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                CoreDispatcherPriority.Normal, () =>
                 {
                     if (TraceLogger.GetInstance().IsWindowIdInLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
                     {
                         AppLifecycleLogger.GetInstance().LaunchUIResponsive();
                         AppLifecycleLogger.GetInstance().LaunchVisibleComplete();
                     }
-                }));
+                });
         }
 
         private void App_Suspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
@@ -528,10 +529,7 @@ namespace CalculatorApp
                 ShowHideControls(Model.Mode);
             }
 
-            if (m_dateCalculator != null)
-            {
-                m_dateCalculator.CloseCalendarFlyout();
-            }
+            m_dateCalculator?.CloseCalendarFlyout();
         }
 
         private void EnsureDateCalculator()

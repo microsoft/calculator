@@ -30,7 +30,7 @@ namespace CalculatorApp
 {
     namespace ApplicationResourceKeys
     {
-        public static partial class Globals
+        public static class Globals
         {
             public static readonly string AppMinWindowHeight = "AppMinWindowHeight";
             public static readonly string AppMinWindowWidth = "AppMinWindowWidth";
@@ -224,78 +224,74 @@ namespace CalculatorApp
                     if (!m_preLaunched)
                     {
                         var newCoreAppView = CoreApplication.CreateNewView();
-                        _ = newCoreAppView.Dispatcher.RunAsync(
-                            CoreDispatcherPriority.Normal, async () =>
+
+                        async void AgileCallback()
+                        {
+                            if (weak.Target is App that)
                             {
-                                if (weak.Target is App that)
+                                var newRootFrame = App.CreateFrame();
+
+                                SetMinWindowSizeAndThemeAndActivate(newRootFrame, minWindowSize);
+
+                                if (!newRootFrame.Navigate(typeof(MainPage), argument))
                                 {
-                                    var newRootFrame = App.CreateFrame();
+                                    // We couldn't navigate to the main page, kill the app so we have a good
+                                    // stack to debug
+                                    throw new SystemException();
+                                }
 
-                                    SetMinWindowSizeAndThemeAndActivate(newRootFrame, minWindowSize);
+                                var frameService = WindowFrameService.CreateNewWindowFrameService(newRootFrame, true, weak);
+                                that.AddWindowToMap(frameService);
 
-                                    if (!newRootFrame.Navigate(typeof(MainPage), argument))
+                                var dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+
+                                // CSHARP_MIGRATION_ANNOTATION:
+                                // class SafeFrameWindowCreation is being interpreted into a IDisposable class
+                                // in order to enhance its RAII capability that was written in C++/CX
+                                using (var safeFrameServiceCreation = new SafeFrameWindowCreation(frameService, that))
+                                {
+                                    int newWindowId = ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread());
+
+                                    ActivationViewSwitcher activationViewSwitcher = null;
+                                    if (args is IViewSwitcherProvider activateEventArgs)
                                     {
-                                        // We couldn't navigate to the main page, kill the app so we have a good
-                                        // stack to debug
-                                        throw new SystemException();
+                                        activationViewSwitcher = activateEventArgs.ViewSwitcher;
                                     }
 
-                                    var frameService = WindowFrameService.CreateNewWindowFrameService(newRootFrame, true, weak);
-                                    that.AddWindowToMap(frameService);
-
-                                    var dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-
-                                    // CSHARP_MIGRATION_ANNOTATION:
-                                    // class SafeFrameWindowCreation is being interpreted into a IDisposable class
-                                    // in order to enhance its RAII capability that was written in C++/CX
-                                    using (var safeFrameServiceCreation = new SafeFrameWindowCreation(frameService, that))
+                                    if (activationViewSwitcher != null)
                                     {
-                                        int newWindowId = ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread());
-
-                                        ActivationViewSwitcher activationViewSwitcher = null;
-                                        var activateEventArgs = (args as IViewSwitcherProvider);
-                                        if (activateEventArgs != null)
+                                        _ = activationViewSwitcher.ShowAsStandaloneAsync(newWindowId, ViewSizePreference.Default);
+                                        safeFrameServiceCreation.SetOperationSuccess(true);
+                                    }
+                                    else
+                                    {
+                                        if ((args is IApplicationViewActivatedEventArgs activatedEventArgs) && (activatedEventArgs.CurrentlyShownApplicationViewId != 0))
                                         {
-                                            activationViewSwitcher = activateEventArgs.ViewSwitcher;
-                                        }
-
-                                        if (activationViewSwitcher != null)
-                                        {
-                                            _ = activationViewSwitcher.ShowAsStandaloneAsync(newWindowId, ViewSizePreference.Default);
-                                            safeFrameServiceCreation.SetOperationSuccess(true);
-                                        }
-                                        else
-                                        {
-                                            var activatedEventArgs = (args as IApplicationViewActivatedEventArgs);
-                                            if ((activatedEventArgs != null) && (activatedEventArgs.CurrentlyShownApplicationViewId != 0))
-                                            {
-                                                // CSHARP_MIGRATION_ANNOTATION:
-                                                // here we don't use ContinueWith() to interpret origin code because we would like to 
-                                                // pursue the design of class SafeFrameWindowCreate whichi was using RAII to ensure
-                                                // some states get handled properly when its instance is being destructed.
-                                                //
-                                                // To achieve that, SafeFrameWindowCreate has been reinterpreted using IDisposable
-                                                // pattern, which forces we use below way to keep async works being controlled within
-                                                // a same code block.
-                                                var viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
-                                                                frameService.GetViewId(),
-                                                                ViewSizePreference.Default,
-                                                                activatedEventArgs.CurrentlyShownApplicationViewId,
-                                                                ViewSizePreference.Default);
-                                                // SafeFrameServiceCreation is used to automatically remove the frame
-                                                // from the list of frames if something goes bad.
-                                                safeFrameServiceCreation.SetOperationSuccess(viewShown);
-                                            }
+                                            // CSHARP_MIGRATION_ANNOTATION:
+                                            // here we don't use ContinueWith() to interpret origin code because we would like to 
+                                            // pursue the design of class SafeFrameWindowCreate whichi was using RAII to ensure
+                                            // some states get handled properly when its instance is being destructed.
+                                            //
+                                            // To achieve that, SafeFrameWindowCreate has been reinterpreted using IDisposable
+                                            // pattern, which forces we use below way to keep async works being controlled within
+                                            // a same code block.
+                                            var viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(frameService.GetViewId(), ViewSizePreference.Default, activatedEventArgs.CurrentlyShownApplicationViewId, ViewSizePreference.Default);
+                                            // SafeFrameServiceCreation is used to automatically remove the frame
+                                            // from the list of frames if something goes bad.
+                                            safeFrameServiceCreation.SetOperationSuccess(viewShown);
                                         }
                                     }
                                 }
-                            });
+                            }
+                        }
+
+                        _ = newCoreAppView.Dispatcher.RunAsync(
+                            CoreDispatcherPriority.Normal, AgileCallback);
                     }
                     else
                     {
                         ActivationViewSwitcher activationViewSwitcher = null;
-                        var activateEventArgs = (args as IViewSwitcherProvider);
-                        if (activateEventArgs != null)
+                        if (args is IViewSwitcherProvider activateEventArgs)
                         {
                             activationViewSwitcher = activateEventArgs.ViewSwitcher;
                         }
@@ -334,14 +330,13 @@ namespace CalculatorApp
                             // for tablet mode: since system view activation policy is disabled so do ShowAsStandaloneAsync if activationViewSwitcher exists in
                             // activationArgs
                             ActivationViewSwitcher activationViewSwitcher = null;
-                            var activateEventArgs = (args as IViewSwitcherProvider);
-                            if (activateEventArgs != null)
+                            if (args is IViewSwitcherProvider activateEventArgs)
                             {
                                 activationViewSwitcher = activateEventArgs.ViewSwitcher;
                             }
                             if (activationViewSwitcher != null)
                             {
-                                var viewId = (args as IApplicationViewActivatedEventArgs).CurrentlyShownApplicationViewId;
+                                var viewId = ((IApplicationViewActivatedEventArgs)args).CurrentlyShownApplicationViewId;
                                 if (viewId != 0)
                                 {
                                     _ = activationViewSwitcher.ShowAsStandaloneAsync(viewId);
@@ -404,7 +399,7 @@ namespace CalculatorApp
             private readonly WindowFrameService m_frameService;
             private bool m_frameOpenedInWindow;
             private readonly App m_parent;
-        };
+        }
 
         private async Task SetupJumpList()
         {
@@ -425,7 +420,7 @@ namespace CalculatorApp
                     ViewMode mode = option.ViewMode;
                     var item = JumpListItem.CreateWithArguments(((int)mode).ToString(), "ms-resource:///Resources/" + NavCategoryStates.GetNameResourceKey(mode));
                     item.Description = "ms-resource:///Resources/" + NavCategoryStates.GetNameResourceKey(mode);
-                    item.Logo = new Uri("ms-appx:///Assets/" + mode.ToString() + ".png");
+                    item.Logo = new Uri("ms-appx:///Assets/" + mode + ".png");
 
                     jumpList.Items.Add(item);
                 }
@@ -469,33 +464,13 @@ namespace CalculatorApp
             }
         }
 
-        private WindowFrameService GetWindowFromMap(int viewId)
-        {
-            m_windowsMapLock.EnterReadLock();
-            try
-            {
-                if (m_secondaryWindows.TryGetValue(viewId, out var windowMapEntry))
-                {
-                    return windowMapEntry;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            finally
-            {
-                m_windowsMapLock.ExitReadLock();
-            }
-        }
-
         private void RemoveWindowFromMap(int viewId)
         {
             m_windowsMapLock.EnterWriteLock();
             try
             {
                 bool removed = m_secondaryWindows.Remove(viewId);
-                Debug.Assert(removed != false, "Window does not exist in the list");
+                Debug.Assert(removed, "Window does not exist in the list");
             }
             finally
             {

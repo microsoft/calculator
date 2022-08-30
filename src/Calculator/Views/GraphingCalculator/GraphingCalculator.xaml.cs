@@ -376,10 +376,7 @@ namespace CalculatorApp
 
             var peer = FrameworkElementAutomationPeer.FromElement(TraceValue);
 
-            if (peer != null)
-            {
-                peer.RaiseAutomationEvent(AutomationEvents.LiveRegionChanged);
-            }
+            peer?.RaiseAutomationEvent(AutomationEvents.LiveRegionChanged);
 
             PositionGraphPopup();
         }
@@ -402,19 +399,16 @@ namespace CalculatorApp
 
             try
             {
-                string rawHtml;
-                string equationHtml;
-
-                rawHtml = "<p><img src='graph.png' width='600' alt='" + resourceLoader.GetString("GraphImageAltText") + "'></p>";
+                var rawHtml = "<p><img src='graph.png' width='600' alt='" + resourceLoader.GetString("GraphImageAltText") + "'></p>";
 
                 var equations = ViewModel.Equations;
                 bool hasEquations = false;
 
                 if (equations.Count > 0)
                 {
-                    equationHtml = "<span style=\"color: rgb(68, 114, 196); font-style: bold; font-size : 13pt;\">"
-                                   + resourceLoader.GetString("EquationsShareHeader") + "</span>"
-                                   + "<table cellpadding=\"0\" cellspacing=\"0\" >";
+                    var equationHtml = "<span style=\"color: rgb(68, 114, 196); font-style: bold; font-size : 13pt;\">"
+                                       + resourceLoader.GetString("EquationsShareHeader") + "</span>"
+                                       + "<table cellpadding=\"0\" cellspacing=\"0\" >";
 
                     foreach (var equation in equations)
                     {
@@ -429,8 +423,7 @@ namespace CalculatorApp
 
                         expression = GraphingControl.ConvertToLinear(expression);
 
-                        string equationColorHtml;
-                        equationColorHtml = "color:rgb(" + color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString() + ");";
+                        var equationColorHtml = "color:rgb(" + color.R + "," + color.G + "," + color.B + ");";
 
                         equationHtml += "<tr style=\"margin: 0pt 0pt 0pt 0pt; padding: 0pt 0pt 0pt 0pt; \"><td><span style=\"font-size: 22pt; line-height: 0;"
                                         + equationColorHtml + "\">&#x25A0;</span></td><td><div style=\"margin: 4pt 0pt 0pt 6pt;\">"
@@ -518,7 +511,7 @@ namespace CalculatorApp
 
         private void GraphingControl_LosingFocus(UIElement sender, LosingFocusEventArgs args)
         {
-            if (!(args.NewFocusedElement is FrameworkElement newFocusElement) || newFocusElement.Name == null)
+            if (!(args.NewFocusedElement is FrameworkElement))
             {
                 // Because clicking on the swap chain panel will try to move focus to a control that can't actually take focus
                 // we will get a null destination.  So we are going to try and cancel that request.
@@ -534,23 +527,13 @@ namespace CalculatorApp
 
         private void GraphingControl_GraphViewChangedEvent(object sender, GraphViewChangedReason reason)
         {
-            if (reason == GraphViewChangedReason.Manipulation)
-            {
-                IsManualAdjustment = true;
-            }
-            else
-            {
-                IsManualAdjustment = false;
-            }
+            IsManualAdjustment = reason == GraphViewChangedReason.Manipulation;
 
             UpdateGraphAutomationName();
 
             var announcement = CalculatorAnnouncement.GetGraphViewChangedAnnouncement(GraphControlAutomationName);
             var peer = FrameworkElementAutomationPeer.FromElement(GraphingControl);
-            if (peer != null)
-            {
-                peer.RaiseNotificationEvent(announcement.Kind, announcement.Processing, announcement.Announcement, announcement.ActivityId);
-            }
+            peer?.RaiseNotificationEvent(announcement.Kind, announcement.Processing, announcement.Announcement, announcement.ActivityId);
         }
 
         private void GraphingControl_GraphPlottedEvent(object sender, RoutedEventArgs e)
@@ -752,13 +735,13 @@ namespace CalculatorApp
         private void OnColorValuesChanged(UISettings sender, object args)
         {
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 if (weakThis.Target is GraphingCalculator refThis && IsMatchAppTheme)
                 {
                     refThis.UpdateGraphTheme();
                 }
-            }));
+            });
         }
 
         private void UpdateGraphTheme()
@@ -788,13 +771,13 @@ namespace CalculatorApp
 
             IsMatchAppTheme = isMatchAppTheme;
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 if (weakThis.Target is GraphingCalculator refThis)
                 {
                     refThis.UpdateGraphTheme();
                 }
-            }));
+            });
         }
 
         private const double zoomInScale = 1 / 1.0625;

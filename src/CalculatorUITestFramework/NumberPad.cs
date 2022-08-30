@@ -34,7 +34,7 @@ namespace CalculatorUITestFramework
             string numberStr = number.ToString(CultureInfo.InvariantCulture);
             if (numberStr.StartsWith("-"))
             {
-                numberStr = numberStr.Substring(1) + "-";
+                numberStr = numberStr[1..] + "-";
             }
             foreach (char digit in numberStr)
             {
@@ -77,7 +77,7 @@ namespace CalculatorUITestFramework
                         this.NegateButton.Click();
                         break;
                     default:
-                        throw (new ArgumentException(string.Format("{0} is not valid", digit)));
+                        throw (new ArgumentException($"{digit} is not valid"));
                 }
             }
         }

@@ -58,37 +58,25 @@ namespace CalculatorApp
         private void DecButtonChecked(object sender, RoutedEventArgs e)
         {
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.DecButton, ViewMode.Programmer);
-            if (Model != null)
-            {
-                Model.SwitchProgrammerModeBase(NumberBase.DecBase);
-            }
+            Model?.SwitchProgrammerModeBase(NumberBase.DecBase);
         }
 
         private void HexButtonChecked(object sender, RoutedEventArgs e)
         {
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.HexButton, ViewMode.Programmer);
-            if (Model != null)
-            {
-                Model.SwitchProgrammerModeBase(NumberBase.HexBase);
-            }
+            Model?.SwitchProgrammerModeBase(NumberBase.HexBase);
         }
 
         private void BinButtonChecked(object sender, RoutedEventArgs e)
         {
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.BinButton, ViewMode.Programmer);
-            if (Model != null)
-            {
-                Model.SwitchProgrammerModeBase(NumberBase.BinBase);
-            }
+            Model?.SwitchProgrammerModeBase(NumberBase.BinBase);
         }
 
         private void OctButtonChecked(object sender, RoutedEventArgs e)
         {
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.OctButton, ViewMode.Programmer);
-            if (Model != null)
-            {
-                Model.SwitchProgrammerModeBase(NumberBase.OctBase);
-            }
+            Model?.SwitchProgrammerModeBase(NumberBase.OctBase);
         }
 
         private void OnCopyMenuItemClicked(object sender, RoutedEventArgs e)

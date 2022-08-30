@@ -36,7 +36,7 @@ namespace CalculatorApp
         {
             get
             {
-                Debug.Assert(DataContext as ViewModel.StandardCalculatorViewModel != null, "static_cast result must NOT be null");
+                Debug.Assert(DataContext is ViewModel.StandardCalculatorViewModel, "static_cast result must NOT be null");
                 return DataContext as ViewModel.StandardCalculatorViewModel;
             }
         }
