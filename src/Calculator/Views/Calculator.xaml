@@ -166,6 +166,11 @@
                                           Style="{StaticResource ResultsScrollerSnapped}"
                                           AutomationProperties.AccessibilityView="Control">
                                 <Grid x:Name="ExpressionContent">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
                                     <TextBlock x:Name="EditableToken"
                                                Grid.Row="2"
                                                Margin="4,0,4,0"
@@ -409,6 +414,10 @@
     </UserControl.Resources>
 
     <Grid AutomationProperties.LandmarkType="Main">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="ColumnMain"/>
             <ColumnDefinition x:Name="ColumnHistory"

@@ -37,6 +37,10 @@
                             <Grid Name="LayoutRoot"
                                   Background="{ThemeResource ToggleButtonBackground}"
                                   contract7Present:CornerRadius="{TemplateBinding CornerRadius}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal"/>

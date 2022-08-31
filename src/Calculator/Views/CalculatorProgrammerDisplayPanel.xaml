@@ -24,6 +24,7 @@
             <ColumnDefinition Width="1*" MaxWidth="80"/>
             <ColumnDefinition Width="1*" MaxWidth="80"/>
             <ColumnDefinition Width="1*" MaxWidth="80"/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
         <VisualStateManager.VisualStateGroups>

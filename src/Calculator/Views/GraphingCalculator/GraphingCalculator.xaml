@@ -499,6 +499,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="{StaticResource HamburgerHeightGridLength}"/>
             <RowDefinition/>
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
