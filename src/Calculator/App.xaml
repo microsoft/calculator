@@ -2352,6 +2352,7 @@
                                                   Visibility="Collapsed"/>
                                 <Border x:Name="BorderElement"
                                         Grid.Row="1"
+                                        Grid.RowSpan="1"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="4"
                                         MinWidth="32"
