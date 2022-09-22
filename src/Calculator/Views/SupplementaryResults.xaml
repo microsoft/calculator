@@ -7,7 +7,7 @@
              xmlns:designdata="using:CalculatorApp.DesignData"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:CalculatorApp.ViewModel"
+             xmlns:vm="using:CalculatorApp.ViewModelNative"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">

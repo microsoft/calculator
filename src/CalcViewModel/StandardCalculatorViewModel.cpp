@@ -10,9 +10,9 @@
 #include "Common/TraceLogger.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::ViewModel::Common;
-using namespace CalculatorApp::ViewModel::Common::Automation;
-using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModelNative::Common;
+using namespace CalculatorApp::ViewModelNative::Common::Automation;
+using namespace CalculatorApp::ViewModelNative;
 using namespace CalculationManager;
 using namespace concurrency;
 using namespace Platform;
@@ -1732,7 +1732,7 @@ ViewMode StandardCalculatorViewModel::GetCalculatorMode()
     return ViewMode::Programmer;
 }
 
-void StandardCalculatorViewModel::ValueBitLength::set(CalculatorApp::ViewModel::Common::BitLength value)
+void StandardCalculatorViewModel::ValueBitLength::set(CalculatorApp::ViewModelNative::Common::BitLength value)
 {
     if (m_valueBitLength != value)
     {

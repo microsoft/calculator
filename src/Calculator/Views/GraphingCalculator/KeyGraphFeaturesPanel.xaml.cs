@@ -23,7 +23,7 @@ namespace CalculatorApp
 #endif
         }
 
-        public CalculatorApp.ViewModel.EquationViewModel ViewModel
+        public CalculatorApp.ViewModelNative.EquationViewModel ViewModel
         {
             get => m_viewModel;
             set
@@ -54,6 +54,6 @@ namespace CalculatorApp
             KeyGraphFeaturesClosed?.Invoke(this, new RoutedEventArgs());
         }
 
-        private CalculatorApp.ViewModel.EquationViewModel m_viewModel;
+        private CalculatorApp.ViewModelNative.EquationViewModel m_viewModel;
     }
 }

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
-namespace CalculatorApp::ViewModel::Common
+namespace CalculatorApp::ViewModelNative::Common
 {
 public
     enum class NumberBase

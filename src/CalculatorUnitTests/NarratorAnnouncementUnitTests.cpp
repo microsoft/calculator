@@ -7,7 +7,7 @@
 
 using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-using namespace CalculatorApp::ViewModel::Common::Automation;
+using namespace CalculatorApp::ViewModelNative::Common::Automation;
 
 
 namespace CalculatorUnitTests

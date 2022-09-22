@@ -9,7 +9,7 @@
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:mux="using:Microsoft.UI.Xaml.Controls"
-             xmlns:vm="using:CalculatorApp.ViewModel"
+             xmlns:vm="using:CalculatorApp.ViewModelNative"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
@@ -136,14 +136,14 @@
                                     Grid.Column="1"
                                     Margin="8,0,8,-6"
                                     VerticalAlignment="Center"
+                                    contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
                                     DataContext="{x:Bind}"
                                     SmallChange="{x:Bind Step, Mode=TwoWay}"
                                     StepFrequency="{x:Bind Step, Mode=TwoWay}"
                                     ValueChanged="Slider_ValueChanged"
                                     Value="{x:Bind Value, Mode=TwoWay}"
                                     Maximum="{x:Bind Max, Mode=TwoWay}"
-                                    Minimum="{x:Bind Min, Mode=TwoWay}"
-                                    contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"/>
+                                    Minimum="{x:Bind Min, Mode=TwoWay}"/>
 
                             <Grid Grid.Row="1"
                                   Padding="8,0,8,8"

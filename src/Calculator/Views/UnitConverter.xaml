@@ -1,7 +1,7 @@
 <UserControl x:Class="CalculatorApp.UnitConverter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
+             xmlns:automation="using:CalculatorApp.ViewModelNative.Common.Automation"
              xmlns:common="using:CalculatorApp.Common"
              xmlns:contract7NotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,7)"
              xmlns:contract7Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)"
@@ -12,7 +12,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:triggers="using:CalculatorApp.Views.StateTriggers"
-             xmlns:vm="using:CalculatorApp.ViewModel"
+             xmlns:vm="using:CalculatorApp.ViewModelNative"
              d:DesignHeight="658"
              d:DesignWidth="830"
              DataContextChanged="OnDataContextChanged"
@@ -677,8 +677,7 @@
                             </HyperlinkButton.Resources>
                         </HyperlinkButton>
                         <TextBlock Margin="3,6,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
-                            <Run x:Name="CurrencySecondaryStatus"
-                                 Text=""/>
+                            <Run x:Name="CurrencySecondaryStatus" Text=""/>
                         </TextBlock>
                     </StackPanel>
                 </ContentControl>

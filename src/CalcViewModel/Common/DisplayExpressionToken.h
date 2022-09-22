@@ -5,7 +5,7 @@
 
 #include "Utils.h"
 
-namespace CalculatorApp::ViewModel::Common
+namespace CalculatorApp::ViewModelNative::Common
 {
 public
     enum class TokenType

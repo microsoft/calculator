@@ -9,8 +9,8 @@
 #include "CalcViewModel/DataLoaders/UnitConverterDataLoader.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::ViewModel::Common;
-using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModelNative::Common;
+using namespace CalculatorApp::ViewModelNative;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace std;
@@ -21,7 +21,7 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Data;
 
 namespace UCM = UnitConversionManager;
-namespace VM = CalculatorApp::ViewModel;
+namespace VM = CalculatorApp::ViewModelNative;
 using namespace Windows::Globalization;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

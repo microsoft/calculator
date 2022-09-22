@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 //
@@ -81,7 +81,7 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
     Window::Current->Activate();
 
     // Override the current locale to use English (US) to be compatible with all tests based on formatting
-    CalculatorApp::ViewModel::Common::LocalizationService::OverrideWithLanguage(L"en-US");
+    CalculatorApp::ViewModelNative::Common::LocalizationService::OverrideWithLanguage(L"en-US");
 
     Microsoft::VisualStudio::TestPlatform::TestExecutor::WinRTCore::UnitTestClient::Run(e->Arguments);
 }

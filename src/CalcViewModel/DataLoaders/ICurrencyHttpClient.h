@@ -1,11 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
 
 namespace CalculatorApp
 {
-    namespace ViewModel::DataLoaders
+    namespace ViewModelNative::DataLoaders
     {
         class ICurrencyHttpClient
         {

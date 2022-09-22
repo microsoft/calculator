@@ -15,7 +15,7 @@ namespace CalculatorUnitTests
 
     typedef struct item
     {
-        CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum command;
+        CalculatorApp::ViewModelNative::Common::NumbersAndOperatorsEnum command;
         std::wstring expectedPrimaryDisplay;
         std::wstring expectedExpressions;
     } TESTITEM;

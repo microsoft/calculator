@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include "CalculatorButtonPressedEventArgs.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::ViewModel;
-using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModelNative;
+using namespace CalculatorApp::ViewModelNative::Common;
 using namespace Platform;
 
 NumbersAndOperatorsEnum CalculatorButtonPressedEventArgs::GetOperationFromCommandParameter(_In_ Object ^ commandParameter)

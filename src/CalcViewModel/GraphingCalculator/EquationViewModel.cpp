@@ -6,7 +6,7 @@
 #include "CalcViewModel\Common\LocalizationSettings.h"
 #include "CalcViewModel\GraphingCalculatorEnums.h"
 
-using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModelNative::Common;
 using namespace Graphing;
 using namespace Platform;
 using namespace Platform::Collections;
@@ -17,7 +17,7 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::Foundation::Collections;
 using namespace GraphControl;
 
-namespace CalculatorApp::ViewModel
+namespace CalculatorApp::ViewModelNative
 {
     GridDisplayItems::GridDisplayItems()
         : m_Expression{ "" }

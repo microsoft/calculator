@@ -15,7 +15,7 @@
 #include "Common/ExpressionCommandDeserializer.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModelNative::Common;
 using namespace concurrency;
 using namespace Graphing::Renderer;
 using namespace Platform;
@@ -181,7 +181,7 @@ bool operator!=(const Color& color1, const Color& color2)
     return !(color1 == color2);
 }
 
-String^ CalculatorApp::ViewModel::Common::Utilities::EscapeHtmlSpecialCharacters(String^ originalString)
+String^ CalculatorApp::ViewModelNative::Common::Utilities::EscapeHtmlSpecialCharacters(String^ originalString)
 {
     // Construct a default special characters if not provided.
     const std::vector<wchar_t> specialCharacters {L'&', L'\"', L'\'', L'<', L'>'};
@@ -238,7 +238,7 @@ String^ CalculatorApp::ViewModel::Common::Utilities::EscapeHtmlSpecialCharacters
     return replaceCharacters ? replacementString : originalString;
 }
 
-bool CalculatorApp::ViewModel::Common::Utilities::AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2)
+bool CalculatorApp::ViewModelNative::Common::Utilities::AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2)
 {
     return Utils::AreColorsEqual(color1, color2);
 }
@@ -246,7 +246,7 @@ bool CalculatorApp::ViewModel::Common::Utilities::AreColorsEqual(Windows::UI::Co
 // This method calculates the luminance ratio between White and the given background color.
 // The luminance is calculate using the RGB values and does not use the A value.
 // White or Black is returned
-SolidColorBrush ^ CalculatorApp::ViewModel::Common::Utilities::GetContrastColor(Color backgroundColor)
+SolidColorBrush ^ CalculatorApp::ViewModelNative::Common::Utilities::GetContrastColor(Color backgroundColor)
 {
     auto luminance = 0.2126 * backgroundColor.R + 0.7152 * backgroundColor.G + 0.0722 * backgroundColor.B;
 
@@ -258,17 +258,17 @@ SolidColorBrush ^ CalculatorApp::ViewModel::Common::Utilities::GetContrastColor(
     return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"BlackBrush"));
 }
 
-int CalculatorApp::ViewModel::Common::Utilities::GetWindowId()
+int CalculatorApp::ViewModelNative::Common::Utilities::GetWindowId()
 {
     return Utils::GetWindowId();
 }
 
-long long CalculatorApp::ViewModel::Common::Utilities::GetConst_WINEVENT_KEYWORD_RESPONSE_TIME()
+long long CalculatorApp::ViewModelNative::Common::Utilities::GetConst_WINEVENT_KEYWORD_RESPONSE_TIME()
 {
     return WINEVENT_KEYWORD_RESPONSE_TIME;
 }
 
-bool CalculatorApp::ViewModel::Common::Utilities::GetIntegratedDisplaySize(double* size)
+bool CalculatorApp::ViewModelNative::Common::Utilities::GetIntegratedDisplaySize(double* size)
 {
     if (SUCCEEDED(::GetIntegratedDisplaySize(size)))
         return true;

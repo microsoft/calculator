@@ -8,15 +8,15 @@
 
 // A trace logging provider can only be instantiated and registered once per module.
 // This class implements a singleton model ensure that only one instance is created.
-namespace CalculatorApp::ViewModel::Common
+namespace CalculatorApp::ViewModelNative::Common
 {
     struct ButtonLog
     {
     public:
         int count;
-        CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum button;
-        CalculatorApp::ViewModel::Common::ViewMode mode;
-        ButtonLog(CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum btn, CalculatorApp::ViewModel::Common::ViewMode vMode)
+        CalculatorApp::ViewModelNative::Common::NumbersAndOperatorsEnum button;
+        CalculatorApp::ViewModelNative::Common::ViewMode mode;
+        ButtonLog(CalculatorApp::ViewModelNative::Common::NumbersAndOperatorsEnum btn, CalculatorApp::ViewModelNative::Common::ViewMode vMode)
         {
             button = btn;
             mode = vMode;
@@ -62,20 +62,20 @@ namespace CalculatorApp::ViewModel::Common
     public:
         static TraceLogger ^ GetInstance();
 
-        void LogModeChange(CalculatorApp::ViewModel::Common::ViewMode mode);
-        void LogHistoryItemLoad(CalculatorApp::ViewModel::Common::ViewMode mode, int historyListSize, int loadedIndex);
-        void LogMemoryItemLoad(CalculatorApp::ViewModel::Common::ViewMode mode, int memoryListSize, int loadedIndex);
-        void UpdateButtonUsage(CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum button, CalculatorApp::ViewModel::Common::ViewMode mode);
+        void LogModeChange(CalculatorApp::ViewModelNative::Common::ViewMode mode);
+        void LogHistoryItemLoad(CalculatorApp::ViewModelNative::Common::ViewMode mode, int historyListSize, int loadedIndex);
+        void LogMemoryItemLoad(CalculatorApp::ViewModelNative::Common::ViewMode mode, int memoryListSize, int loadedIndex);
+        void UpdateButtonUsage(CalculatorApp::ViewModelNative::Common::NumbersAndOperatorsEnum button, CalculatorApp::ViewModelNative::Common::ViewMode mode);
         void LogButtonUsage();
         void LogDateCalculationModeUsed(bool AddSubtractMode);
         void UpdateWindowCount(uint64 windowCount);
         void DecreaseWindowCount();
         bool IsWindowIdInLog(int windowId);
-        void LogVisualStateChanged(CalculatorApp::ViewModel::Common::ViewMode mode, Platform::String ^ state, bool isAlwaysOnTop);
-        void LogWindowCreated(CalculatorApp::ViewModel::Common::ViewMode mode, int windowId);
-        void LogConverterInputReceived(CalculatorApp::ViewModel::Common::ViewMode mode);
+        void LogVisualStateChanged(CalculatorApp::ViewModelNative::Common::ViewMode mode, Platform::String ^ state, bool isAlwaysOnTop);
+        void LogWindowCreated(CalculatorApp::ViewModelNative::Common::ViewMode mode, int windowId);
+        void LogConverterInputReceived(CalculatorApp::ViewModelNative::Common::ViewMode mode);
         void LogNavBarOpened();
-        void LogError(CalculatorApp::ViewModel::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString);
+        void LogError(CalculatorApp::ViewModelNative::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString);
         void LogShowHideButtonClicked(bool isHideButton);
         void LogGraphButtonClicked(GraphButton buttonName, GraphButtonValue buttonValue);
         void LogGraphLineStyleChanged(LineStyleType style);
@@ -83,12 +83,12 @@ namespace CalculatorApp::ViewModel::Common
         void LogVariableSettingsChanged(Platform::String ^ setting);
         void LogGraphSettingsChanged(GraphSettingsType settingsType, Platform::String ^ settingValue);
         void LogGraphTheme(Platform::String ^ graphTheme);
-        void LogInputPasted(CalculatorApp::ViewModel::Common::ViewMode mode);
-        void LogPlatformExceptionInfo(CalculatorApp::ViewModel::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ message, int hresult);
+        void LogInputPasted(CalculatorApp::ViewModelNative::Common::ViewMode mode);
+        void LogPlatformExceptionInfo(CalculatorApp::ViewModelNative::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ message, int hresult);
 
         internal:
-        void LogPlatformException(CalculatorApp::ViewModel::Common::ViewMode mode, Platform::String ^ functionName, Platform::Exception ^ e);
-        void LogStandardException(CalculatorApp::ViewModel::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
+        void LogPlatformException(CalculatorApp::ViewModelNative::Common::ViewMode mode, Platform::String ^ functionName, Platform::Exception ^ e);
+        void LogStandardException(CalculatorApp::ViewModelNative::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
 
     private:
         // Create an instance of TraceLogger

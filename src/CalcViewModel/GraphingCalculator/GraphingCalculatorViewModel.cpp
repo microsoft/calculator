@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "GraphingCalculatorViewModel.h"
 
-using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModelNative;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace Windows::Foundation;
@@ -12,7 +12,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::Xaml::Data;
 using namespace GraphControl;
 
-namespace CalculatorApp::ViewModel
+namespace CalculatorApp::ViewModelNative
 {
     GraphingCalculatorViewModel::GraphingCalculatorViewModel()
         : m_IsDecimalEnabled{ true }

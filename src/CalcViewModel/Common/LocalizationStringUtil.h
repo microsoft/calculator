@@ -5,7 +5,7 @@
 
 #include "AppResourceProvider.h"
 
-namespace CalculatorApp::ViewModel
+namespace CalculatorApp::ViewModelNative
 {
     namespace Common
     {

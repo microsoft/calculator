@@ -7,7 +7,7 @@
 
 namespace CalculatorApp
 {
-    namespace ViewModel
+    namespace ViewModelNative
     {
         ref class StandardCalculatorViewModel;
 

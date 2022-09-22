@@ -7,8 +7,8 @@
 #include "CalculatorButtonUser.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::ViewModel::Common;
-using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModelNative::Common;
+using namespace CalculatorApp::ViewModelNative;
 using namespace TraceLogging;
 using namespace Concurrency;
 using namespace std;
@@ -148,7 +148,7 @@ namespace CalculatorApp
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_EXCEPTION), fields);
     }
 
-    void TraceLogger::LogPlatformExceptionInfo(CalculatorApp::ViewModel::Common::ViewMode mode, Platform::String ^ functionName, Platform::String^ message, int hresult)
+    void TraceLogger::LogPlatformExceptionInfo(CalculatorApp::ViewModelNative::Common::ViewMode mode, Platform::String ^ functionName, Platform::String^ message, int hresult)
     {
         auto fields = ref new LoggingFields();
         fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));

@@ -1,9 +1,9 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.using CalculatorApp.ViewModel.Common;
 // Licensed under the MIT License.
 
 using CalculatorApp.Controls;
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModelNative;
+using CalculatorApp.ViewModelNative.Common;
 
 using System.Diagnostics;
 

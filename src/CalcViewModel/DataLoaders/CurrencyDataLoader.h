@@ -9,7 +9,7 @@
 
 namespace CalculatorApp
 {
-    namespace ViewModel::DataLoaders
+    namespace ViewModelNative::DataLoaders
     {
     public
         enum class CurrencyLoadStatus
@@ -55,7 +55,7 @@ namespace CalculatorApp
         {
         public:
             CurrencyDataLoader(
-                _In_ std::unique_ptr<CalculatorApp::ViewModel::DataLoaders::ICurrencyHttpClient> client,
+                _In_ std::unique_ptr<CalculatorApp::ViewModelNative::DataLoaders::ICurrencyHttpClient> client,
                 const wchar_t* overrideLanguage = nullptr);
             ~CurrencyDataLoader();
 
@@ -84,7 +84,7 @@ namespace CalculatorApp
             std::future<bool> TryLoadDataFromWebOverrideAsync() override;
             // ICurrencyConverterDataLoader
 
-            void OnNetworkBehaviorChanged(CalculatorApp::ViewModel::Common::NetworkAccessBehavior newBehavior);
+            void OnNetworkBehaviorChanged(CalculatorApp::ViewModelNative::Common::NetworkAccessBehavior newBehavior);
 
         private:
             void ResetLoadStatus();
@@ -114,7 +114,7 @@ namespace CalculatorApp
 
         private:
             Platform::String ^ m_responseLanguage;
-            std::unique_ptr<CalculatorApp::ViewModel::DataLoaders::ICurrencyHttpClient> m_client;
+            std::unique_ptr<CalculatorApp::ViewModelNative::DataLoaders::ICurrencyHttpClient> m_client;
 
             bool m_isRtlLanguage;
 
@@ -132,8 +132,8 @@ namespace CalculatorApp
 
             CurrencyLoadStatus m_loadStatus;
 
-            CalculatorApp::ViewModel::Common::NetworkManager ^ m_networkManager;
-            CalculatorApp::ViewModel::Common::NetworkAccessBehavior m_networkAccessBehavior;
+            CalculatorApp::ViewModelNative::Common::NetworkManager ^ m_networkManager;
+            CalculatorApp::ViewModelNative::Common::NetworkAccessBehavior m_networkAccessBehavior;
             Windows::Foundation::EventRegistrationToken m_networkBehaviorToken;
             bool m_meteredOverrideSet;
         };

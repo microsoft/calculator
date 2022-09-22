@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModelNative.Common;
 
 using System;
 using System.Collections.Generic;
@@ -124,7 +124,7 @@ namespace CalculatorApp
             if (mathRichEdit != null && sender != null)
             {
                 var id = button.ButtonId;
-                TraceLogger.GetInstance().UpdateButtonUsage(id, CalculatorApp.ViewModel.Common.ViewMode.Graphing);
+                TraceLogger.GetInstance().UpdateButtonUsage(id, CalculatorApp.ViewModelNative.Common.ViewMode.Graphing);
                 Tuple<string, int, int> output = GraphingNumPad.GetButtonOutput(id);
                 mathRichEdit.InsertText(output.Item1, output.Item2, output.Item3);
             }
@@ -136,7 +136,7 @@ namespace CalculatorApp
             if (mathRichEdit != null)
             {
                 mathRichEdit.SubmitEquation(CalculatorApp.Controls.EquationSubmissionSource.ENTER_KEY);
-                TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.Submit, CalculatorApp.ViewModel.Common.ViewMode.Graphing);
+                TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.Submit, CalculatorApp.ViewModelNative.Common.ViewMode.Graphing);
             }
         }
 
@@ -153,7 +153,7 @@ namespace CalculatorApp
                     mathRichEdit.SubmitEquation(CalculatorApp.Controls.EquationSubmissionSource.PROGRAMMATIC);
                 }
 
-                TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.Clear, CalculatorApp.ViewModel.Common.ViewMode.Graphing);
+                TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.Clear, CalculatorApp.ViewModelNative.Common.ViewMode.Graphing);
             }
         }
 
@@ -163,7 +163,7 @@ namespace CalculatorApp
             if (mathRichEdit != null)
             {
                 mathRichEdit.BackSpace();
-                TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.Backspace, CalculatorApp.ViewModel.Common.ViewMode.Graphing);
+                TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.Backspace, CalculatorApp.ViewModelNative.Common.ViewMode.Graphing);
             }
         }
 

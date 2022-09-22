@@ -1,7 +1,7 @@
 using CalculatorApp.Common;
 using CalculatorApp.Controls;
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModelNative;
+using CalculatorApp.ViewModelNative.Common;
 
 using System;
 using System.ComponentModel;
@@ -20,7 +20,7 @@ using Windows.UI.Xaml.Input;
 
 namespace CalculatorApp
 {
-    internal class Activatable : ViewModel.IActivatable
+    internal class Activatable : ViewModelNative.IActivatable
     {
         public Activatable(Func<bool> getter, Action<bool> setter)
         {
@@ -80,7 +80,7 @@ namespace CalculatorApp
             }
         }
 
-        public CalculatorApp.ViewModel.UnitConverterViewModel Model => (CalculatorApp.ViewModel.UnitConverterViewModel)this.DataContext;
+        public CalculatorApp.ViewModelNative.UnitConverterViewModel Model => (CalculatorApp.ViewModelNative.UnitConverterViewModel)this.DataContext;
 
         public Windows.UI.Xaml.FlowDirection LayoutDirection { get; } = default;
 

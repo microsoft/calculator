@@ -8,7 +8,7 @@
 
 namespace CalculatorApp
 {
-    namespace ViewModel::Common
+    namespace ViewModelNative::Common
     {
         struct OrderedUnit : UnitConversionManager::Unit
         {
@@ -34,7 +34,7 @@ namespace CalculatorApp
 
         struct UnitData
         {
-            CalculatorApp::ViewModel::Common::ViewMode categoryId;
+            CalculatorApp::ViewModelNative::Common::ViewMode categoryId;
             int unitId;
             double factor;
         };
@@ -45,7 +45,7 @@ namespace CalculatorApp
             {
             }
             ExplicitUnitConversionData(
-                CalculatorApp::ViewModel::Common::ViewMode categoryId,
+                CalculatorApp::ViewModelNative::Common::ViewMode categoryId,
                 int parentUnitId,
                 int unitId,
                 double ratio,
@@ -58,7 +58,7 @@ namespace CalculatorApp
             {
             }
 
-            CalculatorApp::ViewModel::Common::ViewMode categoryId;
+            CalculatorApp::ViewModelNative::Common::ViewMode categoryId;
             int parentUnitId;
             int unitId;
         };
@@ -79,8 +79,8 @@ namespace CalculatorApp
             // IConverterDataLoader
 
             void GetCategories(_In_ std::shared_ptr<std::vector<UnitConversionManager::Category>> categoriesList);
-            void GetUnits(_In_ std::unordered_map<CalculatorApp::ViewModel::Common::ViewMode, std::vector<CalculatorApp::ViewModel::Common::OrderedUnit>>& unitMap);
-            void GetConversionData(_In_ std::unordered_map<CalculatorApp::ViewModel::Common::ViewMode, std::unordered_map<int, double>>& categoryToUnitConversionMap);
+            void GetUnits(_In_ std::unordered_map<CalculatorApp::ViewModelNative::Common::ViewMode, std::vector<CalculatorApp::ViewModelNative::Common::OrderedUnit>>& unitMap);
+            void GetConversionData(_In_ std::unordered_map<CalculatorApp::ViewModelNative::Common::ViewMode, std::unordered_map<int, double>>& categoryToUnitConversionMap);
             void GetExplicitConversionData(_In_ std::unordered_map<int, std::unordered_map<int, UnitConversionManager::ConversionData>>& unitToUnitConversionList);
 
             std::wstring GetLocalizedStringName(_In_ Platform::String ^ stringId);

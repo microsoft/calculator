@@ -7,7 +7,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:model="using:CalculatorApp.ViewModel"
+             xmlns:model="using:CalculatorApp.ViewModelNative"
              x:Name="MemoryList"
              FlowDirection="LeftToRight"
              mc:Ignorable="d">

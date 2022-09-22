@@ -13,7 +13,7 @@ namespace CalculatorUnitTests
     class CopyPasteManagerTest;
 }
 
-namespace CalculatorApp::ViewModel::Common
+namespace CalculatorApp::ViewModelNative::Common
 {
     public value struct CopyPasteMaxOperandLengthAndValue
     {
@@ -26,10 +26,10 @@ namespace CalculatorApp::ViewModel::Common
     public:
         static void CopyToClipboard(Platform::String ^ stringToCopy);
         static Windows::Foundation::IAsyncOperation<Platform::String ^> ^ GetStringToPaste(
-            CalculatorApp::ViewModel::Common::ViewMode mode,
-            CalculatorApp::ViewModel::Common::CategoryGroupType modeType,
-            CalculatorApp::ViewModel::Common::NumberBase programmerNumberBase,
-            CalculatorApp::ViewModel::Common::BitLength bitLengthType);
+            CalculatorApp::ViewModelNative::Common::ViewMode mode,
+            CalculatorApp::ViewModelNative::Common::CategoryGroupType modeType,
+            CalculatorApp::ViewModelNative::Common::NumberBase programmerNumberBase,
+            CalculatorApp::ViewModelNative::Common::BitLength bitLengthType);
         static bool HasStringToPaste();
         static bool IsErrorMessage(Platform::String ^ message);
         static property unsigned int MaxPasteableLength
@@ -88,39 +88,39 @@ namespace CalculatorApp::ViewModel::Common
         static Platform::String
             ^ ValidatePasteExpression(
                 Platform::String ^ pastedText,
-                CalculatorApp::ViewModel::Common::ViewMode mode,
-                CalculatorApp::ViewModel::Common::NumberBase programmerNumberBase,
-                CalculatorApp::ViewModel::Common::BitLength bitLengthType);
+                CalculatorApp::ViewModelNative::Common::ViewMode mode,
+                CalculatorApp::ViewModelNative::Common::NumberBase programmerNumberBase,
+                CalculatorApp::ViewModelNative::Common::BitLength bitLengthType);
         static Platform::String
             ^ ValidatePasteExpression(
                 Platform::String ^ pastedText,
-                CalculatorApp::ViewModel::Common::ViewMode mode,
-                CalculatorApp::ViewModel::Common::CategoryGroupType modeType,
-                CalculatorApp::ViewModel::Common::NumberBase programmerNumberBase,
-                CalculatorApp::ViewModel::Common::BitLength bitLengthType);
+                CalculatorApp::ViewModelNative::Common::ViewMode mode,
+                CalculatorApp::ViewModelNative::Common::CategoryGroupType modeType,
+                CalculatorApp::ViewModelNative::Common::NumberBase programmerNumberBase,
+                CalculatorApp::ViewModelNative::Common::BitLength bitLengthType);
         static CopyPasteMaxOperandLengthAndValue GetMaxOperandLengthAndValue(
-            CalculatorApp::ViewModel::Common::ViewMode mode,
-            CalculatorApp::ViewModel::Common::CategoryGroupType modeType,
-            CalculatorApp::ViewModel::Common::NumberBase programmerNumberBase,
-            CalculatorApp::ViewModel::Common::BitLength bitLengthType);
+            CalculatorApp::ViewModelNative::Common::ViewMode mode,
+            CalculatorApp::ViewModelNative::Common::CategoryGroupType modeType,
+            CalculatorApp::ViewModelNative::Common::NumberBase programmerNumberBase,
+            CalculatorApp::ViewModelNative::Common::BitLength bitLengthType);
         static Windows::Foundation::Collections::IVector<
-            Platform::String ^> ^ ExtractOperands(Platform::String ^ pasteExpression, CalculatorApp::ViewModel::Common::ViewMode mode);
+            Platform::String ^> ^ ExtractOperands(Platform::String ^ pasteExpression, CalculatorApp::ViewModelNative::Common::ViewMode mode);
         static bool ExpressionRegExMatch(
             Windows::Foundation::Collections::IVector<Platform::String ^> ^ operands,
-            CalculatorApp::ViewModel::Common::ViewMode mode,
-            CalculatorApp::ViewModel::Common::CategoryGroupType modeType,
-            CalculatorApp::ViewModel::Common::NumberBase programmerNumberBase,
-            CalculatorApp::ViewModel::Common::BitLength bitLengthType);
+            CalculatorApp::ViewModelNative::Common::ViewMode mode,
+            CalculatorApp::ViewModelNative::Common::CategoryGroupType modeType,
+            CalculatorApp::ViewModelNative::Common::NumberBase programmerNumberBase,
+            CalculatorApp::ViewModelNative::Common::BitLength bitLengthType);
         static Platform::String ^ SanitizeOperand(Platform::String ^ operand);
         static Platform::String ^ RemoveUnwantedCharsFromString(Platform::String ^ input);
-        static Platform::IBox<unsigned long long int> ^ TryOperandToULL(Platform::String ^ operand, CalculatorApp::ViewModel::Common::NumberBase numberBase);
+        static Platform::IBox<unsigned long long int> ^ TryOperandToULL(Platform::String ^ operand, CalculatorApp::ViewModelNative::Common::NumberBase numberBase);
         static ULONG32 StandardScientificOperandLength(Platform::String ^ operand);
         static ULONG32 OperandLength(
             Platform::String ^ operand,
-            CalculatorApp::ViewModel::Common::ViewMode mode,
-            CalculatorApp::ViewModel::Common::CategoryGroupType modeType,
-            CalculatorApp::ViewModel::Common::NumberBase programmerNumberBase);
-        static ULONG32 ProgrammerOperandLength(Platform::String ^ operand, CalculatorApp::ViewModel::Common::NumberBase numberBase);
+            CalculatorApp::ViewModelNative::Common::ViewMode mode,
+            CalculatorApp::ViewModelNative::Common::CategoryGroupType modeType,
+            CalculatorApp::ViewModelNative::Common::NumberBase programmerNumberBase);
+        static ULONG32 ProgrammerOperandLength(Platform::String ^ operand, CalculatorApp::ViewModelNative::Common::NumberBase numberBase);
 
     private:
         static constexpr size_t MaxStandardOperandLengthValue = 16;

@@ -11,7 +11,7 @@ namespace GraphControl
     ref class KeyGraphFeaturesInfo;
 }
 
-namespace CalculatorApp::ViewModel
+namespace CalculatorApp::ViewModelNative
 {
 public
     ref class GridDisplayItems sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
@@ -100,7 +100,7 @@ public
         // Key Graph Features
         OBSERVABLE_PROPERTY_R(Platform::String ^, AnalysisErrorString);
         OBSERVABLE_PROPERTY_R(bool, AnalysisErrorVisible);
-        OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::KeyGraphFeaturesItem ^> ^, KeyGraphFeaturesItems)
+        OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModelNative::KeyGraphFeaturesItem ^> ^, KeyGraphFeaturesItems)
 
         void PopulateKeyGraphFeatures(GraphControl::KeyGraphFeaturesInfo ^ info);
 

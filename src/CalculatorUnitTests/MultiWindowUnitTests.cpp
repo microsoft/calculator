@@ -14,8 +14,8 @@
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace CalculatorApp;
-using namespace CalculatorApp::ViewModel::Common;
-using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModelNative::Common;
+using namespace CalculatorApp::ViewModelNative;
 using namespace CalculationManager;
 using namespace Windows::ApplicationModel::Resources;
 using namespace Windows::Devices::Input;

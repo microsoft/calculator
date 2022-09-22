@@ -7,7 +7,7 @@
 #include "CalcViewModel/Common/LocalizationStringUtil.h"
 #include "EquationViewModel.h"
 
-namespace CalculatorApp::ViewModel
+namespace CalculatorApp::ViewModelNative
 {
 
 inline constexpr int DefaultMinMaxRange = 10;
@@ -127,8 +127,8 @@ public
         {
             Platform::String ^ get()
             {
-                return CalculatorApp::ViewModel::Common::LocalizationStringUtil::GetLocalizedString(
-                           CalculatorApp::ViewModel::Common::AppResourceProvider::GetInstance()->GetResourceString(L"VariableListViewItem"), Name);
+                return CalculatorApp::ViewModelNative::Common::LocalizationStringUtil::GetLocalizedString(
+                           CalculatorApp::ViewModelNative::Common::AppResourceProvider::GetInstance()->GetResourceString(L"VariableListViewItem"), Name);
             }
         }
 

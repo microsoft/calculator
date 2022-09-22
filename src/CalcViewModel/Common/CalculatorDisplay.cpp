@@ -8,13 +8,13 @@
 #include "StandardCalculatorViewModel.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::ViewModel;
-using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModelNative;
+using namespace CalculatorApp::ViewModelNative::Common;
 using namespace CalculationManager;
 using namespace Platform;
 using namespace std;
 
-namespace CalculatorApp::ViewModel::Common
+namespace CalculatorApp::ViewModelNative::Common
 {
     CalculatorDisplay::CalculatorDisplay()
     {
@@ -34,7 +34,7 @@ namespace CalculatorApp::ViewModel::Common
     {
         if (m_callbackReference)
         {
-            if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+            if (auto calcVM = m_callbackReference.Resolve<ViewModelNative::StandardCalculatorViewModel>())
             {
                 calcVM->SetPrimaryDisplay(StringReference(displayStringValue.c_str()), isError);
             }
@@ -45,7 +45,7 @@ namespace CalculatorApp::ViewModel::Common
     {
         if (m_callbackReference != nullptr)
         {
-            if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+            if (auto calcVM = m_callbackReference.Resolve<ViewModelNative::StandardCalculatorViewModel>())
             {
                 calcVM->SetParenthesisCount(parenthesisCount);
             }
@@ -56,7 +56,7 @@ namespace CalculatorApp::ViewModel::Common
     {
         if (m_callbackReference != nullptr)
         {
-            if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+            if (auto calcVM = m_callbackReference.Resolve<ViewModelNative::StandardCalculatorViewModel>())
             {
                 calcVM->OnNoRightParenAdded();
             }
@@ -67,7 +67,7 @@ namespace CalculatorApp::ViewModel::Common
     {
         if (m_callbackReference != nullptr)
         {
-            if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+            if (auto calcVM = m_callbackReference.Resolve<ViewModelNative::StandardCalculatorViewModel>())
             {
                 calcVM->IsInError = isError;
             }
@@ -80,7 +80,7 @@ namespace CalculatorApp::ViewModel::Common
     {
         if (m_callbackReference != nullptr)
         {
-            if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+            if (auto calcVM = m_callbackReference.Resolve<ViewModelNative::StandardCalculatorViewModel>())
             {
                 calcVM->SetExpressionDisplay(tokens, commands);
             }
@@ -91,7 +91,7 @@ namespace CalculatorApp::ViewModel::Common
     {
         if (m_callbackReference != nullptr)
         {
-            if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+            if (auto calcVM = m_callbackReference.Resolve<ViewModelNative::StandardCalculatorViewModel>())
             {
                 calcVM->SetMemorizedNumbers(newMemorizedNumbers);
             }
@@ -102,7 +102,7 @@ namespace CalculatorApp::ViewModel::Common
     {
         if (m_historyCallbackReference != nullptr)
         {
-            if (auto historyVM = m_historyCallbackReference.Resolve<ViewModel::HistoryViewModel>())
+            if (auto historyVM = m_historyCallbackReference.Resolve<ViewModelNative::HistoryViewModel>())
             {
                 historyVM->OnHistoryItemAdded(addedItemIndex);
             }
@@ -113,7 +113,7 @@ namespace CalculatorApp::ViewModel::Common
     {
         if (m_callbackReference != nullptr)
         {
-            if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+            if (auto calcVM = m_callbackReference.Resolve<ViewModelNative::StandardCalculatorViewModel>())
             {
                 calcVM->OnMaxDigitsReached();
             }
@@ -124,7 +124,7 @@ namespace CalculatorApp::ViewModel::Common
     {
         if (m_callbackReference != nullptr)
         {
-            if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+            if (auto calcVM = m_callbackReference.Resolve<ViewModelNative::StandardCalculatorViewModel>())
             {
                 calcVM->OnBinaryOperatorReceived();
             }
@@ -135,7 +135,7 @@ namespace CalculatorApp::ViewModel::Common
     {
         if (m_callbackReference != nullptr)
         {
-            if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+            if (auto calcVM = m_callbackReference.Resolve<ViewModelNative::StandardCalculatorViewModel>())
             {
                 calcVM->OnMemoryItemChanged(indexOfMemory);
             }
@@ -146,7 +146,7 @@ namespace CalculatorApp::ViewModel::Common
     {
         if (m_callbackReference != nullptr)
         {
-            if (auto calcVM = m_callbackReference.Resolve<ViewModel::StandardCalculatorViewModel>())
+            if (auto calcVM = m_callbackReference.Resolve<ViewModelNative::StandardCalculatorViewModel>())
             {
                 calcVM->OnInputChanged();
             }

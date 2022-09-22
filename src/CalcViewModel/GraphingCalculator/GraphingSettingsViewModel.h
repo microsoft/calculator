@@ -4,7 +4,7 @@
 #include "../Common/Utils.h"
 #include "CalcViewModel/Common/TraceLogger.h"
 
-namespace CalculatorApp::ViewModel
+namespace CalculatorApp::ViewModelNative
 {
 #pragma once
     [Windows::UI::Xaml::Data::Bindable] public ref class GraphingSettingsViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
@@ -204,7 +204,7 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeGradians");
 
-                    CalculatorApp::ViewModel::Common::TraceLogger::GetInstance()->LogGraphSettingsChanged(CalculatorApp::ViewModel::Common::GraphSettingsType::TrigUnits, L"Radians");
+                    CalculatorApp::ViewModelNative::Common::TraceLogger::GetInstance()->LogGraphSettingsChanged(CalculatorApp::ViewModelNative::Common::GraphSettingsType::TrigUnits, L"Radians");
                 }
             }
         }
@@ -225,7 +225,7 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeRadians");
                     RaisePropertyChanged(L"TrigModeGradians");
 
-                    CalculatorApp::ViewModel::Common::TraceLogger::GetInstance()->LogGraphSettingsChanged(CalculatorApp::ViewModel::Common::GraphSettingsType::TrigUnits, L"Degrees");
+                    CalculatorApp::ViewModelNative::Common::TraceLogger::GetInstance()->LogGraphSettingsChanged(CalculatorApp::ViewModelNative::Common::GraphSettingsType::TrigUnits, L"Degrees");
                 }
             }
         }
@@ -246,7 +246,7 @@ namespace CalculatorApp::ViewModel
                     RaisePropertyChanged(L"TrigModeDegrees");
                     RaisePropertyChanged(L"TrigModeRadians");
 
-                    CalculatorApp::ViewModel::Common::TraceLogger::GetInstance()->LogGraphSettingsChanged(CalculatorApp::ViewModel::Common::GraphSettingsType::TrigUnits, L"Gradians");
+                    CalculatorApp::ViewModelNative::Common::TraceLogger::GetInstance()->LogGraphSettingsChanged(CalculatorApp::ViewModelNative::Common::GraphSettingsType::TrigUnits, L"Gradians");
                 }
             }
         }

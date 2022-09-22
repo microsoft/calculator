@@ -10,7 +10,7 @@ const int c_maxOffsetValue = 999;
 
 namespace CalculatorApp
 {
-    namespace ViewModel
+    namespace ViewModelNative
     {
         [Windows::UI::Xaml::Data::Bindable] public ref class DateCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
@@ -125,26 +125,26 @@ namespace CalculatorApp
                 }
             }
 
-            property CalculatorApp::ViewModel::Common::DateCalculation::DateDifference DateDiffResult
+            property CalculatorApp::ViewModelNative::Common::DateCalculation::DateDifference DateDiffResult
             {
-                CalculatorApp::ViewModel::Common::DateCalculation::DateDifference get()
+                CalculatorApp::ViewModelNative::Common::DateCalculation::DateDifference get()
                 {
                     return m_dateDiffResult;
                 }
-                void set(CalculatorApp::ViewModel::Common::DateCalculation::DateDifference value)
+                void set(CalculatorApp::ViewModelNative::Common::DateCalculation::DateDifference value)
                 {
                     m_dateDiffResult = value;
                     UpdateDisplayResult();
                 }
             }
 
-            property CalculatorApp::ViewModel::Common::DateCalculation::DateDifference DateDiffResultInDays
+            property CalculatorApp::ViewModelNative::Common::DateCalculation::DateDifference DateDiffResultInDays
             {
-                CalculatorApp::ViewModel::Common::DateCalculation::DateDifference get()
+                CalculatorApp::ViewModelNative::Common::DateCalculation::DateDifference get()
                 {
                     return m_dateDiffResultInDays;
                 }
-                void set(CalculatorApp::ViewModel::Common::DateCalculation::DateDifference value)
+                void set(CalculatorApp::ViewModelNative::Common::DateCalculation::DateDifference value)
                 {
                     m_dateDiffResultInDays = value;
                     UpdateDisplayResult();
@@ -172,13 +172,13 @@ namespace CalculatorApp
             Windows::Foundation::DateTime m_toDate;
             Windows::Foundation::DateTime m_startDate;
             Windows::Foundation::DateTime m_dateResult;
-            CalculatorApp::ViewModel::Common::DateCalculation::DateDifference m_dateDiffResult;
-            CalculatorApp::ViewModel::Common::DateCalculation::DateDifference m_dateDiffResultInDays;
+            CalculatorApp::ViewModelNative::Common::DateCalculation::DateDifference m_dateDiffResult;
+            CalculatorApp::ViewModelNative::Common::DateCalculation::DateDifference m_dateDiffResultInDays;
 
             // Private members
-            CalculatorApp::ViewModel::Common::DateCalculation::DateCalculationEngine ^ m_dateCalcEngine;
-            CalculatorApp::ViewModel::Common::DateCalculation::DateUnit m_daysOutputFormat;
-            CalculatorApp::ViewModel::Common::DateCalculation::DateUnit m_allDateUnitsOutputFormat;
+            CalculatorApp::ViewModelNative::Common::DateCalculation::DateCalculationEngine ^ m_dateCalcEngine;
+            CalculatorApp::ViewModelNative::Common::DateCalculation::DateUnit m_daysOutputFormat;
+            CalculatorApp::ViewModelNative::Common::DateCalculation::DateUnit m_allDateUnitsOutputFormat;
             Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ m_dateTimeFormatter;
             std::wstring m_listSeparator;
         };
