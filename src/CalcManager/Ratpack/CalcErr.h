@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <cstdint>
+
 // CalcErr.h
 //
 // Defines the error codes thrown by ratpak and caught by Calculator
