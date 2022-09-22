@@ -394,7 +394,6 @@ namespace Utils
     }
 
     double GetDoubleFromWstring(std::wstring input);
-    int GetWindowId();
     void RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Windows::UI::Core::CoreDispatcher ^ currentDispatcher);
 
     Windows::Foundation::DateTime GetUniversalSystemTime();
@@ -715,7 +714,6 @@ namespace CalculatorApp
             static Platform::String ^ EscapeHtmlSpecialCharacters(Platform::String ^ originalString);
             static bool AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2);
             static Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
-            static int GetWindowId();
             static long long GetConst_WINEVENT_KEYWORD_RESPONSE_TIME();
             static bool GetIntegratedDisplaySize(double* size);
         };

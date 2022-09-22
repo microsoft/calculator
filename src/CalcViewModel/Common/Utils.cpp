@@ -47,20 +47,6 @@ double Utils::GetDoubleFromWstring(wstring input)
     return stod(ws);
 }
 
-// Returns windowId for the current view
-int Utils::GetWindowId()
-{
-    int windowId = -1;
-
-    auto window = CoreWindow::GetForCurrentThread();
-    if (window != nullptr)
-    {
-        windowId = ApplicationView::GetApplicationViewIdForWindow(window);
-    }
-
-    return windowId;
-}
-
 void Utils::RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ CoreDispatcher ^ currentDispatcher)
 {
     if (currentDispatcher != nullptr)
@@ -256,11 +242,6 @@ SolidColorBrush ^ CalculatorApp::ViewModelNative::Common::Utilities::GetContrast
     }
 
     return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"BlackBrush"));
-}
-
-int CalculatorApp::ViewModelNative::Common::Utilities::GetWindowId()
-{
-    return Utils::GetWindowId();
 }
 
 long long CalculatorApp::ViewModelNative::Common::Utilities::GetConst_WINEVENT_KEYWORD_RESPONSE_TIME()
