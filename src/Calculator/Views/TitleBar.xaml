@@ -86,7 +86,7 @@
                 AutomationProperties.AutomationId="ExitAlwaysOnTopButton"
                 AutomationProperties.Name="{utils:ResourceString Name=ExitAlwaysOnTopButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                 Click="AlwaysOnTopButton_Click"
-                Content=""
+                Content="&#xEE47;"
                 ToolTipService.ToolTip="{utils:ResourceString Name=ExitAlwaysOnTopButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                 Visibility="Collapsed"
                 x:Load="False">

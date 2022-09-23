@@ -21,17 +21,17 @@
         <MenuFlyout x:Name="MemoryContextMenu">
             <MenuFlyoutItem Click="OnClearMenuItemClicked" Text="{utils:ResourceString Name=ClearMemoryMenuItem/Text}">
                 <MenuFlyoutItem.Icon>
-                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph=""/>
+                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xf754;"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutItem Click="OnMemoryAddMenuItemClicked" Text="{utils:ResourceString Name=MemPlusMenuItem/Text}">
                 <MenuFlyoutItem.Icon>
-                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph=""/>
+                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xf757;"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutItem Click="OnMemorySubtractMenuItemClicked" Text="{utils:ResourceString Name=MemMinusMenuItem/Text}">
                 <MenuFlyoutItem.Icon>
-                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph=""/>
+                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xf758;"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
         </MenuFlyout>
@@ -130,7 +130,7 @@
                     AutomationProperties.AutomationId="ClearMemory"
                     AutomationProperties.Name="{utils:ResourceString Name=ClearMemory/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                     Command="{x:Bind Model.ClearMemoryCommand, Mode=OneWay}"
-                    Content=""
+                    Content="&#xE74D;"
                     ToolTipService.ToolTip="{utils:ResourceString Name=ClearMemory/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                     Visibility="{x:Bind Model.IsMemoryEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
         </Grid>

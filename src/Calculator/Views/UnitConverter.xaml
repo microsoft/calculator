@@ -155,7 +155,7 @@
                                            FontSize="12"
                                            AutomationProperties.AccessibilityView="Raw"
                                            IsHitTestVisible="False"
-                                           Text=""/>
+                                           Text="&#xE70D;"/>
                                 <Popup x:Name="Popup">
                                     <Border x:Name="PopupBorder"
                                             Margin="0,-0.5,0,-1"
@@ -749,7 +749,7 @@
                                            common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=backSpaceButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                            AutomationProperties.Name="{utils:ResourceString Name=backSpaceButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Backspace"
-                                           Content=""
+                                           Content="&#xE94F;"
                                            TabIndex="8"/>
             </Grid>
 
@@ -773,7 +773,7 @@
                                        common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=converterNegateButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                        AutomationProperties.Name="{utils:ResourceString Name=converterNegateButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Negate"
-                                       Content=""
+                                       Content="&#xF898;"
                                        TabIndex="6"
                                        Visibility="{x:Bind Model.CurrentCategory.NegateVisibility, Mode=OneWay}"/>
         </Grid>

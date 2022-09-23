@@ -189,7 +189,7 @@
                                        AutomationProperties.AutomationId="percentButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=percentButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Percent"
-                                       Content=""/>
+                                       Content="&#xE94C;"/>
             <controls:CalculatorButton x:Name="ClearEntryButton"
                                        Grid.Column="1"
                                        Style="{StaticResource OperatorButtonStyle}"
@@ -216,7 +216,7 @@
                                        AutomationProperties.AutomationId="backSpaceButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=backSpaceButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Backspace"
-                                       Content=""/>
+                                       Content="&#xE94F;"/>
         </Grid>
 
         <Grid x:Name="StandardFunctions"
@@ -245,7 +245,7 @@
                                        AutomationProperties.AutomationId="invertButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=invertButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Invert"
-                                       Content=""/>
+                                       Content="&#xf7c9;"/>
             <controls:CalculatorButton x:Name="XPower2Button"
                                        Grid.Column="1"
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
@@ -254,7 +254,7 @@
                                        AutomationProperties.AutomationId="xpower2Button"
                                        AutomationProperties.Name="{utils:ResourceString Name=xpower2Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="XPower2"
-                                       Content=""/>
+                                       Content="&#xf7c8;"/>
             <controls:CalculatorButton x:Name="SquareRootButton"
                                        Grid.Column="2"
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
@@ -262,7 +262,7 @@
                                        AutomationProperties.AutomationId="squareRootButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=squareRootButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Sqrt"
-                                       Content=""/>
+                                       Content="&#xF899;"/>
         </Grid>
 
         <Grid x:Name="StandardOperators"
@@ -286,7 +286,7 @@
                                        AutomationProperties.AutomationId="divideButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=divideButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Divide"
-                                       Content=""/>
+                                       Content="&#xE94A;"/>
             <controls:CalculatorButton x:Name="MultiplyButton"
                                        Grid.Row="1"
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
@@ -295,7 +295,7 @@
                                        AutomationProperties.AutomationId="multiplyButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=multiplyButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Multiply"
-                                       Content=""/>
+                                       Content="&#xE947;"/>
             <controls:CalculatorButton x:Name="MinusButton"
                                        Grid.Row="2"
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
@@ -304,7 +304,7 @@
                                        AutomationProperties.AutomationId="minusButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=minusButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Subtract"
-                                       Content=""/>
+                                       Content="&#xE949;"/>
             <controls:CalculatorButton x:Name="PlusButton"
                                        Grid.Row="3"
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
@@ -313,7 +313,7 @@
                                        AutomationProperties.AutomationId="plusButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=plusButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Add"
-                                       Content=""/>
+                                       Content="&#xE948;"/>
             <controls:CalculatorButton x:Name="EqualButton"
                                        Grid.Row="4"
                                        Style="{StaticResource AccentEmphasizedCalcButtonStyle}"
@@ -322,7 +322,7 @@
                                        AutomationProperties.AutomationId="equalButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=equalButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Equals"
-                                       Content=""/>
+                                       Content="&#xE94E;"/>
         </Grid>
 
         <local:NumberPad x:Name="NumberPad"
@@ -343,6 +343,6 @@
                                    AutomationProperties.AutomationId="negateButton"
                                    AutomationProperties.Name="{utils:ResourceString Name=negateButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                    ButtonId="Negate"
-                                   Content=""/>
+                                   Content="&#xF898;"/>
     </Grid>
 </UserControl>

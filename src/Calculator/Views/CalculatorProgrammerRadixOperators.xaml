@@ -237,7 +237,7 @@
                                           Style="{StaticResource OperatorPanelButtonStyle}"
                                           AutomationProperties.AutomationId="bitwiseButton"
                                           AutomationProperties.Name="{utils:ResourceString Name=bitwiseButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                          Glyph=""
+                                          Glyph="&#xF895;"
                                           Text="{utils:ResourceString Name=bitwiseButton/Text}">
                 <controls:OperatorPanelButton.FlyoutMenu>
                     <Flyout x:Name="BitwiseFlyout"

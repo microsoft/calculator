@@ -91,7 +91,7 @@
                 FontSize="12"
                 AutomationProperties.Name="{utils:ResourceString Name=TitleBarBackButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                 Click="BackButton_Click"
-                Content=""/>
+                Content="&#xE72B;"/>
 
         <Grid Grid.Row="1"
               Height="{StaticResource HamburgerHeight}"
@@ -144,7 +144,7 @@
                                       Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                                       FontFamily="{ThemeResource CalculatorFontFamily}"
                                       FontSize="16"
-                                      Glyph=""/>
+                                      Glyph="&#xE790;"/>
 
                             <StackPanel Grid.Column="1"
                                         Margin="0,12"

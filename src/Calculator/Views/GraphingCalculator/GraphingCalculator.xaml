@@ -1,6 +1,7 @@
 <UserControl x:Class="CalculatorApp.GraphingCalculator"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:common="using:CalculatorApp.Common"
              xmlns:contract7NotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,7)"
              xmlns:contract7Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)"
              xmlns:contract8Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
@@ -215,7 +216,7 @@
                                                   Foreground="{ThemeResource ToggleSwitchIconOnBrush}"
                                                   FontFamily="{StaticResource CalculatorFontFamily}"
                                                   FontSize="14"
-                                                  Glyph=""/>
+                                                  Glyph="&#xF770;"/>
                                         <Grid Margin="-2,0,2,0"
                                               VerticalAlignment="Center"
                                               FlowDirection="LeftToRight">
@@ -224,7 +225,7 @@
                                                       Foreground="{ThemeResource ToggleSwitchIconOffBrush}"
                                                       FontFamily="{StaticResource CalculatorFontFamily}"
                                                       FontSize="12"
-                                                      Glyph=""/>
+                                                      Glyph="&#xF893;"/>
                                             <TextBlock x:Name="EquationsIconX"
                                                        Margin="0,8,-1,0"
                                                        HorizontalAlignment="Right"
@@ -245,13 +246,13 @@
                                                   Foreground="{ThemeResource ToggleSwitchIconOffBrush}"
                                                   FontFamily="{StaticResource CalculatorFontFamily}"
                                                   FontSize="14"
-                                                  Glyph=""/>
+                                                  Glyph="&#xF770;"/>
                                         <Grid Margin="-2,0,2,0" VerticalAlignment="Center">
                                             <FontIcon VerticalAlignment="Center"
                                                       Foreground="{ThemeResource ToggleSwitchIconOnBrush}"
                                                       FontFamily="{StaticResource CalculatorFontFamily}"
                                                       FontSize="12"
-                                                      Glyph=""/>
+                                                      Glyph="&#xF893;"/>
                                             <TextBlock Margin="0,8,-1,0"
                                                        HorizontalAlignment="Right"
                                                        VerticalAlignment="Bottom"
@@ -636,7 +637,7 @@
                         </ToolTipService.ToolTip>
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                   FontSize="16"
-                                  Glyph=""/>
+                                  Glyph="&#xE3B3;"/>
                     </ToggleButton>
 
                     <Button MinWidth="32"
@@ -648,7 +649,7 @@
                             ToolTipService.ToolTip="{utils:ResourceString Name=shareButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}">
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                   FontSize="16"
-                                  Glyph=""/>
+                                  Glyph="&#xE72D;"/>
                     </Button>
 
                     <Button x:Name="GraphSettingsButton"
@@ -661,7 +662,7 @@
                             ToolTipService.ToolTip="{utils:ResourceString Name=graphSettingsButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}">
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                   FontSize="16"
-                                  Glyph=""/>
+                                  Glyph="&#xE3B4;"/>
                     </Button>
                 </StackPanel>
             </Border>
@@ -715,7 +716,7 @@
                                   ToolTipService.ToolTip="{utils:ResourceString Name=zoomInButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}">
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                   FontSize="14"
-                                  Glyph=""/>
+                                  Glyph="&#xE948;"/>
                         <RepeatButton.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Add" Modifiers="Control"/>
                         </RepeatButton.KeyboardAccelerators>
@@ -734,18 +735,17 @@
                                   ToolTipService.ToolTip="{utils:ResourceString Name=zoomOutButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}">
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                   FontSize="14"
-                                  Glyph=""/>
+                                  Glyph="&#xE949;"/>
                         <RepeatButton.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Subtract" Modifiers="Control"/>
                         </RepeatButton.KeyboardAccelerators>
                     </RepeatButton>
 
-                    <ToggleButton xmlns:d6p1="using:CalculatorApp.Common"
-                                  MinHeight="32"
+                    <ToggleButton MinHeight="32"
                                   Margin="4"
                                   Style="{ThemeResource ThemedGraphViewToggleButtonStyle}"
+                                  common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=graphViewButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                   contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
-                                  d6p1:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=graphViewButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                   AutomationProperties.AutomationId="graphViewButton"
                                   AutomationProperties.Name="{utils:ResourceString Name=graphViewButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                   Click="GraphViewButton_Click"
@@ -755,10 +755,10 @@
                             <Grid>
                                 <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                           FontSize="14"
-                                          Glyph=""/>
+                                          Glyph="&#xE45E;"/>
                                 <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                           FontSize="14"
-                                          Glyph=""
+                                          Glyph="&#xE45D;"
                                           Visibility="{x:Bind IsManualAdjustment, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
                             </Grid>
                         </ToggleButton.Content>

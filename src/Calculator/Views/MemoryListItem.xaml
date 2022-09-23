@@ -10,13 +10,13 @@
     <UserControl.Resources>
         <muxc:FontIconSource x:Key="MemClearGlyph"
                              FontFamily="{StaticResource CalculatorFontFamily}"
-                             Glyph=""/>
+                             Glyph="&#xf754;"/>
         <muxc:FontIconSource x:Key="MemPlusGlyph"
                              FontFamily="{StaticResource CalculatorFontFamily}"
-                             Glyph=""/>
+                             Glyph="&#xf757;"/>
         <muxc:FontIconSource x:Key="MemMinusGlyph"
                              FontFamily="{StaticResource CalculatorFontFamily}"
-                             Glyph=""/>
+                             Glyph="&#xf758;"/>
 
         <muxc:SwipeItems x:Key="MemorySwipeItems" Mode="Reveal">
             <muxc:SwipeItem Background="{ThemeResource SystemControlBackgroundAccentBrush}"

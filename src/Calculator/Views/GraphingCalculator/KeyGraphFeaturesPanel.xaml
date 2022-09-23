@@ -251,9 +251,9 @@
                               VerticalAlignment="Center"
                               FontFamily="{StaticResource CalculatorFontFamily}"
                               FontSize="16"
-                              Glyph=""/>
+                              Glyph="&#xE72B;"/>
                     <StackPanel FlowDirection="LeftToRight" Orientation="Horizontal">
-                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph=""/>
+                        <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
                         <TextBlock Margin="-5,19,0,0"
                                    FontSize="11"
                                    Text="{x:Bind ViewModel.FunctionLabelIndex}"/>

@@ -401,7 +401,7 @@
                                               AutomationProperties.AutomationId="trigShiftButton"
                                               AutomationProperties.Name="{utils:ResourceString Name=trigShiftButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                               Checked="TrigFlyoutShift_Toggle"
-                                              Content=""
+                                              Content="&#xF897;"
                                               IsTabStop="false"
                                               Unchecked="TrigFlyoutShift_Toggle"
                                               IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
@@ -780,7 +780,7 @@
                                               Style="{StaticResource OperatorPanelButtonStyle}"
                                               AutomationProperties.AutomationId="inequalityButton"
                                               AutomationProperties.Name="{utils:ResourceString Name=inequalityButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                              Glyph=""
+                                              Glyph="&#xF894;"
                                               IsTabStop="false"
                                               Text="{utils:ResourceString Name=inequalityButton/Text}">
                     <controls:OperatorPanelButton.FlyoutMenu>
@@ -812,7 +812,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=lessThanFlyoutButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="LessThan"
                                                            Click="FlyoutButton_Clicked"
-                                                           Content=""
+                                                           Content="&#xF88A;"
                                                            IsTabStop="false"
                                                            IsEnabled="{x:Bind InequalityButton.IsEnabled, Mode=OneWay}"/>
 
@@ -823,7 +823,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=lessThanOrEqualFlyoutButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="LessThanOrEqualTo"
                                                            Click="FlyoutButton_Clicked"
-                                                           Content=""
+                                                           Content="&#xF88B;"
                                                            IsTabStop="false"
                                                            IsEnabled="{x:Bind InequalityButton.IsEnabled, Mode=OneWay}"/>
 
@@ -834,7 +834,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=equalsFlyoutButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Equals"
                                                            Click="FlyoutButton_Clicked"
-                                                           Content=""
+                                                           Content="&#xE94E;"
                                                            IsTabStop="false"
                                                            IsEnabled="{x:Bind InequalityButton.IsEnabled, Mode=OneWay}"/>
 
@@ -845,7 +845,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=greaterThanOrEqualFlyoutButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="GreaterThanOrEqualTo"
                                                            Click="FlyoutButton_Clicked"
-                                                           Content=""
+                                                           Content="&#xF88D;"
                                                            IsTabStop="false"
                                                            IsEnabled="{x:Bind InequalityButton.IsEnabled, Mode=OneWay}"/>
 
@@ -856,7 +856,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=greaterThanFlyoutButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="GreaterThan"
                                                            Click="FlyoutButton_Clicked"
-                                                           Content=""
+                                                           Content="&#xF88C;"
                                                            IsTabStop="false"
                                                            IsEnabled="{x:Bind InequalityButton.IsEnabled, Mode=OneWay}"/>
 
@@ -869,7 +869,7 @@
                                               Style="{StaticResource OperatorPanelButtonStyle}"
                                               AutomationProperties.AutomationId="funcButton"
                                               AutomationProperties.Name="{utils:ResourceString Name=funcButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                              Glyph=""
+                                              Glyph="&#xF893;"
                                               IsTabStop="false"
                                               Text="{utils:ResourceString Name=funcButton/Text}">
 
@@ -900,7 +900,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=absButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Abs"
                                                            Click="FlyoutButton_Clicked"
-                                                           Content=""
+                                                           Content="&#xF884;"
                                                            IsTabStop="false"
                                                            IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
 
@@ -912,7 +912,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=floorButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Floor"
                                                            Click="FlyoutButton_Clicked"
-                                                           Content=""
+                                                           Content="&#xF885;"
                                                            IsTabStop="false"
                                                            IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
 
@@ -924,7 +924,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=ceilButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Ceil"
                                                            Click="FlyoutButton_Clicked"
-                                                           Content=""
+                                                           Content="&#xF886;"
                                                            IsTabStop="false"
                                                            IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
                             </Grid>
@@ -941,7 +941,7 @@
                           AutomationProperties.AutomationId="shiftButton"
                           AutomationProperties.Name="{utils:ResourceString Name=shiftButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                           Checked="ShiftButton_Check"
-                          Content=""
+                          Content="&#xF897;"
                           IsEnabledChanged="ShiftButton_IsEnabledChanged"
                           IsTabStop="false"
                           Unchecked="ShiftButton_Check"
@@ -957,7 +957,7 @@
                                        AutomationProperties.Name="{utils:ResourceString Name=piButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Pi"
                                        Click="Button_Clicked"
-                                       Content=""
+                                       Content="&#xf7cf;"
                                        IsTabStop="false"/>
 
             <controls:CalculatorButton x:Name="EulerButton"
@@ -1006,7 +1006,7 @@
                                            AutomationProperties.Name="{utils:ResourceString Name=backSpaceButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Backspace"
                                            Click="BackSpaceButton_Clicked"
-                                           Content=""
+                                           Content="&#xE94F;"
                                            IsTabStop="false"/>
             </Grid>
 
@@ -1032,7 +1032,7 @@
                                                AutomationProperties.Name="{utils:ResourceString Name=xpower2Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="XPower2"
                                                Click="Button_Clicked"
-                                               Content=""
+                                               Content="&#xf7c8;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="SquareRootButton"
@@ -1043,7 +1043,7 @@
                                                AutomationProperties.Name="{utils:ResourceString Name=squareRootButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="Sqrt"
                                                Click="Button_Clicked"
-                                               Content=""
+                                               Content="&#xF899;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="PowerButton"
@@ -1056,7 +1056,7 @@
                                                AutomationProperties.Name="{utils:ResourceString Name=powerButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="XPowerY"
                                                Click="Button_Clicked"
-                                               Content=""
+                                               Content="&#xf7ca;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="PowerOf10Button"
@@ -1067,7 +1067,7 @@
                                                AutomationProperties.Name="{utils:ResourceString Name=powerOf10Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="TenPowerX"
                                                Click="Button_Clicked"
-                                               Content=""
+                                               Content="&#xF7CC;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="LogBase10Button"
@@ -1111,7 +1111,7 @@
                                                AutomationProperties.Name="{utils:ResourceString Name=xpower3Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="Cube"
                                                Click="ShiftButton_Uncheck"
-                                               Content=""
+                                               Content="&#xf7cb;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="CubeRootButton"
@@ -1122,7 +1122,7 @@
                                                AutomationProperties.Name="{utils:ResourceString Name=cubeRootButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="CubeRoot"
                                                Click="ShiftButton_Uncheck"
-                                               Content=""
+                                               Content="&#xF881;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="YSquareRootButton"
@@ -1134,7 +1134,7 @@
                                                AutomationProperties.Name="{utils:ResourceString Name=ySquareRootButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="YRootX"
                                                Click="ShiftButton_Uncheck"
-                                               Content=""
+                                               Content="&#xf7cd;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="TwoPowerXButton"
@@ -1145,7 +1145,7 @@
                                                AutomationProperties.Name="{utils:ResourceString Name=twoPowerXButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="TwoPowerX"
                                                Click="ShiftButton_Uncheck"
-                                               Content=""
+                                               Content="&#xF882;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="LogBaseY"
@@ -1156,7 +1156,7 @@
                                                AutomationProperties.Name="{utils:ResourceString Name=logBaseY/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="LogBaseY"
                                                Click="ShiftButton_Uncheck"
-                                               Content=""
+                                               Content="&#xF883;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="PowerOfEButton"
@@ -1167,7 +1167,7 @@
                                                AutomationProperties.Name="{utils:ResourceString Name=powerOfEButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="EPowerX"
                                                Click="ShiftButton_Uncheck"
-                                               Content=""
+                                               Content="&#xf7ce;"
                                                IsTabStop="false"/>
                 </Grid>
             </Grid>
@@ -1190,7 +1190,7 @@
                                            AutomationProperties.Name="{utils:ResourceString Name=invertButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Invert"
                                            Click="Button_Clicked"
-                                           Content=""
+                                           Content="&#xf7c9;"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="AbsButton"
@@ -1201,7 +1201,7 @@
                                            AutomationProperties.Name="{utils:ResourceString Name=absButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Abs"
                                            Click="Button_Clicked"
-                                           Content=""
+                                           Content="&#xF884;"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="XButton"
@@ -1265,7 +1265,7 @@
                                        AutomationProperties.Name="{utils:ResourceString Name=equalButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Equals"
                                        Click="Button_Clicked"
-                                       Content=""
+                                       Content="&#xE94E;"
                                        IsTabStop="false"/>
 
             <Grid x:Name="StandardOperators"
@@ -1290,7 +1290,7 @@
                                            AutomationProperties.Name="{utils:ResourceString Name=divideButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Divide"
                                            Click="Button_Clicked"
-                                           Content=""
+                                           Content="&#xE94A;"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="MultiplyButton"
@@ -1302,7 +1302,7 @@
                                            AutomationProperties.Name="{utils:ResourceString Name=multiplyButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Multiply"
                                            Click="Button_Clicked"
-                                           Content=""
+                                           Content="&#xE947;"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="MinusButton"
@@ -1314,7 +1314,7 @@
                                            AutomationProperties.Name="{utils:ResourceString Name=minusButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Subtract"
                                            Click="Button_Clicked"
-                                           Content=""
+                                           Content="&#xE949;"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="PlusButton"
@@ -1326,7 +1326,7 @@
                                            AutomationProperties.Name="{utils:ResourceString Name=plusButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Add"
                                            Click="Button_Clicked"
-                                           Content=""
+                                           Content="&#xE948;"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="SubmitButton"
@@ -1336,7 +1336,7 @@
                                            AutomationProperties.AutomationId="submitButton"
                                            AutomationProperties.Name="{utils:ResourceString Name=submitButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            Click="SubmitButton_Clicked"
-                                           Content=""
+                                           Content="&#xE751;"
                                            IsTabStop="false"/>
             </Grid>
 
@@ -1351,7 +1351,7 @@
                                        AutomationProperties.Name="{utils:ResourceString Name=negateButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Negate"
                                        Click="Button_Clicked"
-                                       Content=""
+                                       Content="&#xE3B5;"
                                        IsTabStop="false"/>
 
             <controls:CalculatorButton x:Name="Num0Button"

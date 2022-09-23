@@ -497,7 +497,7 @@
                                                             Background="Transparent"
                                                             FlowDirection="LeftToRight"
                                                             Orientation="Horizontal">
-                                                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph=""/>
+                                                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xF893;"/>
                                                     <TextBlock x:Name="FunctionNumberLabelTextBlock"
                                                                Margin="-5,19,0,0"
                                                                FontSize="11"
@@ -588,7 +588,7 @@
                                                                                     <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPointerOverOpacity}"/>
                                                                                     <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                                     <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
-                                                                                    <Setter Target="ShowHideIcon.Glyph" Value=""/>
+                                                                                    <Setter Target="ShowHideIcon.Glyph" Value="&#xF6AC;"/>
                                                                                 </VisualState.Setters>
                                                                             </VisualState>
                                                                             <VisualState x:Name="Pressed">
@@ -599,7 +599,7 @@
                                                                                     <Setter Target="ShowHideIcon.Foreground" Value="{ThemeResource ToggleButtonForegroundPressed}"/>
                                                                                     <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                                     <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
-                                                                                    <Setter Target="ShowHideIcon.Glyph" Value=""/>
+                                                                                    <Setter Target="ShowHideIcon.Glyph" Value="&#xF6AC;"/>
                                                                                 </VisualState.Setters>
                                                                             </VisualState>
                                                                             <VisualState x:Name="Checked">
@@ -617,7 +617,7 @@
                                                                                     <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPointerOverOpacity}"/>
                                                                                     <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                                     <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
-                                                                                    <Setter Target="ShowHideIcon.Glyph" Value=""/>
+                                                                                    <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
                                                                                 </VisualState.Setters>
                                                                             </VisualState>
                                                                             <VisualState x:Name="CheckedPressed">
@@ -628,7 +628,7 @@
                                                                                     <Setter Target="Overlay.Opacity" Value="{StaticResource EquationButtonOverlayPressedOpacity}"/>
                                                                                     <Setter Target="ContentPresenter.Visibility" Value="Collapsed"/>
                                                                                     <Setter Target="ShowHideIcon.Visibility" Value="Visible"/>
-                                                                                    <Setter Target="ShowHideIcon.Glyph" Value=""/>
+                                                                                    <Setter Target="ShowHideIcon.Glyph" Value="&#xE890;"/>
                                                                                 </VisualState.Setters>
                                                                             </VisualState>
                                                                         </VisualStateGroup>
@@ -684,17 +684,17 @@
                                                     <MenuFlyoutSeparator/>
                                                     <MenuFlyoutItem x:Name="FunctionAnalysisMenuItem">
                                                         <MenuFlyoutItem.Icon>
-                                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph=""/>
+                                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE945;"/>
                                                         </MenuFlyoutItem.Icon>
                                                     </MenuFlyoutItem>
                                                     <MenuFlyoutItem x:Name="ChangeFunctionStyleMenuItem">
                                                         <MenuFlyoutItem.Icon>
-                                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph=""/>
+                                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xE790;"/>
                                                         </MenuFlyoutItem.Icon>
                                                     </MenuFlyoutItem>
                                                     <MenuFlyoutItem x:Name="RemoveFunctionMenuItem">
                                                         <MenuFlyoutItem.Icon>
-                                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph=""/>
+                                                            <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xECC9;"/>
                                                         </MenuFlyoutItem.Icon>
                                                     </MenuFlyoutItem>
                                                 </MenuFlyout>
@@ -711,7 +711,7 @@
                                                 FontFamily="{StaticResource CalculatorFontFamily}"
                                                 AutomationProperties.AccessibilityView="Raw"
                                                 AutomationProperties.Name="{utils:ResourceString Name=functionAnalysisButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                                Content=""
+                                                Content="&#xE945;"
                                                 IsTabStop="False"
                                                 ToolTipService.ToolTip="{utils:ResourceString Name=functionAnalysisButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                                                 Visibility="Collapsed"/>
@@ -725,7 +725,7 @@
                                                       FontFamily="{StaticResource CalculatorFontFamily}"
                                                       AutomationProperties.AccessibilityView="Raw"
                                                       AutomationProperties.Name="{utils:ResourceString Name=colorChooserButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                                      Content=""
+                                                      Content="&#xE790;"
                                                       IsTabStop="False"
                                                       ToolTipService.ToolTip="{utils:ResourceString Name=colorChooserButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                                                       Visibility="Collapsed">
@@ -765,7 +765,7 @@
                                                   FontFamily="{ThemeResource CalculatorFontFamily}"
                                                   FontSize="16"
                                                   AutomationProperties.AccessibilityView="Raw"
-                                                  Glyph=""
+                                                  Glyph="&#xF736;"
                                                   ToolTipService.ToolTip="{TemplateBinding ErrorText}"
                                                   Visibility="Collapsed"/>
                                         <Grid x:Name="RemoveButtonPanel" Grid.Column="5">
@@ -794,7 +794,7 @@
                                                 FontFamily="{ThemeResource CalculatorFontFamily}"
                                                 FontSize="12"
                                                 AutomationProperties.AccessibilityView="Raw"
-                                                Content=""
+                                                Content="&#xE947;"
                                                 IsTabStop="False"
                                                 Visibility="Collapsed"/>
                                     </Grid>

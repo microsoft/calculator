@@ -311,7 +311,7 @@
                                           Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                                           FontFamily="{ThemeResource CalculatorFontFamily}"
                                           FontSize="16"
-                                          Glyph=""/>
+                                          Glyph="&#xE787;"/>
                                 <contract7Present:ContentPresenter x:Name="DescriptionPresenter"
                                                                    Grid.Row="2"
                                                                    Grid.Column="1"
@@ -822,7 +822,7 @@
                                                 FontSize="8"
                                                 contract7Present:BackgroundSizing="InnerBorderEdge"
                                                 contract7Present:CornerRadius="{StaticResource ControlCornerRadius}"
-                                                Content=""
+                                                Content="&#xEDDB;"
                                                 IsTabStop="True"
                                                 IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.HasMoreContentBefore}"/>
                                         <Button x:Name="NextButton"
@@ -834,7 +834,7 @@
                                                 FontSize="8"
                                                 contract7Present:BackgroundSizing="InnerBorderEdge"
                                                 contract7Present:CornerRadius="{StaticResource ControlCornerRadius}"
-                                                Content=""
+                                                Content="&#xEDDC;"
                                                 IsTabStop="True"
                                                 IsEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.HasMoreContentAfter}"/>
                                     </Grid>

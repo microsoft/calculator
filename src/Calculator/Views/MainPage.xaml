@@ -168,7 +168,7 @@
                             AutomationProperties.AutomationId="NormalAlwaysOnTopButton"
                             AutomationProperties.Name="{utils:ResourceString Name=EnterAlwaysOnTopButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                             Click="AlwaysOnTopButtonClick"
-                            Content=""
+                            Content="&#xEE49;"
                             TabIndex="3"
                             ToolTipService.ToolTip="{utils:ResourceString Name=EnterAlwaysOnTopButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                             Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}">
