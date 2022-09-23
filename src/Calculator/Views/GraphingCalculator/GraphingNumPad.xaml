@@ -364,7 +364,7 @@
                                               Style="{StaticResource OperatorPanelButtonStyle}"
                                               AutomationProperties.AutomationId="trigButton"
                                               AutomationProperties.Name="{utils:ResourceString Name=trigButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                              Glyph=""
+                                              Glyph="&#xF892;"
                                               IsTabStop="false"
                                               Text="{utils:ResourceString Name=trigButton/Text}">
 
