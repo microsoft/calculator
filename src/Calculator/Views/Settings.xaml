@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+             xmlns:utils="using:CalculatorApp.Utils"
              Loaded="OnLoaded"
              Unloaded="OnUnloaded"
              mc:Ignorable="d">
@@ -81,7 +82,6 @@
         </VisualStateManager.VisualStateGroups>
 
         <Button x:Name="BackButton"
-                x:Uid="TitleBarBackButton"
                 Grid.Row="0"
                 Width="44"
                 Height="{x:Bind TitleBarHeight.Value, Mode=OneWay}"
@@ -89,8 +89,9 @@
                 Padding="2,0,0,0"
                 Style="{StaticResource SquareIconButtonStyle}"
                 FontSize="12"
+                AutomationProperties.Name="{utils:ResourceString Name=TitleBarBackButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                 Click="BackButton_Click"
-                Content="&#xE72B;"/>
+                Content=""/>
 
         <Grid Grid.Row="1"
               Height="{StaticResource HamburgerHeight}"
@@ -98,8 +99,8 @@
               HorizontalAlignment="Stretch"
               VerticalAlignment="Top">
             <TextBlock x:Name="Header"
-                       x:Uid="SettingsHeader"
-                       Style="{StaticResource CategoryNameTextBlockStyle}"/>
+                       Style="{StaticResource CategoryNameTextBlockStyle}"
+                       Text="{utils:ResourceString Name=SettingsHeader/Text}"/>
         </Grid>
 
         <ScrollViewer Grid.Row="1"
@@ -118,17 +119,17 @@
                     <RowDefinition x:Name="AboutTitleContentRow" Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock x:Uid="SettingsAppearance"
-                           Style="{StaticResource BodyStrongTextBlockStyle}"
-                           AutomationProperties.HeadingLevel="Level1"/>
+                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                           AutomationProperties.HeadingLevel="Level1"
+                           Text="{utils:ResourceString Name=SettingsAppearance/Text}"/>
 
                 <muxc:Expander x:Name="AppThemeExpander"
-                               x:Uid="AppThemeExpander"
                                Grid.Row="1"
                                Margin="0,8,0,0"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Top"
                                HorizontalContentAlignment="Left"
+                               AutomationProperties.Name="{utils:ResourceString Name=AppThemeExpander/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                ExpandDirection="Down"
                                IsExpanded="False">
                     <muxc:Expander.Header>
@@ -143,15 +144,15 @@
                                       Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                                       FontFamily="{ThemeResource CalculatorFontFamily}"
                                       FontSize="16"
-                                      Glyph="&#xE790;"/>
+                                      Glyph=""/>
 
                             <StackPanel Grid.Column="1"
                                         Margin="0,12"
                                         Orientation="Vertical">
-                                <TextBlock x:Uid="SettingsAppThemeTitle" Style="{StaticResource BodyTextBlockStyle}"/>
-                                <TextBlock x:Uid="SettingsAppThemeDescription"
-                                           Style="{StaticResource CaptionTextBlockStyle}"
+                                <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{utils:ResourceString Name=SettingsAppThemeTitle/Text}"/>
+                                <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           Text="{utils:ResourceString Name=SettingsAppThemeDescription/Text}"
                                            TextWrapping="WrapWholeWords"/>
                             </StackPanel>
                         </Grid>
@@ -161,13 +162,13 @@
                                            Margin="32,0,0,0"
                                            SelectionChanged="OnThemeSelectionChanged">
                             <RadioButton x:Name="LightThemeRadioButton"
-                                         x:Uid="LightThemeRadioButton"
+                                         Content="{utils:ResourceString Name=LightThemeRadioButton/Content}"
                                          Tag="Light"/>
                             <RadioButton x:Name="DarkThemeRadioButton"
-                                         x:Uid="DarkThemeRadioButton"
+                                         Content="{utils:ResourceString Name=DarkThemeRadioButton/Content}"
                                          Tag="Dark"/>
                             <RadioButton x:Name="SystemThemeRadioButton"
-                                         x:Uid="SystemThemeRadioButton"
+                                         Content="{utils:ResourceString Name=SystemThemeRadioButton/Content}"
                                          Tag="Default"/>
                         </muxc:RadioButtons>
                     </muxc:Expander.Content>
@@ -181,10 +182,10 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock x:Name="AboutGroupTitle"
-                               x:Uid="AboutGroupTitle"
                                Margin="0,20,0,0"
                                Style="{ThemeResource BodyStrongTextBlockStyle}"
-                               AutomationProperties.HeadingLevel="Level1"/>
+                               AutomationProperties.HeadingLevel="Level1"
+                               Text="{utils:ResourceString Name=AboutGroupTitle/Text}"/>
                     <StackPanel Grid.Row="1"
                                 Margin="0,8,0,0"
                                 Orientation="Vertical">
@@ -201,8 +202,8 @@
                                          Padding="0"
                                          NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
                                          ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
-                            <TextBlock x:Uid="AboutEULA"
-                                       FontSize="{ThemeResource BodyFontSize}"
+                            <TextBlock FontSize="{ThemeResource BodyFontSize}"
+                                       Text="{utils:ResourceString Name=AboutEULA/Text}"
                                        TextWrapping="Wrap"/>
                         </HyperlinkButton>
 
@@ -211,8 +212,8 @@
                                          Padding="0"
                                          NavigateUri="https://go.microsoft.com/fwlink/?LinkID=822631"
                                          ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=822631">
-                            <TextBlock x:Uid="AboutControlServicesAgreement"
-                                       FontSize="{ThemeResource BodyFontSize}"
+                            <TextBlock FontSize="{ThemeResource BodyFontSize}"
+                                       Text="{utils:ResourceString Name=AboutControlServicesAgreement/Text}"
                                        TextWrapping="Wrap"/>
                         </HyperlinkButton>
 
@@ -221,19 +222,19 @@
                                          Padding="0"
                                          NavigateUri="https://go.microsoft.com/fwlink/?LinkID=521839"
                                          ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=521839">
-                            <TextBlock x:Uid="AboutControlPrivacyStatement"
-                                       FontSize="{ThemeResource BodyFontSize}"
+                            <TextBlock FontSize="{ThemeResource BodyFontSize}"
+                                       Text="{utils:ResourceString Name=AboutControlPrivacyStatement/Text}"
                                        TextWrapping="Wrap"/>
                         </HyperlinkButton>
 
                         <Button x:Name="FeedbackButton"
-                                x:Uid="FeedbackButton"
                                 MinWidth="120"
                                 Margin="0,24,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 FontSize="{StaticResource BodyFontSize}"
-                                Click="FeedbackButton_Click"/>
+                                Click="FeedbackButton_Click"
+                                Content="{utils:ResourceString Name=FeedbackButton/Content}"/>
                     </StackPanel>
                     <RichTextBlock x:Name="AboutContribute"
                                    Grid.Row="2"

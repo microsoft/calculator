@@ -165,6 +165,8 @@
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
     <Compile Include="Selectors\NavViewMenuItemTemplateSelector.cs" />
+    <Compile Include="Utils\ResourceVirtualKey.cs" />
+    <Compile Include="Utils\ResourceString.cs" />
     <Compile Include="Utils\ThemeHelper.cs" />
     <Compile Include="Views\GraphingCalculator\EquationStylePanelControl.xaml.cs">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>

@@ -9,6 +9,7 @@
              xmlns:designdata="using:CalculatorApp.DesignData"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="using:CalculatorApp.Utils"
              x:Name="ControlRoot"
              d:DesignHeight="400"
              d:DesignWidth="315"
@@ -172,10 +173,10 @@
         </MenuFlyout>
     </UserControl.Resources>
     <Grid x:Name="ProgrammerOperators"
-          x:Uid="RadixGroup"
           MaxHeight="244"
           Margin="4,0"
           AutomationProperties.HeadingLevel="Level1"
+          AutomationProperties.Name="{utils:ResourceString Name=RadixGroup/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
           FlowDirection="LeftToRight">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" MinHeight="0"/>
@@ -204,48 +205,52 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <controls:RadixButton x:Name="HexButton"
-                              x:Uid="hexButton"
                               HorizontalAlignment="Stretch"
                               Style="{ThemeResource ConditionalProgModeRadioButtonStyle}"
+                              common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=hexButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                               AutomationProperties.AutomationId="hexButton"
                               AutomationProperties.Name="{x:Bind Model.HexDisplayValue_AutomationName, Mode=OneWay}"
                               Checked="HexButtonChecked"
                               Content="{x:Bind Model.HexDisplayValue, Mode=OneWay}"
                               ContextFlyout="{StaticResource ProgrammerOperatorsContextMenu}"
-                              GroupName="BaseConversion"/>
+                              GroupName="BaseConversion"
+                              Tag="{utils:ResourceString Name=hexButton/Tag}"/>
         <controls:RadixButton x:Name="DecimalButton"
-                              x:Uid="decimalButton"
                               Grid.Row="1"
                               HorizontalAlignment="Stretch"
                               Style="{ThemeResource ConditionalProgModeRadioButtonStyle}"
+                              common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=decimalButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                               AutomationProperties.AutomationId="decimalButton"
                               AutomationProperties.Name="{x:Bind Model.DecDisplayValue_AutomationName, Mode=OneWay}"
                               Checked="DecButtonChecked"
                               Content="{x:Bind Model.DecimalDisplayValue, Mode=OneWay}"
                               ContextFlyout="{StaticResource ProgrammerOperatorsContextMenu}"
                               GroupName="BaseConversion"
-                              IsChecked="true"/>
+                              IsChecked="true"
+                              Tag="{utils:ResourceString Name=decimalButton/Tag}"/>
         <controls:RadixButton x:Name="OctButton"
-                              x:Uid="octButton"
                               Grid.Row="2"
                               HorizontalAlignment="Stretch"
                               Style="{ThemeResource ConditionalProgModeRadioButtonStyle}"
+                              common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=octButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                               AutomationProperties.AutomationId="octolButton"
                               AutomationProperties.Name="{x:Bind Model.OctDisplayValue_AutomationName, Mode=OneWay}"
                               Checked="OctButtonChecked"
                               Content="{x:Bind Model.OctalDisplayValue, Mode=OneWay}"
                               ContextFlyout="{StaticResource ProgrammerOperatorsContextMenu}"
-                              GroupName="BaseConversion"/>
+                              GroupName="BaseConversion"
+                              Tag="{utils:ResourceString Name=octButton/Tag}"/>
         <controls:RadixButton x:Name="BinaryButton"
-                              x:Uid="binaryButton"
                               Grid.Row="3"
                               HorizontalAlignment="Stretch"
                               Style="{ThemeResource ConditionalProgModeRadioButtonStyle}"
+                              common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=binaryButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                               AutomationProperties.AutomationId="binaryButton"
                               AutomationProperties.Name="{x:Bind Model.BinDisplayValue_AutomationName, Mode=OneWay}"
                               Checked="BinButtonChecked"
                               Content="{x:Bind Model.BinaryDisplayValue, Mode=OneWay}"
                               ContextFlyout="{StaticResource ProgrammerOperatorsContextMenu}"
-                              GroupName="BaseConversion"/>
+                              GroupName="BaseConversion"
+                              Tag="{utils:ResourceString Name=binaryButton/Tag}"/>
     </Grid>
 </UserControl>
