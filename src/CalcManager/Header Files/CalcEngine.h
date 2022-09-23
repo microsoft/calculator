@@ -179,7 +179,7 @@ private:
     CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op);
     CalcEngine::Rational DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs);
     void SetRadixTypeAndNumWidth(RadixType radixtype, NUM_WIDTH numwidth);
-    int32_t DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
+    int32_t DwWordBitWidthFromNumWidth(NUM_WIDTH numwidth);
     uint32_t NRadixFromRadixType(RadixType radixtype);
     double GenerateRandomNumber();
 
