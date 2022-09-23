@@ -354,7 +354,7 @@
                                           Style="{StaticResource OperatorPanelButtonStyle}"
                                           AutomationProperties.AutomationId="bitShiftButton"
                                           AutomationProperties.Name="{utils:ResourceString Name=bitShiftButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                          Glyph=""
+                                          Glyph="&#xE301;"
                                           Text="{utils:ResourceString Name=bitShiftButton/Text}">
                 <controls:OperatorPanelButton.FlyoutMenu>
                     <Flyout x:Name="BitShiftFlyout"
@@ -403,7 +403,7 @@
                                        AutomationProperties.AutomationId="rolButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=rolButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Rol"
-                                       Content=""
+                                       Content="&#xF88E;"
                                        Visibility="Collapsed"/>
             <controls:CalculatorButton x:Name="RorButton"
                                        Grid.Column="1"
@@ -414,7 +414,7 @@
                                        AutomationProperties.AutomationId="rorButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=rorButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Ror"
-                                       Content=""
+                                       Content="&#xF88F;"
                                        Visibility="Collapsed"/>
 
             <controls:CalculatorButton x:Name="RolCarryButton"
@@ -425,7 +425,7 @@
                                        AutomationProperties.AutomationId="rolButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=rolCarryButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="RolC"
-                                       Content=""
+                                       Content="&#xF88E;"
                                        Visibility="Collapsed"/>
 
             <controls:CalculatorButton x:Name="RorCarryButton"
@@ -437,7 +437,7 @@
                                        AutomationProperties.AutomationId="rorCarryButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=rorCarryButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="RorC"
-                                       Content=""
+                                       Content="&#xF88F;"
                                        Visibility="Collapsed"/>
 
             <controls:CalculatorButton x:Name="LshButton"
@@ -448,7 +448,7 @@
                                        AutomationProperties.AutomationId="lshButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=lshButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Lsh"
-                                       Content=""/>
+                                       Content="&#xF88E;"/>
             <controls:CalculatorButton x:Name="RshButton"
                                        Grid.Column="1"
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
@@ -458,7 +458,7 @@
                                        AutomationProperties.AutomationId="rshButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=rshButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Rsh"
-                                       Content=""/>
+                                       Content="&#xF88F;"/>
 
             <controls:CalculatorButton x:Name="LshLogicalButton"
                                        x:Uid="LshLogicalButton"
@@ -467,7 +467,7 @@
                                        x:DeferLoadStrategy="Lazy"
                                        AutomationProperties.AutomationId="lshLogicalButton"
                                        ButtonId="Lsh"
-                                       Content=""
+                                       Content="&#xF88E;"
                                        Visibility="Collapsed"/>
             <controls:CalculatorButton x:Name="RshLogicalButton"
                                        Grid.Column="1"
@@ -479,7 +479,7 @@
                                        AutomationProperties.AutomationId="rshLogicalButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=rshLogicalButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="RshL"
-                                       Content=""
+                                       Content="&#xF88F;"
                                        Visibility="Collapsed"/>
         </Grid>
 
@@ -522,7 +522,7 @@
                                        AutomationProperties.AutomationId="backSpaceButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=backSpaceButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Backspace"
-                                       Content=""/>
+                                       Content="&#xE94F;"/>
         </Grid>
 
         <controls:CalculatorButton x:Name="OpenParenthesisButton"
@@ -582,7 +582,7 @@
                                        AutomationProperties.AutomationId="divideButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=divideButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Divide"
-                                       Content=""/>
+                                       Content="&#xE94A;"/>
 
             <controls:CalculatorButton x:Name="MultiplyButton"
                                        Grid.Row="1"
@@ -593,7 +593,7 @@
                                        AutomationProperties.AutomationId="multiplyButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=multiplyButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Multiply"
-                                       Content=""/>
+                                       Content="&#xE947;"/>
 
             <controls:CalculatorButton x:Name="MinusButton"
                                        Grid.Row="2"
@@ -604,7 +604,7 @@
                                        AutomationProperties.AutomationId="minusButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=minusButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Subtract"
-                                       Content=""/>
+                                       Content="&#xE949;"/>
 
             <controls:CalculatorButton x:Name="PlusButton"
                                        Grid.Row="3"
@@ -615,7 +615,7 @@
                                        AutomationProperties.AutomationId="plusButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=plusButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Add"
-                                       Content=""/>
+                                       Content="&#xE948;"/>
 
             <controls:CalculatorButton x:Name="EqualButton"
                                        Grid.Row="4"
@@ -626,7 +626,7 @@
                                        AutomationProperties.AutomationId="equalButton"
                                        AutomationProperties.Name="{utils:ResourceString Name=equalButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Equals"
-                                       Content=""/>
+                                       Content="&#xE94E;"/>
         </Grid>
 
         <Grid Grid.Row="1"
@@ -742,6 +742,6 @@
                                    AutomationProperties.AutomationId="negateButton"
                                    AutomationProperties.Name="{utils:ResourceString Name=negateButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                    ButtonId="Negate"
-                                   Content=""/>
+                                   Content="&#xF898;"/>
     </Grid>
 </UserControl>

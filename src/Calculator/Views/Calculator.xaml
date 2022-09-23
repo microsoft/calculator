@@ -81,7 +81,7 @@
                                     AutomationProperties.Name="{utils:ResourceString Name=scrollLeft/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
                                 <FontIcon FontFamily="{ThemeResource CalculatorFontFamily}"
                                           FontSize="12"
-                                          Glyph=""/>
+                                          Glyph="&#xE96F;"/>
                             </Button>
                             <Button x:Name="ScrollRight"
                                     Grid.Column="2"
@@ -90,7 +90,7 @@
                                     AutomationProperties.Name="{utils:ResourceString Name=scrollRight/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
                                 <FontIcon FontFamily="{ThemeResource CalculatorFontFamily}"
                                           FontSize="12"
-                                          Glyph=""/>
+                                          Glyph="&#xE970;"/>
                             </Button>
                         </Grid>
                     </ControlTemplate>
@@ -190,7 +190,7 @@
                                     AutomationProperties.Name="{utils:ResourceString Name=scrollLeft/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
                                 <FontIcon FontFamily="{ThemeResource CalculatorFontFamily}"
                                           FontSize="{TemplateBinding ScrollButtonsFontSize}"
-                                          Glyph=""/>
+                                          Glyph="&#xE96F;"/>
                             </Button>
                             <Button x:Name="ScrollRight"
                                     Grid.Column="2"
@@ -202,7 +202,7 @@
                                     AutomationProperties.Name="{utils:ResourceString Name=scrollRight/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
                                 <FontIcon FontFamily="{ThemeResource CalculatorFontFamily}"
                                           FontSize="{TemplateBinding ScrollButtonsFontSize}"
-                                          Glyph=""/>
+                                          Glyph="&#xE970;"/>
                             </Button>
                         </Grid>
                     </ControlTemplate>
@@ -684,7 +684,7 @@
                     AccessKey="{utils:ResourceString Name=HistoryButton/AccessKey}"
                     AutomationProperties.AutomationId="HistoryButton"
                     Command="{x:Bind HistoryButtonPressed, Mode=OneTime}"
-                    Content=""
+                    Content="&#xe81c;"
                     ExitDisplayModeOnAccessKeyInvoked="False"
                     TabIndex="2"
                     ToolTipService.ToolTip="{utils:ResourceString Name=HistoryButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
@@ -735,7 +735,7 @@
                                            AutomationProperties.AutomationId="ClearMemoryButton"
                                            AutomationProperties.Name="{utils:ResourceString Name=ClearMemoryButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            Command="{x:Bind Model.ClearMemoryCommand}"
-                                           Content=""
+                                           Content="&#xF754;"
                                            TabIndex="10"
                                            ToolTipService.ToolTip="{utils:ResourceString Name=ClearMemoryButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                                            Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
@@ -747,7 +747,7 @@
                                            AutomationProperties.Name="{utils:ResourceString Name=MemRecall/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            Command="{x:Bind Model.MemoryItemPressed}"
                                            CommandParameter="{StaticResource Zero}"
-                                           Content=""
+                                           Content="&#xF755;"
                                            TabIndex="11"
                                            ToolTipService.ToolTip="{utils:ResourceString Name=MemRecall/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                                            Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
@@ -759,7 +759,7 @@
                                            AutomationProperties.Name="{utils:ResourceString Name=MemPlus/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            Command="{x:Bind Model.MemoryAdd}"
                                            CommandParameter="{StaticResource Zero}"
-                                           Content=""
+                                           Content="&#xF757;"
                                            TabIndex="12"
                                            ToolTipService.ToolTip="{utils:ResourceString Name=MemPlus/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                                            Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
@@ -771,7 +771,7 @@
                                            AutomationProperties.Name="{utils:ResourceString Name=MemMinus/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            Command="{x:Bind Model.MemorySubtract}"
                                            CommandParameter="{StaticResource Zero}"
-                                           Content=""
+                                           Content="&#xF758;"
                                            TabIndex="13"
                                            ToolTipService.ToolTip="{utils:ResourceString Name=MemMinus/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                                            Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
@@ -782,7 +782,7 @@
                                            AutomationProperties.AutomationId="memButton"
                                            AutomationProperties.Name="{utils:ResourceString Name=memButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Memory"
-                                           Content=""
+                                           Content="&#xF756;"
                                            TabIndex="14"
                                            ToolTipService.ToolTip="{utils:ResourceString Name=memButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"/>
                 <Button x:Name="MemoryButton"
@@ -793,7 +793,7 @@
                         AccessKey="{utils:ResourceString Name=MemoryButton/AccessKey}"
                         AutomationProperties.AutomationId="MemoryButton"
                         Click="ToggleMemoryFlyout"
-                        Content=""
+                        Content="&#xE61D;"
                         ExitDisplayModeOnAccessKeyInvoked="False"
                         TabIndex="15"
                         ToolTipService.ToolTip="{utils:ResourceString Name=MemoryButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
@@ -996,7 +996,7 @@
                                                   Foreground="{ThemeResource PivotNextButtonForeground}"
                                                   FontFamily="{ThemeResource CalculatorFontFamily}"
                                                   FontSize="12"
-                                                  Glyph=""
+                                                  Glyph="&#xE970;"
                                                   MirroredWhenRightToLeft="True"/>
                                     </Border>
                                 </ControlTemplate>
@@ -1043,7 +1043,7 @@
                                                   Foreground="{ThemeResource PivotPreviousButtonForeground}"
                                                   FontFamily="{ThemeResource CalculatorFontFamily}"
                                                   FontSize="12"
-                                                  Glyph=""
+                                                  Glyph="&#xE96F;"
                                                   MirroredWhenRightToLeft="True"/>
                                     </Border>
                                 </ControlTemplate>

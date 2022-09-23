@@ -808,7 +808,7 @@
                                     <FontIcon x:Name="ScrollLeftText"
                                               FontFamily="{ThemeResource CalculatorFontFamily}"
                                               FontSize="12"
-                                              Glyph=""/>
+                                              Glyph="&#xE96F;"/>
                                 </HyperlinkButton>
                                 <HyperlinkButton x:Name="ScrollRight"
                                                  Grid.Column="2"
@@ -828,7 +828,7 @@
                                     <FontIcon x:Name="ScrollRightText"
                                               FontFamily="{ThemeResource CalculatorFontFamily}"
                                               FontSize="12"
-                                              Glyph=""/>
+                                              Glyph="&#xE970;"/>
                                 </HyperlinkButton>
                             </Grid>
                         </ControlTemplate>
@@ -1081,7 +1081,7 @@
                                               VerticalAlignment="Center"
                                               FontFamily="{StaticResource CalculatorFontFamily}"
                                               FontSize="{TemplateBinding ChevronFontSize}"
-                                              Glyph=""/>
+                                              Glyph="&#xE70D;"/>
                                 </StackPanel>
                             </ContentPresenter>
                         </ControlTemplate>
@@ -2227,7 +2227,7 @@
                                         Foreground="{ThemeResource SystemAltMediumHighColor}"
                                         FontFamily="{ThemeResource CalculatorFontFamily}"
                                         FontSize="12"
-                                        Content=""
+                                        Content="&#xE96F;"
                                         IsTabStop="False"
                                         Visibility="Collapsed"/>
                                 <Button x:Name="ScrollRight"
@@ -2240,7 +2240,7 @@
                                         Foreground="{ThemeResource SystemAltMediumHighColor}"
                                         FontFamily="{ThemeResource CalculatorFontFamily}"
                                         FontSize="12"
-                                        Content=""
+                                        Content="&#xE970;"
                                         IsTabStop="False"
                                         Visibility="Collapsed"/>
                             </Grid>
