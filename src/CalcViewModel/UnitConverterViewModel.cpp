@@ -177,6 +177,8 @@ void UnitConverterViewModel::ResetCategory()
     IsCurrencyLoadingVisible = m_IsCurrencyCurrentCategory && !m_isCurrencyDataLoaded;
     IsDropDownEnabled = m_Units->GetAt(0) != EMPTY_UNIT;
 
+    IsDecimalEnabled = true;
+
     UnitChanged->Execute(nullptr);
 }
 
