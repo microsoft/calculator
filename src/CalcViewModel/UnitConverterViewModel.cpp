@@ -177,7 +177,7 @@ void UnitConverterViewModel::ResetCategory()
     IsCurrencyLoadingVisible = m_IsCurrencyCurrentCategory && !m_isCurrencyDataLoaded;
     IsDropDownEnabled = m_Units->GetAt(0) != EMPTY_UNIT;
 
-    IsDecimalEnabled = true;
+    UpdateIsDecimalEnabled();
 
     UnitChanged->Execute(nullptr);
 }
@@ -873,7 +873,8 @@ void UnitConverterViewModel::UpdateCurrencyFormatter()
 void UnitConverterViewModel::UpdateIsDecimalEnabled()
 {
     if (!IsCurrencyCurrentCategory || CurrencyFormatterFrom == nullptr)
-        return;
+        IsDecimalEnabled = true;
+    else
     IsDecimalEnabled = CurrencyFormatterFrom->FractionDigits > 0;
 }
 
