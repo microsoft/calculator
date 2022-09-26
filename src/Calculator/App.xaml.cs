@@ -30,7 +30,7 @@ namespace CalculatorApp
 {
     namespace ApplicationResourceKeys
     {
-        public static partial class Globals
+        public static class Globals
         {
             public static readonly string AppMinWindowHeight = "AppMinWindowHeight";
             public static readonly string AppMinWindowWidth = "AppMinWindowWidth";
@@ -425,7 +425,7 @@ namespace CalculatorApp
                     ViewMode mode = option.ViewMode;
                     var item = JumpListItem.CreateWithArguments(((int)mode).ToString(), "ms-resource:///Resources/" + NavCategoryStates.GetNameResourceKey(mode));
                     item.Description = "ms-resource:///Resources/" + NavCategoryStates.GetNameResourceKey(mode);
-                    item.Logo = new Uri("ms-appx:///Assets/" + mode.ToString() + ".png");
+                    item.Logo = new Uri("ms-appx:///Assets/" + mode + ".png");
 
                     jumpList.Items.Add(item);
                 }
