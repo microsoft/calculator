@@ -225,7 +225,7 @@ namespace CalculatorApp
             string memoryPaneName = AppResourceProvider.GetInstance().GetResourceString("MemoryPane");
             MemoryFlyout.FlyoutPresenterStyle.Setters.Add(new Setter(AutomationProperties.NameProperty, memoryPaneName));
 
-            if (Windows.Foundation.Metadata.ApiInformation.IsEventPresent("Windows.UI.Xaml.Controls.Primitives.FlyoutBase", "Closing"))
+            if (Windows.Foundation.Metadata.ApiInformation.IsEventPresent("Windows.UI.Xaml.Controls.Primitives.FlyoutBase", nameof(FlyoutBase.Closing)))
             {
                 HistoryFlyout.Closing += HistoryFlyout_Closing;
                 MemoryFlyout.Closing += OnMemoryFlyoutClosing;
