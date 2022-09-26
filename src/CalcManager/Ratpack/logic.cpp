@@ -64,13 +64,6 @@ void rshrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision)
 void boolrat(PRAT* pa, PRAT b, int func, uint32_t radix, int32_t precision);
 void boolnum(PNUMBER* pa, PNUMBER b, int func);
 
-enum
-{
-    FUNC_AND,
-    FUNC_OR,
-    FUNC_XOR
-} BOOL_FUNCS;
-
 void andrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision)
 
 {
