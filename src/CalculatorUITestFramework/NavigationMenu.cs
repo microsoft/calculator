@@ -41,63 +41,27 @@ namespace CalculatorUITestFramework
         /// <param name="mode">The mode to be changed to</param>
         public void ChangeCalculatorMode(CalculatorMode mode)
         {
-            string modeAccessibilityId;
-            switch (mode)
+            string modeAccessibilityId = mode switch
             {
-                case CalculatorMode.StandardCalculator:
-                    modeAccessibilityId = "Standard";
-                    break;
-                case CalculatorMode.ScientificCalculator:
-                    modeAccessibilityId = "Scientific";
-                    break;
-                case CalculatorMode.ProgrammerCalculator:
-                    modeAccessibilityId = "Programmer";
-                    break;
-                case CalculatorMode.DateCalculator:
-                    modeAccessibilityId = "Date";
-                    break;
-                case CalculatorMode.Currency:
-                    modeAccessibilityId = "Currency";
-                    break;
-                case CalculatorMode.Volume:
-                    modeAccessibilityId = "Volume";
-                    break;
-                case CalculatorMode.Length:
-                    modeAccessibilityId = "Length";
-                    break;
-                case CalculatorMode.Weight:
-                    modeAccessibilityId = "Weight";
-                    break;
-                case CalculatorMode.Temperature:
-                    modeAccessibilityId = "Temperature";
-                    break;
-                case CalculatorMode.Energy:
-                    modeAccessibilityId = "Energy";
-                    break;
-                case CalculatorMode.Area:
-                    modeAccessibilityId = "Area";
-                    break;
-                case CalculatorMode.Speed:
-                    modeAccessibilityId = "Speed";
-                    break;
-                case CalculatorMode.Time:
-                    modeAccessibilityId = "Time";
-                    break;
-                case CalculatorMode.Power:
-                    modeAccessibilityId = "Power";
-                    break;
-                case CalculatorMode.Data:
-                    modeAccessibilityId = "Data";
-                    break;
-                case CalculatorMode.Pressure:
-                    modeAccessibilityId = "Pressure";
-                    break;
-                case CalculatorMode.Angle:
-                    modeAccessibilityId = "Angle";
-                    break;
-                default:
-                    throw (new ArgumentException("The mode is not valid"));
-            }
+                CalculatorMode.StandardCalculator => "Standard",
+                CalculatorMode.ScientificCalculator => "Scientific",
+                CalculatorMode.ProgrammerCalculator => "Programmer",
+                CalculatorMode.DateCalculator => "Date",
+                CalculatorMode.Currency => "Currency",
+                CalculatorMode.Volume => "Volume",
+                CalculatorMode.Length => "Length",
+                CalculatorMode.Weight => "Weight",
+                CalculatorMode.Temperature => "Temperature",
+                CalculatorMode.Energy => "Energy",
+                CalculatorMode.Area => "Area",
+                CalculatorMode.Speed => "Speed",
+                CalculatorMode.Time => "Time",
+                CalculatorMode.Power => "Power",
+                CalculatorMode.Data => "Data",
+                CalculatorMode.Pressure => "Pressure",
+                CalculatorMode.Angle => "Angle",
+                _ => throw (new ArgumentException("The mode is not valid"))
+            };
 
             this.NavigationMenuButton.Click();
             this.NavigationMenuPane.WaitForDisplayed();
