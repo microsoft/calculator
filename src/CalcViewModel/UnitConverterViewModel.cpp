@@ -174,10 +174,10 @@ void UnitConverterViewModel::ResetCategory()
     m_isInputBlocked = false;
     SetSelectedUnits();
 
+    UpdateIsDecimalEnabled();
+
     IsCurrencyLoadingVisible = m_IsCurrencyCurrentCategory && !m_isCurrencyDataLoaded;
     IsDropDownEnabled = m_Units->GetAt(0) != EMPTY_UNIT;
-
-    UpdateIsDecimalEnabled();
 
     UnitChanged->Execute(nullptr);
 }

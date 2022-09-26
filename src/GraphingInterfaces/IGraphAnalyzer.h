@@ -11,7 +11,7 @@
 
 namespace Graphing::Analyzer
 {
-    typedef unsigned int NativeAnalysisType; // PerformAnalysisType
+    using NativeAnalysisType = unsigned int; // PerformAnalysisType
 
     struct IGraphAnalyzer : public NonCopyable, public NonMoveable
     {
