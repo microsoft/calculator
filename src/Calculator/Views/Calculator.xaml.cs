@@ -814,8 +814,7 @@ namespace CalculatorApp
 
         private void DockPanelTapped(object sender, TappedRoutedEventArgs e)
         {
-            int index = DockPivot.SelectedIndex;
-            if (index == 1 && !IsProgrammer)
+            if (DockPivot.SelectedIndex == 1 && !IsProgrammer)
             {
                 SetChildAsMemory();
             }

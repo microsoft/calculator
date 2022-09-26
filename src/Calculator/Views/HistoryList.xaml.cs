@@ -48,11 +48,8 @@ namespace CalculatorApp
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            HistoryViewModel historyVM = (DataContext as HistoryViewModel);
-            HistoryItemViewModel clickedItem = (e.ClickedItem as HistoryItemViewModel);
-
             // When the user clears the history list in the overlay view and presses enter, the clickedItem is nullptr
-            if (clickedItem != null && historyVM != null)
+            if (e.ClickedItem is HistoryItemViewModel clickedItem && DataContext is HistoryViewModel historyVM)
             {
                 historyVM.ShowItem(clickedItem);
             }
@@ -60,8 +57,7 @@ namespace CalculatorApp
         private void OnCopyMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var listViewItem = HistoryContextMenu.Target;
-            var itemViewModel = (HistoryListView.ItemFromContainer(listViewItem) as HistoryItemViewModel);
-            if (itemViewModel != null)
+            if (HistoryListView.ItemFromContainer(listViewItem) is HistoryItemViewModel itemViewModel)
             {
                 CopyPasteManager.CopyToClipboard(itemViewModel.Result);
             }
@@ -69,16 +65,14 @@ namespace CalculatorApp
         private void OnDeleteMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var listViewItem = HistoryContextMenu.Target;
-            var itemViewModel = (HistoryListView.ItemFromContainer(listViewItem) as HistoryItemViewModel);
-            if (itemViewModel != null)
+            if (HistoryListView.ItemFromContainer(listViewItem) is HistoryItemViewModel itemViewModel)
             {
                 Model.DeleteItem(itemViewModel);
             }
         }
         private void OnDeleteSwipeInvoked(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs e)
         {
-            var swipedItem = (e.SwipeControl.DataContext as HistoryItemViewModel);
-            if (swipedItem != null)
+            if (e.SwipeControl.DataContext is HistoryItemViewModel swipedItem)
             {
                 Model.DeleteItem(swipedItem);
             }

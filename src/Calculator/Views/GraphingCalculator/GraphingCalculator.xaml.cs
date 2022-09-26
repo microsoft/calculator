@@ -518,7 +518,7 @@ namespace CalculatorApp
 
         private void GraphingControl_LosingFocus(UIElement sender, LosingFocusEventArgs args)
         {
-            if (!(args.NewFocusedElement is FrameworkElement newFocusElement) || newFocusElement.Name == null)
+            if (!(args.NewFocusedElement is FrameworkElement))
             {
                 // Because clicking on the swap chain panel will try to move focus to a control that can't actually take focus
                 // we will get a null destination.  So we are going to try and cancel that request.
@@ -534,15 +534,7 @@ namespace CalculatorApp
 
         private void GraphingControl_GraphViewChangedEvent(object sender, GraphViewChangedReason reason)
         {
-            if (reason == GraphViewChangedReason.Manipulation)
-            {
-                IsManualAdjustment = true;
-            }
-            else
-            {
-                IsManualAdjustment = false;
-            }
-
+            IsManualAdjustment = (reason == GraphViewChangedReason.Manipulation);
             UpdateGraphAutomationName();
 
             var announcement = CalculatorAnnouncement.GetGraphViewChangedAnnouncement(GraphControlAutomationName);

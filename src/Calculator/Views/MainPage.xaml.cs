@@ -368,8 +368,7 @@ namespace CalculatorApp
                 return;
             }
 
-            var item = (e.SelectedItemContainer as MUXC.NavigationViewItem);
-            if (item != null)
+            if (e.SelectedItemContainer is MUXC.NavigationViewItem item)
             {
                 Model.Mode = (ViewMode)item.Tag;
             }
