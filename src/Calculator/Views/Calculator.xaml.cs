@@ -225,11 +225,8 @@ namespace CalculatorApp
             string memoryPaneName = AppResourceProvider.GetInstance().GetResourceString("MemoryPane");
             MemoryFlyout.FlyoutPresenterStyle.Setters.Add(new Setter(AutomationProperties.NameProperty, memoryPaneName));
 
-            if (Windows.Foundation.Metadata.ApiInformation.IsEventPresent("Windows.UI.Xaml.Controls.Primitives.FlyoutBase", nameof(FlyoutBase.Closing)))
-            {
-                HistoryFlyout.Closing += HistoryFlyout_Closing;
-                MemoryFlyout.Closing += OnMemoryFlyoutClosing;
-            }
+            HistoryFlyout.Closing += HistoryFlyout_Closing;
+            MemoryFlyout.Closing += OnMemoryFlyoutClosing;
 
             // Delay load things later when we get a chance.
             WeakReference weakThis = new WeakReference(this);
