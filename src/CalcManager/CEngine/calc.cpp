@@ -101,7 +101,7 @@ CCalcEngine::CCalcEngine(
 {
     InitChopNumbers();
 
-    m_dwWordBitWidth = DwWordBitWidthFromeNumWidth(m_numwidth);
+    m_dwWordBitWidth = DwWordBitWidthFromNumWidth(m_numwidth);
 
     m_maxTrigonometricNum = RationalMath::Pow(10, 100);
 

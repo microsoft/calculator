@@ -258,8 +258,7 @@ namespace CalculatorApp
             }
 
             if (submission.Source == EquationSubmissionSource.ENTER_KEY
-                || (submission.Source == EquationSubmissionSource.FOCUS_LOST && submission.HasTextChanged && eq.Expression != null
-                    && eq.Expression.Length > 0))
+                || (submission.Source == EquationSubmissionSource.FOCUS_LOST && submission.HasTextChanged && !string.IsNullOrEmpty(eq.Expression)))
             {
                 if (submission.Source == EquationSubmissionSource.ENTER_KEY)
                 {
@@ -355,13 +354,13 @@ namespace CalculatorApp
         {
 
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 if (weakThis.Target is EquationInputArea refThis && refThis.m_isHighContrast == refThis.m_accessibilitySettings.HighContrast)
                 {
                     refThis.ReloadAvailableColors(false, false);
                 }
-            }));
+            });
         }
 
         private void EquationTextBox_RemoveButtonClicked(object sender, RoutedEventArgs e)
@@ -436,10 +435,7 @@ namespace CalculatorApp
                 if (index >= 0)
                 {
                     var container = (UIElement)EquationInputList.ContainerFromIndex(index);
-                    if (container != null)
-                    {
-                        container.StartBringIntoView();
-                    }
+                    container?.StartBringIntoView();
                 }
             }
         }
@@ -466,10 +462,7 @@ namespace CalculatorApp
                 if (index >= 0)
                 {
                     var container = (UIElement)EquationInputList.ContainerFromIndex(index);
-                    if (container != null)
-                    {
-                        container.StartBringIntoView();
-                    }
+                    container?.StartBringIntoView();
                 }
             }
         }
@@ -594,11 +587,11 @@ namespace CalculatorApp
             {
                 TimeSpan timeSpan = new TimeSpan(10000000); // 1 tick = 100 nanoseconds, and 10000000 ticks = 1 second.
                 DispatcherTimerDelayer delayer = new DispatcherTimerDelayer(timeSpan);
-                delayer.Action += new EventHandler<object>((object s, object arg) =>
+                delayer.Action += (s, arg) =>
                 {
                     CalculatorApp.ViewModelNative.Common.TraceLogger.GetInstance().LogVariableChanged("Slider", name);
                     variableSliders.Remove(name);
-                });
+                };
                 delayer.Start();
                 variableSliders.Add(name, delayer);
             }
@@ -612,12 +605,8 @@ namespace CalculatorApp
         private EquationViewModel GetViewModelFromEquationTextBox(object sender)
         {
             var tb = (EquationTextBox)sender;
-            if (tb == null)
-            {
-                return null;
-            }
 
-            var eq = (EquationViewModel)tb.DataContext;
+            var eq = (EquationViewModel)tb?.DataContext;
 
             return eq;
         }

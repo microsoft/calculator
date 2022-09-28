@@ -234,7 +234,7 @@ namespace CalculatorApp
             // Delay load things later when we get a chance.
             WeakReference weakThis = new WeakReference(this);
             _ = this.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                CoreDispatcherPriority.Normal, () =>
                 {
                     if (TraceLogger.GetInstance().IsWindowIdInLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
                     {
@@ -243,7 +243,7 @@ namespace CalculatorApp
                             refThis.GetMemory();
                         }
                     }
-                }));
+                });
         }
 
         private void LoadResourceStrings()
@@ -533,7 +533,7 @@ namespace CalculatorApp
 
         // Since we need different font sizes for different numeric system,
         // we use a table of optimal font sizes for each numeric system.
-        private static readonly FontTable[] fontTables = new FontTable[] {
+        private static readonly FontTable[] fontTables = {
             new FontTable { numericSystem = "Arab", fullFont = 104, fullFontMin = 29.333, portraitMin = 23, snapFont = 40,
                             fullNumPadFont = 56, snapScientificNumPadFont = 40, portraitScientificNumPadFont = 56 },
             new FontTable { numericSystem = "ArabExt", fullFont = 104, fullFontMin = 29.333, portraitMin = 23, snapFont = 40,

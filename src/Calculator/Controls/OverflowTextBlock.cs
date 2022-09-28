@@ -37,11 +37,11 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for TokensUpdated.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty TokensUpdatedProperty =
-                DependencyProperty.Register(nameof(TokensUpdated), typeof(bool), typeof(OverflowTextBlock), new PropertyMetadata(default(bool), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(TokensUpdated), typeof(bool), typeof(OverflowTextBlock), new PropertyMetadata(default(bool), (sender, args) =>
                 {
                     var self = (OverflowTextBlock)sender;
                     self.OnTokensUpdatedPropertyChanged((bool)args.OldValue, (bool)args.NewValue);
-                })));
+                }));
 
             public OverflowButtonPlacement ScrollButtonsPlacement
             {
@@ -51,11 +51,11 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for ScrollButtonsPlacement.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ScrollButtonsPlacementProperty =
-                DependencyProperty.Register(nameof(ScrollButtonsPlacement), typeof(OverflowButtonPlacement), typeof(OverflowTextBlock), new PropertyMetadata(default(OverflowButtonPlacement), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(ScrollButtonsPlacement), typeof(OverflowButtonPlacement), typeof(OverflowTextBlock), new PropertyMetadata(default(OverflowButtonPlacement), (sender, args) =>
                 {
                     var self = (OverflowTextBlock)sender;
                     self.OnScrollButtonsPlacementPropertyChanged((OverflowButtonPlacement)args.OldValue, (OverflowButtonPlacement)args.NewValue);
-                })));
+                }));
 
             public bool IsActive
             {

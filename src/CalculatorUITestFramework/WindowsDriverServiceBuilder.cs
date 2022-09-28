@@ -45,10 +45,6 @@ namespace CalculatorUITestFramework
 
         public WindowsDriverServiceBuilder WithStartUpTimeOut(TimeSpan startUpTimeout)
         {
-            if (startUpTimeout == null)
-            {
-                throw new ArgumentNullException("A startup timeout should not be NULL");
-            }
             this.StartUpTimeout = startUpTimeout;
             return this;
         }

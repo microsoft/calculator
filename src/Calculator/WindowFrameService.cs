@@ -59,7 +59,7 @@ namespace CalculatorApp
         public Task HandleViewRelease()
         {
             TaskCompletionSource<object> tsource = new TaskCompletionSource<object>();
-            _ = m_coreDispatcher.RunAsync(CoreDispatcherPriority.Low, new DispatchedHandler(() =>
+            _ = m_coreDispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
                 KeyboardShortcutManager.OnWindowClosed(this.m_viewId);
                 Window.Current.Content = null;
@@ -70,7 +70,7 @@ namespace CalculatorApp
                 tsource.SetResult(new object());
                 this.m_coreDispatcher.StopProcessEvents();
                 Window.Current.Close();
-            }));
+            });
 
             return tsource.Task;
         }

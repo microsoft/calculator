@@ -22,10 +22,9 @@ namespace CalcEngine
     Number::Number(PNUMBER p) noexcept
         : m_sign{ p->sign }
         , m_exp{ p->exp }
-        , m_mantissa{}
     {
         m_mantissa.reserve(p->cdigit);
-        copy(p->mant, p->mant + p->cdigit, back_inserter(m_mantissa));
+        copy_n(p->mant, p->cdigit, back_inserter(m_mantissa));
     }
 
     PNUMBER Number::ToPNUMBER() const

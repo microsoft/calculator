@@ -792,9 +792,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.10</Version>
+      <Version>6.2.14</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.0" />
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalculatorApp.ViewModel\CalculatorApp.ViewModel.csproj">

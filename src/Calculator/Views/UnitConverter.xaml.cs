@@ -86,7 +86,7 @@ namespace CalculatorApp
 
         public void SetDefaultFocus()
         {
-            Control[] focusPrecedence = new Control[] { Value1, CurrencyRefreshBlockControl, OfflineBlock, ClearEntryButtonPos0 };
+            Control[] focusPrecedence = { Value1, CurrencyRefreshBlockControl, OfflineBlock, ClearEntryButtonPos0 };
 
             foreach (Control control in focusPrecedence)
             {
@@ -368,10 +368,7 @@ namespace CalculatorApp
 
         private void HideProgressRing()
         {
-            if (m_delayTimer != null)
-            {
-                m_delayTimer.Stop();
-            }
+            m_delayTimer?.Stop();
 
             CurrencyLoadingProgressRing.IsActive = false;
         }
@@ -391,8 +388,8 @@ namespace CalculatorApp
         private static readonly Lazy<UISettings> uiSettings = new Lazy<UISettings>(true);
         private readonly Windows.UI.Xaml.Controls.MenuFlyout m_resultsFlyout = default;
 
-        private readonly string m_chargesMayApplyText = string.Empty;
-        private readonly string m_failedToRefreshText = string.Empty;
+        private readonly string m_chargesMayApplyText;
+        private readonly string m_failedToRefreshText;
 
         private bool m_meteredConnectionOverride;
 

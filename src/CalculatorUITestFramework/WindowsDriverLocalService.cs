@@ -20,6 +20,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace CalculatorUITestFramework
 {
@@ -146,20 +147,23 @@ namespace CalculatorUITestFramework
         {
             Uri status;
             Uri service = this.ServiceUrl;
-            HttpClient httpClient = new HttpClient();
-            httpClient.Timeout = this.InitializationTimeout;
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.Timeout = this.InitializationTimeout;
 
-            if (service.IsLoopback)
-            {
-                status = new Uri("http://localhost:" + Convert.ToString(this.Port) + "/status");
+                if (service.IsLoopback)
+                {
+                    status = new Uri("http://localhost:" + Convert.ToString(this.Port) + "/status");
+                }
+                else
+                {
+                    status = new Uri(service + "/status");
+                }
+
+                var httpResponse = Task.Run(() => httpClient.GetAsync(status)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                return httpResponse.IsSuccessStatusCode;
             }
-            else
-            {
-                status = new Uri(service + "/status");
-            }
-            
-            var httpResponse = httpClient.GetAsync(status);
-            return httpResponse.Result.IsSuccessStatusCode;
         }
     }
 }

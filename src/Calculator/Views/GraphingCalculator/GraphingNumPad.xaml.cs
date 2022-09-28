@@ -187,7 +187,7 @@ namespace CalculatorApp
             }
         }
 
-        private static readonly Dictionary<NumbersAndOperatorsEnum, Tuple<string, int, int>> buttonOutput = new Dictionary<NumbersAndOperatorsEnum, Tuple<string, int, int>>()
+        private static readonly Dictionary<NumbersAndOperatorsEnum, Tuple<string, int, int>> buttonOutput = new Dictionary<NumbersAndOperatorsEnum, Tuple<string, int, int>>
         {
             { NumbersAndOperatorsEnum.Sin, Tuple.Create("sin()", 4, 0) },
             { NumbersAndOperatorsEnum.Cos, Tuple.Create("cos()", 4, 0) },
