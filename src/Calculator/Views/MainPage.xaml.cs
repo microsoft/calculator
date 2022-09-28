@@ -215,58 +215,49 @@ namespace CalculatorApp
                         Model.CalculatorViewModel.HistoryVM.ReloadHistory(newValue);
                         break;
                     case ViewMode.Scientific:
+                        EnsureCalculator();
+                        Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = true;
+                        if (Model.PreviousMode != ViewMode.Scientific)
                         {
-                            EnsureCalculator();
-                            Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = true;
-                            if (Model.PreviousMode != ViewMode.Scientific)
-                            {
-                                m_calculator.AnimateCalculator(NavCategory.IsConverterViewMode(previousMode));
-                            }
-
-                            Model.CalculatorViewModel.HistoryVM.ReloadHistory(newValue);
-                            break;
+                            m_calculator.AnimateCalculator(NavCategory.IsConverterViewMode(previousMode));
                         }
+                        Model.CalculatorViewModel.HistoryVM.ReloadHistory(newValue);
+                        break;
                     case ViewMode.Programmer:
+                        Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
+                        EnsureCalculator();
+                        if (Model.PreviousMode != ViewMode.Programmer)
                         {
-                            Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
-                            EnsureCalculator();
-                            if (Model.PreviousMode != ViewMode.Programmer)
-                            {
-                                m_calculator.AnimateCalculator(NavCategory.IsConverterViewMode(previousMode));
-                            }
-
-                            break;
+                            m_calculator.AnimateCalculator(NavCategory.IsConverterViewMode(previousMode));
                         }
+                        break;
                     case ViewMode.Graphing:
                         EnsureGraphingCalculator();
                         KeyboardShortcutManager.DisableShortcuts(true);
                         break;
                     default:
+                        if (NavCategory.IsDateCalculatorViewMode(newValue))
                         {
-                            if (NavCategory.IsDateCalculatorViewMode(newValue))
+                            if (Model.CalculatorViewModel != null)
                             {
-                                if (Model.CalculatorViewModel != null)
-                                {
-                                    Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
-                                }
-                                EnsureDateCalculator();
+                                Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
                             }
-                            else if (NavCategory.IsConverterViewMode(newValue))
-                            {
-                                if (Model.CalculatorViewModel != null)
-                                {
-                                    Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
-                                }
-
-                                EnsureConverter();
-                                if (!NavCategory.IsConverterViewMode(previousMode))
-                                {
-                                    m_converter.AnimateConverter();
-                                }
-                            }
-
-                            break;
+                            EnsureDateCalculator();
                         }
+                        else if (NavCategory.IsConverterViewMode(newValue))
+                        {
+                            if (Model.CalculatorViewModel != null)
+                            {
+                                Model.CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = false;
+                            }
+
+                            EnsureConverter();
+                            if (!NavCategory.IsConverterViewMode(previousMode))
+                            {
+                                m_converter.AnimateConverter();
+                            }
+                        }
+                        break;
                 }
 
                 ShowHideControls(newValue);
