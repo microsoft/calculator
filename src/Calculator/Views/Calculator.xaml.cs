@@ -225,9 +225,6 @@ namespace CalculatorApp
             string memoryPaneName = AppResourceProvider.GetInstance().GetResourceString("MemoryPane");
             MemoryFlyout.FlyoutPresenterStyle.Setters.Add(new Setter(AutomationProperties.NameProperty, memoryPaneName));
 
-            HistoryFlyout.Closing += HistoryFlyout_Closing;
-            MemoryFlyout.Closing += OnMemoryFlyoutClosing;
-
             // Delay load things later when we get a chance.
             WeakReference weakThis = new WeakReference(this);
             _ = this.Dispatcher.RunAsync(
@@ -647,9 +644,6 @@ namespace CalculatorApp
 
         private void HistoryFlyout_Closed(object sender, object args)
         {
-            // Ideally, this would be renamed in the Closing event because the Closed event is too late.
-            // Closing is not available until RS1+ so we set the name again here for TH2 support.
-            AutomationProperties.SetName(HistoryButton, m_openHistoryFlyoutAutomationName);
             m_fIsHistoryFlyoutOpen = false;
             EnableControls(true);
             if (HistoryButton.IsEnabled && HistoryButton.Visibility == Visibility.Visible)
@@ -742,9 +736,6 @@ namespace CalculatorApp
 
         private void OnMemoryFlyoutClosed(object sender, object args)
         {
-            // Ideally, this would be renamed in the Closing event because the Closed event is too late.
-            // Closing is not available until RS1+ so we set the name again here for TH2 support.
-            AutomationProperties.SetName(MemoryButton, m_openMemoryFlyoutAutomationName);
             m_fIsMemoryFlyoutOpen = false;
             EnableControls(true);
             if (MemoryButton.IsEnabled)
