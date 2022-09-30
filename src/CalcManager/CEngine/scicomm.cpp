@@ -776,7 +776,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         break;
     case IDC_FE:
         // Toggle exponential notation display.
-        m_nFE = NumberFormat(!(int)m_nFE);
+        m_nFE = m_nFE == NumberFormat::Float ? NumberFormat::Scientific : NumberFormat::Float;
         DisplayNum();
         break;
 

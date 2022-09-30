@@ -21,8 +21,8 @@ public:
     ~CHistoryCollector();
     void AddOpndToHistory(std::wstring_view numStr, CalcEngine::Rational const& rat, bool fRepetition = false);
     void RemoveLastOpndFromHistory();
-    void AddBinOpToHistory(int nOpCode, bool isIntgerMode, bool fNoRepetition = true);
-    void ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher, bool isIntgerMode);
+    void AddBinOpToHistory(int nOpCode, bool isIntegerMode, bool fNoRepetition = true);
+    void ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher, bool isIntegerMode);
     void AddUnaryOpToHistory(int nOpCode, bool fInv, AngleType angletype);
     void AddOpenBraceToHistory();
     void AddCloseBraceToHistory();
