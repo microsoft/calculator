@@ -5,7 +5,7 @@
 
 #include "CalcManager/Header Files/ICalcDisplay.h"
 
-namespace CalculatorApp::ViewModel::Common
+namespace CalculatorApp::ViewModelNative::Common
 {
     // Callback interface to be implemented by the CalculatorManager
     class CalculatorDisplay : public ICalcDisplay

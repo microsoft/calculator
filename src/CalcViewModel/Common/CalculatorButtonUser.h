@@ -5,7 +5,7 @@
 
 #include "CalcManager/Command.h"
 
-namespace CalculatorApp::ViewModel::Common
+namespace CalculatorApp::ViewModelNative::Common
 {
     namespace CM = CalculationManager;
 

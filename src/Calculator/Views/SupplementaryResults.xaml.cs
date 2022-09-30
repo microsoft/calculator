@@ -1,4 +1,4 @@
-﻿using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModelNative;
 
 using System;
 using System.Collections.Generic;
@@ -93,14 +93,14 @@ namespace CalculatorApp
             InitializeComponent();
         }
 
-        public IEnumerable<ViewModel.SupplementaryResult> Results
+        public IEnumerable<ViewModelNative.SupplementaryResult> Results
         {
-            get => (IEnumerable<ViewModel.SupplementaryResult>)GetValue(ResultsProperty);
+            get => (IEnumerable<ViewModelNative.SupplementaryResult>)GetValue(ResultsProperty);
             set => SetValue(ResultsProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Results.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ResultsProperty =
-            DependencyProperty.Register(nameof(Results), typeof(IEnumerable<ViewModel.SupplementaryResult>), typeof(SupplementaryResult), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Results), typeof(IEnumerable<ViewModelNative.SupplementaryResult>), typeof(SupplementaryResult), new PropertyMetadata(null));
     }
 }

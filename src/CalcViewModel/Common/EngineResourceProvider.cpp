@@ -5,7 +5,7 @@
 #include "EngineResourceProvider.h"
 #include "Common/LocalizationSettings.h"
 
-using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModelNative::Common;
 using namespace Platform;
 using namespace Windows::ApplicationModel::Resources;
 using namespace std;

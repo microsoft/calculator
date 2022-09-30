@@ -21,13 +21,15 @@ jobs:
   - checkout: none
   
   - task: DownloadBuildArtifacts@0
-    displayName: Download CalculatorUnitTests
+    displayName: Download test files
     inputs:
       artifactName: drop
-      itemPattern: drop/Release/${{ parameters.platform }}/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test/**
+      itemPattern: |
+        drop/Release/${{ parameters.platform }}/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test/**
+        drop/Release/${{ parameters.platform }}/CalculatorApp.ViewModel.Tests/AppPackages/CalculatorApp.ViewModel.Tests_Test/**
 
   - task: PowerShell@2
-    displayName: Install Certificate
+    displayName: Install certificate
     inputs:
       filePath: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\Add-AppDevPackage.ps1
       arguments: -CertificatePath $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.cer -Force
@@ -36,4 +38,10 @@ jobs:
     displayName: Run CalculatorUnitTests
     inputs:
       testAssemblyVer2: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.msix
+      otherConsoleOptions: /Platform:${{ parameters.platform }}
+
+  - task: VSTest@2
+    displayName: Run CalculatorApp.ViewModel.Tests
+    inputs:
+      testAssemblyVer2: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorApp.ViewModel.Tests\AppPackages\CalculatorApp.ViewModel.Tests_Test\CalculatorApp.ViewModel.Tests.msix
       otherConsoleOptions: /Platform:${{ parameters.platform }}

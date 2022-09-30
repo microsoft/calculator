@@ -3,7 +3,7 @@
 
 namespace CalculatorApp
 {
-    namespace ViewModel::Common
+    namespace ViewModelNative::Common
     {
     private
         enum UnitConverterUnits

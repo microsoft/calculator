@@ -1,8 +1,8 @@
 using CalculatorApp.Common;
 using CalculatorApp.Converters;
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
-using CalculatorApp.ViewModel.Common.Automation;
+using CalculatorApp.ViewModelNative;
+using CalculatorApp.ViewModelNative.Common;
+using CalculatorApp.ViewModelNative.Common.Automation;
 
 using System;
 using System.Collections.Generic;

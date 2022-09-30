@@ -7,7 +7,7 @@
 #include "EquationViewModel.h"
 #include "VariableViewModel.h"
 
-namespace CalculatorApp::ViewModel
+namespace CalculatorApp::ViewModelNative
 {
     [Windows::UI::Xaml::Data::Bindable] public ref class GraphingCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
     {

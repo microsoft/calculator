@@ -1,5 +1,5 @@
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModelNative;
+using CalculatorApp.ViewModelNative.Common;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,7 +17,7 @@ namespace CalculatorApp
             MemoryPaneEmpty.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
         }
 
-        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model => (CalculatorApp.ViewModel.StandardCalculatorViewModel)this.DataContext;
+        public CalculatorApp.ViewModelNative.StandardCalculatorViewModel Model => (CalculatorApp.ViewModelNative.StandardCalculatorViewModel)this.DataContext;
 
         public GridLength RowHeight
         {

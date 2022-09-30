@@ -7,8 +7,8 @@
 //
 
 using CalculatorApp.Utils;
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModelNative;
+using CalculatorApp.ViewModelNative.Common;
 
 using Windows.UI.Xaml;
 

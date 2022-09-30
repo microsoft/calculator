@@ -11,7 +11,7 @@
 #endif
 
 using namespace CalculatorApp::DataLoaders;
-using namespace CalculatorApp::ViewModel::DataLoaders;
+using namespace CalculatorApp::ViewModelNative::DataLoaders;
 using namespace Platform;
 using namespace std;
 using namespace Windows::Foundation;

@@ -1,4 +1,4 @@
-using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModelNative.Common;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -39,15 +39,15 @@ namespace CalculatorApp
         public static readonly DependencyProperty ButtonStyleProperty =
             DependencyProperty.Register(nameof(ButtonStyle), typeof(Windows.UI.Xaml.Style), typeof(NumberPad), new PropertyMetadata(default(Windows.UI.Xaml.Style)));
 
-        public CalculatorApp.ViewModel.Common.NumberBase CurrentRadixType
+        public CalculatorApp.ViewModelNative.Common.NumberBase CurrentRadixType
         {
-            get => (CalculatorApp.ViewModel.Common.NumberBase)GetValue(CurrentRadixTypeProperty);
+            get => (CalculatorApp.ViewModelNative.Common.NumberBase)GetValue(CurrentRadixTypeProperty);
             set => SetValue(CurrentRadixTypeProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for CurrentRadixType.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentRadixTypeProperty =
-            DependencyProperty.Register(nameof(CurrentRadixType), typeof(CalculatorApp.ViewModel.Common.NumberBase), typeof(NumberPad), new PropertyMetadata(CalculatorApp.ViewModel.Common.NumberBase.DecBase, (sender, args) =>
+            DependencyProperty.Register(nameof(CurrentRadixType), typeof(CalculatorApp.ViewModelNative.Common.NumberBase), typeof(NumberPad), new PropertyMetadata(CalculatorApp.ViewModelNative.Common.NumberBase.DecBase, (sender, args) =>
             {
                 var self = (NumberPad)sender;
                 self.OnCurrentRadixTypePropertyChanged((NumberBase)args.OldValue, (NumberBase)args.NewValue);

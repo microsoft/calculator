@@ -7,7 +7,7 @@
 
 namespace CalculatorApp
 {
-    namespace ViewModel
+    namespace ViewModelNative
     {
         [Windows::UI::Xaml::Data::Bindable] public ref class HistoryItemViewModel sealed
         {

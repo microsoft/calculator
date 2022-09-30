@@ -1,5 +1,5 @@
 using CalculatorApp.Utils;
-using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModelNative.Common;
 
 using System.Diagnostics;
 using System.Windows.Input;
@@ -32,12 +32,12 @@ namespace CalculatorApp
 
         private ICommand donotuse_BitLengthButtonPressed;
 
-        public ViewModel.StandardCalculatorViewModel Model
+        public ViewModelNative.StandardCalculatorViewModel Model
         {
             get
             {
-                Debug.Assert(DataContext as ViewModel.StandardCalculatorViewModel != null, "static_cast result must NOT be null");
-                return DataContext as ViewModel.StandardCalculatorViewModel;
+                Debug.Assert(DataContext as ViewModelNative.StandardCalculatorViewModel != null, "static_cast result must NOT be null");
+                return DataContext as ViewModelNative.StandardCalculatorViewModel;
             }
         }
 

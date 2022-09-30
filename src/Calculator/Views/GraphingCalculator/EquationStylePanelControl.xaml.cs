@@ -1,4 +1,4 @@
-using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModelNative.Common;
 
 using GraphControl;
 
@@ -239,7 +239,7 @@ namespace CalculatorApp
                     SelectedColor = brush.Color;
                 }
 
-                CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogGraphLineStyleChanged(LineStyleType.Color);
+                CalculatorApp.ViewModelNative.Common.TraceLogger.GetInstance().LogGraphLineStyleChanged(LineStyleType.Color);
             }
         }
 
@@ -284,7 +284,7 @@ namespace CalculatorApp
             if (oldStyle != newStyle)
             {
                 SelectStyle(newStyle);
-                CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogGraphLineStyleChanged(LineStyleType.Pattern);
+                CalculatorApp.ViewModelNative.Common.TraceLogger.GetInstance().LogGraphLineStyleChanged(LineStyleType.Pattern);
             }
         }
 

@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using CalculatorApp.Utils;
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModelNative;
+using CalculatorApp.ViewModelNative.Common;
 
 using System;
 
@@ -62,7 +62,7 @@ namespace CalculatorApp
             this.SizeChanged += Calculator_SizeChanged;
         }
 
-        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
+        public CalculatorApp.ViewModelNative.StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
 
         public bool IsStandard
         {
@@ -155,7 +155,7 @@ namespace CalculatorApp
             }
         }
 
-        public void InitializeHistoryView(CalculatorApp.ViewModel.HistoryViewModel historyVM)
+        public void InitializeHistoryView(CalculatorApp.ViewModelNative.HistoryViewModel historyVM)
         {
             if (m_historyList == null)
             {

@@ -15,10 +15,10 @@
 #include "DataLoaders/UnitConverterDataLoader.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::ViewModel;
-using namespace CalculatorApp::ViewModel::Common;
-using namespace CalculatorApp::ViewModel::Common::Automation;
-using namespace CalculatorApp::ViewModel::DataLoaders;
+using namespace CalculatorApp::ViewModelNative;
+using namespace CalculatorApp::ViewModelNative::Common;
+using namespace CalculatorApp::ViewModelNative::Common::Automation;
+using namespace CalculatorApp::ViewModelNative::DataLoaders;
 using namespace concurrency;
 using namespace Platform;
 using namespace Platform::Collections;
@@ -76,7 +76,7 @@ namespace
     StringReference SupplementaryVisibilityPropertyName(L"SupplementaryVisibility");
 }
 
-namespace CalculatorApp::ViewModel::DataLoaders::UnitConverterResourceKeys
+namespace CalculatorApp::ViewModelNative::DataLoaders::UnitConverterResourceKeys
 {
     StringReference ValueFromFormat(L"Format_ValueFrom");
     StringReference ValueFromDecimalFormat(L"Format_ValueFrom_Decimal");

@@ -1,4 +1,4 @@
-﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -8,7 +8,7 @@ namespace CalculatorApp
     [Windows.Foundation.Metadata.WebHostHidden]
     public sealed partial class OperatorsPanel : UserControl
     {
-        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model => (CalculatorApp.ViewModel.StandardCalculatorViewModel)DataContext;
+        public CalculatorApp.ViewModelNative.StandardCalculatorViewModel Model => (CalculatorApp.ViewModelNative.StandardCalculatorViewModel)DataContext;
 
         public OperatorsPanel()
         {

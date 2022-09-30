@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -6,7 +6,7 @@
 
 #include "CalcViewModel/Common/NetworkManager.h"
 
-using namespace CalculatorApp::ViewModel::DataLoaders;
+using namespace CalculatorApp::ViewModelNative::DataLoaders;
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::System::UserProfile;

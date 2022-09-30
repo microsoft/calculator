@@ -4,9 +4,9 @@
 using Calculator.Utils;
 
 using CalculatorApp.Controls;
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
-using CalculatorApp.ViewModel.Common.Automation;
+using CalculatorApp.ViewModelNative;
+using CalculatorApp.ViewModelNative.Common;
+using CalculatorApp.ViewModelNative.Common.Automation;
 
 using GraphControl;
 
@@ -53,7 +53,7 @@ namespace CalculatorApp
             OnPropertyChanged(p);
         }
 
-        public Windows.Foundation.Collections.IObservableVector<ViewModel.EquationViewModel> Equations
+        public Windows.Foundation.Collections.IObservableVector<ViewModelNative.EquationViewModel> Equations
         {
             get => m_Equations;
             set
@@ -65,9 +65,9 @@ namespace CalculatorApp
                 }
             }
         }
-        private Windows.Foundation.Collections.IObservableVector<ViewModel.EquationViewModel> m_Equations;
+        private Windows.Foundation.Collections.IObservableVector<ViewModelNative.EquationViewModel> m_Equations;
 
-        public Windows.Foundation.Collections.IObservableVector<ViewModel.VariableViewModel> Variables
+        public Windows.Foundation.Collections.IObservableVector<ViewModelNative.VariableViewModel> Variables
         {
             get => m_Variables;
             set
@@ -79,7 +79,7 @@ namespace CalculatorApp
                 }
             }
         }
-        private Windows.Foundation.Collections.IObservableVector<ViewModel.VariableViewModel> m_Variables;
+        private Windows.Foundation.Collections.IObservableVector<ViewModelNative.VariableViewModel> m_Variables;
 
         public ObservableCollection<SolidColorBrush> AvailableColors
         {
@@ -110,7 +110,7 @@ namespace CalculatorApp
         }
         private bool m_IsMatchAppTheme;
 
-        public event System.EventHandler<ViewModel.EquationViewModel> KeyGraphFeaturesRequested;
+        public event System.EventHandler<ViewModelNative.EquationViewModel> KeyGraphFeaturesRequested;
         public event System.EventHandler<CalculatorApp.Controls.MathRichEditBoxFormatRequest> EquationFormatRequested;
 
         public static Visibility ManageEditVariablesButtonVisibility(uint numberOfVariables)
@@ -415,7 +415,7 @@ namespace CalculatorApp
             var eq = GetViewModelFromEquationTextBox(sender);
             eq.IsLineEnabled = !eq.IsLineEnabled;
 
-            CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogShowHideButtonClicked(!eq.IsLineEnabled);
+            CalculatorApp.ViewModelNative.Common.TraceLogger.GetInstance().LogShowHideButtonClicked(!eq.IsLineEnabled);
         }
 
         private void EquationTextBox_Loaded(object sender, RoutedEventArgs e)
@@ -503,20 +503,20 @@ namespace CalculatorApp
             {
                 val = validateDouble(sender.Text, variableViewModel.Value);
                 variableViewModel.Value = val;
-                CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogVariableChanged("ValueTextBox", variableViewModel.Name);
+                CalculatorApp.ViewModelNative.Common.TraceLogger.GetInstance().LogVariableChanged("ValueTextBox", variableViewModel.Name);
             }
             else if (sender.Name == "MinTextBox")
             {
                 val = validateDouble(sender.Text, variableViewModel.Min);
 
                 variableViewModel.Min = val;
-                CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogVariableSettingsChanged("MinTextBox");
+                CalculatorApp.ViewModelNative.Common.TraceLogger.GetInstance().LogVariableSettingsChanged("MinTextBox");
             }
             else if (sender.Name == "MaxTextBox")
             {
                 val = validateDouble(sender.Text, variableViewModel.Max);
                 variableViewModel.Max = val;
-                CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogVariableSettingsChanged("MaxTextBox");
+                CalculatorApp.ViewModelNative.Common.TraceLogger.GetInstance().LogVariableSettingsChanged("MaxTextBox");
             }
             else if (sender.Name == "StepTextBox")
             {
@@ -529,7 +529,7 @@ namespace CalculatorApp
                 }
 
                 variableViewModel.Step = val;
-                CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogVariableSettingsChanged("StepTextBox");
+                CalculatorApp.ViewModelNative.Common.TraceLogger.GetInstance().LogVariableSettingsChanged("StepTextBox");
             }
             else
             {
@@ -589,7 +589,7 @@ namespace CalculatorApp
                 DispatcherTimerDelayer delayer = new DispatcherTimerDelayer(timeSpan);
                 delayer.Action += (s, arg) =>
                 {
-                    CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogVariableChanged("Slider", name);
+                    CalculatorApp.ViewModelNative.Common.TraceLogger.GetInstance().LogVariableChanged("Slider", name);
                     variableSliders.Remove(name);
                 };
                 delayer.Start();
@@ -636,7 +636,7 @@ namespace CalculatorApp
         private int m_lastLineColorIndex;
         private int m_lastFunctionLabelIndex;
         private bool m_isHighContrast;
-        private ViewModel.EquationViewModel m_equationToFocus;
+        private ViewModelNative.EquationViewModel m_equationToFocus;
         private SortedDictionary<string, DispatcherTimerDelayer> variableSliders;
     }
 }

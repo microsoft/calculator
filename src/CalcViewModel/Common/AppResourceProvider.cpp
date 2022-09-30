@@ -7,7 +7,7 @@
 using namespace Platform;
 using namespace Windows::ApplicationModel::Resources;
 using namespace CalculatorApp;
-using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModelNative::Common;
 
 AppResourceProvider::AppResourceProvider()
 {

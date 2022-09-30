@@ -7,10 +7,10 @@
 #include "CalcViewModel/DataLoaders/CurrencyDataLoader.h"
 #include "CalcViewModel/Common/LocalizationService.h"
 
-using namespace CalculatorApp::ViewModel::Common;
-using namespace CalculatorApp::ViewModel::Common::LocalizationServiceProperties;
-using namespace CalculatorApp::ViewModel::DataLoaders;
-using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModelNative::Common;
+using namespace CalculatorApp::ViewModelNative::Common::LocalizationServiceProperties;
+using namespace CalculatorApp::ViewModelNative::DataLoaders;
+using namespace CalculatorApp::ViewModelNative;
 using namespace CalculatorUnitTests;
 using namespace Concurrency;
 using namespace Platform;
@@ -21,7 +21,7 @@ using namespace Windows::Storage;
 using namespace Windows::Web::Http;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace CalculatorApp::ViewModel
+namespace CalculatorApp::ViewModelNative
 {
     namespace DataLoaders
     {

@@ -17,7 +17,7 @@
 #include "Utils.h"
 #include "MyVirtualKey.h"
 
-namespace CalculatorApp::ViewModel
+namespace CalculatorApp::ViewModelNative
 {
     namespace Common
     {
@@ -91,7 +91,7 @@ namespace CalculatorApp::ViewModel
         public ref class NavCategory sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         private:
-            using ViewModeType = ::CalculatorApp::ViewModel::Common::ViewMode;
+            using ViewModeType = ::CalculatorApp::ViewModelNative::Common::ViewMode;
         public:
             OBSERVABLE_OBJECT();
             PROPERTY_R(Platform::String ^, Name);

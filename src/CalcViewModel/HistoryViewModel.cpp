@@ -9,9 +9,9 @@
 #include "StandardCalculatorViewModel.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::ViewModel::Common;
-using namespace CalculatorApp::ViewModel::Common::Automation;
-using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModelNative::Common;
+using namespace CalculatorApp::ViewModelNative::Common::Automation;
+using namespace CalculatorApp::ViewModelNative;
 using namespace Platform;
 using namespace std;
 using namespace Windows::Foundation;

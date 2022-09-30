@@ -797,6 +797,10 @@
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CalculatorApp.ViewModel\CalculatorApp.ViewModel.csproj">
+      <Project>{081f0c62-aeac-47e8-92bc-ad6945f24192}</Project>
+      <Name>CalculatorApp.ViewModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
       <Project>{812d1a7b-b8ac-49e4-8e6d-af5d59500d56}</Project>
       <Name>CalcViewModel</Name>

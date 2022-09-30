@@ -1,6 +1,6 @@
 using CalculatorApp.Utils;
-using CalculatorApp.ViewModel.Common;
-using CalculatorApp.ViewModel.Common.Automation;
+using CalculatorApp.ViewModelNative.Common;
+using CalculatorApp.ViewModelNative.Common.Automation;
 
 using System;
 using System.Diagnostics;

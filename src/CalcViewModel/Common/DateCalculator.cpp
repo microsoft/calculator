@@ -7,7 +7,7 @@
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::Globalization;
-using namespace CalculatorApp::ViewModel::Common::DateCalculation;
+using namespace CalculatorApp::ViewModelNative::Common::DateCalculation;
 
 bool operator==(const DateDifference& l, const DateDifference& r)
 {

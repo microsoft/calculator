@@ -10,7 +10,7 @@
 #include "CalcManager/NumberFormattingUtils.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModelNative::Common;
 using namespace CalculationManager;
 using namespace UnitConversionManager::NumberFormattingUtils;
 using namespace Platform;

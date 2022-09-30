@@ -1,6 +1,6 @@
 #pragma once
 
-namespace CalculatorApp::ViewModel
+namespace CalculatorApp::ViewModelNative
 {
     namespace Common
     {

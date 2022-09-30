@@ -174,8 +174,8 @@ public:
         {                                                                                                                                                      \
             if (!donotuse_##p)                                                                                                                                 \
             {                                                                                                                                                  \
-                donotuse_##p = ref new CalculatorApp::ViewModel::Common::DelegateCommand(                                                                                 \
-                    CalculatorApp::ViewModel::Common::MakeDelegateCommandHandler(this, &m)                                                                                \
+                donotuse_##p = ref new CalculatorApp::ViewModelNative::Common::DelegateCommand(                                                                \
+                    CalculatorApp::ViewModelNative::Common::MakeDelegateCommandHandler(this, &m)                                                               \
                 );                                                                                                                                             \
             }                                                                                                                                                  \
             return donotuse_##p;                                                                                                                               \
@@ -394,7 +394,6 @@ namespace Utils
     }
 
     double GetDoubleFromWstring(std::wstring input);
-    int GetWindowId();
     void RunOnUIThreadNonblocking(std::function<void()>&& function, _In_ Windows::UI::Core::CoreDispatcher ^ currentDispatcher);
 
     Windows::Foundation::DateTime GetUniversalSystemTime();
@@ -705,7 +704,7 @@ namespace CalculatorApp
         return to;
     }
 
-    namespace ViewModel::Common
+    namespace ViewModelNative::Common
     {
         // below utilities are intended to support interops between C# and C++/CX
         // they can be removed if the entire codebase has been migrated to C#
@@ -715,7 +714,6 @@ namespace CalculatorApp
             static Platform::String ^ EscapeHtmlSpecialCharacters(Platform::String ^ originalString);
             static bool AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2);
             static Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
-            static int GetWindowId();
             static long long GetConst_WINEVENT_KEYWORD_RESPONSE_TIME();
             static bool GetIntegratedDisplaySize(double* size);
         };

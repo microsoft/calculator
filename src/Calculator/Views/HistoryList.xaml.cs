@@ -1,5 +1,5 @@
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModelNative;
+using CalculatorApp.ViewModelNative.Common;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -20,7 +20,7 @@ namespace CalculatorApp
             HistoryEmpty.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
         }
 
-        public CalculatorApp.ViewModel.HistoryViewModel Model => (CalculatorApp.ViewModel.HistoryViewModel)DataContext;
+        public CalculatorApp.ViewModelNative.HistoryViewModel Model => (CalculatorApp.ViewModelNative.HistoryViewModel)DataContext;
 
         public void ScrollToBottom()
         {

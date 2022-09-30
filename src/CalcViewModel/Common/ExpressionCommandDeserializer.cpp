@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "ExpressionCommandDeserializer.h"
 
-using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModelNative::Common;
 using namespace Windows::Storage::Streams;
 
 CommandDeserializer::CommandDeserializer(_In_ DataReader ^ dataReader)

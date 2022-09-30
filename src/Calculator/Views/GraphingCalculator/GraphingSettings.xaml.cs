@@ -5,8 +5,8 @@
 
 
 //using Graphing;
-using CalculatorApp.ViewModel;
-using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModelNative;
+using CalculatorApp.ViewModelNative.Common;
 
 using Windows.Storage;
 using Windows.System;
@@ -25,7 +25,7 @@ namespace CalculatorApp
             InitializeComponent();
         }
 
-        public CalculatorApp.ViewModel.GraphingSettingsViewModel ViewModel { get; set; }
+        public CalculatorApp.ViewModelNative.GraphingSettingsViewModel ViewModel { get; set; }
 
         public bool IsMatchAppTheme
         {
@@ -112,7 +112,7 @@ namespace CalculatorApp
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             localSettings.Values["IsGraphThemeMatchApp"] = isMatchAppTheme;
             GraphThemeSettingChanged?.Invoke(this, isMatchAppTheme);
-            CalculatorApp.ViewModel.Common.TraceLogger.GetInstance().LogGraphSettingsChanged(GraphSettingsType.Theme, propertyName);
+            CalculatorApp.ViewModelNative.Common.TraceLogger.GetInstance().LogGraphSettingsChanged(GraphSettingsType.Theme, propertyName);
         }
 
         private bool m_IsMatchAppTheme;
