@@ -17,24 +17,16 @@ std::shared_ptr<IExpressionCommand> CommandDeserializer::Deserialize(_In_ Calcul
     switch (cmdType)
     {
     case CalculationManager::CommandType::OperandCommand:
-
         return std::make_shared<COpndCommand>(DeserializeOperand());
-        break;
 
     case CalculationManager::CommandType::Parentheses:
-
         return std::make_shared<CParentheses>(DeserializeParentheses());
-        break;
 
     case CalculationManager::CommandType::UnaryCommand:
-
         return std::make_shared<CUnaryCommand>(DeserializeUnary());
-        break;
 
     case CalculationManager::CommandType::BinaryCommand:
-
         return std::make_shared<CBinaryCommand>(DeserializeBinary());
-        break;
 
     default:
         throw ref new Platform::Exception(E_INVALIDARG, ref new Platform::String(L"Unknown command type"));
@@ -50,7 +42,7 @@ COpndCommand CommandDeserializer::DeserializeOperand()
     std::shared_ptr<std::vector<int>> cmdVector = std::make_shared<std::vector<int>>();
     auto cmdVectorSize = m_dataReader->ReadUInt32();
 
-    for (unsigned int j = 0; j < cmdVectorSize; ++j)
+    for (auto j = cmdVectorSize; j > 0; --j)
     {
         int eachOpndcmd = m_dataReader->ReadInt32();
         cmdVector->push_back(eachOpndcmd);
