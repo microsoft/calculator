@@ -3,6 +3,7 @@ using CalculatorApp.Converters;
 using CalculatorApp.ViewModelNative;
 using CalculatorApp.ViewModelNative.Common;
 using CalculatorApp.ViewModelNative.Common.Automation;
+using ApplicationViewModel = CalculatorApp.ViewModel.ApplicationViewModel;
 
 using System;
 using System.Collections.Generic;
@@ -131,9 +132,9 @@ namespace CalculatorApp
             else
             {
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-                if (localSettings.Values.ContainsKey(ApplicationViewModel.ModePropertyName))
+                if (localSettings.Values.ContainsKey(ApplicationViewModel.ModeLocalSettings))
                 {
-                    initialMode = NavCategoryStates.Deserialize(localSettings.Values[ApplicationViewModel.ModePropertyName]);
+                    initialMode = NavCategoryStates.Deserialize(localSettings.Values[ApplicationViewModel.ModeLocalSettings]);
                 }
             }
 
@@ -143,11 +144,6 @@ namespace CalculatorApp
         private void InitializeNavViewCategoriesSource()
         {
             NavViewCategoriesSource = ExpandNavViewCategoryGroups(Model.Categories);
-            Model.Categories.VectorChanged += (sender, args) =>
-            {
-                NavViewCategoriesSource.Clear();
-                NavViewCategoriesSource = ExpandNavViewCategoryGroups(Model.Categories);
-            };
 
             _ = Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
             {
@@ -199,7 +195,7 @@ namespace CalculatorApp
         private void OnAppPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             string propertyName = e.PropertyName;
-            if (propertyName == ApplicationViewModel.ModePropertyName)
+            if (propertyName == nameof(ApplicationViewModel.Mode))
             {
                 ViewMode newValue = Model.Mode;
                 ViewMode previousMode = Model.PreviousMode;
@@ -265,7 +261,7 @@ namespace CalculatorApp
                 UpdateViewState();
                 SetDefaultFocus();
             }
-            else if (propertyName == ApplicationViewModel.CategoryNamePropertyName)
+            else if (propertyName == nameof(ApplicationViewModel.CategoryName))
             {
                 SetHeaderAutomationName();
                 AnnounceCategoryName();

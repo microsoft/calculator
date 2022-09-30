@@ -152,6 +152,17 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
     PopulateData();
 }
 
+UnitConverterViewModel::UnitConverterViewModel()
+    : UnitConverterViewModel(make_shared<UnitConversionManager::UnitConverter>(
+        make_shared<UnitConverterDataLoader>(ref new Windows::Globalization::GeographicRegion()),
+        make_shared<CurrencyDataLoader>(make_unique<CurrencyHttpClient>())))
+{
+}
+
+UnitConverterViewModel::~UnitConverterViewModel()
+{
+}
+
 void UnitConverterViewModel::ResetView()
 {
     m_model->SendCommand(UCM::Command::Reset);

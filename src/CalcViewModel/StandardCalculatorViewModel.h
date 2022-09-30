@@ -259,10 +259,13 @@ namespace CalculatorApp
             void SwitchAngleType(CalculatorApp::ViewModelNative::Common::NumbersAndOperatorsEnum num);
             void FtoEButtonToggled();
 
-        internal:
-            void OnPaste(Platform::String ^ pastedString);
+            void SetCalculatorType(CalculatorApp::ViewModelNative::Common::ViewMode targetState);
+
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
+
+        internal:
+            void OnPaste(Platform::String ^ pastedString);
 
             ButtonInfo MapCharacterToButtonId(char16 ch);
 
@@ -277,7 +280,6 @@ namespace CalculatorApp
 
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);
-            void SetCalculatorType(CalculatorApp::ViewModelNative::Common::ViewMode targetState);
 
             Platform::String ^ GetRawDisplayValue();
             void Recalculate(bool fromHistory = false);

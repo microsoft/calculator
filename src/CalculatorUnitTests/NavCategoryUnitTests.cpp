@@ -98,7 +98,7 @@ namespace CalculatorUnitTests
     public:
         TEST_METHOD(CreateNavCategoryGroup)
         {
-            IObservableVector<NavCategoryGroup ^> ^ menuOptions = NavCategoryStates::CreateMenuOptions();
+            IVector<NavCategoryGroup ^> ^ menuOptions = NavCategoryStates::CreateMenuOptions();
 
             VERIFY_ARE_EQUAL(2, menuOptions->Size);
 

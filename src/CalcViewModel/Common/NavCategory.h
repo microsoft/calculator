@@ -153,7 +153,7 @@ namespace CalculatorApp::ViewModelNative
         {
         public:
             static void SetCurrentUser(Platform::String^ user);
-            static Windows::Foundation::Collections::IObservableVector<NavCategoryGroup ^> ^ CreateMenuOptions();
+            static Windows::Foundation::Collections::IVector<NavCategoryGroup ^> ^ CreateMenuOptions();
             static NavCategoryGroup ^ CreateCalculatorCategoryGroup();
             static NavCategoryGroup ^ CreateConverterCategoryGroup();
 

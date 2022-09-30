@@ -4,6 +4,7 @@
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModelNative;
 using CalculatorApp.ViewModelNative.Common;
+using ApplicationViewModel = CalculatorApp.ViewModel.ApplicationViewModel;
 using Utilities = CalculatorApp.ViewModel.Common.Utilities;
 
 using System;

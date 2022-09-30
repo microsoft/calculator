@@ -82,7 +82,6 @@
     <ClCompile Include="GraphingCalculator\GraphingSettingsViewModel.cpp">
       <Filter>GraphingCalculator</Filter>
     </ClCompile>
-    <ClCompile Include="ApplicationViewModel.cpp" />
     <ClCompile Include="DateCalculatorViewModel.cpp" />
     <ClCompile Include="HistoryItemViewModel.cpp" />
     <ClCompile Include="HistoryViewModel.cpp" />
@@ -194,7 +193,6 @@
     <ClInclude Include="GraphingCalculator\VariableViewModel.h">
       <Filter>GraphingCalculator</Filter>
     </ClInclude>
-    <ClInclude Include="ApplicationViewModel.h" />
     <ClInclude Include="DateCalculatorViewModel.h" />
     <ClInclude Include="GraphingCalculatorEnums.h" />
     <ClInclude Include="HistoryItemViewModel.h" />
@@ -208,5 +206,8 @@
     <None Include="DataLoaders\DefaultFromToCurrency.json">
       <Filter>DataLoaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CalcViewModel.rc" />
   </ItemGroup>
 </Project>

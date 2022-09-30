@@ -322,7 +322,7 @@ void NavCategoryStates::SetCurrentUser(Platform::String^ userId)
     CurrentUserId = userId;
 }
 
-IObservableVector<NavCategoryGroup ^> ^ NavCategoryStates::CreateMenuOptions()
+IVector<NavCategoryGroup ^> ^ NavCategoryStates::CreateMenuOptions()
 {
     auto menuOptions = ref new Vector<NavCategoryGroup ^>();
     menuOptions->Append(CreateCalculatorCategoryGroup());
