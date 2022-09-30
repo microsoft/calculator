@@ -298,7 +298,7 @@ void _divnumx(PNUMBER* pa, PNUMBER b, int32_t precision)
 
     while (cdigits++ < thismax && !zernum(rem))
     {
-        int32_t digit = 0;
+        MANTTYPE digit = 0;
         *ptrc = 0;
         while (!lessnum(rem, b))
         {
@@ -334,7 +334,7 @@ void _divnumx(PNUMBER* pa, PNUMBER b, int32_t precision)
     cdigits--;
     if (c->mant != ++ptrc)
     {
-        memmove(c->mant, ptrc, (int)(cdigits * sizeof(MANTTYPE)));
+        memmove(c->mant, ptrc, cdigits * sizeof(MANTTYPE));
     }
 
     if (!cdigits)
