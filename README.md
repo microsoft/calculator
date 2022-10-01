@@ -67,6 +67,92 @@ Microsoft uses for the currency converter feature (e.g., in the retail version o
 for your use. The mock data will be clearly identifiable as it references planets instead of countries,
 and remains static regardless of selected inputs.
 
+## Hotkeys
+With the following list of hotkeys, you will be quickly convert from different modes and will be able to fully take advantage of
+the powerful features offered by the Windows Calculator App.
+
+| Key   | Functionality   |
+|---|---|
+| Alt + 1  | Switch to Standard Mode   
+| Alt + 2  | Switch to Scientific Mode 
+| Alt + 3	 | Switch to Graphing mode   
+| Alt + 4	 | Switch to Programmer mode
+| Alt + 5	 | Switch to Date Calculation mode
+| Ctrl + M | Store in memory, in Standard mode, Scientific mode, and Programmer mode
+| Ctrl + P| 	Add to memory, in Standard mode, Scientific mode, and Programmer mode
+| Ctrl + Q	| Subtract from memory, in Standard mode, Scientific mode, and Programmer mode
+| Ctrl + R	| Recall from memory, in Standard mode, Scientific mode, and Programmer mode
+| Ctrl + L	| Clear memory
+| Delete	| Clear current input (select CE)
+| Esc	| Fully clear input (select C)
+| Tab	| Navigate to the next UI item and give it focus
+| Spacebar	| Selects UI item that has focus
+| Enter	| Selects = in Standard mode, Scientific mode, and Programmer mode
+| F9	| Select +/- in Standard mode, Scientific mode, and Programmer mode
+| R	| Select 1/x in Standard mode and Scientific mode
+| @	| Select 2√x in Standard mode and Scientific mode
+| %	| Select % in Standard mode and Programmer mode
+| Ctrl + H| 	When history button is visible, selects the history button in Standard mode and Scientific mode
+| Up arrow	| Move up in history list, memory list, and menu items
+| Down arrow	| Move down in history list, memory list, and menu items
+| Ctrl + Shift + D	| Clear history
+| F3	| Select DEG in Scientific mode
+| F4	| Select RAD in Scientific mode
+| F5	| Select GRAD in Scientific mode
+| G	| Select 2<sup>x</sup> in Scientific mode
+| Ctrl + G	| Select 10<sup>x</sup> in Scientific mode
+| Shift + S	| Select sin<sup>-1</sup> in Scientific mode
+| Ctrl + S	| Select sinh in Scientific mode
+| Ctrl + Shift + S	| Select sinh<sup>-1</sup> in Scientific mode
+| T	| Select tan in Scientific mode
+| Shift + T| 	Select tan<sup>-1</sup> in Scientific mode
+| Ctrl + T| 	Select tanh in Scientific mode
+| Ctrl + Shift + T| 	Select tanh<sup>-1</sup> in Scientific mode
+| O| 	Select cos in Scientific mode
+| Shift + O| 	Select cos<sup>-1</sup> in Scientific mode
+| Ctrl + O| 	Select cosh in Scientific mode
+| Ctrl + Shift + O	| Select cosh<sup>-1</sup> in Scientific mode
+| U	| Select sec in Scientific mode
+| Shift + U	| Select sec<sup>-1</sup> in Scientific mode
+| Ctrl + U	| Select sech in Scientific mode
+| Ctrl + Shift + U| 	Select sech<sup>-1</sup> in Scientific mode
+| I	| Select csc in Scientific mode
+| Shift + I	| Select csc<sup>-1</sup> in Scientific mode
+| Ctrl + I	| Select csch in Scientific mode
+| Ctrl + Shift + I| 	Select csch<sup>-1</sup> in Scientific mode
+| J	| Select cot in Scientific mode
+| Shift + J	| Select cot<sup>-1</sup> in Scientific mode
+| Ctrl + J	| Select coth in Scientific mode
+| Ctrl + Shift + J| 	Select coth<sup>-1</sup> in Scientific mode
+| Ctrl + Y| Select <sup>y</sup>√x in Scientific mode
+| Shift + \	| Select |x| in Scientific mode
+| [	| Select ⌊x⌋ in Scientific mode
+| ]	| Select ⌈x⌉ in Scientific mode
+| L	| Select log in Scientific mode
+| Shift + L	| Select log<sub>y</sub><sup>x</sup> in Scientific mode
+| M	| Select dms in Scientific mode
+| N	| Select ln in Scientific mode
+| Ctrl + N| Select e<sup>x</sup> in Scientific mode
+| P	| Select Pi in Scientific mode
+| Q	| Select x<sup>2</sup> in Standard mode and Scientific mode
+| V	| Toggles on/off F-E button in Scientific mode
+| X	| Select exp in Scientific mode
+| Y, ^| 	Select x<sup>y</sup> in Scientific mode
+| #	| Select x<sup>3</sup> in Scientific mode
+| !	| Select n! in Scientific mode
+| %	| Select mod in Scientific mode
+| Ctrl ++ on numpad| 	Graph zooms in while in Graphing mode
+| Ctrl +- on numpad	| Graph zooms out while in Graphing mode
+| F5	| Select HEX in Programmer mode
+| F6	| Select DEC in Programmer mode
+| F7	| Select OCT in Programmer mode
+| A-F	| Select letters A-F in Programmer mode while HEX is selected
+| Shift + ,	| Select RoL in Programmer mode when Bit Shift is set to either "Circular" shift
+| Shift + .	| Select RoR in Programmer mode when Bit Shift is set to either "Circular" shift
+| Shift + ,	| Select Lsh in Programmer mode when Bit Shift is set to "Arithmetic" or "Logical" shift
+| Shift + .	| Select Rsh in Programmer mode when Bit Shift is set to "Arithmetic" or "Logical" shift
+| %	Select % | in Programmer mode
+
 ## Reporting Security Issues
 Please refer to [SECURITY.md](./SECURITY.md).
 
