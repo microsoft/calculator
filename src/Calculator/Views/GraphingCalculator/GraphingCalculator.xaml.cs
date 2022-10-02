@@ -4,6 +4,7 @@
 using CalculatorApp.Common;
 using CalculatorApp.Controls;
 using CalculatorApp.Utils;
+using CalculatorApp.ViewModel.Common.Automation;
 using CalculatorApp.ViewModelNative;
 using CalculatorApp.ViewModelNative.Common;
 using CalculatorApp.ViewModelNative.Common.Automation;

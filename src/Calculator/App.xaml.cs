@@ -7,7 +7,6 @@
 //
 
 using CalculatorApp.ViewModelNative.Common;
-using CalculatorApp.ViewModelNative.Common.Automation;
 
 using System;
 using System.Collections.Generic;
@@ -51,8 +50,6 @@ namespace CalculatorApp
             InitializeComponent();
 
             m_preLaunched = false;
-
-            RegisterDependencyProperties();
 
             // TODO: MSFT 14645325: Set this directly from XAML.
             // Currently this is bugged so the property is only respected from code-behind.
@@ -358,11 +355,6 @@ namespace CalculatorApp
         private void DismissedEventHandler(SplashScreen sender, object e)
         {
             _ = SetupJumpList();
-        }
-
-        private void RegisterDependencyProperties()
-        {
-            NarratorNotifier.RegisterDependencyProperties();
         }
 
         private void OnSuspending(object sender, SuspendingEventArgs args)

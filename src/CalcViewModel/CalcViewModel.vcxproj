@@ -301,7 +301,6 @@
     <ClInclude Include="ApplicationViewModel.h" />
     <ClInclude Include="Common\AppResourceProvider.h" />
     <ClInclude Include="Common\Automation\NarratorAnnouncement.h" />
-    <ClInclude Include="Common\Automation\NarratorNotifier.h" />
     <ClInclude Include="Common\BitLength.h" />
     <ClInclude Include="Common\CalculatorButtonPressedEventArgs.h" />
     <ClInclude Include="Common\CalculatorButtonUser.h" />
@@ -346,7 +345,6 @@
     <ClCompile Include="ApplicationViewModel.cpp" />
     <ClCompile Include="Common\AppResourceProvider.cpp" />
     <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp" />
-    <ClCompile Include="Common\Automation\NarratorNotifier.cpp" />
     <ClCompile Include="Common\CalculatorButtonPressedEventArgs.cpp" />
     <ClCompile Include="Common\CalculatorDisplay.cpp" />
     <ClCompile Include="Common\CopyPasteManager.cpp" />

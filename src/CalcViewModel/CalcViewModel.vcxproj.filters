@@ -61,9 +61,6 @@
     <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
       <Filter>Common\Automation</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Automation\NarratorNotifier.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
     <ClCompile Include="DataLoaders\CurrencyDataLoader.cpp">
       <Filter>DataLoaders</Filter>
     </ClCompile>
@@ -161,9 +158,6 @@
     <ClInclude Include="Common\Automation\NarratorAnnouncement.h">
       <Filter>Common\Automation</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Automation\NarratorNotifier.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
     <ClInclude Include="DataLoaders\CurrencyDataLoader.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
@@ -208,5 +202,8 @@
     <None Include="DataLoaders\DefaultFromToCurrency.json">
       <Filter>DataLoaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CalcViewModel.rc" />
   </ItemGroup>
 </Project>

@@ -21,9 +21,6 @@
     <ClCompile Include="..\CalcViewModel\Common\Automation\NarratorAnnouncement.cpp">
       <Filter>Common\Automation</Filter>
     </ClCompile>
-    <ClCompile Include="..\CalcViewModel\Common\Automation\NarratorNotifier.cpp">
-      <Filter>Common\Automation</Filter>
-    </ClCompile>
     <ClCompile Include="..\CalcViewModel\ApplicationViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\DateCalculatorViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\HistoryItemViewModel.cpp" />
@@ -93,9 +90,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\CalcViewModel\Common\Automation\NarratorAnnouncement.h">
-      <Filter>Common\Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CalcViewModel\Common\Automation\NarratorNotifier.h">
       <Filter>Common\Automation</Filter>
     </ClInclude>
     <ClInclude Include="..\CalcViewModel\ApplicationViewModel.h" />
