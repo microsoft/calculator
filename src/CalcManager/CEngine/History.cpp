@@ -143,14 +143,14 @@ void CHistoryCollector::AddBinOpToHistory(int nOpCode, bool isIntegerMode, bool 
 // This is expected to be called when a binary op in the last say 1+2+ is changing to another one say 1+2* (+ changed to *)
 // It needs to know by this change a Precedence inversion happened. i.e. previous op was lower or equal to its previous op, but the new
 // one isn't. (Eg. 1*2* to 1*2^). It can add explicit brackets to ensure the precedence is inverted. (Eg. (1*2) ^)
-void CHistoryCollector::ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher, bool isIntgerMode)
+void CHistoryCollector::ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher, bool isIntegerMode)
 {
     TruncateEquationSzFromIch(m_lastBinOpStartIndex);
     if (fPrecInvToHigher)
     {
         EnclosePrecInversionBrackets();
     }
-    AddBinOpToHistory(nOpCode, isIntgerMode);
+    AddBinOpToHistory(nOpCode, isIntegerMode);
 }
 
 void CHistoryCollector::PushLastOpndStart(int ichOpndStart)
