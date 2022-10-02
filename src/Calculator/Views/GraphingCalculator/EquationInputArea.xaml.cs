@@ -7,6 +7,7 @@ using CalculatorApp.Controls;
 using CalculatorApp.ViewModelNative;
 using CalculatorApp.ViewModelNative.Common;
 using CalculatorApp.ViewModelNative.Common.Automation;
+using Utilities = CalculatorApp.ViewModel.Common.Utilities;
 
 using GraphControl;
 

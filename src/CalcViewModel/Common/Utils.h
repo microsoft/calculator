@@ -703,21 +703,6 @@ namespace CalculatorApp
 
         return to;
     }
-
-    namespace ViewModelNative::Common
-    {
-        // below utilities are intended to support interops between C# and C++/CX
-        // they can be removed if the entire codebase has been migrated to C#
-        public ref class Utilities sealed
-        {
-        public:
-            static Platform::String ^ EscapeHtmlSpecialCharacters(Platform::String ^ originalString);
-            static bool AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2);
-            static Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
-            static long long GetConst_WINEVENT_KEYWORD_RESPONSE_TIME();
-            static bool GetIntegratedDisplaySize(double* size);
-        };
-    }
 }
 
 // There's no standard definition of equality for Windows::UI::Color structs.

@@ -28,6 +28,9 @@ namespace CalculatorApp
         public const long MICROSOFT_KEYWORD_LEVEL_3 = 0;
         public const long MICROSOFT_KEYWORD_RESERVED_44 = 0;
 #endif
+
+        // From winmeta.h in the Windows SDK
+        public const long WINEVENT_KEYWORD_RESPONSE_TIME = 0x1000000000000;
     }
 
     internal class AppLifecycleLogger
@@ -131,7 +134,7 @@ namespace CalculatorApp
         private void LogAppLifecycleEvent(string eventName, LoggingFields fields)
         {
             m_appLifecycleProvider.LogEvent(
-                eventName, fields, LoggingLevel.Information, new LoggingOptions(Globals.MICROSOFT_KEYWORD_LEVEL_3 | Utilities.GetConst_WINEVENT_KEYWORD_RESPONSE_TIME()));
+                eventName, fields, LoggingLevel.Information, new LoggingOptions(Globals.MICROSOFT_KEYWORD_LEVEL_3 | Globals.WINEVENT_KEYWORD_RESPONSE_TIME));
         }
 
         private void PopulateAppInfo(LoggingFields fields)

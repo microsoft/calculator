@@ -11,7 +11,7 @@ using CalculatorApp.ViewModelNative.Common.Automation;
 using GraphControl;
 
 using System;
-
+using System.Web;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
@@ -434,7 +434,7 @@ namespace CalculatorApp
 
                         equationHtml += "<tr style=\"margin: 0pt 0pt 0pt 0pt; padding: 0pt 0pt 0pt 0pt; \"><td><span style=\"font-size: 22pt; line-height: 0;"
                                         + equationColorHtml + "\">&#x25A0;</span></td><td><div style=\"margin: 4pt 0pt 0pt 6pt;\">"
-                                        + Utilities.EscapeHtmlSpecialCharacters(expression) + "</div></td>";
+                                        + HttpUtility.HtmlEncode(expression) + "</div></td>";
                     }
                     equationHtml += "</table>";
 

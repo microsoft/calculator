@@ -266,7 +266,7 @@ namespace CalculatorApp
                     continue;
                 }
 
-                if (Utilities.AreColorsEqual(brush.Color, selectedColor))
+                if (brush.Color == selectedColor)
                 {
                     gridViewItem.IsSelected = true;
                     SelectedColorIndex = i;
