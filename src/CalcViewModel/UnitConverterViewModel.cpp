@@ -174,6 +174,8 @@ void UnitConverterViewModel::ResetCategory()
     m_isInputBlocked = false;
     SetSelectedUnits();
 
+    UpdateIsDecimalEnabled();
+
     IsCurrencyLoadingVisible = m_IsCurrencyCurrentCategory && !m_isCurrencyDataLoaded;
     IsDropDownEnabled = m_Units->GetAt(0) != EMPTY_UNIT;
 
@@ -693,7 +695,8 @@ void UnitConverterViewModel::RefreshCurrencyRatios()
     auto that(this);
     auto refreshTask = create_task([that] { return that->m_model->RefreshCurrencyRatios().get(); });
     refreshTask.then(
-        [that](const pair<bool, wstring>& refreshResult) {
+        [that](const pair<bool, wstring>& refreshResult)
+        {
             bool didLoad = refreshResult.first;
             wstring timestamp = refreshResult.second;
 
@@ -870,7 +873,13 @@ void UnitConverterViewModel::UpdateCurrencyFormatter()
 
 void UnitConverterViewModel::UpdateIsDecimalEnabled()
 {
-    if (!IsCurrencyCurrentCategory || CurrencyFormatterFrom == nullptr)
+    if (!IsCurrencyCurrentCategory)
+    {
+        IsDecimalEnabled = true; // Always have decimal enabled if we aren't in a currency category.
+        return;
+    }
+
+    if (CurrencyFormatterFrom == nullptr)
         return;
     IsDecimalEnabled = CurrencyFormatterFrom->FractionDigits > 0;
 }
