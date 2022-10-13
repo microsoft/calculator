@@ -22,7 +22,7 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 
 ## Getting started
 Prerequisites:
-- Your computer must be running Windows 11, build 22000 or newer.
+- You must be running Windows 10 2004 (build >= 10.0.19041.0)
 - Install the latest version of [Visual Studio](https://developer.microsoft.com/en-us/windows/downloads) (the free community edition is sufficient).
   - Install the "Universal Windows Platform Development" workload.
   - Install the optional "C++ Universal Windows Platform tools" component.
