@@ -136,7 +136,7 @@ void ChangeConstants(uint32_t radix, int32_t precision)
     // in the internal BASEX radix, this is important for length calculations
     // in translating from radix to BASEX and back.
 
-    g_ratio = static_cast<int32_t>(ceil(log2(BASEX) / log2(radix))) - 1;
+    g_ratio = static_cast<int32_t>(ceil(BASEXPWR / log2(radix))) - 1;
 
     destroyrat(rat_nRadix);
     rat_nRadix = i32torat(radix);
