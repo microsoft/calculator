@@ -63,6 +63,8 @@ components, prefer the patterns described in the
 [C++ core guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
 and the [modern C++/WinRT language projections](https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/).
 
+For C# coding standards you can follow the coding styles and guidelines in [C# coding conventions](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
+
 ### Testing
 Your change should include tests to verify new functionality wherever possible. Code should be
 structured so that it can be unit tested independently of the UI. [Manual test cases](docs/ManualTests.md)
