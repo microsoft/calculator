@@ -358,12 +358,19 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
                                        true,
                                        false,
                                        false });
+    energyUnits.push_back(OrderedUnit{ UnitConverterUnits::Energy_Kilowatthour,
+                                       GetLocalizedStringName(L"UnitName_Kilowatthour"),
+                                       GetLocalizedStringName(L"UnitAbbreviation_Kilowatthour"),
+                                       166,
+                                       true,
+                                       false,
+                                       false });
     energyUnits.push_back(OrderedUnit{ UnitConverterUnits::Energy_Kilocalorie,
                                        GetLocalizedStringName(L"UnitName_Kilocalorie"),
                                        GetLocalizedStringName(L"UnitAbbreviation_Kilocalorie"),
                                        5,
                                        false,
-                                       true,
+                                       false,
                                        false });
     energyUnits.push_back(OrderedUnit{
         UnitConverterUnits::Energy_Kilojoule, GetLocalizedStringName(L"UnitName_Kilojoule"), GetLocalizedStringName(L"UnitAbbreviation_Kilojoule"), 3 });
@@ -830,6 +837,7 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_Kilocalorie, 4184 },
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_BritishThermalUnit, 1055.056 },
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_Kilojoule, 1000 },
+                                                   { ViewMode::Energy, UnitConverterUnits::Energy_Kilowatthour, 3600000 },
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_ElectronVolt, 0.0000000000000000001602176565 },
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_Joule, 1 },
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_FootPound, 1.3558179483314 },

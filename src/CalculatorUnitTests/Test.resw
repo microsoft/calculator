@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-    <!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,533 +59,536 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-        <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-        <xsd:element name="root" msdata:IsDataSet="true">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
             <xsd:complexType>
-                <xsd:choice maxOccurs="unbounded">
-                    <xsd:element name="metadata">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-                            </xsd:sequence>
-                            <xsd:attribute name="name" use="required" type="xsd:string" />
-                            <xsd:attribute name="type" type="xsd:string" />
-                            <xsd:attribute name="mimetype" type="xsd:string" />
-                            <xsd:attribute ref="xml:space" />
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="assembly">
-                        <xsd:complexType>
-                            <xsd:attribute name="alias" type="xsd:string" />
-                            <xsd:attribute name="name" type="xsd:string" />
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="data">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-                            </xsd:sequence>
-                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-                            <xsd:attribute ref="xml:space" />
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="resheader">
-                        <xsd:complexType>
-                            <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                            </xsd:sequence>
-                            <xsd:attribute name="name" type="xsd:string" use="required" />
-                        </xsd:complexType>
-                    </xsd:element>
-                </xsd:choice>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
-        </xsd:element>
-    </xsd:schema>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>2.0</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <data name="Square meters-Acres">
-        <value>4046.8564224</value>
-    </data>
-    <data name="Square meters-Square meters">
-        <value>1</value>
-    </data>
-    <data name="Square meters-Square feet">
-        <value>0.09290304</value>
-    </data>
-    <data name="Square meters-Square yards">
-        <value>0.83612736</value>
-    </data>
-    <data name="Square meters-Square millimeters">
-        <value>0.000001</value>
-    </data>
-    <data name="Square meters-Square centimeters">
-        <value>0.0001</value>
-    </data>
-    <data name="Square meters-Square inches">
-        <value>0.00064516</value>
-    </data>
-    <data name="Square meters-Square miles">
-        <value>2589988.110336</value>
-    </data>
-    <data name="Square meters-Square kilometers">
-        <value>1000000</value>
-    </data>
-    <data name="Square meters-Hectares">
-        <value>10000</value>
-    </data>
-    <data name="Square meters-hands">
-        <value>0.012516104</value>
-    </data>
-    <data name="Square meters-sheets of paper">
-        <value>0.06032246</value>
-    </data>
-    <data name="Square meters-soccer fields">
-        <value>10869.66</value>
-    </data>
-    <data name="Square meters-castles">
-        <value>100000</value>
-    </data>
-    <data name="Megabytes-Bits">
-        <value>0.000000125</value>
-    </data>
-    <data name="Megabytes-Bytes">
-        <value>0.000001</value>
-    </data>
-    <data name="Megabytes-Kilobytes">
-        <value>0.001</value>
-    </data>
-    <data name="Megabytes-Megabytes">
-        <value>1</value>
-    </data>
-    <data name="Megabytes-Gigabytes">
-        <value>1000</value>
-    </data>
-    <data name="Megabytes-Terabytes">
-        <value>1000000</value>
-    </data>
-    <data name="Megabytes-Petabytes">
-        <value>1000000000</value>
-    </data>
-    <data name="Megabytes-Exabytes">
-        <value>1000000000000</value>
-    </data>
-    <data name="Megabytes-Zetabytes">
-        <value>1000000000000000</value>
-    </data>
-    <data name="Megabytes-Yottabyte">
-        <value>1000000000000000000</value>
-    </data>
-    <data name="Megabytes-Kilobits">
-        <value>0.000125</value>
-    </data>
-    <data name="Megabytes-Megabits">
-        <value>0.125</value>
-    </data>
-    <data name="Megabytes-Gigabits">
-        <value>125</value>
-    </data>
-    <data name="Megabytes-Terabits">
-        <value>125000</value>
-    </data>
-    <data name="Megabytes-Petabits">
-        <value>125000000</value>
-    </data>
-    <data name="Megabytes-Exabits">
-        <value>125000000000</value>
-    </data>
-    <data name="Megabytes-Zetabits">
-        <value>125000000000000</value>
-    </data>
-    <data name="Megabytes-Yottabit">
-        <value>125000000000000000</value>
-    </data>
-    <data name="Megabytes-Gibibits">
-        <value>134.217728</value>
-    </data>
-    <data name="Megabytes-Gibibytes">
-        <value>1073.741824</value>
-    </data>
-    <data name="Megabytes-Kibibits">
-        <value>0.000128</value>
-    </data>
-    <data name="Megabytes-Kibibytes">
-        <value>0.001024</value>
-    </data>
-    <data name="Megabytes-Mebibits">
-        <value>0.131072</value>
-    </data>
-    <data name="Megabytes-Mebibytes">
-        <value>1.048576</value>
-    </data>
-    <data name="Megabytes-Pebibits">
-        <value>140737488.355328</value>
-    </data>
-    <data name="Megabytes-Pebibytes">
-        <value>1125899906.842624</value>
-    </data>
-    <data name="Megabytes-Tebibits">
-        <value>137438.953472</value>
-    </data>
-    <data name="Megabytes-Tebibytes">
-        <value>1099511.627776</value>
-    </data>
-    <data name="Megabytes-Exbibits">
-        <value>144115188075.855872</value>
-    </data>
-    <data name="Megabytes-Exbibytes">
-        <value>1152921504606.846976</value>
-    </data>
-    <data name="Megabytes-Zebibits">
-        <value>147573952589676.412928</value>
-    </data>
-    <data name="Megabytes-Zebibytes">
-        <value>1180591620717411.303424</value>
-    </data>
-    <data name="Megabytes-Yobibits">
-        <value>151115727451828646.838272</value>
-    </data>
-    <data name="Megabytes-Yobibytes">
-        <value>1208925819614629174.706176</value>
-    </data>
-    <data name="Megabytes-floppy disks">
-        <value>1.474560</value>
-    </data>
-    <data name="Megabytes-CDs">
-        <value>734.003200</value>
-    </data>
-    <data name="Megabytes-DVDs">
-        <value>5046.586573</value>
-    </data>
-    <data name="Joules-Thermal calories">
-        <value>4.184</value>
-    </data>
-    <data name="Joules-Food calories">
-        <value>4184</value>
-    </data>
-    <data name="Joules-British thermal units">
-        <value>1055.056</value>
-    </data>
-    <data name="Joules-Kilojoules">
-        <value>1000</value>
-    </data>
-    <data name="Joules-FahrenheitVolt">
-        <value>0.0000000000000000001602176565</value>
-    </data>
-    <data name="Joules-Joules">
-        <value>1</value>
-    </data>
-    <data name="Joules-Foot-pounds">
-        <value>1.3558179483314</value>
-    </data>
-    <data name="Joules-batteries">
-        <value>9000</value>
-    </data>
-    <data name="Joules-bananas">
-        <value>439614</value>
-    </data>
-    <data name="Joules-slices of cake">
-        <value>1046700</value>
-    </data>
-    <data name="Meters-Inches">
-        <value>0.0254</value>
-    </data>
-    <data name="Meters-Feet">
-        <value>0.3048</value>
-    </data>
-    <data name="Meters-Yards">
-        <value>0.9144</value>
-    </data>
-    <data name="Meters-Miles">
-        <value>1609.344</value>
-    </data>
-    <data name="Meters-Microns">
-        <value>0.000001</value>
-    </data>
-    <data name="Meters-Millimeters">
-        <value>0.001</value>
-    </data>
-    <data name="Meters-Nanometers">
-        <value>0.000000001</value>
-    </data>
-    <data name="Meters-Centimeters">
-        <value>0.01</value>
-    </data>
-    <data name="Meters-Meters">
-        <value>1</value>
-    </data>
-    <data name="Meters-Kilometers">
-        <value>1000</value>
-    </data>
-    <data name="Meters-Nautical Miles">
-        <value>1852</value>
-    </data>
-    <data name="Meters-paperclips">
-        <value>0.035052</value>
-    </data>
-    <data name="Meters-hands">
-        <value>0.18669</value>
-    </data>
-    <data name="Meters-jumbo jets">
-        <value>76</value>
-    </data>
-    <data name="Watts-British thermal unitsPerMinute">
-        <value>17.58426666666667</value>
-    </data>
-    <data name="Watts-Foot-pounds/minute">
-        <value>0.0225969658055233</value>
-    </data>
-    <data name="Watts-Watts">
-        <value>1</value>
-    </data>
-    <data name="Watts-Kilowatts">
-        <value>1000</value>
-    </data>
-    <data name="Watts-Horsepower (US)">
-        <value>745.69987158227022</value>
-    </data>
-    <data name="Watts-light bulbs">
-        <value>60</value>
-    </data>
-    <data name="Watts-horses">
-        <value>745.7</value>
-    </data>
-    <data name="Watts-train engines">
-        <value>2982799.486329081</value>
-    </data>
-    <data name="Seconds-Days">
-        <value>86400</value>
-    </data>
-    <data name="Seconds-Seconds">
-        <value>1</value>
-    </data>
-    <data name="Seconds-Weeks">
-        <value>604800</value>
-    </data>
-    <data name="Seconds-Years">
-        <value>31557600</value>
-    </data>
-    <data name="Seconds-Milliseconds">
-        <value>0.001</value>
-    </data>
-    <data name="Seconds-Microseconds">
-        <value>0.000001</value>
-    </data>
-    <data name="Seconds-Minutes">
-        <value>60</value>
-    </data>
-    <data name="Seconds-Hours">
-        <value>3600</value>
-    </data>
-    <data name="Cubic centimeters-Cups (US)">
-        <value>236.588237</value>
-    </data>
-    <data name="Cubic centimeters-Pints (US)">
-        <value>473.176473</value>
-    </data>
-    <data name="Cubic centimeters-Pints (UK)">
-        <value>568.26125</value>
-    </data>
-    <data name="Cubic centimeters-Quarts (US)">
-        <value>946.352946</value>
-    </data>
-    <data name="Cubic centimeters-Quarts (UK)">
-        <value>1136.5225</value>
-    </data>
-    <data name="Cubic centimeters-Gallons (US)">
-        <value>3785.411784</value>
-    </data>
-    <data name="Cubic centimeters-Gallons (UK)">
-        <value>4546.09</value>
-    </data>
-    <data name="Cubic centimeters-Liters">
-        <value>1000</value>
-    </data>
-    <data name="Cubic centimeters-Teaspoons (US)">
-        <value>4.928922</value>
-    </data>
-    <data name="Cubic centimeters-Tablespoons (US)">
-        <value>14.786765</value>
-    </data>
-    <data name="Cubic centimeters-Cubic centimeters">
-        <value>1</value>
-    </data>
-    <data name="Cubic centimeters-Cubic yards">
-        <value>764554.857984</value>
-    </data>
-    <data name="Cubic centimeters-Cubic meters">
-        <value>1000000</value>
-    </data>
-    <data name="Cubic centimeters-Milliliters">
-        <value>1</value>
-    </data>
-    <data name="Cubic centimeters-Cubic inches">
-        <value>16.387064</value>
-    </data>
-    <data name="Cubic centimeters-Cubic feet">
-        <value>28316.846592</value>
-    </data>
-    <data name="Cubic centimeters-Fluid ounces (US)">
-        <value>29.5735295625</value>
-    </data>
-    <data name="Cubic centimeters-Fluid ounces (UK)">
-        <value>28.4130625</value>
-    </data>
-    <data name="Cubic centimeters-Teaspoons (UK)">
-        <value>5.91938802083333333333</value>
-    </data>
-    <data name="Cubic centimeters-Tablespoons (UK)">
-        <value>17.7581640625</value>
-    </data>
-    <data name="Cubic centimeters-coffee cups">
-        <value>236.5882</value>
-    </data>
-    <data name="Cubic centimeters-bathtubs">
-        <value>378541.2</value>
-    </data>
-    <data name="Cubic centimeters-swimming pools">
-        <value>3750000000</value>
-    </data>
-    <data name="Kilograms-Kilograms">
-        <value>1</value>
-    </data>
-    <data name="Kilograms-Hectograms">
-        <value>0.1</value>
-    </data>
-    <data name="Kilograms-Dekagrams">
-        <value>0.01</value>
-    </data>
-    <data name="Kilograms-Grams">
-        <value>0.001</value>
-    </data>
-    <data name="Kilograms-Pounds">
-        <value>0.45359237</value>
-    </data>
-    <data name="Kilograms-Ounces">
-        <value>0.028349523125</value>
-    </data>
-    <data name="Kilograms-Milligrams">
-        <value>0.000001</value>
-    </data>
-    <data name="Kilograms-Centigrams">
-        <value>0.00001</value>
-    </data>
-    <data name="Kilograms-Decigrams">
-        <value>0.0001</value>
-    </data>
-    <data name="Kilograms-Long tons (UK)">
-        <value>1016.0469088</value>
-    </data>
-    <data name="Kilograms-Metric tonnes">
-        <value>1000</value>
-    </data>
-    <data name="Kilograms-Stone">
-        <value>6.35029318</value>
-    </data>
-    <data name="Kilograms-Carats">
-        <value>0.0002</value>
-    </data>
-    <data name="Kilograms-Short tons (US)">
-        <value>907.18474</value>
-    </data>
-    <data name="Kilograms-snowflakes">
-        <value>0.000002</value>
-    </data>
-    <data name="Kilograms-soccer balls">
-        <value>0.4325</value>
-    </data>
-    <data name="Kilograms-elephants">
-        <value>4000</value>
-    </data>
-    <data name="Kilograms-whales">
-        <value>90000</value>
-    </data>
-    <data name="CentimetersPerSecond-CentimetersPerSecond">
-        <value>1</value>
-    </data>
-    <data name="CentimetersPerSecond-Feet per second">
-        <value>30.48</value>
-    </data>
-    <data name="CentimetersPerSecond-Kilometers per hour">
-        <value>27.777777777777777777778</value>
-    </data>
-    <data name="CentimetersPerSecond-Knots">
-        <value>51.44</value>
-    </data>
-    <data name="CentimetersPerSecond-Mach">
-        <value>34030</value>
-    </data>
-    <data name="CentimetersPerSecond-Meters per second">
-        <value>100</value>
-    </data>
-    <data name="CentimetersPerSecond-Miles per hour">
-        <value>44.7</value>
-    </data>
-    <data name="CentimetersPerSecond-turtles">
-        <value>8.94</value>
-    </data>
-    <data name="CentimetersPerSecond-horses">
-        <value>2011.5</value>
-    </data>
-    <data name="CentimetersPerSecond-jets">
-        <value>24585</value>
-    </data>
-    <data name="Degrees-Degrees">
-        <value>1</value>
-    </data>
-    <data name="Degrees-Radians">
-        <value>57.29577951308233</value>
-    </data>
-    <data name="Degrees-Gradians">
-        <value>0.9</value>
-    </data>
-    <data name="Atmospheres-Atmospheres">
-        <value>1</value>
-    </data>
-    <data name="Atmospheres-Bars">
-        <value>0.9869232667160128</value>
-    </data>
-    <data name="Atmospheres-Kilopascals">
-        <value>0.0098692326671601</value>
-    </data>
-    <data name="Atmospheres-Millimeters of mercury ">
-        <value>0.0013155687145324</value>
-    </data>
-    <data name="Atmospheres-Pascals">
-        <value>9.869232667160128e-6</value>
-    </data>
-    <data name="Atmospheres-Pounds per square inch">
-        <value>0.068045961016531</value>
-    </data>
-    <data name="Liters-Cubic meters-2" xml:space="preserve">
-    <value>0.002</value>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Square meters-Acres" xml:space="preserve">
+    <value>4046.8564224</value>
   </data>
-    <data name="Milliliters-Cubic centimeters" xml:space="preserve">
+  <data name="Square meters-Square meters" xml:space="preserve">
     <value>1</value>
   </data>
-    <data name="Milliliters-Cubic centimeters-1" xml:space="preserve">
+  <data name="Square meters-Square feet" xml:space="preserve">
+    <value>0.09290304</value>
+  </data>
+  <data name="Square meters-Square yards" xml:space="preserve">
+    <value>0.83612736</value>
+  </data>
+  <data name="Square meters-Square millimeters" xml:space="preserve">
+    <value>0.000001</value>
+  </data>
+  <data name="Square meters-Square centimeters" xml:space="preserve">
+    <value>0.0001</value>
+  </data>
+  <data name="Square meters-Square inches" xml:space="preserve">
+    <value>0.00064516</value>
+  </data>
+  <data name="Square meters-Square miles" xml:space="preserve">
+    <value>2589988.110336</value>
+  </data>
+  <data name="Square meters-Square kilometers" xml:space="preserve">
+    <value>1000000</value>
+  </data>
+  <data name="Square meters-Hectares" xml:space="preserve">
+    <value>10000</value>
+  </data>
+  <data name="Square meters-hands" xml:space="preserve">
+    <value>0.012516104</value>
+  </data>
+  <data name="Square meters-sheets of paper" xml:space="preserve">
+    <value>0.06032246</value>
+  </data>
+  <data name="Square meters-soccer fields" xml:space="preserve">
+    <value>10869.66</value>
+  </data>
+  <data name="Square meters-castles" xml:space="preserve">
+    <value>100000</value>
+  </data>
+  <data name="Megabytes-Bits" xml:space="preserve">
+    <value>0.000000125</value>
+  </data>
+  <data name="Megabytes-Bytes" xml:space="preserve">
+    <value>0.000001</value>
+  </data>
+  <data name="Megabytes-Kilobytes" xml:space="preserve">
+    <value>0.001</value>
+  </data>
+  <data name="Megabytes-Megabytes" xml:space="preserve">
     <value>1</value>
   </data>
-    <data name="Milliliters-Liters" xml:space="preserve">
+  <data name="Megabytes-Gigabytes" xml:space="preserve">
     <value>1000</value>
   </data>
-    <data name="Milliliters-Milliliters" xml:space="preserve">
+  <data name="Megabytes-Terabytes" xml:space="preserve">
+    <value>1000000</value>
+  </data>
+  <data name="Megabytes-Petabytes" xml:space="preserve">
+    <value>1000000000</value>
+  </data>
+  <data name="Megabytes-Exabytes" xml:space="preserve">
+    <value>1000000000000</value>
+  </data>
+  <data name="Megabytes-Zetabytes" xml:space="preserve">
+    <value>1000000000000000</value>
+  </data>
+  <data name="Megabytes-Yottabyte" xml:space="preserve">
+    <value>1000000000000000000</value>
+  </data>
+  <data name="Megabytes-Kilobits" xml:space="preserve">
+    <value>0.000125</value>
+  </data>
+  <data name="Megabytes-Megabits" xml:space="preserve">
+    <value>0.125</value>
+  </data>
+  <data name="Megabytes-Gigabits" xml:space="preserve">
+    <value>125</value>
+  </data>
+  <data name="Megabytes-Terabits" xml:space="preserve">
+    <value>125000</value>
+  </data>
+  <data name="Megabytes-Petabits" xml:space="preserve">
+    <value>125000000</value>
+  </data>
+  <data name="Megabytes-Exabits" xml:space="preserve">
+    <value>125000000000</value>
+  </data>
+  <data name="Megabytes-Zetabits" xml:space="preserve">
+    <value>125000000000000</value>
+  </data>
+  <data name="Megabytes-Yottabit" xml:space="preserve">
+    <value>125000000000000000</value>
+  </data>
+  <data name="Megabytes-Gibibits" xml:space="preserve">
+    <value>134.217728</value>
+  </data>
+  <data name="Megabytes-Gibibytes" xml:space="preserve">
+    <value>1073.741824</value>
+  </data>
+  <data name="Megabytes-Kibibits" xml:space="preserve">
+    <value>0.000128</value>
+  </data>
+  <data name="Megabytes-Kibibytes" xml:space="preserve">
+    <value>0.001024</value>
+  </data>
+  <data name="Megabytes-Mebibits" xml:space="preserve">
+    <value>0.131072</value>
+  </data>
+  <data name="Megabytes-Mebibytes" xml:space="preserve">
+    <value>1.048576</value>
+  </data>
+  <data name="Megabytes-Pebibits" xml:space="preserve">
+    <value>140737488.355328</value>
+  </data>
+  <data name="Megabytes-Pebibytes" xml:space="preserve">
+    <value>1125899906.842624</value>
+  </data>
+  <data name="Megabytes-Tebibits" xml:space="preserve">
+    <value>137438.953472</value>
+  </data>
+  <data name="Megabytes-Tebibytes" xml:space="preserve">
+    <value>1099511.627776</value>
+  </data>
+  <data name="Megabytes-Exbibits" xml:space="preserve">
+    <value>144115188075.855872</value>
+  </data>
+  <data name="Megabytes-Exbibytes" xml:space="preserve">
+    <value>1152921504606.846976</value>
+  </data>
+  <data name="Megabytes-Zebibits" xml:space="preserve">
+    <value>147573952589676.412928</value>
+  </data>
+  <data name="Megabytes-Zebibytes" xml:space="preserve">
+    <value>1180591620717411.303424</value>
+  </data>
+  <data name="Megabytes-Yobibits" xml:space="preserve">
+    <value>151115727451828646.838272</value>
+  </data>
+  <data name="Megabytes-Yobibytes" xml:space="preserve">
+    <value>1208925819614629174.706176</value>
+  </data>
+  <data name="Megabytes-floppy disks" xml:space="preserve">
+    <value>1.474560</value>
+  </data>
+  <data name="Megabytes-CDs" xml:space="preserve">
+    <value>734.003200</value>
+  </data>
+  <data name="Megabytes-DVDs" xml:space="preserve">
+    <value>5046.586573</value>
+  </data>
+  <data name="Joules-Thermal calories" xml:space="preserve">
+    <value>4.184</value>
+  </data>
+  <data name="Joules-Food calories" xml:space="preserve">
+    <value>4184</value>
+  </data>
+  <data name="Joules-British thermal units" xml:space="preserve">
+    <value>1055.056</value>
+  </data>
+  <data name="Joules-Kilojoules" xml:space="preserve">
+    <value>1000</value>
+  </data>
+  <data name="Joules-FahrenheitVolt" xml:space="preserve">
+    <value>0.0000000000000000001602176565</value>
+  </data>
+  <data name="Joules-Joules" xml:space="preserve">
     <value>1</value>
   </data>
-    <data name="Nanometers-Microns-3" xml:space="preserve">
+  <data name="Joules-Foot-pounds" xml:space="preserve">
+    <value>1.3558179483314</value>
+  </data>
+  <data name="Joules-batteries" xml:space="preserve">
+    <value>9000</value>
+  </data>
+  <data name="Joules-bananas" xml:space="preserve">
+    <value>439614</value>
+  </data>
+  <data name="Joules-slices of cake" xml:space="preserve">
+    <value>1046700</value>
+  </data>
+  <data name="Meters-Inches" xml:space="preserve">
+    <value>0.0254</value>
+  </data>
+  <data name="Meters-Feet" xml:space="preserve">
+    <value>0.3048</value>
+  </data>
+  <data name="Meters-Yards" xml:space="preserve">
+    <value>0.9144</value>
+  </data>
+  <data name="Meters-Miles" xml:space="preserve">
+    <value>1609.344</value>
+  </data>
+  <data name="Meters-Microns" xml:space="preserve">
+    <value>0.000001</value>
+  </data>
+  <data name="Meters-Millimeters" xml:space="preserve">
+    <value>0.001</value>
+  </data>
+  <data name="Meters-Nanometers" xml:space="preserve">
+    <value>0.000000001</value>
+  </data>
+  <data name="Meters-Centimeters" xml:space="preserve">
+    <value>0.01</value>
+  </data>
+  <data name="Meters-Meters" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Meters-Kilometers" xml:space="preserve">
+    <value>1000</value>
+  </data>
+  <data name="Meters-Nautical Miles" xml:space="preserve">
+    <value>1852</value>
+  </data>
+  <data name="Meters-paperclips" xml:space="preserve">
+    <value>0.035052</value>
+  </data>
+  <data name="Meters-hands" xml:space="preserve">
+    <value>0.18669</value>
+  </data>
+  <data name="Meters-jumbo jets" xml:space="preserve">
+    <value>76</value>
+  </data>
+  <data name="Watts-British thermal unitsPerMinute" xml:space="preserve">
+    <value>17.58426666666667</value>
+  </data>
+  <data name="Watts-Foot-pounds/minute" xml:space="preserve">
+    <value>0.0225969658055233</value>
+  </data>
+  <data name="Watts-Watts" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Watts-Kilowatts" xml:space="preserve">
+    <value>1000</value>
+  </data>
+  <data name="Watts-Horsepower (US)" xml:space="preserve">
+    <value>745.69987158227022</value>
+  </data>
+  <data name="Watts-light bulbs" xml:space="preserve">
+    <value>60</value>
+  </data>
+  <data name="Watts-horses" xml:space="preserve">
+    <value>745.7</value>
+  </data>
+  <data name="Watts-train engines" xml:space="preserve">
+    <value>2982799.486329081</value>
+  </data>
+  <data name="Seconds-Days" xml:space="preserve">
+    <value>86400</value>
+  </data>
+  <data name="Seconds-Seconds" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Seconds-Weeks" xml:space="preserve">
+    <value>604800</value>
+  </data>
+  <data name="Seconds-Years" xml:space="preserve">
+    <value>31557600</value>
+  </data>
+  <data name="Seconds-Milliseconds" xml:space="preserve">
+    <value>0.001</value>
+  </data>
+  <data name="Seconds-Microseconds" xml:space="preserve">
+    <value>0.000001</value>
+  </data>
+  <data name="Seconds-Minutes" xml:space="preserve">
+    <value>60</value>
+  </data>
+  <data name="Seconds-Hours" xml:space="preserve">
+    <value>3600</value>
+  </data>
+  <data name="Cubic centimeters-Cups (US)" xml:space="preserve">
+    <value>236.588237</value>
+  </data>
+  <data name="Cubic centimeters-Pints (US)" xml:space="preserve">
+    <value>473.176473</value>
+  </data>
+  <data name="Cubic centimeters-Pints (UK)" xml:space="preserve">
+    <value>568.26125</value>
+  </data>
+  <data name="Cubic centimeters-Quarts (US)" xml:space="preserve">
+    <value>946.352946</value>
+  </data>
+  <data name="Cubic centimeters-Quarts (UK)" xml:space="preserve">
+    <value>1136.5225</value>
+  </data>
+  <data name="Cubic centimeters-Gallons (US)" xml:space="preserve">
+    <value>3785.411784</value>
+  </data>
+  <data name="Cubic centimeters-Gallons (UK)" xml:space="preserve">
+    <value>4546.09</value>
+  </data>
+  <data name="Cubic centimeters-Liters" xml:space="preserve">
+    <value>1000</value>
+  </data>
+  <data name="Cubic centimeters-Teaspoons (US)" xml:space="preserve">
+    <value>4.928922</value>
+  </data>
+  <data name="Cubic centimeters-Tablespoons (US)" xml:space="preserve">
+    <value>14.786765</value>
+  </data>
+  <data name="Cubic centimeters-Cubic centimeters" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Cubic centimeters-Cubic yards" xml:space="preserve">
+    <value>764554.857984</value>
+  </data>
+  <data name="Cubic centimeters-Cubic meters" xml:space="preserve">
+    <value>1000000</value>
+  </data>
+  <data name="Cubic centimeters-Milliliters" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Cubic centimeters-Cubic inches" xml:space="preserve">
+    <value>16.387064</value>
+  </data>
+  <data name="Cubic centimeters-Cubic feet" xml:space="preserve">
+    <value>28316.846592</value>
+  </data>
+  <data name="Cubic centimeters-Fluid ounces (US)" xml:space="preserve">
+    <value>29.5735295625</value>
+  </data>
+  <data name="Cubic centimeters-Fluid ounces (UK)" xml:space="preserve">
+    <value>28.4130625</value>
+  </data>
+  <data name="Cubic centimeters-Teaspoons (UK)" xml:space="preserve">
+    <value>5.91938802083333333333</value>
+  </data>
+  <data name="Cubic centimeters-Tablespoons (UK)" xml:space="preserve">
+    <value>17.7581640625</value>
+  </data>
+  <data name="Cubic centimeters-coffee cups" xml:space="preserve">
+    <value>236.5882</value>
+  </data>
+  <data name="Cubic centimeters-bathtubs" xml:space="preserve">
+    <value>378541.2</value>
+  </data>
+  <data name="Cubic centimeters-swimming pools" xml:space="preserve">
+    <value>3750000000</value>
+  </data>
+  <data name="Kilograms-Kilograms" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Kilograms-Hectograms" xml:space="preserve">
+    <value>0.1</value>
+  </data>
+  <data name="Kilograms-Dekagrams" xml:space="preserve">
+    <value>0.01</value>
+  </data>
+  <data name="Kilograms-Grams" xml:space="preserve">
+    <value>0.001</value>
+  </data>
+  <data name="Kilograms-Pounds" xml:space="preserve">
+    <value>0.45359237</value>
+  </data>
+  <data name="Kilograms-Ounces" xml:space="preserve">
+    <value>0.028349523125</value>
+  </data>
+  <data name="Kilograms-Milligrams" xml:space="preserve">
+    <value>0.000001</value>
+  </data>
+  <data name="Kilograms-Centigrams" xml:space="preserve">
+    <value>0.00001</value>
+  </data>
+  <data name="Kilograms-Decigrams" xml:space="preserve">
+    <value>0.0001</value>
+  </data>
+  <data name="Kilograms-Long tons (UK)" xml:space="preserve">
+    <value>1016.0469088</value>
+  </data>
+  <data name="Kilograms-Metric tonnes" xml:space="preserve">
+    <value>1000</value>
+  </data>
+  <data name="Kilograms-Stone" xml:space="preserve">
+    <value>6.35029318</value>
+  </data>
+  <data name="Kilograms-Carats" xml:space="preserve">
+    <value>0.0002</value>
+  </data>
+  <data name="Kilograms-Short tons (US)" xml:space="preserve">
+    <value>907.18474</value>
+  </data>
+  <data name="Kilograms-snowflakes" xml:space="preserve">
+    <value>0.000002</value>
+  </data>
+  <data name="Kilograms-soccer balls" xml:space="preserve">
+    <value>0.4325</value>
+  </data>
+  <data name="Kilograms-elephants" xml:space="preserve">
+    <value>4000</value>
+  </data>
+  <data name="Kilograms-whales" xml:space="preserve">
+    <value>90000</value>
+  </data>
+  <data name="CentimetersPerSecond-CentimetersPerSecond" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="CentimetersPerSecond-Feet per second" xml:space="preserve">
+    <value>30.48</value>
+  </data>
+  <data name="CentimetersPerSecond-Kilometers per hour" xml:space="preserve">
+    <value>27.777777777777777777778</value>
+  </data>
+  <data name="CentimetersPerSecond-Knots" xml:space="preserve">
+    <value>51.44</value>
+  </data>
+  <data name="CentimetersPerSecond-Mach" xml:space="preserve">
+    <value>34030</value>
+  </data>
+  <data name="CentimetersPerSecond-Meters per second" xml:space="preserve">
+    <value>100</value>
+  </data>
+  <data name="CentimetersPerSecond-Miles per hour" xml:space="preserve">
+    <value>44.7</value>
+  </data>
+  <data name="CentimetersPerSecond-turtles" xml:space="preserve">
+    <value>8.94</value>
+  </data>
+  <data name="CentimetersPerSecond-horses" xml:space="preserve">
+    <value>2011.5</value>
+  </data>
+  <data name="CentimetersPerSecond-jets" xml:space="preserve">
+    <value>24585</value>
+  </data>
+  <data name="Degrees-Degrees" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Degrees-Radians" xml:space="preserve">
+    <value>57.29577951308233</value>
+  </data>
+  <data name="Degrees-Gradians" xml:space="preserve">
+    <value>0.9</value>
+  </data>
+  <data name="Atmospheres-Atmospheres" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Atmospheres-Bars" xml:space="preserve">
+    <value>0.9869232667160128</value>
+  </data>
+  <data name="Atmospheres-Kilopascals" xml:space="preserve">
+    <value>0.0098692326671601</value>
+  </data>
+  <data name="Atmospheres-Millimeters of mercury " xml:space="preserve">
+    <value>0.0013155687145324</value>
+  </data>
+  <data name="Atmospheres-Pascals" xml:space="preserve">
+    <value>9.869232667160128e-6</value>
+  </data>
+  <data name="Atmospheres-Pounds per square inch" xml:space="preserve">
+    <value>0.068045961016531</value>
+  </data>
+  <data name="Liters-Cubic meters-2" xml:space="preserve">
+    <value>0.002</value>
+  </data>
+  <data name="Milliliters-Cubic centimeters" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Milliliters-Cubic centimeters-1" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Milliliters-Liters" xml:space="preserve">
+    <value>1000</value>
+  </data>
+  <data name="Milliliters-Milliliters" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Nanometers-Microns-3" xml:space="preserve">
     <value>0.003</value>
+  </data>
+  <data name="Joules-Kilowatthour" xml:space="preserve">
+    <value>3600000</value>
   </data>
 </root>
