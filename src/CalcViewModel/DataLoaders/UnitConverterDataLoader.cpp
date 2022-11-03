@@ -370,7 +370,7 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
                                        GetLocalizedStringName(L"UnitAbbreviation_Kilocalorie"),
                                        5,
                                        false,
-                                       false,
+                                       true,
                                        false });
     energyUnits.push_back(OrderedUnit{
         UnitConverterUnits::Energy_Kilojoule, GetLocalizedStringName(L"UnitName_Kilojoule"), GetLocalizedStringName(L"UnitAbbreviation_Kilojoule"), 3 });
