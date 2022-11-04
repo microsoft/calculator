@@ -474,14 +474,7 @@ namespace CalculatorApp
             m_windowsMapLock.EnterReadLock();
             try
             {
-                if (m_secondaryWindows.TryGetValue(viewId, out var windowMapEntry))
-                {
-                    return windowMapEntry;
-                }
-                else
-                {
-                    return null;
-                }
+                return m_secondaryWindows.TryGetValue(viewId, out var windowMapEntry) ? windowMapEntry : null;
             }
             finally
             {

@@ -601,21 +601,19 @@ namespace CalculatorApp
                     {
                         if (itemRef.Target is MUXC.NavigationView item)
                         {
-                            var navView = item;
-
-                            var menuItems = ((List<object>)navView.MenuItemsSource);
+                            var menuItems = ((List<object>)item.MenuItemsSource);
                             if (menuItems != null)
                             {
-                                var vm = (navView.DataContext as ApplicationViewModel);
+                                var vm = (item.DataContext as ApplicationViewModel);
                                 if (null != vm)
                                 {
                                     ViewMode realToMode = toMode.HasValue ? toMode.Value : NavCategoryStates.GetViewModeForVirtualKey(((MyVirtualKey)key));
 
                                     var nvi = menuItems[NavCategoryStates.GetFlatIndex(realToMode)];
-                                    if (CanNavigateModeByShortcut(navView, nvi, vm, realToMode))
+                                    if (CanNavigateModeByShortcut(item, nvi, vm, realToMode))
                                     {
                                         vm.Mode = realToMode;
-                                        navView.SelectedItem = nvi;
+                                        item.SelectedItem = nvi;
                                     }
                                 }
                             }
@@ -685,14 +683,13 @@ namespace CalculatorApp
                 {
                     if (currentHonorShortcuts)
                     {
-                        var myVirtualKey = key;
                         var lookupMap = GetCurrentKeyDictionary(isControlKeyPressed, isShiftKeyPressed, isAltKeyPressed);
                         if (lookupMap == null)
                         {
                             return;
                         }
 
-                        var buttons = EqualRange(lookupMap, (MyVirtualKey)myVirtualKey);
+                        var buttons = EqualRange(lookupMap, (MyVirtualKey)key);
                         if (!buttons.Any())
                         {
                             return;

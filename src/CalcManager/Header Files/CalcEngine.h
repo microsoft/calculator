@@ -154,14 +154,14 @@ private:
     std::unique_ptr<std::mt19937> m_randomGeneratorEngine;
     std::unique_ptr<std::uniform_real_distribution<>> m_distr;
 
-    uint64_t m_carryBit;
+    uint64_t m_carryBit{};
 
     CHistoryCollector m_HistoryCollector; // Accumulator of each line of history as various commands are processed
 
     std::array<CalcEngine::Rational, NUM_WIDTH_LENGTH> m_chopNumbers;           // word size enforcement
     std::array<std::wstring, NUM_WIDTH_LENGTH> m_maxDecimalValueStrings;        // maximum values represented by a given word width based off m_chopNumbers
     static std::unordered_map<std::wstring_view, std::wstring> s_engineStrings; // the string table shared across all instances
-    wchar_t m_decimalSeparator;
+    wchar_t m_decimalSeparator{};
     wchar_t m_groupSeparator;
 
 private:

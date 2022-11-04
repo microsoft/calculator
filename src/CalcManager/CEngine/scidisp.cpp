@@ -41,14 +41,14 @@ typedef struct
     Rational value;
     int32_t precision;
     uint32_t radix;
-    int nFE;
+    NumberFormat nFE;
     NUM_WIDTH numwidth;
     bool fIntMath;
     bool bRecord;
     bool bUseSep;
 } LASTDISP;
 
-static LASTDISP gldPrevious = { 0, -1, 0, -1, (NUM_WIDTH)-1, false, false, false };
+static LASTDISP gldPrevious = { 0, -1, 0, (NumberFormat)-1, (NUM_WIDTH)-1, false, false, false };
 
 // Truncates if too big, makes it a non negative - the number in rat. Doesn't do anything if not in INT mode
 CalcEngine::Rational CCalcEngine::TruncateNumForIntMath(CalcEngine::Rational const& rat)
@@ -84,12 +84,12 @@ void CCalcEngine::DisplayNum(void)
     //  something important has changed since the last time DisplayNum was
     //  called.
     //
-    if (m_bRecord || gldPrevious.value != m_currentVal || gldPrevious.precision != m_precision || gldPrevious.radix != m_radix || gldPrevious.nFE != (int)m_nFE
+    if (m_bRecord || gldPrevious.value != m_currentVal || gldPrevious.precision != m_precision || gldPrevious.radix != m_radix || gldPrevious.nFE != m_nFE
         || !gldPrevious.bUseSep || gldPrevious.numwidth != m_numwidth || gldPrevious.fIntMath != m_fIntegerMode || gldPrevious.bRecord != m_bRecord)
     {
         gldPrevious.precision = m_precision;
         gldPrevious.radix = m_radix;
-        gldPrevious.nFE = (int)m_nFE;
+        gldPrevious.nFE = m_nFE;
         gldPrevious.numwidth = m_numwidth;
 
         gldPrevious.fIntMath = m_fIntegerMode;
@@ -156,7 +156,7 @@ int CCalcEngine::IsNumberInvalid(const wstring& numberString, int iMaxExp, int i
                 auto intEnd = exp.end();
                 while (intItr != intEnd && *intItr == L'0')
                 {
-                    intItr++;
+                    ++intItr;
                 }
 
                 auto iMantissa = distance(intItr, intEnd) + matches.length(2);

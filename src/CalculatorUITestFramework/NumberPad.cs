@@ -34,7 +34,7 @@ namespace CalculatorUITestFramework
             string numberStr = number.ToString(CultureInfo.InvariantCulture);
             if (numberStr.StartsWith("-"))
             {
-                numberStr = numberStr.Substring(1) + "-";
+                numberStr = numberStr[1..] + "-";
             }
             foreach (char digit in numberStr)
             {

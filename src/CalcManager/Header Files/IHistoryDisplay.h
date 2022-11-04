@@ -9,7 +9,7 @@
 class IHistoryDisplay
 {
 public:
-    virtual ~IHistoryDisplay(){};
+    virtual ~IHistoryDisplay() = default;
     virtual unsigned int AddToHistory(
         _In_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
         _In_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands,

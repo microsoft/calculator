@@ -411,7 +411,7 @@ void UnitConverter::SendCommand(Command command)
     {
         clearFront = (m_currentDisplay == L"0");
         clearBack =
-            ((m_currentHasDecimal && m_currentDisplay.size() - 1 >= MAXIMUMDIGITSALLOWED)
+            ((m_currentHasDecimal && m_currentDisplay.size() >= MAXIMUMDIGITSALLOWED + 1)
              || (!m_currentHasDecimal && m_currentDisplay.size() >= MAXIMUMDIGITSALLOWED));
     }
 
@@ -619,15 +619,15 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
     vector<SuggestedValueIntermediate> intermediateWhimsicalVector;
     unordered_map<Unit, ConversionData, UnitHash> ratios = m_ratioMap[m_fromType];
     // Calculate converted values for every other unit type in this category, along with their magnitude
-    for (const auto& cur : ratios)
+    for (const auto& [first, second] : ratios)
     {
-        if (cur.first != m_fromType && cur.first != m_toType)
+        if (first != m_fromType && first != m_toType)
         {
-            double convertedValue = Convert(stod(m_currentDisplay), cur.second);
+            double convertedValue = Convert(stod(m_currentDisplay), second);
             SuggestedValueIntermediate newEntry;
             newEntry.magnitude = log10(convertedValue);
             newEntry.value = convertedValue;
-            newEntry.type = cur.first;
+            newEntry.type = first;
             if (newEntry.type.isWhimsical)
                 intermediateWhimsicalVector.push_back(newEntry);
             else
@@ -636,7 +636,7 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
     }
 
     // Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
-    sort(intermediateVector.begin(), intermediateVector.end(), [](SuggestedValueIntermediate first, SuggestedValueIntermediate second) {
+    sort(intermediateVector.begin(), intermediateVector.end(), [](const SuggestedValueIntermediate& first, const SuggestedValueIntermediate& second) {
         if (abs(first.magnitude) == abs(second.magnitude))
         {
             return first.magnitude > second.magnitude;
@@ -648,31 +648,32 @@ vector<tuple<wstring, Unit>> UnitConverter::CalculateSuggested()
     });
 
     // Now that the list is sorted, iterate over it and populate the return vector with properly rounded and formatted return strings
-    for (const auto& entry : intermediateVector)
+    for (const auto& [magnitude, value, type] : intermediateVector)
     {
         wstring roundedString;
-        if (abs(entry.value) < 100)
+        if (abs(value) < 100)
         {
-            roundedString = RoundSignificantDigits(entry.value, 2U);
+            roundedString = RoundSignificantDigits(value, 2U);
         }
-        else if (abs(entry.value) < 1000)
+        else if (abs(value) < 1000)
         {
-            roundedString = RoundSignificantDigits(entry.value, 1U);
+            roundedString = RoundSignificantDigits(value, 1U);
         }
         else
         {
-            roundedString = RoundSignificantDigits(entry.value, 0U);
+            roundedString = RoundSignificantDigits(value, 0U);
         }
         if (stod(roundedString) != 0.0 || m_currentCategory.supportsNegative)
         {
             TrimTrailingZeros(roundedString);
-            returnVector.emplace_back(roundedString, entry.type);
+            returnVector.emplace_back(roundedString, type);
         }
     }
 
     // The Whimsicals are determined differently
     // Sort the resulting list by absolute magnitude, breaking ties by choosing the positive value
-    sort(intermediateWhimsicalVector.begin(), intermediateWhimsicalVector.end(), [](SuggestedValueIntermediate first, SuggestedValueIntermediate second) {
+    sort(intermediateWhimsicalVector.begin(), intermediateWhimsicalVector.end(), [](const SuggestedValueIntermediate& first, const SuggestedValueIntermediate&
+                                                                                    second) {
         if (abs(first.magnitude) == abs(second.magnitude))
         {
             return first.magnitude > second.magnitude;

@@ -59,9 +59,7 @@ namespace MockGraphingImpl
     class MockExpression : public Graphing::IExpression
     {
     public:
-        MockExpression()
-        {
-        }
+        MockExpression() = default;
 
         unsigned int GetExpressionID() const override
         {
@@ -76,9 +74,7 @@ namespace MockGraphingImpl
     class MockVariable : public Graphing::IVariable
     {
     public:
-        MockVariable()
-        {
-        }
+        MockVariable() = default;
 
         int GetVariableID() const override
         {
@@ -96,9 +92,7 @@ namespace MockGraphingImpl
     class MathSolver : public Graphing::IMathSolver
     {
     public:
-        MathSolver()
-        {
-        }
+        MathSolver() = default;
 
         Graphing::IParsingOptions& ParsingOptions() override
         {

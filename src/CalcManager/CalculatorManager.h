@@ -44,7 +44,7 @@ namespace CalculationManager
     class CalculatorManager final : public ICalcDisplay
     {
     private:
-        static const unsigned int m_maximumMemorySize = 100;
+        static constexpr unsigned int m_maximumMemorySize = 100;
         ICalcDisplay* const m_displayCallback;
         CCalcEngine* m_currentCalculatorEngine;
         std::unique_ptr<CCalcEngine> m_scientificCalculatorEngine;

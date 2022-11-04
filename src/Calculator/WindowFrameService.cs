@@ -166,14 +166,7 @@ namespace CalculatorApp
         // Returns nullptr if no service is registered with the specified id
         private object TryResolveRuntimeWindowService(Type serviceId)
         {
-            if (m_runtimeServicesMap.TryGetValue(serviceId.Name, out object retval))
-            {
-                return retval;
-            }
-            else
-            {
-                return null;
-            }
+            return m_runtimeServicesMap.TryGetValue(serviceId.Name, out object retval) ? retval : null;
         }
 
         private readonly Windows.UI.Core.CoreWindow m_currentWindow;

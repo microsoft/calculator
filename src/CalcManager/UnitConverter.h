@@ -15,9 +15,8 @@ namespace UnitConversionManager
 
     struct Unit
     {
-        Unit()
-        {
-        }
+        Unit() = default;
+
         Unit(int id, std::wstring_view name, std::wstring abbreviation, bool isConversionSource, bool isConversionTarget, bool isWhimsical)
             : id(id)
             , name(name)
@@ -53,13 +52,13 @@ namespace UnitConversionManager
             accessibleName.append(1, L' ').append(nameValue2);
         }
 
-        int id;
+        int id{};
         std::wstring name;
         std::wstring accessibleName;
         std::wstring abbreviation;
-        bool isConversionSource;
-        bool isConversionTarget;
-        bool isWhimsical;
+        bool isConversionSource{};
+        bool isConversionTarget{};
+        bool isWhimsical{};
 
         bool operator!=(const Unit& that) const
         {
@@ -81,9 +80,7 @@ namespace UnitConversionManager
 
     struct Category
     {
-        Category()
-        {
-        }
+        Category() = default;
 
         Category(int id, std::wstring name, bool supportsNegative)
             : id(id)
@@ -92,9 +89,9 @@ namespace UnitConversionManager
         {
         }
 
-        int id;
+        int id{};
         std::wstring name;
-        bool supportsNegative;
+        bool supportsNegative{};
 
         bool operator!=(const Category& that) const
         {
@@ -118,16 +115,15 @@ namespace UnitConversionManager
 
     struct SuggestedValueIntermediate
     {
-        double magnitude;
-        double value;
+        double magnitude{};
+        double value{};
         Unit type;
     };
 
     struct ConversionData
     {
-        ConversionData()
-        {
-        }
+        ConversionData() = default;
+
         ConversionData(double ratio, double offset, bool offsetFirst)
             : ratio(ratio)
             , offset(offset)
@@ -166,7 +162,7 @@ namespace UnitConversionManager
     class IViewModelCurrencyCallback
     {
     public:
-        virtual ~IViewModelCurrencyCallback(){};
+        virtual ~IViewModelCurrencyCallback() = default;
         virtual void CurrencyDataLoadFinished(bool didLoad) = 0;
         virtual void CurrencySymbolsCallback(_In_ const std::wstring& fromSymbol, _In_ const std::wstring& toSymbol) = 0;
         virtual void CurrencyRatiosCallback(_In_ const std::wstring& ratioEquality, _In_ const std::wstring& accRatioEquality) = 0;
@@ -177,7 +173,7 @@ namespace UnitConversionManager
     class IConverterDataLoader
     {
     public:
-        virtual ~IConverterDataLoader(){};
+        virtual ~IConverterDataLoader() = default;
         virtual void LoadData() = 0; // prepare data if necessary before calling other functions
         virtual std::vector<Category> GetOrderedCategories() = 0;
         virtual std::vector<Unit> GetOrderedUnits(const Category& c) = 0;
@@ -203,7 +199,7 @@ namespace UnitConversionManager
     class IUnitConverterVMCallback
     {
     public:
-        virtual ~IUnitConverterVMCallback(){};
+        virtual ~IUnitConverterVMCallback() = default;
         virtual void DisplayCallback(const std::wstring& from, const std::wstring& to) = 0;
         virtual void SuggestedValueCallback(const std::vector<std::tuple<std::wstring, Unit>>& suggestedValues) = 0;
         virtual void MaxDigitsReached() = 0;
@@ -212,9 +208,7 @@ namespace UnitConversionManager
     class IUnitConverter
     {
     public:
-        virtual ~IUnitConverter()
-        {
-        }
+        virtual ~IUnitConverter() = default;
         virtual void Initialize() = 0; // Use to initialize first time, use deserialize instead to rehydrate
         virtual std::vector<Category> GetCategories() = 0;
         virtual CategorySelectionInitializer SetCurrentCategory(const Category& input) = 0;
@@ -289,8 +283,8 @@ namespace UnitConversionManager
         Unit m_toType;
         std::wstring m_currentDisplay;
         std::wstring m_returnDisplay;
-        bool m_currentHasDecimal;
-        bool m_returnHasDecimal;
-        bool m_switchedActive;
+        bool m_currentHasDecimal{};
+        bool m_returnHasDecimal{};
+        bool m_switchedActive{};
     };
 }

@@ -212,7 +212,7 @@ void COpndCommand::ClearAllAndAppendCommand(CalculationManager::Command command)
 
 const wstring& COpndCommand::GetToken(wchar_t decimalSymbol)
 {
-    static const wchar_t chZero = L'0';
+    static constexpr wchar_t chZero = L'0';
 
     const size_t nCommands = m_commands->size();
     m_token.clear();

@@ -1,4 +1,4 @@
-﻿using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel;
 
 using System;
 using System.Collections.Generic;
@@ -56,14 +56,7 @@ namespace CalculatorApp
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             SupplementaryResult result = (SupplementaryResult)item;
-            if (result.IsWhimsical())
-            {
-                return DelighterTemplate;
-            }
-            else
-            {
-                return RegularTemplate;
-            }
+            return result.IsWhimsical() ? DelighterTemplate : RegularTemplate;
         }
     }
 

@@ -66,10 +66,7 @@ namespace CalculatorApp
             Window.Current.SizeChanged -= WindowSizeChanged;
             m_accessibilitySettings.HighContrastChanged -= OnHighContrastChanged;
 
-            if (m_calculator != null)
-            {
-                m_calculator.UnregisterEventHandlers();
-            }
+            m_calculator?.UnregisterEventHandlers();
         }
 
         public void SetDefaultFocus()
@@ -435,10 +432,7 @@ namespace CalculatorApp
 
         private void UpdatePanelViewState()
         {
-            if (m_calculator != null)
-            {
-                m_calculator.UpdatePanelViewState();
-            }
+            m_calculator?.UpdatePanelViewState();
         }
 
         private void OnHighContrastChanged(AccessibilitySettings sender, object args)
@@ -528,10 +522,7 @@ namespace CalculatorApp
                 ShowHideControls(Model.Mode);
             }
 
-            if (m_dateCalculator != null)
-            {
-                m_dateCalculator.CloseCalendarFlyout();
-            }
+            m_dateCalculator?.CloseCalendarFlyout();
         }
 
         private void EnsureDateCalculator()

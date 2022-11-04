@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#include <utility>
+
 #include "Header Files/CalcEngine.h"
 #include "Command.h"
 #include "ExpressionCommand.h"
@@ -45,7 +47,7 @@ void CHistoryCollector::ReinitHistory()
 // Constructor
 // Can throw Out of memory error
 CHistoryCollector::CHistoryCollector(ICalcDisplay* pCalcDisplay, std::shared_ptr<IHistoryDisplay> pHistoryDisplay, wchar_t decimalSymbol)
-    : m_pHistoryDisplay(pHistoryDisplay)
+    : m_pHistoryDisplay(std::move(pHistoryDisplay))
     , m_pCalcDisplay(pCalcDisplay)
     , m_iCurLineHistStart(-1)
     , m_decimalSymbol(decimalSymbol)

@@ -1124,5 +1124,5 @@ double CCalcEngine::GenerateRandomNumber()
         m_randomGeneratorEngine = std::make_unique<std::mt19937>(rd());
         m_distr = std::make_unique<std::uniform_real_distribution<>>(0, 1);
     }
-    return (*m_distr.get())(*m_randomGeneratorEngine.get());
+    return (*m_distr)(*m_randomGeneratorEngine);
 }

@@ -376,10 +376,7 @@ namespace CalculatorApp
 
             var peer = FrameworkElementAutomationPeer.FromElement(TraceValue);
 
-            if (peer != null)
-            {
-                peer.RaiseAutomationEvent(AutomationEvents.LiveRegionChanged);
-            }
+            peer?.RaiseAutomationEvent(AutomationEvents.LiveRegionChanged);
 
             PositionGraphPopup();
         }
@@ -547,10 +544,7 @@ namespace CalculatorApp
 
             var announcement = CalculatorAnnouncement.GetGraphViewChangedAnnouncement(GraphControlAutomationName);
             var peer = FrameworkElementAutomationPeer.FromElement(GraphingControl);
-            if (peer != null)
-            {
-                peer.RaiseNotificationEvent(announcement.Kind, announcement.Processing, announcement.Announcement, announcement.ActivityId);
-            }
+            peer?.RaiseNotificationEvent(announcement.Kind, announcement.Processing, announcement.Announcement, announcement.ActivityId);
         }
 
         private void GraphingControl_GraphPlottedEvent(object sender, RoutedEventArgs e)

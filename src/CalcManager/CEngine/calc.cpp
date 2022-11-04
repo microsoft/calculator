@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include <cassert>
+#include <utility>
 #include "Header Files/CalcEngine.h"
 #include "CalculatorResource.h"
 
@@ -96,7 +97,7 @@ CCalcEngine::CCalcEngine(
     , m_nLastCom(0)
     , m_angletype(AngleType::Degrees)
     , m_numwidth(NUM_WIDTH::QWORD_WIDTH)
-    , m_HistoryCollector(pCalcDisplay, pHistoryDisplay, DEFAULT_DEC_SEPARATOR)
+    , m_HistoryCollector(pCalcDisplay, std::move(pHistoryDisplay), DEFAULT_DEC_SEPARATOR)
     , m_groupSeparator(DEFAULT_GRP_SEPARATOR)
 {
     InitChopNumbers();

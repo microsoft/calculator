@@ -85,10 +85,7 @@ namespace CalculatorUITestFramework
             }
             finally
             {
-                if (sock != null)
-                {
-                    sock.Dispose();
-                }
+                sock?.Dispose();
             }
         }
     }
