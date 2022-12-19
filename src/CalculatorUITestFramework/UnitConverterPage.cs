@@ -10,7 +10,7 @@ namespace CalculatorUITestFramework
         public NavigationMenu NavigationMenu = new NavigationMenu();
         public UnitConverterResults UnitConverterResults = new UnitConverterResults();
 
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
 
         /// <summary>
         /// Clear the Calculator display
@@ -46,7 +46,7 @@ namespace CalculatorUITestFramework
         ///// </summary>
         public void EnsureCalculatorIsCurrencyMode()
         {
-            string source = WinAppDriver.Instance.CalculatorSession.PageSource;
+            string source = CalculatorDriver.Instance.CalculatorSession.PageSource;
             if (source.Contains("Header"))
             {
                 string header = CalculatorApp.Header.Text;

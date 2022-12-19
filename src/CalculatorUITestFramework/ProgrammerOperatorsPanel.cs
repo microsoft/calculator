@@ -11,7 +11,7 @@ namespace CalculatorUITestFramework
     /// </summary>
     public class ProgrammerOperatorsPanel
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         public NumberPad NumberPad = new NumberPad();
 
         public WindowsElement HexButton => this.session.TryFindElementByAccessibilityId("hexButton");

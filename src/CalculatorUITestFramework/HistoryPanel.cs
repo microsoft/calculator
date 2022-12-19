@@ -17,7 +17,7 @@ namespace CalculatorUITestFramework
         public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
         public WindowsElement ClearHistoryButton => this.session.TryFindElementByAccessibilityId("ClearHistory");
 
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         private WindowsElement HistoryLabel => this.session.TryFindElementByAccessibilityId("HistoryLabel");
         private WindowsElement HistoryListView => this.session.TryFindElementByAccessibilityId("HistoryListView");
         private WindowsElement HistoryFlyout => this.session.TryFindElementByAccessibilityId("HistoryFlyout");
@@ -62,8 +62,8 @@ namespace CalculatorUITestFramework
         public void ResizeWindowToDisplayHistoryLabel()
         {
             // Put the calculator in the upper left region of the screen
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
-            GrowWindowToShowHistoryLabel(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
+            CalculatorDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
+            GrowWindowToShowHistoryLabel(CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
         }
 
         ///// <summary>
@@ -72,8 +72,8 @@ namespace CalculatorUITestFramework
         public void ResizeWindowToDisplayHistoryButton()
         {
             // Put the calculator in the upper left region of the screen
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
-            ShrinkWindowToShowHistoryButton(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
+            CalculatorDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
+            ShrinkWindowToShowHistoryButton(CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace CalculatorUITestFramework
             this.ResizeWindowToDisplayHistoryButton();
             CalculatorApp.EnsureCalculatorHasFocus();
             CalculatorApp.Window.SendKeys(Keys.Control + "h" + Keys.Control);
-            Actions moveToHistoryFlyout = new Actions(WinAppDriver.Instance.CalculatorSession);
+            Actions moveToHistoryFlyout = new Actions(CalculatorDriver.Instance.CalculatorSession);
             moveToHistoryFlyout.MoveToElement(HistoryFlyout);
             moveToHistoryFlyout.Perform();
         }
@@ -111,8 +111,8 @@ namespace CalculatorUITestFramework
 
             if (!this.session.PageSource.Contains("HistoryLabel"))
             {
-                var height = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Height;
-                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
+                var height = CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size.Height;
+                CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
                 //give window time to render new size
                 System.Threading.Thread.Sleep(10);
                 GrowWindowToShowHistoryLabel(width + 100);
@@ -131,8 +131,8 @@ namespace CalculatorUITestFramework
 
             if (!this.session.PageSource.Contains("HistoryButton"))
             {
-                var height = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Height;
-                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
+                var height = CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size.Height;
+                CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
                 //give window time to render new size
                 System.Threading.Thread.Sleep(10);
                 ShrinkWindowToShowHistoryButton(width - 100);

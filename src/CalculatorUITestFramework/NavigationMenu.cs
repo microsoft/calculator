@@ -33,7 +33,7 @@ namespace CalculatorUITestFramework
         public WindowsElement NavigationMenuButton => this.session.TryFindElementByAccessibilityId("TogglePaneButton");
         public WindowsElement NavigationMenuPane => this.session.TryFindElementByClassName("SplitViewPane");
 
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
 
         /// <summary>
         /// Changes the mode using the navigation menu in the UI

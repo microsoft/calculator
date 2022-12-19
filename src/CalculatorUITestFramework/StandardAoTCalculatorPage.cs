@@ -20,9 +20,9 @@ namespace CalculatorUITestFramework
         public NavigationMenu NavigationMenu = new NavigationMenu();
         public WindowsElement EnterAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("NormalAlwaysOnTopButton");
         public WindowsElement ExitAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("ExitAlwaysOnTopButton");
-        public AppiumWebElement ToolTip => WinAppDriver.Instance.CalculatorSession.FindElementByClassName("ToolTip").FindElementByClassName("TextBlock");
+        public AppiumWebElement ToolTip => CalculatorDriver.Instance.CalculatorSession.FindElementByClassName("ToolTip").FindElementByClassName("TextBlock");
 
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
 
         ///// <summary>
         ///// Navigates from AoT(Keep on top) to Standard
@@ -59,7 +59,7 @@ namespace CalculatorUITestFramework
             {
                 this.EnterAlwaysOnTopButton.Click();
                 this.ExitAlwaysOnTopButton.WaitForDisplayed();
-                source = WinAppDriver.Instance.CalculatorSession.PageSource;
+                source = CalculatorDriver.Instance.CalculatorSession.PageSource;
                 if (source.Contains("Header"))
                 {
                     throw new NotFoundException("Failed to enter 'Keep on top' mode; In AoT mode, Calculator does not have header");
@@ -77,13 +77,13 @@ namespace CalculatorUITestFramework
             {
                 if (source.Contains("Keep on top"))
                 {
-                    Actions moveToAoTButton = new Actions(WinAppDriver.Instance.CalculatorSession);
+                    Actions moveToAoTButton = new Actions(CalculatorDriver.Instance.CalculatorSession);
                     moveToAoTButton.MoveToElement(EnterAlwaysOnTopButton);
                     moveToAoTButton.Perform();
                 }
                 else
                 {
-                    Actions moveToBackToFullViewVButton = new Actions(WinAppDriver.Instance.CalculatorSession);
+                    Actions moveToBackToFullViewVButton = new Actions(CalculatorDriver.Instance.CalculatorSession);
                     moveToBackToFullViewVButton.MoveToElement(ExitAlwaysOnTopButton);
                     moveToBackToFullViewVButton.Perform();
                 }
@@ -127,8 +127,8 @@ namespace CalculatorUITestFramework
         public void ResizeAoTWindowToDisplayInvertButton()
         {
             // Put the calculator in the upper left region of the screen
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
-            GrowWindowToShowInvertButton(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Height);
+            CalculatorDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
+            GrowWindowToShowInvertButton(CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size.Height);
         }
 
         /// <summary>
@@ -143,8 +143,8 @@ namespace CalculatorUITestFramework
 
             if (!this.session.PageSource.Contains("invertButton"))
             {
-                var width = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width;
-                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
+                var width = CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size.Width;
+                CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
                 //give window time to render new size
                 System.Threading.Thread.Sleep(10);
                 GrowWindowToShowInvertButton(height + 100);

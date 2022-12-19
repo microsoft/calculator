@@ -6,7 +6,7 @@ namespace CalculatorUITestFramework
 {
     public class UnitConverterOperatorsPanel
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         public NumberPad NumberPad = new NumberPad();
         public WindowsElement ClearButton => this.session.TryFindElementByAccessibilityId("ClearEntryButtonPos0");
         public WindowsElement BackSpaceButton => this.session.TryFindElementByAccessibilityId("BackSpaceButtonSmall");
