@@ -29,10 +29,10 @@ namespace CalcEngine::RationalMath
     Rational ACos(Rational const& rat, AngleType angletype);
     Rational ATan(Rational const& rat, AngleType angletype);
 
-    Rational Sinh(Rational const& rat);
-    Rational Cosh(Rational const& rat);
-    Rational Tanh(Rational const& rat);
-    Rational ASinh(Rational const& rat);
-    Rational ACosh(Rational const& rat);
-    Rational ATanh(Rational const& rat);
+    Rational Sinh(Rational const& rat, AngleType angletype);
+    Rational Cosh(Rational const& rat, AngleType angletype);
+    Rational Tanh(Rational const& rat, AngleType angletype);
+    Rational ASinh(Rational const& rat, AngleType angletype);
+    Rational ACosh(Rational const& rat, AngleType angletype);
+    Rational ATanh(Rational const& rat, AngleType angletype);
 }
