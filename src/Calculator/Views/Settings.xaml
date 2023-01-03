@@ -14,7 +14,7 @@
         <ResourceDictionary>
             <Style x:Key="SettingsContentScrollViewStyle" TargetType="ScrollViewer">
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
                 <Setter Property="HorizontalScrollMode" Value="Disabled"/>
                 <Setter Property="IsHorizontalRailEnabled" Value="False"/>
@@ -31,11 +31,19 @@
                 <Setter Property="TextWrapping" Value="Wrap"/>
             </Style>
 
+            <Style x:Key="SettingsCategoryTitleTextBlockStyle"
+                   BasedOn="{StaticResource BodyStrongTextBlockStyle}"
+                   TargetType="TextBlock">
+                <Setter Property="Margin" Value="0,29,0,5"/>
+            </Style>
+
             <automation:NarratorNotifier x:Name="NarratorNotifier"/>
 
             <!-- Override default hyperlink button background color -->
             <StaticResource x:Key="HyperlinkButtonBackgroundPointerOver" ResourceKey="SubtleFillColorTransparentBrush"/>
             <StaticResource x:Key="HyperlinkButtonBackgroundPressed" ResourceKey="SubtleFillColorTransparentBrush"/>
+
+            <x:Double x:Key="SettingsCardSpacing">3</x:Double>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -44,42 +52,6 @@
             <RowDefinition Height="{x:Bind TitleBarHeight, Mode=OneWay}"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="LayoutVisualStates">
-                <VisualState x:Name="LargeWideView">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="690"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ColumnAbout.Width" Value="324"/>
-                        <Setter Target="AboutContentGrid.(Grid.Row)" Value="0"/>
-                        <Setter Target="AboutContentGrid.(Grid.RowSpan)" Value="3"/>
-                        <Setter Target="AboutContentGrid.(Grid.Column)" Value="1"/>
-                        <Setter Target="AboutGroupTitle.Margin" Value="0"/>
-                        <Setter Target="AboutContentGrid.Margin" Value="60,0,0,0"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="SideVisible">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="632"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ColumnMain.Width" Value="*"/>
-                        <Setter Target="ColumnAbout.Width" Value="*"/>
-                        <Setter Target="AboutContentGrid.(Grid.Row)" Value="0"/>
-                        <Setter Target="AboutContentGrid.(Grid.RowSpan)" Value="3"/>
-                        <Setter Target="AboutContentGrid.(Grid.Column)" Value="1"/>
-                        <Setter Target="AboutGroupTitle.Margin" Value="0"/>
-                        <Setter Target="AboutContentGrid.Margin" Value="60,0,0,0"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="DefaultLayout">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
 
         <Button x:Name="BackButton"
                 x:Uid="TitleBarBackButton"
@@ -107,138 +79,102 @@
                       Margin="0,60,0,0"
                       Padding="24,0,24,16"
                       Style="{StaticResource SettingsContentScrollViewStyle}">
-            <Grid x:Name="ContentGrid">
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="ColumnMain" Width="*"/>
-                    <ColumnDefinition x:Name="ColumnAbout" Width="0"/>
+                    <ColumnDefinition MaxWidth="1000"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition x:Name="AppearanceTitleRow" Height="Auto"/>
-                    <RowDefinition x:Name="AppearanceExpanderRow" Height="Auto"/>
-                    <RowDefinition x:Name="AboutTitleContentRow" Height="*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock x:Uid="SettingsAppearance"
-                           Style="{StaticResource BodyStrongTextBlockStyle}"
-                           AutomationProperties.HeadingLevel="Level1"/>
-
-                <muxc:Expander x:Name="AppThemeExpander"
-                               x:Uid="AppThemeExpander"
-                               Grid.Row="1"
-                               Margin="0,8,0,0"
-                               HorizontalAlignment="Stretch"
-                               VerticalAlignment="Top"
-                               HorizontalContentAlignment="Left"
-                               ExpandDirection="Down"
-                               IsExpanded="False">
-                    <muxc:Expander.Header>
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <FontIcon Margin="0,0,12,0"
-                                      VerticalAlignment="Center"
-                                      Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                                      FontFamily="{ThemeResource CalculatorFontFamily}"
-                                      FontSize="16"
-                                      Glyph="&#xE790;"/>
-
-                            <StackPanel Grid.Column="1"
-                                        Margin="0,12"
-                                        Orientation="Vertical">
-                                <TextBlock x:Uid="SettingsAppThemeTitle" Style="{StaticResource BodyTextBlockStyle}"/>
-                                <TextBlock x:Uid="SettingsAppThemeDescription"
-                                           Style="{StaticResource CaptionTextBlockStyle}"
-                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                           TextWrapping="WrapWholeWords"/>
-                            </StackPanel>
-                        </Grid>
-                    </muxc:Expander.Header>
-                    <muxc:Expander.Content>
-                        <muxc:RadioButtons x:Name="ThemeRadioButtons"
-                                           Margin="32,0,0,0"
-                                           SelectionChanged="OnThemeSelectionChanged">
-                            <RadioButton x:Name="LightThemeRadioButton"
-                                         x:Uid="LightThemeRadioButton"
-                                         Tag="Light"/>
-                            <RadioButton x:Name="DarkThemeRadioButton"
-                                         x:Uid="DarkThemeRadioButton"
-                                         Tag="Dark"/>
-                            <RadioButton x:Name="SystemThemeRadioButton"
-                                         x:Uid="SystemThemeRadioButton"
-                                         Tag="Default"/>
-                        </muxc:RadioButtons>
-                    </muxc:Expander.Content>
-                </muxc:Expander>
-
-                <Grid x:Name="AboutContentGrid" Grid.Row="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource SettingsCardSpacing}">
+                    <StackPanel.ChildrenTransitions>
+                        <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True" />
+                    </StackPanel.ChildrenTransitions>
+                    <TextBlock x:Uid="SettingsAppearance"
+                               Style="{StaticResource SettingsCategoryTitleTextBlockStyle}"
+                               AutomationProperties.HeadingLevel="Level1"/>
+                    <labs:SettingsExpander x:Name="AppThemeExpander"
+                                           Description="Select which app theme to display"
+                                           Header="App theme">
+                        <labs:SettingsExpander.HeaderIcon>
+                            <FontIcon Glyph="&#xE790;"/>
+                        </labs:SettingsExpander.HeaderIcon>
+                        <labs:SettingsExpander.Items>
+                            <labs:SettingsCard ContentAlignment="Left">
+                                <muxc:RadioButtons x:Name="ThemeRadioButtons" SelectionChanged="OnThemeSelectionChanged">
+                                    <RadioButton x:Name="LightThemeRadioButton"
+                                                 x:Uid="LightThemeRadioButton"
+                                                 Tag="Light"/>
+                                    <RadioButton x:Name="DarkThemeRadioButton"
+                                                 x:Uid="DarkThemeRadioButton"
+                                                 Tag="Dark"/>
+                                    <RadioButton x:Name="SystemThemeRadioButton"
+                                                 x:Uid="SystemThemeRadioButton"
+                                                 Tag="Default"/>
+                                </muxc:RadioButtons>
+                            </labs:SettingsCard>
+                        </labs:SettingsExpander.Items>
+                    </labs:SettingsExpander>
 
                     <TextBlock x:Name="AboutGroupTitle"
                                x:Uid="AboutGroupTitle"
-                               Margin="0,20,0,0"
-                               Style="{ThemeResource BodyStrongTextBlockStyle}"
+                               Style="{ThemeResource SettingsCategoryTitleTextBlockStyle}"
                                AutomationProperties.HeadingLevel="Level1"/>
-                    <StackPanel Grid.Row="1"
-                                Margin="0,8,0,0"
-                                Orientation="Vertical">
-                        <RichTextBlock x:Name="AboutContentBody" Style="{StaticResource SettingsRichTextBlockStyle}">
-                            <Paragraph>
-                                <Run x:Name="AboutBuildVersion"/>
-                                <LineBreak/>
-                                <Run x:Name="AboutControlCopyrightRun"/>
-                            </Paragraph>
-                        </RichTextBlock>
+                    <labs:SettingsExpander x:Name="AboutExpander">
+                        <labs:SettingsExpander.HeaderIcon>
+                            <BitmapIcon AutomationProperties.AccessibilityView="Raw" UriSource="ms-appx:///Assets/CalculatorAppList.png"/>
+                        </labs:SettingsExpander.HeaderIcon>
+                        <TextBlock x:Name="AboutBuildVersion"
+                                   Style="{StaticResource CaptionTextBlockStyle}"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                   IsTextSelectionEnabled="True"/>
+                        <labs:SettingsExpander.Items>
+                            <labs:SettingsCard ContentAlignment="Left">
+                                <StackPanel Margin="0,6"
+                                            Orientation="Vertical"
+                                            Spacing="12">
+                                    
+                                    <HyperlinkButton x:Name="AboutEULA"
+                                                     Padding="0"
+                                                     NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
+                                                     ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
+                                        <TextBlock x:Uid="AboutEULA"
+                                                   FontSize="{ThemeResource BodyFontSize}"
+                                                   TextWrapping="Wrap"/>
+                                    </HyperlinkButton>
 
-                        <HyperlinkButton x:Name="AboutEULA"
-                                         Margin="0,16,0,0"
-                                         Padding="0"
-                                         NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
-                                         ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
-                            <TextBlock x:Uid="AboutEULA"
-                                       FontSize="{ThemeResource BodyFontSize}"
-                                       TextWrapping="Wrap"/>
-                        </HyperlinkButton>
+                                    <HyperlinkButton x:Name="AboutControlServicesAgreement"
+                                                     Padding="0"
+                                                     NavigateUri="https://go.microsoft.com/fwlink/?LinkID=822631"
+                                                     ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=822631">
+                                        <TextBlock x:Uid="AboutControlServicesAgreement"
+                                                   FontSize="{ThemeResource BodyFontSize}"
+                                                   TextWrapping="Wrap"/>
+                                    </HyperlinkButton>
 
-                        <HyperlinkButton x:Name="AboutControlServicesAgreement"
-                                         Margin="0,16,0,0"
-                                         Padding="0"
-                                         NavigateUri="https://go.microsoft.com/fwlink/?LinkID=822631"
-                                         ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=822631">
-                            <TextBlock x:Uid="AboutControlServicesAgreement"
-                                       FontSize="{ThemeResource BodyFontSize}"
-                                       TextWrapping="Wrap"/>
-                        </HyperlinkButton>
+                                    <HyperlinkButton x:Name="AboutControlPrivacyStatement"
+                                                     Padding="0"
+                                                     NavigateUri="https://go.microsoft.com/fwlink/?LinkID=521839"
+                                                     ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=521839">
+                                        <TextBlock x:Uid="AboutControlPrivacyStatement"
+                                                   FontSize="{ThemeResource BodyFontSize}"
+                                                   TextWrapping="Wrap"/>
+                                    </HyperlinkButton>
+                                </StackPanel>
+                            </labs:SettingsCard>
+                        </labs:SettingsExpander.Items>
+                    </labs:SettingsExpander>
 
-                        <HyperlinkButton x:Name="AboutControlPrivacyStatement"
-                                         Margin="0,16,0,0"
-                                         Padding="0"
-                                         NavigateUri="https://go.microsoft.com/fwlink/?LinkID=521839"
-                                         ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=521839">
-                            <TextBlock x:Uid="AboutControlPrivacyStatement"
-                                       FontSize="{ThemeResource BodyFontSize}"
-                                       TextWrapping="Wrap"/>
-                        </HyperlinkButton>
+                    <Button x:Name="FeedbackButton"
+                            x:Uid="FeedbackButton"
+                            MinWidth="120"
+                            Margin="0,12,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            FontSize="{StaticResource BodyFontSize}"
+                            Click="FeedbackButton_Click"/>
 
-                        <Button x:Name="FeedbackButton"
-                                x:Uid="FeedbackButton"
-                                MinWidth="120"
-                                Margin="0,24,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                FontSize="{StaticResource BodyFontSize}"
-                                Click="FeedbackButton_Click"/>
-                    </StackPanel>
                     <RichTextBlock x:Name="AboutContribute"
                                    Grid.Row="2"
-                                   Margin="0,16,0,0"
+                                   Margin="1,9,0,0"
                                    Style="{StaticResource SettingsRichTextBlockStyle}">
                         <Paragraph>
                             <!--
@@ -254,7 +190,8 @@
                             </Hyperlink><Run x:Name="ContributeRunAfterLink"/>
                         </Paragraph>
                     </RichTextBlock>
-                </Grid>
+
+                </StackPanel>
             </Grid>
         </ScrollViewer>
     </Grid>
