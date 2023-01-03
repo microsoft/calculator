@@ -86,7 +86,7 @@
 
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource SettingsCardSpacing}">
                     <StackPanel.ChildrenTransitions>
-                        <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True" />
+                        <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True"/>
                     </StackPanel.ChildrenTransitions>
                     <TextBlock x:Uid="SettingsAppearance"
                                Style="{StaticResource SettingsCategoryTitleTextBlockStyle}"
@@ -99,7 +99,9 @@
                         </labs:SettingsExpander.HeaderIcon>
                         <labs:SettingsExpander.Items>
                             <labs:SettingsCard ContentAlignment="Left">
-                                <muxc:RadioButtons x:Name="ThemeRadioButtons" SelectionChanged="OnThemeSelectionChanged">
+                                <muxc:RadioButtons x:Name="ThemeRadioButtons"
+                                                   Margin="0,-8,0,0"
+                                                   SelectionChanged="OnThemeSelectionChanged">
                                     <RadioButton x:Name="LightThemeRadioButton"
                                                  x:Uid="LightThemeRadioButton"
                                                  Tag="Light"/>
@@ -128,10 +130,10 @@
                                    IsTextSelectionEnabled="True"/>
                         <labs:SettingsExpander.Items>
                             <labs:SettingsCard ContentAlignment="Left">
-                                <StackPanel Margin="0,6"
+                                <StackPanel Margin="0,4,0,6"
                                             Orientation="Vertical"
                                             Spacing="12">
-                                    
+
                                     <HyperlinkButton x:Name="AboutEULA"
                                                      Padding="0"
                                                      NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
