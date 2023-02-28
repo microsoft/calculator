@@ -792,7 +792,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Labs.Uwp.SettingsControls">
-      <Version>0.0.10</Version>
+      <Version>0.0.16</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
