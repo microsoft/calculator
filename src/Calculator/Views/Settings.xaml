@@ -115,12 +115,16 @@
                 <Grid.RowDefinitions>
                     <RowDefinition x:Name="AppearanceTitleRow" Height="Auto"/>
                     <RowDefinition x:Name="AppearanceExpanderRow" Height="Auto"/>
+                    <RowDefinition x:Name="ContentTitleRow" Height="Auto"/>
+                    <RowDefinition x:Name="ContentExpanderRow" Height="Auto"/>
+                    <RowDefinition x:Name="FeedbackRow" Height="Auto"/>
                     <RowDefinition x:Name="AboutTitleContentRow" Height="*"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock x:Uid="SettingsAppearance"
                            Style="{StaticResource BodyStrongTextBlockStyle}"
                            AutomationProperties.HeadingLevel="Level1"/>
+
 
                 <muxc:Expander x:Name="AppThemeExpander"
                                x:Uid="AppThemeExpander"
@@ -172,69 +176,106 @@
                         </muxc:RadioButtons>
                     </muxc:Expander.Content>
                 </muxc:Expander>
+                
+                <TextBlock x:Uid="AboutGroupTitle"
+                           Grid.Row="2"
+                           Style="{StaticResource BodyStrongTextBlockStyle}"
+                           AutomationProperties.HeadingLevel="Level1"/>
 
-                <Grid x:Name="AboutContentGrid" Grid.Row="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                <muxc:Expander x:Name="AboutContentExpander"
+                               x:Uid="AboutContentExpander"
+                               Grid.Row="3"
+                               Margin="0,8,0,0"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Top"
+                               HorizontalContentAlignment="Left"
+                               ExpandDirection="Down"
+                               IsExpanded="False">
+                    <muxc:Expander.Header>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <BitmapIcon  Margin="0,0,12,0"
+                                         VerticalAlignment="Center"
+                                         AutomationProperties.AccessibilityView="Raw"
+                                         Height="16"
+                                         Width="16"
+                                         UriSource="ms-appx:///Assets/CalculatorAppList.png"/>
+                            
+                            <StackPanel Grid.Column="1"
+                                        Margin="0,12"
+                                        Orientation="Vertical">
 
-                    <TextBlock x:Name="AboutGroupTitle"
-                               x:Uid="AboutGroupTitle"
-                               Margin="0,20,0,0"
-                               Style="{ThemeResource BodyStrongTextBlockStyle}"
-                               AutomationProperties.HeadingLevel="Level1"/>
-                    <StackPanel Grid.Row="1"
+                                <TextBlock x:Uid="AboutCalculator" Style="{StaticResource BodyTextBlockStyle}"/>
+
+                                <TextBlock x:Uid="LearnMoreAboutCalculator" 
+                                           Style="{StaticResource CaptionTextBlockStyle}"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           TextWrapping="WrapWholeWords"/>
+                            </StackPanel>
+                        </Grid>
+                    </muxc:Expander.Header>
+                    <muxc:Expander.Content>
+                        <StackPanel Grid.Row="1"
                                 Margin="0,8,0,0"
                                 Orientation="Vertical">
-                        <RichTextBlock x:Name="AboutContentBody" Style="{StaticResource SettingsRichTextBlockStyle}">
-                            <Paragraph>
-                                <Run x:Name="AboutBuildVersion"/>
-                                <LineBreak/>
-                                <Run x:Name="AboutControlCopyrightRun"/>
-                            </Paragraph>
-                        </RichTextBlock>
-
-                        <HyperlinkButton x:Name="AboutEULA"
+                            <TextBlock x:Name="AboutBuildVersion" 
+                                       TextWrapping="WrapWholeWords"/>
+                            <TextBlock x:Name="AboutControlCopyrightRun"
+                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                       TextWrapping="WrapWholeWords"/>
+                            <HyperlinkButton x:Name="AboutEULA"
                                          Margin="0,16,0,0"
                                          Padding="0"
                                          NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
                                          ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
-                            <TextBlock x:Uid="AboutEULA"
+                                <TextBlock x:Uid="AboutEULA"
                                        FontSize="{ThemeResource BodyFontSize}"
                                        TextWrapping="Wrap"/>
-                        </HyperlinkButton>
+                            </HyperlinkButton>
 
-                        <HyperlinkButton x:Name="AboutControlServicesAgreement"
+                            <HyperlinkButton x:Name="AboutControlServicesAgreement"
                                          Margin="0,16,0,0"
                                          Padding="0"
                                          NavigateUri="https://go.microsoft.com/fwlink/?LinkID=822631"
                                          ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=822631">
-                            <TextBlock x:Uid="AboutControlServicesAgreement"
+                                <TextBlock x:Uid="AboutControlServicesAgreement"
                                        FontSize="{ThemeResource BodyFontSize}"
                                        TextWrapping="Wrap"/>
-                        </HyperlinkButton>
+                            </HyperlinkButton>
 
-                        <HyperlinkButton x:Name="AboutControlPrivacyStatement"
+                            <HyperlinkButton x:Name="AboutControlPrivacyStatement"
                                          Margin="0,16,0,0"
                                          Padding="0"
                                          NavigateUri="https://go.microsoft.com/fwlink/?LinkID=521839"
                                          ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=521839">
-                            <TextBlock x:Uid="AboutControlPrivacyStatement"
+                                <TextBlock x:Uid="AboutControlPrivacyStatement"
                                        FontSize="{ThemeResource BodyFontSize}"
                                        TextWrapping="Wrap"/>
-                        </HyperlinkButton>
+                            </HyperlinkButton>
+                        </StackPanel>
+                    </muxc:Expander.Content>
+                </muxc:Expander>
 
-                        <Button x:Name="FeedbackButton"
+
+                <Button x:Name="FeedbackButton"
                                 x:Uid="FeedbackButton"
+                                Grid.Row="4"
                                 MinWidth="120"
                                 Margin="0,24,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 FontSize="{StaticResource BodyFontSize}"
                                 Click="FeedbackButton_Click"/>
-                    </StackPanel>
+
+                <Grid x:Name="AboutContributeGrid" Grid.Row="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
                     <RichTextBlock x:Name="AboutContribute"
                                    Grid.Row="2"
                                    Margin="0,16,0,0"
@@ -244,13 +285,15 @@
                                 Note: don't put Hyperlink element start to the next line
                                 otherwise unexpected whitespace will be add.
                             -->
-                            <Run x:Name="ContributeRunBeforeLink"/><Hyperlink Foreground="{x:Bind AboutEULA.Foreground, Mode=OneWay}"
+                            <Run x:Name="ContributeRunBeforeLink"/>
+                            <Hyperlink Foreground="{x:Bind AboutEULA.Foreground, Mode=OneWay}"
                                        NavigateUri="https://go.microsoft.com/fwlink/?linkid=2099939"
                                        TextDecorations="None"
                                        ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?linkid=2099939"
                                        UnderlineStyle="None">
                                 <Run x:Name="ContributeRunLink"/>
-                            </Hyperlink><Run x:Name="ContributeRunAfterLink"/>
+                            </Hyperlink>
+                            <Run x:Name="ContributeRunAfterLink"/>
                         </Paragraph>
                     </RichTextBlock>
                 </Grid>

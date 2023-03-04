@@ -81,5 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="WindowsDev_TemporaryKey.pfx" />
+    <None Include="..\calculator\views\titlebar.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="..\calculator\views\titlebar.xaml" />
   </ItemGroup>
 </Project>

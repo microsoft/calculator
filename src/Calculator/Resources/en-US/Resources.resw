@@ -2721,6 +2721,14 @@
     <value>To learn how you can contribute to Windows Calculator, check out the project on %HL%GitHub%HL%.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
+  <data name="AboutCalculator.Text" xml:space="preserve">
+    <value>About Calculator</value>
+    <comment>Title of about information expander.</comment>
+  </data>
+  <data name="LearnMoreAboutCalculator.Text" xml:space="preserve">
+    <value>Learn more about Windows Calculator</value>
+    <comment>Label of about information expander.</comment>
+  </data>
   <data name="AboutGroupTitle.Text" xml:space="preserve">
     <value>About</value>
     <comment>Subtitle of about message on Settings page</comment>
