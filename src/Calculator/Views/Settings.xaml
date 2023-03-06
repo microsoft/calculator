@@ -79,121 +79,117 @@
                       Margin="0,60,0,0"
                       Padding="24,0,24,16"
                       Style="{StaticResource SettingsContentScrollViewStyle}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition MaxWidth="1000"/>
-                </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource SettingsCardSpacing}">
-                    <StackPanel.ChildrenTransitions>
-                        <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True"/>
-                    </StackPanel.ChildrenTransitions>
-                    <TextBlock x:Uid="SettingsAppearance"
-                               Style="{StaticResource SettingsCategoryTitleTextBlockStyle}"
-                               AutomationProperties.HeadingLevel="Level1"/>
-                    <labs:SettingsExpander x:Name="AppThemeExpander"
-                                           Description="Select which app theme to display"
-                                           Header="App theme">
-                        <labs:SettingsExpander.HeaderIcon>
-                            <FontIcon Glyph="&#xE790;"/>
-                        </labs:SettingsExpander.HeaderIcon>
-                        <labs:SettingsExpander.Items>
-                            <labs:SettingsCard ContentAlignment="Left">
-                                <muxc:RadioButtons x:Name="ThemeRadioButtons"
-                                                   Margin="0,-8,0,0"
-                                                   SelectionChanged="OnThemeSelectionChanged">
-                                    <RadioButton x:Name="LightThemeRadioButton"
-                                                 x:Uid="LightThemeRadioButton"
-                                                 Tag="Light"/>
-                                    <RadioButton x:Name="DarkThemeRadioButton"
-                                                 x:Uid="DarkThemeRadioButton"
-                                                 Tag="Dark"/>
-                                    <RadioButton x:Name="SystemThemeRadioButton"
-                                                 x:Uid="SystemThemeRadioButton"
-                                                 Tag="Default"/>
-                                </muxc:RadioButtons>
-                            </labs:SettingsCard>
-                        </labs:SettingsExpander.Items>
-                    </labs:SettingsExpander>
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource SettingsCardSpacing}">
+                <StackPanel.ChildrenTransitions>
+                    <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True"/>
+                    <RepositionThemeTransition IsStaggeringEnabled="False"/>
+                </StackPanel.ChildrenTransitions>
+                <TextBlock x:Uid="SettingsAppearance"
+                           Style="{StaticResource SettingsCategoryTitleTextBlockStyle}"
+                           AutomationProperties.HeadingLevel="Level1"/>
+                <labs:SettingsExpander x:Name="AppThemeExpander"
+                                       Description="Select which app theme to display"
+                                       Header="App theme">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xE790;"/>
+                    </labs:SettingsExpander.HeaderIcon>
+                    <labs:SettingsExpander.Items>
+                        <labs:SettingsCard ContentAlignment="Left">
+                            <muxc:RadioButtons x:Name="ThemeRadioButtons"
+                                               Margin="0,-8,0,0"
+                                               SelectionChanged="OnThemeSelectionChanged">
+                                <RadioButton x:Name="LightThemeRadioButton"
+                                             x:Uid="LightThemeRadioButton"
+                                             Tag="Light"/>
+                                <RadioButton x:Name="DarkThemeRadioButton"
+                                             x:Uid="DarkThemeRadioButton"
+                                             Tag="Dark"/>
+                                <RadioButton x:Name="SystemThemeRadioButton"
+                                             x:Uid="SystemThemeRadioButton"
+                                             Tag="Default"/>
+                            </muxc:RadioButtons>
+                        </labs:SettingsCard>
+                    </labs:SettingsExpander.Items>
+                </labs:SettingsExpander>
 
-                    <TextBlock x:Name="AboutGroupTitle"
-                               x:Uid="AboutGroupTitle"
-                               Style="{ThemeResource SettingsCategoryTitleTextBlockStyle}"
-                               AutomationProperties.HeadingLevel="Level1"/>
-                    <labs:SettingsExpander x:Name="AboutExpander">
-                        <labs:SettingsExpander.HeaderIcon>
-                            <BitmapIcon AutomationProperties.AccessibilityView="Raw" UriSource="ms-appx:///Assets/CalculatorAppList.png"/>
-                        </labs:SettingsExpander.HeaderIcon>
-                        <TextBlock x:Name="AboutBuildVersion"
-                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                   IsTextSelectionEnabled="True"/>
-                        <labs:SettingsExpander.Items>
-                            <labs:SettingsCard ContentAlignment="Left">
-                                <StackPanel Margin="0,4,0,6"
-                                            Orientation="Vertical"
-                                            Spacing="12">
+                <TextBlock x:Name="AboutGroupTitle"
+                           x:Uid="AboutGroupTitle"
+                           Style="{ThemeResource SettingsCategoryTitleTextBlockStyle}"
+                           AutomationProperties.HeadingLevel="Level1"/>
+                <labs:SettingsExpander x:Name="AboutExpander">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <BitmapIcon AutomationProperties.AccessibilityView="Raw" UriSource="ms-appx:///Assets/CalculatorAppList.png"/>
+                    </labs:SettingsExpander.HeaderIcon>
+                    <TextBlock x:Name="AboutBuildVersion"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               IsTextSelectionEnabled="True"/>
+                    <labs:SettingsExpander.Items>
+                        <labs:SettingsCard ContentAlignment="Left">
+                            <StackPanel Margin="0,4,0,6"
+                                        Orientation="Vertical"
+                                        Spacing="12">
 
-                                    <HyperlinkButton x:Name="AboutEULA"
-                                                     Padding="0"
-                                                     NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
-                                                     ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
-                                        <TextBlock x:Uid="AboutEULA"
-                                                   FontSize="{ThemeResource BodyFontSize}"
-                                                   TextWrapping="Wrap"/>
-                                    </HyperlinkButton>
+                                <HyperlinkButton x:Name="AboutEULA"
+                                                 Padding="0"
+                                                 NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
+                                                 ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
+                                    <TextBlock x:Uid="AboutEULA"
+                                               FontSize="{ThemeResource BodyFontSize}"
+                                               TextWrapping="Wrap"/>
+                                </HyperlinkButton>
 
-                                    <HyperlinkButton x:Name="AboutControlServicesAgreement"
-                                                     Padding="0"
-                                                     NavigateUri="https://go.microsoft.com/fwlink/?LinkID=822631"
-                                                     ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=822631">
-                                        <TextBlock x:Uid="AboutControlServicesAgreement"
-                                                   FontSize="{ThemeResource BodyFontSize}"
-                                                   TextWrapping="Wrap"/>
-                                    </HyperlinkButton>
+                                <HyperlinkButton x:Name="AboutControlServicesAgreement"
+                                                 Padding="0"
+                                                 NavigateUri="https://go.microsoft.com/fwlink/?LinkID=822631"
+                                                 ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=822631">
+                                    <TextBlock x:Uid="AboutControlServicesAgreement"
+                                               FontSize="{ThemeResource BodyFontSize}"
+                                               TextWrapping="Wrap"/>
+                                </HyperlinkButton>
 
-                                    <HyperlinkButton x:Name="AboutControlPrivacyStatement"
-                                                     Padding="0"
-                                                     NavigateUri="https://go.microsoft.com/fwlink/?LinkID=521839"
-                                                     ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=521839">
-                                        <TextBlock x:Uid="AboutControlPrivacyStatement"
-                                                   FontSize="{ThemeResource BodyFontSize}"
-                                                   TextWrapping="Wrap"/>
-                                    </HyperlinkButton>
-                                </StackPanel>
-                            </labs:SettingsCard>
-                        </labs:SettingsExpander.Items>
-                    </labs:SettingsExpander>
+                                <HyperlinkButton x:Name="AboutControlPrivacyStatement"
+                                                 Padding="0"
+                                                 NavigateUri="https://go.microsoft.com/fwlink/?LinkID=521839"
+                                                 ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=521839">
+                                    <TextBlock x:Uid="AboutControlPrivacyStatement"
+                                               FontSize="{ThemeResource BodyFontSize}"
+                                               TextWrapping="Wrap"/>
+                                </HyperlinkButton>
+                            </StackPanel>
+                        </labs:SettingsCard>
+                    </labs:SettingsExpander.Items>
+                </labs:SettingsExpander>
 
-                    <HyperlinkButton x:Name="FeedbackButton"
-                                     x:Uid="FeedbackButton"
-                                     MinWidth="120"
-                                     Margin="-12,4,0,0"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Top"
-                                     FontSize="{StaticResource BodyFontSize}"
-                                     Click="FeedbackButton_Click"/>
+                <HyperlinkButton x:Name="FeedbackButton"
+                                 x:Uid="FeedbackButton"
+                                 MinWidth="120"
+                                 Margin="-12,4,0,0"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Top"
+                                 FontSize="{StaticResource BodyFontSize}"
+                                 Click="FeedbackButton_Click"/>
 
-                    <RichTextBlock x:Name="AboutContribute"
-                                   Grid.Row="2"
-                                   Margin="1,9,0,0"
-                                   Style="{StaticResource SettingsRichTextBlockStyle}">
-                        <Paragraph>
-                            <!--
-                                Note: don't put Hyperlink element start to the next line
-                                otherwise unexpected whitespace will be add.
-                            -->
-                            <Run x:Name="ContributeRunBeforeLink"/><Hyperlink Foreground="{x:Bind AboutEULA.Foreground, Mode=OneWay}"
-                                       NavigateUri="https://go.microsoft.com/fwlink/?linkid=2099939"
-                                       TextDecorations="None"
-                                       ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?linkid=2099939"
-                                       UnderlineStyle="None">
-                                <Run x:Name="ContributeRunLink"/>
-                            </Hyperlink><Run x:Name="ContributeRunAfterLink"/>
-                        </Paragraph>
-                    </RichTextBlock>
+                <RichTextBlock x:Name="AboutContribute"
+                               Grid.Row="2"
+                               Margin="1,9,0,0"
+                               Style="{StaticResource SettingsRichTextBlockStyle}">
+                    <Paragraph>
+                        <!--
+                            Note: don't put Hyperlink element start to the next line
+                            otherwise unexpected whitespace will be add.
+                        -->
+                        <Run x:Name="ContributeRunBeforeLink"/><Hyperlink Foreground="{x:Bind AboutEULA.Foreground, Mode=OneWay}"
+                                   NavigateUri="https://go.microsoft.com/fwlink/?linkid=2099939"
+                                   TextDecorations="None"
+                                   ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?linkid=2099939"
+                                   UnderlineStyle="None">
+                            <Run x:Name="ContributeRunLink"/>
+                        </Hyperlink><Run x:Name="ContributeRunAfterLink"/>
+                    </Paragraph>
+                </RichTextBlock>
 
-                </StackPanel>
-            </Grid>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </UserControl>
