@@ -76,7 +76,7 @@
         </Grid>
 
         <ScrollViewer Grid.Row="1"
-                      Margin="0,60,0,0"
+                      Margin="0,30,0,0"
                       Padding="24,0,24,16"
                       Style="{StaticResource SettingsContentScrollViewStyle}">
 
