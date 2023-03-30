@@ -91,7 +91,7 @@ public:
     void CurrencyTimestampCallback(_In_ const std::wstring& /*timestamp*/, bool /*isWeekOldData*/) override
     {
     }
-    void NetworkBehaviorChanged(_In_ int /*newBehavior*/) override
+    void NetworkBehaviorChanged(_In_ int /*newBehaviour*/) override
     {
     }
 
