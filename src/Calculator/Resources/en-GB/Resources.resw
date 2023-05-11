@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1385,10 +1385,6 @@
     <value>J</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
-    <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
-    <value>kWh</value>
-    <comment>An abbreviation for a measurement unit of energy</comment>
-  </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
     <value>K</value>
     <comment>An abbreviation for the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin)</comment>
@@ -1751,10 +1747,6 @@
   </data>
   <data name="UnitName_Joule" xml:space="preserve">
     <value>Joules</value>
-    <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
-  </data>
-    <data name="UnitName_Kilowatthour" xml:space="preserve">
-    <value>Kilowatt-hour</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kelvin" xml:space="preserve">

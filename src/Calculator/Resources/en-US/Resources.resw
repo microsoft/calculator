@@ -1775,7 +1775,7 @@
   </data>
     <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
     <value>kWh</value>
-    <comment>An abbreviation for a measurement unit of energy</comment>
+    <comment>An abbreviation for a measurement unit of electricity consumption</comment>
   </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
     <value>K</value>
@@ -2143,7 +2143,7 @@
   </data>
     <data name="UnitName_Kilowatthour" xml:space="preserve">
     <value>Kilowatt-hours</value>
-    <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+    <comment>A measurement unit for electricity consumption. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
     <value>Kelvin</value>
