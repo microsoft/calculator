@@ -86,9 +86,9 @@
                     <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True"/>
                     <RepositionThemeTransition IsStaggeringEnabled="False"/>
                 </StackPanel.ChildrenTransitions>
-                <TextBlock x:Uid="SettingsAppearance"
-                           Style="{StaticResource SettingsCategoryTitleTextBlockStyle}"
-                           AutomationProperties.HeadingLevel="Level1"/>
+                <TextBlock Style="{StaticResource SettingsCategoryTitleTextBlockStyle}"
+                           AutomationProperties.HeadingLevel="Level1"
+                           Text="{utils:ResourceString Name=SettingsAppearance/Text}"/>
                 <labs:SettingsExpander x:Name="AppThemeExpander"
                                        Description="Select which app theme to display"
                                        Header="App theme">
@@ -101,13 +101,13 @@
                                                Margin="0,-8,0,0"
                                                SelectionChanged="OnThemeSelectionChanged">
                                 <RadioButton x:Name="LightThemeRadioButton"
-                                             x:Uid="LightThemeRadioButton"
+                                             Content="{utils:ResourceString Name=LightThemeRadioButton/Content}"
                                              Tag="Light"/>
                                 <RadioButton x:Name="DarkThemeRadioButton"
-                                             x:Uid="DarkThemeRadioButton"
+                                             Content="{utils:ResourceString Name=DarkThemeRadioButton/Content}"
                                              Tag="Dark"/>
                                 <RadioButton x:Name="SystemThemeRadioButton"
-                                             x:Uid="SystemThemeRadioButton"
+                                             Content="{utils:ResourceString Name=SystemThemeRadioButton/Content}"
                                              Tag="Default"/>
                             </muxc:RadioButtons>
                         </labs:SettingsCard>
@@ -115,9 +115,9 @@
                 </labs:SettingsExpander>
 
                 <TextBlock x:Name="AboutGroupTitle"
-                           x:Uid="AboutGroupTitle"
                            Style="{ThemeResource SettingsCategoryTitleTextBlockStyle}"
-                           AutomationProperties.HeadingLevel="Level1"/>
+                           AutomationProperties.HeadingLevel="Level1"
+                           Text="{utils:ResourceString Name=AboutGroupTitle/Text}"/>
                 <labs:SettingsExpander x:Name="AboutExpander">
                     <labs:SettingsExpander.HeaderIcon>
                         <BitmapIcon AutomationProperties.AccessibilityView="Raw" UriSource="ms-appx:///Assets/CalculatorAppList.png"/>
@@ -135,8 +135,8 @@
                                                  Padding="0"
                                                  NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
                                                  ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
-                                    <TextBlock x:Uid="AboutEULA"
-                                               FontSize="{ThemeResource BodyFontSize}"
+                                    <TextBlock FontSize="{ThemeResource BodyFontSize}"
+                                               Text="{utils:ResourceString Name=AboutEULA/Text}"
                                                TextWrapping="Wrap"/>
                                 </HyperlinkButton>
 
@@ -144,8 +144,8 @@
                                                  Padding="0"
                                                  NavigateUri="https://go.microsoft.com/fwlink/?LinkID=822631"
                                                  ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=822631">
-                                    <TextBlock x:Uid="AboutControlServicesAgreement"
-                                               FontSize="{ThemeResource BodyFontSize}"
+                                    <TextBlock FontSize="{ThemeResource BodyFontSize}"
+                                               Text="{utils:ResourceString Name=AboutControlServicesAgreement/Text}"
                                                TextWrapping="Wrap"/>
                                 </HyperlinkButton>
 
@@ -153,8 +153,8 @@
                                                  Padding="0"
                                                  NavigateUri="https://go.microsoft.com/fwlink/?LinkID=521839"
                                                  ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=521839">
-                                    <TextBlock x:Uid="AboutControlPrivacyStatement"
-                                               FontSize="{ThemeResource BodyFontSize}"
+                                    <TextBlock FontSize="{ThemeResource BodyFontSize}"
+                                               Text="{utils:ResourceString Name=AboutControlPrivacyStatement/Text}"
                                                TextWrapping="Wrap"/>
                                 </HyperlinkButton>
                             </StackPanel>
@@ -163,13 +163,13 @@
                 </labs:SettingsExpander>
 
                 <HyperlinkButton x:Name="FeedbackButton"
-                                 x:Uid="FeedbackButton"
                                  MinWidth="120"
                                  Margin="-12,4,0,0"
                                  HorizontalAlignment="Left"
                                  VerticalAlignment="Top"
                                  FontSize="{StaticResource BodyFontSize}"
-                                 Click="FeedbackButton_Click"/>
+                                 Click="FeedbackButton_Click"
+                                 Content="{utils:ResourceString Name=FeedbackButton/Content}"/>
 
                 <RichTextBlock x:Name="AboutContribute"
                                Grid.Row="2"
