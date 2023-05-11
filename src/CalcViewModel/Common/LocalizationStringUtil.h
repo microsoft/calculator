@@ -16,7 +16,7 @@ namespace CalculatorApp::ViewModel
             {
                 std::wstring returnString = L"";
                 const UINT32 length = 1024;
-                std::unique_ptr<wchar_t[]> spBuffer = std::unique_ptr<wchar_t[]>(new wchar_t[length]);
+                std::unique_ptr<wchar_t[]> spBuffer = std::make_unique<wchar_t[]>(length);
                 va_list args = NULL;
                 va_start(args, pMessage);
                 DWORD fmtReturnVal = FormatMessage(FORMAT_MESSAGE_FROM_STRING, pMessage->Data(), 0, 0, spBuffer.get(), length, &args);

@@ -225,16 +225,10 @@ namespace CalculatorApp
             string memoryPaneName = AppResourceProvider.GetInstance().GetResourceString("MemoryPane");
             MemoryFlyout.FlyoutPresenterStyle.Setters.Add(new Setter(AutomationProperties.NameProperty, memoryPaneName));
 
-            if (Windows.Foundation.Metadata.ApiInformation.IsEventPresent("Windows.UI.Xaml.Controls.Primitives.FlyoutBase", "Closing"))
-            {
-                HistoryFlyout.Closing += HistoryFlyout_Closing;
-                MemoryFlyout.Closing += OnMemoryFlyoutClosing;
-            }
-
             // Delay load things later when we get a chance.
             WeakReference weakThis = new WeakReference(this);
             _ = this.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                CoreDispatcherPriority.Normal, () =>
                 {
                     if (TraceLogger.GetInstance().IsWindowIdInLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
                     {
@@ -243,7 +237,7 @@ namespace CalculatorApp
                             refThis.GetMemory();
                         }
                     }
-                }));
+                });
         }
 
         private void LoadResourceStrings()
@@ -533,7 +527,7 @@ namespace CalculatorApp
 
         // Since we need different font sizes for different numeric system,
         // we use a table of optimal font sizes for each numeric system.
-        private static readonly FontTable[] fontTables = new FontTable[] {
+        private static readonly FontTable[] fontTables = {
             new FontTable { numericSystem = "Arab", fullFont = 104, fullFontMin = 29.333, portraitMin = 23, snapFont = 40,
                             fullNumPadFont = 56, snapScientificNumPadFont = 40, portraitScientificNumPadFont = 56 },
             new FontTable { numericSystem = "ArabExt", fullFont = 104, fullFontMin = 29.333, portraitMin = 23, snapFont = 40,
@@ -650,9 +644,6 @@ namespace CalculatorApp
 
         private void HistoryFlyout_Closed(object sender, object args)
         {
-            // Ideally, this would be renamed in the Closing event because the Closed event is too late.
-            // Closing is not available until RS1+ so we set the name again here for TH2 support.
-            AutomationProperties.SetName(HistoryButton, m_openHistoryFlyoutAutomationName);
             m_fIsHistoryFlyoutOpen = false;
             EnableControls(true);
             if (HistoryButton.IsEnabled && HistoryButton.Visibility == Visibility.Visible)
@@ -745,9 +736,6 @@ namespace CalculatorApp
 
         private void OnMemoryFlyoutClosed(object sender, object args)
         {
-            // Ideally, this would be renamed in the Closing event because the Closed event is too late.
-            // Closing is not available until RS1+ so we set the name again here for TH2 support.
-            AutomationProperties.SetName(MemoryButton, m_openMemoryFlyoutAutomationName);
             m_fIsMemoryFlyoutOpen = false;
             EnableControls(true);
             if (MemoryButton.IsEnabled)

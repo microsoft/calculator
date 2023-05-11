@@ -752,13 +752,13 @@ namespace CalculatorApp
         private void OnColorValuesChanged(UISettings sender, object args)
         {
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 if (weakThis.Target is GraphingCalculator refThis && IsMatchAppTheme)
                 {
                     refThis.UpdateGraphTheme();
                 }
-            }));
+            });
         }
 
         private void UpdateGraphTheme()
@@ -788,13 +788,13 @@ namespace CalculatorApp
 
             IsMatchAppTheme = isMatchAppTheme;
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 if (weakThis.Target is GraphingCalculator refThis)
                 {
                     refThis.UpdateGraphTheme();
                 }
-            }));
+            });
         }
 
         private const double zoomInScale = 1 / 1.0625;

@@ -81,7 +81,7 @@ jobs:
       pathToPublish: $(Build.ArtifactStagingDirectory)\msixBundle
 
   - ${{ if eq(parameters.signBundle, true) }}:
-    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+    - task: EsrpCodeSigning@2
       displayName: Send msixbundle to code signing service
       inputs:
         ConnectedServiceName: Essential Experiences Codesign

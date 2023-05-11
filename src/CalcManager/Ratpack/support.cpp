@@ -25,7 +25,7 @@
 
 using namespace std;
 
-void _readconstants(void);
+void _readconstants();
 
 #if defined(GEN_CONST)
 static int cbitsofprecision = 0;
@@ -136,13 +136,7 @@ void ChangeConstants(uint32_t radix, int32_t precision)
     // in the internal BASEX radix, this is important for length calculations
     // in translating from radix to BASEX and back.
 
-    uint64_t limit = static_cast<uint64_t>(BASEX) / static_cast<uint64_t>(radix);
-    g_ratio = 0;
-    for (uint32_t digit = 1; digit < limit; digit *= radix)
-    {
-        g_ratio++;
-    }
-    g_ratio += !g_ratio;
+    g_ratio = static_cast<int32_t>(ceil(BASEXPWR / log2(radix))) - 1;
 
     destroyrat(rat_nRadix);
     rat_nRadix = i32torat(radix);

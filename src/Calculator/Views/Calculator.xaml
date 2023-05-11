@@ -694,6 +694,7 @@
                     <Flyout x:Name="HistoryFlyout"
                             AutomationProperties.AutomationId="HistoryFlyout"
                             Closed="HistoryFlyout_Closed"
+                            Closing="HistoryFlyout_Closing"
                             FlyoutPresenterStyle="{StaticResource HistoryFlyoutStyle}"
                             Opened="HistoryFlyout_Opened"
                             Placement="Full"/>
@@ -803,6 +804,7 @@
                                 AutomationProperties.AutomationId="MemoryFlyout"
                                 AutomationProperties.Name="{utils:ResourceString Name=MemoryFlyout/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                 Closed="OnMemoryFlyoutClosed"
+                                Closing="OnMemoryFlyoutClosing"
                                 FlyoutPresenterStyle="{StaticResource MemoryFlyoutStyle}"
                                 Opened="OnMemoryFlyoutOpened"
                                 Placement="Full"/>

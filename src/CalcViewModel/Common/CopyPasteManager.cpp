@@ -288,9 +288,8 @@ bool CopyPasteManager::ExpressionRegExMatch(
     }
     else if (mode == ViewMode::Programmer)
     {
-        patterns.assign(
-            programmerModePatterns[(int)programmerNumberBase - (int)NumberBase::HexBase].begin(),
-            programmerModePatterns[(int)programmerNumberBase - (int)NumberBase::HexBase].end());
+        auto pattern = &programmerModePatterns[static_cast<int>(programmerNumberBase) - static_cast<int>(NumberBase::HexBase)];
+        patterns.assign(pattern->begin(), pattern->end());
     }
     else if (modeType == CategoryGroupType::Converter)
     {
@@ -505,18 +504,15 @@ ULONG32 CopyPasteManager::StandardScientificOperandLength(Platform::String ^ ope
     const bool hasDecimal = operandWstring.find('.') != wstring::npos;
     auto length = operandWstring.length();
 
-    if (hasDecimal)
+    if (hasDecimal && length >= 2)
     {
-        if (length >= 2)
+        if ((operandWstring[0] == L'0') && (operandWstring[1] == L'.'))
         {
-            if ((operandWstring[0] == L'0') && (operandWstring[1] == L'.'))
-            {
-                length -= 2;
-            }
-            else
-            {
-                length -= 1;
-            }
+            length -= 2;
+        }
+        else
+        {
+            length -= 1;
         }
     }
 
