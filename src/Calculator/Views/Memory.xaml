@@ -8,6 +8,7 @@
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:model="using:CalculatorApp.ViewModel"
+             xmlns:utils="using:CalculatorApp.Utils"
              x:Name="MemoryList"
              FlowDirection="LeftToRight"
              mc:Ignorable="d">
@@ -18,17 +19,17 @@
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
 
         <MenuFlyout x:Name="MemoryContextMenu">
-            <MenuFlyoutItem x:Uid="ClearMemoryMenuItem" Click="OnClearMenuItemClicked">
+            <MenuFlyoutItem Click="OnClearMenuItemClicked" Text="{utils:ResourceString Name=ClearMemoryMenuItem/Text}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xf754;"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
-            <MenuFlyoutItem x:Uid="MemPlusMenuItem" Click="OnMemoryAddMenuItemClicked">
+            <MenuFlyoutItem Click="OnMemoryAddMenuItemClicked" Text="{utils:ResourceString Name=MemPlusMenuItem/Text}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xf757;"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
-            <MenuFlyoutItem x:Uid="MemMinusMenuItem" Click="OnMemorySubtractMenuItemClicked">
+            <MenuFlyoutItem Click="OnMemorySubtractMenuItemClicked" Text="{utils:ResourceString Name=MemMinusMenuItem/Text}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="&#xf758;"/>
                 </MenuFlyoutItem.Icon>
@@ -96,10 +97,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock x:Name="MemoryPaneEmpty"
-                       x:Uid="MemoryPaneEmpty"
                        Margin="12,8,24,0"
                        Style="{ThemeResource BodyTextBlockStyle}"
                        Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                       Text="{utils:ResourceString Name=MemoryPaneEmpty/Text}"
                        TextWrapping="Wrap"
                        Visibility="{Binding IsMemoryEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <ListView x:Name="MemoryListView"
@@ -123,12 +124,14 @@
                 </ListView.ItemContainerTransitions>
             </ListView>
             <Button x:Name="ClearMemory"
-                    x:Uid="ClearMemory"
                     Grid.Row="1"
                     Style="{ThemeResource ClearAllHistoryMemoryButtonStyle}"
+                    AccessKey="{utils:ResourceString Name=ClearMemory/AccessKey}"
                     AutomationProperties.AutomationId="ClearMemory"
+                    AutomationProperties.Name="{utils:ResourceString Name=ClearMemory/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                     Command="{x:Bind Model.ClearMemoryCommand, Mode=OneWay}"
                     Content="&#xE74D;"
+                    ToolTipService.ToolTip="{utils:ResourceString Name=ClearMemory/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                     Visibility="{x:Bind Model.IsMemoryEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
         </Grid>
 

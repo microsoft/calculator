@@ -6,6 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="using:CalculatorApp.Utils"
              x:Name="BitFlip"
              d:DesignHeight="395"
              d:DesignWidth="315"
@@ -98,7 +99,6 @@
                                                   AutomationProperties.AccessibilityView="Raw"
                                                   Content="{Binding Text, ElementName=BinaryZero, Mode=OneWay}"/>
                                 <TextBlock x:Name="BinaryZero"
-                                           x:Uid="BinaryZero"
                                            Margin="{TemplateBinding Padding}"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -106,9 +106,9 @@
                                            FontSize="{TemplateBinding FontSize}"
                                            FontWeight="SemiBold"
                                            AutomationProperties.AccessibilityView="Raw"
-                                           IsTextScaleFactorEnabled="False"/>
+                                           IsTextScaleFactorEnabled="False"
+                                           Text="{utils:ResourceString Name=BinaryZero/Text}"/>
                                 <TextBlock x:Name="BinaryOne"
-                                           x:Uid="BinaryOne"
                                            Margin="{TemplateBinding Padding}"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -117,6 +117,7 @@
                                            FontWeight="SemiBold"
                                            AutomationProperties.AccessibilityView="Raw"
                                            IsTextScaleFactorEnabled="False"
+                                           Text="{utils:ResourceString Name=BinaryOne/Text}"
                                            Visibility="Collapsed"/>
                             </Grid>
                         </Grid>
@@ -137,9 +138,9 @@
         </Style>
     </UserControl.Resources>
     <Grid x:Name="BitFlipPanel"
-          x:Uid="BitFlipPanel"
           Margin="0,1,0,1"
-          AutomationProperties.HeadingLevel="Level1">
+          AutomationProperties.HeadingLevel="Level1"
+          AutomationProperties.Name="{utils:ResourceString Name=BitFlipPanel/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>

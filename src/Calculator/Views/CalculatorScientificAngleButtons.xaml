@@ -2,9 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="using:CalculatorApp.Controls"
+             xmlns:common="using:CalculatorApp.Common"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp.ViewModel.Common"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="using:CalculatorApp.Utils"
              x:Name="ControlRoot"
              d:DesignHeight="315"
              d:DesignWidth="400"
@@ -26,9 +28,9 @@
     </UserControl.Resources>
 
     <Grid x:Name="ScientificAngleOperators"
-          x:Uid="ScientificAngleOperators"
           Margin="3,0,3,0"
-          AutomationProperties.HeadingLevel="Level1">
+          AutomationProperties.HeadingLevel="Level1"
+          AutomationProperties.Name="{utils:ResourceString Name=ScientificAngleOperators/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" MaxWidth="80"/>
             <ColumnDefinition Width="1*" MaxWidth="80"/>
@@ -71,34 +73,38 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Button x:Name="DegreeButton"
-                x:Uid="degButton"
                 Style="{StaticResource CaptionButtonSmallStyle}"
+                common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=degButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                 AutomationProperties.AutomationId="degButton"
+                AutomationProperties.Name="{utils:ResourceString Name=degButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                 Command="{x:Bind ButtonPressed}"
                 CommandParameter="0"
                 Content="DEG"/>
         <Button x:Name="RadianButton"
-                x:Uid="radButton"
                 Style="{StaticResource CaptionButtonSmallStyle}"
+                common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=radButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                 AutomationProperties.AutomationId="radButton"
+                AutomationProperties.Name="{utils:ResourceString Name=radButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                 Command="{x:Bind ButtonPressed}"
                 CommandParameter="1"
                 Content="RAD"
                 Visibility="Collapsed"/>
         <Button x:Name="GradsButton"
-                x:Uid="gradButton"
                 Style="{StaticResource CaptionButtonSmallStyle}"
+                common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=gradButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                 AutomationProperties.AutomationId="gradButton"
+                AutomationProperties.Name="{utils:ResourceString Name=gradButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                 Command="{x:Bind ButtonPressed}"
                 CommandParameter="2"
                 Content="GRAD"
                 Visibility="Collapsed"/>
         <ToggleButton x:Name="FtoeButton"
-                      x:Uid="ftoeButton"
                       Grid.Column="1"
                       Style="{StaticResource CaptionToggleButtonWithIndicatorStyle}"
                       Background="{ThemeResource SystemControlBackgroundTransparentBrush}"
+                      common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=ftoeButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                       AutomationProperties.AutomationId="ftoeButton"
+                      AutomationProperties.Name="{utils:ResourceString Name=ftoeButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                       Checked="FToEButton_Toggled"
                       Content="F-E"
                       IsChecked="{x:Bind Model.IsFToEChecked, Mode=OneWay}"
