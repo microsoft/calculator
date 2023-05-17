@@ -7,13 +7,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="using:CalculatorApp.Utils"
              Margin="3,0,0,0"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
 
     <UserControl.Resources>
-         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/> 
+        <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
     </UserControl.Resources>
 
     <Grid x:Name="ProgrammerDisplay">
@@ -51,64 +52,70 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Grid x:Uid="InputModeSelectionGroup"
-              Grid.Column="0"
-              AutomationProperties.HeadingLevel="Level1">
+        <Grid Grid.Column="0"
+              AutomationProperties.HeadingLevel="Level1"
+              AutomationProperties.Name="{utils:ResourceString Name=InputModeSelectionGroup/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" MaxWidth="80"/>
                 <ColumnDefinition Width="1*" MaxWidth="80"/>
             </Grid.ColumnDefinitions>
 
             <RadioButton x:Name="FullKeypad"
-                         x:Uid="fullKeypad"
                          Style="{StaticResource ConditionalProgKeypadRadioButtonStyle}"
                          AutomationProperties.AutomationId="fullKeypad"
+                         AutomationProperties.Name="{utils:ResourceString Name=fullKeypad/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                          Content="&#xe75f;"
-                         IsChecked="{x:Bind Model.IsBitFlipChecked, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"/>
+                         IsChecked="{x:Bind Model.IsBitFlipChecked, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"
+                         ToolTipService.ToolTip="{utils:ResourceString Name=fullKeypad/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"/>
             <RadioButton x:Name="BitFlip"
-                         x:Uid="bitFlip"
                          Grid.Column="1"
                          Style="{StaticResource ConditionalProgKeypadRadioButtonStyle}"
                          AutomationProperties.AutomationId="bitFlip"
+                         AutomationProperties.Name="{utils:ResourceString Name=bitFlip/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                          Content="&#xf7d0;"
-                         IsChecked="{x:Bind Model.IsBitFlipChecked, Mode=TwoWay}"/>
+                         IsChecked="{x:Bind Model.IsBitFlipChecked, Mode=TwoWay}"
+                         ToolTipService.ToolTip="{utils:ResourceString Name=bitFlip/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"/>
         </Grid>
 
         <Button x:Name="QwordButton"
-                x:Uid="qwordButton"
                 Grid.Column="0"
                 Grid.ColumnSpan="7"
                 Style="{StaticResource ProgWordSizeButtonStyle}"
+                common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=qwordButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                 AutomationProperties.AutomationId="qwordButton"
+                AutomationProperties.Name="{utils:ResourceString Name=qwordButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="0"
                 Content="QWORD"/>
         <Button x:Name="DwordButton"
-                x:Uid="dwordButton"
                 Grid.Column="0"
                 Grid.ColumnSpan="7"
                 Style="{StaticResource ProgWordSizeButtonStyle}"
+                common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=dwordButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                 AutomationProperties.AutomationId="dwordButton"
+                AutomationProperties.Name="{utils:ResourceString Name=dwordButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="1"
                 Content="DWORD"
                 Visibility="Collapsed"/>
         <Button x:Name="WordButton"
-                x:Uid="wordButton"
                 Grid.Column="0"
                 Grid.ColumnSpan="7"
                 Style="{StaticResource ProgWordSizeButtonStyle}"
+                common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=wordButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                 AutomationProperties.AutomationId="wordButton"
+                AutomationProperties.Name="{utils:ResourceString Name=wordButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="2"
                 Content="WORD"
                 Visibility="Collapsed"/>
         <Button x:Name="ByteButton"
-                x:Uid="byteButton"
                 Grid.Column="0"
                 Grid.ColumnSpan="7"
                 Style="{StaticResource ProgWordSizeButtonStyle}"
+                common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=byteButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                 AutomationProperties.AutomationId="byteButton"
+                AutomationProperties.Name="{utils:ResourceString Name=byteButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                 Command="{x:Bind BitLengthButtonPressed, Mode=OneTime}"
                 CommandParameter="3"
                 Content="BYTE"

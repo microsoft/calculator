@@ -12,6 +12,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:triggers="using:CalculatorApp.Views.StateTriggers"
+             xmlns:utils="using:CalculatorApp.Utils"
              xmlns:vm="using:CalculatorApp.ViewModel"
              d:DesignHeight="658"
              d:DesignWidth="830"
@@ -663,12 +664,12 @@
                                 Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <HyperlinkButton x:Name="CurrencyRefreshBlock"
-                                         x:Uid="RefreshButtonText"
                                          Margin="16,4,0,0"
                                          Padding="0"
                                          Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                                          BorderThickness="0"
-                                         Click="CurrencyRefreshButton_Click">
+                                         Click="CurrencyRefreshButton_Click"
+                                         Content="{utils:ResourceString Name=RefreshButtonText/Content}">
                             <HyperlinkButton.Resources>
                                 <ResourceDictionary>
                                     <StaticResource x:Key="HyperlinkButtonBackgroundPointerOver" ResourceKey="SubtleFillColorTransparentBrush"/>
@@ -677,8 +678,7 @@
                             </HyperlinkButton.Resources>
                         </HyperlinkButton>
                         <TextBlock Margin="3,6,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
-                            <Run x:Name="CurrencySecondaryStatus"
-                                 Text=""/>
+                            <Run x:Name="CurrencySecondaryStatus" Text=""/>
                         </TextBlock>
                     </StackPanel>
                 </ContentControl>
@@ -724,50 +724,54 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Grid x:Uid="DisplayControls"
-                  Grid.Row="0"
+            <Grid Grid.Row="0"
                   Grid.Column="1"
                   Grid.ColumnSpan="2"
-                  AutomationProperties.HeadingLevel="Level1">
+                  AutomationProperties.HeadingLevel="Level1"
+                  AutomationProperties.Name="{utils:ResourceString Name=DisplayControls/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <controls:CalculatorButton x:Name="ClearEntryButtonPos0"
-                                           x:Uid="clearEntryButton"
                                            HorizontalAlignment="Stretch"
                                            Style="{StaticResource OperatorButtonStyle}"
                                            FontSize="14"
+                                           common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=clearEntryButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
+                                           AutomationProperties.Name="{utils:ResourceString Name=clearEntryButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Clear"
                                            Content="CE"
                                            TabIndex="7"/>
                 <controls:CalculatorButton x:Name="BackSpaceButtonSmall"
-                                           x:Uid="backSpaceButton"
                                            Grid.Column="1"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
                                            FontSize="14"
+                                           common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=backSpaceButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
+                                           AutomationProperties.Name="{utils:ResourceString Name=backSpaceButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Backspace"
                                            Content="&#xE94F;"
                                            TabIndex="8"/>
             </Grid>
 
             <local:NumberPad x:Name="NumberPad"
-                             x:Uid="NumberPad"
                              Grid.Row="1"
                              Grid.RowSpan="4"
                              Grid.Column="0"
                              Grid.ColumnSpan="3"
                              VerticalAlignment="Stretch"
                              AutomationProperties.HeadingLevel="Level1"
+                             AutomationProperties.Name="{utils:ResourceString Name=NumberPad/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                              ButtonStyle="{StaticResource NumericButtonStyle18}"
                              TabIndex="10"
                              TabNavigation="Local"/>
             <controls:CalculatorButton x:Name="ConverterNegateButton"
-                                       x:Uid="converterNegateButton"
                                        Grid.Row="4"
                                        Grid.Column="0"
                                        Style="{StaticResource SymbolOperatorKeypadButtonStyle}"
                                        FontSize="16"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=converterNegateButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
+                                       common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=converterNegateButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
+                                       AutomationProperties.Name="{utils:ResourceString Name=converterNegateButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Negate"
                                        Content="&#xF898;"
                                        TabIndex="6"

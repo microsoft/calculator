@@ -2,12 +2,14 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
+             xmlns:common="using:CalculatorApp.Common"
              xmlns:converters="using:CalculatorApp.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:model="using:CalculatorApp.ViewModel"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+             xmlns:utils="using:CalculatorApp.Utils"
              AutomationProperties.AutomationId="HistoryList"
              FlowDirection="LeftToRight"
              mc:Ignorable="d">
@@ -42,18 +44,20 @@
             <muxc:SymbolIconSource x:Key="DeleteSymbol" Symbol="Delete"/>
 
             <muxc:SwipeItems x:Key="HistorySwipeItems" Mode="Execute">
-                <muxc:SwipeItem x:Uid="DeleteHistorySwipeItem"
+                <muxc:SwipeItem AutomationProperties.Name="{utils:ResourceString Name=DeleteHistorySwipeItem/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                 IconSource="{StaticResource DeleteSymbol}"
-                                Invoked="OnDeleteSwipeInvoked"/>
+                                Invoked="OnDeleteSwipeInvoked"
+                                Text="{utils:ResourceString Name=DeleteHistorySwipeItem/Text}"/>
             </muxc:SwipeItems>
 
             <MenuFlyout x:Name="HistoryContextMenu">
-                <MenuFlyoutItem x:Uid="CopyHistoryMenuItem"
-                                Click="OnCopyMenuItemClicked"
-                                Icon="Copy"/>
-                <MenuFlyoutItem x:Uid="DeleteHistoryMenuItem"
+                <MenuFlyoutItem Click="OnCopyMenuItemClicked"
+                                Icon="Copy"
+                                Text="{utils:ResourceString Name=CopyHistoryMenuItem/Text}"/>
+                <MenuFlyoutItem AutomationProperties.Name="{utils:ResourceString Name=DeleteHistoryMenuItem/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                 Click="OnDeleteMenuItemClicked"
-                                Icon="Delete"/>
+                                Icon="Delete"
+                                Text="{utils:ResourceString Name=DeleteHistoryMenuItem/Text}"/>
             </MenuFlyout>
 
             <DataTemplate x:Key="HistoryItemTemplate" x:DataType="model:HistoryItemViewModel">
@@ -133,10 +137,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock x:Name="HistoryEmpty"
-                       x:Uid="HistoryEmpty"
                        Margin="12,8,24,0"
                        Style="{ThemeResource BodyTextBlockStyle}"
                        Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                       Text="{utils:ResourceString Name=HistoryEmpty/Text}"
                        TextWrapping="Wrap"
                        Visibility="{x:Bind Model.ItemsCount, Converter={StaticResource ItemSizeToVisibilityConverter}, Mode=OneWay}"/>
             <ListView x:Name="HistoryListView"
@@ -162,12 +166,15 @@
                 </ListView.ItemContainerTransitions>
             </ListView>
             <Button x:Name="ClearHistory"
-                    x:Uid="ClearHistory"
                     Grid.Row="1"
                     Style="{StaticResource ClearAllHistoryMemoryButtonStyle}"
+                    common:KeyboardShortcutManager.VirtualKeyControlShiftChord="{utils:ResourceVirtualKey Name=ClearHistory/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlShiftChord}"
+                    AccessKey="{utils:ResourceString Name=ClearHistory/AccessKey}"
                     AutomationProperties.AutomationId="ClearHistory"
+                    AutomationProperties.Name="{utils:ResourceString Name=ClearHistory/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                     Command="{x:Bind Model.ClearCommand, Mode=OneWay}"
-                    Content="&#xE74D;"
+                    Content=""
+                    ToolTipService.ToolTip="{utils:ResourceString Name=ClearHistory/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                     Visibility="{x:Bind Model.ItemsCount, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}"/>
         </Grid>
     </Grid>

@@ -1,6 +1,7 @@
 <UserControl x:Class="CalculatorApp.GraphingCalculator"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:common="using:CalculatorApp.Common"
              xmlns:contract7NotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,7)"
              xmlns:contract7Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)"
              xmlns:contract8Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
@@ -9,6 +10,7 @@
              xmlns:graphControl="using:GraphControl"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="using:CalculatorApp.Utils"
              x:Name="Control"
              DataContextChanged="GraphingCalculator_DataContextChanged"
              mc:Ignorable="d">
@@ -553,13 +555,12 @@
         <!-- Top panel -->
         <Grid Grid.ColumnSpan="2">
             <ToggleSwitch x:Name="SwitchModeToggleButton"
-                          x:Uid="SwitchModeToggleButton"
                           Margin="0,0,12,2"
                           HorizontalAlignment="Right"
                           VerticalAlignment="Center"
                           Style="{StaticResource ConditionalGraphModeToggleSwitchStyle}"
                           AutomationProperties.AutomationId="SwitchModeToggleButton"
-                          AutomationProperties.Name="{x:Bind local:GraphingCalculator.GetInfoForSwitchModeToggleButton(SwitchModeToggleButton.IsOn), Mode=OneWay}"
+                          AutomationProperties.Name="{utils:ResourceString Name=SwitchModeToggleButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                           Toggled="SwitchModeToggleButton_Toggled"
                           ToolTipService.ToolTip="{x:Bind local:GraphingCalculator.GetInfoForSwitchModeToggleButton(SwitchModeToggleButton.IsOn), Mode=OneWay}"
                           Visibility="Collapsed"/>
@@ -595,9 +596,9 @@
                                   VariablesUpdated="GraphingControl_VariablesUpdated">
                 <graphControl:Grapher.ContextFlyout>
                     <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem x:Uid="GraphCopyMenuItem"
-                                        Click="GraphMenuFlyoutItem_Click"
-                                        Icon="Copy"/>
+                        <MenuFlyoutItem Click="GraphMenuFlyoutItem_Click"
+                                        Icon="Copy"
+                                        Text="{utils:ResourceString Name=GraphCopyMenuItem/Text}"/>
                     </MenuFlyout>
                 </graphControl:Grapher.ContextFlyout>
             </graphControl:Grapher>
@@ -639,24 +640,26 @@
                                   Glyph="&#xE3B3;"/>
                     </ToggleButton>
 
-                    <Button x:Uid="shareButton"
-                            MinWidth="32"
+                    <Button MinWidth="32"
                             Margin="0,4,0,4"
                             Style="{ThemeResource ThemedGraphButtonStyle}"
                             contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
-                            Click="OnShareClick">
+                            AutomationProperties.Name="{utils:ResourceString Name=shareButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                            Click="OnShareClick"
+                            ToolTipService.ToolTip="{utils:ResourceString Name=shareButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}">
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                   FontSize="16"
                                   Glyph="&#xE72D;"/>
                     </Button>
 
                     <Button x:Name="GraphSettingsButton"
-                            x:Uid="graphSettingsButton"
                             MinWidth="3"
                             Margin="4"
                             Style="{ThemeResource ThemedGraphButtonStyle}"
                             contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
-                            Click="GraphSettingsButton_Click">
+                            AutomationProperties.Name="{utils:ResourceString Name=graphSettingsButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                            Click="GraphSettingsButton_Click"
+                            ToolTipService.ToolTip="{utils:ResourceString Name=graphSettingsButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}">
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                   FontSize="16"
                                   Glyph="&#xE3B4;"/>
@@ -701,7 +704,6 @@
                         </ResourceDictionary>
                     </StackPanel.Resources>
                     <RepeatButton x:Name="ZoomInButton"
-                                  x:Uid="zoomInButton"
                                   MinHeight="32"
                                   Margin="4"
                                   HorizontalAlignment="Stretch"
@@ -709,7 +711,9 @@
                                   FontFamily="{StaticResource CalculatorFontFamily}"
                                   contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
                                   AutomationProperties.AutomationId="zoomInButton"
-                                  Command="{x:Bind ZoomInButtonPressed, Mode=OneTime}">
+                                  AutomationProperties.Name="{utils:ResourceString Name=zoomInButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                                  Command="{x:Bind ZoomInButtonPressed, Mode=OneTime}"
+                                  ToolTipService.ToolTip="{utils:ResourceString Name=zoomInButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}">
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                   FontSize="14"
                                   Glyph="&#xE948;"/>
@@ -719,7 +723,6 @@
                     </RepeatButton>
 
                     <RepeatButton x:Name="ZoomOutButton"
-                                  x:Uid="zoomOutButton"
                                   MinHeight="32"
                                   Margin="4,0,4,0"
                                   HorizontalAlignment="Stretch"
@@ -727,7 +730,9 @@
                                   FontFamily="{StaticResource CalculatorFontFamily}"
                                   contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
                                   AutomationProperties.AutomationId="zoomOutButton"
-                                  Command="{x:Bind ZoomOutButtonPressed, Mode=OneTime}">
+                                  AutomationProperties.Name="{utils:ResourceString Name=zoomOutButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                                  Command="{x:Bind ZoomOutButtonPressed, Mode=OneTime}"
+                                  ToolTipService.ToolTip="{utils:ResourceString Name=zoomOutButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}">
                         <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"
                                   FontSize="14"
                                   Glyph="&#xE949;"/>
@@ -736,14 +741,16 @@
                         </RepeatButton.KeyboardAccelerators>
                     </RepeatButton>
 
-                    <ToggleButton x:Uid="graphViewButton"
-                                  MinHeight="32"
+                    <ToggleButton MinHeight="32"
                                   Margin="4"
                                   Style="{ThemeResource ThemedGraphViewToggleButtonStyle}"
+                                  common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=graphViewButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                   contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
                                   AutomationProperties.AutomationId="graphViewButton"
+                                  AutomationProperties.Name="{utils:ResourceString Name=graphViewButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                   Click="GraphViewButton_Click"
-                                  IsChecked="{x:Bind IsManualAdjustment, Mode=TwoWay}">
+                                  IsChecked="{x:Bind IsManualAdjustment, Mode=TwoWay}"
+                                  ToolTipService.ToolTip="{utils:ResourceString Name=graphViewButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}">
                         <ToggleButton.Content>
                             <Grid>
                                 <FontIcon FontFamily="{StaticResource CalculatorFontFamily}"

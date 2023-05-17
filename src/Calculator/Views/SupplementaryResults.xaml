@@ -7,6 +7,7 @@
              xmlns:designdata="using:CalculatorApp.DesignData"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="using:CalculatorApp.Utils"
              xmlns:vm="using:CalculatorApp.ViewModel"
              d:DesignHeight="300"
              d:DesignWidth="400"
@@ -89,13 +90,12 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <TextBlock x:Uid="SupplementaryResultsHeader"
-                   Margin="16,0,0,-6"
+        <TextBlock Margin="16,0,0,-6"
                    HorizontalAlignment="Left"
                    Style="{ThemeResource CaptionTextBlockStyle}"
                    Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
                    IsTextScaleFactorEnabled="False"
-                   Text="Also equal to"/>
+                   Text="{utils:ResourceString Name=SupplementaryResultsHeader/Text}"/>
         <controls:SupplementaryItemsControl x:Name="SupplementaryValues"
                                             MinHeight="27"
                                             HorizontalAlignment="Left"
