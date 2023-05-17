@@ -164,7 +164,8 @@ namespace CalculatorApp
             Data_Zetabits = UnitStart + 163,
             Data_Zetabytes = UnitStart + 164,
             Area_Pyeong = UnitStart + 165,
-            UnitEnd = Area_Pyeong
+            Energy_Kilowatthour = UnitStart + 166,
+            UnitEnd = Energy_Kilowatthour
         };
     }
 }
