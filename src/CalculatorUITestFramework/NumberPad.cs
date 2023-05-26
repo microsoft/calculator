@@ -23,7 +23,7 @@ namespace CalculatorUITestFramework
         public WindowsElement DecimalButton => this.session.TryFindElementByAccessibilityId("decimalSeparatorButton");
         public WindowsElement NegateButton => this.session.TryFindElementByAccessibilityId("negateButton");
 
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
 
         /// <summary>
         /// Translates a number into the Calculator button clicks.

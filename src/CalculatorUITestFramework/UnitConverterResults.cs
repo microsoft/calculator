@@ -10,7 +10,7 @@ namespace CalculatorUITestFramework
 {
     public class UnitConverterResults
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         private WindowsElement CalculationResult1 => this.session.TryFindElementByAccessibilityId("Value1");
 
         private WindowsElement CalculationResult2 => this.session.TryFindElementByAccessibilityId("Value2");

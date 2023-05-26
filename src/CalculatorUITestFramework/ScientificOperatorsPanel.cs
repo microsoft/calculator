@@ -26,7 +26,7 @@ namespace CalculatorUITestFramework
     /// </summary>
     public class ScientificOperatorsPanel
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         public WindowsElement XPower3Button => this.session.TryFindElementByAccessibilityId("xpower3Button");
         public WindowsElement XPowerYButton => this.session.TryFindElementByAccessibilityId("powerButton");
         public WindowsElement PowerOf10Button => this.session.TryFindElementByAccessibilityId("powerOf10Button");
