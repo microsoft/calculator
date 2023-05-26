@@ -484,13 +484,8 @@ namespace CalculatorApp
                 // Writer lock for the static maps
                 lock (s_keyboardShortcutMapLockMutex)
                 {
-                    Control control = (target as ButtonBase);
-
-                    if (control == null)
-                    {
-                        // Handling Ctrl+E shortcut for Date Calc, target would be NavigationView^ in that case
-                        control = (target as MUXC.NavigationView);
-                    }
+                    // Handling Ctrl+E shortcut for Date Calc, target would be NavigationView^ in that case
+                    Control control = (target as ButtonBase) ?? (Control)(target as MUXC.NavigationView);
 
                     int viewId = Utilities.GetWindowId();
 
@@ -580,7 +575,7 @@ namespace CalculatorApp
             private static bool CanNavigateModeByShortcut(MUXC.NavigationView navView, object nvi
                 , ApplicationViewModel vm, ViewMode toMode)
             {
-                if (nvi != null && nvi is NavCategory navCategory)
+                if (nvi is NavCategory navCategory)
                 {
                     return navCategory.IsEnabled
                         && navView.Visibility == Visibility.Visible
@@ -601,21 +596,18 @@ namespace CalculatorApp
                     {
                         if (itemRef.Target is MUXC.NavigationView item)
                         {
-                            var navView = item;
-
-                            var menuItems = ((List<object>)navView.MenuItemsSource);
+                            var menuItems = ((List<object>)item.MenuItemsSource);
                             if (menuItems != null)
                             {
-                                var vm = (navView.DataContext as ApplicationViewModel);
-                                if (null != vm)
+                                if (item.DataContext is ApplicationViewModel vm)
                                 {
-                                    ViewMode realToMode = toMode.HasValue ? toMode.Value : NavCategoryStates.GetViewModeForVirtualKey(((MyVirtualKey)key));
+                                    ViewMode realToMode = toMode ?? NavCategoryStates.GetViewModeForVirtualKey(((MyVirtualKey)key));
 
                                     var nvi = menuItems[NavCategoryStates.GetFlatIndex(realToMode)];
-                                    if (CanNavigateModeByShortcut(navView, nvi, vm, realToMode))
+                                    if (CanNavigateModeByShortcut(item, nvi, vm, realToMode))
                                     {
                                         vm.Mode = realToMode;
-                                        navView.SelectedItem = nvi;
+                                        item.SelectedItem = nvi;
                                     }
                                 }
                             }
@@ -685,14 +677,13 @@ namespace CalculatorApp
                 {
                     if (currentHonorShortcuts)
                     {
-                        var myVirtualKey = key;
                         var lookupMap = GetCurrentKeyDictionary(isControlKeyPressed, isShiftKeyPressed, isAltKeyPressed);
                         if (lookupMap == null)
                         {
                             return;
                         }
 
-                        var buttons = EqualRange(lookupMap, (MyVirtualKey)myVirtualKey);
+                        var buttons = EqualRange(lookupMap, (MyVirtualKey)key);
                         if (!buttons.Any())
                         {
                             return;
@@ -701,7 +692,7 @@ namespace CalculatorApp
                         KeyboardShortcutManagerLocals.RunFirstEnabledButtonCommand(buttons);
 
                         // Ctrl+C and Ctrl+V shifts focus to some button because of which enter doesn't work after copy/paste. So don't shift focus if Ctrl+C or Ctrl+V
-                        // is pressed. When drop down is open, pressing escape shifts focus to clear button. So dont's shift focus if drop down is open. Ctrl+Insert is
+                        // is pressed. When drop down is open, pressing escape shifts focus to clear button. So don't shift focus if drop down is open. Ctrl+Insert is
                         // equivalent to Ctrl+C and Shift+Insert is equivalent to Ctrl+V
                         //var currentIsDropDownOpen = s_IsDropDownOpen.find(viewId);
                         if (!s_IsDropDownOpen.TryGetValue(viewId, out var currentIsDropDownOpen) || !currentIsDropDownOpen)
@@ -778,13 +769,13 @@ namespace CalculatorApp
                 {
                     if (altPressed)
                     {
-                        if (!shiftKeyPressed)
+                        if (shiftKeyPressed)
                         {
-                            return s_VirtualKeyAltChordsForButtons[viewId];
+                            return null;
                         }
                         else
                         {
-                            return null;
+                            return s_VirtualKeyAltChordsForButtons[viewId];
                         }
                     }
                     else
