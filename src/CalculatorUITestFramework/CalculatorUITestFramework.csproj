@@ -3,7 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Appium.WebDriver" Version="4.3.2" />
+    <PackageReference Include="Appium.WebDriver" Version="4.4.0" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
   </ItemGroup>
 </Project>
