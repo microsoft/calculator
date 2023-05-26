@@ -17,23 +17,6 @@
 //-----------------------------------------------------------------------------
 #include "ratpak.h"
 
-void ascalerat(_Inout_ PRAT* pa, AngleType angletype, int32_t precision)
-{
-    switch (angletype)
-    {
-    case AngleType::Radians:
-        break;
-    case AngleType::Degrees:
-        divrat(pa, two_pi, precision);
-        mulrat(pa, rat_360, precision);
-        break;
-    case AngleType::Gradians:
-        divrat(pa, two_pi, precision);
-        mulrat(pa, rat_400, precision);
-        break;
-    }
-}
-
 //-----------------------------------------------------------------------------
 //
 //  FUNCTION: asinrat, _asinrat

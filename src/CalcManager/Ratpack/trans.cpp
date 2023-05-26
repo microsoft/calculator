@@ -16,22 +16,6 @@
 
 #include "ratpak.h"
 
-void scalerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision)
-{
-    switch (angletype)
-    {
-    case AngleType::Radians:
-        scale2pi(pa, radix, precision);
-        break;
-    case AngleType::Degrees:
-        scale(pa, rat_360, radix, precision);
-        break;
-    case AngleType::Gradians:
-        scale(pa, rat_400, radix, precision);
-        break;
-    }
-}
-
 //-----------------------------------------------------------------------------
 //
 //  FUNCTION: sinrat, _sinrat

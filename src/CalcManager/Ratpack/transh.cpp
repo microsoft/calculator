@@ -109,6 +109,35 @@ void sinhrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     }
 }
 
+void sinhanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision)
+
+{
+    if (angletype != AngleType::Radians)
+    {
+        scalerat(pa, angletype, radix, precision);
+    }
+    switch (angletype)
+    {
+    case AngleType::Degrees:
+        if (rat_gt(*pa, rat_180, precision))
+        {
+            subrat(pa, rat_360, precision);
+        }
+        divrat(pa, rat_180, precision);
+        mulrat(pa, pi, precision);
+        break;
+    case AngleType::Gradians:
+        if (rat_gt(*pa, rat_200, precision))
+        {
+            subrat(pa, rat_400, precision);
+        }
+        divrat(pa, rat_200, precision);
+        mulrat(pa, pi, precision);
+        break;
+    }
+    _sinhrat(pa, precision);
+}
+
 //-----------------------------------------------------------------------------
 //
 //  FUNCTION: coshrat
@@ -198,6 +227,43 @@ void coshrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     }
 }
 
+void coshanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision)
+
+{
+    if (angletype != AngleType::Radians)
+    {
+        scalerat(pa, angletype, radix, precision);
+    }
+    switch (angletype)
+    {
+    case AngleType::Degrees:
+        if (rat_gt(*pa, rat_180, precision))
+        {
+            PRAT ptmp = nullptr;
+            DUPRAT(ptmp, rat_360);
+            subrat(&ptmp, *pa, precision);
+            destroyrat(*pa);
+            *pa = ptmp;
+        }
+        divrat(pa, rat_180, precision);
+        mulrat(pa, pi, precision);
+        break;
+    case AngleType::Gradians:
+        if (rat_gt(*pa, rat_200, precision))
+        {
+            PRAT ptmp = nullptr;
+            DUPRAT(ptmp, rat_400);
+            subrat(&ptmp, *pa, precision);
+            destroyrat(*pa);
+            *pa = ptmp;
+        }
+        divrat(pa, rat_200, precision);
+        mulrat(pa, pi, precision);
+        break;
+    }
+    _coshrat(pa, radix, precision);
+}
+
 //-----------------------------------------------------------------------------
 //
 //  FUNCTION: tanhrat
@@ -223,4 +289,33 @@ void tanhrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     mulnumx(&((*px)->pq), ptmp->pp);
 
     destroyrat(ptmp);
+}
+
+void tanhanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision)
+
+{
+    if (angletype != AngleType::Radians)
+    {
+        scalerat(pa, angletype, radix, precision);
+    }
+    switch (angletype)
+    {
+    case AngleType::Degrees:
+        if (rat_gt(*pa, rat_180, precision))
+        {
+            subrat(pa, rat_180, precision);
+        }
+        divrat(pa, rat_180, precision);
+        mulrat(pa, pi, precision);
+        break;
+    case AngleType::Gradians:
+        if (rat_gt(*pa, rat_200, precision))
+        {
+            subrat(pa, rat_200, precision);
+        }
+        divrat(pa, rat_200, precision);
+        mulrat(pa, pi, precision);
+        break;
+    }
+    tanhrat(pa, radix, precision);
 }

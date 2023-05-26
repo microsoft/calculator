@@ -85,6 +85,13 @@ void asinhrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     destroyrat(neg_pt_eight_five);
 }
 
+void asinhanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision)
+
+{
+    asinhrat(pa, radix, precision);
+    ascalerat(pa, angletype, precision);
+}
+
 //-----------------------------------------------------------------------------
 //
 //  FUNCTION: acoshrat
@@ -121,6 +128,13 @@ void acoshrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     }
 }
 
+void acoshanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision)
+
+{
+    acoshrat(pa, radix, precision);
+    ascalerat(pa, angletype, precision);
+}
+
 //-----------------------------------------------------------------------------
 //
 //  FUNCTION: atanhrat
@@ -150,4 +164,11 @@ void atanhrat(_Inout_ PRAT* px, int32_t precision)
     lograt(px, precision);
     divrat(px, rat_two, precision);
     destroyrat(ptmp);
+}
+
+void atanhanglerat(_Inout_ PRAT* pa, AngleType angletype, int32_t precision)
+
+{
+    atanhrat(pa, precision);
+    ascalerat(pa, angletype, precision);
 }

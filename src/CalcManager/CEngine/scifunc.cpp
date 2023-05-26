@@ -120,7 +120,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         case IDC_SINH: /* Sine- hyperbolic and archyperbolic */
             if (!m_fIntegerMode)
             {
-                result = m_bInv ? ASinh(rat) : Sinh(rat);
+                result = m_bInv ? ASinh(rat, m_angletype) : Sinh(rat, m_angletype);
             }
             break;
 
@@ -134,7 +134,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         case IDC_COSH: /* Cosine hyperbolic, follows convention of sine h function. */
             if (!m_fIntegerMode)
             {
-                result = m_bInv ? ACosh(rat) : Cosh(rat);
+                result = m_bInv ? ACosh(rat, m_angletype) : Cosh(rat, m_angletype);
             }
             break;
 
@@ -148,7 +148,7 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         case IDC_TANH: /* Same as sine h and cosine h. */
             if (!m_fIntegerMode)
             {
-                result = m_bInv ? ATanh(rat) : Tanh(rat);
+                result = m_bInv ? ATanh(rat, m_angletype) : Tanh(rat, m_angletype);
             }
             break;
 
@@ -176,21 +176,21 @@ CalcEngine::Rational CCalcEngine::SciCalcFunctions(CalcEngine::Rational const& r
         case IDC_SECH:
             if (!m_fIntegerMode)
             {
-                result = m_bInv ? ACosh(Invert(rat)) : Invert(Cosh(rat));
+                result = m_bInv ? ACosh(Invert(rat), m_angletype) : Invert(Cosh(rat, m_angletype));
             }
             break;
 
         case IDC_CSCH:
             if (!m_fIntegerMode)
             {
-                result = m_bInv ? ASinh(Invert(rat)) : Invert(Sinh(rat));
+                result = m_bInv ? ASinh(Invert(rat), m_angletype) : Invert(Sinh(rat, m_angletype));
             }
             break;
 
         case IDC_COTH:
             if (!m_fIntegerMode)
             {
-                result = m_bInv ? ATanh(Invert(rat)) : Invert(Tanh(rat));
+                result = m_bInv ? ATanh(Invert(rat), m_angletype) : Invert(Tanh(rat, m_angletype));
             }
             break;
 

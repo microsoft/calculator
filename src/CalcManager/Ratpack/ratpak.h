@@ -373,11 +373,19 @@ extern PRAT _createrat(void);
 // angle type
 extern void acosanglerat(_Inout_ PRAT* px, AngleType angletype, uint32_t radix, int32_t precision);
 
+// returns a new rat structure with the acosh of x->p/x->q taking into account
+// angle type
+extern void acoshanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision);
+
 // returns a new rat structure with the acosh of x->p/x->q
 extern void acoshrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
 
 // returns a new rat structure with the acos of x->p/x->q
 extern void acosrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
+
+// returns a new rat structure with the asinh of x->p/x->q taking into account
+// angle type
+extern void asinhanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision);
 
 // returns a new rat structure with the asin of x->p/x->q taking into account
 // angle type
@@ -393,11 +401,19 @@ extern void asinrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
 // angle type
 extern void atananglerat(_Inout_ PRAT* px, AngleType angletype, uint32_t radix, int32_t precision);
 
+// returns a new rat structure with the atanh of x->p/x->q taking into account
+// angle type
+extern void atanhanglerat(_Inout_ PRAT* pa, AngleType angletype, int32_t precision);
+
 // returns a new rat structure with the atanh of x->p/x->q
 extern void atanhrat(_Inout_ PRAT* px, int32_t precision);
 
 // returns a new rat structure with the atan of x->p/x->q
 extern void atanrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
+
+// returns a new rat structure with the hyperbolic cosine of x->p/x->q taking into account
+// angle type
+extern void coshanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision);
 
 // returns a new rat structure with the cosh of x->p/x->q
 extern void coshrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
@@ -425,12 +441,20 @@ extern PRAT i32torat(int32_t ini32);
 extern PRAT Ui32torat(uint32_t inui32);
 extern PRAT numtorat(_In_ PNUMBER pin, uint32_t radix);
 
+// returns a new rat structure with the hyperbolic sin of x->p/x->q taking into account
+// angle type
+extern void sinhanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision);
+
 extern void sinhrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
 extern void sinrat(_Inout_ PRAT* px);
 
 // returns a new rat structure with the sin of x->p/x->q taking into account
 // angle type
 extern void sinanglerat(_Inout_ PRAT* px, AngleType angletype, uint32_t radix, int32_t precision);
+
+// returns a new rat structure with the hyperbolic tan of x->p/x->q taking into account
+// angle type
+extern void tanhanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision);
 
 extern void tanhrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
 extern void tanrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
@@ -483,3 +507,5 @@ extern void inbetween(_In_ PRAT* px, _In_ PRAT range, int32_t precision);
 extern void trimit(_Inout_ PRAT* px, int32_t precision);
 extern void _dumprawrat(_In_ const wchar_t* varname, _In_ PRAT rat, std::wostream& out);
 extern void _dumprawnum(_In_ const wchar_t* varname, _In_ PNUMBER num, std::wostream& out);
+extern void scalerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t precision);
+extern void ascalerat(_Inout_ PRAT* pa, AngleType angletype, int32_t precision);

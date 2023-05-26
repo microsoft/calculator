@@ -267,13 +267,13 @@ Rational RationalMath::ATan(Rational const& rat, AngleType angletype)
     return result;
 }
 
-Rational RationalMath::Sinh(Rational const& rat)
+Rational RationalMath::Sinh(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        sinhrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
+        sinhanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (uint32_t error)
     {
@@ -287,13 +287,13 @@ Rational RationalMath::Sinh(Rational const& rat)
     return result;
 }
 
-Rational RationalMath::Cosh(Rational const& rat)
+Rational RationalMath::Cosh(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        coshrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
+        coshanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (uint32_t error)
     {
@@ -307,13 +307,13 @@ Rational RationalMath::Cosh(Rational const& rat)
     return result;
 }
 
-Rational RationalMath::Tanh(Rational const& rat)
+Rational RationalMath::Tanh(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        tanhrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
+        tanhanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (uint32_t error)
     {
@@ -327,13 +327,13 @@ Rational RationalMath::Tanh(Rational const& rat)
     return result;
 }
 
-Rational RationalMath::ASinh(Rational const& rat)
+Rational RationalMath::ASinh(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        asinhrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
+        asinhanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (uint32_t error)
     {
@@ -347,13 +347,13 @@ Rational RationalMath::ASinh(Rational const& rat)
     return result;
 }
 
-Rational RationalMath::ACosh(Rational const& rat)
+Rational RationalMath::ACosh(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        acoshrat(&prat, RATIONAL_BASE, RATIONAL_PRECISION);
+        acoshanglerat(&prat, angletype, RATIONAL_BASE, RATIONAL_PRECISION);
     }
     catch (uint32_t error)
     {
@@ -367,13 +367,13 @@ Rational RationalMath::ACosh(Rational const& rat)
     return result;
 }
 
-Rational RationalMath::ATanh(Rational const& rat)
+Rational RationalMath::ATanh(Rational const& rat, AngleType angletype)
 {
     PRAT prat = rat.ToPRAT();
 
     try
     {
-        atanhrat(&prat, RATIONAL_PRECISION);
+        atanhanglerat(&prat, angletype, RATIONAL_PRECISION);
     }
     catch (uint32_t error)
     {
