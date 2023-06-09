@@ -2330,7 +2330,7 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>அங்கு இதுவரை வரலாறு ஏதுமில்லை</value>
+    <value>இங்கு இதுவரை வரலாறு ஏதுமில்லை</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
@@ -4135,16 +4135,8 @@
     <value>தோற்றம்</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>பயன்பாட்டு தீம்</value>
-    <comment>Title of App theme expander</comment>
-  </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
-    <value>எந்தப் பயன்பாட்டு கருப்பொருளைக் காண்பிக்க வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும்</value>
-    <comment>Description of App theme expander</comment>
-  </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
-    <value>லைட்</value>
+    <value>வெளிச்சம்</value>
     <comment>Lable for light theme option</comment>
   </data>
   <data name="DarkThemeRadioButton.Content" xml:space="preserve">

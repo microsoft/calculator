@@ -4134,14 +4134,6 @@
     <value>Appearance</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>Tema ng app</value>
-    <comment>Title of App theme expander</comment>
-  </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
-    <value>Piliin kung aling tema ng app ang ipapakita</value>
-    <comment>Description of App theme expander</comment>
-  </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>Light</value>
     <comment>Lable for light theme option</comment>

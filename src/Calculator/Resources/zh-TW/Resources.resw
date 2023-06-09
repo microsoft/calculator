@@ -3436,7 +3436,7 @@
     <comment>Message displayed when the graph does not have any y-intercepts</comment>
   </data>
   <data name="Domain" xml:space="preserve">
-    <value>網域</value>
+    <value>領域</value>
     <comment>Title for KeyGraphFeatures Domain Property</comment>
   </data>
   <data name="HorizontalAsymptotes" xml:space="preserve">
@@ -4133,14 +4133,6 @@
   <data name="SettingsAppearance.Text" xml:space="preserve">
     <value>外觀</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
-  </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>應用程式佈景主題</value>
-    <comment>Title of App theme expander</comment>
-  </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
-    <value>選取要顯示的應用程式佈景主題</value>
-    <comment>Description of App theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>淺色</value>

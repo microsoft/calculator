@@ -3623,7 +3623,7 @@
     <comment>Error that occurs during graphing when a } is missing.</comment>
   </data>
   <data name="CannotUseIInReal" xml:space="preserve">
-    <value>"i" e "I" no se pueden usar como nombres de variables</value>
+    <value>Tanto "i", como "I", no se pueden usar como nombres de variables</value>
     <comment>Error that occurs during graphing when i or I is used.</comment>
   </data>
   <data name="GeneralError" xml:space="preserve">
@@ -4023,7 +4023,7 @@
     <comment>Graph settings option to set graph to light theme</comment>
   </data>
   <data name="MatchAppTheme.Content" xml:space="preserve">
-    <value>Hacer coincidir con el tema de la aplicación</value>
+    <value>Coincidir con el tema de la aplicación</value>
     <comment>Graph settings option to set graph to match the app theme</comment>
   </data>
   <data name="GraphThemeHeading.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4133,14 +4133,6 @@
   <data name="SettingsAppearance.Text" xml:space="preserve">
     <value>Apariencia</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
-  </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>Tema de la aplicación</value>
-    <comment>Title of App theme expander</comment>
-  </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
-    <value>Seleccionar el tema de la aplicación para mostrar</value>
-    <comment>Description of App theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>Claro</value>

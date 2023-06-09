@@ -2198,11 +2198,11 @@
     <comment>A turtle, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Jet" xml:space="preserve">
-    <value>젯</value>
+    <value>제트</value>
     <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Jet" xml:space="preserve">
-    <value>젯</value>
+    <value>제트</value>
     <comment>A jet plane, used as a comparison measurement unit for speed. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Whale" xml:space="preserve">
@@ -4133,14 +4133,6 @@
   <data name="SettingsAppearance.Text" xml:space="preserve">
     <value>모양</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
-  </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>앱 테마</value>
-    <comment>Title of App theme expander</comment>
-  </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
-    <value>표시할 앱 테마 선택</value>
-    <comment>Description of App theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>밝게</value>

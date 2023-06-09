@@ -1926,7 +1926,7 @@
     <comment>An abbreviation for a measurement unit of Angle</comment>
   </data>
   <data name="UnitAbbreviation_Atmosphere" xml:space="preserve">
-    <value>Minibank</value>
+    <value>atm</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
   <data name="UnitAbbreviation_Bar" xml:space="preserve">
@@ -4133,14 +4133,6 @@
   <data name="SettingsAppearance.Text" xml:space="preserve">
     <value>Utseende</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
-  </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>App-tema</value>
-    <comment>Title of App theme expander</comment>
-  </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
-    <value>Velg hvilket app-tema som skal vises</value>
-    <comment>Description of App theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>Lyst</value>

@@ -558,7 +558,7 @@
     <comment>{Locked="%1"}. Screen reader prompt for the Calculator expression results. %1 = Localized display value, e.g. "50 + 2 - 60 +".</comment>
   </data>
   <data name="Display_Copied" xml:space="preserve">
-    <value>Prikaži vrednost kopiranu u ostavu</value>
+    <value>Prikaži vrednost kopiranu u međuspremnik</value>
     <comment>Screen reader prompt for the Calculator display copy button, when the button is invoked.</comment>
   </data>
   <data name="HistoryPane" xml:space="preserve">
@@ -4133,14 +4133,6 @@
   <data name="SettingsAppearance.Text" xml:space="preserve">
     <value>Izgled</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
-  </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>Tema aplikacije</value>
-    <comment>Title of App theme expander</comment>
-  </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
-    <value>Izaberite temu aplikacije koju želite da prikažete</value>
-    <comment>Description of App theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>Svetlo</value>

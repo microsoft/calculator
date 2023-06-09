@@ -4134,14 +4134,6 @@
     <value>Wygląd</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>Motyw aplikacji</value>
-    <comment>Title of App theme expander</comment>
-  </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
-    <value>Wybierz motyw aplikacji do wyświetlenia</value>
-    <comment>Description of App theme expander</comment>
-  </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>Jasny</value>
     <comment>Lable for light theme option</comment>

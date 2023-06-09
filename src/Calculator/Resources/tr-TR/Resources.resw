@@ -2492,7 +2492,7 @@
     <value>gün</value>
   </data>
   <data name="Date_Days" xml:space="preserve">
-    <value>günler</value>
+    <value>gün</value>
   </data>
   <data name="Date_Month" xml:space="preserve">
     <value>ay</value>
@@ -3623,7 +3623,7 @@
     <comment>Error that occurs during graphing when a } is missing.</comment>
   </data>
   <data name="CannotUseIInReal" xml:space="preserve">
-    <value>"i" ve "ı" değişken adı olarak kullanılamaz</value>
+    <value>"i" ve "I" değişken adı olarak kullanılamaz</value>
     <comment>Error that occurs during graphing when i or I is used.</comment>
   </data>
   <data name="GeneralError" xml:space="preserve">
@@ -4133,14 +4133,6 @@
   <data name="SettingsAppearance.Text" xml:space="preserve">
     <value>Görünüm</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
-  </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>Uygulama teması</value>
-    <comment>Title of App theme expander</comment>
-  </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
-    <value>Görüntülenecek uygulama temasını seçin</value>
-    <comment>Description of App theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>Açık</value>

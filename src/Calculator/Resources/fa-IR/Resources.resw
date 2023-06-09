@@ -4134,14 +4134,6 @@
     <value>ظاهر</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>طرح زمینه برنامه</value>
-    <comment>Title of App theme expander</comment>
-  </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
-    <value>انتخاب کنید کدام طرح زمینه برنامه نمایش داده شود</value>
-    <comment>Description of App theme expander</comment>
-  </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>روشن</value>
     <comment>Lable for light theme option</comment>

@@ -4134,14 +4134,6 @@
     <value>Облик</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>Тема на приложението</value>
-    <comment>Title of App theme expander</comment>
-  </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
-    <value>Изберете коя тема на приложение да се показва</value>
-    <comment>Description of App theme expander</comment>
-  </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>Светла</value>
     <comment>Lable for light theme option</comment>

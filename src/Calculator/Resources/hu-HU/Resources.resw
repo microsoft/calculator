@@ -2318,7 +2318,7 @@
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutControlContribute" xml:space="preserve">
-    <value>Ha tudni szeretné, hogy miként működhet a Windows Számológép számára, nézze meg a projektet %HL%GitHub%HL%.</value>
+    <value>Ha tudni szeretné, hogy miként működhet közre a Windows Számológép számára, nézze meg a projektet %HL%GitHub%HL%.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutGroupTitle.Text" xml:space="preserve">
@@ -3464,7 +3464,7 @@
     <comment>Title for KeyGraphFeatures Minima Property</comment>
   </data>
   <data name="Monotonicity" xml:space="preserve">
-    <value>Monotonicitás</value>
+    <value>Monotonitás</value>
     <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
   </data>
   <data name="ObliqueAsymptotes" xml:space="preserve">
@@ -4133,14 +4133,6 @@
   <data name="SettingsAppearance.Text" xml:space="preserve">
     <value>Megjelenés</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
-  </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>Alkalmazástéma</value>
-    <comment>Title of App theme expander</comment>
-  </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
-    <value>Válassza ki a megjelenítendő alkalmazástémát</value>
-    <comment>Description of App theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
     <value>Világos</value>
