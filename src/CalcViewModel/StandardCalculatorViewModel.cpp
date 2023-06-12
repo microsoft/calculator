@@ -10,8 +10,8 @@
 #include "Common/TraceLogger.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
-using namespace CalculatorApp::Common::Automation;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel::Common::Automation;
 using namespace CalculatorApp::ViewModel;
 using namespace CalculationManager;
 using namespace concurrency;
@@ -25,7 +25,6 @@ using namespace Windows::UI::Core;
 using namespace Windows::UI::Popups;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Foundation::Collections;
-using namespace Utils;
 using namespace concurrency;
 
 constexpr int StandardModePrecision = 16;
@@ -118,7 +117,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     m_HistoryVM = ref new HistoryViewModel(&m_standardCalculatorManager);
     m_HistoryVM->SetCalculatorDisplay(m_calculatorDisplay);
 
-    m_decimalSeparator = LocalizationSettings::GetInstance().GetDecimalSeparator();
+    m_decimalSeparator = LocalizationSettings::GetInstance()->GetDecimalSeparator();
 
     if (CoreWindow::GetForCurrentThread() != nullptr)
     {
@@ -138,7 +137,14 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
 String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue)
 {
     wstring result(displayValue);
-    LocalizationSettings::GetInstance().LocalizeDisplayValue(&result);
+
+    // Adds leading padding 0's to Programmer Mode's Binary Display
+    if (IsProgrammer && CurrentRadixType == NumberBase::BinBase)
+    {
+        result = AddPadding(result);
+    }
+
+    LocalizationSettings::GetInstance()->LocalizeDisplayValue(&result);
     return ref new Platform::String(result.c_str());
 }
 
@@ -170,13 +176,13 @@ String ^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring
 String ^ StandardCalculatorViewModel::GetNarratorStringReadRawNumbers(_In_ String ^ localizedDisplayValue)
 {
     wstring ws;
-    const auto& locSettings = LocalizationSettings::GetInstance();
+    LocalizationSettings^ locSettings = LocalizationSettings::GetInstance();
 
     // Insert a space after each digit in the string, to force Narrator to read them as separate numbers.
     for (const wchar_t& c : localizedDisplayValue)
     {
         ws += c;
-        if (locSettings.IsLocalizedHexDigit(c))
+        if (locSettings->IsLocalizedHexDigit(c))
         {
             ws += L' ';
         }
@@ -230,7 +236,7 @@ void StandardCalculatorViewModel::SetParenthesisCount(_In_ unsigned int parenthe
 void StandardCalculatorViewModel::SetOpenParenthesisCountNarratorAnnouncement()
 {
     wstring localizedParenthesisCount = to_wstring(m_OpenParenthesisCount).c_str();
-    LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedParenthesisCount);
+    LocalizationSettings::GetInstance()->LocalizeDisplayValue(&localizedParenthesisCount);
 
     if (m_localizedOpenParenthesisCountChangedAutomationFormat == nullptr)
     {
@@ -329,7 +335,7 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<vector<pair<wstri
         return;
     }
 
-    const auto& localizer = LocalizationSettings::GetInstance();
+    LocalizationSettings^ localizer = LocalizationSettings::GetInstance();
 
     const wstring separator = L" ";
     for (unsigned int i = 0; i < nTokens; ++i)
@@ -338,7 +344,7 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<vector<pair<wstri
 
         Common::TokenType type;
         bool isEditable = currentToken.second != -1;
-        localizer.LocalizeDisplayValue(&(currentToken.first));
+        localizer->LocalizeDisplayValue(&(currentToken.first));
 
         if (!isEditable)
         {
@@ -392,7 +398,7 @@ String ^ StandardCalculatorViewModel::GetCalculatorExpressionAutomationName()
 
 void StandardCalculatorViewModel::SetMemorizedNumbers(const vector<wstring>& newMemorizedNumbers)
 {
-    const auto& localizer = LocalizationSettings::GetInstance();
+    LocalizationSettings^ localizer = LocalizationSettings::GetInstance();
     if (newMemorizedNumbers.size() == 0) // Memory has been cleared
     {
         MemorizedNumbers->Clear();
@@ -408,7 +414,7 @@ void StandardCalculatorViewModel::SetMemorizedNumbers(const vector<wstring>& new
 
             MemoryItemViewModel ^ memorySlot = ref new MemoryItemViewModel(this);
             memorySlot->Position = 0;
-            localizer.LocalizeDisplayValue(&stringValue);
+            localizer->LocalizeDisplayValue(&stringValue);
             memorySlot->Value = ref new String(stringValue.c_str());
 
             MemorizedNumbers->InsertAt(0, memorySlot);
@@ -426,7 +432,7 @@ void StandardCalculatorViewModel::SetMemorizedNumbers(const vector<wstring>& new
         for (unsigned int i = 0; i < MemorizedNumbers->Size; i++)
         {
             auto newStringValue = newMemorizedNumbers.at(i);
-            localizer.LocalizeDisplayValue(&newStringValue);
+            localizer->LocalizeDisplayValue(&newStringValue);
 
             // If the value is different, update the value
             if (MemorizedNumbers->GetAt(i)->Value != StringReference(newStringValue.c_str()))
@@ -720,7 +726,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     }
 
     // Ensure that the paste happens on the UI thread
-    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), numberBase, bitLengthType))
+    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategoryStates::GetGroupType(mode), numberBase, bitLengthType))
         .then([that, mode](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
@@ -1001,10 +1007,10 @@ ButtonInfo StandardCalculatorViewModel::MapCharacterToButtonId(char16 ch)
 
     if (result.buttonId == NumbersAndOperatorsEnum::None)
     {
-        if (LocalizationSettings::GetInstance().IsLocalizedDigit(ch))
+        if (LocalizationSettings::GetInstance()->IsLocalizedDigit(ch))
         {
             result.buttonId =
-                NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit('0'));
+                NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance()->GetDigitSymbolFromEnUsDigit('0'));
             result.canSendNegate = true;
         }
     }
@@ -1044,7 +1050,7 @@ void StandardCalculatorViewModel::OnMemoryItemChanged(unsigned int indexOfMemory
         String ^ localizedValue = memSlot->Value;
 
         wstring localizedIndex = to_wstring(indexOfMemory + 1);
-        LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
+        LocalizationSettings::GetInstance()->LocalizeDisplayValue(&localizedIndex);
 
         if (m_localizedMemoryItemChangedAutomationFormat == nullptr)
         {
@@ -1116,7 +1122,7 @@ void StandardCalculatorViewModel::OnMemoryClear(_In_ Object ^ memoryItemPosition
             TraceLogger::GetInstance()->UpdateButtonUsage(NumbersAndOperatorsEnum::MemoryClear, GetCalculatorMode());
 
             wstring localizedIndex = to_wstring(boxedPosition->Value + 1);
-            LocalizationSettings::GetInstance().LocalizeDisplayValue(&localizedIndex);
+            LocalizationSettings::GetInstance()->LocalizeDisplayValue(&localizedIndex);
 
             if (m_localizedMemoryItemClearedAutomationFormat == nullptr)
             {
@@ -1189,20 +1195,20 @@ void StandardCalculatorViewModel::SetCalculatorType(ViewMode targetState)
     {
     case ViewMode::Standard:
         IsStandard = true;
-        ResetDisplay();
+        ResetRadixAndUpdateMemory(true);
         SetPrecision(StandardModePrecision);
         UpdateMaxIntDigits();
         break;
 
     case ViewMode::Scientific:
         IsScientific = true;
-        ResetDisplay();
+        ResetRadixAndUpdateMemory(true);
         SetPrecision(ScientificModePrecision);
         break;
 
     case ViewMode::Programmer:
         IsProgrammer = true;
-        ResetDisplay();
+        ResetRadixAndUpdateMemory(false);
         SetPrecision(ProgrammerModePrecision);
         break;
     }
@@ -1216,7 +1222,7 @@ String ^ StandardCalculatorViewModel::GetRawDisplayValue()
     }
     else
     {
-        return LocalizationSettings::GetInstance().RemoveGroupSeparators(DisplayValue);
+        return LocalizationSettings::GetInstance()->RemoveGroupSeparators(DisplayValue);
     }
 }
 
@@ -1228,11 +1234,18 @@ String ^ StandardCalculatorViewModel::GetLocalizedStringFormat(String ^ format, 
     return LocalizationStringUtil::GetLocalizedString(format, displayValue);
 }
 
-void StandardCalculatorViewModel::ResetDisplay()
+void StandardCalculatorViewModel::ResetRadixAndUpdateMemory(bool resetRadix)
 {
-    AreHEXButtonsEnabled = false;
-    CurrentRadixType = NumberBase::DecBase;
-    m_standardCalculatorManager.SetRadix(RadixType::Decimal);
+    if (resetRadix)
+    {
+        AreHEXButtonsEnabled = false;
+        CurrentRadixType = NumberBase::DecBase;
+        m_standardCalculatorManager.SetRadix(RadixType::Decimal);
+    }
+    else
+    {
+        m_standardCalculatorManager.SetMemorizedNumbersString();
+    }
 }
 
 void StandardCalculatorViewModel::SetPrecision(int32_t precision)
@@ -1535,7 +1548,7 @@ size_t StandardCalculatorViewModel::LengthWithoutPadding(wstring str)
 
 wstring StandardCalculatorViewModel::AddPadding(wstring binaryString)
 {
-    if (LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(StringReference(binaryString.c_str())) == L"0")
+    if (LocalizationSettings::GetInstance()->GetEnglishValueFromLocalizedDigits(StringReference(binaryString.c_str())) == L"0")
     {
         return binaryString;
     }
@@ -1571,13 +1584,13 @@ void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
             binaryDisplayString = m_standardCalculatorManager.GetResultForRadix(2, precision, true);
         }
     }
-    const auto& localizer = LocalizationSettings::GetInstance();
+    LocalizationSettings^ localizer = LocalizationSettings::GetInstance();
     binaryDisplayString = AddPadding(binaryDisplayString);
 
-    localizer.LocalizeDisplayValue(&hexDisplayString);
-    localizer.LocalizeDisplayValue(&decimalDisplayString);
-    localizer.LocalizeDisplayValue(&octalDisplayString);
-    localizer.LocalizeDisplayValue(&binaryDisplayString);
+    localizer->LocalizeDisplayValue(&hexDisplayString);
+    localizer->LocalizeDisplayValue(&decimalDisplayString);
+    localizer->LocalizeDisplayValue(&octalDisplayString);
+    localizer->LocalizeDisplayValue(&binaryDisplayString);
 
     HexDisplayValue = ref new Platform::String(hexDisplayString.c_str());
     DecimalDisplayValue = ref new Platform::String(decimalDisplayString.c_str());
@@ -1609,7 +1622,7 @@ void StandardCalculatorViewModel::UpdateOperand(int pos, String ^ text)
 {
     pair<wstring, int> p = m_tokens->at(pos);
 
-    String ^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(text);
+    String ^ englishString = LocalizationSettings::GetInstance()->GetEnglishValueFromLocalizedDigits(text);
     p.first = englishString->Data();
 
     int commandPos = p.second;
@@ -1719,7 +1732,7 @@ ViewMode StandardCalculatorViewModel::GetCalculatorMode()
     return ViewMode::Programmer;
 }
 
-void StandardCalculatorViewModel::ValueBitLength::set(CalculatorApp::Common::BitLength value)
+void StandardCalculatorViewModel::ValueBitLength::set(CalculatorApp::ViewModel::Common::BitLength value)
 {
     if (m_valueBitLength != value)
     {

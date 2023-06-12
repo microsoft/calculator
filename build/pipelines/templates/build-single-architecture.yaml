@@ -1,18 +1,58 @@
-# This template contains steps to build the app for a single architecture.
-# The job containing these steps must set the variables 'BuildConfiguration' and 'BuildPlatform'.
+# This template contains a job to build the app for a single architecture.
 
 parameters:
-  extraMsBuildArgs: ''
+  isReleaseBuild: false
+  isOSSBuild: false
+  useReleaseAppxManifest: false
+  platform: ''
+  condition: ''
 
-steps:
+jobs:
+- job: Build${{ parameters.platform }}
+  displayName: Build ${{ parameters.platform }}
+  condition: ${{ parameters.condition }}
+  pool:
+    ${{ if eq(parameters.isOSSBuild, true) }}:
+      name: EssentialExperiencesOpenSource-windows-2022
+    ${{ if eq(parameters.isOSSBuild, false) }}:
+      name: EssentialExperiences-windows-2022
+  variables:
+    BuildConfiguration: Release
+    BuildPlatform: ${{ parameters.platform }}
+    ${{ if eq(parameters.isReleaseBuild, true) }}:
+      ${{ if eq(parameters.useReleaseAppxManifest, true) }}:
+        ExtraMSBuildArgs: '/p:IsStoreBuild=true /p:UseReleaseAppxManifest=true'
+      ${{ if eq(parameters.useReleaseAppxManifest, false) }}:
+        ExtraMSBuildArgs: '/p:IsStoreBuild=true'
+    ${{ if eq(parameters.isReleaseBuild, false) }}:
+      ${{ if eq(parameters.useReleaseAppxManifest, true) }}:
+        ExtraMSBuildArgs: '/p:UseReleaseAppxManifest=true'
+      ${{ if eq(parameters.useReleaseAppxManifest, false) }}:
+        ExtraMSBuildArgs: ''
+    ${{ if eq(parameters.useReleaseAppxManifest, false) }}:
+      ManifestFileName: 'Package.appxmanifest'
+    ${{ if eq(parameters.useReleaseAppxManifest, true) }}:
+      ManifestFileName: 'Package.Release.appxmanifest'
+  steps:
+  - checkout: self
+    fetchDepth: 1
+
+  - ${{ if eq(parameters.isReleaseBuild, true) }}:
+    - task: UniversalPackages@0
+      displayName: Download internals package
+      inputs:
+        command: download
+        downloadDirectory: $(Build.SourcesDirectory)
+        vstsFeed: WindowsInboxApps
+        vstsFeedPackage: calculator-internals
+        vstsPackageVersion: 0.0.105
+
   - task: NuGetToolInstaller@1
-    displayName: Use NuGet 5.x
+    displayName: Use NuGet 6.x
     inputs:
-      versionSpec: 5.x
+      versionSpec: 6.x
 
-  # In most accounts, you can just use 'NuGetCommand' instead of this GUID.
-  # In the microsoft.visualstudio.com account, NuGetCommand is ambiguous so the GUID is needed.
-  - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
+  - task: NuGetCommand@2
     displayName: NuGet restore src/Calculator.sln
     inputs:
       command: custom
@@ -22,17 +62,25 @@ steps:
     displayName: Set version number in AppxManifest
     inputs:
       filePath: $(Build.SourcesDirectory)\build\scripts\UpdateAppxManifestVersion.ps1
-      arguments: '-AppxManifest $(Build.SourcesDirectory)\src\Calculator\Package.appxmanifest -Version $(Build.BuildNumber)'
+      arguments: '-AppxManifest $(Build.SourcesDirectory)\src\Calculator\$(ManifestFileName) -Version $(Build.BuildNumber)'
 
   - task: VSBuild@1
     displayName: 'Build solution src/Calculator.sln'
     inputs:
       solution: src/Calculator.sln
-      vsVersion: 16.0
-      msbuildArgs: /bl:$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator.binlog /p:OutDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\ /p:GenerateProjectSpecificOutputFolder=true /p:AppVersion=$(Build.BuildNumber) /t:Publish /p:PublishDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\publish\ ${{ parameters.extraMsBuildArgs }}
+      vsVersion: 17.0
+      msbuildArgs: /bl:$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator.binlog /p:OutDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\ /p:GenerateProjectSpecificOutputFolder=true /p:Version=$(Build.BuildNumber) /t:Publish /p:PublishDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\publish\ $(ExtraMSBuildArgs)
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
       maximumCpuCount: true
+
+  - ${{ if eq(parameters.isReleaseBuild, true) }}:          
+    - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+      displayName: 'Generate Software Bill of Material(SBoM)'
+      inputs:
+          BuildDropPath: $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator
+          PackageName: 'Microsoft.WindowsCalculator'
+          PackageVersion: $(Build.BuildNumber)
 
   - task: PublishBuildArtifacts@1
     displayName: Publish drop artifact
@@ -40,3 +88,56 @@ steps:
       artifactName: drop
       pathToPublish: $(Build.BinariesDirectory)
       parallel: true
+
+  - ${{ if eq(parameters.isReleaseBuild, true) }}:          
+    - task: PublishSymbols@2
+      displayName: Publish symbols
+      inputs:
+        symbolsFolder: $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)
+        searchPattern: '**/*.pdb'
+        symbolServerType: teamServices
+        treatNotIndexedAsWarning: true
+        symbolsArtifactName: $(System.teamProject)/$(Build.BuildNumber)_$(BuildPlatform)$(BuildConfiguration)
+
+    - task: CopyFiles@2
+      displayName: Copy Files for BinSkim analysis
+      inputs:
+        SourceFolder: '$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator\'
+        # Setting up a folder to store all the binary files that we need BinSkim to scan.
+        # If we put more things than we produce pdbs for and can index (such as nuget packages that ship without pdbs), binskim will fail.
+        # Below are ignored files
+        #   - clrcompression.dll
+        #   - WebView2Loader.dll
+        #   - Microsoft.Web.WebView2.Core.dll
+        Contents: |
+          **\*
+          !**\clrcompression.dll
+          !**\WebView2Loader.dll
+          !**\Microsoft.Web.WebView2.Core.dll
+        TargetFolder: '$(Agent.BuildDirectory)\binskim'
+        CleanTargetFolder: true
+        OverWrite: true
+        flattenFolders: false
+        analyzeTarget: '$(Agent.BuildDirectory)\binskim\*'
+
+    - task: securedevelopmentteam.vss-secure-development-tools.build-task-binskim.BinSkim@3
+      displayName: Run BinSkim
+      inputs:
+        inputType: Basic
+        analyzeTarget: '$(Agent.BuildDirectory)\binskim\*'
+        analyzeVerbose: true
+        analyzeHashes: true
+      continueOnError: true
+
+    - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@1
+      displayName: Run PoliCheck
+      inputs:
+        targetType: F
+
+    - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@2
+      displayName: Publish security analysis logs
+
+    - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+      displayName: Detect open source components
+      inputs:
+        sourceScanPath: $(Agent.BuildDirectory)

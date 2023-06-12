@@ -13,7 +13,7 @@
 
 using namespace CalculationManager;
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -42,7 +42,7 @@ namespace CalculatorUnitTests
             viewModel->IsStandard = true;
             viewModel->IsScientific = false;
             viewModel->IsProgrammer = false;
-            viewModel->ResetDisplay();
+            viewModel->ResetRadixAndUpdateMemory(true);
             viewModel->SetPrecision(StandardModePrecision);
         }
         else if (mode == 1)
@@ -50,7 +50,7 @@ namespace CalculatorUnitTests
             viewModel->IsScientific = true;
             viewModel->IsProgrammer = false;
             viewModel->IsStandard = false;
-            viewModel->ResetDisplay();
+            viewModel->ResetRadixAndUpdateMemory(true);
             viewModel->SetPrecision(ScientificModePrecision);
         }
         else if (mode == 2)
@@ -58,7 +58,7 @@ namespace CalculatorUnitTests
             viewModel->IsProgrammer = true;
             viewModel->IsScientific = false;
             viewModel->IsStandard = false;
-            viewModel->ResetDisplay();
+            viewModel->ResetRadixAndUpdateMemory(false);
             viewModel->SetPrecision(ProgrammerModePrecision);
         }
     }

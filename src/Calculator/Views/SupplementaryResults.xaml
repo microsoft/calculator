@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CalculatorApp.SupplementaryResults"
+<UserControl x:Class="CalculatorApp.SupplementaryResults"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:common="using:CalculatorApp.Common"
@@ -7,6 +7,7 @@
              xmlns:designdata="using:CalculatorApp.DesignData"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="using:CalculatorApp.Utils"
              xmlns:vm="using:CalculatorApp.ViewModel"
              d:DesignHeight="300"
              d:DesignWidth="400"
@@ -15,7 +16,7 @@
     <UserControl.Resources>
         <DataTemplate x:Name="SupplementaryValueTemplate" x:DataType="vm:SupplementaryResult">
             <StackPanel Margin="0" Orientation="Horizontal">
-                <TextBlock Margin="0,0,4,0"
+                <TextBlock Margin="16,0,4,0"
                            Padding="0"
                            VerticalAlignment="Bottom"
                            Style="{ThemeResource BaseTextBlockStyle}"
@@ -89,13 +90,12 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <TextBlock x:Uid="SupplementaryResultsHeader"
-                   Margin="0,0,0,-6"
+        <TextBlock Margin="16,0,0,-6"
                    HorizontalAlignment="Left"
                    Style="{ThemeResource CaptionTextBlockStyle}"
                    Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
                    IsTextScaleFactorEnabled="False"
-                   Text="Also equal to"/>
+                   Text="{utils:ResourceString Name=SupplementaryResultsHeader/Text}"/>
         <controls:SupplementaryItemsControl x:Name="SupplementaryValues"
                                             MinHeight="27"
                                             HorizontalAlignment="Left"

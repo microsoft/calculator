@@ -4,9 +4,11 @@
 
 #include <CppUnitTest.h>
 
+
 using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-using namespace CalculatorApp::Common::Automation;
+using namespace CalculatorApp::ViewModel::Common::Automation;
+
 
 namespace CalculatorUnitTests
 {
@@ -171,6 +173,15 @@ namespace CalculatorUnitTests
             auto annoucement = CalculatorAnnouncement::GetBitShiftRadioButtonCheckedAnnouncement(m_testAnnouncement);
             VERIFY_ARE_EQUAL(annoucement->Announcement, m_testAnnouncement);
             VERIFY_ARE_EQUAL(annoucement->ActivityId, L"BitShiftRadioButtonContent");
+            VERIFY_ARE_EQUAL(annoucement->Kind, AutomationNotificationKind::ActionCompleted);
+            VERIFY_ARE_EQUAL(annoucement->Processing, AutomationNotificationProcessing::ImportantMostRecent);
+        }
+
+        TEST_METHOD(TestGetSettingsPageOpenedAnnouncement)
+        {
+            auto annoucement = CalculatorAnnouncement::GetSettingsPageOpenedAnnouncement(m_testAnnouncement);
+            VERIFY_ARE_EQUAL(annoucement->Announcement, m_testAnnouncement);
+            VERIFY_ARE_EQUAL(annoucement->ActivityId, L"SettingsPageOpened");
             VERIFY_ARE_EQUAL(annoucement->Kind, AutomationNotificationKind::ActionCompleted);
             VERIFY_ARE_EQUAL(annoucement->Processing, AutomationNotificationProcessing::ImportantMostRecent);
         }

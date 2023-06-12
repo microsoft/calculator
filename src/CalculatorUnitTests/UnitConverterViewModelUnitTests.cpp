@@ -9,7 +9,7 @@
 #include "CalcViewModel/DataLoaders/UnitConverterDataLoader.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Platform::Collections;

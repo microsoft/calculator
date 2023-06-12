@@ -2,18 +2,15 @@
 // Licensed under the MIT License.
 
 using CalculatorUITestFramework;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Appium.Windows;
-using System;
-using System.Collections.Generic;
 
 namespace CalculatorUITests
 {
     [TestClass]
     public class ScientificModeFunctionalTests
     {
-        private static ScientificCalculatorPage page = new ScientificCalculatorPage();
+        private static readonly ScientificCalculatorPage page = new ScientificCalculatorPage();
 
         /// <summary>
         /// Initializes the WinAppDriver web driver session.
@@ -23,7 +20,7 @@ namespace CalculatorUITests
         public static void ClassInitialize(TestContext context)
         {
             // Create session to launch a Calculator window
-            WinAppDriver.Instance.SetupCalculatorSession(context);
+            CalculatorDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in scientific mode
             page.NavigateToScientificCalculator();
@@ -39,7 +36,7 @@ namespace CalculatorUITests
         public static void ClassCleanup()
         {
             // Tear down Calculator session.
-            WinAppDriver.Instance.TearDownCalculatorSession();
+            CalculatorDriver.Instance.TearDownCalculatorSession();
         }
 
         /// <summary>

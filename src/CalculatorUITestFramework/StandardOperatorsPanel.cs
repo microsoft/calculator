@@ -10,7 +10,7 @@ namespace CalculatorUITestFramework
     /// </summary>
     public class StandardOperatorsPanel
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         public NumberPad NumberPad = new NumberPad();
 
         public WindowsElement PercentButton => this.session.TryFindElementByAccessibilityId("percentButton");

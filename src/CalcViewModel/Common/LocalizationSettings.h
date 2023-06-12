@@ -6,22 +6,191 @@
 
 #include <iterator>
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
     namespace Common
     {
-        class LocalizationSettings
+        public ref class LocalizationSettings sealed
         {
         private:
             LocalizationSettings()
                 // Use DecimalFormatter as it respects the locale and the user setting
-                : LocalizationSettings(LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter())
             {
+                Initialize(LocalizationService::GetInstance()->GetRegionalSettingsAwareDecimalFormatter());
             }
 
         public:
             // This is only public for unit testing purposes.
             LocalizationSettings(Windows::Globalization::NumberFormatting::DecimalFormatter ^ formatter)
+            {
+                Initialize(formatter);
+            }
+
+            // Provider of the singleton LocalizationSettings instance.
+            static LocalizationSettings^ GetInstance()
+            {
+                static LocalizationSettings^ localizationSettings = ref new LocalizationSettings();
+                return localizationSettings;
+            }
+
+            Platform::String ^ GetLocaleName()
+            {
+                return m_resolvedName;
+            }
+
+            bool IsDigitEnUsSetting()
+            {
+                return (this->GetDigitSymbolFromEnUsDigit('0') == L'0');
+            }
+
+            Platform::String ^ GetEnglishValueFromLocalizedDigits(Platform::String ^ localizedString)
+            {
+                if (m_resolvedName == L"en-US")
+                {
+                    return localizedString;
+                }
+
+                std::wstring englishString;
+                englishString.reserve(localizedString->Length());
+
+                for (wchar_t ch : localizedString)
+                {
+                    if (!IsEnUsDigit(ch))
+                    {
+                        auto it = std::find(m_digitSymbols.begin(), m_digitSymbols.end(), ch);
+
+                        if (it != m_digitSymbols.end())
+                        {
+                            auto index = std::distance(m_digitSymbols.begin(), it);
+                            ch = index.ToString()->Data()[0];
+                        }
+                    }
+                    if (ch == m_decimalSeparator)
+                    {
+                        ch = L'.';
+                    }
+                    englishString += ch;
+                }
+
+                return ref new Platform::String(englishString.c_str());
+            }
+
+            Platform::String ^ RemoveGroupSeparators(Platform::String ^ source)
+            {
+                std::wstring destination;
+                std::copy_if(
+                    begin(source), end(source), std::back_inserter(destination), [this](auto const c) { return c != L' ' && c != m_numberGroupSeparator; });
+                
+                return ref new Platform::String(destination.c_str());
+            }
+
+            Platform::String ^ GetCalendarIdentifier()
+            {
+                return m_calendarIdentifier;
+            }
+
+            Windows::Globalization::DayOfWeek GetFirstDayOfWeek()
+            {
+                return m_firstDayOfWeek;
+            }
+
+            int GetCurrencyTrailingDigits()
+            {
+                return m_currencyTrailingDigits;
+            }
+
+            int GetCurrencySymbolPrecedence()
+            {
+                return m_currencySymbolPrecedence;
+            }
+
+            wchar_t GetDecimalSeparator()
+            {
+                return m_decimalSeparator;
+            }
+
+            wchar_t GetDigitSymbolFromEnUsDigit(wchar_t digitSymbol)
+            {
+                assert(digitSymbol >= L'0' && digitSymbol <= L'9');
+                int digit = digitSymbol - L'0';
+                return m_digitSymbols.at(digit); // throws on out of range
+            }
+
+            wchar_t GetNumberGroupSeparator()
+            {
+                return m_numberGroupSeparator;
+            }
+
+            bool IsEnUsDigit(wchar_t digit)
+            {
+                return (digit >= L'0' && digit <= L'9');
+            }
+
+            bool IsLocalizedDigit(wchar_t digit)
+            {
+                return std::find(m_digitSymbols.begin(), m_digitSymbols.end(), digit) != m_digitSymbols.end();
+            }
+
+            bool IsLocalizedHexDigit(wchar_t digit)
+            {
+                if (IsLocalizedDigit(digit))
+                {
+                    return true;
+                }
+
+                return std::find(s_hexSymbols.begin(), s_hexSymbols.end(), digit) != s_hexSymbols.end();
+            }
+
+            Platform::String ^ GetListSeparatorWinRT()
+            {
+                return ref new Platform::String(GetListSeparator().c_str());
+            }
+
+            Platform::String ^ GetDecimalSeparatorStrWinRT()
+            {
+                return ref new Platform::String(GetDecimalSeparatorStr().c_str());
+            }
+
+        internal:
+            void LocalizeDisplayValue(_Inout_ std::wstring* stringToLocalize)
+            {
+                if (IsDigitEnUsSetting())
+                {
+                    return;
+                }
+
+                for (wchar_t& ch : *stringToLocalize)
+                {
+                    if (IsEnUsDigit(ch))
+                    {
+                        ch = GetDigitSymbolFromEnUsDigit(ch);
+                    }
+                }
+            }
+
+            std::wstring GetDecimalSeparatorStr()
+            {
+                return std::wstring(1, m_decimalSeparator);
+            }
+
+            std::wstring GetNumberGroupingSeparatorStr()
+            {
+                return std::wstring(1, m_numberGroupSeparator);
+            }
+
+            std::wstring GetNumberGroupingStr()
+            {
+                return m_numberGrouping;
+            }
+
+            std::wstring GetListSeparator()
+            {
+                return m_listSeparator;
+            }
+
+
+        private:
+            void Initialize(Windows::Globalization::NumberFormatting::DecimalFormatter ^ formatter)
             {
                 formatter->FractionDigits = 0;
                 formatter->IsDecimalPointAlwaysDisplayed = false;
@@ -125,167 +294,6 @@ namespace CalculatorApp
                 m_firstDayOfWeek = static_cast<Windows::Globalization::DayOfWeek>((_wtoi(day) + 1) % 7); // static cast int to DayOfWeek enum
             }
 
-            // A LocalizationSettings object is not copyable.
-            LocalizationSettings(const LocalizationSettings&) = delete;
-            LocalizationSettings& operator=(const LocalizationSettings&) = delete;
-
-            // A LocalizationSettings object is not moveable.
-            LocalizationSettings(LocalizationSettings&&) = delete;
-            LocalizationSettings& operator=(LocalizationSettings&&) = delete;
-
-            // Provider of the singleton LocalizationSettings instance.
-            static const LocalizationSettings& GetInstance()
-            {
-                static const LocalizationSettings localizationSettings;
-
-                return localizationSettings;
-            }
-
-            Platform::String ^ GetLocaleName() const
-            {
-                return m_resolvedName;
-            }
-
-            bool IsDigitEnUsSetting() const
-            {
-                return (this->GetDigitSymbolFromEnUsDigit('0') == L'0');
-            }
-
-            void LocalizeDisplayValue(_Inout_ std::wstring* stringToLocalize) const
-            {
-                if (IsDigitEnUsSetting())
-                {
-                    return;
-                }
-
-                for (wchar_t& ch : *stringToLocalize)
-                {
-                    if (IsEnUsDigit(ch))
-                    {
-                        ch = GetDigitSymbolFromEnUsDigit(ch);
-                    }
-                }
-            }
-
-            Platform::String ^ GetEnglishValueFromLocalizedDigits(Platform::String ^ localizedString) const
-            {
-                if (m_resolvedName == L"en-US")
-                {
-                    return localizedString;
-                }
-
-                std::wstring englishString;
-                englishString.reserve(localizedString->Length());
-
-                for (wchar_t ch : localizedString)
-                {
-                    if (!IsEnUsDigit(ch))
-                    {
-                        auto it = std::find(m_digitSymbols.begin(), m_digitSymbols.end(), ch);
-
-                        if (it != m_digitSymbols.end())
-                        {
-                            auto index = std::distance(m_digitSymbols.begin(), it);
-                            ch = index.ToString()->Data()[0];
-                        }
-                    }
-                    if (ch == m_decimalSeparator)
-                    {
-                        ch = L'.';
-                    }
-                    englishString += ch;
-                }
-
-                return ref new Platform::String(englishString.c_str());
-            }
-
-            bool IsEnUsDigit(const wchar_t digit) const
-            {
-                return (digit >= L'0' && digit <= L'9');
-            }
-
-            bool IsLocalizedDigit(const wchar_t digit) const
-            {
-                return std::find(m_digitSymbols.begin(), m_digitSymbols.end(), digit) != m_digitSymbols.end();
-            }
-
-            bool IsLocalizedHexDigit(const wchar_t digit) const
-            {
-                if (IsLocalizedDigit(digit))
-                {
-                    return true;
-                }
-
-                return std::find(s_hexSymbols.begin(), s_hexSymbols.end(), digit) != s_hexSymbols.end();
-            }
-
-            wchar_t GetDigitSymbolFromEnUsDigit(wchar_t digitSymbol) const
-            {
-                assert(digitSymbol >= L'0' && digitSymbol <= L'9');
-                int digit = digitSymbol - L'0';
-                return m_digitSymbols.at(digit); // throws on out of range
-            }
-
-            wchar_t GetDecimalSeparator() const
-            {
-                return m_decimalSeparator;
-            }
-
-            wchar_t GetNumberGroupSeparator() const
-            {
-                return m_numberGroupSeparator;
-            }
-
-            std::wstring GetDecimalSeparatorStr() const
-            {
-                return std::wstring(1, m_decimalSeparator);
-            }
-
-            std::wstring GetNumberGroupingSeparatorStr() const
-            {
-                return std::wstring(1, m_numberGroupSeparator);
-            }
-
-            std::wstring GetNumberGroupingStr() const
-            {
-                return m_numberGrouping;
-            }
-
-            Platform::String ^ RemoveGroupSeparators(Platform::String ^ source) const
-            {
-                std::wstring destination;
-                std::copy_if(
-                    begin(source), end(source), std::back_inserter(destination), [this](auto const c) { return c != L' ' && c != m_numberGroupSeparator; });
-
-                return ref new Platform::String(destination.c_str());
-            }
-
-            Platform::String ^ GetCalendarIdentifier() const
-            {
-                return m_calendarIdentifier;
-            }
-
-            std::wstring GetListSeparator() const
-            {
-                return m_listSeparator;
-            }
-
-            Windows::Globalization::DayOfWeek GetFirstDayOfWeek() const
-            {
-                return m_firstDayOfWeek;
-            }
-
-            int GetCurrencyTrailingDigits() const
-            {
-                return m_currencyTrailingDigits;
-            }
-
-            int GetCurrencySymbolPrecedence() const
-            {
-                return m_currencySymbolPrecedence;
-            }
-
-        private:
             static Platform::String^ GetCalendarIdentifierFromCalid(CALID calId)
             {
                 switch (calId)

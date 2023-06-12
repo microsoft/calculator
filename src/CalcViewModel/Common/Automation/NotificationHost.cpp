@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "NotificationHost.h"
 
-using namespace CalculatorApp::Common::Automation;
+using namespace CalculatorApp::ViewModel::Common::Automation;
 using namespace Windows::Foundation::Metadata;
 using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Automation::Peers;

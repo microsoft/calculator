@@ -17,7 +17,7 @@ namespace CalculatorUITestFramework
         public StandardAoTCalculatorPage StandardAoTCalculatorPage = new StandardAoTCalculatorPage();
         public CalculatorResults CalculatorResults = new CalculatorResults();
 
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
 
         /// <summary>
         /// Navigates the calculator to Standard mode and ensures that it is in standard mode
@@ -57,7 +57,7 @@ namespace CalculatorUITestFramework
         ///// </summary>
         public void EnsureCalculatorIsInStandardMode()
         {
-            string source = WinAppDriver.Instance.CalculatorSession.PageSource;
+            string source = CalculatorDriver.Instance.CalculatorSession.PageSource;
             if (source.Contains("Header"))
             {
                 string header = CalculatorApp.Header.Text;

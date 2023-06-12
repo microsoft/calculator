@@ -1,0 +1,10 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#define APP_FILE_NAME "CalcViewModel"
+#define APP_FILE_IS_EXE
+#define APP_PRODUCT_NAME "Microsoft Calculator ViewModel"
+#define APP_COMPANY_NAME "Microsoft Corporation"
+#define APP_COPYRIGHT "\251 Microsoft Corporation. All rights reserved."
+
+#include "../build/appversion.rc"

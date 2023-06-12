@@ -9,7 +9,8 @@
 using namespace std;
 using namespace concurrency;
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel;
 using namespace Platform;
 using namespace Platform::Collections;
 using namespace Windows::Foundation;
@@ -96,7 +97,7 @@ bool CopyPasteManager::HasStringToPaste()
 
 String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, NumberBase programmerNumberBase, BitLength bitLengthType)
 {
-    return ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType);
+    return ValidatePasteExpression(pastedText, mode, NavCategoryStates::GetGroupType(mode), programmerNumberBase, bitLengthType);
 }
 
 // return "NoOp" if pastedText is invalid else return pastedText
@@ -116,7 +117,7 @@ String
     }
 
     // Get english translated expression
-    String ^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pastedText);
+    String ^ englishString = LocalizationSettings::GetInstance()->GetEnglishValueFromLocalizedDigits(pastedText);
 
     // Removing the spaces, comma separator from the pasteExpression to allow pasting of expressions like 1  +     2+1,333
     auto pasteExpression = wstring(RemoveUnwantedCharsFromString(englishString)->Data());
@@ -287,9 +288,8 @@ bool CopyPasteManager::ExpressionRegExMatch(
     }
     else if (mode == ViewMode::Programmer)
     {
-        patterns.assign(
-            programmerModePatterns[(int)programmerNumberBase - (int)NumberBase::HexBase].begin(),
-            programmerModePatterns[(int)programmerNumberBase - (int)NumberBase::HexBase].end());
+        auto pattern = &programmerModePatterns[static_cast<int>(programmerNumberBase) - static_cast<int>(NumberBase::HexBase)];
+        patterns.assign(pattern->begin(), pattern->end());
     }
     else if (modeType == CategoryGroupType::Converter)
     {
@@ -504,18 +504,15 @@ ULONG32 CopyPasteManager::StandardScientificOperandLength(Platform::String ^ ope
     const bool hasDecimal = operandWstring.find('.') != wstring::npos;
     auto length = operandWstring.length();
 
-    if (hasDecimal)
+    if (hasDecimal && length >= 2)
     {
-        if (length >= 2)
+        if ((operandWstring[0] == L'0') && (operandWstring[1] == L'.'))
         {
-            if ((operandWstring[0] == L'0') && (operandWstring[1] == L'.'))
-            {
-                length -= 2;
-            }
-            else
-            {
-                length -= 1;
-            }
+            length -= 2;
+        }
+        else
+        {
+            length -= 1;
         }
     }
 
@@ -614,7 +611,7 @@ ULONG32 CopyPasteManager::ProgrammerOperandLength(Platform::String ^ operand, Nu
 Platform::String ^ CopyPasteManager::RemoveUnwantedCharsFromString(Platform::String ^ input)
 {
     constexpr wchar_t unWantedChars[] = { L' ', L',', L'"', 165, 164, 8373, 36, 8353, 8361, 8362, 8358, 8377, 163, 8364, 8234, 8235, 8236, 8237, 160 };
-    input = CalculatorApp::Common::LocalizationSettings::GetInstance().RemoveGroupSeparators(input);
+    input = CalculatorApp::ViewModel::Common::LocalizationSettings::GetInstance()->RemoveGroupSeparators(input);
     return ref new String(Utils::RemoveUnwantedCharsFromString(input->Data(), unWantedChars).c_str());
 }
 

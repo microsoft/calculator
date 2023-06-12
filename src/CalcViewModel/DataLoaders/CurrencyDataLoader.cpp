@@ -11,11 +11,11 @@
 #include "UnitConverterDataConstants.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
-using namespace CalculatorApp::Common::LocalizationServiceProperties;
-using namespace CalculatorApp::DataLoaders;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel::Common::LocalizationServiceProperties;
+using namespace CalculatorApp::ViewModel::DataLoaders;
 using namespace CalculatorApp::ViewModel;
-using namespace CalculatorApp::ViewModel::CurrencyDataLoaderConstants;
+using namespace CalculatorApp::ViewModel::DataLoaders::CurrencyDataLoaderConstants;
 using namespace concurrency;
 using namespace Platform;
 using namespace std;
@@ -69,7 +69,7 @@ static constexpr auto DEFAULT_TO_CURRENCY = L"EUR";
 
 namespace CalculatorApp
 {
-    namespace ViewModel
+    namespace ViewModel::DataLoaders
     {
         namespace UnitConverterResourceKeys
         {
@@ -188,10 +188,9 @@ void CurrencyDataLoader::ResetLoadStatus()
 #pragma optimize("", off) // Turn off optimizations to work around DevDiv 393321
 void CurrencyDataLoader::LoadData()
 {
-    RegisterForNetworkBehaviorChanges();
-
     if (!LoadFinished())
     {
+        RegisterForNetworkBehaviorChanges();
         create_task([this]() -> task<bool> {
             vector<function<future<bool>()>> loadFunctions = {
                 [this]() { return TryLoadDataFromCacheAsync(); },
@@ -241,7 +240,7 @@ unordered_map<UCM::Unit, UCM::ConversionData, UCM::UnitHash> CurrencyDataLoader:
 
 bool CurrencyDataLoader::SupportsCategory(const UCM::Category& target)
 {
-    static int currencyId = NavCategory::Serialize(ViewMode::Currency);
+    static int currencyId = NavCategoryStates::Serialize(ViewMode::Currency);
     return target.id == currencyId;
 }
 
@@ -300,7 +299,7 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const U
                 double ratio = (iter2->second).ratio;
                 double rounded = RoundCurrencyRatio(ratio);
 
-                auto digit = LocalizationSettings::GetInstance().GetDigitSymbolFromEnUsDigit(L'1');
+                auto digit = LocalizationSettings::GetInstance()->GetDigitSymbolFromEnUsDigit(L'1');
                 auto digitSymbol = ref new String(&digit, 1);
                 auto roundedFormat = m_ratioFormatter->Format(rounded);
 

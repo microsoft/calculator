@@ -486,7 +486,7 @@
     <comment>Screen reader prompt for a control that activates the unit converter mode.</comment>
   </data>
   <data name="scientificModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Инженерлік режим</value>
+    <value>Ғылыми режим</value>
     <comment>Screen reader prompt for a control that activates scientific mode calculator layout</comment>
   </data>
   <data name="standardModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -606,7 +606,7 @@
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Жадта сақтау</value>
+    <value>Жадқа сақтау</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -871,7 +871,7 @@
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Кері функция</value>
-    <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
+    <comment>Screen reader prompt for the shift button on the number pad in scientific mode.</comment>
   </data>
   <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Алу</value>
@@ -1026,7 +1026,7 @@
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
   <data name="dmsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Градус Минут Секунд</value>
+    <value>Градус минут секунд</value>
     <comment>Screen reader for the exp button on the scientific operator keypad</comment>
   </data>
   <data name="degreesButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1058,11 +1058,11 @@
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
   <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Ашылмалы мәзір режимі</value>
+    <value>Режимнің ашылмалы тізімі</value>
     <comment>Screen reader prompt for the Mode dropdown field in Snapped and Portrait modes.</comment>
   </data>
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Санаттардың ашылмалы мәзірі</value>
+    <value>Санаттардың ашылмалы тізімі</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1142,8 +1142,8 @@
     <comment>Unit conversion category name called Temperature</comment>
   </data>
   <data name="CategoryName_WeightText" xml:space="preserve">
-    <value>Салмақ</value>
-    <comment>Unit conversion category name called Weight and Mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
+    <value>Салмақ және масса</value>
+    <comment>Unit conversion category name called Weight and mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
   </data>
   <data name="CategoryName_PressureText" xml:space="preserve">
     <value>Қысым</value>
@@ -1838,7 +1838,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
-    <value>Теңіздік миля</value>
+    <value>Теңіздік милялар</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabit" xml:space="preserve">
@@ -2301,7 +2301,7 @@
     <value>Артқа</value>
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
-  <data name="AboutFlyoutEULA.Text" xml:space="preserve">
+  <data name="AboutEULA.Text" xml:space="preserve">
     <value>Microsoft бағдарламалық жасақтамасын пайдалану бойынша лицензиялық келісім шарттары</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
@@ -2317,13 +2317,13 @@
     <value>© %1 Microsoft. Барлық құқықтары қорғалған.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
-  <data name="AboutFlyoutContribute" xml:space="preserve">
+  <data name="AboutControlContribute" xml:space="preserve">
     <value>Windows есептегішіне қалай іскерлесуге болатындығын білу үшін, %HL%GitHub%HL% қоймасында жобаны тексеріңіз.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
-  <data name="AboutButton.Content" xml:space="preserve">
-    <value>Бағдарлама туралы ақпарат</value>
-    <comment>The text that shows in the dropdown navigation control to open About panel</comment>
+  <data name="AboutGroupTitle.Text" xml:space="preserve">
+    <value>Мәліметтер</value>
+    <comment>Subtitle of about message on Settings page</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
     <value>Пікір жіберу</value>
@@ -2418,11 +2418,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabit" xml:space="preserve">
-    <value>Йоттабит</value>
+    <value>Йоттабиттер</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabyte" xml:space="preserve">
-    <value>Йоттабайт</value>
+    <value>Йоттабайттар</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibits" xml:space="preserve">
@@ -2438,7 +2438,7 @@
   </data>
   <data name="DateCalculationOption.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Есептеу режимі</value>
-    <comment>Automation label for the Date Calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
+    <comment>Automation label for the Date calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
   </data>
   <data name="AddOption.Content" xml:space="preserve">
     <value>Қосу</value>
@@ -2454,7 +2454,7 @@
   </data>
   <data name="Date_DifferenceOption.Content" xml:space="preserve">
     <value>Күндер арасындағы айырмашылық</value>
-    <comment>Date Difference option</comment>
+    <comment>Date difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
     <value>Күн</value>
@@ -2529,11 +2529,11 @@
   </data>
   <data name="HeaderAutomationName_Converter" xml:space="preserve">
     <value>%1 Түрлендіргіш режимі</value>
-    <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and Mass", "Energy", "Volume", etc.</comment>
+    <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and mass", "Energy", "Volume", etc.</comment>
   </data>
   <data name="HeaderAutomationName_Date" xml:space="preserve">
-    <value>Күн есептеу режимі</value>
-    <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
+    <value>Күнді есептеу режимі</value>
+    <comment>Automation name for when the mode header is focused and the current mode is Date calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Журнал және жад тізімдері</value>
@@ -2613,51 +2613,51 @@
   </data>
   <data name="divideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>бөлінген</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
   </data>
   <data name="multiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>рет</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
   </data>
   <data name="minusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>минус</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
   </data>
   <data name="plusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>плюс</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
   </data>
   <data name="powerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>дәрежеде</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
   </data>
   <data name="ySquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>y түбірі</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
   </data>
   <data name="modButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>модуль</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>солға жылжу</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>оңға жылжу</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>немесе</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
   </data>
   <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>x немесе</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>және</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="CurrencyFromToRatioFormat" xml:space="preserve">
     <value>%1 %2 = %3 %4</value>
@@ -2694,10 +2694,6 @@
   <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
     <value>Бағамдар жаңартылмады</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
-  </data>
-  <data name="AboutButton.AccessKey" xml:space="preserve">
-    <value>AB</value>
-    <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
@@ -2988,7 +2984,7 @@
     <comment>Name for the logbasey function. Used by screen readers.</comment>
   </data>
   <data name="AbsoluteValue" xml:space="preserve">
-    <value>Абсолюттік мән</value>
+    <value>Абсолютті мән</value>
     <comment>Name for the absolute value function. Used by screen readers.</comment>
   </data>
   <data name="LeftShift" xml:space="preserve">
@@ -3080,12 +3076,12 @@
     <comment>Displayed on the button that contains a flyout for the bitwise functions in programmer mode.</comment>
   </data>
   <data name="bitShiftButton.Text" xml:space="preserve">
-    <value>Биттік ауысу</value>
+    <value>Биттік жылжу</value>
     <comment>Displayed on the button that contains a flyout for the bit shift functions in programmer mode.</comment>
   </data>
   <data name="trigShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Кері функция</value>
-    <comment>Screen Reader prompt for the shift button in the trig flyout in scientific mode.</comment>
+    <comment>Screen reader prompt for the shift button in the trig flyout in scientific mode.</comment>
   </data>
   <data name="hypButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Гиперболалық функция</value>
@@ -3100,11 +3096,11 @@
     <comment>Screen reader prompt for the Calculator button sech in the scientific flyout keypad</comment>
   </data>
   <data name="invsecButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Доға секанс</value>
+    <value>Арксеканс</value>
     <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
   </data>
   <data name="invsechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Гиперболалық доға секансы</value>
+    <value>Гиперболалық арксеканс</value>
     <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
   </data>
   <data name="cscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3116,11 +3112,11 @@
     <comment>Screen reader prompt for the Calculator button csch in the scientific flyout keypad</comment>
   </data>
   <data name="invcscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Доға косеканс</value>
+    <value>Арккосеканс</value>
     <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
   </data>
   <data name="invcschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Гиперболалық доға косекансы</value>
+    <value>Гиперболалық арккосеканс</value>
     <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
   </data>
   <data name="cotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3132,11 +3128,11 @@
     <comment>Screen reader prompt for the Calculator button coth in the scientific flyout keypad</comment>
   </data>
   <data name="invcotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Доға котангенс</value>
+    <value>Арккотангенс</value>
     <comment>Screen reader prompt for the Calculator button arc cot in the scientific flyout keypad</comment>
   </data>
   <data name="invcothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Гиперболалық доға котангенсі</value>
+    <value>Гиперболалық арккотангенс</value>
     <comment>Screen reader prompt for the Calculator button arc coth in the scientific flyout keypad</comment>
   </data>
   <data name="floorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3152,7 +3148,7 @@
     <comment>Screen reader prompt for the Calculator button random in the scientific flyout keypad</comment>
   </data>
   <data name="absButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Абсолюттік мән</value>
+    <value>Абсолютті мән</value>
     <comment>Screen reader prompt for the Calculator button abs in the scientific flyout keypad</comment>
   </data>
   <data name="eulerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3169,7 +3165,7 @@
   </data>
   <data name="nandButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Nand</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="norButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Не</value>
@@ -3177,7 +3173,7 @@
   </data>
   <data name="norButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Не</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="rolCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Орындау бар сол жақта айналдыру</value>
@@ -3193,7 +3189,7 @@
   </data>
   <data name="lshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Солға жылжу</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="rshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Оңға жылжу</value>
@@ -3201,18 +3197,18 @@
   </data>
   <data name="rshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Оңға жылжу</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="arithmeticShiftButton.Content" xml:space="preserve">
-    <value>Арифметикалық ауысу</value>
+    <value>Арифметикалық жылжу</value>
     <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
   </data>
   <data name="logicalShiftButton.Content" xml:space="preserve">
-    <value>Логикалық ауысу</value>
+    <value>Логикалық жылжу</value>
     <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
   </data>
   <data name="rotateCircularButton.Content" xml:space="preserve">
-    <value>Айнымалы ауысуды айналдыру</value>
+    <value>Айналма жылжытуды айналдыру</value>
     <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
   </data>
   <data name="rotateCarryShiftButton.Content" xml:space="preserve">
@@ -3280,7 +3276,7 @@
     <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set, resetting the graph</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Ірілеу (Ctrl + қосу)</value>
+    <value>Ұлғайту (Ctrl + плюс)</value>
     <comment>This is the tool tip automation name for the Calculator zoom in button.</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3288,11 +3284,11 @@
     <comment>Screen reader prompt for the zoom in button.</comment>
   </data>
   <data name="zoomOutButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Кішілеу (Ctrl + алу)</value>
+    <value>Кішірейту (Ctrl + минус)</value>
     <comment>This is the tool tip automation name for the Calculator zoom out button.</comment>
   </data>
   <data name="zoomOutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Кішірейту</value>
+    <value>Кішілеу</value>
     <comment>Screen reader prompt for the zoom out button.</comment>
   </data>
   <data name="EquationTextBoxAddPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -3445,11 +3441,11 @@
   </data>
   <data name="HorizontalAsymptotes" xml:space="preserve">
     <value>Көлденең асимптоталар</value>
-    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Horizontal aysmptotes Property</comment>
   </data>
   <data name="InflectionPoints" xml:space="preserve">
-    <value>Бүгілген нүктелері</value>
-    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+    <value>Өзгерістер нүктелері</value>
+    <comment>Title for KeyGraphFeatures Inflection points Property</comment>
   </data>
   <data name="KGFAnalysisNotSupported" xml:space="preserve">
     <value>Бұл функция үшін талдауға қолдау көрсетілмейді.</value>
@@ -3473,7 +3469,7 @@
   </data>
   <data name="ObliqueAsymptotes" xml:space="preserve">
     <value>Көлбеу асимптоталар</value>
-    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Oblique asymptotes Property</comment>
   </data>
   <data name="Parity" xml:space="preserve">
     <value>Бөлік</value>
@@ -3489,7 +3485,7 @@
   </data>
   <data name="VerticalAsymptotes" xml:space="preserve">
     <value>Тік асимптоталар</value>
-    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Vertical asymptotes Property</comment>
   </data>
   <data name="XIntercept" xml:space="preserve">
     <value>X-бөлігі</value>
@@ -3597,7 +3593,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>Өрнек жарамсыз</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>Өрнек бос</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3609,7 +3605,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>Функция атауынан кейін жақша жоқ</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>Математикалық амалда параметрлердің саны дұрыс емес</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3643,7 +3639,7 @@
     <comment>Error that occurs during graphing when the base is out of range.</comment>
   </data>
   <data name="InvalidVariableSpecification" xml:space="preserve">
-    <value>Математикалық амал бір параметрінің айнымалы болуын талап етеді</value>
+    <value>Математикалық амал параметрлерінің біреуінің айнымалы болуын талап етеді</value>
     <comment>Error that occurs during graphing when a function requires a variable in a particular position. Ex: 2nd argument of deriv.</comment>
   </data>
   <data name="ExpectingLogicalOperands" xml:space="preserve">
@@ -3745,7 +3741,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>Графикті қарау терезесі, x осі %1 және %2 арқылы шектелген, ал y осі %3 және %4 арқылы шектелген, %5 теңдеулерін көрсетіп тұр</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Жүгірткіні конфигурациялау</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3823,8 +3819,8 @@
     <comment>This is the automation name text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="GraphOptionsHeading.Text" xml:space="preserve">
-    <value>Параметрлер</value>
-    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+    <value>График параметрлері</value>
+    <comment>Heading for the Graph options flyout in Graphing mode.</comment>
   </data>
   <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Айнымалы параметрлер</value>
@@ -3836,18 +3832,18 @@
   </data>
   <data name="LineThicknessBoxHeading.Text" xml:space="preserve">
     <value>Сызық қалыңдығы</value>
-    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+    <comment>Heading for the Graph options flyout in Graphing mode.</comment>
   </data>
   <data name="LineOptionsHeading.Text" xml:space="preserve">
     <value>Сызық параметрлері</value>
     <comment>Heading for the equation style flyout in Graphing mode.</comment>
   </data>
   <data name="SmallLineWidthAutomationName" xml:space="preserve">
-    <value>Кіші сызық ені</value>
+    <value>Кішкентай сызық ені</value>
     <comment>Automation name for line width setting</comment>
   </data>
   <data name="MediumLineWidthAutomationName" xml:space="preserve">
-    <value>Ортаңғы cызық ені</value>
+    <value>Орташа сызық ені</value>
     <comment>Automation name for line width setting</comment>
   </data>
   <data name="LargeLineWidthAutomationName" xml:space="preserve">
@@ -3862,7 +3858,7 @@
     <value>Өрнекті енгізіңіз</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>Көшіру</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3887,15 +3883,15 @@
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Функциялық енгізілімнің тізім элементі</value>
+    <value>Функцияны енгізу</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Функциялық енгізілім тізімі</value>
+    <value>Функцияны енгізу</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Функциялық енгізілім тақтасы</value>
+    <value>Функцияның кіріс тақтасы</value>
     <comment>The automation name for the Equation Input StackPanel that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableStackPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3907,7 +3903,7 @@
     <comment>The automation name for the Variable ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableListViewItem" xml:space="preserve">
-    <value>Айнымалы %1 тізім элементі</value>
+    <value>Айнымалының %1 тізім элементі</value>
     <comment>The automation name for the Variable ListViewItem that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableValueTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3963,7 +3959,7 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor6AutomationName" xml:space="preserve">
-    <value>Қою жасыл</value>
+    <value>Күңгірт жасыл</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor7AutomationName" xml:space="preserve">
@@ -3975,7 +3971,7 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor9AutomationName" xml:space="preserve">
-    <value>Ашық алхоры түстес</value>
+    <value>Ашық алхоры түсті</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor10AutomationName" xml:space="preserve">
@@ -4047,7 +4043,7 @@
     <comment>Announcement used in Graphing Calculator when a function is removed from the function list</comment>
   </data>
   <data name="KGFEquationTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Функциялық талдаудың теңдеу жолағы</value>
+    <value>Функцияны талдау теңдеуінің жолағы</value>
     <comment>This is the automation name text for the equation box in the function analysis panel</comment>
   </data>
   <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4087,7 +4083,7 @@
     <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
   </data>
   <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Функциялық талдау</value>
+    <value>Функцияны талдау</value>
     <comment>Screen reader prompt for the function analysis grid</comment>
   </data>
   <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4115,19 +4111,59 @@
     <comment>Announcement to indicate calculator window is now back to full view.</comment>
   </data>
   <data name="arithmeticShiftButtonSelected" xml:space="preserve">
-    <value>Арифметикалық ауысу таңдалды</value>
+    <value>Арифметикалық жылжыту таңдалды</value>
     <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
   </data>
   <data name="logicalShiftButtonSelected" xml:space="preserve">
-    <value>Логикалық ауысу таңдалды</value>
+    <value>Логикалық жылжыту таңдалды</value>
     <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
   </data>
   <data name="rotateCircularButtonSelected" xml:space="preserve">
-    <value>Айнымалы ауысуды айналдыру таңдалды</value>
+    <value>Айнымалы жылжытуды айналдыру таңдалды</value>
     <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
   </data>
   <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
-    <value>Айнымалы ауысуды орындау арқылы айналдыру таңдалды</value>
+    <value>Айнымалы жылжытуды орындау арқылы айналдыру таңдалды</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="SettingsHeader.Text" xml:space="preserve">
+    <value>Параметрлер</value>
+    <comment>Header text of Settings page</comment>
+  </data>
+  <data name="SettingsAppearance.Text" xml:space="preserve">
+    <value>Көрініс</value>
+    <comment>Subtitle of appearance setting on Settings page</comment>
+  </data>
+  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+    <value>Бағдарлама тақырыбы</value>
+    <comment>Title of App theme expander</comment>
+  </data>
+  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+    <value>Көрсетілетін бағдарлама тақырыбын таңдау</value>
+    <comment>Description of App theme expander</comment>
+  </data>
+  <data name="LightThemeRadioButton.Content" xml:space="preserve">
+    <value>Ашық</value>
+    <comment>Lable for light theme option</comment>
+  </data>
+  <data name="DarkThemeRadioButton.Content" xml:space="preserve">
+    <value>Күңгірт</value>
+    <comment>Lable for dark theme option</comment>
+  </data>
+  <data name="SystemThemeRadioButton.Content" xml:space="preserve">
+    <value>Жүйе параметрін пайдалану</value>
+    <comment>Lable for the app theme option to use system setting</comment>
+  </data>
+  <data name="TitleBarBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Артқа</value>
+    <comment>Screen reader prompt for the Back button in title bar to back to main page</comment>
+  </data>
+  <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
+    <value>Параметрлер беті</value>
+    <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Бағдарлама тақырыбының параметрі</value>
+    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>

@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using CalculatorUITestFramework;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+
 using System;
 
 namespace CalculatorUITests
@@ -12,7 +15,7 @@ namespace CalculatorUITests
     [TestClass]
     public class MemoryFunctionalTests
     {
-        private static StandardCalculatorPage page = new StandardCalculatorPage();
+        private static readonly StandardCalculatorPage page = new StandardCalculatorPage();
 
         /// <summary>
         /// Initializes the WinAppDriver web driver session.
@@ -22,7 +25,7 @@ namespace CalculatorUITests
         public static void ClassInitialize(TestContext context)
         {
             // Create session to launch a Calculator window
-            WinAppDriver.Instance.SetupCalculatorSession(context);
+            CalculatorDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in standard mode
             page.NavigateToStandardCalculator();
@@ -38,7 +41,7 @@ namespace CalculatorUITests
         public static void ClassCleanup()
         {
             // Tear down Calculator session.
-            WinAppDriver.Instance.TearDownCalculatorSession();
+            CalculatorDriver.Instance.TearDownCalculatorSession();
         }
 
         /// <summary>
@@ -75,7 +78,7 @@ namespace CalculatorUITests
             page.MemoryPanel.NumberpadMSButton.Click();
             page.MemoryPanel.OpenMemoryPanel();
 
-            Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
+            Actions moveToListView = new Actions(CalculatorDriver.Instance.CalculatorSession);
             var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
             moveToListView.MoveToElement(memoryItems[0].Item);
             moveToListView.ContextClick(memoryItems[0].Item);
@@ -93,7 +96,7 @@ namespace CalculatorUITests
             Assert.IsTrue(memoryItems2[0].GetValue().Equals("3", StringComparison.InvariantCultureIgnoreCase));
 
             page.MemoryPanel.PanelClearMemoryButton.Click();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
         }
 
         [TestMethod]
@@ -107,7 +110,7 @@ namespace CalculatorUITests
 
             page.MemoryPanel.OpenMemoryFlyout();
             var memoryItems = page.MemoryPanel.GetAllMemoryFlyoutListViewItems();
-            Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
+            Actions moveToListView = new Actions(CalculatorDriver.Instance.CalculatorSession);
             moveToListView.MoveToElement(memoryItems[0].Item);
             moveToListView.ContextClick(memoryItems[0].Item);
             moveToListView.Perform();
@@ -127,10 +130,10 @@ namespace CalculatorUITests
 
             page.MemoryPanel.OpenMemoryFlyout();
             page.MemoryPanel.PanelClearMemoryButton.Click();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
 
             page.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
         }
 
         #endregion

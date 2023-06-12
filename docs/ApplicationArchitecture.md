@@ -21,11 +21,11 @@ that build into the final Calculator application.
 
 The View layer is contained in the [Calculator project][Calculator folder]. This project contains mostly XAML files
 and various custom controls that support the UI. [App.xaml][App.xaml] contains many of the [static][StaticResource] and
-[theme][ThemeResource] resources that the other XAML files will reference. Its code-behind file, [App.xaml.cpp][App.xaml.cpp],
+[theme][ThemeResource] resources that the other XAML files will reference. Its code-behind file, [App.xaml.cs][App.xaml.cs],
 contains the main entry point to the application. On startup, it navigates to the main page.
 
-```C++
-rootFrame->Navigate(MainPage::typeid, argument)
+```C#
+rootFrame.Navigate(typeof(MainPage), argument)
 ```
 
 In Calculator, there is only one concrete [Page][Page] class: [MainPage.xaml][MainPage.xaml]. `MainPage` is the root
@@ -166,7 +166,7 @@ instead of regular floating point arithmetic). The interface to this layer is de
 
 [Calculator folder]:                  ../src/Calculator
 [App.xaml]:                           ../src/Calculator/App.xaml
-[App.xaml.cpp]:                       ../src/Calculator/App.xaml.cpp
+[App.xaml.cs]:                       ../src/Calculator/App.xaml.cs
 [StaticResource]:                     https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/staticresource-markup-extension
 [ThemeResource]:                      https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/themeresource-markup-extension
 [Page]:                               https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Page

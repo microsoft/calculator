@@ -9,7 +9,7 @@
 // This event is unreliable and should be deprecated in favor of the new
 // RaiseNotification API in RS3.
 
-namespace CalculatorApp::Common::Automation
+namespace CalculatorApp::ViewModel::Common::Automation
 {
     // This class exists so that the app can run on RS2 and use LiveRegions
     // to host notifications on those builds.

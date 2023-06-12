@@ -594,7 +594,7 @@
     <comment>Screen reader prompt for the Calculator History Clear button, when the button is invoked.</comment>
   </data>
   <data name="HideHistory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Slėpti istoriją</value>
+    <value>Slėpti retrospektyvą</value>
     <comment>Screen reader prompt for the Calculator History Hide button</comment>
   </data>
   <data name="HistoryButton_Open" xml:space="preserve">
@@ -630,19 +630,19 @@
     <comment>This is the tool tip automation name for the Memory Recall (MR) button.</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Atminties pridėjimas</value>
+    <value>Atminties sudėtis</value>
     <comment>Screen reader prompt for the Calculator Memory Add button</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Atminties pridėjimas (Ctrl+P)</value>
+    <value>Atminties sudėtis (Ctrl+P)</value>
     <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Atminties atėmimas</value>
+    <value>Atminties atimtis</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Atminties atėmimas (Ctrl+Q)</value>
+    <value>Atminties atimtis (Ctrl+Q)</value>
     <comment>This is the tool tip automation name for the Memory Subtract (M-) button.</comment>
   </data>
   <data name="ClearMemoryItemButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -871,7 +871,7 @@
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Atvirkštinė funkcija</value>
-    <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
+    <comment>Screen reader prompt for the shift button on the number pad in scientific mode.</comment>
   </data>
   <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Minusas</value>
@@ -894,11 +894,11 @@
     <comment>Screen reader prompt for the percent button on the scientific operator keypad</comment>
   </data>
   <data name="negateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Teigiamas Neigiamas</value>
+    <value>Teigiamas neigiamas</value>
     <comment>Screen reader prompt for the negate button on the scientific operator keypad</comment>
   </data>
   <data name="converterNegateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Teigiamas Neigiamas</value>
+    <value>Teigiamas neigiamas</value>
     <comment>Screen reader prompt for the negate button on the converter operator keypad</comment>
   </data>
   <data name="invertButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1062,7 +1062,7 @@
     <comment>Screen reader prompt for the Mode dropdown field in Snapped and Portrait modes.</comment>
   </data>
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Kategorijų išplečiamasis laukas</value>
+    <value>Kategorijų išplečiamasis sąrašas</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1143,7 +1143,7 @@
   </data>
   <data name="CategoryName_WeightText" xml:space="preserve">
     <value>Svoris ir masė</value>
-    <comment>Unit conversion category name called Weight and Mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
+    <comment>Unit conversion category name called Weight and mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
   </data>
   <data name="CategoryName_PressureText" xml:space="preserve">
     <value>Slėgis</value>
@@ -2301,7 +2301,7 @@
     <value>Atgal</value>
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
-  <data name="AboutFlyoutEULA.Text" xml:space="preserve">
+  <data name="AboutEULA.Text" xml:space="preserve">
     <value>„Microsoft“ programinės įrangos licencijos sąlygos</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
@@ -2317,13 +2317,13 @@
     <value>© „Microsoft“, %1. Visos teisės ginamos.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
-  <data name="AboutFlyoutContribute" xml:space="preserve">
+  <data name="AboutControlContribute" xml:space="preserve">
     <value>Norėdami sužinoti, kaip galite prisidėti prie Windows skaičiuotuvas, peržiūrėkite vaizdą %HL%GitHub%HL%.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
-  <data name="AboutButton.Content" xml:space="preserve">
+  <data name="AboutGroupTitle.Text" xml:space="preserve">
     <value>Apie</value>
-    <comment>The text that shows in the dropdown navigation control to open About panel</comment>
+    <comment>Subtitle of about message on Settings page</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
     <value>Siųsti atsiliepimą</value>
@@ -2418,11 +2418,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabit" xml:space="preserve">
-    <value>Jotabitas</value>
+    <value>Jotabitai</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabyte" xml:space="preserve">
-    <value>Jotabaitas</value>
+    <value>Jotabaitai</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibits" xml:space="preserve">
@@ -2438,7 +2438,7 @@
   </data>
   <data name="DateCalculationOption.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Skaičiavimo režimas</value>
-    <comment>Automation label for the Date Calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
+    <comment>Automation label for the Date calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
   </data>
   <data name="AddOption.Content" xml:space="preserve">
     <value>Įtraukti</value>
@@ -2454,7 +2454,7 @@
   </data>
   <data name="Date_DifferenceOption.Content" xml:space="preserve">
     <value>Skirtumas tarp datų</value>
-    <comment>Date Difference option</comment>
+    <comment>Date difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
     <value>Dienos</value>
@@ -2529,11 +2529,11 @@
   </data>
   <data name="HeaderAutomationName_Converter" xml:space="preserve">
     <value>Keitiklio režimas %1</value>
-    <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and Mass", "Energy", "Volume", etc.</comment>
+    <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and mass", "Energy", "Volume", etc.</comment>
   </data>
   <data name="HeaderAutomationName_Date" xml:space="preserve">
     <value>Datos apskaičiavimo režimas</value>
-    <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
+    <comment>Automation name for when the mode header is focused and the current mode is Date calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Istorijos ir atminties sąrašai</value>
@@ -2613,51 +2613,51 @@
   </data>
   <data name="divideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>padalyta iš</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
   </data>
   <data name="multiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>kart</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
   </data>
   <data name="minusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>minus</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
   </data>
   <data name="plusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>plius</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
   </data>
   <data name="powerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>pakelta laipsniu</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
   </data>
   <data name="ySquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>y šaknis</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
   </data>
   <data name="modButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>mod</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Poslinkis į kairę</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Poslinkis į dešinę</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>arba</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
   </data>
   <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>x arba</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ir</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="CurrencyFromToRatioFormat" xml:space="preserve">
     <value>%1 %2 = %3 %4</value>
@@ -2694,10 +2694,6 @@
   <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
     <value>Nepavyko atnaujinti kursų</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
-  </data>
-  <data name="AboutButton.AccessKey" xml:space="preserve">
-    <value>AB</value>
-    <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
@@ -3085,7 +3081,7 @@
   </data>
   <data name="trigShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Atvirkštinė funkcija</value>
-    <comment>Screen Reader prompt for the shift button in the trig flyout in scientific mode.</comment>
+    <comment>Screen reader prompt for the shift button in the trig flyout in scientific mode.</comment>
   </data>
   <data name="hypButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Hiperbolinė funkcija</value>
@@ -3132,7 +3128,7 @@
     <comment>Screen reader prompt for the Calculator button coth in the scientific flyout keypad</comment>
   </data>
   <data name="invcotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Arkkotangentas</value>
+    <value>Arktangentas</value>
     <comment>Screen reader prompt for the Calculator button arc cot in the scientific flyout keypad</comment>
   </data>
   <data name="invcothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3169,7 +3165,7 @@
   </data>
   <data name="nandButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>NAND</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="norButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Nor</value>
@@ -3177,7 +3173,7 @@
   </data>
   <data name="norButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Nor</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="rolCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Sukti į kairę perkeliant</value>
@@ -3193,7 +3189,7 @@
   </data>
   <data name="lshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Poslinkis į kairę</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="rshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Poslinkis į dešinę</value>
@@ -3201,7 +3197,7 @@
   </data>
   <data name="rshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Poslinkis į dešinę</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="arithmeticShiftButton.Content" xml:space="preserve">
     <value>Aritmetinis poslinkis</value>
@@ -3264,7 +3260,7 @@
     <comment>This is the tool tip automation name for the Calculator graph view button.</comment>
   </data>
   <data name="graphViewButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Grafiko rodinys</value>
+    <value>Diagramos rodinys</value>
     <comment>Screen reader prompt for the graph view button.</comment>
   </data>
   <data name="GraphViewAutomaticBestFitAnnouncement" xml:space="preserve">
@@ -3296,7 +3292,7 @@
     <comment>Screen reader prompt for the zoom out button.</comment>
   </data>
   <data name="EquationTextBoxAddPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Įterpti lygtį</value>
+    <value>Įtraukti lygtį</value>
     <comment>Placeholder text for the equation input button</comment>
   </data>
   <data name="ShareActionErrorMessage" xml:space="preserve">
@@ -3445,11 +3441,11 @@
   </data>
   <data name="HorizontalAsymptotes" xml:space="preserve">
     <value>Horizontalios asimptotės</value>
-    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Horizontal aysmptotes Property</comment>
   </data>
   <data name="InflectionPoints" xml:space="preserve">
-    <value>Infleksijos taškai</value>
-    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+    <value>Linkio taškai</value>
+    <comment>Title for KeyGraphFeatures Inflection points Property</comment>
   </data>
   <data name="KGFAnalysisNotSupported" xml:space="preserve">
     <value>Šios funkcijos analizė nepalaikoma.</value>
@@ -3472,8 +3468,8 @@
     <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
   </data>
   <data name="ObliqueAsymptotes" xml:space="preserve">
-    <value>Įstrižinės asimptotės</value>
-    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+    <value>Įstrižos asimptotės</value>
+    <comment>Title for KeyGraphFeatures Oblique asymptotes Property</comment>
   </data>
   <data name="Parity" xml:space="preserve">
     <value>Lyginumas</value>
@@ -3489,7 +3485,7 @@
   </data>
   <data name="VerticalAsymptotes" xml:space="preserve">
     <value>Vertikalios asimptotės</value>
-    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Vertical asymptotes Property</comment>
   </data>
   <data name="XIntercept" xml:space="preserve">
     <value>X sankirtos taškas</value>
@@ -3597,7 +3593,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>Neleistinas reiškinys</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>Reiškinys yra tuščias</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3609,7 +3605,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>Po funkcijos pavadinimo nėra skliaustelių</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>Matematinėje operacijoje yra netinkamas parametrų skaičius</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3745,7 +3741,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>Diagramos peržiūros langas, x ašis bounded %1 ir %2, y ašis bounded pagal %3 ir %4, Rodyti %5 lygtis</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Konfigūruoti slankiklį</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3824,7 +3820,7 @@
   </data>
   <data name="GraphOptionsHeading.Text" xml:space="preserve">
     <value>Diagramos parinktys</value>
-    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+    <comment>Heading for the Graph options flyout in Graphing mode.</comment>
   </data>
   <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Kintamųjų parinktys</value>
@@ -3835,34 +3831,34 @@
     <comment>Tool tip for the variable settings toggle button</comment>
   </data>
   <data name="LineThicknessBoxHeading.Text" xml:space="preserve">
-    <value>Tinklelio linijų storis</value>
-    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+    <value>Linijos storis</value>
+    <comment>Heading for the Graph options flyout in Graphing mode.</comment>
   </data>
   <data name="LineOptionsHeading.Text" xml:space="preserve">
     <value>Linijos parinktys</value>
     <comment>Heading for the equation style flyout in Graphing mode.</comment>
   </data>
   <data name="SmallLineWidthAutomationName" xml:space="preserve">
-    <value>Mažas eilutės plotis</value>
+    <value>Mažos eilutės plotis</value>
     <comment>Automation name for line width setting</comment>
   </data>
   <data name="MediumLineWidthAutomationName" xml:space="preserve">
-    <value>Vidutinis eilutės plotis</value>
+    <value>Vidutinės eilutės plotis</value>
     <comment>Automation name for line width setting</comment>
   </data>
   <data name="LargeLineWidthAutomationName" xml:space="preserve">
-    <value>Didelis eilutės plotis</value>
+    <value>Didelės eilutės plotis</value>
     <comment>Automation name for line width setting</comment>
   </data>
   <data name="ExtraLargeLineWidthAutomationName" xml:space="preserve">
-    <value>Ypač didelis eilutės plotis</value>
+    <value>Ypač didelės eilutės plotis</value>
     <comment>Automation name for line width setting</comment>
   </data>
   <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
     <value>Įveskite išraišką</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>Kopijuoti</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3883,23 +3879,23 @@
     <comment>Undo menu item from the Equation TextBox</comment>
   </data>
   <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
-    <value>Pasirinkti viską</value>
+    <value>Žymėti viską</value>
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Funkcijos įvesties sąrašo elementas</value>
+    <value>Funkcijos įvestis</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Funkcijos įvesties sąrašas</value>
+    <value>Funkcijos įvestis</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Funkcijos įvesties sritis</value>
+    <value>Funkcijos įvesties skydas</value>
     <comment>The automation name for the Equation Input StackPanel that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableStackPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Kintamųjų sritis</value>
+    <value>Kintamųjų skydas</value>
     <comment>The automation name for the Variable StackPanel that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableListView.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3911,23 +3907,23 @@
     <comment>The automation name for the Variable ListViewItem that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableValueTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Kintamojo reikšmės teksto laukas</value>
+    <value>Kintamųjų reikšmės teksto laukas</value>
     <comment>The automation name for the Variable Value Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableValueSlider.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Kintamojo reikšmės slankiklis</value>
+    <value>Kintamųjų reikšmės slankiklis</value>
     <comment>The automation name for the Variable Value Slider that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableMinTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Kintamojo minimalios reikšmės teksto laukas</value>
+    <value>Kintamųjų minimalios reikšmės teksto laukas</value>
     <comment>The automation name for the Variable Min Value Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableStepTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Kintamojo veiksmo reikšmės teksto laukas</value>
+    <value>Kintamųjų veiksmo reikšmės teksto laukas</value>
     <comment>The automation name for the Variable Step Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableMaxTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Kintamojo didžiausios reikšmės teksto laukas</value>
+    <value>Kintamųjų maksimalios reikšmės teksto laukas</value>
     <comment>The automation name for the Variable Max Value Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="solidLineStyleAutomationName" xml:space="preserve">
@@ -3959,7 +3955,7 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor5AutomationName" xml:space="preserve">
-    <value>Mėtinė žalia</value>
+    <value>Mėtų žalia</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor6AutomationName" xml:space="preserve">
@@ -4087,7 +4083,7 @@
     <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
   </data>
   <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Funkcijų analizė</value>
+    <value>Funkcijos analizė</value>
     <comment>Screen reader prompt for the function analysis grid</comment>
   </data>
   <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4129,5 +4125,45 @@
   <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
     <value>Sukimo per perkėlimą ciklinis poslinkis pasirinktas</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="SettingsHeader.Text" xml:space="preserve">
+    <value>Parametrai</value>
+    <comment>Header text of Settings page</comment>
+  </data>
+  <data name="SettingsAppearance.Text" xml:space="preserve">
+    <value>Išvaizda</value>
+    <comment>Subtitle of appearance setting on Settings page</comment>
+  </data>
+  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+    <value>Programėlės tema</value>
+    <comment>Title of App theme expander</comment>
+  </data>
+  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+    <value>Pasirinkite, kurią programėlės temą rodyti</value>
+    <comment>Description of App theme expander</comment>
+  </data>
+  <data name="LightThemeRadioButton.Content" xml:space="preserve">
+    <value>Šviesus</value>
+    <comment>Lable for light theme option</comment>
+  </data>
+  <data name="DarkThemeRadioButton.Content" xml:space="preserve">
+    <value>Tamsus</value>
+    <comment>Lable for dark theme option</comment>
+  </data>
+  <data name="SystemThemeRadioButton.Content" xml:space="preserve">
+    <value>Naudoti sistemos parametrą</value>
+    <comment>Lable for the app theme option to use system setting</comment>
+  </data>
+  <data name="TitleBarBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Atgal</value>
+    <comment>Screen reader prompt for the Back button in title bar to back to main page</comment>
+  </data>
+  <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
+    <value>Parametrų puslapis</value>
+    <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Programos temos parametras</value>
+    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>

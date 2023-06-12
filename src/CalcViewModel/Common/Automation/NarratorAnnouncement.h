@@ -3,7 +3,7 @@
 
 #pragma once
 
-namespace CalculatorApp::Common::Automation
+namespace CalculatorApp::ViewModel::Common::Automation
 {
 public
     ref class NarratorAnnouncement sealed
@@ -28,25 +28,23 @@ public
         static bool IsValid(NarratorAnnouncement ^ announcement);
 
     private:
-        // Make CalculatorAnnouncement a friend class so it is the only
-        // class that can access the private constructor.
-        friend class CalculatorAnnouncement;
+        Platform::String ^ m_announcement;
+        Platform::String ^ m_activityId;
+        Windows::UI::Xaml::Automation::Peers::AutomationNotificationKind m_kind;
+        Windows::UI::Xaml::Automation::Peers::AutomationNotificationProcessing m_processing;
 
+    internal:
         NarratorAnnouncement(
             Platform::String ^ announcement,
             Platform::String ^ activityId,
             Windows::UI::Xaml::Automation::Peers::AutomationNotificationKind kind,
             Windows::UI::Xaml::Automation::Peers::AutomationNotificationProcessing processing);
-
-        Platform::String ^ m_announcement;
-        Platform::String ^ m_activityId;
-        Windows::UI::Xaml::Automation::Peers::AutomationNotificationKind m_kind;
-        Windows::UI::Xaml::Automation::Peers::AutomationNotificationProcessing m_processing;
     };
 
     // CalculatorAnnouncement is intended to contain only static methods
     // that return announcements made for the Calculator app.
-    class CalculatorAnnouncement
+public
+    ref class CalculatorAnnouncement sealed
     {
     public:
         static NarratorAnnouncement ^ GetDisplayUpdatedAnnouncement(Platform::String ^ announcement);
@@ -77,5 +75,7 @@ public
         static NarratorAnnouncement ^ GetAlwaysOnTopChangedAnnouncement(Platform::String ^ announcement);
 
         static NarratorAnnouncement ^ GetBitShiftRadioButtonCheckedAnnouncement(Platform::String ^ announcement);
+
+        static NarratorAnnouncement ^ GetSettingsPageOpenedAnnouncement(Platform::String ^ announcement);
     };
 }

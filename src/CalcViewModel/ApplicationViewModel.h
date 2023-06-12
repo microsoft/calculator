@@ -17,14 +17,14 @@ namespace CalculatorApp
         public:
             ApplicationViewModel();
 
-            void Initialize(CalculatorApp::Common::ViewMode mode); // Use for first init, use deserialize for rehydration
+            void Initialize(CalculatorApp::ViewModel::Common::ViewMode mode); // Use for first init, use deserialize for rehydration
 
             OBSERVABLE_OBJECT();
             OBSERVABLE_PROPERTY_RW(StandardCalculatorViewModel ^, CalculatorViewModel);
             OBSERVABLE_PROPERTY_RW(DateCalculatorViewModel ^, DateCalcViewModel);
             OBSERVABLE_PROPERTY_RW(GraphingCalculatorViewModel ^, GraphingCalcViewModel);
             OBSERVABLE_PROPERTY_RW(UnitConverterViewModel ^, ConverterViewModel);
-            OBSERVABLE_PROPERTY_RW(CalculatorApp::Common::ViewMode, PreviousMode);
+            OBSERVABLE_PROPERTY_RW(CalculatorApp::ViewModel::Common::ViewMode, PreviousMode);
             OBSERVABLE_PROPERTY_R(bool, IsAlwaysOnTop);
             OBSERVABLE_NAMED_PROPERTY_RW(Platform::String ^, CategoryName);
 
@@ -34,14 +34,14 @@ namespace CalculatorApp
             COMMAND_FOR_METHOD(CopyCommand, ApplicationViewModel::OnCopyCommand);
             COMMAND_FOR_METHOD(PasteCommand, ApplicationViewModel::OnPasteCommand);
 
-            property CalculatorApp::Common::ViewMode Mode
+            property CalculatorApp::ViewModel::Common::ViewMode Mode
             {
-                CalculatorApp::Common::ViewMode get()
+                CalculatorApp::ViewModel::Common::ViewMode get()
                 {
                     return m_mode;
                 }
 
-                void set(CalculatorApp::Common::ViewMode value);
+                void set(CalculatorApp::ViewModel::Common::ViewMode value);
             }
             static property Platform::String^ ModePropertyName
             {
@@ -51,21 +51,21 @@ namespace CalculatorApp
                 }
             }
 
-            property Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup^>^ Categories
+            property Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::Common::NavCategoryGroup^>^ Categories
             {
-                Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup^>^ get()
+                Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::Common::NavCategoryGroup^>^ get()
                 {
                     return m_categories;
                 }
 
-                void set(Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup^>^ value);
+                void set(Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::Common::NavCategoryGroup^>^ value);
             }
 
             property Windows::UI::Xaml::Visibility ClearMemoryVisibility
             {
                 Windows::UI::Xaml::Visibility get()
                 {
-                    return CalculatorApp::Common::NavCategory::IsCalculatorViewMode(Mode) ? Windows::UI::Xaml::Visibility::Visible
+                    return CalculatorApp::ViewModel::Common::NavCategory::IsCalculatorViewMode(Mode) ? Windows::UI::Xaml::Visibility::Visible
                                                                                           : Windows::UI::Xaml::Visibility::Collapsed;
                 }
             }
@@ -106,8 +106,8 @@ namespace CalculatorApp
 
             void SetMenuCategories();
 
-            CalculatorApp::Common::ViewMode m_mode;
-            Windows::Foundation::Collections::IObservableVector<CalculatorApp::Common::NavCategoryGroup ^> ^ m_categories;
+            CalculatorApp::ViewModel::Common::ViewMode m_mode;
+            Windows::Foundation::Collections::IObservableVector<CalculatorApp::ViewModel::Common::NavCategoryGroup ^> ^ m_categories;
             Concurrency::task<void> HandleToggleAlwaysOnTop(float width, float height);
             void SetDisplayNormalAlwaysOnTopOption();
         };

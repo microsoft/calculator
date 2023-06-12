@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using OpenQA.Selenium.Appium;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalculatorUITestFramework
 {
@@ -19,7 +16,7 @@ namespace CalculatorUITestFramework
 
         public string GetValue()
         {
-            return Item.FindElementByAccessibilityId("MemoryItemValue")?.Text;
+            return Item.Text;
         }
     }
 }

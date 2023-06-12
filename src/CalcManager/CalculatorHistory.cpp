@@ -79,7 +79,7 @@ vector<shared_ptr<HISTORYITEM>> const& CalculatorHistory::GetHistory()
 
 shared_ptr<HISTORYITEM> const& CalculatorHistory::GetHistoryItem(unsigned int uIdx)
 {
-    assert(uIdx >= 0 && uIdx < m_historyItems.size());
+    assert(uIdx < m_historyItems.size());
     return m_historyItems.at(uIdx);
 }
 

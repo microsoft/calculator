@@ -12,7 +12,7 @@ schedules:
   displayName: Daily sync
   branches:
     include:
-    - master
+    - main
   always: true
 
 trigger: none
@@ -23,7 +23,7 @@ name: $(BuildDefinitionName)_$(date:yyMM).$(date:dd)$(rev:rrr)
 jobs:
 - job: Localize
   pool:
-    vmImage: windows-2019
+    name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
   steps:

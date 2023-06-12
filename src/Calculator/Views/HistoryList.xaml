@@ -1,13 +1,15 @@
 <UserControl x:Class="CalculatorApp.HistoryList"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:automation="using:CalculatorApp.Common.Automation"
+             xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
+             xmlns:common="using:CalculatorApp.Common"
              xmlns:converters="using:CalculatorApp.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:model="using:CalculatorApp.ViewModel"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-             x:Name="HistoryList"
+             xmlns:utils="using:CalculatorApp.Utils"
              AutomationProperties.AutomationId="HistoryList"
              FlowDirection="LeftToRight"
              mc:Ignorable="d">
@@ -42,39 +44,40 @@
             <muxc:SymbolIconSource x:Key="DeleteSymbol" Symbol="Delete"/>
 
             <muxc:SwipeItems x:Key="HistorySwipeItems" Mode="Execute">
-                <muxc:SwipeItem x:Uid="DeleteHistorySwipeItem"
+                <muxc:SwipeItem AutomationProperties.Name="{utils:ResourceString Name=DeleteHistorySwipeItem/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                 IconSource="{StaticResource DeleteSymbol}"
-                                Invoked="OnDeleteSwipeInvoked"/>
+                                Invoked="OnDeleteSwipeInvoked"
+                                Text="{utils:ResourceString Name=DeleteHistorySwipeItem/Text}"/>
             </muxc:SwipeItems>
 
             <MenuFlyout x:Name="HistoryContextMenu">
-                <MenuFlyoutItem x:Uid="CopyHistoryMenuItem"
-                                Click="OnCopyMenuItemClicked"
-                                Icon="Copy"/>
-                <MenuFlyoutItem x:Uid="DeleteHistoryMenuItem"
+                <MenuFlyoutItem Click="OnCopyMenuItemClicked"
+                                Icon="Copy"
+                                Text="{utils:ResourceString Name=CopyHistoryMenuItem/Text}"/>
+                <MenuFlyoutItem AutomationProperties.Name="{utils:ResourceString Name=DeleteHistoryMenuItem/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                 Click="OnDeleteMenuItemClicked"
-                                Icon="Delete"/>
+                                Icon="Delete"
+                                Text="{utils:ResourceString Name=DeleteHistoryMenuItem/Text}"/>
             </MenuFlyout>
 
             <DataTemplate x:Key="HistoryItemTemplate" x:DataType="model:HistoryItemViewModel">
-                <muxc:SwipeControl RightItems="{StaticResource HistorySwipeItems}">
-                    <StackPanel Margin="0,6,4,6" Background="Transparent">
+                <muxc:SwipeControl AutomationProperties.Name="{x:Bind local:HistoryList.GetHistoryItemAutomationName(AccExpression, AccResult)}" RightItems="{StaticResource HistorySwipeItems}">
+                    <StackPanel Margin="0,6,16,6" Background="Transparent">
                         <TextBlock x:Name="ExprTextBlock"
                                    Margin="0,0,0,4"
                                    HorizontalAlignment="Right"
                                    Style="{ThemeResource BodyTextBlockMediumStyle}"
+                                   AutomationProperties.AccessibilityView="Raw"
                                    AutomationProperties.AutomationId="HistoryItemExpression"
-                                   AutomationProperties.Name="{x:Bind AccExpression}"
                                    IsTextSelectionEnabled="True"
                                    Text="{x:Bind Expression}"
                                    TextAlignment="Right"
                                    TextWrapping="Wrap"/>
                         <TextBlock x:Name="ResultTextBlock"
                                    HorizontalAlignment="Right"
-                                   Style="{ThemeResource TitleTextBlockStyle}"
-                                   FontWeight="SemiBold"
+                                   Style="{ThemeResource SubtitleTextBlockStyle}"
+                                   AutomationProperties.AccessibilityView="Raw"
                                    AutomationProperties.AutomationId="HistoryItemValue"
-                                   AutomationProperties.Name="{x:Bind AccResult}"
                                    IsTextSelectionEnabled="True"
                                    Text="{x:Bind Result}"
                                    TextAlignment="Right"
@@ -83,7 +86,7 @@
                 </muxc:SwipeControl>
             </DataTemplate>
             <Style x:Key="HistoryItemContainerStyle"
-                   BasedOn="{StaticResource HistoryMemoryItemContainerStyle}"
+                   BasedOn="{StaticResource ConditionalHistoryMemoryItemContainerStyle}"
                    TargetType="ListViewItem">
                 <Setter Property="Margin" Value="0,0,0,20"/>
                 <Setter Property="ContextFlyout" Value="{StaticResource HistoryContextMenu}"/>
@@ -94,7 +97,7 @@
     <Grid x:Name="LayoutGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="{Binding RowHeight, ElementName=HistoryList, Mode=OneWay}"/>
+            <RowDefinition Height="{x:Bind RowHeight, Mode=OneWay}"/>
         </Grid.RowDefinitions>
 
         <VisualStateManager.VisualStateGroups>
@@ -123,9 +126,10 @@
                 Padding="0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Background="{ThemeResource SystemControlChromeMediumLowAcrylicElementMediumBrush}"
+                Background="{ThemeResource SolidBackgroundFillColorBase}"
                 BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
-                BorderThickness="{ThemeResource HighContrastThicknessTop}"/>
+                BorderThickness="{ThemeResource HighContrastThicknessTop}"
+                CornerRadius="{ThemeResource OverlayCornerRadius}"/>
 
         <Grid x:Name="HistoryListRootGrid" Grid.Row="1">
             <Grid.RowDefinitions>
@@ -133,16 +137,16 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock x:Name="HistoryEmpty"
-                       x:Uid="HistoryEmpty"
-                       Margin="16,14,24,0"
-                       Style="{ThemeResource BaseTextBlockStyle}"
-                       Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                       FontWeight="SemiLight"
+                       Margin="12,8,24,0"
+                       Style="{ThemeResource BodyTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                       Text="{utils:ResourceString Name=HistoryEmpty/Text}"
                        TextWrapping="Wrap"
                        Visibility="{x:Bind Model.ItemsCount, Converter={StaticResource ItemSizeToVisibilityConverter}, Mode=OneWay}"/>
             <ListView x:Name="HistoryListView"
                       MinHeight="60"
-                      Padding="0,12,0,0"
+                      Margin="4,0"
+                      Padding="0,24,0,0"
                       HorizontalAlignment="Stretch"
                       AutomationProperties.AutomationId="HistoryListView"
                       IsItemClickEnabled="True"
@@ -162,12 +166,15 @@
                 </ListView.ItemContainerTransitions>
             </ListView>
             <Button x:Name="ClearHistory"
-                    x:Uid="ClearHistory"
                     Grid.Row="1"
                     Style="{StaticResource ClearAllHistoryMemoryButtonStyle}"
+                    common:KeyboardShortcutManager.VirtualKeyControlShiftChord="{utils:ResourceVirtualKey Name=ClearHistory/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlShiftChord}"
+                    AccessKey="{utils:ResourceString Name=ClearHistory/AccessKey}"
                     AutomationProperties.AutomationId="ClearHistory"
+                    AutomationProperties.Name="{utils:ResourceString Name=ClearHistory/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                     Command="{x:Bind Model.ClearCommand, Mode=OneWay}"
-                    Content="&#xE74D;"
+                    Content=""
+                    ToolTipService.ToolTip="{utils:ResourceString Name=ClearHistory/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                     Visibility="{x:Bind Model.ItemsCount, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}"/>
         </Grid>
     </Grid>

@@ -8,7 +8,7 @@
 // This class announces NarratorAnnouncements using the RaiseNotification API
 // available in RS3.
 
-namespace CalculatorApp::Common::Automation
+namespace CalculatorApp::ViewModel::Common::Automation
 {
 public
     ref class NotificationHost sealed : public INarratorAnnouncementHost
@@ -23,10 +23,10 @@ public
 
     private:
         static Windows::UI::Xaml::Automation::Peers::AutomationNotificationKind
-        GetWindowsNotificationKind(CalculatorApp::Common::Automation::AutomationNotificationKind customKindType);
+        GetWindowsNotificationKind(CalculatorApp::ViewModel::Common::Automation::AutomationNotificationKind customKindType);
 
         static Windows::UI::Xaml::Automation::Peers::AutomationNotificationProcessing
-        GetWindowsNotificationProcessing(CalculatorApp::Common::Automation::AutomationNotificationProcessing customProcessingType);
+        GetWindowsNotificationProcessing(CalculatorApp::ViewModel::Common::Automation::AutomationNotificationProcessing customProcessingType);
 
     private:
         Windows::UI::Xaml::UIElement ^ m_host;
