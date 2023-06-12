@@ -1,17 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium.Windows;
 
 namespace CalculatorUITestFramework
 {
     /// <summary>
-    /// This class contains the UI automation objects and helper methods available when the Calculator is in Scientific Mode.
+    /// This class contains the UI automation objects and helper methods available when the Calculator is in Programmer Mode.
     /// </summary>
     public class ProgrammerCalculatorPage
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         public ScientificOperatorsPanel ScientificOperators = new ScientificOperatorsPanel();
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public ProgrammerOperatorsPanel ProgrammerOperators = new ProgrammerOperatorsPanel();

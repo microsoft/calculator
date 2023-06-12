@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 <!--
-See https://github.com/Microsoft/calculator/blob/master/docs/NewFeatureProcess.md for suggestions on how to write a good feature pitch. Just want to submit an idea quickly? Try Feedback Hub instead: https://insider.windows.com/en-us/fb/?contextid=130
+See https://github.com/Microsoft/calculator/blob/main/docs/NewFeatureProcess.md for suggestions on how to write a good feature pitch. Just want to submit an idea quickly? Try Feedback Hub instead: https://insider.windows.com/en-us/fb/?contextid=130
 -->
 
 **Problem Statement**

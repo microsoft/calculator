@@ -9,7 +9,7 @@
 
 namespace CalculatorApp
 {
-    namespace ViewModel
+    namespace ViewModel::DataLoaders
     {
     public
         enum class CurrencyLoadStatus
@@ -54,7 +54,9 @@ namespace CalculatorApp
         class CurrencyDataLoader : public UCM::IConverterDataLoader, public UCM::ICurrencyConverterDataLoader
         {
         public:
-            CurrencyDataLoader(_In_ std::unique_ptr<CalculatorApp::DataLoaders::ICurrencyHttpClient> client, const wchar_t* overrideLanguage = nullptr);
+            CurrencyDataLoader(
+                _In_ std::unique_ptr<CalculatorApp::ViewModel::DataLoaders::ICurrencyHttpClient> client,
+                const wchar_t* overrideLanguage = nullptr);
             ~CurrencyDataLoader();
 
             bool LoadFinished();
@@ -82,7 +84,7 @@ namespace CalculatorApp
             std::future<bool> TryLoadDataFromWebOverrideAsync() override;
             // ICurrencyConverterDataLoader
 
-            void OnNetworkBehaviorChanged(CalculatorApp::NetworkAccessBehavior newBehavior);
+            void OnNetworkBehaviorChanged(CalculatorApp::ViewModel::Common::NetworkAccessBehavior newBehavior);
 
         private:
             void ResetLoadStatus();
@@ -112,7 +114,7 @@ namespace CalculatorApp
 
         private:
             Platform::String ^ m_responseLanguage;
-            std::unique_ptr<CalculatorApp::DataLoaders::ICurrencyHttpClient> m_client;
+            std::unique_ptr<CalculatorApp::ViewModel::DataLoaders::ICurrencyHttpClient> m_client;
 
             bool m_isRtlLanguage;
 
@@ -130,8 +132,8 @@ namespace CalculatorApp
 
             CurrencyLoadStatus m_loadStatus;
 
-            CalculatorApp::NetworkManager ^ m_networkManager;
-            CalculatorApp::NetworkAccessBehavior m_networkAccessBehavior;
+            CalculatorApp::ViewModel::Common::NetworkManager ^ m_networkManager;
+            CalculatorApp::ViewModel::Common::NetworkAccessBehavior m_networkAccessBehavior;
             Windows::Foundation::EventRegistrationToken m_networkBehaviorToken;
             bool m_meteredOverrideSet;
         };

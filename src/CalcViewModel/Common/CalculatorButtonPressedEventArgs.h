@@ -6,7 +6,7 @@
 #include "CalculatorButtonUser.h"
 #include "Utils.h"
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
     namespace Common
     {
@@ -15,15 +15,15 @@ namespace CalculatorApp
         {
         public:
             PROPERTY_R(Platform::String ^, AuditoryFeedback);
-            PROPERTY_R(CalculatorApp::NumbersAndOperatorsEnum, Operation);
+            PROPERTY_R(CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum, Operation);
 
-            CalculatorButtonPressedEventArgs(Platform::String ^ feedback, CalculatorApp::NumbersAndOperatorsEnum operation)
+            CalculatorButtonPressedEventArgs(Platform::String ^ feedback, CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum operation)
                 : m_AuditoryFeedback(feedback)
                 , m_Operation(operation)
             {
             }
 
-            static CalculatorApp::NumbersAndOperatorsEnum GetOperationFromCommandParameter(_In_ Platform::Object ^ commandParameter);
+            static CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum GetOperationFromCommandParameter(_In_ Platform::Object ^ commandParameter);
             static Platform::String ^ GetAuditoryFeedbackFromCommandParameter(_In_ Platform::Object ^ commandParameter);
         };
     }

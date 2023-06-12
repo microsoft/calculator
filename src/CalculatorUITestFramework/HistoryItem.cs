@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using OpenQA.Selenium.Appium;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalculatorUITestFramework
 {
@@ -19,11 +16,13 @@ namespace CalculatorUITestFramework
 
         public string GetValue()
         {
-            return Item.FindElementByAccessibilityId("HistoryItemValue")?.Text;
+            var equalSignIndex = Item.Text.IndexOf("=");
+            return Item.Text.Substring(equalSignIndex + 1).Trim();
         }
         public string GetExpression()
         {
-            return Item.FindElementByAccessibilityId("HistoryItemExpression")?.Text;
+            var equalSignIndex = Item.Text.IndexOf("=");
+            return Item.Text.Substring(0, equalSignIndex + 1).Trim();
         }
     }
 }

@@ -39,7 +39,7 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RadixType radixtype, NUM_WIDTH numwidt
     if (numwidth >= NUM_WIDTH::QWORD_WIDTH && numwidth <= NUM_WIDTH::BYTE_WIDTH)
     {
         m_numwidth = numwidth;
-        m_dwWordBitWidth = DwWordBitWidthFromeNumWidth(numwidth);
+        m_dwWordBitWidth = DwWordBitWidthFromNumWidth(numwidth);
     }
 
     // inform ratpak that a change in base or precision has occurred
@@ -50,7 +50,7 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RadixType radixtype, NUM_WIDTH numwidt
     DisplayNum();
 }
 
-int32_t CCalcEngine::DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth)
+int32_t CCalcEngine::DwWordBitWidthFromNumWidth(NUM_WIDTH numwidth)
 {
     switch (numwidth)
     {
@@ -85,7 +85,7 @@ uint32_t CCalcEngine::NRadixFromRadixType(RadixType radixtype)
 //  Toggles a given bit into the number representation. returns true if it changed it actually.
 bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno)
 {
-    uint32_t wmax = DwWordBitWidthFromeNumWidth(m_numwidth);
+    uint32_t wmax = DwWordBitWidthFromNumWidth(m_numwidth);
     if (wbitno >= wmax)
     {
         return false; // ignore error cant happen

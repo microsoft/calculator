@@ -1,6 +1,7 @@
 # This template contains jobs to run unit tests.
 
 parameters:
+  isOSSBuild: false
   platform: ''
   runsettingsFileName: ''
 
@@ -10,7 +11,10 @@ jobs:
   dependsOn: Build${{ parameters.platform }}
   condition: succeeded()
   pool:
-    vmImage: windows-2019
+    ${{ if eq(parameters.isOSSBuild, true) }}:
+      name: EssentialExperiencesOpenSource-windows-2022
+    ${{ if eq(parameters.isOSSBuild, false) }}:
+      name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
   steps:
@@ -31,5 +35,5 @@ jobs:
   - task: VSTest@2
     displayName: Run CalculatorUnitTests
     inputs:
-      testAssemblyVer2: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.appx
+      testAssemblyVer2: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.msix
       otherConsoleOptions: /Platform:${{ parameters.platform }}

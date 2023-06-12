@@ -482,7 +482,7 @@
     <comment>Label for a control that activates standard mode calculator layout.</comment>
   </data>
   <data name="converterModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ម៉ូដអង្គបំលែង</value>
+    <value>ម៉ូដបំប្លែង</value>
     <comment>Screen reader prompt for a control that activates the unit converter mode.</comment>
   </data>
   <data name="scientificModeButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -606,7 +606,7 @@
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ឃ្លាំងផ្ទុកអង្គចងចាំ</value>
+    <value>រក្សាទុកអង្គចងចាំ</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -622,7 +622,7 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button, when the button is invoked.</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>អង្គចងចាំហៅឡើងវិញ</value>
+    <value>ហៅអង្គចងចាំឡើងវិញ</value>
     <comment>Screen reader prompt for the Calculator Memory Recall button</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -630,7 +630,7 @@
     <comment>This is the tool tip automation name for the Memory Recall (MR) button.</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>អង្គចងចាំបូក</value>
+    <value>បញ្ចូលអង្គចងចាំ</value>
     <comment>Screen reader prompt for the Calculator Memory Add button</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -638,7 +638,7 @@
     <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>អង្គចងចាំដក</value>
+    <value>ដកអង្គចងចាំ</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -846,7 +846,7 @@
     <comment>Screen reader prompt for the Calculator numberPad button</comment>
   </data>
   <data name="decimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>សញ្ញាទសភាគ</value>
+    <value>សញ្ញាក្បៀស</value>
     <comment>Screen reader prompt for the "." button</comment>
   </data>
   <data name="clearEntryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -870,8 +870,8 @@
     <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>មុខងារដាក់បញ្ច្រាស</value>
-    <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
+    <value>អនុគមន៍ច្រាស</value>
+    <comment>Screen reader prompt for the shift button on the number pad in scientific mode.</comment>
   </data>
   <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ដក</value>
@@ -950,15 +950,15 @@
     <comment>Screen reader prompt for the Calculator tan button  on the scientific operator keypad</comment>
   </data>
   <data name="sinhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ស៊ីនអ៊ីព័របូលិក</value>
+    <value>អ៊ីពែប៉ូលិកស៊ីនុស</value>
     <comment>Screen reader prompt for the Calculator sinh button  on the scientific operator keypad</comment>
   </data>
   <data name="coshButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>កូស៊ីនុសអ៊ីព័របូលិក</value>
+    <value>អ៊ីពែប៉ូលិកកូស៊ីនុស</value>
     <comment>Screen reader prompt for the Calculator cosh button  on the scientific operator keypad</comment>
   </data>
   <data name="tanhButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>តង់ហ្សង់អ៊ីព័របូលិក</value>
+    <value>អ៊ីពែប៉ូលិកតង់សង់</value>
     <comment>Screen reader prompt for the Calculator tanh button  on the scientific operator keypad</comment>
   </data>
   <data name="xpower2Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1058,11 +1058,11 @@
     <comment>This is the Deg button's Rad mode automation name on the scientific operator keypad. Should read as "Radians toggle button".</comment>
   </data>
   <data name="FlyoutNav.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ម៉ូដបញ្ជីទម្លាក់ចុះ</value>
+    <value>ម៉ឺនុយធ្លាក់​ចុះ​នៃម៉ូដ</value>
     <comment>Screen reader prompt for the Mode dropdown field in Snapped and Portrait modes.</comment>
   </data>
   <data name="Categories.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>បញ្ជីទម្លាក់ចុះតាមប្រភេទ</value>
+    <value>ម៉ឺនុយធ្លាក់​ចុះ​នៃ​ប្រភេទ</value>
     <comment>Screen reader prompt for the Categories dropdown field.</comment>
   </data>
   <data name="EnterAlwaysOnTopButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -1143,7 +1143,7 @@
   </data>
   <data name="CategoryName_WeightText" xml:space="preserve">
     <value>ទម្ងន់ និងម៉ាស់</value>
-    <comment>Unit conversion category name called Weight and Mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
+    <comment>Unit conversion category name called Weight and mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
   </data>
   <data name="CategoryName_PressureText" xml:space="preserve">
     <value>សម្ពាធ</value>
@@ -1838,7 +1838,7 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
-    <value>ជលម៉ាយល៍</value>
+    <value>រង្វាស់ចម្ងាយនាវាចរ</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabit" xml:space="preserve">
@@ -2301,7 +2301,7 @@
     <value>ថយក្រោយ</value>
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
-  <data name="AboutFlyoutEULA.Text" xml:space="preserve">
+  <data name="AboutEULA.Text" xml:space="preserve">
     <value>លក្ខខណ្ឌអាជ្ញាប័ណ្ណសូហ្វវែរបស់ Microsoft</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
@@ -2317,13 +2317,13 @@
     <value>© %1 Microsoft. រក្សាសិទ្ធិគ្រប់បែបយ៉ាង។</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
-  <data name="AboutFlyoutContribute" xml:space="preserve">
+  <data name="AboutControlContribute" xml:space="preserve">
     <value>ដើម្បីស្វែងយល់​​អំពី​របៀប​​ដែល​អ្នក​អាច​​ចូលរួមចំណែក​ក្នុង​ម៉ាស៊ីនគិតលេខ Windows សូមពិនិត្យមើល​គម្រោងនៅលើ %HL%GitHub%HL%។</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
-  <data name="AboutButton.Content" xml:space="preserve">
+  <data name="AboutGroupTitle.Text" xml:space="preserve">
     <value>អំពី</value>
-    <comment>The text that shows in the dropdown navigation control to open About panel</comment>
+    <comment>Subtitle of about message on Settings page</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
     <value>ផ្ញើមតិប្រតិកម្ម</value>
@@ -2418,11 +2418,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabit" xml:space="preserve">
-    <value>យ៉ូតតាប៊ីត</value>
+    <value>យ៉ូតាប៊ីត</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabyte" xml:space="preserve">
-    <value>យ៉ូតតាបៃ</value>
+    <value>យ៉ូតាបៃ</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibits" xml:space="preserve">
@@ -2438,7 +2438,7 @@
   </data>
   <data name="DateCalculationOption.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ម៉ូដការគណនា</value>
-    <comment>Automation label for the Date Calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
+    <comment>Automation label for the Date calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
   </data>
   <data name="AddOption.Content" xml:space="preserve">
     <value>បន្ថែម</value>
@@ -2454,7 +2454,7 @@
   </data>
   <data name="Date_DifferenceOption.Content" xml:space="preserve">
     <value>ផលសងរវាងកាលបរិច្ឆេទ</value>
-    <comment>Date Difference option</comment>
+    <comment>Date difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
     <value>ថ្ងៃ</value>
@@ -2529,11 +2529,11 @@
   </data>
   <data name="HeaderAutomationName_Converter" xml:space="preserve">
     <value>ម៉ូដអង្គបំលែង %1</value>
-    <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and Mass", "Energy", "Volume", etc.</comment>
+    <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and mass", "Energy", "Volume", etc.</comment>
   </data>
   <data name="HeaderAutomationName_Date" xml:space="preserve">
     <value>ម៉ូដគណនាកាលបរិច្ឆេទ</value>
-    <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
+    <comment>Automation name for when the mode header is focused and the current mode is Date calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>បញ្ជីប្រវត្តិ និងអង្គចងចាំ</value>
@@ -2613,51 +2613,51 @@
   </data>
   <data name="divideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ចែកដោយ</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
   </data>
   <data name="multiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ពេលវេលា</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
   </data>
   <data name="minusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ដក</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
   </data>
   <data name="plusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>បូក</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
   </data>
   <data name="powerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ទៅកាន់កម្លាំងនៃ</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
   </data>
   <data name="ySquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ឬស y</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
   </data>
   <data name="modButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>mod</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ឃី shift ខាងឆ្វេង</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ឃី shift ខាងស្តាំ</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ឬ</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
   </data>
   <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>x ឬ</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>និង</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="CurrencyFromToRatioFormat" xml:space="preserve">
     <value>%1 %2 = %3 %4</value>
@@ -2680,7 +2680,7 @@
     <comment>The text displayed when currency ratio data fails to load.</comment>
   </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
-    <value>ក្រៅបណ្តាញ។ សូមពិនិត្យមើលការកំណត់បណ្តាញ%HL%របស់អ្នក%HL%</value>
+    <value>ក្រៅបណ្តាញ។ សូមពិនិត្យមើល%HL%ការកំណត់បណ្ដាញ%HL%របស់អ្នក</value>
     <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
   </data>
   <data name="UpdatingCurrencyRates" xml:space="preserve">
@@ -2694,10 +2694,6 @@
   <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
     <value>មិនអាចអាប់ដេតអត្រាផ្សេងៗ</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
-  </data>
-  <data name="AboutButton.AccessKey" xml:space="preserve">
-    <value>AB</value>
-    <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
@@ -2984,7 +2980,7 @@
     <comment>Name for the cube root function. Used by screen readers.</comment>
   </data>
   <data name="Logy" xml:space="preserve">
-    <value>កំណត់ហេតុមូលដ្ឋាន</value>
+    <value>គោលលោការីត</value>
     <comment>Name for the logbasey function. Used by screen readers.</comment>
   </data>
   <data name="AbsoluteValue" xml:space="preserve">
@@ -3044,11 +3040,11 @@
     <comment>From Date Header for AddSubtract Date Picker</comment>
   </data>
   <data name="CalculationResultScrollLeft.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>រំកិលលទ្ធផលការគណនាទៅឆ្វេង</value>
+    <value>រំកិលលទ្ធផលគណនាទៅខាងឆ្វេង</value>
     <comment>Automation label for the "Scroll Left" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
   </data>
   <data name="CalculationResultScrollRight.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>រំកិលលទ្ធផលការគណនាទៅស្ដាំ</value>
+    <value>រំកិលលទ្ធផលគណនាទៅខាងស្ដាំ</value>
     <comment>Automation label for the "Scroll Right" button that appears when a calculation result is too large to fit in calculation result text box.</comment>
   </data>
   <data name="CalculationFailed" xml:space="preserve">
@@ -3080,12 +3076,12 @@
     <comment>Displayed on the button that contains a flyout for the bitwise functions in programmer mode.</comment>
   </data>
   <data name="bitShiftButton.Text" xml:space="preserve">
-    <value>ប្ដូរប៊ិត</value>
+    <value>ប្ដូរប៊ីត</value>
     <comment>Displayed on the button that contains a flyout for the bit shift functions in programmer mode.</comment>
   </data>
   <data name="trigShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>មុខងារច្រាស</value>
-    <comment>Screen Reader prompt for the shift button in the trig flyout in scientific mode.</comment>
+    <value>អនុគមន៍ច្រាស</value>
+    <comment>Screen reader prompt for the shift button in the trig flyout in scientific mode.</comment>
   </data>
   <data name="hypButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>មុខងារអ៊ីពែរបូលិក</value>
@@ -3096,15 +3092,15 @@
     <comment>Screen reader prompt for the Calculator button sec in the scientific flyout keypad</comment>
   </data>
   <data name="sechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>សេកង់អ៊ីពែរបូលិក</value>
+    <value>អ៊ីពែបូលិចស៊ិក</value>
     <comment>Screen reader prompt for the Calculator button sech in the scientific flyout keypad</comment>
   </data>
   <data name="invsecButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>សេកង់អាក់</value>
+    <value>អាក់ស៊ិក</value>
     <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
   </data>
   <data name="invsechButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>សេកង់អាក់អ៊ីពែរបូលិក</value>
+    <value>អ៊ីពែបូលិចអាក់ស៊ិក</value>
     <comment>Screen reader prompt for the Calculator button arc sec in the scientific flyout keypad</comment>
   </data>
   <data name="cscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3112,15 +3108,15 @@
     <comment>Screen reader prompt for the Calculator button csc in the scientific flyout keypad</comment>
   </data>
   <data name="cschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>កូសេកង់អ៊ីពែរបូលិក</value>
+    <value>អ៊ីពែបូលិចកូស៊ិក</value>
     <comment>Screen reader prompt for the Calculator button csch in the scientific flyout keypad</comment>
   </data>
   <data name="invcscButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>កូសេកង់អាក់</value>
+    <value>អាក់កូស៊ិក</value>
     <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
   </data>
   <data name="invcschButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>កូសេកង់អាក់អ៊ីពែរបូលិក</value>
+    <value>អ៊ីពែបូលិចអាក់កូស៊ិក</value>
     <comment>Screen reader prompt for the Calculator button arc csc in the scientific flyout keypad</comment>
   </data>
   <data name="cotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3128,15 +3124,15 @@
     <comment>Screen reader prompt for the Calculator button cot in the scientific flyout keypad</comment>
   </data>
   <data name="cothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>កូតង់ហ្សង់អ៊ីពែរបូលិក</value>
+    <value>អ៊ីពែបូលិចកូតង់សង់</value>
     <comment>Screen reader prompt for the Calculator button coth in the scientific flyout keypad</comment>
   </data>
   <data name="invcotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>កូតង់ហ្សង់អាក់</value>
+    <value>អាក់កូតង់សង់</value>
     <comment>Screen reader prompt for the Calculator button arc cot in the scientific flyout keypad</comment>
   </data>
   <data name="invcothButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>កូតង់ហ្សង់អាក់អ៊ីពែរបូលិក</value>
+    <value>អ៊ីពែបូលិចអាក់កូតង់សង់</value>
     <comment>Screen reader prompt for the Calculator button arc coth in the scientific flyout keypad</comment>
   </data>
   <data name="floorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3169,7 +3165,7 @@
   </data>
   <data name="nandButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Nand</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="norButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Nor</value>
@@ -3177,7 +3173,7 @@
   </data>
   <data name="norButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>Nor</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="rolCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>បង្វិលនៅខាងឆ្វេងជាមួយ carry</value>
@@ -3188,27 +3184,27 @@
     <comment>Screen reader prompt for the Calculator button ror with carry in the scientific flyout keypad</comment>
   </data>
   <data name="lshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ប្ដូរទៅឆ្វេង</value>
+    <value>shift ខាងឆ្វេង</value>
     <comment>Screen reader prompt for the Calculator button lshLogical in the scientific flyout keypad</comment>
   </data>
   <data name="lshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ប្ដូរទៅឆ្វេង</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="rshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ប្ដូរទៅស្ដាំ</value>
+    <value>shift ខាងស្ដាំ</value>
     <comment>Screen reader prompt for the Calculator button rshLogical in the scientific flyout keypad</comment>
   </data>
   <data name="rshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ប្ដូរទៅស្ដាំ</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="arithmeticShiftButton.Content" xml:space="preserve">
-    <value>ប្ដូរតាមនព្វន្ដសាស្ដ្រ</value>
+    <value>ប្ដូរតាមលេខនព្វន្ដ</value>
     <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
   </data>
   <data name="logicalShiftButton.Content" xml:space="preserve">
-    <value>ប្ដូរតាមបែបឡូជិក</value>
+    <value>ប្ដូរតាមបែបតក្កវិទ្យា</value>
     <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
   </data>
   <data name="rotateCircularButton.Content" xml:space="preserve">
@@ -3216,7 +3212,7 @@
     <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
   </data>
   <data name="rotateCarryShiftButton.Content" xml:space="preserve">
-    <value>បង្វិលដល់ការប្ដូរជារង្វង់ Carry</value>
+    <value>បង្វិលតាមការប្ដូរជារង្វង់</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
   <data name="cubeRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3264,7 +3260,7 @@
     <comment>This is the tool tip automation name for the Calculator graph view button.</comment>
   </data>
   <data name="graphViewButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ទិដ្ឋភាព​ក្រាហ្វ</value>
+    <value>ទិដ្ឋភាពក្រាហ្វ</value>
     <comment>Screen reader prompt for the graph view button.</comment>
   </data>
   <data name="GraphViewAutomaticBestFitAnnouncement" xml:space="preserve">
@@ -3296,7 +3292,7 @@
     <comment>Screen reader prompt for the zoom out button.</comment>
   </data>
   <data name="EquationTextBoxAddPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>បន្ថែមសមីការ</value>
+    <value>បញ្ចូលសមីការ</value>
     <comment>Placeholder text for the equation input button</comment>
   </data>
   <data name="ShareActionErrorMessage" xml:space="preserve">
@@ -3445,11 +3441,11 @@
   </data>
   <data name="HorizontalAsymptotes" xml:space="preserve">
     <value>អាស៊ីមតូតដេក</value>
-    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Horizontal aysmptotes Property</comment>
   </data>
   <data name="InflectionPoints" xml:space="preserve">
     <value>ចំណុចរបត់</value>
-    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+    <comment>Title for KeyGraphFeatures Inflection points Property</comment>
   </data>
   <data name="KGFAnalysisNotSupported" xml:space="preserve">
     <value>ការវិភាគមិនត្រូវបានគាំទ្រសម្រាប់អនុគមន៍នេះទេ។</value>
@@ -3473,7 +3469,7 @@
   </data>
   <data name="ObliqueAsymptotes" xml:space="preserve">
     <value>អាស៊ីមតូតទេរ</value>
-    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Oblique asymptotes Property</comment>
   </data>
   <data name="Parity" xml:space="preserve">
     <value>ភាពស្មើគ្នា</value>
@@ -3488,8 +3484,8 @@
     <comment>Title for KeyGraphFeatures Range Property</comment>
   </data>
   <data name="VerticalAsymptotes" xml:space="preserve">
-    <value>អាស៊ីមតូតបញ្ឈរ</value>
-    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
+    <value>អាស៊ីមតូតឈរ</value>
+    <comment>Title for KeyGraphFeatures Vertical asymptotes Property</comment>
   </data>
   <data name="XIntercept" xml:space="preserve">
     <value>X-ស្ទាក់ចាប់</value>
@@ -3597,7 +3593,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>កន្សោមពាក្យមិនត្រឹមត្រូវ</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>កន្សោមពាក្យទទេរ</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3609,7 +3605,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>ភ្លេច​សញ្ញា​វង់​ក្រចក​បន្ទាប់​ពី​ឈ្មោះអនុគមន៍</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>សញ្ញាគណិតវិទ្យា​មាន​លេខ​ប៉ារ៉ាម៉ែត្រ​មិន​ត្រឹម​ត្រូវ</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3643,7 +3639,7 @@
     <comment>Error that occurs during graphing when the base is out of range.</comment>
   </data>
   <data name="InvalidVariableSpecification" xml:space="preserve">
-    <value>សញ្ញាគណិតវិទ្យាតម្រូវឱ្យមានមួយនៃប៉ារ៉ាម៉ែត្ររបស់វាទៅជាអថេរ</value>
+    <value>តម្រូវឱ្យមានសញ្ញាគណិតវិទ្យាមួយនៃប៉ារ៉ាម៉ែត្ររបស់វាជាអថេរ</value>
     <comment>Error that occurs during graphing when a function requires a variable in a particular position. Ex: 2nd argument of deriv.</comment>
   </data>
   <data name="ExpectingLogicalOperands" xml:space="preserve">
@@ -3745,7 +3741,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>វីនដូមើលក្រាប, អាក់ស៊ីស x ដែលភ្ជាប់ដោយ %1 និង %2, អាក់ស៊ីស y ដែលភ្ជាប់ដោយ %3 និង %4, ដែលបង្ហាញ %5 សមីការ</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>រៀបចំរបាររំកិល</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3823,8 +3819,8 @@
     <comment>This is the automation name text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="GraphOptionsHeading.Text" xml:space="preserve">
-    <value>ជម្រើសក្រាហ្វិច</value>
-    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+    <value>ជម្រើស​​គំនូស​តាង</value>
+    <comment>Heading for the Graph options flyout in Graphing mode.</comment>
   </data>
   <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ជម្រើស​អថេរ</value>
@@ -3835,15 +3831,15 @@
     <comment>Tool tip for the variable settings toggle button</comment>
   </data>
   <data name="LineThicknessBoxHeading.Text" xml:space="preserve">
-    <value>ភាពក្រាស់នៃបន្ទាត់</value>
-    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+    <value>កម្រិតក្រាស់នៃបន្ទាត់</value>
+    <comment>Heading for the Graph options flyout in Graphing mode.</comment>
   </data>
   <data name="LineOptionsHeading.Text" xml:space="preserve">
     <value>ជម្រើសបន្ទាត់</value>
     <comment>Heading for the equation style flyout in Graphing mode.</comment>
   </data>
   <data name="SmallLineWidthAutomationName" xml:space="preserve">
-    <value>កម្រាស់​បន្ទាត់​តូច</value>
+    <value>កម្រាស់បន្ទាត់តូច</value>
     <comment>Automation name for line width setting</comment>
   </data>
   <data name="MediumLineWidthAutomationName" xml:space="preserve">
@@ -3851,18 +3847,18 @@
     <comment>Automation name for line width setting</comment>
   </data>
   <data name="LargeLineWidthAutomationName" xml:space="preserve">
-    <value>កម្រាស់​បន្ទាត់ធំ</value>
+    <value>កម្រាស់បន្ទាត់ធំ</value>
     <comment>Automation name for line width setting</comment>
   </data>
   <data name="ExtraLargeLineWidthAutomationName" xml:space="preserve">
-    <value>កម្រាស់​បន្ទាត់ធំបន្ថែម​ទៀត</value>
+    <value>កម្រាស់បន្ទាត់ធំខ្លាំង</value>
     <comment>Automation name for line width setting</comment>
   </data>
   <data name="mathRichEditBox.PlaceholderText" xml:space="preserve">
     <value>បញ្ចូលកន្សោមពាក្យមួយ</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>ចម្លង</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3883,27 +3879,27 @@
     <comment>Undo menu item from the Equation TextBox</comment>
   </data>
   <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
-    <value>ជ្រើសទាំងអស់</value>
+    <value>ជ្រើសរើសទាំងអស់</value>
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ធាតុ​បញ្ជី​បញ្ចូល​មុខងារ</value>
+    <value>បញ្ចូលអនុគមន៍</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>បញ្ជី​បញ្ចូល​មុខងារ</value>
+    <value>បញ្ចូលអនុគមន៍</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ផ្ទាំង​បញ្ចូល​មុខងារ</value>
+    <value>ផ្ទាំង​បញ្ចូល​អនុគមន៍</value>
     <comment>The automation name for the Equation Input StackPanel that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableStackPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ផ្ទាំង​អថេរ</value>
+    <value>ផ្ទាំងអថេរ</value>
     <comment>The automation name for the Variable StackPanel that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableListView.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>បញ្ជី​អថេរ</value>
+    <value>បញ្ជីអថេរ</value>
     <comment>The automation name for the Variable ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableListViewItem" xml:space="preserve">
@@ -3911,23 +3907,23 @@
     <comment>The automation name for the Variable ListViewItem that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableValueTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ប្រអប់​អត្ថបទ​តម្លៃ​អថេរ</value>
+    <value>ប្រអប់បញ្ចូលតម្លៃរបស់អថេរ</value>
     <comment>The automation name for the Variable Value Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableValueSlider.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>គ្រាប់រំកិល​តម្លៃ​អថេរ</value>
+    <value>របាររំកិល​តម្លៃ​អថេរ</value>
     <comment>The automation name for the Variable Value Slider that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableMinTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ប្រអប់​អត្ថបទ​តម្លៃ​អតិបរមា​អថេរ</value>
+    <value>ប្រអប់​បញ្ចូលតម្លៃ​អប្បបរមារបស់អថេរ</value>
     <comment>The automation name for the Variable Min Value Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableStepTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ប្រអប់​អត្ថបទ​តម្លៃ​ជំហាន​អថេរ</value>
+    <value>ប្រអប់​បញ្ចូលតម្លៃ​ជំហានរបស់អថេរ</value>
     <comment>The automation name for the Variable Step Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableMaxTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ប្រអប់​អត្ថបទ​តម្លៃ​អតិបរមាអថេរ</value>
+    <value>ប្រអប់​បញ្ចូលតម្លៃ​អតិបរមារបស់អថេរ</value>
     <comment>The automation name for the Variable Max Value Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="solidLineStyleAutomationName" xml:space="preserve">
@@ -3959,7 +3955,7 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor5AutomationName" xml:space="preserve">
-    <value>បៃតង</value>
+    <value>បៃតងស្រាល</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor6AutomationName" xml:space="preserve">
@@ -3975,7 +3971,7 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor9AutomationName" xml:space="preserve">
-    <value>ស្វាយ​ក្រហម​ខ្ចី</value>
+    <value>ស្វាយ​ក្រហម​</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor10AutomationName" xml:space="preserve">
@@ -3983,11 +3979,11 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor11AutomationName" xml:space="preserve">
-    <value>មាសលឿង</value>
+    <value>លឿង​ទុំ</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor12AutomationName" xml:space="preserve">
-    <value>ភ្លឺទឹកក្រូច</value>
+    <value>ទឹក​ក្រូច​ស្រស់</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor13AutomationName" xml:space="preserve">
@@ -4019,7 +4015,7 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="GraphThemeHeading.Text" xml:space="preserve">
-    <value>រូបរាង​ក្រាហ្វ</value>
+    <value>រចនាប័ទ្មក្រាហ្វ</value>
     <comment>Graph settings heading for the theme options</comment>
   </data>
   <data name="AlwaysLightTheme.Content" xml:space="preserve">
@@ -4047,7 +4043,7 @@
     <comment>Announcement used in Graphing Calculator when a function is removed from the function list</comment>
   </data>
   <data name="KGFEquationTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ប្រអប់​សមីការ​វិភាគ​មុខងារ</value>
+    <value>ប្រអប់​សមីការ​វិភាគ​អនុគមន៍</value>
     <comment>This is the automation name text for the equation box in the function analysis panel</comment>
   </data>
   <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4087,11 +4083,11 @@
     <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
   </data>
   <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ការ​វិភាគ​មុខងារ</value>
+    <value>ការវិភាគអនុគមន៍</value>
     <comment>Screen reader prompt for the function analysis grid</comment>
   </data>
   <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ជម្រើសគូរ​គំនូស​តាង</value>
+    <value>ជម្រើស​​គំនូស​តាង</value>
     <comment>Screen reader prompt for the graph options panel</comment>
   </data>
   <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
@@ -4115,19 +4111,59 @@
     <comment>Announcement to indicate calculator window is now back to full view.</comment>
   </data>
   <data name="arithmeticShiftButtonSelected" xml:space="preserve">
-    <value>Arithmetic Shift ត្រូវបានជ្រើសរើស</value>
+    <value>ប្ដូរតាមលេខនព្វន្ដដែលបានជ្រើសរើស</value>
     <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
   </data>
   <data name="logicalShiftButtonSelected" xml:space="preserve">
-    <value>Logical Shift ត្រូវបានជ្រើសរើស</value>
+    <value>ប្ដូរតាមបែបតក្កវិទ្យាដែលបានជ្រើសរើស</value>
     <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
   </data>
   <data name="rotateCircularButtonSelected" xml:space="preserve">
-    <value>បានជ្រើសរើសការបង្វិលរាងជារង្វង់</value>
+    <value>បង្វិលរាងជារង្វង់ដែលបានជ្រើសរើស</value>
     <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
   </data>
   <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
-    <value>បង្វិលតាមរង្វង់មូលដែលបានជ្រើសរើស</value>
+    <value>បង្វិលតាមរង្វង់ដែលបានជ្រើសរើស</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="SettingsHeader.Text" xml:space="preserve">
+    <value>ការកំណត់</value>
+    <comment>Header text of Settings page</comment>
+  </data>
+  <data name="SettingsAppearance.Text" xml:space="preserve">
+    <value>រូបរាង</value>
+    <comment>Subtitle of appearance setting on Settings page</comment>
+  </data>
+  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+    <value>គំរូរចនាកម្មវិធី</value>
+    <comment>Title of App theme expander</comment>
+  </data>
+  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+    <value>ជ្រើសរើសគំរូរចនាកម្មវិធីណាមួយ ដើម្បីបង្ហាញ</value>
+    <comment>Description of App theme expander</comment>
+  </data>
+  <data name="LightThemeRadioButton.Content" xml:space="preserve">
+    <value>ភ្លឺ</value>
+    <comment>Lable for light theme option</comment>
+  </data>
+  <data name="DarkThemeRadioButton.Content" xml:space="preserve">
+    <value>ងងឹត</value>
+    <comment>Lable for dark theme option</comment>
+  </data>
+  <data name="SystemThemeRadioButton.Content" xml:space="preserve">
+    <value>ប្រើការកំណត់ប្រព័ន្ធ</value>
+    <comment>Lable for the app theme option to use system setting</comment>
+  </data>
+  <data name="TitleBarBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ថយក្រោយ</value>
+    <comment>Screen reader prompt for the Back button in title bar to back to main page</comment>
+  </data>
+  <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
+    <value>ទំព័រការកំណត់</value>
+    <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ការកំណត់រចនាប័ទ្មកម្មវិធី</value>
+    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>

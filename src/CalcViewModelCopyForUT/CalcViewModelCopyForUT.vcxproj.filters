@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>{2c2762e9-7673-4c4e-bf31-9513125dfc00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Automation">
+      <UniqueIdentifier>{8f48b19f-14df-421f-bcc6-ef908f9dcff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataLoaders">
+      <UniqueIdentifier>{6811c769-d698-4add-b477-794316d39c66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphingCalculator">
+      <UniqueIdentifier>{da163ad4-d001-45eb-b4b3-6e9e17d22077}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\CalcViewModel\Common\AppResourceProvider.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\Automation\NarratorAnnouncement.cpp">
+      <Filter>Common\Automation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\Automation\NarratorNotifier.cpp">
+      <Filter>Common\Automation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\ApplicationViewModel.cpp" />
+    <ClCompile Include="..\CalcViewModel\DateCalculatorViewModel.cpp" />
+    <ClCompile Include="..\CalcViewModel\HistoryItemViewModel.cpp" />
+    <ClCompile Include="..\CalcViewModel\HistoryViewModel.cpp" />
+    <ClCompile Include="..\CalcViewModel\MemoryItemViewModel.cpp" />
+    <ClCompile Include="..\CalcViewModel\pch.cpp" />
+    <ClCompile Include="..\CalcViewModel\StandardCalculatorViewModel.cpp" />
+    <ClCompile Include="..\CalcViewModel\UnitConverterViewModel.cpp" />
+    <ClCompile Include="..\CalcViewModel\Common\Utils.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\CalculatorButtonPressedEventArgs.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\CalculatorDisplay.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\CopyPasteManager.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\DateCalculator.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\EngineResourceProvider.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\ExpressionCommandDeserializer.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\ExpressionCommandSerializer.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\LocalizationService.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\NavCategory.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\NetworkManager.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\TraceLogger.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\DataLoaders\CurrencyDataLoader.cpp">
+      <Filter>DataLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\DataLoaders\CurrencyHttpClient.cpp">
+      <Filter>DataLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\DataLoaders\UnitConverterDataLoader.cpp">
+      <Filter>DataLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\GraphingCalculator\EquationViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\GraphingCalculator\GraphingCalculatorViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\GraphingCalculator\GraphingSettingsViewModel.cpp">
+      <Filter>GraphingCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Common\RadixType.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\CalcViewModel\Common\AppResourceProvider.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\Automation\NarratorAnnouncement.h">
+      <Filter>Common\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\Automation\NarratorNotifier.h">
+      <Filter>Common\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\ApplicationViewModel.h" />
+    <ClInclude Include="..\CalcViewModel\DateCalculatorViewModel.h" />
+    <ClInclude Include="..\CalcViewModel\HistoryItemViewModel.h" />
+    <ClInclude Include="..\CalcViewModel\HistoryViewModel.h" />
+    <ClInclude Include="..\CalcViewModel\MemoryItemViewModel.h" />
+    <ClInclude Include="..\CalcViewModel\pch.h" />
+    <ClInclude Include="..\CalcViewModel\StandardCalculatorViewModel.h" />
+    <ClInclude Include="..\CalcViewModel\targetver.h" />
+    <ClInclude Include="..\CalcViewModel\UnitConverterViewModel.h" />
+    <ClInclude Include="..\CalcViewModel\Common\Utils.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\BitLength.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\CalculatorButtonPressedEventArgs.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\CalculatorButtonUser.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\CalculatorDisplay.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\CopyPasteManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\DateCalculator.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\DelegateCommand.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\DisplayExpressionToken.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\EngineResourceProvider.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\ExpressionCommandDeserializer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\ExpressionCommandSerializer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\GraphingCalculatorEnums.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\LocalizationService.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\LocalizationSettings.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\LocalizationStringUtil.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\MyVirtualKey.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\NavCategory.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\NetworkManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\NumberBase.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\TraceLogger.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\DataLoaders\CurrencyDataLoader.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\DataLoaders\CurrencyHttpClient.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\DataLoaders\DataLoaderMockConstants.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\DataLoaders\ICurrencyHttpClient.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\DataLoaders\UnitConverterDataConstants.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\DataLoaders\UnitConverterDataLoader.h">
+      <Filter>DataLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\GraphingCalculator\EquationViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\GraphingCalculator\GraphingCalculatorViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\GraphingCalculator\GraphingSettingsViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\GraphingCalculator\VariableViewModel.h">
+      <Filter>GraphingCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Common\RadixType.h" />
+    <ClInclude Include="..\CalcViewModel\Common\AlwaysSelectedCollectionView.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\CalcViewModel\DataLoaders\DefaultFromToCurrency.json">
+      <Filter>DataLoaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

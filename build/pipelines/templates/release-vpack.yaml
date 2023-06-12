@@ -1,0 +1,42 @@
+# This template contains a job to create a VPack. The VPack is used to preinstall the app in a
+# Windows OS build.
+
+jobs:
+- job: ReleaseVPack
+  dependsOn: Package
+  pool:
+    name: EssentialExperiences-windows-2022
+  variables:
+    skipComponentGovernanceDetection: true
+  steps:
+  - checkout: none
+
+  - task: DownloadBuildArtifacts@0
+    displayName: Download msixBundleSigned artifact
+    inputs:
+      artifactName: msixBundleSigned
+
+  - task: CopyFiles@2
+    displayName: Copy signed MsixBundle to vpack staging folder
+    inputs:
+      sourceFolder: $(Build.ArtifactStagingDirectory)\msixBundleSigned
+      contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
+      targetFolder: $(Build.ArtifactStagingDirectory)\vpack\msixBundle
+
+  - task: PkgESVPack@12
+    displayName: Create and push vpack for app
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    inputs:
+      sourceDirectory: $(Build.ArtifactStagingDirectory)\vpack\msixBundle
+      description: VPack for the Calculator Application
+      pushPkgName: calculator.app
+      version: $(versionMajor).$(versionMinor).$(versionBuild)
+      owner: paxeeapps
+      provData: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish vpack\app artifact with vpack manifest
+    inputs:
+      pathtoPublish: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
+      artifactName: vpackManifest

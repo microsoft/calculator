@@ -6,7 +6,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="315"
              d:DesignWidth="235"
-             UseLayoutRounding="False"
              mc:Ignorable="d">
     <Grid>
         <local:CalculatorStandardOperators x:Name="StandardOperators"

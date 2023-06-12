@@ -8,6 +8,7 @@
 
 using namespace std;
 using namespace CalculatorApp;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace CalculationManager;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

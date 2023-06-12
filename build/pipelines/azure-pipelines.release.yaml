@@ -4,37 +4,43 @@
 # Store and the Windows image. This pipeline relies on Microsoft-internal resources to run.
 #
 
-schedules:
-- cron: "0 7 * * *"
-  displayName: Daily midnight build
-  branches:
-    include:
-    - master
-
 trigger: none
 pr: none
 
 variables:
-  versionMajor: 10
-  versionMinor: 2103
-  versionBuild: $[counter('10.2103.*', 0)]
+  versionMajor: 11
+  versionMinor: 2305
+  versionBuild: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
   versionPatch: 0
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
 
 jobs:
-- template: ./templates/build-app-internal.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
     platform: x64
+    isReleaseBuild: true
+    useReleaseAppxmanifest: true
 
-- template: ./templates/build-app-internal.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
     platform: x86
+    isReleaseBuild: true
+    useReleaseAppxmanifest: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/build-app-internal.yaml
+- template: ./templates/build-single-architecture.yaml
   parameters:
     platform: ARM
+    isReleaseBuild: true
+    useReleaseAppxmanifest: true
+    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+
+- template: ./templates/build-single-architecture.yaml
+  parameters:
+    platform: ARM64
+    isReleaseBuild: true
+    useReleaseAppxmanifest: true
     condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
 - template: ./templates/run-ui-tests.yaml
@@ -55,8 +61,10 @@ jobs:
   parameters:
     platform: x86
 
-- template: ./templates/package-appxbundle.yaml
+- template: ./templates/package-msixbundle.yaml
   parameters:
     signBundle: true
+    createStoreBrokerPackages: true
 
-- template: ./templates/prepare-release-internalonly.yaml
+- template: ./templates/release-store.yaml
+- template: ./templates/release-vpack.yaml

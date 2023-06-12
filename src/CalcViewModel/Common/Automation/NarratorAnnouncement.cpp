@@ -4,11 +4,11 @@
 #include "pch.h"
 #include "NarratorAnnouncement.h"
 
-using namespace CalculatorApp::Common::Automation;
+using namespace CalculatorApp::ViewModel::Common::Automation;
 using namespace Platform;
 using namespace Windows::UI::Xaml::Automation::Peers;
 
-namespace CalculatorApp::Common::Automation
+namespace CalculatorApp::ViewModel::Common::Automation
 {
     namespace CalculatorActivityIds
     {
@@ -30,6 +30,7 @@ namespace CalculatorApp::Common::Automation
         StringReference GraphViewBestFitChanged(L"GraphViewBestFitChanged");
         StringReference AlwaysOnTop(L"AlwaysOnTop");
         StringReference BitShiftRadioButtonContent(L"BitShiftRadioButtonContent");
+        StringReference SettingsPageOpened(L"SettingsPageOpened");
     }
 }
 
@@ -201,6 +202,15 @@ NarratorAnnouncement ^ CalculatorAnnouncement::GetBitShiftRadioButtonCheckedAnno
     return ref new NarratorAnnouncement(
         announcement,
         CalculatorActivityIds::BitShiftRadioButtonContent,
+        AutomationNotificationKind::ActionCompleted,
+        AutomationNotificationProcessing::ImportantMostRecent);
+}
+
+NarratorAnnouncement ^ CalculatorAnnouncement::GetSettingsPageOpenedAnnouncement(Platform::String ^ announcement)
+{
+    return ref new NarratorAnnouncement(
+        announcement,
+        CalculatorActivityIds::SettingsPageOpened,
         AutomationNotificationKind::ActionCompleted,
         AutomationNotificationProcessing::ImportantMostRecent);
 }

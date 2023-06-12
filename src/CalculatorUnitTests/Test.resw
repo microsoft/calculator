@@ -588,4 +588,7 @@
     <data name="Nanometers-Microns-3" xml:space="preserve">
     <value>0.003</value>
   </data>
+  <data name="Joules-Kilowatthour" xml:space="preserve">
+    <value>3600000</value>
+  </data>
 </root>

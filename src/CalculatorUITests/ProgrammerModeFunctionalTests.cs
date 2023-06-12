@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using CalculatorUITestFramework;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using OpenQA.Selenium;
+
 using System;
 
 namespace CalculatorUITests
@@ -11,7 +14,7 @@ namespace CalculatorUITests
     [TestClass]
     public class ProgrammerModeFunctionalTests
     {
-        private static ProgrammerCalculatorPage page = new ProgrammerCalculatorPage();
+        private static readonly ProgrammerCalculatorPage page = new ProgrammerCalculatorPage();
 
         /// <summary>
         /// Initializes the WinAppDriver web driver session.
@@ -21,7 +24,7 @@ namespace CalculatorUITests
         public static void ClassInitialize(TestContext context)
         {
             // Create session to launch a Calculator window
-            WinAppDriver.Instance.SetupCalculatorSession(context);
+            CalculatorDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in programmer mode
             page.NavigateToProgrammerCalculator();
@@ -37,7 +40,7 @@ namespace CalculatorUITests
         public static void ClassCleanup()
         {
             // Tear down Calculator session.
-            WinAppDriver.Instance.TearDownCalculatorSession();
+            CalculatorDriver.Instance.TearDownCalculatorSession();
         }
 
         /// <summary>
@@ -340,7 +343,7 @@ namespace CalculatorUITests
             page.ProgrammerOperators.LeftShiftButton.Click();
             page.StandardOperators.NumberPad.Input(1);
             page.StandardOperators.EqualButton.Click();
-            Assert.AreEqual("1  0 1 0 0", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("0 0 0 1  0 1 0 0", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -352,7 +355,7 @@ namespace CalculatorUITests
             page.ProgrammerOperators.RightShiftButton.Click();
             page.StandardOperators.NumberPad.Input(1);
             page.StandardOperators.EqualButton.Click();
-            Assert.AreEqual("1 0 1", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("0 1 0 1", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -429,7 +432,7 @@ namespace CalculatorUITests
             page.ProgrammerOperators.XorButton.Click();
             page.StandardOperators.NumberPad.Input(1100);
             page.StandardOperators.EqualButton.Click();
-            Assert.AreEqual("1 1 0", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("0 1 1 0", page.CalculatorResults.GetCalculatorResultText());
         }
 
         /// <summary>
@@ -623,7 +626,7 @@ namespace CalculatorUITests
             page.ProgrammerOperators.LeftShiftLogicalButton.Click();
             page.StandardOperators.NumberPad.Input(1);
             page.StandardOperators.EqualButton.Click();
-            Assert.AreEqual("1  0 1 0 0", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("0 0 0 1  0 1 0 0", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -637,7 +640,7 @@ namespace CalculatorUITests
             page.ProgrammerOperators.RightShiftLogicalButton.Click();
             page.StandardOperators.NumberPad.Input(1);
             page.StandardOperators.EqualButton.Click();
-            Assert.IsTrue(String.Equals(page.CalculatorResults.GetCalculatorResultText(), "1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 0 1 1", StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(string.Equals(page.CalculatorResults.GetCalculatorResultText(), "0 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 0 1 1", StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -737,7 +740,7 @@ namespace CalculatorUITests
             page.StandardOperators.NumberPad.Input(1011);
             page.ProgrammerOperators.RoLButton.Click();
             page.StandardOperators.EqualButton.Click();
-            Assert.AreEqual("1  0 1 1 0", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("0 0 0 1  0 1 1 0", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -846,7 +849,7 @@ namespace CalculatorUITests
             page.StandardOperators.NumberPad.Input(1010);
             page.ProgrammerOperators.RoLButton.Click();
             page.StandardOperators.EqualButton.Click();
-            Assert.AreEqual("1  0 1 0 0", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("0 0 0 1  0 1 0 0", page.CalculatorResults.GetCalculatorResultText());
         }
 
         [TestMethod]
@@ -858,7 +861,7 @@ namespace CalculatorUITests
             page.StandardOperators.NumberPad.Input(1011);
             page.ProgrammerOperators.RoRCarryButton.Click();
             page.StandardOperators.EqualButton.Click();
-            Assert.AreEqual("1 0 1", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("0 1 0 1", page.CalculatorResults.GetCalculatorResultText());
         }
 
         /// <summary>

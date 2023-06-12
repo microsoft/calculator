@@ -5,7 +5,7 @@
 #include "HistoryItemViewModel.h"
 #include "Common/LocalizationService.h"
 
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace CalculatorApp::ViewModel;
 using namespace std;
 using namespace Platform;

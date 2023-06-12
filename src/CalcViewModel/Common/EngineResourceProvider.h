@@ -5,7 +5,7 @@
 
 #include "CalcManager/CalculatorResource.h"
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel::Common
 {
     class EngineResourceProvider : public CalculationManager::IResourceProvider
     {

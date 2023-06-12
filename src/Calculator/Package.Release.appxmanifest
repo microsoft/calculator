@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5" IgnorableNamespaces="uap uap3 uap5 mp">
+    <Identity Name="Microsoft.WindowsCalculator" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.1604.27012.0" />
+    <mp:PhoneIdentity PhoneProductId="b58171c6-c70c-4266-a2e8-8f9c994f4456" PhonePublisherId="95d94207-0c7c-47ed-82db-d75c81153c35" />
+    <Properties>
+        <DisplayName>ms-resource:AppStoreName</DisplayName>
+        <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+        <Logo>Assets\CalculatorStoreLogo.png</Logo>
+    </Properties>
+    <Dependencies>
+        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.19041.0" MaxVersionTested="10.0.22000.0" />
+    </Dependencies>
+    <Resources>
+        <Resource Language="x-generate" />
+    </Resources>
+    <Applications>
+        <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Calculator.App">
+            <uap:VisualElements DisplayName="ms-resource:AppName" Square150x150Logo="Assets\CalculatorMedTile.png" Square44x44Logo="Assets\CalculatorAppList.png" Description="ms-resource:AppDescription" BackgroundColor="#0078D4">
+                <uap:DefaultTile ShortName="ms-resource:AppName" Square310x310Logo="Assets\CalculatorLargeTile.png" Wide310x150Logo="Assets\CalculatorWideTile.png" Square71x71Logo="Assets\CalculatorSmallTile.png">
+                    <uap:ShowNameOnTiles>
+                        <uap:ShowOn Tile="square150x150Logo" />
+                        <uap:ShowOn Tile="wide310x150Logo" />
+                        <uap:ShowOn Tile="square310x310Logo" />
+                    </uap:ShowNameOnTiles>
+                </uap:DefaultTile>
+                <uap:SplashScreen Image="Assets\CalculatorSplashScreen.png" uap5:Optional="true" BackgroundColor="#0078D4" />
+            </uap:VisualElements>
+            <Extensions>
+                <uap:Extension Category="windows.protocol">
+                    <uap:Protocol Name="calculator">
+                        <uap:Logo>Assets\CalculatorAppList.png</uap:Logo>
+                    </uap:Protocol>
+                </uap:Extension>
+                <uap:Extension Category="windows.protocol">
+                    <uap:Protocol Name="ms-calculator">
+                        <uap:Logo>Assets\CalculatorAppList.png</uap:Logo>
+                    </uap:Protocol>
+                </uap:Extension>
+                <uap3:Extension Category="windows.appExtension">
+                    <uap3:AppExtension Name="com.microsoft.windows.dontmaximizeonsmallscreen"
+                                       Id="calculator"
+                                       DisplayName="calculator"
+                                       Description="This app extension prevents calculator from being maximized by default on some small screen devices."
+                                       PublicFolder="Public">
+                        <uap3:Properties>
+                            <Service>com.microsoft.windows.dontmaximizeonsmallscreen</Service>
+                        </uap3:Properties>
+                    </uap3:AppExtension>
+                </uap3:Extension>
+            </Extensions>
+        </Application>
+    </Applications>
+    <Capabilities>
+        <Capability Name="internetClient" />
+    </Capabilities>
+</Package>

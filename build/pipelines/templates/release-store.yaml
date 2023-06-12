@@ -1,0 +1,48 @@
+# This template contains jobs to release the app to the Store.
+
+jobs:
+- job: ReleaseStore
+  dependsOn: Package
+  pool:
+    name: EssentialExperiences-windows-2022
+  variables:
+    skipComponentGovernanceDetection: true
+    StoreBrokerPackagePath: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
+    StoreBrokerLogPath: $(StoreBrokerPackagePath)\StoreBroker.log
+    FlightId: 161f0975-cb5f-475b-8ef6-26383c37621f
+    AppId: 9WZDNCRFHVN5
+    ProductId: 00009007199266248474
+  steps:
+  - checkout: none
+
+  - task: DownloadBuildArtifacts@0
+    displayName: Download storeBrokerPayload artifact
+    inputs:
+      artifactName: storeBrokerPayload
+
+  - task: MS-RDX-MRO.windows-store-publish-dev.flight-task.store-flight@2
+    displayName: Flight StoreBroker Payload to team ring
+    name: StoreBrokerFlight
+    inputs:
+      serviceEndpoint: Calculator StoreBroker Connection
+      appId: $(AppId)
+      flightId: $(FlightId)
+      inputMethod: JsonAndZip
+      jsonPath: $(StoreBrokerPackagePath)\SBCalculator.json
+      zipPath: $(StoreBrokerPackagePath)\SBCalculator.zip
+      force: true
+      skipPolling: true
+      targetPublishMode: Immediate
+      logPath: $(StoreBrokerLogPath)
+      deletePackages: true
+      numberOfPackagesToKeep: 0
+
+  - task: APS-Aero-Package.aero-upload-task.AeroUploadTask.AeroUpload@0
+    displayName: Aero Upload
+    inputs:
+      productId: $(ProductId)
+      flightId: $(FlightId)
+      submissionId: $(StoreBrokerFlight.WS_SubmissionId)
+      submissionDataPath: $(StoreBrokerPackagePath)\SBCalculator.json
+      packagePath: $(StoreBrokerPackagePath)\SBCalculator.zip
+      serviceEndpoint: AeroUpload-APS-Calculator

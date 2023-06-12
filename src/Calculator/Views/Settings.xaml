@@ -1,0 +1,196 @@
+<UserControl x:Class="CalculatorApp.Settings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+             xmlns:utils="using:CalculatorApp.Utils"
+             Loaded="OnLoaded"
+             Unloaded="OnUnloaded"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="SettingsContentScrollViewStyle" TargetType="ScrollViewer">
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+                <Setter Property="HorizontalScrollMode" Value="Disabled"/>
+                <Setter Property="IsHorizontalRailEnabled" Value="False"/>
+                <Setter Property="IsVerticalRailEnabled" Value="True"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="VerticalScrollMode" Value="Auto"/>
+                <Setter Property="ZoomMode" Value="Disabled"/>
+            </Style>
+
+            <Style x:Key="SettingsRichTextBlockStyle" TargetType="RichTextBlock">
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimary}"/>
+                <Setter Property="FontSize" Value="{ThemeResource BodyFontSize}"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+
+            <Style x:Key="SettingsCategoryTitleTextBlockStyle"
+                   BasedOn="{StaticResource BodyStrongTextBlockStyle}"
+                   TargetType="TextBlock">
+                <Setter Property="Margin" Value="0,29,0,5"/>
+            </Style>
+
+            <automation:NarratorNotifier x:Name="NarratorNotifier"/>
+
+            <!-- Override default hyperlink button background color -->
+            <StaticResource x:Key="HyperlinkButtonBackgroundPointerOver" ResourceKey="SubtleFillColorTransparentBrush"/>
+            <StaticResource x:Key="HyperlinkButtonBackgroundPressed" ResourceKey="SubtleFillColorTransparentBrush"/>
+
+            <x:Double x:Key="SettingsCardSpacing">3</x:Double>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{x:Bind TitleBarHeight, Mode=OneWay}"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="BackButton"
+                Grid.Row="0"
+                Width="44"
+                Height="{x:Bind TitleBarHeight.Value, Mode=OneWay}"
+                Margin="0,0,4,0"
+                Padding="2,0,0,0"
+                Style="{StaticResource SquareIconButtonStyle}"
+                FontSize="12"
+                AutomationProperties.Name="{utils:ResourceString Name=TitleBarBackButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                Click="BackButton_Click"
+                Content="&#xE72B;"/>
+
+        <Grid Grid.Row="1"
+              Height="{StaticResource HamburgerHeight}"
+              Padding="24,0"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Top">
+            <TextBlock x:Name="Header"
+                       Style="{StaticResource CategoryNameTextBlockStyle}"
+                       Text="{utils:ResourceString Name=SettingsHeader/Text}"/>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1"
+                      Margin="0,30,0,0"
+                      Padding="24,0,24,16"
+                      Style="{StaticResource SettingsContentScrollViewStyle}">
+
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource SettingsCardSpacing}">
+                <StackPanel.ChildrenTransitions>
+                    <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True"/>
+                    <RepositionThemeTransition IsStaggeringEnabled="False"/>
+                </StackPanel.ChildrenTransitions>
+                <TextBlock Style="{StaticResource SettingsCategoryTitleTextBlockStyle}"
+                           AutomationProperties.HeadingLevel="Level1"
+                           Text="{utils:ResourceString Name=SettingsAppearance/Text}"/>
+                <labs:SettingsExpander x:Name="AppThemeExpander"
+                                       Description="Select which app theme to display"
+                                       Header="App theme">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xE790;"/>
+                    </labs:SettingsExpander.HeaderIcon>
+                    <labs:SettingsExpander.Items>
+                        <labs:SettingsCard ContentAlignment="Left">
+                            <muxc:RadioButtons x:Name="ThemeRadioButtons"
+                                               Margin="0,-8,0,0"
+                                               SelectionChanged="OnThemeSelectionChanged">
+                                <RadioButton x:Name="LightThemeRadioButton"
+                                             Content="{utils:ResourceString Name=LightThemeRadioButton/Content}"
+                                             Tag="Light"/>
+                                <RadioButton x:Name="DarkThemeRadioButton"
+                                             Content="{utils:ResourceString Name=DarkThemeRadioButton/Content}"
+                                             Tag="Dark"/>
+                                <RadioButton x:Name="SystemThemeRadioButton"
+                                             Content="{utils:ResourceString Name=SystemThemeRadioButton/Content}"
+                                             Tag="Default"/>
+                            </muxc:RadioButtons>
+                        </labs:SettingsCard>
+                    </labs:SettingsExpander.Items>
+                </labs:SettingsExpander>
+
+                <TextBlock x:Name="AboutGroupTitle"
+                           Style="{ThemeResource SettingsCategoryTitleTextBlockStyle}"
+                           AutomationProperties.HeadingLevel="Level1"
+                           Text="{utils:ResourceString Name=AboutGroupTitle/Text}"/>
+                <labs:SettingsExpander x:Name="AboutExpander">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <BitmapIcon AutomationProperties.AccessibilityView="Raw" UriSource="ms-appx:///Assets/CalculatorAppList.png"/>
+                    </labs:SettingsExpander.HeaderIcon>
+                    <TextBlock x:Name="AboutBuildVersion"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               IsTextSelectionEnabled="True"/>
+                    <labs:SettingsExpander.Items>
+                        <labs:SettingsCard ContentAlignment="Left">
+                            <StackPanel Margin="0,4,0,6"
+                                        Orientation="Vertical"
+                                        Spacing="12">
+
+                                <HyperlinkButton x:Name="AboutEULA"
+                                                 Padding="0"
+                                                 NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
+                                                 ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
+                                    <TextBlock FontSize="{ThemeResource BodyFontSize}"
+                                               Text="{utils:ResourceString Name=AboutEULA/Text}"
+                                               TextWrapping="Wrap"/>
+                                </HyperlinkButton>
+
+                                <HyperlinkButton x:Name="AboutControlServicesAgreement"
+                                                 Padding="0"
+                                                 NavigateUri="https://go.microsoft.com/fwlink/?LinkID=822631"
+                                                 ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=822631">
+                                    <TextBlock FontSize="{ThemeResource BodyFontSize}"
+                                               Text="{utils:ResourceString Name=AboutControlServicesAgreement/Text}"
+                                               TextWrapping="Wrap"/>
+                                </HyperlinkButton>
+
+                                <HyperlinkButton x:Name="AboutControlPrivacyStatement"
+                                                 Padding="0"
+                                                 NavigateUri="https://go.microsoft.com/fwlink/?LinkID=521839"
+                                                 ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=521839">
+                                    <TextBlock FontSize="{ThemeResource BodyFontSize}"
+                                               Text="{utils:ResourceString Name=AboutControlPrivacyStatement/Text}"
+                                               TextWrapping="Wrap"/>
+                                </HyperlinkButton>
+                            </StackPanel>
+                        </labs:SettingsCard>
+                    </labs:SettingsExpander.Items>
+                </labs:SettingsExpander>
+
+                <HyperlinkButton x:Name="FeedbackButton"
+                                 MinWidth="120"
+                                 Margin="-12,4,0,0"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Top"
+                                 FontSize="{StaticResource BodyFontSize}"
+                                 Click="FeedbackButton_Click"
+                                 Content="{utils:ResourceString Name=FeedbackButton/Content}"/>
+
+                <RichTextBlock x:Name="AboutContribute"
+                               Grid.Row="2"
+                               Margin="1,9,0,0"
+                               Style="{StaticResource SettingsRichTextBlockStyle}">
+                    <Paragraph>
+                        <!--
+                            Note: don't put Hyperlink element start to the next line
+                            otherwise unexpected whitespace will be add.
+                        -->
+                        <Run x:Name="ContributeRunBeforeLink"/><Hyperlink Foreground="{x:Bind AboutEULA.Foreground, Mode=OneWay}"
+                                   NavigateUri="https://go.microsoft.com/fwlink/?linkid=2099939"
+                                   TextDecorations="None"
+                                   ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?linkid=2099939"
+                                   UnderlineStyle="None">
+                            <Run x:Name="ContributeRunLink"/>
+                        </Hyperlink><Run x:Name="ContributeRunAfterLink"/>
+                    </Paragraph>
+                </RichTextBlock>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

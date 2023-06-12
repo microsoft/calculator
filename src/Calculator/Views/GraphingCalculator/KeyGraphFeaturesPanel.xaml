@@ -8,6 +8,7 @@
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ts="using:CalculatorApp.TemplateSelectors"
+             xmlns:utils="using:CalculatorApp.Utils"
              xmlns:vm="using:CalculatorApp.ViewModel"
              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
              mc:Ignorable="d">
@@ -130,8 +131,8 @@
             </Style>
 
             <Style x:Name="KGF_TitleTextBlockStyle" TargetType="TextBlock">
-                <Setter Property="FontWeight" Value="Medium"/>
-                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="FontSize" Value="12"/>
                 <Setter Property="TextWrapping" Value="WrapWholeWords"/>
                 <Setter Property="AutomationProperties.HeadingLevel" Value="Level2"/>
             </Style>
@@ -143,21 +144,22 @@
             </Style>
 
             <Style x:Name="KGF_ListViewItemContainerStyle" TargetType="ListViewItem">
-                <Setter Property="IsTabStop" Value="False"/>
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                <Setter Property="AutomationProperties.AccessibilityView" Value="Raw"/>
                 <Setter Property="Padding" Value="0,10"/>
             </Style>
 
             <DataTemplate x:Key="KGFRichEditDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
-                <StackPanel>
+                <StackPanel AutomationProperties.Name="{x:Bind Title, Mode=OneWay}">
                     <TextBlock x:Name="TitleTextBlock"
                                Style="{StaticResource KGF_TitleTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                Text="{x:Bind Title, Mode=OneWay}"/>
-                    <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}" UseSystemFocusVisuals="True">
+                    <ItemsControl IsTabStop="False" ItemsSource="{x:Bind DisplayItems, Mode=OneWay}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
-                                <controls:MathRichEditBox Style="{StaticResource KGF_RichEditBoxStyle}" MathText="{x:Bind}"/>
+                                <controls:MathRichEditBox Style="{StaticResource KGF_RichEditBoxStyle}"
+                                                          IsTabStop="False"
+                                                          MathText="{x:Bind}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -168,6 +170,7 @@
                 <StackPanel>
                     <TextBlock x:Name="TitleTextBlock"
                                Style="{StaticResource KGF_TitleTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                Text="{x:Bind Title, Mode=OneWay}"/>
                     <ItemsControl ItemsSource="{x:Bind GridItems, Mode=OneWay}" UseSystemFocusVisuals="True">
                         <ItemsControl.ItemTemplate>
@@ -192,11 +195,12 @@
             </DataTemplate>
 
             <DataTemplate x:Key="KGFTextBlockDataTemplate" x:DataType="vm:KeyGraphFeaturesItem">
-                <StackPanel>
+                <StackPanel AutomationProperties.Name="{x:Bind Title, Mode=OneWay}">
                     <TextBlock x:Name="TitleTextBlock"
                                Style="{StaticResource KGF_TitleTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                Text="{x:Bind Title, Mode=OneWay}"/>
-                    <ItemsControl ItemsSource="{x:Bind DisplayItems, Mode=OneWay}" UseSystemFocusVisuals="True">
+                    <ItemsControl IsTabStop="False" ItemsSource="{x:Bind DisplayItems, Mode=OneWay}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
                                 <TextBlock Style="{StaticResource KGF_TextBlockStyle}" Text="{x:Bind}"/>
@@ -218,31 +222,34 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Uid="FunctionAnalysisGrid">
+    <Grid AutomationProperties.Name="{utils:ResourceString Name=FunctionAnalysisGrid/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Margin="0,0,1,0" Background="{ThemeResource TextControlBackground}">
+        <Grid Margin="4,0"
+              Background="{ThemeResource TextControlBackground}"
+              CornerRadius="{ThemeResource ControlCornerRadius}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="BackButton"
-                    x:Uid="equationAnalysisBack"
                     MinWidth="44"
                     VerticalAlignment="Stretch"
                     Style="{ThemeResource ThemedBackButtonStyle}"
-                    contract7Present:CornerRadius="0"
-                    Click="BackButton_Click">
+                    contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
+                    AutomationProperties.Name="{utils:ResourceString Name=equationAnalysisBack/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                    Click="BackButton_Click"
+                    ToolTipService.ToolTip="{utils:ResourceString Name=equationAnalysisBack/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}">
                 <StackPanel Margin="5,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
                     <FontIcon Margin="0,0,6,0"
                               VerticalAlignment="Center"
-                              FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                              FontFamily="{StaticResource CalculatorFontFamily}"
                               FontSize="16"
                               Glyph="&#xE72B;"/>
                     <StackPanel FlowDirection="LeftToRight" Orientation="Horizontal">
@@ -253,21 +260,22 @@
                     </StackPanel>
                 </StackPanel>
             </Button>
-            <controls:MathRichEditBox x:Uid="KGFEquationTextBox"
-                                      Grid.Column="1"
+            <controls:MathRichEditBox Grid.Column="1"
                                       Padding="10,0,6,0"
                                       VerticalAlignment="Stretch"
                                       VerticalContentAlignment="Center"
                                       Style="{StaticResource KGF_RichEditBoxStyle}"
                                       Foreground="{ThemeResource TitleMathRichEditBoxForegroundBrush}"
+                                      AutomationProperties.Name="{utils:ResourceString Name=KGFEquationTextBox/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                       MathText="{x:Bind ViewModel.Expression, Mode=OneWay}"/>
         </Grid>
-        <TextBlock x:Uid="KeyGraphFeaturesLabel"
-                   Grid.Row="1"
+        <TextBlock Grid.Row="1"
                    Margin="12,12,10,0"
                    Style="{StaticResource KGF_TitleTextBlockStyle}"
                    FontSize="20"
-                   AutomationProperties.HeadingLevel="Level1"/>
+                   FontWeight="Medium"
+                   AutomationProperties.HeadingLevel="Level1"
+                   Text="{utils:ResourceString Name=KeyGraphFeaturesLabel/Text}"/>
 
         <ListView x:Name="KeyGraphFeaturesListView"
                   Grid.Row="2"

@@ -594,7 +594,7 @@
     <comment>Screen reader prompt for the Calculator History Clear button, when the button is invoked.</comment>
   </data>
   <data name="HideHistory.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಇತಿಹಾಸ ಅಡಗಿಸಿ</value>
+    <value>ಇತಿಹಾಸ ಮರೆಮಾಡಿ</value>
     <comment>Screen reader prompt for the Calculator History Hide button</comment>
   </data>
   <data name="HistoryButton_Open" xml:space="preserve">
@@ -606,7 +606,7 @@
     <comment>Screen reader prompt for the Calculator History button, when the flyout is open.</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಸ್ಮರಣೆ ಸ್ಟೋರ್</value>
+    <value>ಸ್ಮರಣೆ ಸಂಗ್ರಹ</value>
     <comment>Screen reader prompt for the Calculator Memory button</comment>
   </data>
   <data name="memButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -622,7 +622,7 @@
     <comment>Screen reader prompt for the Calculator Clear Memory button, when the button is invoked.</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಸ್ಮರಣೆ ಮರುಪಡೆಯಿರಿ</value>
+    <value>ಸ್ಮರಣೆ ಮರುಪಡೆ</value>
     <comment>Screen reader prompt for the Calculator Memory Recall button</comment>
   </data>
   <data name="MemRecall.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -630,7 +630,7 @@
     <comment>This is the tool tip automation name for the Memory Recall (MR) button.</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಸ್ಮರಣೆ ಸಂಕಲನ</value>
+    <value>ಸ್ಮರಣೆ ಸೇರಿಸಿ</value>
     <comment>Screen reader prompt for the Calculator Memory Add button</comment>
   </data>
   <data name="MemPlus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -638,7 +638,7 @@
     <comment>This is the tool tip automation name for the Memory Add (M+) button.</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಸ್ಮರಣೆ ವ್ಯವಕಲನ</value>
+    <value>ಸ್ಮರಣೆ ಕಳೆಯಿರಿ</value>
     <comment>Screen reader prompt for the Calculator Memory Subtract button</comment>
   </data>
   <data name="MemMinus.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -846,7 +846,7 @@
     <comment>Screen reader prompt for the Calculator numberPad button</comment>
   </data>
   <data name="decimalSeparatorButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ದಶಮಾಂಶ ಬೇರ್ಪಡಿಸುವಿಕೆ</value>
+    <value>ದಶಮಾಂಶ ವಿಭಾಜಕ</value>
     <comment>Screen reader prompt for the "." button</comment>
   </data>
   <data name="clearEntryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -870,8 +870,8 @@
     <comment>Screen reader prompt for the equals button on the scientific operator keypad</comment>
   </data>
   <data name="shiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಹಿಮ್ಮುಖ ಕಾರ್ಯ</value>
-    <comment>Screen Reader prompt for the shift button on the number pad in scientific mode.</comment>
+    <value>ವಿಲೋಮ ಕಾರ್ಯ</value>
+    <comment>Screen reader prompt for the shift button on the number pad in scientific mode.</comment>
   </data>
   <data name="minusButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ಕಳೆ</value>
@@ -1142,8 +1142,8 @@
     <comment>Unit conversion category name called Temperature</comment>
   </data>
   <data name="CategoryName_WeightText" xml:space="preserve">
-    <value>ತೂಕ ಮತ್ತು ದ್ರವ್ಯರಾಶಿ</value>
-    <comment>Unit conversion category name called Weight and Mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
+    <value>ತೂಕ</value>
+    <comment>Unit conversion category name called Weight and mass. Note that this category includes units of both mass and weight. People use the word "weight" in everyday life for measuring things such as food and people. In case a language has same word for "weight" and "mass" please use one word only.</comment>
   </data>
   <data name="CategoryName_PressureText" xml:space="preserve">
     <value>ಒತ್ತಡ</value>
@@ -2286,7 +2286,7 @@
     <comment>A soccer ball, used as a comparison measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="MemoryItemHelpText" xml:space="preserve">
-    <value>ಸ್ಮರಣೆ ಅಂಶ</value>
+    <value>ಸ್ಮರಣೆ ಐಟಂ</value>
     <comment>Help text used by accessibility tools to indicate that an item in the list of memory values is a memory item.</comment>
   </data>
   <data name="SupplementaryUnit_AutomationName" xml:space="preserve">
@@ -2301,7 +2301,7 @@
     <value>ಹಿಂದೆ</value>
     <comment>Content of tooltip being displayed on AboutControlBackButton</comment>
   </data>
-  <data name="AboutFlyoutEULA.Text" xml:space="preserve">
+  <data name="AboutEULA.Text" xml:space="preserve">
     <value>Microsoft ಸಾಫ್ಟ್‌ವೇರ್ ಪರವಾನಗಿ ನಿಯಮಗಳು</value>
     <comment>Displayed on a link to the Microsoft Software License Terms on the About panel</comment>
   </data>
@@ -2317,13 +2317,13 @@
     <value>© %1 Microsoft. ಎಲ್ಲ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.</value>
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
-  <data name="AboutFlyoutContribute" xml:space="preserve">
+  <data name="AboutControlContribute" xml:space="preserve">
     <value>ನೀವು Windows ಕ್ಯಾಲ್ಕುಲೇಟರ್‌ಗೆ ಹೇಗೆ ಕೊಡುಗೆ ನೀಡಬಹುದು ಎಂದು ತಿಳಿಯಲು, %HL%GitHub%HL% ನಲ್ಲಿ Project ಅನ್ನು ಪರಿಶೀಲಿಸಿ.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
-  <data name="AboutButton.Content" xml:space="preserve">
-    <value>ಕುರಿತು</value>
-    <comment>The text that shows in the dropdown navigation control to open About panel</comment>
+  <data name="AboutGroupTitle.Text" xml:space="preserve">
+    <value>ಬಗ್ಗೆ</value>
+    <comment>Subtitle of about message on Settings page</comment>
   </data>
   <data name="FeedbackButton.Content" xml:space="preserve">
     <value>ಪ್ರತಿಕ್ರಿಯೆ ಕಳುಹಿಸಿ</value>
@@ -2418,11 +2418,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabit" xml:space="preserve">
-    <value>ಯೊಟ್ಟಾಬಿಟ್</value>
+    <value>ಯೋಟಾ ಬಿಟ್ಸ್</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabyte" xml:space="preserve">
-    <value>ಯೊಟ್ಟಾಬೈಟ್</value>
+    <value>ಯೊಟಾಬೈಟ್ಸ್</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yobibits" xml:space="preserve">
@@ -2438,7 +2438,7 @@
   </data>
   <data name="DateCalculationOption.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ಲೆಕ್ಕಾಚಾರ ಮೋಡ್</value>
-    <comment>Automation label for the Date Calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
+    <comment>Automation label for the Date calculation Mode combobox. Users will hear "Calculation mode combobox".</comment>
   </data>
   <data name="AddOption.Content" xml:space="preserve">
     <value>ಸೇರಿಸು</value>
@@ -2454,7 +2454,7 @@
   </data>
   <data name="Date_DifferenceOption.Content" xml:space="preserve">
     <value>ದಿನಾಂಕಗಳ ನಡುವಿನ ವ್ಯತ್ಯಾಸ</value>
-    <comment>Date Difference option</comment>
+    <comment>Date difference option</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
     <value>ದಿನಗಳು</value>
@@ -2529,11 +2529,11 @@
   </data>
   <data name="HeaderAutomationName_Converter" xml:space="preserve">
     <value>%1 ಕನ್ವರ್ಟರ್ ಮೋಡ್</value>
-    <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and Mass", "Energy", "Volume", etc.</comment>
+    <comment>{Locked='%1'} Automation name for when the mode header is focused. %1 = the current converter mode: "Weight and mass", "Energy", "Volume", etc.</comment>
   </data>
   <data name="HeaderAutomationName_Date" xml:space="preserve">
     <value>ದಿನಾಂಕ ಲೆಕ್ಕಾಚಾರ ಮೋಡ್</value>
-    <comment>Automation name for when the mode header is focused and the current mode is Date Calculation.</comment>
+    <comment>Automation name for when the mode header is focused and the current mode is Date calculation.</comment>
   </data>
   <data name="DockPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ಇತಿಹಾಸ ಮತ್ತು ಸ್ಮರಣೆ ಪಟ್ಟಿಗಳು</value>
@@ -2613,51 +2613,51 @@
   </data>
   <data name="divideButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಇದರಿಂದ ವಿಭಾಗಿಸಿ</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 divided by" when the button is pressed.</comment>
   </data>
   <data name="multiplyButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಸಮಯಗಳು</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 times" when the button is pressed.</comment>
   </data>
   <data name="minusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಕಳೆ</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 minus" when the button is pressed.</comment>
   </data>
   <data name="plusButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಕೂಡು</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 plus" when the button is pressed.</comment>
   </data>
   <data name="powerButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಪವರ್</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 to the power of" when the button is pressed.</comment>
   </data>
   <data name="ySquareRootButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>y ರೂಟ್</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 y root" when the button is pressed.</comment>
   </data>
   <data name="modButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಮಾಡ್</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 mod" when the button is pressed.</comment>
   </data>
   <data name="lshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಎಡ ಶಿಫ್ಟ್</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 left shift" when the button is pressed.</comment>
   </data>
   <data name="rshButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಬಲ ಶಿಫ್ಟ್</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 right shift" when the button is pressed.</comment>
   </data>
   <data name="orButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಅಥವಾ</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 or" when the button is pressed. OR is a mathematical operation on two binary values.</comment>
   </data>
   <data name="xorButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>x ಅಥವಾ</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 x or" when the button is pressed. XOR is a mathematical operation on two binary values. Here the feedback is "x or" in order to get the correct pronunciation.</comment>
   </data>
   <data name="andButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಮತ್ತು</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 and" when the button is pressed. AND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="CurrencyFromToRatioFormat" xml:space="preserve">
     <value>%1 %2 = %3 %4</value>
@@ -2694,10 +2694,6 @@
   <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
     <value>ದರಗಳನ್ನು ನವೀಕರಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
-  </data>
-  <data name="AboutButton.AccessKey" xml:space="preserve">
-    <value>AB</value>
-    <comment>AccessKey for the About button. {StringCategory="Accelerator"}</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
     <value>I</value>
@@ -2988,7 +2984,7 @@
     <comment>Name for the logbasey function. Used by screen readers.</comment>
   </data>
   <data name="AbsoluteValue" xml:space="preserve">
-    <value>ಸಂಪೂರ್ಣ ಮೌಲ್ಯ</value>
+    <value>ಪರಿಪೂರ್ಣ ಮೌಲ್ಯ</value>
     <comment>Name for the absolute value function. Used by screen readers.</comment>
   </data>
   <data name="LeftShift" xml:space="preserve">
@@ -3085,7 +3081,7 @@
   </data>
   <data name="trigShiftButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ವಿಲೋಮ ಕಾರ್ಯ</value>
-    <comment>Screen Reader prompt for the shift button in the trig flyout in scientific mode.</comment>
+    <comment>Screen reader prompt for the shift button in the trig flyout in scientific mode.</comment>
   </data>
   <data name="hypButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ಹೈಪರ್‌ಬೋಲಿಕ್ ಕಾರ್ಯ</value>
@@ -3152,7 +3148,7 @@
     <comment>Screen reader prompt for the Calculator button random in the scientific flyout keypad</comment>
   </data>
   <data name="absButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಸಂಪೂರ್ಣ ಮೌಲ್ಯ</value>
+    <value>ಪರಿಪೂರ್ಣ ಮೌಲ್ಯ</value>
     <comment>Screen reader prompt for the Calculator button abs in the scientific flyout keypad</comment>
   </data>
   <data name="eulerButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3169,7 +3165,7 @@
   </data>
   <data name="nandButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಇಲ್ಲ ಮತ್ತು</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 nand" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="norButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ಅಥವಾ</value>
@@ -3177,7 +3173,7 @@
   </data>
   <data name="norButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಅಥವಾ</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 nor" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="rolCarryButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ಕ್ಯಾರಿಯೊಂದಿಗೆ ಎಡಗಡೆಗೆ ತಿರುಗಿಸಿ</value>
@@ -3193,7 +3189,7 @@
   </data>
   <data name="lshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಎಡ ಶಿಫ್ಟ್</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 left shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="rshLogicalButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ಬಲ ಶಿಫ್ಟ್</value>
@@ -3201,10 +3197,10 @@
   </data>
   <data name="rshLogicalButton.[using:CalculatorApp.Controls]CalculatorButton.AuditoryFeedback" xml:space="preserve">
     <value>ಬಲ ಶಿಫ್ಟ್</value>
-    <comment>Auditory feedback for Screen Reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
+    <comment>Auditory feedback for screen reader users. Users will hear "Display is 7 right shift" when the button is pressed. NAND is a mathematical operation on two binary values.</comment>
   </data>
   <data name="arithmeticShiftButton.Content" xml:space="preserve">
-    <value>ಅಂಕಗಣಿತೀಯ ಶಿಫ್ಟ್</value>
+    <value>ಅಂಕಗಣಿತ ಶಿಫ್ಟ್</value>
     <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
   </data>
   <data name="logicalShiftButton.Content" xml:space="preserve">
@@ -3264,7 +3260,7 @@
     <comment>This is the tool tip automation name for the Calculator graph view button.</comment>
   </data>
   <data name="graphViewButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಗ್ರಾಫ್ ನೋಟ</value>
+    <value>ಗ್ರಾಫ್ ವೀಕ್ಷಣೆ</value>
     <comment>Screen reader prompt for the graph view button.</comment>
   </data>
   <data name="GraphViewAutomaticBestFitAnnouncement" xml:space="preserve">
@@ -3280,7 +3276,7 @@
     <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set, resetting the graph</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>ಜೂಮ್ ಇನ್ (Ctrl + ಪ್ಲಸ್)</value>
+    <value>ಝೂಮ್ ಇನ್ (Ctrl + ಪ್ಲಸ್)</value>
     <comment>This is the tool tip automation name for the Calculator zoom in button.</comment>
   </data>
   <data name="zoomInButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3288,7 +3284,7 @@
     <comment>Screen reader prompt for the zoom in button.</comment>
   </data>
   <data name="zoomOutButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>ಜೂಮ್ ಔಟ್ (Ctrl + ಮೈನಸ್)</value>
+    <value>ಝೂಮ್ ಔಟ್ (Ctrl + ಮೈನಸ್)</value>
     <comment>This is the tool tip automation name for the Calculator zoom out button.</comment>
   </data>
   <data name="zoomOutButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3445,11 +3441,11 @@
   </data>
   <data name="HorizontalAsymptotes" xml:space="preserve">
     <value>ಅಡ್ಡ ಅಸಂಪಾತಗಳು</value>
-    <comment>Title for KeyGraphFeatures Horizontal Aysmptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Horizontal aysmptotes Property</comment>
   </data>
   <data name="InflectionPoints" xml:space="preserve">
-    <value>ಇನ್ಫ್ಲೆಕ್ಷನ್ ಪಾಯಿಂಟ್‌ಗಳು</value>
-    <comment>Title for KeyGraphFeatures Inflection Points Property</comment>
+    <value>ರೂಪನಿಷ್ಪತ್ತಿ ಬಿಂದುಗಳು</value>
+    <comment>Title for KeyGraphFeatures Inflection points Property</comment>
   </data>
   <data name="KGFAnalysisNotSupported" xml:space="preserve">
     <value>ಈ ಫಂಕ್ಷನ್‌ಗಾಗಿ ವಿಶ್ಲೇಷಣೆಯನ್ನು ಬೆಂಬಲಿತವಾಗಿಲ್ಲ.</value>
@@ -3473,7 +3469,7 @@
   </data>
   <data name="ObliqueAsymptotes" xml:space="preserve">
     <value>ಓರೆಯಾದ ಅಸಂಪಾತಗಳು</value>
-    <comment>Title for KeyGraphFeatures Oblique Asymptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Oblique asymptotes Property</comment>
   </data>
   <data name="Parity" xml:space="preserve">
     <value>ಸಮಾನತೆ</value>
@@ -3489,7 +3485,7 @@
   </data>
   <data name="VerticalAsymptotes" xml:space="preserve">
     <value>ಲಂಬ ಅಸಂಪಾತಗಳು</value>
-    <comment>Title for KeyGraphFeatures Vertical Asymptotes Property</comment>
+    <comment>Title for KeyGraphFeatures Vertical asymptotes Property</comment>
   </data>
   <data name="XIntercept" xml:space="preserve">
     <value>X-ಪ್ರತಿಬಂಧ</value>
@@ -3597,7 +3593,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>ಅಮಾನ್ಯವಾದ ಅಭಿವ್ಯಕ್ತಿ</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>ಅಭಿವ್ಯಕ್ತಿಯು ಖಾಲಿ ಇದೆ</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3609,7 +3605,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>ಫಲನದ ಹೆಸರಿನ ನಂತರ ಪ್ರಕ್ಷೇಪ ಚಿಹ್ನೆಗಳು ಕಾಣೆಯಾಗಿರುವವು</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>ಗಣಿತೀಯ ಕಾರ್ಯಾಚರಣೆಯು ತಪ್ಪಾದ ಸಂಖ್ಯೆಯ ನಿಯತಾಂಕಗಳನ್ನು ಹೊಂದಿದೆ</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3643,7 +3639,7 @@
     <comment>Error that occurs during graphing when the base is out of range.</comment>
   </data>
   <data name="InvalidVariableSpecification" xml:space="preserve">
-    <value>ಗಣಿತೀಯ ಕಾರ್ಯಾಚರಣೆಗಾಗಿ ಅದರ ಒಂದು ಪರಮಾಂಶವು ಒಂದು ಚರ ಆಗಿರಬೇಕಾಗುತ್ತದೆ</value>
+    <value>ಗಣಿತೀಯ ಕಾರ್ಯಾಚರಣೆಗಾಗಿ ಅದರ ಒಂದು ಪರಮಾಂಶವು ಒಂದು ವೇರಿಯಬಲ್ ಆಗಿರಬೇಕಾಗುತ್ತದೆ</value>
     <comment>Error that occurs during graphing when a function requires a variable in a particular position. Ex: 2nd argument of deriv.</comment>
   </data>
   <data name="ExpectingLogicalOperands" xml:space="preserve">
@@ -3745,7 +3741,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>ಗ್ರಾಫ್ ವೀಕ್ಷಣೆ ವಿಂಡೋ, x- ಅಕ್ಷವು %1 ಮತ್ತು %2 ರಿಂದ ಸುತ್ತುವರಿಯಲ್ಪಟ್ಟಿದೆ, y- ಅಕ್ಷವು %3 ಮತ್ತು %4 ರಿಂದ ಸುತ್ತುವರೆದಿದೆ, %5 ಸಮೀಕರಣಗಳನ್ನು ಪ್ರದರ್ಶಿಸುತ್ತದೆ</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>ಸ್ಲೈಡರ್ ಅನ್ನು ಕಾನ್ಫಿಗರ್ ಮಾಡಿ</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3823,8 +3819,8 @@
     <comment>This is the automation name text for the graph options button in Graphing Calculator</comment>
   </data>
   <data name="GraphOptionsHeading.Text" xml:space="preserve">
-    <value>ಗ್ರಾಫ್ ಆಯ್ಕೆಗಳು</value>
-    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+    <value>ರೇಖಾನಕ್ಷೆ ಆಯ್ಕೆಗಳು</value>
+    <comment>Heading for the Graph options flyout in Graphing mode.</comment>
   </data>
   <data name="VariableAreaSettings.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>ವೇರಿಯೇಬಲ್ ಆಯ್ಕೆಗಳು</value>
@@ -3836,7 +3832,7 @@
   </data>
   <data name="LineThicknessBoxHeading.Text" xml:space="preserve">
     <value>ಸಾಲಿನ ದಪ್ಪ</value>
-    <comment>Heading for the Graph Options flyout in Graphing mode.</comment>
+    <comment>Heading for the Graph options flyout in Graphing mode.</comment>
   </data>
   <data name="LineOptionsHeading.Text" xml:space="preserve">
     <value>ಸಾಲು ಆಯ್ಕೆಗಳು</value>
@@ -3862,7 +3858,7 @@
     <value>ಅಭಿವ್ಯಕ್ತಿಯನ್ನು ನಮೂದಿಸಿ</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>ನಕಲಿಸಿ</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3883,19 +3879,19 @@
     <comment>Undo menu item from the Equation TextBox</comment>
   </data>
   <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
-    <value>ಎಲ್ಲ ಆಯ್ಕೆಮಾಡು</value>
+    <value>ಎಲ್ಲವನ್ನೂ ಆಯ್ಕೆಮಾಡಿ</value>
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಕಾರ್ಯದ ಇನ್ಪುಟ್ ಪಟ್ಟಿಯ ಐಟಂ</value>
+    <value>ಕಾರ್ಯದ ಇನ್‌ಪುಟ್</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಕಾರ್ಯದ ಇನ್ಪುಟ್ ಲಿಸ್ಟ್</value>
+    <value>ಕಾರ್ಯದ ಇನ್‌ಪುಟ್</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಕಾರ್ಯದ ಇನ್ಪುಟ್ ಪ್ಯಾನಲ್‌</value>
+    <value>ಕಾರ್ಯದ ಇನ್‌ಪುಟ್ ಪ್ಯಾನಲ್</value>
     <comment>The automation name for the Equation Input StackPanel that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableStackPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3911,7 +3907,7 @@
     <comment>The automation name for the Variable ListViewItem that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableValueTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಬದಲಾಗಬಹುದಾದ ಮೌಲ್ಯದ ಟೆಕ್ಸ್ಟ್‌ಬಾಕ್ಸ್</value>
+    <value>ಬದಲಾಗಬಹುದಾದ ಮೌಲ್ಯದ ಪಠ್ಯಪೆಟ್ಟಿಗೆ</value>
     <comment>The automation name for the Variable Value Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableValueSlider.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3919,15 +3915,15 @@
     <comment>The automation name for the Variable Value Slider that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableMinTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಬದಲಾಗಬಹುದಾದ ಕನಿಷ್ಠ ಮೌಲ್ಯದ ಟೆಕ್ಸ್ಟ್‌ಬಾಕ್ಸ್</value>
+    <value>ಬದಲಾಗಬಹುದಾದ ಕನಿಷ್ಠ ಮೌಲ್ಯದ ಪಠ್ಯಪೆಟ್ಟಿಗೆ</value>
     <comment>The automation name for the Variable Min Value Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableStepTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಬದಲಾಗಬಹುದಾದ ಹಂತ ಮೌಲ್ಯದ ಟೆಕ್ಸ್ಟ್‌ಬಾಕ್ಸ್</value>
+    <value>ಬದಲಾಗಬಹುದಾದ ಹಂತ ಮೌಲ್ಯದ ಪಠ್ಯಪೆಟ್ಟಿಗೆ</value>
     <comment>The automation name for the Variable Step Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="VariableMaxTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಬದಲಾಗಬಹುದಾದ ಗರಿಷ್ಠ ಮೌಲ್ಯದ ಟೆಕ್ಸ್ಟ್‌ಬಾಕ್ಸ್</value>
+    <value>ಬದಲಾಗಬಹುದಾದ ಗರಿಷ್ಠ ಮೌಲ್ಯದ ಪಠ್ಯಪೆಟ್ಟಿಗೆ</value>
     <comment>The automation name for the Variable Max Value Textbox that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="solidLineStyleAutomationName" xml:space="preserve">
@@ -3943,7 +3939,7 @@
     <comment>Name of the dashed line style for a graphed equation</comment>
   </data>
   <data name="equationColor1AutomationName" xml:space="preserve">
-    <value>ಕಡು ನೀಲಿ</value>
+    <value>ಗಾಢ ನೀಲಿ</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor2AutomationName" xml:space="preserve">
@@ -3975,7 +3971,7 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor9AutomationName" xml:space="preserve">
-    <value>ತಿಳಿ ಊದಾ</value>
+    <value>ತಿಳಿ ಪ್ಲಮ್</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor10AutomationName" xml:space="preserve">
@@ -3983,11 +3979,11 @@
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor11AutomationName" xml:space="preserve">
-    <value>ಹಳದಿ ಸ್ವರ್ಣ</value>
+    <value>ಸ್ವರ್ಣ ಹಳದಿ </value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor12AutomationName" xml:space="preserve">
-    <value>ಪ್ರಕಾಶಮಾನ ಕಿತ್ತಳೆ ಬಣ್ಣ</value>
+    <value>ಪ್ರಕಾಶಮಾನವಾದ ಕಿತ್ತಳೆ ಬಣ್ಣ</value>
     <comment>Name of color in the color picker</comment>
   </data>
   <data name="equationColor13AutomationName" xml:space="preserve">
@@ -4047,7 +4043,7 @@
     <comment>Announcement used in Graphing Calculator when a function is removed from the function list</comment>
   </data>
   <data name="KGFEquationTextBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಕಾರ್ಯನಿರ್ವಹಣೆ ವಿಶ್ಲೇಷಣೆ ಸಮೀಕರಣ ಬಾಕ್ಸ್</value>
+    <value>ಕಾರ್ಯನಿರ್ವಹಣೆ ವಿಶ್ಲೇಷಣೆ ಸಮೀಕರಣ ಪೆಟ್ಟಿಗೆ</value>
     <comment>This is the automation name text for the equation box in the function analysis panel</comment>
   </data>
   <data name="graphingEqualButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4087,11 +4083,11 @@
     <comment>Screen reader prompt for the submit button on the graphing calculator operator keypad</comment>
   </data>
   <data name="FunctionAnalysisGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಕಾರ್ಯಾಚರಣೆ ವಿಶ್ಲೇಷಣೆ</value>
+    <value>ಕಾರ್ಯ ವಿಶ್ಲೇಷಣೆ</value>
     <comment>Screen reader prompt for the function analysis grid</comment>
   </data>
   <data name="GraphSettingsGrid.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>ಗ್ರಾಫ್ ಆಯ್ಕೆಗಳು</value>
+    <value>ರೇಖಾನಕ್ಷೆ ಆಯ್ಕೆಗಳು</value>
     <comment>Screen reader prompt for the graph options panel</comment>
   </data>
   <data name="DockPanel_HistoryMemoryLists" xml:space="preserve">
@@ -4115,19 +4111,59 @@
     <comment>Announcement to indicate calculator window is now back to full view.</comment>
   </data>
   <data name="arithmeticShiftButtonSelected" xml:space="preserve">
-    <value>ಆಯ್ಕೆಮಾಡಿದ ಅಂಕಗಣಿತ ಶಿಫ್ಟ್</value>
+    <value>ಅಂಕಗಣಿತ ಶಿಫ್ಟ್ ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ</value>
     <comment>Label for a radio button that toggles arithmetic shift behavior for the shift operations.</comment>
   </data>
   <data name="logicalShiftButtonSelected" xml:space="preserve">
-    <value>ಆಯ್ಕೆಮಾಡಿದ ತಾರ್ಕಿಕ ಶಿಫ್ಟ್</value>
+    <value>ತಾರ್ಕಿಕ ಶಿಫ್ಟ್ ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ</value>
     <comment>Label for a radio button that toggles logical shift behavior for the shift operations.</comment>
   </data>
   <data name="rotateCircularButtonSelected" xml:space="preserve">
-    <value>ಆಯ್ಕೆ ಮಾಡಿದ ವೃತ್ತಾಕಾರದ ಶಿಫ್ಟ್ ತಿರುಗಿಸು</value>
+    <value>ಆಯ್ಕೆಮಾಡಿದ ವೃತ್ತಾಕಾರದ ಶಿಫ್ಟ್ ತಿರುಗಿಸಿ</value>
     <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
   </data>
   <data name="rotateCarryShiftButtonSelected" xml:space="preserve">
-    <value>ಆಯ್ಕೆ ಮಾಡಿದ ಕ್ಯಾರಿ ವೃತ್ತಾಕಾರದ ಶಿಫ್ಟ್ ಮೂಲಕ ತಿರುಗಿಸಿ</value>
+    <value>ಆಯ್ಕೆಮಾಡಿದ ಕ್ಯಾರಿ ವೃತ್ತಾಕಾರದ ಶಿಫ್ಟ್ ಮೂಲಕ ತಿರುಗಿಸಿ</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
+  </data>
+  <data name="SettingsHeader.Text" xml:space="preserve">
+    <value>ಸೆಟ್ಟಿಂಗ್‍ಗಳು</value>
+    <comment>Header text of Settings page</comment>
+  </data>
+  <data name="SettingsAppearance.Text" xml:space="preserve">
+    <value>ನೋಟ</value>
+    <comment>Subtitle of appearance setting on Settings page</comment>
+  </data>
+  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+    <value>ಅಪ್ಲಿ ಥೀಮ್</value>
+    <comment>Title of App theme expander</comment>
+  </data>
+  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+    <value>ಯಾವ ಅಪ್ಲಿ ಥೀಮ್ ಪ್ರದರ್ಶಿಸಬೇಕೆಂದು ಆಯ್ಕೆಮಾಡಿ</value>
+    <comment>Description of App theme expander</comment>
+  </data>
+  <data name="LightThemeRadioButton.Content" xml:space="preserve">
+    <value>ತಿಳಿ</value>
+    <comment>Lable for light theme option</comment>
+  </data>
+  <data name="DarkThemeRadioButton.Content" xml:space="preserve">
+    <value>ಗಾಢ</value>
+    <comment>Lable for dark theme option</comment>
+  </data>
+  <data name="SystemThemeRadioButton.Content" xml:space="preserve">
+    <value>ಸಿಸ್ಟಂ ಸೆಟ್ಟಿಂಗ್ ಅನ್ನು ಬಳಸಿ</value>
+    <comment>Lable for the app theme option to use system setting</comment>
+  </data>
+  <data name="TitleBarBackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ಹಿಂದೆ</value>
+    <comment>Screen reader prompt for the Back button in title bar to back to main page</comment>
+  </data>
+  <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
+    <value>ಸೆಟ್ಟಿಂಗ್‌ಗಳ ಪುಟ</value>
+    <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ಅಪ್ಲಿ ಥೀಮ್ ಸೆಟ್ಟಿಂಗ್</value>
+    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using OpenQA.Selenium.Appium.Windows;
+
 using System;
 using System.Globalization;
 
@@ -22,7 +23,7 @@ namespace CalculatorUITestFramework
         public WindowsElement DecimalButton => this.session.TryFindElementByAccessibilityId("decimalSeparatorButton");
         public WindowsElement NegateButton => this.session.TryFindElementByAccessibilityId("negateButton");
 
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
 
         /// <summary>
         /// Translates a number into the Calculator button clicks.
@@ -76,7 +77,7 @@ namespace CalculatorUITestFramework
                         this.NegateButton.Click();
                         break;
                     default:
-                        throw (new ArgumentException(String.Format("{0} is not valid", digit)));
+                        throw (new ArgumentException($"{digit} is not valid"));
                 }
             }
         }

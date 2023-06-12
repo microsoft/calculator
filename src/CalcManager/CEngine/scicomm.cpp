@@ -18,7 +18,6 @@
 #include <sstream>
 #include "Header Files/CalcEngine.h"
 #include "Header Files/CalcUtils.h"
-#include "NumberFormattingUtils.h"
 
 using namespace std;
 using namespace CalcEngine;
@@ -31,17 +30,31 @@ namespace
     // 0 is returned. Higher the number, higher the precedence of the operator.
     int NPrecedenceOfOp(int nopCode)
     {
-        static uint16_t rgbPrec[] = { 0,        0, IDC_OR,    0, IDC_XOR, 0, IDC_AND, 1, IDC_NAND, 1, IDC_NOR, 1, IDC_ADD,  2, IDC_SUB,      2, IDC_RSHF, 3,
-                                      IDC_LSHF, 3, IDC_RSHFL, 3, IDC_MOD, 3, IDC_DIV, 3, IDC_MUL,  3, IDC_PWR, 4, IDC_ROOT, 4, IDC_LOGBASEY, 4 };
-
-        for (unsigned int iPrec = 0; iPrec < size(rgbPrec); iPrec += 2)
+        switch (nopCode)
         {
-            if (nopCode == rgbPrec[iPrec])
-            {
-                return rgbPrec[iPrec + 1];
-            }
+        default:
+        case IDC_OR:
+        case IDC_XOR:
+            return 0;
+        case IDC_AND:
+        case IDC_NAND:
+        case IDC_NOR:
+            return 1;
+        case IDC_ADD:
+        case IDC_SUB:
+            return 2;
+        case IDC_LSHF:
+        case IDC_RSHF:
+        case IDC_RSHFL:
+        case IDC_MOD:
+        case IDC_DIV:
+        case IDC_MUL:
+            return 3;
+        case IDC_PWR:
+        case IDC_ROOT:
+        case IDC_LOGBASEY:
+            return 4;
         }
-        return 0;
     }
 }
 
@@ -519,6 +532,12 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 
         if (wParam == IDC_OPENP)
         {
+            // if there's an omitted multiplication sign
+            if (IsDigitOpCode(m_nLastCom) || IsUnaryOpCode(m_nLastCom) || m_nLastCom == IDC_PNT || m_nLastCom == IDC_CLOSEP)
+            {
+                ProcessCommand(IDC_MUL);
+            }
+
             CheckAndAddLastBinOpToHistory();
             m_HistoryCollector.AddOpenBraceToHistory();
 
@@ -594,7 +613,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         // Set the "(=xx" indicator.
         if (nullptr != m_pCalcDisplay)
         {
-            m_pCalcDisplay->SetParenthesisNumber(m_openParenCount >= 0 ? static_cast<unsigned int>(m_openParenCount) : 0);
+            m_pCalcDisplay->SetParenthesisNumber(static_cast<unsigned int>(m_openParenCount));
         }
 
         if (!m_bError)
@@ -757,7 +776,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         break;
     case IDC_FE:
         // Toggle exponential notation display.
-        m_nFE = NumberFormat(!(int)m_nFE);
+        m_nFE = m_nFE == NumberFormat::Float ? NumberFormat::Scientific : NumberFormat::Float;
         DisplayNum();
         break;
 

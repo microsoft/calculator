@@ -5,7 +5,8 @@
 #include "CalculatorButtonPressedEventArgs.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
+using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace Platform;
 
 NumbersAndOperatorsEnum CalculatorButtonPressedEventArgs::GetOperationFromCommandParameter(_In_ Object ^ commandParameter)
