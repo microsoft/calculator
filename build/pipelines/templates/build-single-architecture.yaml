@@ -97,7 +97,6 @@ jobs:
         searchPattern: '**/*.pdb'
         symbolServerType: teamServices
         treatNotIndexedAsWarning: true
-        symbolsArtifactName: $(System.teamProject)/$(Build.BuildNumber)_$(BuildPlatform)$(BuildConfiguration)
 
     - task: CopyFiles@2
       displayName: Copy Files for BinSkim analysis
