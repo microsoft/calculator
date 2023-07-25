@@ -107,6 +107,16 @@ CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> clie
         if (GlobalizationPreferences::Languages->Size > 0)
         {
             m_responseLanguage = GlobalizationPreferences::Languages->GetAt(0);
+
+            // Workaround for Simplified Chinese localization issue of currency API.
+            std::wstring responseLanguage(m_responseLanguage->Data());
+            wregex pattern = wregex(L"zh-hans-[a-zA-Z]+", std::regex_constants::icase);
+            std::wsmatch match;
+            if (regex_match(responseLanguage, match, pattern))
+            {
+                responseLanguage = L"zh-CN";
+            }
+            m_responseLanguage = ref new Platform::String(responseLanguage.c_str());
         }
         else
         {
