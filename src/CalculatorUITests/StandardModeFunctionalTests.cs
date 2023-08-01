@@ -336,7 +336,7 @@ namespace CalculatorUITests
             CalculatorApp.Window.SendKeys(Keys.Shift + "2" + Keys.Shift);
             Assert.AreEqual("0.3162277660168379", page.CalculatorResults.GetCalculatorResultText()); //verifies square root calculation
             Assert.AreEqual("10 + √(0.1)", page.CalculatorResults.GetCalculatorExpressionText()); //verifies 2√x hotkey
-            CalculatorApp.Window.SendKeys(".");
+            page.StandardOperators.NumberPad.DecimalButton.Click();
             Assert.AreEqual("0 point", page.CalculatorResults.GetCalculatorResultText()); //verifies using decimal key
             CalculatorApp.Window.SendKeys(Keys.F9);
             CalculatorApp.Window.SendKeys("1");
