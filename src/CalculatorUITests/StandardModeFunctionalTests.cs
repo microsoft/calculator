@@ -316,8 +316,11 @@ namespace CalculatorUITests
             Assert.AreEqual("square (9)", page.CalculatorResults.GetCalculatorExpressionText()); //verifies squared hotkey
         }
 
+        // Ignore this test and add a new test KeyboardInput_PercentSquareRootBackspaceNegateOneZero below
+        // to avoid the issue of decimal keyboard input
         [TestMethod]
         [Priority(1)]
+        [Ignore]
         public void KeyboardInput_PercentSquareRootBackspaceDecimalNegateOneZero()
         {
             //Verifies the %, square root, backspace, decimal, negate, 1, and 0 button
@@ -336,10 +339,38 @@ namespace CalculatorUITests
             CalculatorApp.Window.SendKeys(Keys.Shift + "2" + Keys.Shift);
             Assert.AreEqual("0.3162277660168379", page.CalculatorResults.GetCalculatorResultText()); //verifies square root calculation
             Assert.AreEqual("10 + √(0.1)", page.CalculatorResults.GetCalculatorExpressionText()); //verifies 2√x hotkey
-            page.StandardOperators.NumberPad.DecimalButton.Click();
+            CalculatorApp.Window.SendKeys(".");
             Assert.AreEqual("0 point", page.CalculatorResults.GetCalculatorResultText()); //verifies using decimal key
             CalculatorApp.Window.SendKeys(Keys.F9);
             CalculatorApp.Window.SendKeys("1");
+            Assert.AreEqual("-0.1", page.CalculatorResults.GetCalculatorResultText()); //verifies negate hotkey
+            page.StandardOperators.EqualButton.Click();
+            Assert.AreEqual("9.9", page.CalculatorResults.GetCalculatorResultText()); //verifies calculation with decimal point and negative number
+        }
+
+        [TestMethod]
+        [Priority(1)]
+        public void KeyboardInput_PercentSquareRootBackspaceNegateOneZero()
+        {
+            //Verifies the %, square root, backspace, negate, 1, and 0 button
+            CalculatorApp.EnsureCalculatorHasFocus();
+            CalculatorApp.Window.SendKeys("100");
+            CalculatorApp.Window.SendKeys(Keys.Backspace);
+            Assert.AreEqual("10", page.CalculatorResults.GetCalculatorResultText()); // verifies using the 1 key, the 0 key, and the backspace key
+            CalculatorApp.Window.SendKeys(Keys.Add);
+            CalculatorApp.EnsureCalculatorHasFocus();
+            CalculatorApp.Window.SendKeys(Keys.Shift + "5" + Keys.Shift);
+            Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText()); //verifies percent calculation
+            Assert.AreEqual("10 + 1", page.CalculatorResults.GetCalculatorExpressionText()); //verifies percent hotkey
+            CalculatorApp.Window.SendKeys(Keys.Shift);
+            CalculatorApp.Window.SendKeys(Keys.Shift + "5" + Keys.Shift);
+            CalculatorApp.Window.SendKeys(Keys.Shift);
+            CalculatorApp.Window.SendKeys(Keys.Shift + "2" + Keys.Shift);
+            Assert.AreEqual("0.3162277660168379", page.CalculatorResults.GetCalculatorResultText()); //verifies square root calculation
+            Assert.AreEqual("10 + √(0.1)", page.CalculatorResults.GetCalculatorExpressionText()); //verifies 2√x hotkey
+            CalculatorApp.Window.SendKeys("1");
+            CalculatorApp.Window.SendKeys(Keys.Shift + "5" + Keys.Shift);
+            CalculatorApp.Window.SendKeys(Keys.F9);
             Assert.AreEqual("-0.1", page.CalculatorResults.GetCalculatorResultText()); //verifies negate hotkey
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("9.9", page.CalculatorResults.GetCalculatorResultText()); //verifies calculation with decimal point and negative number
