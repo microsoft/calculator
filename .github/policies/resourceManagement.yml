@@ -1,0 +1,135 @@
+id: 
+name: GitOps.PullRequestIssueManagement
+description: GitOps.PullRequestIssueManagement primitive
+owner: 
+resource: repository
+disabled: false
+where: 
+configuration:
+  resourceManagementConfiguration:
+    scheduledSearches:
+    - description: 
+      frequencies:
+      - hourly:
+          hour: 3
+      filters:
+      - isPullRequest
+      - isOpen
+      - hasLabel:
+          label: needs author feedback
+      - noActivitySince:
+          days: 7
+      - isNotLabeledWith:
+          label: no recent activity
+      actions:
+      - addLabel:
+          label: no recent activity
+      - addReply:
+          reply: This pull request has been automatically marked as stale because it has been marked as requiring author feedback but has not had any activity for **7 days**. Thank you for your contributions to Windows Calculator!
+    eventResponderTasks:
+    - if:
+      - payloadType: Issue_Comment
+      - hasLabel:
+          label: no recent activity
+      then:
+      - removeLabel:
+          label: no recent activity
+      description: 
+    - if:
+      - payloadType: Issues
+      - isAction:
+          action: Closed
+      then:
+      - removeLabel:
+          label: needs pitch review
+      - removeLabel:
+          label: needs more info
+      - removeLabel:
+          label: needs spec
+      - removeLabel:
+          label: no recent activity
+      - removeLabel:
+          label: help wanted
+      - removeLabel:
+          label: needs spec review
+      - removeLabel:
+          label: needs spec
+      description: 
+      triggerOnOwnActions: true
+    - if:
+      - payloadType: Pull_Request_Review
+      - isAction:
+          action: Submitted
+      - isReviewState:
+          reviewState: Changes_requested
+      then:
+      - addLabel:
+          label: needs author feedback
+      description: 
+    - if:
+      - payloadType: Pull_Request
+      - isActivitySender:
+          issueAuthor: True
+      - not:
+          isAction:
+            action: Closed
+      - hasLabel:
+          label: needs author feedback
+      then:
+      - removeLabel:
+          label: needs author feedback
+      description: 
+    - if:
+      - payloadType: Issue_Comment
+      - isActivitySender:
+          issueAuthor: True
+      - hasLabel:
+          label: needs author feedback
+      then:
+      - removeLabel:
+          label: needs author feedback
+      description: 
+    - if:
+      - payloadType: Pull_Request_Review
+      - isActivitySender:
+          issueAuthor: True
+      - hasLabel:
+          label: needs author feedback
+      then:
+      - removeLabel:
+          label: needs author feedback
+      description: 
+    - if:
+      - payloadType: Pull_Request
+      - not:
+          isAction:
+            action: Closed
+      - hasLabel:
+          label: no recent activity
+      then:
+      - removeLabel:
+          label: no recent activity
+      description: 
+    - if:
+      - payloadType: Issue_Comment
+      - hasLabel:
+          label: no recent activity
+      then:
+      - removeLabel:
+          label: no recent activity
+      description: 
+    - if:
+      - payloadType: Pull_Request_Review
+      - hasLabel:
+          label: no recent activity
+      then:
+      - removeLabel:
+          label: no recent activity
+      description: 
+    - if:
+      - payloadType: Issue_Comment
+      then:
+      - cleanEmailReply
+      description: 
+onFailure: 
+onSuccess: 
