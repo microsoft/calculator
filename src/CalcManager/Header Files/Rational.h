@@ -30,6 +30,8 @@ namespace CalcEngine
         Number const& P() const;
         Number const& Q() const;
 
+        bool IsZero() const;
+
         Rational operator-() const;
         Rational& operator+=(Rational const& rhs);
         Rational& operator-=(Rational const& rhs);
