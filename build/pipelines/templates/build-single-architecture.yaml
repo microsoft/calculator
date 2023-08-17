@@ -37,11 +37,9 @@ jobs:
   - checkout: self
     fetchDepth: 1
 
-  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-    - powershell: |
-        $(Build.SourcesDirectory)\build\scripts\VerifyNugetConfig.ps1 -FilePath "$(Build.SourcesDirectory)\nuget.config"
-      displayName: Verify nuget config
-      failOnStderr: true
+  - ${{ if eq(parameters.isOSSBuild, true) }}:
+    - task: nuget-security-analysis@0
+      displayName: Secure Supply Chain Analysis
 
   - ${{ if eq(parameters.isReleaseBuild, true) }}:
     - task: UniversalPackages@0
