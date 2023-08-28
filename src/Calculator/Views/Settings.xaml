@@ -35,7 +35,7 @@
             <Style x:Key="SettingsCategoryTitleTextBlockStyle"
                    BasedOn="{StaticResource BodyStrongTextBlockStyle}"
                    TargetType="TextBlock">
-                <Setter Property="Margin" Value="0,29,0,5"/>
+                <Setter Property="Margin" Value="0,30,0,4"/>
             </Style>
 
             <automation:NarratorNotifier x:Name="NarratorNotifier"/>
@@ -44,7 +44,7 @@
             <StaticResource x:Key="HyperlinkButtonBackgroundPointerOver" ResourceKey="SubtleFillColorTransparentBrush"/>
             <StaticResource x:Key="HyperlinkButtonBackgroundPressed" ResourceKey="SubtleFillColorTransparentBrush"/>
 
-            <x:Double x:Key="SettingsCardSpacing">3</x:Double>
+            <x:Double x:Key="SettingsCardSpacing">4</x:Double>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -90,8 +90,8 @@
                            AutomationProperties.HeadingLevel="Level1"
                            Text="{utils:ResourceString Name=SettingsAppearance/Text}"/>
                 <toolkit:SettingsExpander x:Name="AppThemeExpander"
-                                       Description="Select which app theme to display"
-                                       Header="App theme">
+                                       Description="{utils:ResourceString Name=AppThemeExpander/Description}"
+                                       Header="{utils:ResourceString Name=AppThemeExpander/Header}">
                     <toolkit:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE790;"/>
                     </toolkit:SettingsExpander.HeaderIcon>
