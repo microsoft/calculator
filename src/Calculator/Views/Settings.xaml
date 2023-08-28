@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+             xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:utils="using:CalculatorApp.Utils"
@@ -89,14 +89,14 @@
                 <TextBlock Style="{StaticResource SettingsCategoryTitleTextBlockStyle}"
                            AutomationProperties.HeadingLevel="Level1"
                            Text="{utils:ResourceString Name=SettingsAppearance/Text}"/>
-                <labs:SettingsExpander x:Name="AppThemeExpander"
+                <toolkit:SettingsExpander x:Name="AppThemeExpander"
                                        Description="Select which app theme to display"
                                        Header="App theme">
-                    <labs:SettingsExpander.HeaderIcon>
+                    <toolkit:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE790;"/>
-                    </labs:SettingsExpander.HeaderIcon>
-                    <labs:SettingsExpander.Items>
-                        <labs:SettingsCard ContentAlignment="Left">
+                    </toolkit:SettingsExpander.HeaderIcon>
+                    <toolkit:SettingsExpander.Items>
+                        <toolkit:SettingsCard ContentAlignment="Left">
                             <muxc:RadioButtons x:Name="ThemeRadioButtons"
                                                Margin="0,-8,0,0"
                                                SelectionChanged="OnThemeSelectionChanged">
@@ -110,23 +110,23 @@
                                              Content="{utils:ResourceString Name=SystemThemeRadioButton/Content}"
                                              Tag="Default"/>
                             </muxc:RadioButtons>
-                        </labs:SettingsCard>
-                    </labs:SettingsExpander.Items>
-                </labs:SettingsExpander>
+                        </toolkit:SettingsCard>
+                    </toolkit:SettingsExpander.Items>
+                </toolkit:SettingsExpander>
 
                 <TextBlock x:Name="AboutGroupTitle"
                            Style="{ThemeResource SettingsCategoryTitleTextBlockStyle}"
                            AutomationProperties.HeadingLevel="Level1"
                            Text="{utils:ResourceString Name=AboutGroupTitle/Text}"/>
-                <labs:SettingsExpander x:Name="AboutExpander">
-                    <labs:SettingsExpander.HeaderIcon>
+                <toolkit:SettingsExpander x:Name="AboutExpander">
+                    <toolkit:SettingsExpander.HeaderIcon>
                         <BitmapIcon AutomationProperties.AccessibilityView="Raw" UriSource="ms-appx:///Assets/CalculatorAppList.png"/>
-                    </labs:SettingsExpander.HeaderIcon>
+                    </toolkit:SettingsExpander.HeaderIcon>
                     <TextBlock x:Name="AboutBuildVersion"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                IsTextSelectionEnabled="True"/>
-                    <labs:SettingsExpander.Items>
-                        <labs:SettingsCard ContentAlignment="Left">
+                    <toolkit:SettingsExpander.Items>
+                        <toolkit:SettingsCard ContentAlignment="Left">
                             <StackPanel Margin="0,4,0,6"
                                         Orientation="Vertical"
                                         Spacing="12">
@@ -158,9 +158,9 @@
                                                TextWrapping="Wrap"/>
                                 </HyperlinkButton>
                             </StackPanel>
-                        </labs:SettingsCard>
-                    </labs:SettingsExpander.Items>
-                </labs:SettingsExpander>
+                        </toolkit:SettingsCard>
+                    </toolkit:SettingsExpander.Items>
+                </toolkit:SettingsExpander>
 
                 <HyperlinkButton x:Name="FeedbackButton"
                                  MinWidth="120"

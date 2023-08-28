@@ -793,8 +793,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Labs.Uwp.SettingsControls">
-      <Version>0.0.16</Version>
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls">
+      <Version>8.0.230823-rc</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
