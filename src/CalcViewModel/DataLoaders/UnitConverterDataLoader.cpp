@@ -293,6 +293,8 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
                                      false,
                                      true,
                                      false });
+	dataUnits.push_back(OrderedUnit{
+        UnitConverterUnits::Data_Nibble, GetLocalizedStringName(L"UnitName_Nibble"), GetLocalizedStringName(L"UnitAbbreviation_Nibble"), 167 });
     dataUnits.push_back(OrderedUnit{
         UnitConverterUnits::Data_Pebibits, GetLocalizedStringName(L"UnitName_Pebibits"), GetLocalizedStringName(L"UnitAbbreviation_Pebibits"), 20 });
     dataUnits.push_back(OrderedUnit{
@@ -796,6 +798,7 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
                                                    { ViewMode::Area, UnitConverterUnits::Area_Pyeong, 400.0 / 121.0 },
 
                                                    { ViewMode::Data, UnitConverterUnits::Data_Bit, 0.000000125 },
+												   { ViewMode::Data, UnitConverterUnits::Data_Nibble, 0.0000005 },
                                                    { ViewMode::Data, UnitConverterUnits::Data_Byte, 0.000001 },
                                                    { ViewMode::Data, UnitConverterUnits::Data_Kilobyte, 0.001 },
                                                    { ViewMode::Data, UnitConverterUnits::Data_Megabyte, 1 },
