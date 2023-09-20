@@ -162,4 +162,9 @@
     </ClInclude>
     <ClInclude Include="NumberFormattingUtils.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="ratpak.natvis">
+      <Filter>RatPack</Filter>
+    </Natvis>
+  </ItemGroup>
 </Project>

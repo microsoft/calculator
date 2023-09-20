@@ -344,6 +344,9 @@
     <ClCompile Include="NumberFormattingUtils.cpp" />
     <ClCompile Include="UnitConverter.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="ratpak.natvis" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>
