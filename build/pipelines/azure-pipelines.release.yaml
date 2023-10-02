@@ -9,7 +9,7 @@ pr: none
 
 variables:
   versionMajor: 11
-  versionMinor: 2309
+  versionMinor: 2310
   versionBuild: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
   versionPatch: 0
 
