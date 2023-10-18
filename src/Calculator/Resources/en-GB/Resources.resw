@@ -1477,10 +1477,6 @@
     <value>nmi</value>
     <comment>An abbreviation for a measurement unit of length</comment>
   </data>
-  <data name="UnitAbbreviation_Nibble" xml:space="preserve">
-    <value>nybl</value>
-    <comment>An abbreviation for a measurement unit of data</comment>
-  </data>
   <data name="UnitAbbreviation_Petabit" xml:space="preserve">
     <value>Pb</value>
     <comment>An abbreviation for a measurement unit of data</comment>
@@ -1844,10 +1840,6 @@
   <data name="UnitName_NauticalMile" xml:space="preserve">
     <value>Nautical miles</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
-  </data>
-  <data name="UnitName_Nibble" xml:space="preserve">
-    <value>Nibble</value>
-    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabit" xml:space="preserve">
     <value>Petabits</value>
