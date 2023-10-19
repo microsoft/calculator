@@ -162,6 +162,9 @@
     <data name="Megabytes-Bits">
         <value>0.000000125</value>
     </data>
+    <data name="Megabytes-Nibble">
+        <value>0.0000005</value>
+    </data>
     <data name="Megabytes-Bytes">
         <value>0.000001</value>
     </data>
