@@ -4,10 +4,15 @@
 jobs:
 - job: ReleaseVPack
   dependsOn: Package
-  pool:
-    name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
+  templateContext:
+    outputs:
+    - output: pipelineArtifact
+      displayName: Publish vpack\app artifact with vpack manifest
+      targetPath: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
+      artifactName: vpackManifest
+
   steps:
   - checkout: none
 
@@ -34,9 +39,3 @@ jobs:
       version: $(versionMajor).$(versionMinor).$(versionBuild)
       owner: paxeeapps
       provData: true
-
-  - task: PublishBuildArtifacts@1
-    displayName: Publish vpack\app artifact with vpack manifest
-    inputs:
-      pathtoPublish: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
-      artifactName: vpackManifest

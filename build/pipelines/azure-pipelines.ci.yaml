@@ -15,46 +15,59 @@ pr:
 
 name: 0.$(Date:yyMM).$(DayOfMonth)$(Rev:rr).0
 
-jobs:
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    platform: x64
-    isOSSBuild: true
+resources:
+  repositories:
+  - repository: 1esPipelines
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
 
-- template: ./templates/build-single-architecture.yaml
+extends:
+  template: v1/1ES.Unofficial.PipelineTemplate.yml@1esPipelines
   parameters:
-    platform: x86
-    isOSSBuild: true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+    pool:
+      name: EssentialExperiencesOpenSource-windows-2022
+      image: MMSWindows2022-Secure
+      os: windows
 
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    platform: ARM
-    isOSSBuild: true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+    stages:
+    - stage: Calculator
+      jobs:
+      - template: ./templates/build-single-architecture.yaml
+        parameters:
+          platform: x64
 
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    platform: ARM64
-    isOSSBuild: true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+      - template: ./templates/build-single-architecture.yaml
+        parameters:
+          platform: x86
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/run-ui-tests.yaml
-  parameters:
-    platform: x64
-    isOSSBuild: true
-    runsettingsFileName: CalculatorUITests.ci.runsettings
+      - template: ./templates/build-single-architecture.yaml
+        parameters:
+          platform: ARM
+          isOSSBuild: true
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/run-unit-tests.yaml
-  parameters:
-    platform: x64
-    isOSSBuild: true
+      - template: ./templates/build-single-architecture.yaml
+        parameters:
+          platform: ARM64
+          isOSSBuild: true
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/run-unit-tests.yaml
-  parameters:
-    platform: x86
-    isOSSBuild: true
+      - template: ./templates/run-ui-tests.yaml
+        parameters:
+          platform: x64
+          isOSSBuild: true
+          runsettingsFileName: CalculatorUITests.ci.runsettings
 
-- template: ./templates/package-msixbundle.yaml
-  parameters:
-    isOSSBuild: true
+      - template: ./templates/run-unit-tests.yaml
+        parameters:
+          platform: x64
+
+      - template: ./templates/run-unit-tests.yaml
+        parameters:
+          platform: x86
+
+      - template: ./templates/package-msixbundle.yaml
+        parameters:
+          isOSSBuild: true

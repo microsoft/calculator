@@ -31,6 +31,24 @@ jobs:
     skipComponentGovernanceDetection: true
     StoreBrokerMediaRootPath: $(TEMP)\SBMedia
     StoreBrokerPackagePath: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
+  templateContext:
+    outputs:
+    - ${{ if eq(parameters.signBundle, true) }}:
+      - output: pipelineArtifact
+        displayName: Publish MsixBundle artifact
+        targetPath: $(Build.ArtifactStagingDirectory)\msixBundle
+        artifactName: msixBundle
+    - ${{ if eq(parameters.signBundle, false) }}:
+      - output: pipelineArtifact
+        displayName: Publish MsixBundleSigned artifact
+        targetPath: $(Build.ArtifactStagingDirectory)\msixBundle
+        artifactName: msixBundleSigned
+      - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:      
+        - output: pipelineArtifact
+          displayName: Publish StoreBroker Payload artifact
+          targetPath: $(StoreBrokerPackagePath)
+          artifactName: storeBrokerPayload
+
   steps:
   - checkout: self
     fetchDepth: 1
@@ -74,12 +92,6 @@ jobs:
       contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
       targetFolder: $(Build.ArtifactStagingDirectory)\msixBundle
 
-  - task: PublishBuildArtifacts@1
-    displayName: Publish MsixBundle artifact
-    inputs:
-      artifactName: msixBundle
-      pathToPublish: $(Build.ArtifactStagingDirectory)\msixBundle
-
   - ${{ if eq(parameters.signBundle, true) }}:
     - task: EsrpCodeSigning@2
       displayName: Send msixbundle to code signing service
@@ -114,11 +126,6 @@ jobs:
               "ToolVersion": "1.0"
             }
           ]
-    - task: PublishBuildArtifacts@1
-      displayName: Publish MsixBundleSigned artifact
-      inputs:
-        pathtoPublish: $(Build.ArtifactStagingDirectory)\msixBundle
-        artifactName: msixBundleSigned
 
     - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:      
       - powershell: |
@@ -152,9 +159,3 @@ jobs:
           pdpMediaPath: $(StoreBrokerMediaRootPath)
           outSBPackagePath: $(StoreBrokerPackagePath)
           outSBName: SBCalculator
-
-      - task: PublishBuildArtifacts@1
-        displayName: Publish StoreBroker Payload artifact
-        inputs:
-          pathtoPublish: $(StoreBrokerPackagePath)
-          artifactName: storeBrokerPayload

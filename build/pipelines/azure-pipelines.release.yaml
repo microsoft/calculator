@@ -8,63 +8,80 @@ trigger: none
 pr: none
 
 variables:
-  versionMajor: 11
+  versionMajor: 0 # TODO: revert this to 11 before checking in the code
   versionMinor: 2310
   versionBuild: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
   versionPatch: 0
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
 
-jobs:
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    platform: x64
-    isReleaseBuild: true
-    useReleaseAppxmanifest: true
+resources:
+  repositories:
+  - repository: 1esPipelines
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
 
-- template: ./templates/build-single-architecture.yaml
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
   parameters:
-    platform: x86
-    isReleaseBuild: true
-    useReleaseAppxmanifest: true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+    pool:
+      name: EssentialExperiences-windows-2022
+      image: MMSWindows2022-Secure
+      os: windows
 
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    platform: ARM
-    isReleaseBuild: true
-    useReleaseAppxmanifest: true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+    stages:
+    - stage: Calculator
+      jobs:
+      - template: ./templates/build-single-architecture.yaml
+        parameters:
+          platform: x64
+          isReleaseBuild: true
+          useReleaseAppxmanifest: true
 
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    platform: ARM64
-    isReleaseBuild: true
-    useReleaseAppxmanifest: true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+      - template: ./templates/build-single-architecture.yaml
+        parameters:
+          platform: x86
+          isReleaseBuild: true
+          useReleaseAppxmanifest: true
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/run-ui-tests.yaml
-  parameters:
-    platform: x64
-    runsettingsFileName: CalculatorUITests.release.runsettings
+      - template: ./templates/build-single-architecture.yaml
+        parameters:
+          platform: ARM
+          isReleaseBuild: true
+          useReleaseAppxmanifest: true
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/run-ui-tests.yaml
-  parameters:
-    platform: x86
-    runsettingsFileName: CalculatorUITests.release.runsettings
+      - template: ./templates/build-single-architecture.yaml
+        parameters:
+          platform: ARM64
+          isReleaseBuild: true
+          useReleaseAppxmanifest: true
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/run-unit-tests.yaml
-  parameters:
-    platform: x64
+      - template: ./templates/run-ui-tests.yaml
+        parameters:
+          platform: x64
+          runsettingsFileName: CalculatorUITests.release.runsettings
 
-- template: ./templates/run-unit-tests.yaml
-  parameters:
-    platform: x86
+      - template: ./templates/run-ui-tests.yaml
+        parameters:
+          platform: x86
+          runsettingsFileName: CalculatorUITests.release.runsettings
 
-- template: ./templates/package-msixbundle.yaml
-  parameters:
-    signBundle: true
-    createStoreBrokerPackages: true
+      - template: ./templates/run-unit-tests.yaml
+        parameters:
+          platform: x64
 
-- template: ./templates/release-store.yaml
-- template: ./templates/release-vpack.yaml
+      - template: ./templates/run-unit-tests.yaml
+        parameters:
+          platform: x86
+
+      - template: ./templates/package-msixbundle.yaml
+        parameters:
+          signBundle: true
+          createStoreBrokerPackages: true
+
+      - template: ./templates/release-store.yaml
+      - template: ./templates/release-vpack.yaml
