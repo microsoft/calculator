@@ -33,55 +33,55 @@ extends:
     stages:
     - stage: Calculator
       jobs:
-      - template: ./templates/build-single-architecture.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: x64
           isReleaseBuild: true
           useReleaseAppxmanifest: true
 
-      - template: ./templates/build-single-architecture.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: x86
           isReleaseBuild: true
           useReleaseAppxmanifest: true
           condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-      - template: ./templates/build-single-architecture.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: ARM
           isReleaseBuild: true
           useReleaseAppxmanifest: true
           condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-      - template: ./templates/build-single-architecture.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: ARM64
           isReleaseBuild: true
           useReleaseAppxmanifest: true
           condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-      - template: ./templates/run-ui-tests.yaml
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
         parameters:
           platform: x64
           runsettingsFileName: CalculatorUITests.release.runsettings
 
-      - template: ./templates/run-ui-tests.yaml
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
         parameters:
           platform: x86
           runsettingsFileName: CalculatorUITests.release.runsettings
 
-      - template: ./templates/run-unit-tests.yaml
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
         parameters:
           platform: x64
 
-      - template: ./templates/run-unit-tests.yaml
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
         parameters:
           platform: x86
 
-      - template: ./templates/package-msixbundle.yaml
+      - template: /build/pipelines/templates/package-msixbundle.yaml@self
         parameters:
           signBundle: true
           createStoreBrokerPackages: true
 
-      - template: ./templates/release-store.yaml
-      - template: ./templates/release-vpack.yaml
+      - template: /build/pipelines/templates/release-store.yaml@self
+      - template: /build/pipelines/templates/release-vpack.yaml@self

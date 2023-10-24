@@ -33,41 +33,41 @@ extends:
     stages:
     - stage: Calculator
       jobs:
-      - template: ./templates/build-single-architecture.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: x64
 
-      - template: ./templates/build-single-architecture.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: x86
           condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-      - template: ./templates/build-single-architecture.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: ARM
           isOSSBuild: true
           condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-      - template: ./templates/build-single-architecture.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: ARM64
           isOSSBuild: true
           condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-      - template: ./templates/run-ui-tests.yaml
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
         parameters:
           platform: x64
           isOSSBuild: true
           runsettingsFileName: CalculatorUITests.ci.runsettings
 
-      - template: ./templates/run-unit-tests.yaml
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
         parameters:
           platform: x64
 
-      - template: ./templates/run-unit-tests.yaml
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
         parameters:
           platform: x86
 
-      - template: ./templates/package-msixbundle.yaml
+      - template: /build/pipelines/templates/package-msixbundle.yaml@self
         parameters:
           isOSSBuild: true

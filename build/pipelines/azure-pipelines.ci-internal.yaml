@@ -30,46 +30,46 @@ extends:
     stages:
     - stage:
       jobs:
-      - template: ./templates/build-single-architecture.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           isReleaseBuild: true
           useReleaseAppxManifest: false
           platform: x64
 
-      - template: ./templates/build-single-architecture.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           isReleaseBuild: true
           useReleaseAppxManifest: false
           platform: x86
 
-      - template: ./templates/build-single-architecture.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           isReleaseBuild: true
           useReleaseAppxManifest: false
           platform: ARM
 
-      - template: ./templates/build-single-architecture.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           isReleaseBuild: true
           useReleaseAppxManifest: false
           platform: ARM64
 
-      - template: ./templates/run-ui-tests.yaml
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
         parameters:
           platform: x64
           runsettingsFileName: CalculatorUITests.ci-internal.runsettings
 
-      - template: ./templates/run-ui-tests.yaml
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
         parameters:
           platform: x86
           runsettingsFileName: CalculatorUITests.ci-internal.runsettings
 
-      - template: ./templates/run-unit-tests.yaml
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
         parameters:
           platform: x64
 
-      - template: ./templates/run-unit-tests.yaml
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
         parameters:
           platform: x86
 
-      - template: ./templates/package-msixbundle.yaml
+      - template: /build/pipelines/templates/package-msixbundle.yaml@self
