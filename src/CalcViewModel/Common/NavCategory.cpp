@@ -100,7 +100,8 @@ namespace // put the utils within this TU
           MyVirtualKey::Number2,
           L"2",
           SUPPORTS_ALL },
-      NavCategoryInitializer{ ViewMode::Graphing,
+        /*
+        NavCategoryInitializer{ ViewMode::Graphing,
           GRAPHING_ID,
           L"Graphing",
           L"GraphingCalculatorMode",
@@ -243,7 +244,7 @@ namespace // put the utils within this TU
           CategoryGroupType::Converter,
           MyVirtualKey::None,
           std::nullopt,
-          SUPPORTS_NEGATIVE },
+          SUPPORTS_NEGATIVE },*/
     };
 } // namespace unnamed
 
