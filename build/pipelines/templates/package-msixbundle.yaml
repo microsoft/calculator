@@ -97,7 +97,7 @@ jobs:
     displayName: Generate MsixBundle mapping
     inputs:
       filePath: $(Build.SourcesDirectory)\build\scripts\CreateMsixBundleMapping.ps1
-      arguments: '-InputPath $(Build.ArtifactStagingDirectory)\drop\Release -ProjectName Calculator -OutputFile $(Build.BinariesDirectory)\MsixBundleMapping.txt'
+      arguments: '-InputPath $(Build.ArtifactStagingDirectory)\drop -ProjectName Calculator -OutputFile $(Build.BinariesDirectory)\MsixBundleMapping.txt'
 
   - powershell: |
       $buildVersion = [version]$Env:BUILDVERSION
