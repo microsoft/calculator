@@ -14,11 +14,10 @@ jobs:
   steps:
   - checkout: none
   
-  - task: DownloadBuildArtifacts@0
+  - download: current
     displayName: Download CalculatorUnitTests
-    inputs:
-      artifactName: drop
-      itemPattern: drop/Release/${{ parameters.platform }}/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test/**
+    artifact: drop
+    patterns: drop/Release/${{ parameters.platform }}/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test/**
 
   - task: PowerShell@2
     displayName: Install Certificate
