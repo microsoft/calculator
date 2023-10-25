@@ -16,10 +16,9 @@ jobs:
   steps:
   - checkout: none
 
-  - task: DownloadBuildArtifacts@0
+  - download: current
     displayName: Download msixBundleSigned artifact
-    inputs:
-      artifactName: msixBundleSigned
+    artifact: msixBundleSigned
 
   - task: CopyFiles@2
     displayName: Copy signed MsixBundle to vpack staging folder

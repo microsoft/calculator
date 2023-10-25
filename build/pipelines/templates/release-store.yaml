@@ -13,10 +13,9 @@ jobs:
   steps:
   - checkout: none
 
-  - task: DownloadBuildArtifacts@0
+  - download: current
     displayName: Download storeBrokerPayload artifact
-    inputs:
-      artifactName: storeBrokerPayload
+    artifact: storeBrokerPayload
 
   - task: MS-RDX-MRO.windows-store-publish-dev.flight-task.store-flight@2
     displayName: Flight StoreBroker Payload to team ring

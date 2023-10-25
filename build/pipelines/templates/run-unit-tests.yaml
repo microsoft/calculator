@@ -11,22 +11,23 @@ jobs:
   condition: succeeded()
   variables:
     skipComponentGovernanceDetection: true
+    UnitTestsDir: $(Pipeline.Workspace)\drop-${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test
   steps:
   - checkout: none
   
   - download: current
     displayName: Download CalculatorUnitTests
-    artifact: drop
-    patterns: drop/Release/${{ parameters.platform }}/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test/**
+    artifact: drop-${{ parameters.platform }}
+    patterns: '**/CalculatorUnitTests_Test/**'
 
   - task: PowerShell@2
     displayName: Install Certificate
     inputs:
-      filePath: $(Pipeline.Workspace)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\Add-AppDevPackage.ps1
-      arguments: -CertificatePath $(Pipeline.Workspace)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.cer -Force
+      filePath: $(UnitTestsDir)\Add-AppDevPackage.ps1
+      arguments: -CertificatePath $(UnitTestsDir)\CalculatorUnitTests.cer -Force
 
   - task: VSTest@2
     displayName: Run CalculatorUnitTests
     inputs:
-      testAssemblyVer2: $(Pipeline.Workspace)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.msix
+      testAssemblyVer2: $(UnitTestsDir)\CalculatorUnitTests.msix
       otherConsoleOptions: /Platform:${{ parameters.platform }}

@@ -31,8 +31,8 @@ jobs:
     outputs:
     - output: pipelineArtifact
       displayName: Publish drop artifact
-      targetPath: $(Build.BinariesDirectory)
-      artifactName: drop
+      targetPath: $(Build.BinariesDirectory)\$(BuildConfiguration)\${{ parameters.platform }}
+      artifactName: drop-${{ parameters.platform }}
 
   steps:
   - checkout: self
