@@ -51,7 +51,7 @@ jobs:
   - checkout: self
     fetchDepth: 1
 
-  - task: DownloadPipelineArtifacts@2
+  - task: DownloadPipelineArtifact@2
     displayName: Download all .msix artifacts (x86)
     condition: and(succeeded(), eq(variables.PackageX86, 'true'))
     inputs:
@@ -59,7 +59,7 @@ jobs:
       itemPattern: '**/*.msix'
       targetPath: $(Build.ArtifactStagingDirectory)\drop\x86
 
-  - task: DownloadPipelineArtifacts@2
+  - task: DownloadPipelineArtifact@2
     displayName: Download all .msix artifacts (x64)
     condition: and(succeeded(), eq(variables.PackageX64, 'true'))
     inputs:
@@ -67,7 +67,7 @@ jobs:
       itemPattern: '**/*.msix'
       targetPath: $(Build.ArtifactStagingDirectory)\drop\x64
 
-  - task: DownloadPipelineArtifacts@2
+  - task: DownloadPipelineArtifact@2
     displayName: Download all .msix artifacts (ARM)
     condition: and(succeeded(), eq(variables.PackageARM, 'true'))
     inputs:
@@ -75,7 +75,7 @@ jobs:
       itemPattern: '**/*.msix'
       targetPath: $(Build.ArtifactStagingDirectory)\drop\ARM
 
-  - task: DownloadPipelineArtifacts@2
+  - task: DownloadPipelineArtifact@2
     displayName: Download all .msix artifacts (ARM64)
     condition: and(succeeded(), eq(variables.PackageARM64, 'true'))
     inputs:
