@@ -58,6 +58,7 @@ jobs:
     inputs:
       artifactName: drop
       itemPattern: '**/*.msix'
+      targetPath: $(Build.ArtifactStagingDirectory)
 
   - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:
     - task: UniversalPackages@0

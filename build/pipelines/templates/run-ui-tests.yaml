@@ -44,19 +44,19 @@ jobs:
   - task: PowerShell@2
     displayName: Install certificate
     inputs:
-      filePath: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
-      arguments: -CertificatePath $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Calculator_$(Build.BuildNumber)_${{ parameters.platform }}.cer -Force
+      filePath: $(Pipeline.Workspace)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
+      arguments: -CertificatePath $(Pipeline.Workspace)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Calculator_$(Build.BuildNumber)_${{ parameters.platform }}.cer -Force
 
   - task: PowerShell@2
     displayName: Install app
     inputs:
-      filePath: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
+      filePath: $(Pipeline.Workspace)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
       arguments: -Force
 
   - task: VSTest@2
     displayName: Run CalculatorUITests
     inputs:
-      testAssemblyVer2: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/CalculatorUITests.dll
-      runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/${{ parameters.runsettingsFileName }}
+      testAssemblyVer2: $(Pipeline.Workspace)/drop/Release/${{ parameters.platform }}/publish/CalculatorUITests.dll
+      runSettingsFile: $(Pipeline.Workspace)/drop/Release/${{ parameters.platform }}/publish/${{ parameters.runsettingsFileName }}
       platform: ${{ parameters.platform }}
       configuration: Release

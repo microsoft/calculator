@@ -23,11 +23,11 @@ jobs:
   - task: PowerShell@2
     displayName: Install Certificate
     inputs:
-      filePath: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\Add-AppDevPackage.ps1
-      arguments: -CertificatePath $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.cer -Force
+      filePath: $(Pipeline.Workspace)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\Add-AppDevPackage.ps1
+      arguments: -CertificatePath $(Pipeline.Workspace)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.cer -Force
 
   - task: VSTest@2
     displayName: Run CalculatorUnitTests
     inputs:
-      testAssemblyVer2: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.msix
+      testAssemblyVer2: $(Pipeline.Workspace)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.msix
       otherConsoleOptions: /Platform:${{ parameters.platform }}

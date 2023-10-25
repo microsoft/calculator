@@ -5,7 +5,7 @@ jobs:
   dependsOn: Package
   variables:
     skipComponentGovernanceDetection: true
-    StoreBrokerPackagePath: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
+    StoreBrokerPackagePath: $(Pipeline.Workspace)\storeBrokerPayload
     StoreBrokerLogPath: $(StoreBrokerPackagePath)\StoreBroker.log
     FlightId: 161f0975-cb5f-475b-8ef6-26383c37621f
     AppId: 9WZDNCRFHVN5
