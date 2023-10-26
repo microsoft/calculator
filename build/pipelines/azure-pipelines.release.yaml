@@ -37,6 +37,8 @@ extends:
           !**/clrcompression.dll
           !**/WebView2Loader.dll
           !**/Microsoft.Web.WebView2.Core.dll
+          !**/GraphingImpl.dll
+          !**/omsautimmss.dll. 
 
     stages:
     - stage: Calculator
