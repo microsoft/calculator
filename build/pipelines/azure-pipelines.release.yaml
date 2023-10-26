@@ -29,6 +29,14 @@ extends:
       name: EssentialExperiences-windows-2022
       image: MMSWindows2022-Secure
       os: windows
+    sdl:
+      binSkim:
+        analyzeTargetGlob: |
+          $(Build.BinariesDirectory)/**.dll;
+          $(Build.BinariesDirectory)/**.exe;
+          !**/clrcompression.dll
+          !**/WebView2Loader.dll
+          !**/Microsoft.Web.WebView2.Core.dll
 
     stages:
     - stage: Calculator
