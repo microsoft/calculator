@@ -31,14 +31,7 @@ extends:
       os: windows
     sdl:
       binskim:
-        AnalyzeTargetBinskim: |
-          $(Build.BinariesDirectory)/**.dll;
-          $(Build.BinariesDirectory)/**.exe;
-          !**/clrcompression.dll;
-          !**/WebView2Loader.dll;
-          !**/Microsoft.Web.WebView2.Core.dll;
-          !**/GraphingImpl.dll;
-          !**/omsautimmss.dll;
+        analyzeTargetGlob: -f|**/GraphingImpl.dll;-f|**/omsautimmss.dll
 
     stages:
     - stage: Calculator
