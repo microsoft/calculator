@@ -12,6 +12,7 @@ jobs:
       displayName: Publish vpack\app artifact with vpack manifest
       targetPath: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
       artifactName: vpackManifest
+      sbomEnabled: false
 
   steps:
   - checkout: none
