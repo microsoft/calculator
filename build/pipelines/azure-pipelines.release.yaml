@@ -30,8 +30,8 @@ extends:
       image: MMSWindows2022-Secure
       os: windows
     sdl:
-      binSkim:
-        analyzeTargetGlob: |
+      binskim:
+        analyzeTargetBinskim: |
           $(Build.BinariesDirectory)/**.dll;
           $(Build.BinariesDirectory)/**.exe;
           !**/clrcompression.dll;
