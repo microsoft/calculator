@@ -31,7 +31,7 @@ extends:
       os: windows
     sdl:
       binskim:
-        analyzeTargetGlob: -:f|**\GraphingImpl.dll;-:f|**\omsautimmss.dll
+        analyzeTargetGlob: +:f|$(Build.BinariesDirectory)\**\*.dll;+:$(Build.BinariesDirectory)\**\*.exe;-:f|**\GraphingImpl.dll;-:f|**\omsautimmss.dll
 
     stages:
     - stage: Calculator
