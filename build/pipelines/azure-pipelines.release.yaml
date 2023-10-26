@@ -34,11 +34,11 @@ extends:
         analyzeTargetGlob: |
           $(Build.BinariesDirectory)/**.dll;
           $(Build.BinariesDirectory)/**.exe;
-          !**/clrcompression.dll
-          !**/WebView2Loader.dll
-          !**/Microsoft.Web.WebView2.Core.dll
-          !**/GraphingImpl.dll
-          !**/omsautimmss.dll. 
+          !**/clrcompression.dll;
+          !**/WebView2Loader.dll;
+          !**/Microsoft.Web.WebView2.Core.dll;
+          !**/GraphingImpl.dll;
+          !**/omsautimmss.dll;
 
     stages:
     - stage: Calculator
