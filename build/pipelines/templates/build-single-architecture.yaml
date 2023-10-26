@@ -75,28 +75,28 @@ jobs:
       configuration: $(BuildConfiguration)
       maximumCpuCount: true
 
-  - task: CopyFiles@2
-    displayName: Copy Files for BinSkim analysis
-    inputs:
-      SourceFolder: '$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator\'
-      # Setting up a folder to store all the binary files that we need BinSkim to scan.
-      # If we put more things than we produce pdbs for and can index (such as nuget packages that ship without pdbs), binskim will fail.
-      # Below are ignored files
-      #   - clrcompression.dll
-      #   - WebView2Loader.dll
-      #   - Microsoft.Web.WebView2.Core.dll
-      Contents: |
-        **\*
-        !**\clrcompression.dll
-        !**\WebView2Loader.dll
-        !**\Microsoft.Web.WebView2.Core.dll
-      TargetFolder: '$(Agent.BuildDirectory)\binskim'
-      CleanTargetFolder: true
-      OverWrite: true
-      flattenFolders: false
-      analyzeTarget: '$(Agent.BuildDirectory)\binskim\*'
-
   - ${{ if eq(parameters.isReleaseBuild, true) }}:          
+    - task: CopyFiles@2
+      displayName: Copy Files for BinSkim analysis
+      inputs:
+        SourceFolder: '$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator\'
+        # Setting up a folder to store all the binary files that we need BinSkim to scan.
+        # If we put more things than we produce pdbs for and can index (such as nuget packages that ship without pdbs), binskim will fail.
+        # Below are ignored files
+        #   - clrcompression.dll
+        #   - WebView2Loader.dll
+        #   - Microsoft.Web.WebView2.Core.dll
+        Contents: |
+          **\*
+          !**\clrcompression.dll
+          !**\WebView2Loader.dll
+          !**\Microsoft.Web.WebView2.Core.dll
+        TargetFolder: '$(Agent.BuildDirectory)\binskim'
+        CleanTargetFolder: true
+        OverWrite: true
+        flattenFolders: false
+        analyzeTarget: '$(Agent.BuildDirectory)\binskim\*'
+
     - task: PublishSymbols@2
       displayName: Publish symbols
       inputs:

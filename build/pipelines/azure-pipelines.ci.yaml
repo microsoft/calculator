@@ -30,6 +30,10 @@ extends:
       image: MMSWindows2022-Secure
       os: windows
 
+    sdl:
+      binskim:
+        enabled: false
+
     stages:
     - stage: Calculator
       jobs:
