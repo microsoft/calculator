@@ -29,9 +29,6 @@ extends:
       name: EssentialExperiences-windows-2022
       image: MMSWindows2022-Secure
       os: windows
-    sdl:
-      binskim:
-        analyzeTargetGlob: +:f|$(Agent.BuildDirectory)\binskim\**\*.dll;+:f|$(Agent.BuildDirectory)\binskim\**\*.exe
 
     stages:
     - stage: Calculator
