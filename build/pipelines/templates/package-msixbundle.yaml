@@ -31,12 +31,12 @@ jobs:
     PackageARM64: $[in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues')]
   templateContext:
     outputs:
-    - ${{ if eq(parameters.signBundle, true) }}:
+    - ${{ if eq(parameters.signBundle, false) }}:
       - output: pipelineArtifact
         displayName: Publish MsixBundle artifact
         targetPath: $(Build.ArtifactStagingDirectory)\msixBundle
         artifactName: msixBundle
-    - ${{ if eq(parameters.signBundle, false) }}:
+    - ${{ else }}:
       - output: pipelineArtifact
         displayName: Publish MsixBundleSigned artifact
         targetPath: $(Build.ArtifactStagingDirectory)\msixBundle
