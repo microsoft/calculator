@@ -31,7 +31,7 @@ extends:
       os: windows
     sdl:
       binskim:
-        analyzeTargetBinskim: |
+        AnalyzeTargetBinskim: |
           $(Build.BinariesDirectory)/**.dll;
           $(Build.BinariesDirectory)/**.exe;
           !**/clrcompression.dll;
