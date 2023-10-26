@@ -31,6 +31,7 @@ jobs:
     sdl:
       binskim:
         analyzeTargetGlob: +:f|$(Agent.BuildDirectory)\binskim\**\*.dll;+:f|$(Agent.BuildDirectory)\binskim\**\*.exe
+
     outputs:
     - output: pipelineArtifact
       displayName: Publish drop artifact
