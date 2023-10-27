@@ -30,7 +30,7 @@ jobs:
   templateContext:
     sdl:
       binskim:
-        analyzeTargetGlob: +:f|$(Agent.BuildDirectory)\binskim\**\*.dll;+:f|$(Agent.BuildDirectory)\binskim\**\*.exe
+        analyzeTargetGlob: +:f|$(Agent.BuildDirectory)\binskim\**\*
 
     outputs:
     - output: pipelineArtifact
@@ -91,7 +91,8 @@ jobs:
         #   - WebView2Loader.dll
         #   - Microsoft.Web.WebView2.Core.dll
         Contents: |
-          **\*
+          **\*.dll
+          **\*.exe
           !**\clrcompression.dll
           !**\WebView2Loader.dll
           !**\Microsoft.Web.WebView2.Core.dll

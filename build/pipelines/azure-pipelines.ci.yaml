@@ -49,13 +49,11 @@ extends:
       - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: ARM
-          isOSSBuild: true
           condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
       - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: ARM64
-          isOSSBuild: true
           condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
       - template: /build/pipelines/templates/run-ui-tests.yaml@self
@@ -73,5 +71,3 @@ extends:
           platform: x86
 
       - template: /build/pipelines/templates/package-msixbundle.yaml@self
-        parameters:
-          isOSSBuild: true
