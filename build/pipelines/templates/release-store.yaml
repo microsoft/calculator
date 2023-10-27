@@ -3,11 +3,9 @@
 jobs:
 - job: ReleaseStore
   dependsOn: Package
-  pool:
-    name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
-    StoreBrokerPackagePath: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
+    StoreBrokerPackagePath: $(Pipeline.Workspace)\storeBrokerPayload
     StoreBrokerLogPath: $(StoreBrokerPackagePath)\StoreBroker.log
     FlightId: 161f0975-cb5f-475b-8ef6-26383c37621f
     AppId: 9WZDNCRFHVN5
@@ -15,10 +13,9 @@ jobs:
   steps:
   - checkout: none
 
-  - task: DownloadBuildArtifacts@0
+  - download: current
     displayName: Download storeBrokerPayload artifact
-    inputs:
-      artifactName: storeBrokerPayload
+    artifact: storeBrokerPayload
 
   - task: MS-RDX-MRO.windows-store-publish-dev.flight-task.store-flight@2
     displayName: Flight StoreBroker Payload to team ring
