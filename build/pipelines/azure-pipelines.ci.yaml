@@ -59,6 +59,26 @@ extends:
           platform: ARM64
           condition: not(eq(variables['Build.Reason'], 'PullRequest'))
           isOSSBuild: true
+          trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- task: VSBuild@1
+  inputs:
+    solution: 'src/Calculator.sln'
+    vsVersion: '17.0'
+    configuration: 'Release'
+    platform: 'Any CPU'
+    deployOnBuild: true
+    webPublishMethod: 'Package'
+    packageAsSingleFile: true
+    skipInvalidConfigurations: true
+    packageLocation: '$(build.artifactstagingdirectory)'
+    msDeployUserAgent: 'VSTS_b7d7e05b-19ad-4e10-96e2-229b3295a0a9_build_15_0'
+
 
       - template: /build/pipelines/templates/run-ui-tests.yaml@self
         parameters:
