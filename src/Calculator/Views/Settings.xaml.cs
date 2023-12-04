@@ -45,7 +45,7 @@ namespace CalculatorApp
 
             var copyrightText =
                 LocalizationStringUtil.GetLocalizedString(resourceLoader.GetResourceString("AboutControlCopyright"), BUILD_YEAR);
-            AboutControlCopyrightRun.Text = copyrightText;
+            AboutExpander.Description = copyrightText;
 
             InitializeContributeTextBlock();
         }
@@ -108,8 +108,8 @@ namespace CalculatorApp
         private void SetVersionString()
         {
             PackageVersion version = Package.Current.Id.Version;
-            string appName = AppResourceProvider.GetInstance().GetResourceString("AppName");
-            AboutBuildVersion.Text = appName + " " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
+            AboutExpander.Header = AppResourceProvider.GetInstance().GetResourceString("AppName");
+            AboutBuildVersion.Text = version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
         }
 
         private void InitializeContributeTextBlock()

@@ -4722,11 +4722,11 @@
     <value>Appearance</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Header" xml:space="preserve">
     <value>App theme</value>
     <comment>Title of App theme expander</comment>
   </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Description" xml:space="preserve">
     <value>Select which app theme to display</value>
     <comment>Description of App theme expander</comment>
   </data>
