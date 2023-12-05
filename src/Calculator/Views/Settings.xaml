@@ -32,12 +32,6 @@
                 <Setter Property="TextWrapping" Value="Wrap"/>
             </Style>
 
-            <Style x:Key="SettingsCategoryTitleTextBlockStyle"
-                   BasedOn="{StaticResource BodyStrongTextBlockStyle}"
-                   TargetType="TextBlock">
-                <Setter Property="Margin" Value="0,30,0,4"/>
-            </Style>
-
             <automation:NarratorNotifier x:Name="NarratorNotifier"/>
 
             <!-- Override default hyperlink button background color -->
