@@ -1385,6 +1385,10 @@
     <value>J</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
+  <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
+    <value>kWh</value>
+    <comment>An abbreviation for a measurement unit of electricity consumption</comment>
+  </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
     <value>K</value>
     <comment>An abbreviation for the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin)</comment>
@@ -1573,6 +1577,10 @@
     <value>MiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
+  <data name="UnitAbbreviation_Nibble" xml:space="preserve">
+    <value>nybl</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
     <value>Pi</value>
     <comment>An abbreviation for a measurement unit of data</comment>
@@ -1749,6 +1757,10 @@
     <value>ஜூல்கள்</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Kilowatthour" xml:space="preserve">
+    <value>கிலோவாட்-மணிநேரங்கள்</value>
+    <comment>A measurement unit for electricity consumption. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
     <value>கெல்வின்</value>
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
@@ -1832,6 +1844,10 @@
   <data name="UnitName_Minute" xml:space="preserve">
     <value>நிமிடங்கள்</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Nibble" xml:space="preserve">
+    <value>நிபில்</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
     <value>நானோமீட்டர்கள்</value>
@@ -2330,7 +2346,7 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>அங்கு இதுவரை வரலாறு ஏதுமில்லை</value>
+    <value>இங்கு இதுவரை வரலாறு ஏதுமில்லை</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
@@ -4135,16 +4151,16 @@
     <value>தோற்றம்</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>பயன்பாட்டு தீம்</value>
+  <data name="AppThemeExpander.Header" xml:space="preserve">
+    <value>பயன்பாட்டுக் கருப்பொருள்</value>
     <comment>Title of App theme expander</comment>
   </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Description" xml:space="preserve">
     <value>எந்தப் பயன்பாட்டு கருப்பொருளைக் காண்பிக்க வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும்</value>
     <comment>Description of App theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
-    <value>லைட்</value>
+    <value>வெளிச்சம்</value>
     <comment>Lable for light theme option</comment>
   </data>
   <data name="DarkThemeRadioButton.Content" xml:space="preserve">
@@ -4162,9 +4178,5 @@
   <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
     <value>அமைப்புகள் பக்கம்</value>
     <comment>Announcement used when Settings page is opened</comment>
-  </data>
-  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>பயன்பாட்டின் கருப்பொருள் அமைப்பு</value>
-    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>

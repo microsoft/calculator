@@ -1385,6 +1385,10 @@
     <value>J</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
+  <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
+    <value>kWh</value>
+    <comment>An abbreviation for a measurement unit of electricity consumption</comment>
+  </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
     <value>K</value>
     <comment>An abbreviation for the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin)</comment>
@@ -1573,6 +1577,10 @@
     <value>MiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
+  <data name="UnitAbbreviation_Nibble" xml:space="preserve">
+    <value>falat</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
     <value>Pi</value>
     <comment>An abbreviation for a measurement unit of data</comment>
@@ -1749,6 +1757,10 @@
     <value>joule</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Kilowatthour" xml:space="preserve">
+    <value>Kilowattóra</value>
+    <comment>A measurement unit for electricity consumption. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
     <value>Kelvin</value>
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
@@ -1832,6 +1844,10 @@
   <data name="UnitName_Minute" xml:space="preserve">
     <value>perc</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Nibble" xml:space="preserve">
+    <value>Falat</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
     <value>nanométer</value>
@@ -2318,7 +2334,7 @@
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutControlContribute" xml:space="preserve">
-    <value>Ha tudni szeretné, hogy miként működhet a Windows Számológép számára, nézze meg a projektet %HL%GitHub%HL%.</value>
+    <value>Ha tudni szeretné, hogy miként működhet közre a Windows Számológép számára, nézze meg a projektet a %HL%GitHub%HL% szolgáltatásban.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutGroupTitle.Text" xml:space="preserve">
@@ -3464,7 +3480,7 @@
     <comment>Title for KeyGraphFeatures Minima Property</comment>
   </data>
   <data name="Monotonicity" xml:space="preserve">
-    <value>Monotonicitás</value>
+    <value>Monotonitás</value>
     <comment>Title for KeyGraphFeatures Monotonicity Property</comment>
   </data>
   <data name="ObliqueAsymptotes" xml:space="preserve">
@@ -4134,11 +4150,11 @@
     <value>Megjelenés</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Header" xml:space="preserve">
     <value>Alkalmazástéma</value>
     <comment>Title of App theme expander</comment>
   </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Description" xml:space="preserve">
     <value>Válassza ki a megjelenítendő alkalmazástémát</value>
     <comment>Description of App theme expander</comment>
   </data>
@@ -4161,9 +4177,5 @@
   <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
     <value>Beállítások lap</value>
     <comment>Announcement used when Settings page is opened</comment>
-  </data>
-  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Alkalmazástéma beállítása</value>
-    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>
