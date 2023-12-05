@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+             xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
              xmlns:utils="using:CalculatorApp.Utils"
              Loaded="OnLoaded"
              Unloaded="OnUnloaded"
@@ -32,12 +32,6 @@
                 <Setter Property="TextWrapping" Value="Wrap"/>
             </Style>
 
-            <Style x:Key="SettingsCategoryTitleTextBlockStyle"
-                   BasedOn="{StaticResource BodyStrongTextBlockStyle}"
-                   TargetType="TextBlock">
-                <Setter Property="Margin" Value="0,30,0,4"/>
-            </Style>
-
             <automation:NarratorNotifier x:Name="NarratorNotifier"/>
 
             <!-- Override default hyperlink button background color -->
@@ -51,6 +45,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="{x:Bind TitleBarHeight, Mode=OneWay}"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -76,8 +71,7 @@
                        Text="{utils:ResourceString Name=SettingsHeader/Text}"/>
         </Grid>
 
-        <ScrollViewer Grid.Row="1"
-                      Margin="0,30,0,0"
+        <ScrollViewer Grid.Row="2"
                       Padding="24,0,24,16"
                       Style="{StaticResource SettingsContentScrollViewStyle}">
 
@@ -86,12 +80,13 @@
                     <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True"/>
                     <RepositionThemeTransition IsStaggeringEnabled="False"/>
                 </StackPanel.ChildrenTransitions>
-                <TextBlock Style="{StaticResource SettingsCategoryTitleTextBlockStyle}"
+                <TextBlock Margin="0,12,0,4"
+                           Style="{StaticResource BodyStrongTextBlockStyle}"
                            AutomationProperties.HeadingLevel="Level1"
                            Text="{utils:ResourceString Name=SettingsAppearance/Text}"/>
                 <toolkit:SettingsExpander x:Name="AppThemeExpander"
-                                       Description="{utils:ResourceString Name=AppThemeExpander/Description}"
-                                       Header="{utils:ResourceString Name=AppThemeExpander/Header}">
+                                          Description="{utils:ResourceString Name=AppThemeExpander/Description}"
+                                          Header="{utils:ResourceString Name=AppThemeExpander/Header}">
                     <toolkit:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE790;"/>
                     </toolkit:SettingsExpander.HeaderIcon>
@@ -115,12 +110,15 @@
                 </toolkit:SettingsExpander>
 
                 <TextBlock x:Name="AboutGroupTitle"
-                           Style="{ThemeResource SettingsCategoryTitleTextBlockStyle}"
+                           Margin="0,30,0,4"
+                           Style="{StaticResource BodyStrongTextBlockStyle}"
                            AutomationProperties.HeadingLevel="Level1"
                            Text="{utils:ResourceString Name=AboutGroupTitle/Text}"/>
                 <toolkit:SettingsExpander x:Name="AboutExpander">
                     <toolkit:SettingsExpander.HeaderIcon>
-                        <BitmapIcon AutomationProperties.AccessibilityView="Raw" UriSource="ms-appx:///Assets/CalculatorAppList.png"/>
+                        <BitmapIcon AutomationProperties.AccessibilityView="Raw"
+                                    ShowAsMonochrome="False"
+                                    UriSource="ms-appx:///Assets/CalculatorAppList.png"/>
                     </toolkit:SettingsExpander.HeaderIcon>
                     <TextBlock x:Name="AboutBuildVersion"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"

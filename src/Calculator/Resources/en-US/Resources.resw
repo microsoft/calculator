@@ -4750,8 +4750,4 @@
     <value>Settings page</value>
     <comment>Announcement used when Settings page is opened</comment>
   </data>
-  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>App theme setting</value>
-    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
-  </data>
 </root>
