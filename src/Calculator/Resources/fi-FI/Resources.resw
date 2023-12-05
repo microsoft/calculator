@@ -1385,6 +1385,10 @@
     <value>J</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
+  <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
+    <value>kWh</value>
+    <comment>An abbreviation for a measurement unit of electricity consumption</comment>
+  </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
     <value>K</value>
     <comment>An abbreviation for the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin)</comment>
@@ -1573,6 +1577,10 @@
     <value>MiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
+  <data name="UnitAbbreviation_Nibble" xml:space="preserve">
+    <value>nybl</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
     <value>Pii</value>
     <comment>An abbreviation for a measurement unit of data</comment>
@@ -1749,6 +1757,10 @@
     <value>joulea</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Kilowatthour" xml:space="preserve">
+    <value>kilowattituntia</value>
+    <comment>A measurement unit for electricity consumption. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
     <value>Kelvin</value>
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
@@ -1832,6 +1844,10 @@
   <data name="UnitName_Minute" xml:space="preserve">
     <value>minuuttia</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Nibble" xml:space="preserve">
+    <value>Puolitavu</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
     <value>Nanometrit</value>
@@ -4134,11 +4150,11 @@
     <value>Ulkoasu</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Header" xml:space="preserve">
     <value>Sovelluksen teema</value>
     <comment>Title of App theme expander</comment>
   </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Description" xml:space="preserve">
     <value>Valitse näytettävä sovelluksen teema</value>
     <comment>Description of App theme expander</comment>
   </data>
@@ -4161,9 +4177,5 @@
   <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
     <value>Asetussivu</value>
     <comment>Announcement used when Settings page is opened</comment>
-  </data>
-  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Sovelluksen teeman asetus</value>
-    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>
