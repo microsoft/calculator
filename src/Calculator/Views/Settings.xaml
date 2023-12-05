@@ -51,6 +51,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="{x:Bind TitleBarHeight, Mode=OneWay}"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -76,8 +77,7 @@
                        Text="{utils:ResourceString Name=SettingsHeader/Text}"/>
         </Grid>
 
-        <ScrollViewer Grid.Row="1"
-                      Margin="0,30,0,0"
+        <ScrollViewer Grid.Row="2"
                       Padding="24,0,24,16"
                       Style="{StaticResource SettingsContentScrollViewStyle}">
 
@@ -86,7 +86,8 @@
                     <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True"/>
                     <RepositionThemeTransition IsStaggeringEnabled="False"/>
                 </StackPanel.ChildrenTransitions>
-                <TextBlock Style="{StaticResource SettingsCategoryTitleTextBlockStyle}"
+                <TextBlock Margin="0,12,0,4"
+                           Style="{StaticResource BodyStrongTextBlockStyle}"
                            AutomationProperties.HeadingLevel="Level1"
                            Text="{utils:ResourceString Name=SettingsAppearance/Text}"/>
                 <toolkit:SettingsExpander x:Name="AppThemeExpander"
@@ -115,7 +116,8 @@
                 </toolkit:SettingsExpander>
 
                 <TextBlock x:Name="AboutGroupTitle"
-                           Style="{ThemeResource SettingsCategoryTitleTextBlockStyle}"
+                           Margin="0,30,0,4"
+                           Style="{StaticResource BodyStrongTextBlockStyle}"
                            AutomationProperties.HeadingLevel="Level1"
                            Text="{utils:ResourceString Name=AboutGroupTitle/Text}"/>
                 <toolkit:SettingsExpander x:Name="AboutExpander">
