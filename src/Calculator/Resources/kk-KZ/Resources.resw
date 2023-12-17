@@ -2143,11 +2143,11 @@
   </data>
   <data name="UnitName_Battery" xml:space="preserve">
     <value>батарея</value>
-    <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+    <comment>AA-cell battery, used as a comparison measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitAbbreviation_Battery" xml:space="preserve">
     <value>батарея</value>
-    <comment>AA-cell battery, used as a comparison measurement unit for data storage. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+    <comment>AA-cell battery, used as a comparison measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Paperclip" xml:space="preserve">
     <value>қағаз түйрегіші</value>
