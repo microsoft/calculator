@@ -17,6 +17,8 @@ jobs:
       name: EssentialExperiences-Win11
   variables:
     skipComponentGovernanceDetection: true
+    DropName: drop-${{ parameters.platform }}
+
   steps:
   - checkout: self
     fetchDepth: 1
@@ -33,32 +35,29 @@ jobs:
       width: 1920
       height: 1080
 
-  - task: DownloadBuildArtifacts@0
+  - download: current
     displayName: Download MsixBundle and CalculatorUITests
-    inputs:
-      artifactName: drop
-      itemPattern: |
-        drop/Release/${{ parameters.platform }}/Calculator/AppPackages/**
-        drop/Release/${{ parameters.platform }}/publish/**
+    artifact: $(DropName)
+    patterns: |
+      Calculator/AppPackages/**
+      publish/**
 
   - task: PowerShell@2
     displayName: Install certificate
     inputs:
-      filePath: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
-      arguments: -CertificatePath $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Calculator_$(Build.BuildNumber)_${{ parameters.platform }}.cer -Force
+      filePath: $(Pipeline.Workspace)/$(DropName)/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
+      arguments: -CertificatePath $(Pipeline.Workspace)/$(DropName)/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Calculator_$(Build.BuildNumber)_${{ parameters.platform }}.cer -Force
 
   - task: PowerShell@2
     displayName: Install app
     inputs:
-      filePath: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
+      filePath: $(Pipeline.Workspace)/$(DropName)/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
       arguments: -Force
 
   - task: VSTest@2
     displayName: Run CalculatorUITests
     inputs:
-      testAssemblyVer2: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/CalculatorUITests.dll
-      runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/${{ parameters.runsettingsFileName }}
+      testAssemblyVer2: $(Pipeline.Workspace)/$(DropName)/publish/CalculatorUITests.dll
+      runSettingsFile: $(Pipeline.Workspace)/$(DropName)/publish/${{ parameters.runsettingsFileName }}
       platform: ${{ parameters.platform }}
       configuration: Release
-      ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-        testFiltercriteria: Priority=0

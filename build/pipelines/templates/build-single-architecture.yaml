@@ -11,11 +11,6 @@ jobs:
 - job: Build${{ parameters.platform }}
   displayName: Build ${{ parameters.platform }}
   condition: ${{ parameters.condition }}
-  pool:
-    ${{ if eq(parameters.isOSSBuild, true) }}:
-      name: EssentialExperiencesOpenSource-windows-2022
-    ${{ if eq(parameters.isOSSBuild, false) }}:
-      name: EssentialExperiences-windows-2022
   variables:
     BuildConfiguration: Release
     BuildPlatform: ${{ parameters.platform }}
@@ -33,9 +28,24 @@ jobs:
       ManifestFileName: 'Package.appxmanifest'
     ${{ if eq(parameters.useReleaseAppxManifest, true) }}:
       ManifestFileName: 'Package.Release.appxmanifest'
+  templateContext:
+    sdl:
+      binskim:
+        analyzeTargetGlob: +:f|$(Agent.BuildDirectory)\binskim\**\*
+
+    outputs:
+    - output: pipelineArtifact
+      displayName: Publish drop artifact
+      targetPath: $(Build.BinariesDirectory)\$(BuildConfiguration)\${{ parameters.platform }}
+      artifactName: drop-${{ parameters.platform }}
+
   steps:
   - checkout: self
     fetchDepth: 1
+
+  - ${{ if eq(parameters.isOSSBuild, true) }}:
+    - task: nuget-security-analysis@0
+      displayName: Secure Supply Chain Analysis
 
   - ${{ if eq(parameters.isReleaseBuild, true) }}:
     - task: UniversalPackages@0
@@ -75,30 +85,6 @@ jobs:
       maximumCpuCount: true
 
   - ${{ if eq(parameters.isReleaseBuild, true) }}:          
-    - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
-      displayName: 'Generate Software Bill of Material(SBoM)'
-      inputs:
-          BuildDropPath: $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator
-          PackageName: 'Microsoft.WindowsCalculator'
-          PackageVersion: $(Build.BuildNumber)
-
-  - task: PublishBuildArtifacts@1
-    displayName: Publish drop artifact
-    inputs:
-      artifactName: drop
-      pathToPublish: $(Build.BinariesDirectory)
-      parallel: true
-
-  - ${{ if eq(parameters.isReleaseBuild, true) }}:          
-    - task: PublishSymbols@2
-      displayName: Publish symbols
-      inputs:
-        symbolsFolder: $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)
-        searchPattern: '**/*.pdb'
-        symbolServerType: teamServices
-        treatNotIndexedAsWarning: true
-        symbolsArtifactName: $(System.teamProject)/$(Build.BuildNumber)_$(BuildPlatform)$(BuildConfiguration)
-
     - task: CopyFiles@2
       displayName: Copy Files for BinSkim analysis
       inputs:
@@ -110,7 +96,8 @@ jobs:
         #   - WebView2Loader.dll
         #   - Microsoft.Web.WebView2.Core.dll
         Contents: |
-          **\*
+          **\*.dll
+          **\*.exe
           !**\clrcompression.dll
           !**\WebView2Loader.dll
           !**\Microsoft.Web.WebView2.Core.dll
@@ -120,24 +107,15 @@ jobs:
         flattenFolders: false
         analyzeTarget: '$(Agent.BuildDirectory)\binskim\*'
 
-    - task: securedevelopmentteam.vss-secure-development-tools.build-task-binskim.BinSkim@3
-      displayName: Run BinSkim
+    - task: PublishSymbols@2
+      displayName: Publish symbols
       inputs:
-        inputType: Basic
-        analyzeTarget: '$(Agent.BuildDirectory)\binskim\*'
-        analyzeVerbose: true
-        analyzeHashes: true
-      continueOnError: true
+        symbolsFolder: $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)
+        searchPattern: '**/*.pdb'
+        symbolServerType: teamServices
+        treatNotIndexedAsWarning: true
 
     - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@1
       displayName: Run PoliCheck
       inputs:
         targetType: F
-
-    - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@2
-      displayName: Publish security analysis logs
-
-    - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-      displayName: Detect open source components
-      inputs:
-        sourceScanPath: $(Agent.BuildDirectory)
