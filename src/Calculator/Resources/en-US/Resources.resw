@@ -1965,6 +1965,10 @@
     <value>MiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
+  <data name="UnitAbbreviation_Nibble" xml:space="preserve">
+    <value>nybl</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
     <value>Pi</value>
     <comment>An abbreviation for a measurement unit of data</comment>
@@ -2228,6 +2232,10 @@
   <data name="UnitName_Minute" xml:space="preserve">
     <value>Minutes</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Nibble" xml:space="preserve">
+    <value>Nibble</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
     <value>Nanometers</value>
@@ -4741,9 +4749,5 @@
   <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
     <value>Settings page</value>
     <comment>Announcement used when Settings page is opened</comment>
-  </data>
-  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>App theme setting</value>
-    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
   </data>
 </root>

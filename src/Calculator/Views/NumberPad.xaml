@@ -110,10 +110,12 @@
                                    AutomationProperties.AutomationId="num9Button"
                                    AutomationProperties.Name="{utils:ResourceString Name=num9Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                    ButtonId="Nine"/>
+        <!-- DO NOT REMOVE the common:KeyboardShortcutManager.Character from this element, it's value will be overwritten by the KeyboardShortcutManager -->
         <controls:CalculatorButton x:Name="DecimalSeparatorButton"
                                    Grid.Row="3"
                                    Grid.Column="2"
                                    Style="{Binding ElementName=ControlRoot, Path=ButtonStyle}"
+                                   common:KeyboardShortcutManager.Character="."
                                    common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=decimalSeparatorButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                    AutomationProperties.AutomationId="decimalSeparatorButton"
                                    AutomationProperties.Name="{utils:ResourceString Name=decimalSeparatorButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
