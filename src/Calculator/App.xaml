@@ -909,6 +909,22 @@
                                     <contract7Present:BrushTransition Duration="0:0:0.083"/>
                                 </contract7Present:ContentPresenter.BackgroundTransition>
 
+                                <ContentPresenter.Resources>
+                                    <ResourceDictionary>
+                                        <ResourceDictionary.ThemeDictionaries>
+                                            <ResourceDictionary x:Key="Default">
+                                                <StaticResource x:Key="ToggleButtonForegroundCheckedCustom" ResourceKey="AppControlForegroundSecondaryBrush"/>
+                                            </ResourceDictionary>
+                                            <ResourceDictionary x:Key="HighContrast">
+                                                <StaticResource x:Key="ToggleButtonForegroundCheckedCustom" ResourceKey="TextFillColorSecondaryBrush"/>
+                                            </ResourceDictionary>
+                                            <ResourceDictionary x:Key="Light">
+                                                <StaticResource x:Key="ToggleButtonForegroundCheckedCustom" ResourceKey="AppControlForegroundSecondaryBrush"/>
+                                            </ResourceDictionary>
+                                        </ResourceDictionary.ThemeDictionaries>
+                                    </ResourceDictionary>
+                                </ContentPresenter.Resources>
+
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal"/>
@@ -958,7 +974,7 @@
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlBackgroundTertiaryBrush}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlForegroundSecondaryBrush}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundCheckedCustom}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrush}"/>
