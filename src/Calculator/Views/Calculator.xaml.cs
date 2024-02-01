@@ -6,7 +6,7 @@ using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 
 using System;
-
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Globalization.NumberFormatting;
 using Windows.UI.Core;
@@ -120,6 +120,26 @@ namespace CalculatorApp
                 self.OnIsAlwaysOnTopPropertyChanged((bool)args.OldValue, (bool)args.NewValue);
             }));
 
+        public string HistoryPivotItemUiaName
+        {
+            get => (string)GetValue(HistoryPivotItemUiaNameProperty);
+            set => SetValue(HistoryPivotItemUiaNameProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for HistoryPivotItemUiaName.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty HistoryPivotItemUiaNameProperty =
+            DependencyProperty.Register(nameof(HistoryPivotItemUiaName), typeof(string), typeof(Calculator), new PropertyMetadata(string.Empty));
+
+        public string MemoryPivotItemUiaName
+        {
+            get => (string)GetValue(MemoryPivotItemUiaNameProperty);
+            set => SetValue(MemoryPivotItemUiaNameProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for MemoryPivotItemUiaName.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MemoryPivotItemUiaNameProperty =
+            DependencyProperty.Register(nameof(MemoryPivotItemUiaName), typeof(string), typeof(Calculator), new PropertyMetadata(string.Empty));
+
         public System.Windows.Input.ICommand HistoryButtonPressed
         {
             get
@@ -159,6 +179,7 @@ namespace CalculatorApp
         {
             if (m_historyList == null)
             {
+                historyVM.PropertyChanged += (s, e) => UpdateHistoryState();
                 m_historyList = new HistoryList
                 {
                     DataContext = historyVM
@@ -167,6 +188,7 @@ namespace CalculatorApp
                 historyVM.HistoryItemClicked += OnHistoryItemClicked;
             }
         }
+
 
         public void UpdatePanelViewState()
         {
@@ -296,6 +318,7 @@ namespace CalculatorApp
                     MemRecall.IsEnabled = false;
                     ClearMemoryButton.IsEnabled = false;
                 }
+                MemoryPivotItemUiaName = GetMemoryPivotItemUiaString(Model.IsMemoryEmpty);
 
                 if (DockPanel.Visibility == Visibility.Visible)
                 {
@@ -328,6 +351,7 @@ namespace CalculatorApp
                 {
                     DockPivot.SelectedIndex = 0;
                 }
+                HistoryPivotItemUiaName = GetHistoryPivotItemUiaString(Model.HistoryVM.ItemsCount == 0);
             }
             else
             {
@@ -842,6 +866,20 @@ namespace CalculatorApp
 
             var mode = IsStandard ? ViewMode.Standard : IsScientific ? ViewMode.Scientific : ViewMode.Programmer;
             TraceLogger.GetInstance().LogVisualStateChanged(mode, e.NewState.Name, IsAlwaysOnTop);
+        }
+
+        private string GetMemoryPivotItemUiaString(bool isEmpty)
+        {
+            var loader = ResourceLoader.GetForCurrentView();
+            var label = loader.GetString("MemoryLabel/Text");
+            return isEmpty ? $"{loader.GetString("MemoryPaneEmpty/Text")} {label}" : label;
+        }
+
+        private string GetHistoryPivotItemUiaString(bool isEmpty)
+        {
+            var loader = ResourceLoader.GetForCurrentView();
+            var label = loader.GetString("HistoryLabel/Text");
+            return isEmpty ? $"{loader.GetString("HistoryEmpty/Text")} {label}" : label;
         }
     }
 }

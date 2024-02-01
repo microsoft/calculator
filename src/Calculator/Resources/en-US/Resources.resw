@@ -2778,11 +2778,11 @@
     <comment>{Locked}The Octal button</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>There’s no history yet</value>
+    <value>There’s no history yet.</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>There’s nothing saved in memory</value>
+    <value>There’s nothing saved in memory.</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
