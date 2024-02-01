@@ -1374,6 +1374,7 @@
                 </Pivot.Resources>
                 <PivotItem x:Name="HistoryPivotItem"
                            Margin="0,10,0,0"
+                           AutomationProperties.AutomationId="HistoryLabel"
                            AutomationProperties.Name="{x:Bind HistoryPivotItemUiaName, Mode=OneWay}">
                     <PivotItem.Header>
                         <TextBlock AccessKey="{utils:ResourceString Name=HistoryLabel/AccessKey}"
@@ -1384,6 +1385,7 @@
                 </PivotItem>
                 <PivotItem x:Name="MemoryPivotItem"
                            Margin="0,10,0,0"
+                           AutomationProperties.AutomationId="MemoryLabel"
                            AutomationProperties.Name="{x:Bind MemoryPivotItemUiaName, Mode=OneWay}">
                     <PivotItem.Header>
                         <TextBlock AccessKey="{utils:ResourceString Name=MemoryLabel/AccessKey}"
