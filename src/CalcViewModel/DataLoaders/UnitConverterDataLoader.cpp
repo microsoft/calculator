@@ -758,9 +758,9 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
         OrderedUnit{ UnitConverterUnits::Pressure_Pascal, GetLocalizedStringName(L"UnitName_Pascal"), GetLocalizedStringName(L"UnitAbbreviation_Pascal"), 5 });
     pressureUnits.push_back(OrderedUnit{
         UnitConverterUnits::Pressure_PSI, GetLocalizedStringName(L"UnitName_PSI"), GetLocalizedStringName(L"UnitAbbreviation_PSI"), 6, false, false, false });
-    unitMap.emplace(ViewMode::Pressure, pressureUnits);
     pressureUnits.push_back(OrderedUnit{
         UnitConverterUnits::Pressure_Torr, GetLocalizedStringName(L"UnitName_Torr"), GetLocalizedStringName(L"UnitAbbreviation_Torr"), 7});
+    unitMap.emplace(ViewMode::Pressure, pressureUnits);
 
     vector<OrderedUnit> angleUnits;
     angleUnits.push_back(OrderedUnit{ UnitConverterUnits::Angle_Degree,
