@@ -166,7 +166,8 @@ namespace CalculatorApp
             Area_Pyeong = UnitStart + 165,
             Energy_Kilowatthour = UnitStart + 166,
 			Data_Nibble = UnitStart + 167,
-            UnitEnd = Data_Nibble
+            Pressure_Torr = UnitStart + 168,
+            UnitEnd = Pressure_Torr
         };
     }
 }
