@@ -747,17 +747,48 @@ namespace CalculatorApp
             {
                 int viewId = Utilities.GetWindowId();
 
-                if (controlKeyPressed && !altPressed)
+                if (controlKeyPressed)
                 {
-                    return shiftKeyPressed ? s_VirtualKeyControlShiftChordsForButtons[viewId] : s_VirtualKeyControlChordsForButtons[viewId];
-                }
-                else if (altPressed && !controlKeyPressed)
-                {
-                    return shiftKeyPressed ? null : s_VirtualKeyAltChordsForButtons[viewId];
+                    if (altPressed)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        if (shiftKeyPressed)
+                        {
+                            return s_VirtualKeyControlShiftChordsForButtons[viewId];
+                        }
+                        else
+                        {
+                            return s_VirtualKeyControlChordsForButtons[viewId];
+                        }
+                    }
                 }
                 else
                 {
-                    return shiftKeyPressed ? s_VirtualKeyShiftChordsForButtons[viewId] : s_virtualKey[viewId];
+                    if (altPressed)
+                    {
+                        if (shiftKeyPressed)
+                        {
+                            return null;
+                        }
+                        else
+                        {
+                            return s_VirtualKeyAltChordsForButtons[viewId];
+                        }
+                    }
+                    else
+                    {
+                        if (shiftKeyPressed)
+                        {
+                            return s_VirtualKeyShiftChordsForButtons[viewId];
+                        }
+                        else
+                        {
+                            return s_virtualKey[viewId];
+                        }
+                    }
                 }
             }
 
