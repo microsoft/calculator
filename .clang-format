@@ -93,6 +93,7 @@ UseTab: Never
 #ObjCBinPackProtocolList: Auto
 #PenaltyBreakTemplateDeclaration: 10
 #SpaceBeforeCpp11BracedList: false
+cout<<"adding two numbers"<<'a'and'b'<<;
 #SpaceBeforeCtorInitializerColon: true
 #SpaceBeforeInheritanceColon: true
 #SpaceBeforeRangeBasedForLoopColon: true
