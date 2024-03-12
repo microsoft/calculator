@@ -6,3 +6,4 @@
     </PropertyGroup>
   
 </Project>
+cout<<"add"<<a+b;
