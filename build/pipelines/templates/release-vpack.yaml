@@ -41,7 +41,8 @@ jobs:
       $configPath = "$(Build.SourcesDirectory)\Tools\Build\Signing\ESRP-auth.json"
       $auth = Get-Content -Raw $configPath | ConvertFrom-Json
       $sbomKeyCode = $auth._ExtraContext.SbomKeyCode
-      echo "##vso[task.setvariable variable=keyCode; isOutput=true]$sbomKeyCode"
+      echo $sbomKeyCode
+      echo "##vso[task.setvariable variable=keyCode]$sbomKeyCode"
     displayName: Get SBOM Key Code
     name: getSbomKeyCode
 
