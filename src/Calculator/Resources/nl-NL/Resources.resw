@@ -3264,7 +3264,7 @@
     <comment>Used to describe the last bit of a binary number. Used in bit flip</comment>
   </data>
   <data name="GraphingCalculatorModeText" xml:space="preserve">
-    <value>In een grafiek weergeven</value>
+    <value>Grafisch</value>
     <comment>Name of the Graphing mode of the Calculator app. Displayed in the navigation menu.</comment>
   </data>
   <data name="plotButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
