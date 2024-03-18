@@ -573,7 +573,7 @@ void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
                 temp[i] = data[j++];
             }
             temp[i] = L'\0';
-            commandIndex += 1;
+            commandIndex++;
         }
     }
 
