@@ -2334,7 +2334,7 @@
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutControlContribute" xml:space="preserve">
-    <value>Um zu erfahren, wie Sie dem Windows-Rechner mitwirken können, checken Sie das Projekt auf %HL%GitHub%HL% aus.</value>
+    <value>Um zu erfahren, wie Sie am Windows-Rechner mitwirken können, checken Sie das Projekt auf %HL%GitHub%HL% aus.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutGroupTitle.Text" xml:space="preserve">
