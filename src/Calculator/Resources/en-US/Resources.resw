@@ -2353,6 +2353,10 @@
     <value>psi</value>
     <comment>An abbreviation for a measurement unit of Pressure</comment>
   </data>
+  <data name="UnitAbbreviation_Torr" xml:space="preserve">
+    <value>Torr</value>
+    <comment>An abbreviation for a measurement unit of Pressure</comment>
+  </data>
   <data name="UnitAbbreviation_Centigram" xml:space="preserve">
     <value>cg</value>
     <comment>An abbreviation for a measurement unit of weight</comment>
@@ -2443,6 +2447,10 @@
   </data>
   <data name="UnitName_PSI" xml:space="preserve">
     <value>Pounds per square inch</value>
+    <comment>A measurement unit for Pressure.</comment>
+  </data>
+  <data name="UnitName_Torr" xml:space="preserve">
+    <value>Torr</value>
     <comment>A measurement unit for Pressure.</comment>
   </data>
   <data name="UnitName_Centigram" xml:space="preserve">
