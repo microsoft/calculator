@@ -4751,7 +4751,7 @@
     <comment>Announcement used when Settings page is opened</comment>
   </data>
   <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Press Shift + F10 to open the context menu</value>
+    <value>Open the context menu for more functionalities</value>
     <comment>Screen reader prompt for the equation and accelerator to context menu</comment>
   </data>
 </root>
