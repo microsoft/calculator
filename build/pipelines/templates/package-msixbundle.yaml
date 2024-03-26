@@ -5,6 +5,7 @@
 parameters:
   signBundle: false
   createStoreBrokerPackages: false
+  oneEspt: true # Whether or not this job is going to be running in the 1ES Pipeline Template.
 
 jobs:
 - job: Package
@@ -29,23 +30,24 @@ jobs:
     PackageX64: $[in(dependencies.Buildx64.result, 'Succeeded', 'SucceededWithIssues')]
     PackageARM: $[in(dependencies.BuildARM.result, 'Succeeded', 'SucceededWithIssues')]
     PackageARM64: $[in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues')]
-  templateContext:
-    outputs:
-    - ${{ if eq(parameters.signBundle, false) }}:
-      - output: pipelineArtifact
-        displayName: Publish MsixBundle artifact
-        targetPath: $(Build.ArtifactStagingDirectory)\msixBundle
-        artifactName: msixBundle
-    - ${{ else }}:
-      - output: pipelineArtifact
-        displayName: Publish MsixBundleSigned artifact
-        targetPath: $(Build.ArtifactStagingDirectory)\msixBundle
-        artifactName: msixBundleSigned
-      - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:      
+  ${{ if eq(parameters.oneEspt, true) }}:
+    templateContext:
+      outputs:
+      - ${{ if eq(parameters.signBundle, false) }}:
         - output: pipelineArtifact
-          displayName: Publish StoreBroker Payload artifact
-          targetPath: $(StoreBrokerPackagePath)
-          artifactName: storeBrokerPayload
+          displayName: Publish MsixBundle artifact
+          targetPath: $(Build.ArtifactStagingDirectory)\msixBundle
+          artifactName: msixBundle
+      - ${{ else }}:
+        - output: pipelineArtifact
+          displayName: Publish MsixBundleSigned artifact
+          targetPath: $(Build.ArtifactStagingDirectory)\msixBundle
+          artifactName: msixBundleSigned
+        - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:      
+          - output: pipelineArtifact
+            displayName: Publish StoreBroker Payload artifact
+            targetPath: $(StoreBrokerPackagePath)
+            artifactName: storeBrokerPayload
 
   steps:
   - checkout: self
@@ -108,6 +110,11 @@ jobs:
       BUILDVERSION: $(Build.BuildNumber)
       MAPPINGFILEPATH: $(Build.BinariesDirectory)\MsixBundleMapping.txt
       OUTPUTPATH: $(Build.BinariesDirectory)\Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
+
+  - ${{ if eq(parameters.oneEspt, false) }}:
+    - publish: $(Build.ArtifactStagingDirectory)\msixBundle
+      artifact: msixBundle
+      displayName: Publish MsixBundle artifact
 
   - task: CopyFiles@2
     displayName: Copy MsixBundle to staging directory

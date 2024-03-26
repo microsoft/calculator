@@ -15,63 +15,48 @@ pr:
 
 name: 0.$(Date:yyMM).$(DayOfMonth)$(Rev:rr).0
 
-resources:
-  repositories:
-  - repository: 1esPipelines
-    type: git
-    name: 1ESPipelineTemplates/1ESPipelineTemplates
-    ref: refs/tags/release
-
-extends:
-  template: v1/1ES.Unofficial.PipelineTemplate.yml@1esPipelines
+jobs:
+- template: ./templates/build-single-architecture.yaml
   parameters:
-    pool:
-      name: EssentialExperiencesOpenSource-windows-2022
-      image: MMSWindows2022-Secure
-      os: windows
+    platform: x64
+    isOSSBuild: true
+    oneEspt: false
 
-    sdl:
-      binskim:
-        enabled: false
+- template: ./templates/build-single-architecture.yaml
+  parameters:
+    platform: x86
+    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+    isOSSBuild: true
+    oneEspt: false
 
-    stages:
-    - stage: Calculator
-      jobs:
-      - template: /build/pipelines/templates/build-single-architecture.yaml@self
-        parameters:
-          platform: x64
-          isOSSBuild: true
+- template: ./templates/build-single-architecture.yaml
+  parameters:
+    platform: ARM
+    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+    isOSSBuild: true
+    oneEspt: false
 
-      - template: /build/pipelines/templates/build-single-architecture.yaml@self
-        parameters:
-          platform: x86
-          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-          isOSSBuild: true
+- template: ./templates/build-single-architecture.yaml
+  parameters:
+    platform: ARM64
+    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+    isOSSBuild: true
+    oneEspt: false
 
-      - template: /build/pipelines/templates/build-single-architecture.yaml@self
-        parameters:
-          platform: ARM
-          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-          isOSSBuild: true
+- template: ./templates/run-ui-tests.yaml
+  parameters:
+    platform: x64
+    isOSSBuild: true
+    runsettingsFileName: CalculatorUITests.ci.runsettings
 
-      - template: /build/pipelines/templates/build-single-architecture.yaml@self
-        parameters:
-          platform: ARM64
-          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-          isOSSBuild: true
+- template: ./templates/run-unit-tests.yaml
+  parameters:
+    platform: x64
 
-      - template: /build/pipelines/templates/run-ui-tests.yaml@self
-        parameters:
-          platform: x64
-          isOSSBuild: true
-          runsettingsFileName: CalculatorUITests.ci.runsettings
+- template: ./templates/run-unit-tests.yaml
+  parameters:
+    platform: x86
 
-      - template: /build/pipelines/templates/run-unit-tests.yaml@self
-        parameters:
-          platform: x64
-
-      - template: /build/pipelines/templates/run-unit-tests.yaml@self
-        parameters:
-          platform: x86
-
-      - template: /build/pipelines/templates/package-msixbundle.yaml@self
+- template: ./templates/package-msixbundle.yaml
+  parameters:
+    oneEspt: false

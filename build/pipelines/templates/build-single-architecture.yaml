@@ -4,6 +4,7 @@ parameters:
   isReleaseBuild: false
   isOSSBuild: false
   useReleaseAppxManifest: false
+  oneEspt: true # Whether or not this job is going to be running in the 1ES Pipeline Template.
   platform: ''
   condition: ''
 
@@ -11,6 +12,10 @@ jobs:
 - job: Build${{ parameters.platform }}
   displayName: Build ${{ parameters.platform }}
   condition: ${{ parameters.condition }}
+  pool:
+    name: EssentialExperiencesOpenSource-windows-2022
+    image: MMSWindows2022-Secure
+    os: windows
   variables:
     BuildConfiguration: Release
     BuildPlatform: ${{ parameters.platform }}
@@ -28,16 +33,17 @@ jobs:
       ManifestFileName: 'Package.appxmanifest'
     ${{ if eq(parameters.useReleaseAppxManifest, true) }}:
       ManifestFileName: 'Package.Release.appxmanifest'
-  templateContext:
-    sdl:
-      binskim:
-        analyzeTargetGlob: +:f|$(Agent.BuildDirectory)\binskim\**\*
+  ${{ if eq(parameters.oneEspt, true) }}:
+    templateContext:
+      sdl:
+        binskim:
+          analyzeTargetGlob: +:f|$(Agent.BuildDirectory)\binskim\**\*
 
-    outputs:
-    - output: pipelineArtifact
-      displayName: Publish drop artifact
-      targetPath: $(Build.BinariesDirectory)\$(BuildConfiguration)\${{ parameters.platform }}
-      artifactName: drop-${{ parameters.platform }}
+      outputs:
+      - output: pipelineArtifact
+        displayName: Publish drop artifact
+        targetPath: $(Build.BinariesDirectory)\$(BuildConfiguration)\${{ parameters.platform }}
+        artifactName: drop-${{ parameters.platform }}
 
   steps:
   - checkout: self
@@ -83,6 +89,11 @@ jobs:
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
       maximumCpuCount: true
+
+  - ${{ if eq(parameters.oneEspt, false) }}:
+    - publish: $(Build.BinariesDirectory)\$(BuildConfiguration)\${{ parameters.platform }}
+      artifact: drop-${{ parameters.platform }}
+      displayName: Publish drop artifact
 
   - ${{ if eq(parameters.isReleaseBuild, true) }}:          
     - task: CopyFiles@2
