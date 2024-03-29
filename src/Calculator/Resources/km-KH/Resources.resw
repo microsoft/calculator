@@ -2346,11 +2346,11 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>មិនមានប្រវត្តិនៅឡើយ</value>
+    <value>មិនទាន់មានប្រវត្តិនៅឡើយទេ។</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>មិនមានអ្វីត្រូវបានរក្សាទុកក្នុងអង្គចងចាំទេ</value>
+    <value>មិនមានអ្វីត្រូវបានរក្សាទុកក្នុងអង្គចងចាំទេ។</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4177,5 +4177,9 @@
   <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
     <value>ទំព័រការកំណត់</value>
     <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>បើកម៉ឺនុយបរិបទសម្រាប់សកម្មភាពដែលមាន</value>
+    <comment>Screen reader prompt for the context menu of the expression box</comment>
   </data>
 </root>
