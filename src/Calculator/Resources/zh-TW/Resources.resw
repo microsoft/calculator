@@ -1806,7 +1806,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Megabyte" xml:space="preserve">
-    <value>Megabyte</value>
+    <value>Mega 位元組</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Meter" xml:space="preserve">
@@ -1858,11 +1858,11 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabit" xml:space="preserve">
-    <value>Petabit</value>
+    <value>Peta 位元</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabyte" xml:space="preserve">
-    <value>P 位元組</value>
+    <value>Peta 位元組</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Second" xml:space="preserve">
@@ -1902,7 +1902,7 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabit" xml:space="preserve">
-    <value>T 位元</value>
+    <value>Tera 位元</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabyte" xml:space="preserve">
@@ -2346,11 +2346,11 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>尚無歷程記錄</value>
+    <value>尚無歷程記錄。</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>記憶中沒有儲存任何項目</value>
+    <value>記憶體中沒有儲存任何項目。</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2366,11 +2366,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gibibytes" xml:space="preserve">
-    <value>Gibibyte</value>
+    <value>Gibi 位元組</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibits" xml:space="preserve">
-    <value>Kibibit</value>
+    <value>Kibi 位元</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibytes" xml:space="preserve">
@@ -2402,7 +2402,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabits" xml:space="preserve">
-    <value>Exabit</value>
+    <value>Exa 位元</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabytes" xml:space="preserve">
@@ -2414,15 +2414,15 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibytes" xml:space="preserve">
-    <value>Exbibyte</value>
+    <value>Exbi 位元組</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabits" xml:space="preserve">
-    <value>Zetabit</value>
+    <value>Zeta 位元</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabytes" xml:space="preserve">
-    <value>Zetabyte</value>
+    <value>Zeta 位元組</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zebibits" xml:space="preserve">
@@ -2430,7 +2430,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zebibytes" xml:space="preserve">
-    <value>Zebibyte</value>
+    <value>Zebi 位元組</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabit" xml:space="preserve">
@@ -4177,5 +4177,9 @@
   <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
     <value>設定頁面</value>
     <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>開啟操作功能表以執行可用的動作</value>
+    <comment>Screen reader prompt for the context menu of the expression box</comment>
   </data>
 </root>

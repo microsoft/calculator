@@ -4178,4 +4178,8 @@
     <value>เพจการตั้งค่า</value>
     <comment>Announcement used when Settings page is opened</comment>
   </data>
+  <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>เปิดเมนูบริบทสําหรับการดําเนินการที่พร้อมใช้งาน</value>
+    <comment>Screen reader prompt for the context menu of the expression box</comment>
+  </data>
 </root>

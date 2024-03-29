@@ -1646,7 +1646,7 @@
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
   <data name="UnitName_Acre" xml:space="preserve">
-    <value>Are</value>
+    <value>Acre</value>
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Bit" xml:space="preserve">
@@ -2346,11 +2346,11 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>Er is nog geen geschiedenis</value>
+    <value>Er is nog geen geschiedenis.</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>Er is niets opgeslagen in het geheugen</value>
+    <value>Er is niets opgeslagen in het geheugen.</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4177,5 +4177,9 @@
   <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
     <value>Instellingenpagina</value>
     <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Het contextmenu openen voor beschikbare acties</value>
+    <comment>Screen reader prompt for the context menu of the expression box</comment>
   </data>
 </root>
