@@ -543,7 +543,7 @@ namespace GraphControl
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
             m_graph->SetArgValue(variableName->Data(), newValue);
-            m_renderMain->RunRenderPass();
+            [](RenderMain ^ renderMain) -> winrt::fire_and_forget { co_await renderMain->RunRenderPassAsync(); }(m_renderMain);
         }
     }
 
