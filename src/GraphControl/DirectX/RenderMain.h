@@ -175,10 +175,6 @@ namespace GraphControl::DX
         Windows::Foundation::EventRegistrationToken m_tokenOrientationChanged;
         Windows::Foundation::EventRegistrationToken m_tokenDisplayContentsInvalidated;
 
-        // Track our independent input on a background worker thread.
-        Windows::Foundation::IAsyncAction ^ m_inputLoopWorker = nullptr;
-        Windows::UI::Core::CoreIndependentInputSource ^ m_coreInput = nullptr;
-
         double m_XTraceValue;
         double m_YTraceValue;
 

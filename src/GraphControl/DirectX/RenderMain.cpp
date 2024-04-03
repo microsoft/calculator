@@ -30,11 +30,10 @@ namespace
 namespace GraphControl::DX
 {
     RenderMain::RenderMain(SwapChainPanel ^ panel)
-        : m_deviceResources{ panel }
-        , m_nearestPointRenderer{ &m_deviceResources }
-        , m_backgroundColor{ {} }
-        , m_swapChainPanel{ panel }
-        , m_TraceLocation(Point(0, 0))
+        : m_deviceResources(panel)
+        , m_nearestPointRenderer(&m_deviceResources)
+        , m_swapChainPanel(panel)
+        , m_TraceLocation(Point{ 0, 0 })
         , m_Tracing(false)
     {
         // Register to be notified if the Device is lost or recreated
@@ -47,6 +46,7 @@ namespace GraphControl::DX
 
     RenderMain::~RenderMain()
     {
+        m_renderPassCts.cancel();
         UnregisterEventHandlers();
     }
 
@@ -212,8 +212,8 @@ namespace GraphControl::DX
         }
         m_renderPassCts = concurrency::cancellation_token_source{};
 
-        bool result = true;
-        co_await CoreWindow::GetForCurrentThread()->Dispatcher->RunAsync(
+        bool result = false;
+        co_await m_coreWindow->Dispatcher->RunAsync(
             CoreDispatcherPriority::High,
             ref new DispatchedHandler(
                 [this, &result, cancel = m_renderPassCts.get_token()]
