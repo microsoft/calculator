@@ -51,17 +51,7 @@ namespace GraphControl::DX
 
         bool RunRenderPass();
 
-        Windows::Foundation::IAsyncAction ^ RunRenderPassAsync(bool allowCancel = true);
-
-        Concurrency::critical_section& GetCriticalSection()
-        {
-            return m_criticalSection;
-        }
-
-        bool IsRenderPassSuccesful()
-        {
-            return m_isRenderPassSuccesful;
-        }
+        concurrency::task<bool> RunRenderPassAsync(bool allowCancel = true);
 
         HRESULT GetRenderError();
 
@@ -198,11 +188,7 @@ namespace GraphControl::DX
         // Are we currently showing the tracing value
         bool m_Tracing;
 
-        Concurrency::critical_section m_criticalSection;
-
-        Windows::Foundation::IAsyncAction ^ m_renderPass = nullptr;
-
-        bool m_isRenderPassSuccesful;
+        concurrency::cancellation_token_source m_renderPassCts;
 
         HRESULT m_HResult;
     };
