@@ -8,17 +8,17 @@
 namespace GraphControl::DX
 {
     // Provides an interface for an application that owns DeviceResources to be notified of the device being lost or created.
-    interface class IDeviceNotify
+    struct IDeviceNotify
     {
-        virtual void OnDeviceLost();
-        virtual void OnDeviceRestored();
+        virtual void OnDeviceLost() = 0;
+        virtual void OnDeviceRestored() = 0;
     };
 
     // Controls all the DirectX device resources.
     class DeviceResources
     {
     public:
-        DeviceResources(Windows::UI::Xaml::Controls::SwapChainPanel^ panel);
+        explicit DeviceResources(Windows::UI::Xaml::Controls::SwapChainPanel^ panel, IDeviceNotify* deviceNotify);
         void SetSwapChainPanel(Windows::UI::Xaml::Controls::SwapChainPanel^ panel);
         void SetLogicalSize(Windows::Foundation::Size logicalSize);
         void SetCurrentOrientation(Windows::Graphics::Display::DisplayOrientations currentOrientation);
@@ -26,7 +26,6 @@ namespace GraphControl::DX
         void SetCompositionScale(float compositionScaleX, float compositionScaleY);
         void ValidateDevice();
         void HandleDeviceLost();
-        void RegisterDeviceNotify(IDeviceNotify^ deviceNotify);
         void Trim();
         void Present();
 
@@ -106,6 +105,6 @@ namespace GraphControl::DX
         DirectX::XMFLOAT4X4 m_orientationTransform3D;
 
         // The IDeviceNotify can be held directly as it owns the DeviceResources.
-        IDeviceNotify^ m_deviceNotify;
+        IDeviceNotify* m_deviceNotify;
     };
 }

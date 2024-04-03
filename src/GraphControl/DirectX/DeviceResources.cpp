@@ -71,7 +71,7 @@ namespace ScreenRotation
 namespace GraphControl::DX
 {
     // Constructor for DeviceResources.
-    DeviceResources::DeviceResources(SwapChainPanel^ panel) :
+    DeviceResources::DeviceResources(SwapChainPanel^ panel, IDeviceNotify* deviceNotify) :
         m_screenViewport(),
         m_d3dFeatureLevel(D3D_FEATURE_LEVEL_9_1),
         m_d3dRenderTargetSize(),
@@ -83,7 +83,7 @@ namespace GraphControl::DX
         m_effectiveDpi(-1.0f),
         m_compositionScaleX(1.0f),
         m_compositionScaleY(1.0f),
-        m_deviceNotify(nullptr)
+        m_deviceNotify(deviceNotify)
     {
         CreateDeviceIndependentResources();
         CreateDeviceResources();
@@ -610,12 +610,6 @@ namespace GraphControl::DX
         {
             m_deviceNotify->OnDeviceRestored();
         }
-    }
-
-    // Register our DeviceNotify to be informed on device lost and creation.
-    void DeviceResources::RegisterDeviceNotify(DX::IDeviceNotify^ deviceNotify)
-    {
-        m_deviceNotify = deviceNotify;
     }
 
     // Call this method when the app suspends. It provides a hint to the driver that the app

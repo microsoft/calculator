@@ -97,18 +97,10 @@ namespace GraphControl
         {
             if (auto renderer = m_graph->GetRenderer())
             {
-                m_renderMain->GetCriticalSection().lock();
-
                 if (SUCCEEDED(renderer->ScaleRange(centerX, centerY, scale)))
                 {
-                    m_renderMain->GetCriticalSection().unlock();
-
-                    m_renderMain->RunRenderPass();
+                    m_renderMain->FireRenderPass();
                     GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
-                }
-                else
-                {
-                    m_renderMain->GetCriticalSection().unlock();
                 }
             }
         }
@@ -145,7 +137,7 @@ namespace GraphControl
 
                 if (SUCCEEDED(hr))
                 {
-                    m_renderMain->RunRenderPass();
+                    m_renderMain->FireRenderPass();
                     GraphViewChangedEvent(this, GraphViewChangedReason::Reset);
                 }
             }
@@ -158,8 +150,8 @@ namespace GraphControl
         if (swapChainPanel)
         {
             swapChainPanel->AllowFocusOnInteraction = true;
-            m_renderMain = ref new RenderMain(swapChainPanel);
-            m_renderMain->BackgroundColor = GraphBackground;
+            m_renderMain = std::make_unique<DX::RenderMain>(swapChainPanel, m_graph.get());
+            m_renderMain->BackgroundColor(GraphBackground);
         }
 
         TryUpdateGraph(false);
@@ -220,7 +212,7 @@ namespace GraphControl
 
         if (m_renderMain)
         {
-            m_renderMain->RunRenderPass();
+            m_renderMain->FireRenderPass();
         }
     }
 
@@ -404,11 +396,9 @@ namespace GraphControl
                     UpdateGraphOptions(m_graph->GetOptions(), validEqs);
                     SetGraphArgs(m_graph);
 
-                    m_renderMain->Graph = m_graph;
-
                     // It is possible that the render fails, in that case fall through to explicit empty initialization
-                    co_await m_renderMain->RunRenderPassAsync(false);
-                    if (m_renderMain->IsRenderPassSuccesful())
+                    auto succ = co_await m_renderMain->RunRenderPassAsync();
+                    if (succ)
                     {
                         UpdateVariables();
                         successful = true;
@@ -438,7 +428,6 @@ namespace GraphControl
                         UpdateGraphOptions(m_graph->GetOptions(), vector<Equation ^>());
                         SetGraphArgs(m_graph);
 
-                        m_renderMain->Graph = m_graph;
                         co_await m_renderMain->RunRenderPassAsync();
 
                         UpdateVariables();
@@ -479,8 +468,6 @@ namespace GraphControl
     {
         if (graph != nullptr && m_renderMain != nullptr)
         {
-            critical_section::scoped_lock lock(m_renderMain->GetCriticalSection());
-
             for (auto variablePair : Variables)
             {
                 graph->SetArgValue(variablePair->Key->Data(), variablePair->Value->Value);
@@ -557,15 +544,8 @@ namespace GraphControl
 
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
-            auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
-                m_renderMain->GetCriticalSection().lock();
-                m_graph->SetArgValue(variableName->Data(), newValue);
-                m_renderMain->GetCriticalSection().unlock();
-
-                m_renderMain->RunRenderPass();
-            });
-
-            ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
+            m_graph->SetArgValue(variableName->Data(), newValue);
+            m_renderMain->FireRenderPass();
         }
     }
 
@@ -668,7 +648,7 @@ namespace GraphControl
             m_renderMain->DrawNearestPoint = true;
             Point currPosition = e->GetCurrentPoint(/* relativeTo */ this)->Position;
 
-            if (m_renderMain->ActiveTracing)
+            if (m_renderMain->ActiveTracing())
             {
                 PointerValueChangedEvent(currPosition);
                 ActiveTraceCursorPosition = currPosition;
@@ -681,7 +661,7 @@ namespace GraphControl
             }
             else if (m_cachedCursor != nullptr)
             {
-                m_renderMain->PointerLocation = currPosition;
+                m_renderMain->PointerLocation(currPosition);
 
                 ::CoreWindow::GetForCurrentThread()->PointerCursor = m_cachedCursor;
                 m_cachedCursor = nullptr;
@@ -690,7 +670,7 @@ namespace GraphControl
             }
             else
             {
-                m_renderMain->PointerLocation = currPosition;
+                m_renderMain->PointerLocation(currPosition);
                 UpdateTracingChanged();
             }
 
@@ -783,15 +763,10 @@ namespace GraphControl
                     translationX /= -width;
                     translationY /= height;
 
-                    m_renderMain->GetCriticalSection().lock();
-
                     if (FAILED(renderer->MoveRangeByRatio(translationX, translationY)))
                     {
-                        m_renderMain->GetCriticalSection().unlock();
                         return;
                     }
-
-                    m_renderMain->GetCriticalSection().unlock();
                     needsRenderPass = true;
                 }
 
@@ -805,21 +780,16 @@ namespace GraphControl
                     const auto& pos = e->Position;
                     const auto [centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
 
-                    m_renderMain->GetCriticalSection().lock();
-
                     if (FAILED(renderer->ScaleRange(centerX, centerY, scale)))
                     {
-                        m_renderMain->GetCriticalSection().unlock();
                         return;
                     }
-
-                    m_renderMain->GetCriticalSection().unlock();
                     needsRenderPass = true;
                 }
 
                 if (needsRenderPass)
                 {
-                    m_renderMain->RunRenderPass();
+                    m_renderMain->FireRenderPass();
                     GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
                 }
             }
@@ -1075,7 +1045,7 @@ void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, 
 {
     if (m_renderMain)
     {
-        m_renderMain->BackgroundColor = newValue;
+        m_renderMain->BackgroundColor(newValue);
     }
     if (m_graph)
     {
@@ -1091,7 +1061,7 @@ void Grapher::OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, W
     {
         auto gridLinesColor = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
         m_graph->GetOptions().SetGridColor(gridLinesColor);
-        m_renderMain->RunRenderPassAsync();
+        m_renderMain->FireRenderPass();
     }
 }
 
@@ -1102,8 +1072,8 @@ void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
         UpdateGraphOptions(m_graph->GetOptions(), GetGraphableEquations());
         if (m_renderMain)
         {
-            m_renderMain->SetPointRadius(LineWidth + 1);
-            m_renderMain->RunRenderPass();
+            m_renderMain->PointRadius(LineWidth + 1);
+            m_renderMain->FireRenderPass();
 
             TraceLogger::GetInstance()->LogLineWidthChanged();
         }
@@ -1112,7 +1082,6 @@ void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
 
 optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bool keepCurrentView, const IExpression* graphingExp)
 {
-    critical_section::scoped_lock lock(m_renderMain->GetCriticalSection());
     if (keepCurrentView || IsKeepCurrentView)
     {
         auto renderer = m_graph->GetRenderer();

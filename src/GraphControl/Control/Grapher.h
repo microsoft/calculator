@@ -25,11 +25,12 @@ public
 public
     delegate void PointerValueChangedEventHandler(Windows::Foundation::Point value);
 
-public enum class GraphViewChangedReason
-{
-    Manipulation,
-    Reset
-};  
+public
+    enum class GraphViewChangedReason
+    {
+        Manipulation,
+        Reset
+    };
 
     [Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = L"Equations")] public ref class Grapher sealed
         : public Windows::UI::Xaml::Controls::Control,
@@ -65,14 +66,14 @@ public enum class GraphViewChangedReason
         {
             bool get()
             {
-                return m_renderMain != nullptr && m_renderMain->ActiveTracing;
+                return m_renderMain != nullptr && m_renderMain->ActiveTracing();
             }
 
             void set(bool value)
             {
-                if (m_renderMain != nullptr && m_renderMain->ActiveTracing != value)
+                if (m_renderMain != nullptr && m_renderMain->ActiveTracing() != value)
                 {
-                    m_renderMain->ActiveTracing = value;
+                    m_renderMain->ActiveTracing(value);
                     UpdateTracingChanged();
                     PropertyChanged(this, ref new Windows::UI::Xaml::Data::PropertyChangedEventArgs(L"ActiveTracing"));
                 }
@@ -86,7 +87,7 @@ public enum class GraphViewChangedReason
         {
             Windows::Foundation::Point get()
             {
-                return m_renderMain->TraceLocation;
+                return m_renderMain->TraceLocation();
             }
         }
 
@@ -94,14 +95,14 @@ public enum class GraphViewChangedReason
         {
             Windows::Foundation::Point get()
             {
-                return m_renderMain->ActiveTraceCursorPosition;
+                return m_renderMain->ActiveTraceCursorPosition();
             }
 
             void set(Windows::Foundation::Point newValue)
             {
-                if (m_renderMain->ActiveTraceCursorPosition != newValue)
+                if (m_renderMain->ActiveTraceCursorPosition() != newValue)
                 {
-                    m_renderMain->ActiveTraceCursorPosition = newValue;
+                    m_renderMain->ActiveTraceCursorPosition(newValue);
                     UpdateTracingChanged();
                 }
             }
@@ -154,7 +155,7 @@ public enum class GraphViewChangedReason
                     m_graph->GetOptions().SetDefaultXRange(newValue);
                     if (m_renderMain != nullptr)
                     {
-                        m_renderMain->RunRenderPass();
+                        m_renderMain->FireRenderPass();
                     }
                 }
             }
@@ -174,7 +175,7 @@ public enum class GraphViewChangedReason
                     m_graph->GetOptions().SetDefaultXRange(newValue);
                     if (m_renderMain != nullptr)
                     {
-                        m_renderMain->RunRenderPass();
+                        m_renderMain->FireRenderPass();
                     }
                 }
             }
@@ -194,7 +195,7 @@ public enum class GraphViewChangedReason
                     m_graph->GetOptions().SetDefaultYRange(newValue);
                     if (m_renderMain != nullptr)
                     {
-                        m_renderMain->RunRenderPass();
+                        m_renderMain->FireRenderPass();
                     }
                 }
             }
@@ -214,7 +215,7 @@ public enum class GraphViewChangedReason
                     m_graph->GetOptions().SetDefaultYRange(newValue);
                     if (m_renderMain != nullptr)
                     {
-                        m_renderMain->RunRenderPass();
+                        m_renderMain->FireRenderPass();
                     }
                 }
             }
@@ -228,7 +229,6 @@ public enum class GraphViewChangedReason
                 {
                     if (auto render = m_graph->GetRenderer())
                     {
-                        Concurrency::critical_section::scoped_lock lock(m_renderMain->GetCriticalSection());
                         render->GetDisplayRanges(*xMin, *xMax, *yMin, *yMax);
                     }
                 }
@@ -249,7 +249,7 @@ public enum class GraphViewChangedReason
                     m_rangeUpdatedBySettings = true;
                     if (m_renderMain)
                     {
-                        m_renderMain->RunRenderPass();
+                        m_renderMain->FireRenderPass();
                         GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
                     }
                 }
@@ -304,12 +304,10 @@ public enum class GraphViewChangedReason
 
         void SetEquationsAsValid();
         void SetEquationErrors();
-        std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> TryInitializeGraph(bool keepCurrentView, _In_ const Graphing::IExpression* graphingExp = nullptr);
-
+        std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>>
+        TryInitializeGraph(bool keepCurrentView, _In_ const Graphing::IExpression* graphingExp = nullptr);
 
     private:
-        DX::RenderMain ^ m_renderMain = nullptr;
-
         static Windows::UI::Xaml::DependencyProperty ^ s_equationTemplateProperty;
 
         static Windows::UI::Xaml::DependencyProperty ^ s_equationsSourceProperty;
@@ -326,6 +324,7 @@ public enum class GraphViewChangedReason
 
         const std::unique_ptr<Graphing::IMathSolver> m_solver;
         const std::shared_ptr<Graphing::IGraph> m_graph;
+        std::unique_ptr<DX::RenderMain> m_renderMain;
         bool m_calculatedForceProportional = false;
         bool m_tracingTracking;
         bool m_trigUnitsChanged;
