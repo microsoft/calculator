@@ -55,7 +55,7 @@ namespace
     // Translate the pointer position to the [-1, 1] bounds.
     __inline std::pair<double, double> PointerPositionToGraphPosition(double posX, double posY, double width, double height)
     {
-        return std::make_pair((2 * posX / width - 1), (1 - 2 * posY / height));
+        return { (2 * posX / width - 1), (1 - 2 * posY / height) };
     }
 }
 
@@ -381,7 +381,7 @@ namespace GraphControl
 
                 if (initResult.has_value())
                 {
-                    auto graphedEquations = *initResult;
+                    auto& graphedEquations = *initResult;
 
                     for (size_t i = 0; i < validEqs.size(); ++i)
                     {
@@ -573,8 +573,8 @@ namespace GraphControl
                     }
 
                     eq->GraphedEquation->GetGraphEquationOptions()->SetLineStyle(static_cast<::Graphing::Renderer::LineStyle>(eq->EquationStyle));
-                    eq->GraphedEquation->GetGraphEquationOptions()->SetLineWidth(LineWidth);
-                    eq->GraphedEquation->GetGraphEquationOptions()->SetSelectedEquationLineWidth(LineWidth + ((LineWidth <= 2) ? 1 : 2));
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetLineWidth(static_cast<float>(LineWidth));
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetSelectedEquationLineWidth(static_cast<float>(LineWidth + ((LineWidth <= 2) ? 1 : 2)));
                 }
             }
             options.SetGraphColors(graphColors);
@@ -1070,7 +1070,7 @@ void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
         UpdateGraphOptions(m_graph->GetOptions(), GetGraphableEquations());
         if (m_renderMain)
         {
-            m_renderMain->SetPointRadius(LineWidth + 1);
+            m_renderMain->SetPointRadius(static_cast<float>(LineWidth + 1));
             m_renderMain->RunRenderPass();
 
             TraceLogger::GetInstance()->LogLineWidthChanged();

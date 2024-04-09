@@ -46,7 +46,6 @@ namespace GraphControl::DX
 
     RenderMain::~RenderMain()
     {
-        m_renderPassCts.cancel();
         UnregisterEventHandlers();
     }
 
@@ -206,44 +205,32 @@ namespace GraphControl::DX
 
     concurrency::task<bool> RenderMain::RunRenderPassAsync(bool allowCancel)
     {
-        if (allowCancel)
-        {
-            m_renderPassCts.cancel();
-        }
-        m_renderPassCts = concurrency::cancellation_token_source{};
-
         bool result = false;
+        auto currentVer = ++m_renderPassVer;
+        Platform::WeakReference that{ this };
         co_await m_coreWindow->Dispatcher->RunAsync(
             CoreDispatcherPriority::High,
             ref new DispatchedHandler(
-                [this, &result, cancel = m_renderPassCts.get_token()]
+                [&]
                 {
-                    if (cancel.is_canceled())
+                    auto self = that.Resolve<RenderMain>();
+                    if (self == nullptr || (allowCancel && m_renderPassVer != currentVer))
+                    {
                         return;
-                    result = RunRenderPassInternal();
+                    }
+                    result = self->RunRenderPassInternal();
                 }));
         co_return result;
     }
 
     bool RenderMain::RunRenderPassInternal()
     {
-        // We are accessing Direct3D resources directly without Direct2D's knowledge, so we
-        // must manually acquire and apply the Direct2D factory lock.
-        winrt::com_ptr<ID2D1Multithread> d2dmultithread;
-        m_deviceResources.GetD2DFactory()->QueryInterface(IID_PPV_ARGS(d2dmultithread.put()));
-        d2dmultithread->Enter();
-
-        bool succesful = Render();
-
-        if (succesful)
+        if (Render())
         {
             m_deviceResources.Present();
+            return true;
         }
-
-        // It is absolutely critical that the factory lock be released upon
-        // exiting this function, or else any consequent Direct2D calls will be blocked.
-        d2dmultithread->Leave();
-        return succesful;
+        return false;
     }
 
     // Renders the current frame according to the current application state.

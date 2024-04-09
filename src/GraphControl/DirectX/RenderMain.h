@@ -184,7 +184,7 @@ namespace GraphControl::DX
         // Are we currently showing the tracing value
         bool m_Tracing;
 
-        concurrency::cancellation_token_source m_renderPassCts;
+        unsigned m_renderPassVer = 0;
 
         HRESULT m_HResult;
     };
