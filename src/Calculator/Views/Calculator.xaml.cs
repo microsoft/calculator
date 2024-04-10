@@ -771,7 +771,7 @@ namespace CalculatorApp
 
         private void SetChildAsMemory()
         {
-            if (DockMemoryHolder.Child!= GetMemory())
+            if (DockMemoryHolder.Child != GetMemory())
             {
                 DockMemoryHolder.Child = GetMemory();
             }
