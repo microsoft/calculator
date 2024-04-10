@@ -189,7 +189,6 @@ namespace CalculatorApp
             }
         }
 
-
         public void UpdatePanelViewState()
         {
             UpdateHistoryState();
@@ -772,7 +771,10 @@ namespace CalculatorApp
 
         private void SetChildAsMemory()
         {
-            DockMemoryHolder.Child = GetMemory();
+            if (DockMemoryHolder.Child!= GetMemory())
+            {
+                DockMemoryHolder.Child = GetMemory();
+            }
         }
 
         private void SetChildAsHistory()
@@ -782,7 +784,10 @@ namespace CalculatorApp
                 InitializeHistoryView(Model.HistoryVM);
             }
 
-            DockHistoryHolder.Child = m_historyList;
+            if (DockHistoryHolder.Child != m_historyList)
+            {
+                DockHistoryHolder.Child = m_historyList;
+            }
         }
 
         private Memory GetMemory()
