@@ -186,8 +186,9 @@ namespace CalculatorApp
 
                 await jumpList.SaveAsync();
             }
-            catch
+            catch (Exception ex)
             {
+                TraceLogger.GetInstance().LogError(ViewMode.None, nameof(SetupJumpListAsync), ex.ToString());
 #if DEBUG
                 throw;
 #endif
