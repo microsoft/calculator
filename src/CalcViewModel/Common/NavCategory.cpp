@@ -50,34 +50,24 @@ static constexpr int GRAPHING_ID = 17;
 namespace // put the utils within this TU
 {
     Platform::String^ CurrentUserId;
-    std::mutex GraphingModeCheckMutex;
 
     bool IsGraphingModeEnabled()
     {
-        static bool isChecked = false;
-        static bool isEnabled = false;
+        static auto enabled = []
+        {
+            if (CurrentUserId == nullptr)
+            {
+                throw std::logic_error{ "SetCurrentUser must be invoked at least once." };
+            }
 
-        std::scoped_lock<std::mutex> lock(GraphingModeCheckMutex);
-        if (isChecked)
-        {
-            return isEnabled;
-        }
-        else
-        {
             auto user = User::GetFromId(CurrentUserId);
             if (user == nullptr)
             {
                 return true;
             }
-
-            auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(
-                user,
-                L"Education",
-                L"AllowGraphingCalculator");
-            isEnabled = namedPolicyData->GetBoolean();
-            isChecked = true;
-            return isEnabled;
-        }
+            return NamedPolicy::GetPolicyFromPathForUser(user, L"Education", L"AllowGraphingCalculator")->GetBoolean();
+        }();
+        return enabled;
     }
 
     // The order of items in this list determines the order of items in the menu.
@@ -318,7 +308,6 @@ NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupIniti
 
 void NavCategoryStates::SetCurrentUser(Platform::String^ userId)
 {
-    std::scoped_lock<std::mutex> lock(GraphingModeCheckMutex);
     CurrentUserId = userId;
 }
 
