@@ -250,7 +250,6 @@
     <Compile Include="Views\UnitConverter.xaml.cs">
       <DependentUpon>UnitConverter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WindowFrameService.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseReleaseAppxManifest)' == 'True'">
     <AppxManifest Include="Package.Release.appxmanifest">
