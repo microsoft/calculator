@@ -25,9 +25,11 @@ jobs:
   pool:
     name: EssentialExperiences-windows-2022
   variables:
-    clean: true
     skipComponentGovernanceDetection: true
   steps:
+  - checkout: self
+    clean: true
+    
   - task: MicrosoftTDBuild.tdbuild-task.tdbuild-task.TouchdownBuildTask@2
     displayName: Send resources to Touchdown Build
     inputs:
