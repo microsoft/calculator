@@ -93,8 +93,8 @@ namespace CalculatorApp
 
             args.SplashScreen.Dismissed += async (_, __) => await SetupJumpListAsync();
 
-            var minWindowWidth = (float)Resources["AppMinWindowWidth"];
-            var minWindowHeight = (float)Resources["AppMinWindowHeight"];
+            var minWindowWidth = Convert.ToSingle(Resources["AppMinWindowWidth"]);
+            var minWindowHeight = Convert.ToSingle(Resources["AppMinWindowHeight"]);
             var minWindowSize = SizeHelper.FromDimensions(minWindowWidth, minWindowHeight);
 
             ApplicationView appView = ApplicationView.GetForCurrentView();
