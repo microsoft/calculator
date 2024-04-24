@@ -502,13 +502,6 @@ bool NavCategoryStates::IsValidViewMode(ViewMode mode)
 
 bool NavCategoryStates::IsViewModeEnabled(ViewMode mode)
 {
-    if (mode != ViewMode::Graphing)
-    {
-        return true;
-    }
-    else
-    {
-        return IsGraphingModeEnabled();
-    }
+    return mode != ViewMode::Graphing ? true : IsGraphingModeEnabled();
 }
 
