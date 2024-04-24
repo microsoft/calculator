@@ -25,6 +25,7 @@ jobs:
   pool:
     name: EssentialExperiences-windows-2022
   variables:
+    clean: true
     skipComponentGovernanceDetection: true
   steps:
   - task: MicrosoftTDBuild.tdbuild-task.tdbuild-task.TouchdownBuildTask@2
