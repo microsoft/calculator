@@ -12,27 +12,18 @@ using System.Threading.Tasks;
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
 using Windows.Storage;
 using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
+using CalculatorApp.Utils;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
 
 namespace CalculatorApp
 {
-    namespace ApplicationResourceKeys
-    {
-        public static class Globals
-        {
-            public static readonly string AppMinWindowHeight = "AppMinWindowHeight";
-            public static readonly string AppMinWindowWidth = "AppMinWindowWidth";
-        }
-    }
-
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
@@ -74,7 +65,7 @@ namespace CalculatorApp
         {
             NavCategoryStates.SetCurrentUser(args.User.NonRoamableId);
 
-            // It takes time to check GraphingMode at the 1st time. So, do it in a background thread
+            // It takes time to check GraphingMode at the very first time. Warm up in a background thread.
             Task.Run(() => NavCategoryStates.IsViewModeEnabled(ViewMode.Graphing));
 
             OnAppLaunch(args, args.Arguments, args.PrelaunchActivated);
@@ -102,9 +93,9 @@ namespace CalculatorApp
 
             args.SplashScreen.Dismissed += async (_, __) => await SetupJumpListAsync();
 
-            float minWindowWidth = (float)((double)Resources[ApplicationResourceKeys.Globals.AppMinWindowWidth]);
-            float minWindowHeight = (float)((double)Resources[ApplicationResourceKeys.Globals.AppMinWindowHeight]);
-            Size minWindowSize = SizeHelper.FromDimensions(minWindowWidth, minWindowHeight);
+            var minWindowWidth = (float)Resources["AppMinWindowWidth"];
+            var minWindowHeight = (float)Resources["AppMinWindowHeight"];
+            var minWindowSize = SizeHelper.FromDimensions(minWindowWidth, minWindowHeight);
 
             ApplicationView appView = ApplicationView.GetForCurrentView();
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
@@ -112,7 +103,6 @@ namespace CalculatorApp
             if (!localSettings.Values.ContainsKey("VeryFirstLaunch"))
             {
                 localSettings.Values["VeryFirstLaunch"] = false;
-                appView.SetPreferredMinSize(minWindowSize);
                 appView.TryResizeView(minWindowSize);
             }
             else
@@ -151,7 +141,7 @@ namespace CalculatorApp
 
             // Place the frame in the current Window
             Window.Current.Content = rootFrame;
-            Utils.ThemeHelper.InitializeAppTheme();
+            ThemeHelper.InitializeAppTheme();
             Window.Current.Activate();
         }
 
@@ -180,7 +170,6 @@ namespace CalculatorApp
                     var item = JumpListItem.CreateWithArguments(((int)mode).ToString(), "ms-resource:///Resources/" + NavCategoryStates.GetNameResourceKey(mode));
                     item.Description = "ms-resource:///Resources/" + NavCategoryStates.GetNameResourceKey(mode);
                     item.Logo = new Uri("ms-appx:///Assets/" + mode + ".png");
-
                     jumpList.Items.Add(item);
                 }
 
