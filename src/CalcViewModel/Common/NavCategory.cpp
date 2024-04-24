@@ -55,11 +55,6 @@ namespace // put the utils within this TU
     {
         static auto enabled = []
         {
-            if (CurrentUserId == nullptr)
-            {
-                throw std::logic_error{ "SetCurrentUser must be invoked at least once." };
-            }
-
             auto user = User::GetFromId(CurrentUserId);
             if (user == nullptr)
             {
