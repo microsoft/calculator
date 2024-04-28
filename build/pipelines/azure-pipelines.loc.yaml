@@ -27,12 +27,14 @@ jobs:
   variables:
     skipComponentGovernanceDetection: true
   steps:
-  - task: MicrosoftTDBuild.tdbuild-task.tdbuild-task.TouchdownBuildTask@1
+  - checkout: self
+    clean: true
+    
+  - task: MicrosoftTDBuild.tdbuild-task.tdbuild-task.TouchdownBuildTask@2
     displayName: Send resources to Touchdown Build
     inputs:
       teamId: 86
-      authId: bf6d44ca-3210-4cfa-833f-c79f164ea27b
-      authKey: $(LocServiceKey)
+      TDBuildServiceConnection: EE-TDBuild-Localization
       isPreview: false
       relativePathRoot: src/Calculator/Resources/en-US/
       resourceFilePath: '*.resw'
