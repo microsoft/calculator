@@ -91,7 +91,7 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        vstsPackageVersion: 0.0.105
+        vstsPackageVersion: 0.0.106
 
   - task: PowerShell@2
     displayName: Generate MsixBundle mapping
