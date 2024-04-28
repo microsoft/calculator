@@ -96,14 +96,17 @@ namespace CalculatorApp
             var minWindowWidth = Convert.ToSingle(Resources["AppMinWindowWidth"]);
             var minWindowHeight = Convert.ToSingle(Resources["AppMinWindowHeight"]);
             var minWindowSize = SizeHelper.FromDimensions(minWindowWidth, minWindowHeight);
+            var appView = ApplicationView.GetForCurrentView();
+            var localSettings = ApplicationData.Current.LocalSettings;
 
-            ApplicationView appView = ApplicationView.GetForCurrentView();
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            // SetPreferredMinSize should always be called before Window.Activate
+            appView.SetPreferredMinSize(minWindowSize);
+
             // For very first launch, set the size of the calc as size of the default standard mode
             if (!localSettings.Values.ContainsKey("VeryFirstLaunch"))
             {
                 localSettings.Values["VeryFirstLaunch"] = false;
-                appView.TryResizeView(minWindowSize);
+                appView.TryResizeView(minWindowSize); // the requested size must not be less than the min size.
             }
             else
             {
@@ -135,9 +138,6 @@ namespace CalculatorApp
                 // stack to debug
                 throw new SystemException("6d430286-eb5d-4f8d-95d2-3d1059552968");
             }
-
-            // SetPreferredMinSize should always be called before Window.Activate
-            appView.SetPreferredMinSize(minWindowSize);
 
             // Place the frame in the current Window
             Window.Current.Content = rootFrame;
