@@ -22,7 +22,7 @@ parameters:
   default: true
 
 - name: publishVPack
-  displayName: Publish VPack as undocked inbox app
+  displayName: Publish as undocked inbox app via VPack
   type: boolean
   default: true
 
