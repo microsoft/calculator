@@ -16,8 +16,18 @@ variables:
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
 
 parameters:
-  buildPlatformList: [x64, x86, ARM, ARM64]
-  testPlatformList: [x64, x86]
+- name: buildPlatformList
+  type: object
+  default:
+  - x64
+  - x86
+  - ARM64
+  - ARM
+- name: testPlatformList
+  type: object
+  default:
+  - x64
+  - x86
 
 resources:
   repositories:
