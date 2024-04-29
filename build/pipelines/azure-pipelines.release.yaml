@@ -15,6 +15,10 @@ variables:
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
 
+parameters:
+  buildPlatformList: [x64, x86, ARM, ARM64]
+  testPlatformList: [x64, x86]
+
 resources:
   repositories:
   - repository: 1esPipelines
@@ -31,57 +35,42 @@ extends:
       os: windows
 
     stages:
-    - stage: Calculator
+    - stage: BuildStage
       jobs:
-      - template: /build/pipelines/templates/build-single-architecture.yaml@self
-        parameters:
-          platform: x64
-          isReleaseBuild: true
-          useReleaseAppxmanifest: true
+      - ${{ each platform in parameters.buildPlatformList }}:
+        - template: /build/pipelines/templates/build-single-architecture.yaml@self
+          parameters:
+            platform: ${{ platform }}
+            isReleaseBuild: true
+            useReleaseAppxmanifest: true
 
-      - template: /build/pipelines/templates/build-single-architecture.yaml@self
-        parameters:
-          platform: x86
-          isReleaseBuild: true
-          useReleaseAppxmanifest: true
-          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+    - stage: UnitTestStage
+      dependsOn: BuildStage
+      jobs:
+      - ${{ each platform in parameters.testPlatformList }}:
+        - template: /build/pipelines/templates/run-unit-tests.yaml@self
+          parameters:
+            platform: ${{ platform }}
 
-      - template: /build/pipelines/templates/build-single-architecture.yaml@self
-        parameters:
-          platform: ARM
-          isReleaseBuild: true
-          useReleaseAppxmanifest: true
-          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+    - stage: UiTestStage
+      dependsOn: BuildStage
+      jobs:
+      - ${{ each platform in parameters.testPlatformList }}:
+        - template: /build/pipelines/templates/run-ui-tests.yaml@self
+          parameters:
+            platform: ${{ platform }}
+            runsettingsFileName: CalculatorUITests.release.runsettings
 
-      - template: /build/pipelines/templates/build-single-architecture.yaml@self
-        parameters:
-          platform: ARM64
-          isReleaseBuild: true
-          useReleaseAppxmanifest: true
-          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-
-      - template: /build/pipelines/templates/run-ui-tests.yaml@self
-        parameters:
-          platform: x64
-          runsettingsFileName: CalculatorUITests.release.runsettings
-
-      - template: /build/pipelines/templates/run-ui-tests.yaml@self
-        parameters:
-          platform: x86
-          runsettingsFileName: CalculatorUITests.release.runsettings
-
-      - template: /build/pipelines/templates/run-unit-tests.yaml@self
-        parameters:
-          platform: x64
-
-      - template: /build/pipelines/templates/run-unit-tests.yaml@self
-        parameters:
-          platform: x86
-
+    - stage: PackageStage
+      dependsOn: [UnitTestStage, UiTestStage]
+      jobs:
       - template: /build/pipelines/templates/package-msixbundle.yaml@self
         parameters:
           signBundle: true
           createStoreBrokerPackages: true
 
+    - stage: PublishStage
+      dependsOn: PackageStage
+      jobs:
       - template: /build/pipelines/templates/release-store.yaml@self
       - template: /build/pipelines/templates/release-vpack.yaml@self
