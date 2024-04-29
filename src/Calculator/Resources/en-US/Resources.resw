@@ -2778,11 +2778,11 @@
     <comment>{Locked}The Octal button</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>There’s no history yet</value>
+    <value>There’s no history yet.</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>There’s nothing saved in memory</value>
+    <value>There’s nothing saved in memory.</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4749,5 +4749,9 @@
   <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
     <value>Settings page</value>
     <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Open the context menu for available actions</value>
+    <comment>Screen reader prompt for the context menu of the expression box</comment>
   </data>
 </root>

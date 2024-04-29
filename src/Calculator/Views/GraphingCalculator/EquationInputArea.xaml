@@ -661,6 +661,7 @@
                                                                   FontSize="{TemplateBinding FontSize}"
                                                                   FontWeight="{TemplateBinding FontWeight}"
                                                                   AcceptsReturn="false"
+                                                                  AutomationProperties.Name="{utils:ResourceString Name=MathRichEditBox/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                   InputScope="Text"
                                                                   MathText="{Binding MathEquation, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                                                   MaxLength="2048"

@@ -50,34 +50,19 @@ static constexpr int GRAPHING_ID = 17;
 namespace // put the utils within this TU
 {
     Platform::String^ CurrentUserId;
-    std::mutex GraphingModeCheckMutex;
 
     bool IsGraphingModeEnabled()
     {
-        static bool isChecked = false;
-        static bool isEnabled = false;
-
-        std::scoped_lock<std::mutex> lock(GraphingModeCheckMutex);
-        if (isChecked)
-        {
-            return isEnabled;
-        }
-        else
+        static auto enabled = []
         {
             auto user = User::GetFromId(CurrentUserId);
             if (user == nullptr)
             {
                 return true;
             }
-
-            auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(
-                user,
-                L"Education",
-                L"AllowGraphingCalculator");
-            isEnabled = namedPolicyData->GetBoolean();
-            isChecked = true;
-            return isEnabled;
-        }
+            return NamedPolicy::GetPolicyFromPathForUser(user, L"Education", L"AllowGraphingCalculator")->GetBoolean();
+        }();
+        return enabled;
     }
 
     // The order of items in this list determines the order of items in the menu.
@@ -318,7 +303,6 @@ NavCategoryGroup::NavCategoryGroup(const NavCategoryGroupInitializer& groupIniti
 
 void NavCategoryStates::SetCurrentUser(Platform::String^ userId)
 {
-    std::scoped_lock<std::mutex> lock(GraphingModeCheckMutex);
     CurrentUserId = userId;
 }
 
@@ -518,13 +502,6 @@ bool NavCategoryStates::IsValidViewMode(ViewMode mode)
 
 bool NavCategoryStates::IsViewModeEnabled(ViewMode mode)
 {
-    if (mode != ViewMode::Graphing)
-    {
-        return true;
-    }
-    else
-    {
-        return IsGraphingModeEnabled();
-    }
+    return mode != ViewMode::Graphing ? true : IsGraphingModeEnabled();
 }
 

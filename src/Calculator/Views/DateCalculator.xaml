@@ -223,7 +223,7 @@
                                         <VisualState x:Name="Focused">
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Background" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CalendarDatePickerBackgroundFocused}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SubtleFillColorTransparentBrush}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
@@ -1023,7 +1023,12 @@
                             <StaticResource x:Key="ComboBoxBackgroundUnfocused" ResourceKey="SubtleFillColorTransparentBrush"/>
                             <StaticResource x:Key="ComboBoxBackgroundFocused" ResourceKey="SubtleFillColorTransparentBrush"/>
                         </ResourceDictionary>
-                        <ResourceDictionary x:Key="HighContrast"/>
+                        <ResourceDictionary x:Key="HighContrast">
+                            <StaticResource x:Key="ComboBoxBackgroundPointerOver" ResourceKey="SubtleFillColorSecondaryBrush"/>
+                            <StaticResource x:Key="ComboBoxBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush"/>
+                            <StaticResource x:Key="ComboBoxBackgroundUnfocused" ResourceKey="SubtleFillColorTransparentBrush"/>
+                            <StaticResource x:Key="ComboBoxBackgroundFocused" ResourceKey="SubtleFillColorTransparentBrush"/>
+                        </ResourceDictionary>
                     </ResourceDictionary.ThemeDictionaries>
                 </ResourceDictionary>
             </ComboBox.Resources>

@@ -2066,7 +2066,7 @@
     <comment>A measurement unit for weight. Note: Dekagram is spelled "decagram" everywhere except where US English is used. (EN-US dekagram, elsewhere decagram). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Decigram" xml:space="preserve">
-    <value>十分之一克</value>
+    <value>分克</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gram" xml:space="preserve">
@@ -2346,11 +2346,11 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>尚无历史记录</value>
+    <value>尚无历史记录。</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>存储器中未保存数据</value>
+    <value>内存中未保存任何内容。</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4177,5 +4177,9 @@
   <data name="SettingsPageOpenedAnnouncement" xml:space="preserve">
     <value>“设置”页面</value>
     <comment>Announcement used when Settings page is opened</comment>
+  </data>
+  <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>打开可用操作的上下文菜单</value>
+    <comment>Screen reader prompt for the context menu of the expression box</comment>
   </data>
 </root>
