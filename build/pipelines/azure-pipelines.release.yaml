@@ -15,6 +15,17 @@ variables:
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
 
+parameters:
+- name: publishStore
+  displayName: Publish and flight the package on Store
+  type: boolean
+  default: true
+
+- name: publishVPack
+  displayName: Publish VPack as undocked inbox app
+  type: boolean
+  default: true
+
 resources:
   repositories:
   - repository: 1esPipelines
@@ -83,5 +94,7 @@ extends:
           signBundle: true
           createStoreBrokerPackages: true
 
-      - template: /build/pipelines/templates/release-store.yaml@self
-      - template: /build/pipelines/templates/release-vpack.yaml@self
+      - ${{ if eq(parameters.publishStore, true) }}:
+        - template: /build/pipelines/templates/release-store.yaml@self
+      - ${{ if eq(parameters.publishVPack, true) }}:
+        - template: /build/pipelines/templates/release-vpack.yaml@self
