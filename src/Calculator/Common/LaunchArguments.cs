@@ -45,8 +45,7 @@ namespace CalculatorApp
             if (string.IsNullOrEmpty(activity.ActivityId) ||
                 activity.ActivationUri == null ||
                 activity.ActivationUri.AbsolutePath != "/snapshot" ||
-                string.IsNullOrEmpty(activity.ActivationUri.Query) ||
-                activity.ContentInfo == null)
+                string.IsNullOrEmpty(activity.ActivationUri.Query))
             {
                 return false;
             }

@@ -33,6 +33,30 @@ namespace CalculatorApp
             bool canSendNegate;
         };
 
+        struct CalculatorManagerSnapshot
+        {
+            std::optional<std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>> HistoryItems;
+        };
+
+        struct PrimaryDisplaySnapshot
+        {
+            Platform::String ^ DisplayValue;
+            bool IsError = false;
+        };
+
+        struct ExpressionDisplaySnapshot
+        {
+            std::vector<std::pair<std::wstring, int>> Tokens;
+            std::vector<std::shared_ptr<IExpressionCommand>> Commands;
+        };
+
+        struct StandardCalculatorSnapshot
+        {
+            CalculatorManagerSnapshot CalcManager;
+            PrimaryDisplaySnapshot PrimaryDisplay;
+            std::optional<ExpressionDisplaySnapshot> ExpressionDisplay;
+        };
+
         [Windows::UI::Xaml::Data::Bindable] public ref class StandardCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
@@ -294,6 +318,9 @@ namespace CalculatorApp
             {
                 return m_CurrentAngleType;
             }
+
+            StandardCalculatorSnapshot GetStandardCalculatorSnapshot() const;
+            void SetStandardCalculatorSnapshot(const StandardCalculatorSnapshot& state);
             
         private:
             void SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers);

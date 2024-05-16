@@ -1782,3 +1782,34 @@ void StandardCalculatorViewModel::SetBitshiftRadioButtonCheckedAnnouncement(Plat
 {
     Announcement = CalculatorAnnouncement::GetBitShiftRadioButtonCheckedAnnouncement(announcement);
 }
+
+StandardCalculatorSnapshot StandardCalculatorViewModel::GetStandardCalculatorSnapshot() const
+{
+    StandardCalculatorSnapshot snapshot;
+    auto historyItems = m_standardCalculatorManager.GetHistoryItems();
+    if (!historyItems.empty())
+    {
+        snapshot.CalcManager.HistoryItems = std::move(historyItems);
+    }
+    snapshot.PrimaryDisplay = PrimaryDisplaySnapshot{ m_DisplayValue, m_IsInError };
+    if (!m_tokens->empty() && !m_commands->empty())
+    {
+        snapshot.ExpressionDisplay = { *m_tokens, *m_commands };
+    }
+    return snapshot;
+}
+
+void StandardCalculatorViewModel::SetStandardCalculatorSnapshot(const StandardCalculatorSnapshot& snapshot)
+{
+    if (snapshot.CalcManager.HistoryItems.has_value())
+    {
+        m_standardCalculatorManager.SetHistoryItems(snapshot.CalcManager.HistoryItems.value());
+    }
+    SetPrimaryDisplay(snapshot.PrimaryDisplay.DisplayValue, snapshot.PrimaryDisplay.IsError);
+    if (snapshot.ExpressionDisplay.has_value())
+    {
+        SetExpressionDisplay(
+            std::make_shared<std::vector<std::pair<std::wstring, int>>>(snapshot.ExpressionDisplay->Tokens),
+            std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>(snapshot.ExpressionDisplay->Commands));
+    }
+}

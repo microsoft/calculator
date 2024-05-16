@@ -67,9 +67,7 @@ namespace CalculatorApp
                 var channel = UserActivityChannel.GetDefault();
                 var activity = await channel.GetOrCreateUserActivityAsync($"{Guid.NewGuid()}");
                 activity.ActivationUri = new Uri($"ms-calculator:///snapshot?activityId={activity.ActivityId}");
-
-                var snapshot = "{}"; // TODO: serialize the current snapshot into a JSON representation string.
-                activity.ContentInfo = UserActivityContentInfo.FromJson(snapshot);
+                activity.ContentInfo = UserActivityContentInfo.FromJson(Model.SaveApplicationSnapshot().Stringify());
 
                 var resProvider = AppResourceProvider.GetInstance();
                 activity.VisualElements.DisplayText =
@@ -176,9 +174,27 @@ namespace CalculatorApp
                     }
                     else
                     {
-                        if (JsonObject.TryParse(activity.ContentInfo.ToJson(), out var jsonModel))
+                        if (JsonObject.TryParse(activity.ToJson(), out var activityJson))
                         {
-                            // TODO: try restore the model from jsonModel
+                            try
+                            {
+                                // Work around for bug https://microsoft.visualstudio.com/DefaultCollection/OS/_workitems/edit/48931227 where ContentInfo can't be directly accessed.
+                                var contentJson = activityJson.GetNamedObject("contentInfo");
+                                if (Model.TryRestoreFromSnapshot(contentJson))
+                                {
+                                    SelectNavigationItemByModel();
+                                }
+                                else
+                                {
+                                    // TODO: show error dialog
+                                    return;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                // TODO: show error dialog
+                                return;
+                            }
                         }
                         else
                         {
