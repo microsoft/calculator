@@ -66,13 +66,12 @@ namespace CalculatorApp
                 }
                 var channel = UserActivityChannel.GetDefault();
                 var activity = await channel.GetOrCreateUserActivityAsync($"{Guid.NewGuid()}");
-                activity.ActivationUri = new Uri($"ms-calculator:///snapshot?activityId={activity.ActivityId}");
+                activity.ActivationUri = new Uri($"ms-calculator:snapshots/{activity.ActivityId}");
                 activity.ContentInfo = UserActivityContentInfo.FromJson(Model.SaveApplicationSnapshot().Stringify());
-
+                activity.IsRoamable = false;
                 var resProvider = AppResourceProvider.GetInstance();
                 activity.VisualElements.DisplayText =
                     $"{resProvider.GetResourceString("AppName")} - {resProvider.GetResourceString(NavCategoryStates.GetNameResourceKey(Model.Mode))}";
-
                 await activity.SaveAsync();
                 args.Request.SetUserActivity(activity);
                 deferral.Complete();
