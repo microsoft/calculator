@@ -1786,7 +1786,7 @@ void StandardCalculatorViewModel::SetBitshiftRadioButtonCheckedAnnouncement(Plat
 StandardCalculatorSnapshot StandardCalculatorViewModel::GetStandardCalculatorSnapshot() const
 {
     StandardCalculatorSnapshot snapshot;
-    auto historyItems = m_standardCalculatorManager.GetHistoryItems();
+    auto& historyItems = m_standardCalculatorManager.GetHistoryItems();
     if (!historyItems.empty())
     {
         snapshot.CalcManager.HistoryItems = std::move(historyItems);

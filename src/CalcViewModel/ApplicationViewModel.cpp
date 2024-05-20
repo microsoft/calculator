@@ -710,8 +710,9 @@ Windows::Data::Json::JsonObject ^ ApplicationViewModel::SaveApplicationSnapshot(
     ApplicationSnapshot applicationSnapshot;
     applicationSnapshot.SnapshotVersion = SnapshotHelper::SnapshotVersion;
     applicationSnapshot.Mode = static_cast<int>(Mode);
-    if (NavCategory::IsCalculatorViewMode(m_mode) && m_CalculatorViewModel != nullptr)
+    if (m_CalculatorViewModel != nullptr && m_mode == ViewMode::Standard)
     {
+        // Standard calculator is the only supported mode so far.
         applicationSnapshot.StandardCalc = m_CalculatorViewModel->GetStandardCalculatorSnapshot();
     }
     return SnapshotHelper::SaveSnapshotToJson(applicationSnapshot);

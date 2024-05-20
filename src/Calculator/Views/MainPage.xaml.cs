@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 using Windows.ApplicationModel.UserActivities;
 using Windows.Data.Json;
@@ -21,9 +22,11 @@ using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
 
+using wuxc = Windows.UI.Xaml.Controls;
+
 namespace CalculatorApp
 {
-    public sealed partial class MainPage : Windows.UI.Xaml.Controls.Page
+    public sealed partial class MainPage : wuxc.Page
     {
         public static readonly DependencyProperty NavViewCategoriesSourceProperty =
             DependencyProperty.Register(nameof(NavViewCategoriesSource), typeof(List<object>), typeof(MainPage), new PropertyMetadata(default));
@@ -165,42 +168,19 @@ namespace CalculatorApp
                 {
                     var channel = UserActivityChannel.GetDefault();
                     var activity = await channel.GetOrCreateUserActivityAsync(snapshotArgs.ActivityId);
-                    if (!snapshotArgs.VerifyIncomingActivity(activity))
+
+                    // Work around for bug https://microsoft.visualstudio.com/DefaultCollection/OS/_workitems/edit/48931227
+                    // where ContentInfo can't be directly accessed.
+                    if (snapshotArgs.VerifyIncomingActivity(activity) &&
+                        JsonObject.TryParse(activity.ToJson(), out var activityJson) &&
+                        activityJson.ContainsKey("contentInfo") &&
+                        Model.TryRestoreFromSnapshot(activityJson.GetNamedObject("contentInfo")))
                     {
-                        // something's going wrong with the activity
-                        // TODO: show error dialog
-                        return;
+                        SelectNavigationItemByModel();
                     }
                     else
                     {
-                        if (JsonObject.TryParse(activity.ToJson(), out var activityJson))
-                        {
-                            try
-                            {
-                                // Work around for bug https://microsoft.visualstudio.com/DefaultCollection/OS/_workitems/edit/48931227 where ContentInfo can't be directly accessed.
-                                var contentJson = activityJson.GetNamedObject("contentInfo");
-                                if (Model.TryRestoreFromSnapshot(contentJson))
-                                {
-                                    SelectNavigationItemByModel();
-                                }
-                                else
-                                {
-                                    // TODO: show error dialog
-                                    return;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                // TODO: show error dialog
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            // data corrupted
-                            // TODO: show error dialog
-                            return;
-                        }
+                        await ShowSnapshotLaunchErrorAsync();
                     }
                 });
                 Model.Initialize(initialMode);
@@ -679,6 +659,19 @@ namespace CalculatorApp
         private void Settings_BackButtonClick(object sender, RoutedEventArgs e)
         {
             CloseSettingsPopup();
+        }
+
+        private async Task ShowSnapshotLaunchErrorAsync()
+        {
+            var resProvider = AppResourceProvider.GetInstance();
+            var dialog = new wuxc.ContentDialog
+            {
+                Title = resProvider.GetResourceString("AppName"),
+                Content = new wuxc.TextBlock { Text = resProvider.GetResourceString("SnapshotRestoreError") },
+                CloseButtonText = resProvider.GetResourceString("ErrorButtonOk"),
+                DefaultButton = wuxc.ContentDialogButton.Close
+            };
+            await dialog.ShowAsync();
         }
 
         private Calculator m_calculator;
