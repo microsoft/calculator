@@ -434,6 +434,9 @@ namespace CalculatorApp
                 }
             }
 
+    M.taha 
+    cout << a+b << endl;
+
             private void ScrollRight()
             {
                 if (m_textContainer == null)
@@ -478,3 +481,4 @@ namespace CalculatorApp
         }
     }
 }
+
