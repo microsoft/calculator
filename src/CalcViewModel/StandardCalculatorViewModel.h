@@ -55,6 +55,7 @@ namespace CalculatorApp
             CalculatorManagerSnapshot CalcManager;
             PrimaryDisplaySnapshot PrimaryDisplay;
             std::optional<ExpressionDisplaySnapshot> ExpressionDisplay;
+            std::vector<std::shared_ptr<IExpressionCommand>> DisplayCommands;
         };
 
         [Windows::UI::Xaml::Data::Bindable] public ref class StandardCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged

@@ -119,5 +119,6 @@ namespace CalculationManager
         }
         CalculationManager::Command GetCurrentDegreeMode();
         void SetInHistoryItemLoadMode(_In_ bool isHistoryItemLoadMode);
+        std::vector<std::shared_ptr<IExpressionCommand>> GetDisplayCommandsSnapshot() const;
     };
 }

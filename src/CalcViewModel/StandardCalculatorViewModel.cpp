@@ -42,6 +42,57 @@ namespace
     StringReference IsBitFlipCheckedPropertyName(L"IsBitFlipChecked");
     StringReference CalcAlwaysOnTop(L"CalcAlwaysOnTop");
     StringReference CalcBackToFullView(L"CalcBackToFullView");
+
+    std::vector<int> GetCommandsFromExpressionCommands(const std::vector<std::shared_ptr<IExpressionCommand>>& expressionCommands)
+    {
+        vector<int> commands;
+        for (const auto& command : expressionCommands)
+        {
+            CommandType commandType = command->GetCommandType();
+
+            if (commandType == CommandType::UnaryCommand)
+            {
+                shared_ptr<IUnaryCommand> spCommand = dynamic_pointer_cast<IUnaryCommand>(command);
+                const shared_ptr<vector<int>>& unaryCommands = spCommand->GetCommands();
+
+                for (int nUCode : *unaryCommands)
+                {
+                    commands.push_back(nUCode);
+                }
+            }
+
+            if (commandType == CommandType::BinaryCommand)
+            {
+                shared_ptr<IBinaryCommand> spCommand = dynamic_pointer_cast<IBinaryCommand>(command);
+                commands.push_back(spCommand->GetCommand());
+            }
+
+            if (commandType == CommandType::Parentheses)
+            {
+                shared_ptr<IParenthesisCommand> spCommand = dynamic_pointer_cast<IParenthesisCommand>(command);
+                commands.push_back(spCommand->GetCommand());
+            }
+
+            if (commandType == CommandType::OperandCommand)
+            {
+                shared_ptr<IOpndCommand> spCommand = dynamic_pointer_cast<IOpndCommand>(command);
+                const shared_ptr<vector<int>>& opndCommands = spCommand->GetCommands();
+                bool fNeedIDCSign = spCommand->IsNegative();
+
+                for (int nOCode : *opndCommands)
+                {
+                    commands.push_back(nOCode);
+
+                    if (fNeedIDCSign && nOCode != IDC_0)
+                    {
+                        commands.push_back(static_cast<int>(CalculationManager::Command::CommandSIGN));
+                        fNeedIDCSign = false;
+                    }
+                }
+            }
+        }
+        return commands;
+    }
 }
 
 namespace CalculatorResourceKeys
@@ -1388,55 +1439,8 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
 {
     // Recalculate
     Command currentDegreeMode = m_standardCalculatorManager.GetCurrentDegreeMode();
-    shared_ptr<vector<shared_ptr<IExpressionCommand>>> savedCommands = make_shared<vector<shared_ptr<IExpressionCommand>>>();
-    vector<int> currentCommands;
-
-    for (const auto& command : *m_commands)
-    {
-        savedCommands->push_back(command);
-        CommandType commandType = command->GetCommandType();
-
-        if (commandType == CommandType::UnaryCommand)
-        {
-            shared_ptr<IUnaryCommand> spCommand = dynamic_pointer_cast<IUnaryCommand>(command);
-            const shared_ptr<vector<int>>& unaryCommands = spCommand->GetCommands();
-
-            for (int nUCode : *unaryCommands)
-            {
-                currentCommands.push_back(nUCode);
-            }
-        }
-
-        if (commandType == CommandType::BinaryCommand)
-        {
-            shared_ptr<IBinaryCommand> spCommand = dynamic_pointer_cast<IBinaryCommand>(command);
-            currentCommands.push_back(spCommand->GetCommand());
-        }
-
-        if (commandType == CommandType::Parentheses)
-        {
-            shared_ptr<IParenthesisCommand> spCommand = dynamic_pointer_cast<IParenthesisCommand>(command);
-            currentCommands.push_back(spCommand->GetCommand());
-        }
-
-        if (commandType == CommandType::OperandCommand)
-        {
-            shared_ptr<IOpndCommand> spCommand = dynamic_pointer_cast<IOpndCommand>(command);
-            const shared_ptr<vector<int>>& opndCommands = spCommand->GetCommands();
-            bool fNeedIDCSign = spCommand->IsNegative();
-
-            for (int nOCode : *opndCommands)
-            {
-                currentCommands.push_back(nOCode);
-
-                if (fNeedIDCSign && nOCode != IDC_0)
-                {
-                    currentCommands.push_back(static_cast<int>(CalculationManager::Command::CommandSIGN));
-                    fNeedIDCSign = false;
-                }
-            }
-        }
-    }
+    shared_ptr<vector<shared_ptr<IExpressionCommand>>> savedCommands = std::make_shared<std::vector<shared_ptr<IExpressionCommand>>>(*m_commands);
+    vector<int> currentCommands = GetCommandsFromExpressionCommands(*m_commands);
 
     shared_ptr<vector<pair<wstring, int>>> savedTokens = make_shared<vector<pair<wstring, int>>>();
 
@@ -1796,6 +1800,7 @@ StandardCalculatorSnapshot StandardCalculatorViewModel::GetStandardCalculatorSna
     {
         snapshot.ExpressionDisplay = { *m_tokens, *m_commands };
     }
+    snapshot.DisplayCommands = m_standardCalculatorManager.GetDisplayCommandsSnapshot();
     return snapshot;
 }
 
@@ -1805,11 +1810,26 @@ void StandardCalculatorViewModel::SetStandardCalculatorSnapshot(const StandardCa
     {
         m_standardCalculatorManager.SetHistoryItems(snapshot.CalcManager.HistoryItems.value());
     }
-    SetPrimaryDisplay(snapshot.PrimaryDisplay.DisplayValue, snapshot.PrimaryDisplay.IsError);
+
+    std::vector<int> commands;
+    if (snapshot.ExpressionDisplay.has_value() && snapshot.ExpressionDisplay->Tokens.back().first == L"=")
+    {
+        commands = GetCommandsFromExpressionCommands(snapshot.ExpressionDisplay->Commands);
+    }
+    if (commands.empty() && !snapshot.DisplayCommands.empty())
+    {
+        commands = GetCommandsFromExpressionCommands(snapshot.DisplayCommands);
+    }
+    for (const auto& command : commands)
+    {
+        m_standardCalculatorManager.SendCommand(static_cast<Command>(command));
+    }
+
     if (snapshot.ExpressionDisplay.has_value())
     {
         SetExpressionDisplay(
             std::make_shared<std::vector<std::pair<std::wstring, int>>>(snapshot.ExpressionDisplay->Tokens),
             std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>(snapshot.ExpressionDisplay->Commands));
     }
+    SetPrimaryDisplay(snapshot.PrimaryDisplay.DisplayValue, snapshot.PrimaryDisplay.IsError);
 }

@@ -63,6 +63,12 @@ namespace
             {
                 jsonObject->SetNamedValue(L"ExpressionDisplay", SaveSnapshotToJson(*value.ExpressionDisplay));
             }
+            auto commandsJsonArray = ref new Windows::Data::Json::JsonArray();
+            for (const auto& command : value.DisplayCommands)
+            {
+                commandsJsonArray->Append(SaveSnapshotToJson(command));
+            }
+            jsonObject->SetNamedValue(L"DisplayCommands", commandsJsonArray);
             return jsonObject;
         }
 
@@ -270,6 +276,7 @@ namespace
                     return;
                 }
             }
+            standardCalculatorSnapshot.DisplayCommands = RestoreExpressionCommandsFromJsonArray(jsonObject->GetNamedArray(L"DisplayCommands"));
             value = std::move(standardCalculatorSnapshot);
         }
 

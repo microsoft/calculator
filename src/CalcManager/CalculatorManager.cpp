@@ -597,4 +597,9 @@ namespace CalculationManager
     {
         m_inHistoryItemLoadMode = isHistoryItemLoadMode;
     }
+
+    std::vector<std::shared_ptr<IExpressionCommand>> CalculatorManager::GetDisplayCommandsSnapshot() const
+    {
+        return m_currentCalculatorEngine->GetHistoryCollectorCommandsSnapshot();
+    }
 }

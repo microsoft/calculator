@@ -4,9 +4,12 @@
 #pragma once
 
 #include <array>
+#include "ExpressionCommand.h"
 #include "ICalcDisplay.h"
 #include "IHistoryDisplay.h"
 #include "Rational.h"
+
+class COpndCommand;
 
 // maximum depth you can get by precedence. It is just an array's size limit.
 static constexpr size_t MAXPRECDEPTH = 25;
@@ -29,13 +32,15 @@ public:
     void PushLastOpndStart(int ichOpndStart = -1);
     void PopLastOpndStart();
     void EnclosePrecInversionBrackets();
-    bool FOpndAddedToHistory();
+    bool FOpndAddedToHistory() const;
     void CompleteHistoryLine(std::wstring_view numStr);
     void CompleteEquation(std::wstring_view numStr);
     void ClearHistoryLine(std::wstring_view errStr);
     int AddCommand(_In_ const std::shared_ptr<IExpressionCommand>& spCommand);
     void UpdateHistoryExpression(uint32_t radix, int32_t precision);
     void SetDecimalSymbol(wchar_t decimalSymbol);
+    std::shared_ptr<COpndCommand> GetOperandCommandsFromString(std::wstring_view numStr, CalcEngine::Rational const& rat) const;
+    std::vector<std::shared_ptr<IExpressionCommand>> GetCommands() const;
 
 private:
     std::shared_ptr<IHistoryDisplay> m_pHistoryDisplay;
@@ -60,5 +65,5 @@ private:
     void TruncateEquationSzFromIch(int ich);
     void SetExpressionDisplay();
     void InsertSzInEquationSz(std::wstring_view str, int icommandIndex, int ich);
-    std::shared_ptr<std::vector<int>> GetOperandCommandsFromString(std::wstring_view numStr);
+    std::shared_ptr<std::vector<int>> GetOperandCommandsFromString(std::wstring_view numStr) const;
 };
