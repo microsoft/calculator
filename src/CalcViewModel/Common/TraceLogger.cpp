@@ -43,6 +43,8 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_VARIABLE_SETTING_CHANGED = L"VariableSettingChanged";
     constexpr auto EVENT_NAME_GRAPH_SETTINGS_CHANGED = L"GraphSettingsChanged";
     constexpr auto EVENT_NAME_GRAPH_THEME = L"GraphTheme";
+    constexpr auto EVENT_NAME_RECALL_SNAPSHOT = L"RecallSnapshot";
+    constexpr auto EVENT_NAME_RECALL_RESTORE = L"RecallRestore";
 
     constexpr auto EVENT_NAME_EXCEPTION = L"Exception";
 
@@ -327,5 +329,28 @@ namespace CalculatorApp
         fields->AddString(L"GraphTheme", graphTheme);
 
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_GRAPH_THEME), fields);
+    }
+
+    void TraceLogger::LogRecallSnapshot(ViewMode mode)
+    {
+        auto fields = ref new LoggingFields();
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_RECALL_SNAPSHOT), fields);
+    }
+
+    void TraceLogger::LogRecallRestore(ViewMode mode)
+    {
+        auto fields = ref new LoggingFields();
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_RECALL_RESTORE), fields);
+    }
+
+    void TraceLogger::LogRecallError(CalculatorApp::ViewModel::Common::ViewMode mode, Platform::String^ message)
+    {
+        auto fields = ref new LoggingFields();
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
+        fields->AddString(StringReference(L"FunctionName"), L"Recall");
+        fields->AddString(StringReference(L"Message"), message);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_EXCEPTION), fields);
     }
 }

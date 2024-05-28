@@ -202,3 +202,13 @@ wchar_t CCalcEngine::DecimalSeparator() const
 {
     return m_decimalSeparator;
 }
+
+std::vector<std::shared_ptr<IExpressionCommand>> CCalcEngine::GetHistoryCollectorCommandsSnapshot() const
+{
+    auto commands = m_HistoryCollector.GetCommands();
+    if (!m_HistoryCollector.FOpndAddedToHistory() && m_bRecord)
+    {
+        commands.push_back(m_HistoryCollector.GetOperandCommandsFromString(m_numberString, m_currentVal));
+    }
+    return commands;
+}

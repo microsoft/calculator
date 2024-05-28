@@ -1773,7 +1773,7 @@
     <value>J</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
-    <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
+  <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
     <value>kWh</value>
     <comment>An abbreviation for a measurement unit of electricity consumption</comment>
   </data>
@@ -2145,7 +2145,7 @@
     <value>Joules</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
-    <data name="UnitName_Kilowatthour" xml:space="preserve">
+  <data name="UnitName_Kilowatthour" xml:space="preserve">
     <value>Kilowatt-hours</value>
     <comment>A measurement unit for electricity consumption. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
@@ -4753,5 +4753,13 @@
   <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Open the context menu for available actions</value>
     <comment>Screen reader prompt for the context menu of the expression box</comment>
+  </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>OK</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>Couldn't restore this snapshot.</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
   </data>
 </root>
