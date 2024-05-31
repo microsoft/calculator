@@ -20,7 +20,7 @@ jobs:
       in(dependencies.Buildx86.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
       in(dependencies.BuildARM.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
       in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
-    ) 
+    )
   variables:
     skipComponentGovernanceDetection: true
     StoreBrokerMediaRootPath: $(TEMP)\SBMedia
@@ -41,7 +41,7 @@ jobs:
         displayName: Publish MsixBundleSigned artifact
         targetPath: $(Build.ArtifactStagingDirectory)\msixBundle
         artifactName: msixBundleSigned
-      - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:      
+      - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:
         - output: pipelineArtifact
           displayName: Publish StoreBroker Payload artifact
           targetPath: $(StoreBrokerPackagePath)
@@ -151,7 +151,7 @@ jobs:
             }
           ]
 
-    - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:      
+    - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:
       - powershell: |
           # Just modify this line to indicate where your en-us PDP file is. Leave the other lines alone.
           $enUSPdpFilePath = "$(Build.SourcesDirectory)\PDP\en-US\PDP.xml"
@@ -170,11 +170,11 @@ jobs:
           vstsFeed: WindowsInboxApps
           vstsFeedPackage: calculator-pdp-media
           vstsPackageVersion: $(SBMediaReleaseVersion)
-      
-      - task: MS-RDX-MRO.windows-store-publish-dev.package-task.store-package@2
+
+      - task: MS-RDX-MRO.windows-store-publish-dev.package-task.store-package@3
         displayName: Create StoreBroker Payload
         inputs:
-          serviceEndpoint: Calculator StoreBroker Connection
+          ConnectedServiceNameARM: Calculator StoreBroker SNI
           sbConfigPath: Tools/Build/StoreBroker/SBCalculatorConfig.json
           sourceFolder: $(Build.ArtifactStagingDirectory)/msixBundle
           contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle

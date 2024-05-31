@@ -8,7 +8,7 @@ trigger: none
 pr: none
 
 variables:
-  versionMajor: 11
+  versionMajor: 0
   versionMinor: 2405
   versionBuild: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
   versionPatch: 0
