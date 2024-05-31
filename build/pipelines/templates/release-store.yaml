@@ -17,11 +17,11 @@ jobs:
     displayName: Download storeBrokerPayload artifact
     artifact: storeBrokerPayload
 
-  - task: MS-RDX-MRO.windows-store-publish-dev.flight-task.store-flight@2
+  - task: MS-RDX-MRO.windows-store-publish-dev.flight-task.store-flight@3
     displayName: Flight StoreBroker Payload to team ring
     name: StoreBrokerFlight
     inputs:
-      serviceEndpoint: Calculator StoreBroker Connection
+      ConnectedServiceNameARM: Calculator StoreBroker SNI
       appId: $(AppId)
       flightId: $(FlightId)
       inputMethod: JsonAndZip
