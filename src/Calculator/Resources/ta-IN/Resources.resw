@@ -4183,4 +4183,12 @@
     <value>கிடைக்கக்கூடிய செயல்களுக்கு சூழல் மெனுவைத் திறக்கவும்</value>
     <comment>Screen reader prompt for the context menu of the expression box</comment>
   </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>சரி</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>இந்த நொடிப்புச்சேமிப்பை மீட்டெடுக்க முடியவில்லை.</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
+  </data>
 </root>
