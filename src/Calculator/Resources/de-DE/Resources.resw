@@ -2334,7 +2334,7 @@
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutControlContribute" xml:space="preserve">
-    <value>Um zu erfahren, wie Sie dem Windows-Rechner mitwirken können, checken Sie das Projekt auf %HL%GitHub%HL% aus.</value>
+    <value>Um zu erfahren, wie Sie am Windows-Rechner mitwirken können, checken Sie das Projekt auf %HL%GitHub%HL% aus.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutGroupTitle.Text" xml:space="preserve">
@@ -4181,5 +4181,13 @@
   <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Öffnen des Kontextmenüs für verfügbare Aktionen</value>
     <comment>Screen reader prompt for the context menu of the expression box</comment>
+  </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>OK</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>Diese Momentaufnahme konnte nicht wiederhergestellt werden.</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
   </data>
 </root>

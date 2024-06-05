@@ -4182,4 +4182,12 @@
     <value>ಲಭ್ಯವಿರುವ ಕ್ರಿಯೆಗಳಿಗೆ ಸಂದರ್ಭ ಮೆನು ತೆರೆಯಿರಿ</value>
     <comment>Screen reader prompt for the context menu of the expression box</comment>
   </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>ಸರಿ</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>ಈ ಸ್ನ್ಯಾಪ್‌ಶಾಟ್ ಅನ್ನು ಪುನಃಸ್ಥಾಪಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
+  </data>
 </root>

@@ -4182,4 +4182,12 @@
     <value>打开可用操作的上下文菜单</value>
     <comment>Screen reader prompt for the context menu of the expression box</comment>
   </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>确定</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>无法还原此快照。</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
+  </data>
 </root>
