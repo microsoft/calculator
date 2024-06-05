@@ -3452,7 +3452,7 @@
     <comment>Message displayed when the graph does not have any y-intercepts</comment>
   </data>
   <data name="Domain" xml:space="preserve">
-    <value>Область определения</value>
+    <value>Область</value>
     <comment>Title for KeyGraphFeatures Domain Property</comment>
   </data>
   <data name="HorizontalAsymptotes" xml:space="preserve">
@@ -3515,7 +3515,7 @@
     <value>Не удалось выполнить анализ функции.</value>
   </data>
   <data name="KGFDomainNone" xml:space="preserve">
-    <value>Не удается вычислить область значений для этой функции.</value>
+    <value>Не удается вычислить область для этой функции.</value>
     <comment>Error displayed when Domain is not returned from the analyzer.</comment>
   </data>
   <data name="KGFRangeNone" xml:space="preserve">
@@ -3583,7 +3583,7 @@
     <comment>Error that occurs during graphing when a number has too many decimals. Ex: 1.2.3</comment>
   </data>
   <data name="DecimalPointWithoutDigits" xml:space="preserve">
-    <value>Нет цифр рядом с десятичной запятой</value>
+    <value>Десятичная запятая не имеет цифр</value>
     <comment>Error that occurs during graphing with a decimal point without digits</comment>
   </data>
   <data name="UnexpectedEndOfExpression" xml:space="preserve">
@@ -3647,7 +3647,7 @@
     <comment>General error that occurs during graphing.</comment>
   </data>
   <data name="InvalidNumberDigit" xml:space="preserve">
-    <value>Цифра не может использоваться с этим основанием</value>
+    <value>Не удалось определить цифру для заданного основания</value>
     <comment>Error that occurs during graphing when trying to use bases incorrect. Ex: base(2,1020).</comment>
   </data>
   <data name="InvalidNumberBase" xml:space="preserve">
@@ -4181,5 +4181,13 @@
   <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Открыть контекстное меню для просмотра доступных действий</value>
     <comment>Screen reader prompt for the context menu of the expression box</comment>
+  </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>ОК</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>Не удалось восстановить этот моментальный снимок.</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
   </data>
 </root>

@@ -4182,4 +4182,12 @@
     <value>Abrir el menú contextual para ver las acciones disponibles</value>
     <comment>Screen reader prompt for the context menu of the expression box</comment>
   </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>Aceptar</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>No se pudo restaurar esta instantánea.</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
+  </data>
 </root>

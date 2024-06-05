@@ -4182,4 +4182,12 @@
     <value>ላሉት ድርጊቶች የአውድ ምናሌውን ይክፈቱ</value>
     <comment>Screen reader prompt for the context menu of the expression box</comment>
   </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>እሺ</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>ይህን ቅጽበታዊ ገጽ እይታ ወደነበረበት መመለስ አልተቻለም።</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
+  </data>
 </root>
