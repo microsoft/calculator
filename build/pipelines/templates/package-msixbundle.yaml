@@ -117,10 +117,15 @@ jobs:
       targetFolder: $(Build.ArtifactStagingDirectory)\msixBundle
 
   - ${{ if eq(parameters.signBundle, true) }}:
-    - task: EsrpCodeSigning@2
+    - task: EsrpCodeSigning@5
       displayName: Send msixbundle to code signing service
       inputs:
-        ConnectedServiceName: Essential Experiences Codesign
+        ConnectedServiceName: Essential Experiences Codesign ARM
+        AppRegistrationClientId: $(EsrpClientId)
+        AppRegistrationTenantId: $(EsrpTenantId)
+        AuthAKVName: EE-CodeSignKeyVault
+        AuthCertName: EE-Auth-Cert
+        AuthSignCertName: EE-Codesign-Cert
         FolderPath: $(Build.ArtifactStagingDirectory)\msixBundle
         Pattern: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
         signConfigType: inlineSignParams
