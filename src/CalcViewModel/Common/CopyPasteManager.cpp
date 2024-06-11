@@ -67,7 +67,7 @@ void CopyPasteManager::CopyToClipboard(String ^ stringToCopy)
     // Copy the string to the clipboard
     auto dataPackage = ref new DataPackage();
     dataPackage->SetText(stringToCopy);
-    Clipboard::SetContentWithOptions(dataPackage, ref new ClipboardContentOptions());
+    Clipboard::SetContentWithOptions(dataPackage, nullptr);
 }
 
 IAsyncOperation<String ^> ^ CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, NumberBase programmerNumberBase, BitLength bitLengthType)
