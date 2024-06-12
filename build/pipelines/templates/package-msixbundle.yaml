@@ -91,7 +91,7 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        vstsPackageVersion: 0.0.108
+        vstsPackageVersion: 0.0.109
 
   - task: PowerShell@2
     displayName: Generate MsixBundle mapping
@@ -125,7 +125,7 @@ jobs:
         echo ClientId:$esrpClientId, TenantId:$esrpTenantId
         echo "##vso[task.setvariable variable=EsrpClientId]$esrpClientId"
         echo "##vso[task.setvariable variable=EsrpTenantId]$esrpTenantId"
-      displayName: Get SBOM Key Code
+      displayName: Get ESRP config
 
     - task: EsrpCodeSigning@5
       displayName: Send msixbundle to code signing service
