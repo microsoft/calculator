@@ -55,7 +55,7 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        vstsPackageVersion: 0.0.106
+        vstsPackageVersion: 0.0.109
 
   - task: NuGetToolInstaller@1
     displayName: Use NuGet 6.x
@@ -84,7 +84,7 @@ jobs:
       configuration: $(BuildConfiguration)
       maximumCpuCount: true
 
-  - ${{ if eq(parameters.isReleaseBuild, true) }}:          
+  - ${{ if eq(parameters.isReleaseBuild, true) }}:
     - task: CopyFiles@2
       displayName: Copy Files for BinSkim analysis
       inputs:
