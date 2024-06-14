@@ -189,7 +189,7 @@ jobs:
       - task: MS-RDX-MRO.windows-store-publish-dev.package-task.store-package@3
         displayName: Create StoreBroker Payload
         inputs:
-          ConnectedServiceNameARM: Calculator StoreBroker SNI
+          serviceEndpoint: Calculator StoreBroker FC
           sbConfigPath: Tools/Build/StoreBroker/SBCalculatorConfig.json
           sourceFolder: $(Build.ArtifactStagingDirectory)/msixBundle
           contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
