@@ -21,7 +21,7 @@ jobs:
     displayName: Flight StoreBroker Payload to team ring
     name: StoreBrokerFlight
     inputs:
-      ConnectedServiceNameARM: Calculator StoreBroker SNI
+      serviceEndpoint: Calculator StoreBroker FC
       appId: $(AppId)
       flightId: $(FlightId)
       inputMethod: JsonAndZip
