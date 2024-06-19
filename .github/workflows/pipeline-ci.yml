@@ -1,0 +1,19 @@
+name: Windows Calculator Continuous Integration Pipeline
+on:
+  push:
+    branches: [main, release/**, feature/**]
+  pull_request:
+    branches: [main, release/**, feature/**]
+jobs:
+  buildWinCalc:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: nuget/setup-nuget@v2
+      name: Use NuGet 6.x
+      with:
+        nuget-version: '6.x'
+    - run: nuget restore ./src/Calculator.sln
+#  testCalc:
+#    needs: buildWinCalc
+#    runs-on: windows-latest
