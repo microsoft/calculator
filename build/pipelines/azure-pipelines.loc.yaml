@@ -54,7 +54,7 @@ jobs:
 
   - task: PublishPipelineArtifact@0
     displayName: Publish patch file as artifact
-    condition: eq(variables['hasChanges'], '1')
+    condition: and(eq(variables['hasChanges'], '1'), eq(variables['isMainBranch'], true))
     inputs:
       artifactName: Patch
       targetPath: $(Build.ArtifactStagingDirectory)
