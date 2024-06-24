@@ -6,7 +6,7 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 
 [![Continuous Integration](https://github.com/microsoft/calculator/actions/workflows/action-ci.yml/badge.svg)](https://github.com/microsoft/calculator/actions/workflows/action-ci.yml)
 
-  ![Calculator Screenshot](docs/Images/CalculatorScreenshot.png)
+<img src="docs/Images/CalculatorScreenshot.png" alt="Calculator Screenshot" width="450px" />
 
 ## Features
 - Standard Calculator functionality which offers basic operations and evaluates commands immediately as they are entered.
