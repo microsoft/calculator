@@ -756,6 +756,8 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
         OrderedUnit{ UnitConverterUnits::Pressure_Pascal, GetLocalizedStringName(L"UnitName_Pascal"), GetLocalizedStringName(L"UnitAbbreviation_Pascal"), 5 });
     pressureUnits.push_back(OrderedUnit{
         UnitConverterUnits::Pressure_PSI, GetLocalizedStringName(L"UnitName_PSI"), GetLocalizedStringName(L"UnitAbbreviation_PSI"), 6, false, false, false });
+    pressureUnits.push_back(OrderedUnit{
+        UnitConverterUnits::Pressure_Torr, GetLocalizedStringName(L"UnitName_Torr"), GetLocalizedStringName(L"UnitAbbreviation_Torr"), 7});
     unitMap.emplace(ViewMode::Pressure, pressureUnits);
 
     vector<OrderedUnit> angleUnits;
@@ -944,7 +946,8 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
                                                    { ViewMode::Pressure, UnitConverterUnits::Pressure_KiloPascal, 0.0098692326671601 },
                                                    { ViewMode::Pressure, UnitConverterUnits::Pressure_MillimeterOfMercury, 0.0013155687145324 },
                                                    { ViewMode::Pressure, UnitConverterUnits::Pressure_Pascal, 9.869232667160128e-6 },
-                                                   { ViewMode::Pressure, UnitConverterUnits::Pressure_PSI, 0.068045961016531 } };
+                                                   { ViewMode::Pressure, UnitConverterUnits::Pressure_PSI, 0.068045961016531 },
+                                                   { ViewMode::Pressure, UnitConverterUnits::Pressure_Torr, 0.00131578947368 } };
 
     // Populate the hash map and return;
     for (UnitData unitdata : unitDataList)
