@@ -833,8 +833,8 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
                                                    { ViewMode::Data, UnitConverterUnits::Data_Yobibits, 151115727451828646.838272 },
                                                    { ViewMode::Data, UnitConverterUnits::Data_Yobibytes, 1208925819614629174.706176 },
                                                    { ViewMode::Data, UnitConverterUnits::Data_FloppyDisk, 1.474560 },
-                                                   { ViewMode::Data, UnitConverterUnits::Data_CD, 734.003200 },
-                                                   { ViewMode::Data, UnitConverterUnits::Data_DVD, 5046.586573 },
+                                                   { ViewMode::Data, UnitConverterUnits::Data_CD, 700 },
+                                                   { ViewMode::Data, UnitConverterUnits::Data_DVD, 4700 },
 
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_Calorie, 4.184 },
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_Kilocalorie, 4184 },
