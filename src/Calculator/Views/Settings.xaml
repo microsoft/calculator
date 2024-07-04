@@ -59,7 +59,11 @@
                 FontSize="12"
                 AutomationProperties.Name="{utils:ResourceString Name=TitleBarBackButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                 Click="BackButton_Click"
-                Content="&#xE72B;"/>
+                Content="&#xE72B;">
+            <Button.KeyboardAccelerators>
+                <KeyboardAccelerator Key="Left" Modifiers="Menu"/>
+            </Button.KeyboardAccelerators>
+        </Button>
 
         <Grid Grid.Row="1"
               Height="{StaticResource HamburgerHeight}"
