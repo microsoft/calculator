@@ -34,12 +34,12 @@ jobs:
       deletePackages: true
       numberOfPackagesToKeep: 0
 
-  - task: APS-Aero-Package.aero-upload-task.AeroUploadTask.AeroUpload@0
-    displayName: Aero Upload
+  - task: APS-Aero-Package.aero-upload-task.AeroUploadTask.AeroUpload@1
+    displayName: Aero Upload (FC)
     inputs:
       productId: $(ProductId)
       flightId: $(FlightId)
       submissionId: $(StoreBrokerFlight.WS_SubmissionId)
       submissionDataPath: $(StoreBrokerPackagePath)\SBCalculator.json
       packagePath: $(StoreBrokerPackagePath)\SBCalculator.zip
-      serviceEndpoint: AeroUpload-APS-Calculator
+      serviceEndpoint: AeroUpload-Calculator-FC
