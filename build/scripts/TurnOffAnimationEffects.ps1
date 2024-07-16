@@ -19,4 +19,4 @@ Function WaitForAsyncAction($WinRtTask, $ResultType) {
 
 $controller = WaitForAsyncAction ([Windows.UI.ViewManagement.Core.UISettingsController]::RequestDefaultAsync())  ([Windows.UI.ViewManagement.Core.UISettingsController])
 
-$controller.SetAnimationsEnabled($false)
+$controller.SetAnimationsEnabled($true)
