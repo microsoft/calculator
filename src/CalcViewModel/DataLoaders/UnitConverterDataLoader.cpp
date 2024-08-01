@@ -930,7 +930,7 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
                                                    { ViewMode::Speed, UnitConverterUnits::Speed_Knot, 51.44 },
                                                    { ViewMode::Speed, UnitConverterUnits::Speed_Mach, 34030 },
                                                    { ViewMode::Speed, UnitConverterUnits::Speed_MetersPerSecond, 100 },
-                                                   { ViewMode::Speed, UnitConverterUnits::Speed_MilesPerHour, 44.7 },
+                                                   { ViewMode::Speed, UnitConverterUnits::Speed_MilesPerHour, 44.704 },
                                                    { ViewMode::Speed, UnitConverterUnits::Speed_Turtle, 8.94 },
                                                    { ViewMode::Speed, UnitConverterUnits::Speed_Horse, 2011.5 },
                                                    { ViewMode::Speed, UnitConverterUnits::Speed_Jet, 24585 },
