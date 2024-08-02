@@ -573,6 +573,9 @@
     <data name="Atmospheres-Pounds per square inch">
         <value>0.068045961016531</value>
     </data>
+    <data name="Atmospheres-Torr">
+        <value>0.00131578947368</value>
+    </data>
     <data name="Liters-Cubic meters-2" xml:space="preserve">
     <value>0.002</value>
   </data>
