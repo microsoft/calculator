@@ -22,7 +22,7 @@ jobs:
     patterns: '**/CalculatorUnitTests_Test/**'
 
   - powershell: |
-      $(Build.SourceDirectory)/build/scripts/SignTestApp.ps1 -AppToSign '$(UnitTestsDir)\CalculatorUnitTests.msix'
+      $(Build.SourcesDirectory)/build/scripts/SignTestApp.ps1 -AppToSign '$(UnitTestsDir)\CalculatorUnitTests.msix'
     displayName: Sign unit tests
 
   - task: VSTest@2
