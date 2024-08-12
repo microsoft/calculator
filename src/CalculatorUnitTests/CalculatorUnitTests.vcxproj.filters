@@ -79,7 +79,4 @@
       <UniqueIdentifier>{d3ec8922-022d-4531-8744-f65a872f3841}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="WindowsDev_TemporaryKey.pfx" />
-  </ItemGroup>
 </Project>
