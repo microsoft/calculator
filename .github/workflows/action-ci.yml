@@ -141,7 +141,7 @@ jobs:
     - uses: actions/download-artifact@v4
       name: Download tools
       with:
-        name: Tools-${{ matrix.platform }}
+        name: Tools-x64
         path: ${{ github.workspace }}/download/tools
     - run: |
         Set-DisplayResolution -Width 1920 -Height 1080 -Force
