@@ -91,6 +91,10 @@ jobs:
       with:
         name: Build-${{ matrix.platform }}
         path: ${{ github.workspace }}/output
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Tools-${{ matrix.platform }}
+        path: ${{ github.workspace }}/build/scripts/SignTestApp.ps1
 
   unitTests:
     needs: [defineBuilds, build]
@@ -107,10 +111,13 @@ jobs:
       with:
         name: Build-${{ matrix.platform }}
         path: ${{ github.workspace }}/download
+    - uses: actions/download-artifact@v4
+      name: Download tools
+      with:
+        name: Tools-${{ matrix.platform }}
+        path: ${{ github.workspace }}/download/tools
     - run: |
-        ${{ env.testDir }}/Add-AppDevPackage.ps1 `
-          -CertificatePath ${{ env.testDir }}/CalculatorUnitTests.cer `
-          -Force
+        ${{ github.workspace }}/download/tools/SignTestApp.ps1 -AppToSign ${{ env.testDir }}/CalculatorUnitTests.msix
       shell: pwsh
       name: Install test certificate
     - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
@@ -131,16 +138,18 @@ jobs:
       with:
         name: Build-x64
         path: ${{ github.workspace }}/download
+    - uses: actions/download-artifact@v4
+      name: Download tools
+      with:
+        name: Tools-x64
+        path: ${{ github.workspace }}/download/tools
     - run: |
         Set-DisplayResolution -Width 1920 -Height 1080 -Force
       shell: pwsh
       name: Set screen resolution
     - run: |
-        ${{ env.appDir }}/Add-AppDevPackage.ps1 `
-          -CertificatePath ${{ env.appDir }}/Calculator*.cer `
-          -Force
-        ${{ env.appDir }}/Add-AppDevPackage.ps1 `
-          -Force
+        ${{ github.workspace }}/download/tools/SignTestApp.ps1 -AppToSign '${{ env.appDir }}/Calculator_*.msixbundle'
+        ${{ env.appDir }}/Add-AppDevPackage.ps1 -Force
       shell: powershell
       name: Install app
     - run: |

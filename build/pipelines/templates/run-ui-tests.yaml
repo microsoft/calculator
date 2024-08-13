@@ -42,17 +42,10 @@ jobs:
       Calculator/AppPackages/**
       publish/**
 
-  - task: PowerShell@2
-    displayName: Install certificate
-    inputs:
-      filePath: $(Pipeline.Workspace)/$(DropName)/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
-      arguments: -CertificatePath $(Pipeline.Workspace)/$(DropName)/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Calculator_$(Build.BuildNumber)_${{ parameters.platform }}.cer -Force
-
-  - task: PowerShell@2
+  - powershell: |
+      $(Build.SourcesDirectory)/build/scripts/SignTestApp.ps1 -AppToSign '$(Pipeline.Workspace)/$(DropName)/Calculator/AppPackages/Calculator_*_Test/Calculator_*.msixbundle'
+      $(Pipeline.Workspace)/$(DropName)/Calculator/AppPackages/Calculator_*_Test/Add-AppDevPackage.ps1 -Force
     displayName: Install app
-    inputs:
-      filePath: $(Pipeline.Workspace)/$(DropName)/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
-      arguments: -Force
 
   - task: VSTest@2
     displayName: Run CalculatorUITests

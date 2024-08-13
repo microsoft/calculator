@@ -16,7 +16,6 @@
     <!-- We want to automatic replace of MinVersion/MaxVersionTested for unit tests. -->
     <AppxOSMinVersionReplaceManifestVersion>true</AppxOSMinVersionReplaceManifestVersion>
     <AppxOSMaxVersionTestedReplaceManifestVersion>true</AppxOSMaxVersionTestedReplaceManifestVersion>
-    <PackageCertificateKeyFile>WindowsDev_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -288,9 +287,6 @@
     <ProjectReference Include="..\CalcViewModelCopyForUT\CalcViewModelCopyForUT.vcxproj">
       <Project>{cc9b4fa7-d746-4f52-9401-0ad1b4d6b16d}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="WindowsDev_TemporaryKey.pfx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

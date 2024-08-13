@@ -13,18 +13,17 @@ jobs:
     skipComponentGovernanceDetection: true
     UnitTestsDir: $(Pipeline.Workspace)\drop-${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test
   steps:
-  - checkout: none
+  - checkout: self
+    fetchDepth: 1
   
   - download: current
     displayName: Download CalculatorUnitTests
     artifact: drop-${{ parameters.platform }}
     patterns: '**/CalculatorUnitTests_Test/**'
 
-  - task: PowerShell@2
-    displayName: Install Certificate
-    inputs:
-      filePath: $(UnitTestsDir)\Add-AppDevPackage.ps1
-      arguments: -CertificatePath $(UnitTestsDir)\CalculatorUnitTests.cer -Force
+  - powershell: |
+      $(Build.SourcesDirectory)/build/scripts/SignTestApp.ps1 -AppToSign '$(UnitTestsDir)\CalculatorUnitTests.msix'
+    displayName: Sign unit tests
 
   - task: VSTest@2
     displayName: Run CalculatorUnitTests
