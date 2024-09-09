@@ -400,6 +400,8 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
     unitMap.emplace(ViewMode::Energy, energyUnits);
 
     vector<OrderedUnit> lengthUnits;
+    lengthUnits.push_back(OrderedUnit{
+        UnitConverterUnits::Length_Angstrom, GetLocalizedStringName(L"UnitName_Angstrom"), GetLocalizedStringName(L"UnitAbbreviation_Angstrom"), 15 });
     lengthUnits.push_back(OrderedUnit{ UnitConverterUnits::Length_Centimeter,
                                        GetLocalizedStringName(L"UnitName_Centimeter"),
                                        GetLocalizedStringName(L"UnitAbbreviation_Centimeter"),
@@ -855,6 +857,7 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
                                                    { ViewMode::Length, UnitConverterUnits::Length_Micron, 0.000001 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Millimeter, 0.001 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Nanometer, 0.000000001 },
+                                                   { ViewMode::Length, UnitConverterUnits::Length_Angstrom, 0.0000000001 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Centimeter, 0.01 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Meter, 1 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Kilometer, 1000 },
