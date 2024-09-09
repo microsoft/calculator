@@ -324,6 +324,9 @@
     <data name="Meters-Nanometers">
         <value>0.000000001</value>
     </data>
+    <data name="Meters-Angstroms">
+        <value>0.0000000001</value>
+    </data>
     <data name="Meters-Centimeters">
         <value>0.01</value>
     </data>
