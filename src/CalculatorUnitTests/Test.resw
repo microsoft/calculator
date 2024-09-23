@@ -591,8 +591,8 @@
     <data name="Milliliters-Milliliters" xml:space="preserve">
     <value>1</value>
   </data>
-    <data name="Nanometers-Microns-3" xml:space="preserve">
-    <value>0.003</value>
+    <data name="Angstroms-Nanometers-3" xml:space="preserve">
+    <value>0.3</value>
   </data>
   <data name="Joules-Kilowatthour" xml:space="preserve">
     <value>3600000</value>
