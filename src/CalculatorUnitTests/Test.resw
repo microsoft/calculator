@@ -324,6 +324,9 @@
     <data name="Meters-Nanometers">
         <value>0.000000001</value>
     </data>
+    <data name="Meters-Angstroms">
+        <value>0.0000000001</value>
+    </data>
     <data name="Meters-Centimeters">
         <value>0.01</value>
     </data>
@@ -588,8 +591,8 @@
     <data name="Milliliters-Milliliters" xml:space="preserve">
     <value>1</value>
   </data>
-    <data name="Nanometers-Microns-3" xml:space="preserve">
-    <value>0.003</value>
+    <data name="Angstroms-Nanometers-3" xml:space="preserve">
+    <value>0.3</value>
   </data>
   <data name="Joules-Kilowatthour" xml:space="preserve">
     <value>3600000</value>

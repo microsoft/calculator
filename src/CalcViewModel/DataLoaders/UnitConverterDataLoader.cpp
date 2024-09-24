@@ -400,53 +400,55 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
     unitMap.emplace(ViewMode::Energy, energyUnits);
 
     vector<OrderedUnit> lengthUnits;
+    lengthUnits.push_back(OrderedUnit{
+        UnitConverterUnits::Length_Angstrom, GetLocalizedStringName(L"UnitName_Angstrom"), GetLocalizedStringName(L"UnitAbbreviation_Angstrom"), 1 });
     lengthUnits.push_back(OrderedUnit{ UnitConverterUnits::Length_Centimeter,
                                        GetLocalizedStringName(L"UnitName_Centimeter"),
                                        GetLocalizedStringName(L"UnitAbbreviation_Centimeter"),
-                                       4,
+                                       5,
                                        useUSCustomary,
                                        useSI,
                                        false });
     lengthUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Length_Foot, GetLocalizedStringName(L"UnitName_Foot"), GetLocalizedStringName(L"UnitAbbreviation_Foot"), 8 });
+        OrderedUnit{ UnitConverterUnits::Length_Foot, GetLocalizedStringName(L"UnitName_Foot"), GetLocalizedStringName(L"UnitAbbreviation_Foot"), 9 });
     lengthUnits.push_back(OrderedUnit{ UnitConverterUnits::Length_Inch,
                                        GetLocalizedStringName(L"UnitName_Inch"),
                                        GetLocalizedStringName(L"UnitAbbreviation_Inch"),
-                                       7,
+                                       8,
                                        useSI,
                                        useUSCustomary,
                                        false });
     lengthUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Length_Kilometer, GetLocalizedStringName(L"UnitName_Kilometer"), GetLocalizedStringName(L"UnitAbbreviation_Kilometer"), 6 });
+        UnitConverterUnits::Length_Kilometer, GetLocalizedStringName(L"UnitName_Kilometer"), GetLocalizedStringName(L"UnitAbbreviation_Kilometer"), 7 });
     lengthUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Length_Meter, GetLocalizedStringName(L"UnitName_Meter"), GetLocalizedStringName(L"UnitAbbreviation_Meter"), 5 });
+        OrderedUnit{ UnitConverterUnits::Length_Meter, GetLocalizedStringName(L"UnitName_Meter"), GetLocalizedStringName(L"UnitAbbreviation_Meter"), 6 });
     lengthUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Length_Micron, GetLocalizedStringName(L"UnitName_Micron"), GetLocalizedStringName(L"UnitAbbreviation_Micron"), 2 });
+        OrderedUnit{ UnitConverterUnits::Length_Micron, GetLocalizedStringName(L"UnitName_Micron"), GetLocalizedStringName(L"UnitAbbreviation_Micron"), 3 });
     lengthUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Length_Mile, GetLocalizedStringName(L"UnitName_Mile"), GetLocalizedStringName(L"UnitAbbreviation_Mile"), 10 });
+        OrderedUnit{ UnitConverterUnits::Length_Mile, GetLocalizedStringName(L"UnitName_Mile"), GetLocalizedStringName(L"UnitAbbreviation_Mile"), 11 });
     lengthUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Length_Millimeter, GetLocalizedStringName(L"UnitName_Millimeter"), GetLocalizedStringName(L"UnitAbbreviation_Millimeter"), 3 });
+        UnitConverterUnits::Length_Millimeter, GetLocalizedStringName(L"UnitName_Millimeter"), GetLocalizedStringName(L"UnitAbbreviation_Millimeter"), 4 });
     lengthUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Length_Nanometer, GetLocalizedStringName(L"UnitName_Nanometer"), GetLocalizedStringName(L"UnitAbbreviation_Nanometer"), 1 });
+        UnitConverterUnits::Length_Nanometer, GetLocalizedStringName(L"UnitName_Nanometer"), GetLocalizedStringName(L"UnitAbbreviation_Nanometer"), 2 });
     lengthUnits.push_back(OrderedUnit{ UnitConverterUnits::Length_NauticalMile,
                                        GetLocalizedStringName(L"UnitName_NauticalMile"),
                                        GetLocalizedStringName(L"UnitAbbreviation_NauticalMile"),
-                                       11 });
+                                       12 });
     lengthUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Length_Yard, GetLocalizedStringName(L"UnitName_Yard"), GetLocalizedStringName(L"UnitAbbreviation_Yard"), 9 });
+        OrderedUnit{ UnitConverterUnits::Length_Yard, GetLocalizedStringName(L"UnitName_Yard"), GetLocalizedStringName(L"UnitAbbreviation_Yard"), 10 });
     lengthUnits.push_back(OrderedUnit{ UnitConverterUnits::Length_Paperclip,
                                        GetLocalizedStringName(L"UnitName_Paperclip"),
                                        GetLocalizedStringName(L"UnitAbbreviation_Paperclip"),
-                                       12,
+                                       13,
                                        false,
                                        false,
                                        true });
     lengthUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Length_Hand, GetLocalizedStringName(L"UnitName_Hand"), GetLocalizedStringName(L"UnitAbbreviation_Hand"), 13, false, false, true });
+        UnitConverterUnits::Length_Hand, GetLocalizedStringName(L"UnitName_Hand"), GetLocalizedStringName(L"UnitAbbreviation_Hand"), 14, false, false, true });
     lengthUnits.push_back(OrderedUnit{ UnitConverterUnits::Length_JumboJet,
                                        GetLocalizedStringName(L"UnitName_JumboJet"),
                                        GetLocalizedStringName(L"UnitAbbreviation_JumboJet"),
-                                       14,
+                                       15,
                                        false,
                                        false,
                                        true });
@@ -855,6 +857,7 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
                                                    { ViewMode::Length, UnitConverterUnits::Length_Micron, 0.000001 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Millimeter, 0.001 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Nanometer, 0.000000001 },
+                                                   { ViewMode::Length, UnitConverterUnits::Length_Angstrom, 0.0000000001 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Centimeter, 0.01 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Meter, 1 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Kilometer, 1000 },
