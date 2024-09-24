@@ -178,7 +178,6 @@ namespace CalculatorApp
                     else
                     {
                         TraceLogger.GetInstance().LogRecallError(Model.Mode, errorMessage);
-                        await ShowSnapshotLaunchErrorAsync();
                     }
                 });
                 Model.Initialize(initialMode);
