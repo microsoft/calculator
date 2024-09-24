@@ -178,8 +178,6 @@ namespace CalculatorApp
                     else
                     {
                         TraceLogger.GetInstance().LogRecallError(Model.Mode, errorMessage);
-                        // Stop showing error message for snapshot launch failure in the short term
-                        // await ShowSnapshotLaunchErrorAsync();
                     }
                 });
                 Model.Initialize(initialMode);
