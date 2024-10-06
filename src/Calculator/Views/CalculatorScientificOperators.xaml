@@ -1303,7 +1303,8 @@
                          Grid.Row="4"
                          Grid.RowSpan="4"
                          Grid.Column="1"
-                         Grid.ColumnSpan="3"
+                         Grid.ColumnSpan="4"
+                         ExtraColumns="1"
                          AutomationProperties.HeadingLevel="Level1"
                          AutomationProperties.Name="{utils:ResourceString Name=NumberPad/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                          ButtonStyle="{StaticResource NumericButtonStyle24}"/>
