@@ -1,3 +1,4 @@
+using System;
 using CalculatorApp.ViewModel.Common;
 
 using Windows.UI.Xaml;
@@ -28,6 +29,18 @@ namespace CalculatorApp
             Num8Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('8');
             Num9Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('9');
         }
+
+        public int ExtraColumns
+        {
+            get => (int)GetValue(ExtraColumnsProperty);
+            set => SetValue(ExtraColumnsProperty, value);
+        }
+
+        public static readonly DependencyProperty ExtraColumnsProperty =
+            DependencyProperty.Register(nameof(ExtraColumns), typeof(int), typeof(NumberPad), new PropertyMetadata(0, (sender, args) =>
+            {
+                ((NumberPad)sender).OnExtraColumnsPropertyChanged((int)args.OldValue, (int)args.NewValue);
+            }));
 
         public Windows.UI.Xaml.Style ButtonStyle
         {
@@ -63,6 +76,29 @@ namespace CalculatorApp
                     m_isErrorVisualState = value;
                     string newState = m_isErrorVisualState ? "ErrorLayout" : "NoErrorLayout";
                     VisualStateManager.GoToState(this, newState, false);
+                }
+            }
+        }
+
+        private void OnExtraColumnsPropertyChanged(int oldValue, int newValue)
+        {
+            if (newValue < 0)
+            {
+                throw new ArgumentException($"ExtraColumns of value {newValue} is smaller than 0.");
+            }
+            var columnDefinitions = Root.ColumnDefinitions;
+            if (newValue > oldValue)
+            {
+                for (int i = oldValue; i < newValue; ++i)
+                {
+                    columnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                }
+            }
+            else
+            {
+                for (int i = oldValue; i > newValue; --i)
+                {
+                    columnDefinitions.RemoveAt(columnDefinitions.Count - 1);
                 }
             }
         }
