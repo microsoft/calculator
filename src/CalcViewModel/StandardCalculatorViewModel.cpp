@@ -185,12 +185,12 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
     AreProgrammerRadixOperatorsVisible = false;
 }
 
-String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue)
+String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue, _In_ bool isError = false)
 {
     wstring result(displayValue);
 
     // Adds leading padding 0's to Programmer Mode's Binary Display
-    if (IsProgrammer && CurrentRadixType == NumberBase::BinBase)
+    if (IsProgrammer && CurrentRadixType == NumberBase::BinBase && !isError)
     {
         result = AddPadding(result);
     }
@@ -244,7 +244,7 @@ String ^ StandardCalculatorViewModel::GetNarratorStringReadRawNumbers(_In_ Strin
 
 void StandardCalculatorViewModel::SetPrimaryDisplay(_In_ String ^ displayStringValue, _In_ bool isError)
 {
-    String ^ localizedDisplayStringValue = LocalizeDisplayValue(displayStringValue->Data());
+    String ^ localizedDisplayStringValue = LocalizeDisplayValue(displayStringValue->Data(), isError);
 
     // Set this variable before the DisplayValue is modified, Otherwise the DisplayValue will
     // not match what the narrator is saying
