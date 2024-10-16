@@ -16,7 +16,7 @@ namespace CalculatorApp
         {
             int SnapshotVersion;
             int Mode;
-            std::optional<StandardCalculatorSnapshot> StandardCalc;
+            //std::optional<StandardCalculatorSnapshot> StandardCalc;
         };
 
         [Windows::UI::Xaml::Data::Bindable] public ref class ApplicationViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
@@ -103,8 +103,8 @@ namespace CalculatorApp
 
             void ToggleAlwaysOnTop(float width, float height);
 
-            Windows::Data::Json::JsonObject ^ SaveApplicationSnapshot();
-            bool TryRestoreFromSnapshot(Windows::Data::Json::JsonObject ^ jsonObject);
+            //Windows::Data::Json::JsonObject ^ SaveApplicationSnapshot();
+            //bool TryRestoreFromSnapshot(Windows::Data::Json::JsonObject ^ jsonObject);
 
         private:
             bool TryRecoverFromNavigationModeFailure();

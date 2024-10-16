@@ -227,7 +227,7 @@ String ^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring
 String ^ StandardCalculatorViewModel::GetNarratorStringReadRawNumbers(_In_ String ^ localizedDisplayValue)
 {
     wstring ws;
-    LocalizationSettings^ locSettings = LocalizationSettings::GetInstance();
+    LocalizationSettings ^ locSettings = LocalizationSettings::GetInstance();
 
     // Insert a space after each digit in the string, to force Narrator to read them as separate numbers.
     for (const wchar_t& c : localizedDisplayValue)
@@ -386,7 +386,7 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<vector<pair<wstri
         return;
     }
 
-    LocalizationSettings^ localizer = LocalizationSettings::GetInstance();
+    LocalizationSettings ^ localizer = LocalizationSettings::GetInstance();
 
     const wstring separator = L" ";
     for (unsigned int i = 0; i < nTokens; ++i)
@@ -449,7 +449,7 @@ String ^ StandardCalculatorViewModel::GetCalculatorExpressionAutomationName()
 
 void StandardCalculatorViewModel::SetMemorizedNumbers(const vector<wstring>& newMemorizedNumbers)
 {
-    LocalizationSettings^ localizer = LocalizationSettings::GetInstance();
+    LocalizationSettings ^ localizer = LocalizationSettings::GetInstance();
     if (newMemorizedNumbers.size() == 0) // Memory has been cleared
     {
         MemorizedNumbers->Clear();
@@ -1060,8 +1060,8 @@ ButtonInfo StandardCalculatorViewModel::MapCharacterToButtonId(char16 ch)
     {
         if (LocalizationSettings::GetInstance()->IsLocalizedDigit(ch))
         {
-            result.buttonId =
-                NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance()->GetDigitSymbolFromEnUsDigit('0'));
+            result.buttonId = NumbersAndOperatorsEnum::Zero
+                              + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance()->GetDigitSymbolFromEnUsDigit('0'));
             result.canSendNegate = true;
         }
     }
@@ -1588,7 +1588,7 @@ void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
             binaryDisplayString = m_standardCalculatorManager.GetResultForRadix(2, precision, true);
         }
     }
-    LocalizationSettings^ localizer = LocalizationSettings::GetInstance();
+    LocalizationSettings ^ localizer = LocalizationSettings::GetInstance();
     binaryDisplayString = AddPadding(binaryDisplayString);
 
     localizer->LocalizeDisplayValue(&hexDisplayString);
@@ -1787,49 +1787,57 @@ void StandardCalculatorViewModel::SetBitshiftRadioButtonCheckedAnnouncement(Plat
     Announcement = CalculatorAnnouncement::GetBitShiftRadioButtonCheckedAnnouncement(announcement);
 }
 
-StandardCalculatorSnapshot StandardCalculatorViewModel::GetStandardCalculatorSnapshot() const
+StandardCalculatorSnapshot ^ StandardCalculatorViewModel::GetSnapshot() const
 {
-    StandardCalculatorSnapshot snapshot;
-    auto& historyItems = m_standardCalculatorManager.GetHistoryItems();
-    if (!historyItems.empty())
-    {
-        snapshot.CalcManager.HistoryItems = std::move(historyItems);
-    }
-    snapshot.PrimaryDisplay = PrimaryDisplaySnapshot{ m_DisplayValue, m_IsInError };
-    if (!m_tokens->empty() && !m_commands->empty())
-    {
-        snapshot.ExpressionDisplay = { *m_tokens, *m_commands };
-    }
-    snapshot.DisplayCommands = m_standardCalculatorManager.GetDisplayCommandsSnapshot();
-    return snapshot;
+    auto result = ref new StandardCalculatorSnapshot();
+    result->CalcManager = ref new CalcManagerSnapshot(m_standardCalculatorManager);
+    result->PrimaryDisplay = ref new PrimaryDisplaySnapshot(m_DisplayValue, m_IsInError);
+    result->ExpressionDisplay = ref new ExpressionDisplaySnapshot(*m_tokens);
+    return nullptr;
 }
-
-void StandardCalculatorViewModel::SetStandardCalculatorSnapshot(const StandardCalculatorSnapshot& snapshot)
-{
-    if (snapshot.CalcManager.HistoryItems.has_value())
-    {
-        m_standardCalculatorManager.SetHistoryItems(snapshot.CalcManager.HistoryItems.value());
-    }
-
-    std::vector<int> commands;
-    if (snapshot.ExpressionDisplay.has_value() && snapshot.ExpressionDisplay->Tokens.back().first == L"=")
-    {
-        commands = GetCommandsFromExpressionCommands(snapshot.ExpressionDisplay->Commands);
-    }
-    if (commands.empty() && !snapshot.DisplayCommands.empty())
-    {
-        commands = GetCommandsFromExpressionCommands(snapshot.DisplayCommands);
-    }
-    for (const auto& command : commands)
-    {
-        m_standardCalculatorManager.SendCommand(static_cast<Command>(command));
-    }
-
-    if (snapshot.ExpressionDisplay.has_value())
-    {
-        SetExpressionDisplay(
-            std::make_shared<std::vector<std::pair<std::wstring, int>>>(snapshot.ExpressionDisplay->Tokens),
-            std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>(snapshot.ExpressionDisplay->Commands));
-    }
-    SetPrimaryDisplay(snapshot.PrimaryDisplay.DisplayValue, snapshot.PrimaryDisplay.IsError);
-}
+// StandardCalculatorSnapshot StandardCalculatorViewModel::GetStandardCalculatorSnapshot() const
+//{
+//     StandardCalculatorSnapshot snapshot;
+//     auto& historyItems = m_standardCalculatorManager.GetHistoryItems();
+//     if (!historyItems.empty())
+//     {
+//         snapshot.CalcManager.HistoryItems = std::move(historyItems);
+//     }
+//     snapshot.PrimaryDisplay = PrimaryDisplaySnapshot{ m_DisplayValue, m_IsInError };
+//     if (!m_tokens->empty() && !m_commands->empty())
+//     {
+//         snapshot.ExpressionDisplay = { *m_tokens, *m_commands };
+//     }
+//     snapshot.DisplayCommands = m_standardCalculatorManager.GetDisplayCommandsSnapshot();
+//     return snapshot;
+// }
+//
+// void StandardCalculatorViewModel::SetStandardCalculatorSnapshot(const StandardCalculatorSnapshot& snapshot)
+//{
+//     if (snapshot.CalcManager.HistoryItems.has_value())
+//     {
+//         m_standardCalculatorManager.SetHistoryItems(snapshot.CalcManager.HistoryItems.value());
+//     }
+//
+//     std::vector<int> commands;
+//     if (snapshot.ExpressionDisplay.has_value() && snapshot.ExpressionDisplay->Tokens.back().first == L"=")
+//     {
+//         commands = GetCommandsFromExpressionCommands(snapshot.ExpressionDisplay->Commands);
+//     }
+//     if (commands.empty() && !snapshot.DisplayCommands.empty())
+//     {
+//         commands = GetCommandsFromExpressionCommands(snapshot.DisplayCommands);
+//     }
+//     for (const auto& command : commands)
+//     {
+//         m_standardCalculatorManager.SendCommand(static_cast<Command>(command));
+//     }
+//
+//     if (snapshot.ExpressionDisplay.has_value())
+//     {
+//         SetExpressionDisplay(
+//             std::make_shared<std::vector<std::pair<std::wstring, int>>>(snapshot.ExpressionDisplay->Tokens),
+//             std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>(snapshot.ExpressionDisplay->Commands));
+//     }
+//     SetPrimaryDisplay(snapshot.PrimaryDisplay.DisplayValue, snapshot.PrimaryDisplay.IsError);
+// }

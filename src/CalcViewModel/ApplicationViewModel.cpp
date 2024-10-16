@@ -38,445 +38,445 @@ namespace
     StringReference CategoriesPropertyName(L"Categories");
     StringReference ClearMemoryVisibilityPropertyName(L"ClearMemoryVisibility");
 
-    struct SnapshotHelper
-    {
-        static constexpr int SnapshotVersion = 0;
+    //struct SnapshotHelper
+    //{
+    //    static constexpr int SnapshotVersion = 0;
 
-        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const ApplicationSnapshot& value)
-        {
-            auto jsonObject = ref new Windows::Data::Json::JsonObject();
-            jsonObject->SetNamedValue(L"SnapshotVersion", Windows::Data::Json::JsonValue::CreateNumberValue(value.SnapshotVersion));
-            jsonObject->SetNamedValue(L"Mode", Windows::Data::Json::JsonValue::CreateNumberValue(value.Mode));
-            if (value.StandardCalc.has_value())
-            {
-                jsonObject->SetNamedValue(L"StandardCalculatorSnapshot", SaveSnapshotToJson(*value.StandardCalc));
-            }
-            return jsonObject;
-        }
+    //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const ApplicationSnapshot& value)
+    //    {
+    //        auto jsonObject = ref new Windows::Data::Json::JsonObject();
+    //        jsonObject->SetNamedValue(L"SnapshotVersion", Windows::Data::Json::JsonValue::CreateNumberValue(value.SnapshotVersion));
+    //        jsonObject->SetNamedValue(L"Mode", Windows::Data::Json::JsonValue::CreateNumberValue(value.Mode));
+    //        if (value.StandardCalc.has_value())
+    //        {
+    //            jsonObject->SetNamedValue(L"StandardCalculatorSnapshot", SaveSnapshotToJson(*value.StandardCalc));
+    //        }
+    //        return jsonObject;
+    //    }
 
-        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const StandardCalculatorSnapshot& value)
-        {
-            auto jsonObject = ref new Windows::Data::Json::JsonObject();
-            jsonObject->SetNamedValue(L"CalculatorManagerSnapshot", SaveSnapshotToJson(value.CalcManager));
-            jsonObject->SetNamedValue(L"PrimaryDisplay", SaveSnapshotToJson(value.PrimaryDisplay));
-            if (value.ExpressionDisplay.has_value())
-            {
-                jsonObject->SetNamedValue(L"ExpressionDisplay", SaveSnapshotToJson(*value.ExpressionDisplay));
-            }
-            auto commandsJsonArray = ref new Windows::Data::Json::JsonArray();
-            for (const auto& command : value.DisplayCommands)
-            {
-                commandsJsonArray->Append(SaveSnapshotToJson(command));
-            }
-            jsonObject->SetNamedValue(L"DisplayCommands", commandsJsonArray);
-            return jsonObject;
-        }
+    //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const StandardCalculatorSnapshot& value)
+    //    {
+    //        auto jsonObject = ref new Windows::Data::Json::JsonObject();
+    //        jsonObject->SetNamedValue(L"CalculatorManagerSnapshot", SaveSnapshotToJson(value.CalcManager));
+    //        jsonObject->SetNamedValue(L"PrimaryDisplay", SaveSnapshotToJson(value.PrimaryDisplay));
+    //        if (value.ExpressionDisplay.has_value())
+    //        {
+    //            jsonObject->SetNamedValue(L"ExpressionDisplay", SaveSnapshotToJson(*value.ExpressionDisplay));
+    //        }
+    //        auto commandsJsonArray = ref new Windows::Data::Json::JsonArray();
+    //        for (const auto& command : value.DisplayCommands)
+    //        {
+    //            commandsJsonArray->Append(SaveSnapshotToJson(command));
+    //        }
+    //        jsonObject->SetNamedValue(L"DisplayCommands", commandsJsonArray);
+    //        return jsonObject;
+    //    }
 
-        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const PrimaryDisplaySnapshot& value)
-        {
-            auto jsonObject = ref new Windows::Data::Json::JsonObject();
-            jsonObject->SetNamedValue(L"DisplayValue", Windows::Data::Json::JsonValue::CreateStringValue(value.DisplayValue));
-            jsonObject->SetNamedValue(L"IsError", Windows::Data::Json::JsonValue::CreateBooleanValue(value.IsError));
-            return jsonObject;
-        }
+    //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const PrimaryDisplaySnapshot& value)
+    //    {
+    //        auto jsonObject = ref new Windows::Data::Json::JsonObject();
+    //        jsonObject->SetNamedValue(L"DisplayValue", Windows::Data::Json::JsonValue::CreateStringValue(value.DisplayValue));
+    //        jsonObject->SetNamedValue(L"IsError", Windows::Data::Json::JsonValue::CreateBooleanValue(value.IsError));
+    //        return jsonObject;
+    //    }
 
-        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const ExpressionDisplaySnapshot& value)
-        {
-            auto jsonObject = ref new Windows::Data::Json::JsonObject();
-            auto tokensJsonArray = ref new Windows::Data::Json::JsonArray();
-            for (const auto& token : value.Tokens)
-            {
-                auto tokenJsonArray = ref new Windows::Data::Json::JsonArray();
-                tokenJsonArray->Append(Windows::Data::Json::JsonValue::CreateStringValue(ref new Platform::String(token.first.c_str())));
-                tokenJsonArray->Append(Windows::Data::Json::JsonValue::CreateNumberValue(token.second));
-                tokensJsonArray->Append(tokenJsonArray);
-            }
-            jsonObject->SetNamedValue(L"Tokens", tokensJsonArray);
+    //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const ExpressionDisplaySnapshot& value)
+    //    {
+    //        auto jsonObject = ref new Windows::Data::Json::JsonObject();
+    //        auto tokensJsonArray = ref new Windows::Data::Json::JsonArray();
+    //        for (const auto& token : value.Tokens)
+    //        {
+    //            auto tokenJsonArray = ref new Windows::Data::Json::JsonArray();
+    //            tokenJsonArray->Append(Windows::Data::Json::JsonValue::CreateStringValue(ref new Platform::String(token.first.c_str())));
+    //            tokenJsonArray->Append(Windows::Data::Json::JsonValue::CreateNumberValue(token.second));
+    //            tokensJsonArray->Append(tokenJsonArray);
+    //        }
+    //        jsonObject->SetNamedValue(L"Tokens", tokensJsonArray);
 
-            auto commandsJsonArray = ref new Windows::Data::Json::JsonArray();
-            for (const auto& command : value.Commands)
-            {
-                commandsJsonArray->Append(SaveSnapshotToJson(command));
-            }
-            jsonObject->SetNamedValue(L"Commands", commandsJsonArray);
+    //        auto commandsJsonArray = ref new Windows::Data::Json::JsonArray();
+    //        for (const auto& command : value.Commands)
+    //        {
+    //            commandsJsonArray->Append(SaveSnapshotToJson(command));
+    //        }
+    //        jsonObject->SetNamedValue(L"Commands", commandsJsonArray);
 
-            return jsonObject;
-        }
+    //        return jsonObject;
+    //    }
 
-        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CalculatorManagerSnapshot& value)
-        {
-            auto jsonObject = ref new Windows::Data::Json::JsonObject();
-            if (value.HistoryItems.has_value())
-            {
-                auto historyJsonArray = ref new Windows::Data::Json::JsonArray();
-                for (const auto& item : *value.HistoryItems)
-                {
-                    historyJsonArray->Append(SaveSnapshotToJson(*item));
-                }
-                jsonObject->SetNamedValue(L"HistoryItems", historyJsonArray);
-            }
-            return jsonObject;
-        }
+    //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CalculatorManagerSnapshot& value)
+    //    {
+    //        auto jsonObject = ref new Windows::Data::Json::JsonObject();
+    //        if (value.HistoryItems.has_value())
+    //        {
+    //            auto historyJsonArray = ref new Windows::Data::Json::JsonArray();
+    //            for (const auto& item : *value.HistoryItems)
+    //            {
+    //                historyJsonArray->Append(SaveSnapshotToJson(*item));
+    //            }
+    //            jsonObject->SetNamedValue(L"HistoryItems", historyJsonArray);
+    //        }
+    //        return jsonObject;
+    //    }
 
-        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CalculationManager::HISTORYITEM& value)
-        {
-            auto jsonObject = ref new Windows::Data::Json::JsonObject();
-            jsonObject->SetNamedValue(L"Expression", Windows::Data::Json::JsonValue::CreateStringValue(ref new Platform::String(value.historyItemVector.expression.c_str())));
-            jsonObject->SetNamedValue(L"Result", Windows::Data::Json::JsonValue::CreateStringValue(ref new Platform::String(value.historyItemVector.result.c_str())));
+    //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CalculationManager::HISTORYITEM& value)
+    //    {
+    //        auto jsonObject = ref new Windows::Data::Json::JsonObject();
+    //        jsonObject->SetNamedValue(L"Expression", Windows::Data::Json::JsonValue::CreateStringValue(ref new Platform::String(value.historyItemVector.expression.c_str())));
+    //        jsonObject->SetNamedValue(L"Result", Windows::Data::Json::JsonValue::CreateStringValue(ref new Platform::String(value.historyItemVector.result.c_str())));
 
-            auto tokensJsonArray = ref new Windows::Data::Json::JsonArray();
-            for (const auto& token : *value.historyItemVector.spTokens)
-            {
-                auto tokenJsonArray = ref new Windows::Data::Json::JsonArray();
-                tokenJsonArray->Append(Windows::Data::Json::JsonValue::CreateStringValue(ref new Platform::String(token.first.c_str())));
-                tokenJsonArray->Append(Windows::Data::Json::JsonValue::CreateNumberValue(token.second));
-                tokensJsonArray->Append(tokenJsonArray);
-            }
-            jsonObject->SetNamedValue(L"Tokens", tokensJsonArray);
+    //        auto tokensJsonArray = ref new Windows::Data::Json::JsonArray();
+    //        for (const auto& token : *value.historyItemVector.spTokens)
+    //        {
+    //            auto tokenJsonArray = ref new Windows::Data::Json::JsonArray();
+    //            tokenJsonArray->Append(Windows::Data::Json::JsonValue::CreateStringValue(ref new Platform::String(token.first.c_str())));
+    //            tokenJsonArray->Append(Windows::Data::Json::JsonValue::CreateNumberValue(token.second));
+    //            tokensJsonArray->Append(tokenJsonArray);
+    //        }
+    //        jsonObject->SetNamedValue(L"Tokens", tokensJsonArray);
 
-            auto commandsJsonArray = ref new Windows::Data::Json::JsonArray();
-            for (const auto& command : *value.historyItemVector.spCommands)
-            {
-                commandsJsonArray->Append(SaveSnapshotToJson(command));
-            }
-            jsonObject->SetNamedValue(L"Commands", commandsJsonArray);
+    //        auto commandsJsonArray = ref new Windows::Data::Json::JsonArray();
+    //        for (const auto& command : *value.historyItemVector.spCommands)
+    //        {
+    //            commandsJsonArray->Append(SaveSnapshotToJson(command));
+    //        }
+    //        jsonObject->SetNamedValue(L"Commands", commandsJsonArray);
 
-            return jsonObject;
-        }
+    //        return jsonObject;
+    //    }
 
-        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const std::shared_ptr<IExpressionCommand>& value)
-        {
-            auto jsonObject = ref new Windows::Data::Json::JsonObject();
-            auto opndCommand = dynamic_cast<COpndCommand*>(value.get());
-            if (opndCommand != nullptr)
-            {
-                jsonObject = SaveSnapshotToJson(*opndCommand);
-            }
-            auto unaryCommand = dynamic_cast<CUnaryCommand*>(value.get());
-            if (unaryCommand != nullptr)
-            {
-                jsonObject = SaveSnapshotToJson(*unaryCommand);
-            }
-            auto binaryCommand = dynamic_cast<CBinaryCommand*>(value.get());
-            if (binaryCommand != nullptr)
-            {
-                jsonObject = SaveSnapshotToJson(*binaryCommand);
-            }
-            auto parenthesesCommand = dynamic_cast<CParentheses*>(value.get());
-            if (parenthesesCommand != nullptr)
-            {
-                jsonObject = SaveSnapshotToJson(*parenthesesCommand);
-            }
-            return jsonObject;
-        }
+    //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const std::shared_ptr<IExpressionCommand>& value)
+    //    {
+    //        auto jsonObject = ref new Windows::Data::Json::JsonObject();
+    //        auto opndCommand = dynamic_cast<COpndCommand*>(value.get());
+    //        if (opndCommand != nullptr)
+    //        {
+    //            jsonObject = SaveSnapshotToJson(*opndCommand);
+    //        }
+    //        auto unaryCommand = dynamic_cast<CUnaryCommand*>(value.get());
+    //        if (unaryCommand != nullptr)
+    //        {
+    //            jsonObject = SaveSnapshotToJson(*unaryCommand);
+    //        }
+    //        auto binaryCommand = dynamic_cast<CBinaryCommand*>(value.get());
+    //        if (binaryCommand != nullptr)
+    //        {
+    //            jsonObject = SaveSnapshotToJson(*binaryCommand);
+    //        }
+    //        auto parenthesesCommand = dynamic_cast<CParentheses*>(value.get());
+    //        if (parenthesesCommand != nullptr)
+    //        {
+    //            jsonObject = SaveSnapshotToJson(*parenthesesCommand);
+    //        }
+    //        return jsonObject;
+    //    }
 
-        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const COpndCommand& value)
-        {
-            auto jsonObject = ref new Windows::Data::Json::JsonObject();
-            jsonObject->SetNamedValue(L"CommandType", Windows::Data::Json::JsonValue::CreateNumberValue(static_cast<double>(value.GetCommandType())));
-            jsonObject->SetNamedValue(L"IsNegative", Windows::Data::Json::JsonValue::CreateBooleanValue(value.IsNegative()));
-            jsonObject->SetNamedValue(L"IsDecimalPresent", Windows::Data::Json::JsonValue::CreateBooleanValue(value.IsDecimalPresent()));
-            jsonObject->SetNamedValue(L"IsSciFmt", Windows::Data::Json::JsonValue::CreateBooleanValue(value.IsSciFmt()));
-            auto commandsJsonArray = ref new Windows::Data::Json::JsonArray();
-            for (const auto& command : *value.GetCommands())
-            {
-                commandsJsonArray->Append(Windows::Data::Json::JsonValue::CreateNumberValue(command));
-            }
-            jsonObject->SetNamedValue(L"Commands", commandsJsonArray);
-            return jsonObject;
-        }
+    //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const COpndCommand& value)
+    //    {
+    //        auto jsonObject = ref new Windows::Data::Json::JsonObject();
+    //        jsonObject->SetNamedValue(L"CommandType", Windows::Data::Json::JsonValue::CreateNumberValue(static_cast<double>(value.GetCommandType())));
+    //        jsonObject->SetNamedValue(L"IsNegative", Windows::Data::Json::JsonValue::CreateBooleanValue(value.IsNegative()));
+    //        jsonObject->SetNamedValue(L"IsDecimalPresent", Windows::Data::Json::JsonValue::CreateBooleanValue(value.IsDecimalPresent()));
+    //        jsonObject->SetNamedValue(L"IsSciFmt", Windows::Data::Json::JsonValue::CreateBooleanValue(value.IsSciFmt()));
+    //        auto commandsJsonArray = ref new Windows::Data::Json::JsonArray();
+    //        for (const auto& command : *value.GetCommands())
+    //        {
+    //            commandsJsonArray->Append(Windows::Data::Json::JsonValue::CreateNumberValue(command));
+    //        }
+    //        jsonObject->SetNamedValue(L"Commands", commandsJsonArray);
+    //        return jsonObject;
+    //    }
 
-        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CUnaryCommand& value)
-        {
-            auto jsonObject = ref new Windows::Data::Json::JsonObject();
-            jsonObject->SetNamedValue(L"CommandType", Windows::Data::Json::JsonValue::CreateNumberValue(static_cast<double>(value.GetCommandType())));
-            auto commandsJsonArray = ref new Windows::Data::Json::JsonArray();
-            for (const auto& command : *value.GetCommands())
-            {
-                commandsJsonArray->Append(Windows::Data::Json::JsonValue::CreateNumberValue(command));
-            }
-            jsonObject->SetNamedValue(L"Commands", commandsJsonArray);
-            return jsonObject;
-        }
+    //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CUnaryCommand& value)
+    //    {
+    //        auto jsonObject = ref new Windows::Data::Json::JsonObject();
+    //        jsonObject->SetNamedValue(L"CommandType", Windows::Data::Json::JsonValue::CreateNumberValue(static_cast<double>(value.GetCommandType())));
+    //        auto commandsJsonArray = ref new Windows::Data::Json::JsonArray();
+    //        for (const auto& command : *value.GetCommands())
+    //        {
+    //            commandsJsonArray->Append(Windows::Data::Json::JsonValue::CreateNumberValue(command));
+    //        }
+    //        jsonObject->SetNamedValue(L"Commands", commandsJsonArray);
+    //        return jsonObject;
+    //    }
 
-        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CBinaryCommand& value)
-        {
-            auto jsonObject = ref new Windows::Data::Json::JsonObject();
-            jsonObject->SetNamedValue(L"CommandType", Windows::Data::Json::JsonValue::CreateNumberValue(static_cast<double>(value.GetCommandType())));
-            jsonObject->SetNamedValue(L"Command", Windows::Data::Json::JsonValue::CreateNumberValue(value.GetCommand()));
-            return jsonObject;
-        }
+    //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CBinaryCommand& value)
+    //    {
+    //        auto jsonObject = ref new Windows::Data::Json::JsonObject();
+    //        jsonObject->SetNamedValue(L"CommandType", Windows::Data::Json::JsonValue::CreateNumberValue(static_cast<double>(value.GetCommandType())));
+    //        jsonObject->SetNamedValue(L"Command", Windows::Data::Json::JsonValue::CreateNumberValue(value.GetCommand()));
+    //        return jsonObject;
+    //    }
 
-        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CParentheses& value)
-        {
-            auto jsonObject = ref new Windows::Data::Json::JsonObject();
-            jsonObject->SetNamedValue(L"CommandType", Windows::Data::Json::JsonValue::CreateNumberValue(static_cast<double>(value.GetCommandType())));
-            jsonObject->SetNamedValue(L"Command", Windows::Data::Json::JsonValue::CreateNumberValue(value.GetCommand()));
-            return jsonObject;
-        }
+    //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CParentheses& value)
+    //    {
+    //        auto jsonObject = ref new Windows::Data::Json::JsonObject();
+    //        jsonObject->SetNamedValue(L"CommandType", Windows::Data::Json::JsonValue::CreateNumberValue(static_cast<double>(value.GetCommandType())));
+    //        jsonObject->SetNamedValue(L"Command", Windows::Data::Json::JsonValue::CreateNumberValue(value.GetCommand()));
+    //        return jsonObject;
+    //    }
 
-        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<ApplicationSnapshot>& value)
-        {
-            ApplicationSnapshot applicationSnapshot;
-            applicationSnapshot.SnapshotVersion = static_cast<int>(jsonObject->GetNamedNumber(L"SnapshotVersion"));
-            if (applicationSnapshot.SnapshotVersion > SnapshotVersion)
-            {
-                return;
-            }
-            applicationSnapshot.Mode = static_cast<int>(jsonObject->GetNamedNumber(L"Mode"));
-            if (jsonObject->HasKey(L"StandardCalculatorSnapshot"))
-            {
-                std::optional<StandardCalculatorSnapshot> standardCalculatorSnapshot;
-                RestoreJsonToSnapshot(jsonObject->GetNamedObject(L"StandardCalculatorSnapshot"), standardCalculatorSnapshot);
-                if (standardCalculatorSnapshot.has_value())
-                {
-                    applicationSnapshot.StandardCalc = std::move(*standardCalculatorSnapshot);
-                }
-                else
-                {
-                    return;
-                }
-            }
-            value = std::move(applicationSnapshot);
-        }
+    //    static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<ApplicationSnapshot>& value)
+    //    {
+    //        ApplicationSnapshot applicationSnapshot;
+    //        applicationSnapshot.SnapshotVersion = static_cast<int>(jsonObject->GetNamedNumber(L"SnapshotVersion"));
+    //        if (applicationSnapshot.SnapshotVersion > SnapshotVersion)
+    //        {
+    //            return;
+    //        }
+    //        applicationSnapshot.Mode = static_cast<int>(jsonObject->GetNamedNumber(L"Mode"));
+    //        if (jsonObject->HasKey(L"StandardCalculatorSnapshot"))
+    //        {
+    //            std::optional<StandardCalculatorSnapshot> standardCalculatorSnapshot;
+    //            RestoreJsonToSnapshot(jsonObject->GetNamedObject(L"StandardCalculatorSnapshot"), standardCalculatorSnapshot);
+    //            if (standardCalculatorSnapshot.has_value())
+    //            {
+    //                applicationSnapshot.StandardCalc = std::move(*standardCalculatorSnapshot);
+    //            }
+    //            else
+    //            {
+    //                return;
+    //            }
+    //        }
+    //        value = std::move(applicationSnapshot);
+    //    }
 
-        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<StandardCalculatorSnapshot>& value)
-        {
-            StandardCalculatorSnapshot standardCalculatorSnapshot;
-            std::optional<CalculatorManagerSnapshot> calcManagerSnapshot;
-            RestoreJsonToSnapshot(jsonObject->GetNamedObject(L"CalculatorManagerSnapshot"), calcManagerSnapshot);
-            if (calcManagerSnapshot.has_value())
-            {
-                standardCalculatorSnapshot.CalcManager = std::move(*calcManagerSnapshot);
-            }
-            else
-            {
-                return;
-            }
-            std::optional<PrimaryDisplaySnapshot> primaryDisplaySnapshot;
-            RestoreJsonToSnapshot(jsonObject->GetNamedObject(L"PrimaryDisplay"), primaryDisplaySnapshot);
-            if (primaryDisplaySnapshot.has_value())
-            {
-                standardCalculatorSnapshot.PrimaryDisplay = std::move(*primaryDisplaySnapshot);
-            }
-            else
-            {
-                return;
-            }
-            if (jsonObject->HasKey(L"ExpressionDisplay"))
-            {
-                std::optional<ExpressionDisplaySnapshot> expressionDisplaySnapshot;
-                RestoreJsonToSnapshot(jsonObject->GetNamedObject(L"ExpressionDisplay"), expressionDisplaySnapshot);
-                if (expressionDisplaySnapshot.has_value())
-                {
-                    standardCalculatorSnapshot.ExpressionDisplay = std::move(*expressionDisplaySnapshot);
-                }
-                else
-                {
-                    return;
-                }
-            }
-            standardCalculatorSnapshot.DisplayCommands = RestoreExpressionCommandsFromJsonArray(jsonObject->GetNamedArray(L"DisplayCommands"));
-            value = std::move(standardCalculatorSnapshot);
-        }
+    //    static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<StandardCalculatorSnapshot>& value)
+    //    {
+    //        StandardCalculatorSnapshot standardCalculatorSnapshot;
+    //        std::optional<CalculatorManagerSnapshot> calcManagerSnapshot;
+    //        RestoreJsonToSnapshot(jsonObject->GetNamedObject(L"CalculatorManagerSnapshot"), calcManagerSnapshot);
+    //        if (calcManagerSnapshot.has_value())
+    //        {
+    //            standardCalculatorSnapshot.CalcManager = std::move(*calcManagerSnapshot);
+    //        }
+    //        else
+    //        {
+    //            return;
+    //        }
+    //        std::optional<PrimaryDisplaySnapshot> primaryDisplaySnapshot;
+    //        RestoreJsonToSnapshot(jsonObject->GetNamedObject(L"PrimaryDisplay"), primaryDisplaySnapshot);
+    //        if (primaryDisplaySnapshot.has_value())
+    //        {
+    //            standardCalculatorSnapshot.PrimaryDisplay = std::move(*primaryDisplaySnapshot);
+    //        }
+    //        else
+    //        {
+    //            return;
+    //        }
+    //        if (jsonObject->HasKey(L"ExpressionDisplay"))
+    //        {
+    //            std::optional<ExpressionDisplaySnapshot> expressionDisplaySnapshot;
+    //            RestoreJsonToSnapshot(jsonObject->GetNamedObject(L"ExpressionDisplay"), expressionDisplaySnapshot);
+    //            if (expressionDisplaySnapshot.has_value())
+    //            {
+    //                standardCalculatorSnapshot.ExpressionDisplay = std::move(*expressionDisplaySnapshot);
+    //            }
+    //            else
+    //            {
+    //                return;
+    //            }
+    //        }
+    //        standardCalculatorSnapshot.DisplayCommands = RestoreExpressionCommandsFromJsonArray(jsonObject->GetNamedArray(L"DisplayCommands"));
+    //        value = std::move(standardCalculatorSnapshot);
+    //    }
 
-        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<PrimaryDisplaySnapshot>& value)
-        {
-            value = PrimaryDisplaySnapshot{ jsonObject->GetNamedString(L"DisplayValue"), jsonObject->GetNamedBoolean(L"IsError") };
-        }
+    //    static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<PrimaryDisplaySnapshot>& value)
+    //    {
+    //        value = PrimaryDisplaySnapshot{ jsonObject->GetNamedString(L"DisplayValue"), jsonObject->GetNamedBoolean(L"IsError") };
+    //    }
 
-        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<ExpressionDisplaySnapshot>& value)
-        {
-            ExpressionDisplaySnapshot expressionDisplaySnapshot;
-            expressionDisplaySnapshot.Tokens = RestoreExpressionTokensFromJsonArray(jsonObject->GetNamedArray(L"Tokens"));
-            if (expressionDisplaySnapshot.Tokens.empty())
-            {
-                return;
-            }
-            expressionDisplaySnapshot.Commands = RestoreExpressionCommandsFromJsonArray(jsonObject->GetNamedArray(L"Commands"));
-            if (expressionDisplaySnapshot.Commands.empty())
-            {
-                return;
-            }
-            value = std::move(expressionDisplaySnapshot);
-        }
+    //    static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<ExpressionDisplaySnapshot>& value)
+    //    {
+    //        ExpressionDisplaySnapshot expressionDisplaySnapshot;
+    //        expressionDisplaySnapshot.Tokens = RestoreExpressionTokensFromJsonArray(jsonObject->GetNamedArray(L"Tokens"));
+    //        if (expressionDisplaySnapshot.Tokens.empty())
+    //        {
+    //            return;
+    //        }
+    //        expressionDisplaySnapshot.Commands = RestoreExpressionCommandsFromJsonArray(jsonObject->GetNamedArray(L"Commands"));
+    //        if (expressionDisplaySnapshot.Commands.empty())
+    //        {
+    //            return;
+    //        }
+    //        value = std::move(expressionDisplaySnapshot);
+    //    }
 
-        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<CalculatorManagerSnapshot>& value)
-        {
-            CalculatorManagerSnapshot calcManagerSnapshot;
-            if (jsonObject->HasKey(L"HistoryItems"))
-            {
-                std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> historyItems;
-                auto historyJsonArray = jsonObject->GetNamedArray(L"HistoryItems");
-                for (uint32_t i = 0; i < historyJsonArray->Size; ++i)
-                {
-                    std::optional<CalculationManager::HISTORYITEM> historyItem;
-                    RestoreJsonToSnapshot(historyJsonArray->GetObjectAt(i), historyItem);
-                    if (historyItem.has_value())
-                    {
-                        historyItems.push_back(std::make_shared<CalculationManager::HISTORYITEM>(*historyItem));
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-                calcManagerSnapshot.HistoryItems = std::move(historyItems);
-            }
-            value = std::move(calcManagerSnapshot);
-        }
+    //    static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<CalculatorManagerSnapshot>& value)
+    //    {
+    //        CalculatorManagerSnapshot calcManagerSnapshot;
+    //        if (jsonObject->HasKey(L"HistoryItems"))
+    //        {
+    //            std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> historyItems;
+    //            auto historyJsonArray = jsonObject->GetNamedArray(L"HistoryItems");
+    //            for (uint32_t i = 0; i < historyJsonArray->Size; ++i)
+    //            {
+    //                std::optional<CalculationManager::HISTORYITEM> historyItem;
+    //                RestoreJsonToSnapshot(historyJsonArray->GetObjectAt(i), historyItem);
+    //                if (historyItem.has_value())
+    //                {
+    //                    historyItems.push_back(std::make_shared<CalculationManager::HISTORYITEM>(*historyItem));
+    //                }
+    //                else
+    //                {
+    //                    return;
+    //                }
+    //            }
+    //            calcManagerSnapshot.HistoryItems = std::move(historyItems);
+    //        }
+    //        value = std::move(calcManagerSnapshot);
+    //    }
 
-        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<CalculationManager::HISTORYITEM>& value)
-        {
-            CalculationManager::HISTORYITEM historyItem;
-            historyItem.historyItemVector.expression = std::wstring(jsonObject->GetNamedString(L"Expression")->Data());
-            historyItem.historyItemVector.result = std::wstring(jsonObject->GetNamedString(L"Result")->Data());
-            historyItem.historyItemVector.spTokens =
-                std::make_shared<std::vector<std::pair<std::wstring, int>>>(RestoreExpressionTokensFromJsonArray(jsonObject->GetNamedArray(L"Tokens")));
-            if (historyItem.historyItemVector.spTokens->empty())
-            {
-                return;
-            }
-            historyItem.historyItemVector.spCommands = std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>(
-                RestoreExpressionCommandsFromJsonArray(jsonObject->GetNamedArray(L"Commands")));
-            if (historyItem.historyItemVector.spCommands->empty())
-            {
-                return;
-            }
-            value = std::move(historyItem);
-        }
+    //    static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<CalculationManager::HISTORYITEM>& value)
+    //    {
+    //        CalculationManager::HISTORYITEM historyItem;
+    //        historyItem.historyItemVector.expression = std::wstring(jsonObject->GetNamedString(L"Expression")->Data());
+    //        historyItem.historyItemVector.result = std::wstring(jsonObject->GetNamedString(L"Result")->Data());
+    //        historyItem.historyItemVector.spTokens =
+    //            std::make_shared<std::vector<std::pair<std::wstring, int>>>(RestoreExpressionTokensFromJsonArray(jsonObject->GetNamedArray(L"Tokens")));
+    //        if (historyItem.historyItemVector.spTokens->empty())
+    //        {
+    //            return;
+    //        }
+    //        historyItem.historyItemVector.spCommands = std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>(
+    //            RestoreExpressionCommandsFromJsonArray(jsonObject->GetNamedArray(L"Commands")));
+    //        if (historyItem.historyItemVector.spCommands->empty())
+    //        {
+    //            return;
+    //        }
+    //        value = std::move(historyItem);
+    //    }
 
-        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<std::shared_ptr<IExpressionCommand>>& value)
-        {
-            auto commandType = static_cast<CalculationManager::CommandType>(jsonObject->GetNamedNumber(L"CommandType"));
-            switch (commandType)
-            {
-            case CalculationManager::CommandType::OperandCommand:
-            {
-                std::optional<COpndCommand> opndCommand;
-                RestoreJsonToSnapshot(jsonObject, opndCommand);
-                if (opndCommand.has_value())
-                {
-                    value = std::make_shared<COpndCommand>(*opndCommand);
-                }
-                break;
-            }
-            case CalculationManager::CommandType::UnaryCommand:
-            {
-                std::optional<CUnaryCommand> unaryCommand;
-                RestoreJsonToSnapshot(jsonObject, unaryCommand);
-                if (unaryCommand.has_value())
-                {
-                    value = std::make_shared<CUnaryCommand>(*unaryCommand);
-                }
-                break;
-            }
-            case CalculationManager::CommandType::BinaryCommand:
-            {
-                std::optional<CBinaryCommand> binaryCommand;
-                RestoreJsonToSnapshot(jsonObject, binaryCommand);
-                if (binaryCommand.has_value())
-                {
-                    value = std::make_shared<CBinaryCommand>(*binaryCommand);
-                }
-                break;
-            }
-            case CalculationManager::CommandType::Parentheses:
-            {
-                std::optional<CParentheses> parenthesesCommand;
-                RestoreJsonToSnapshot(jsonObject, parenthesesCommand);
-                if (parenthesesCommand.has_value())
-                {
-                    value = std::make_shared<CParentheses>(*parenthesesCommand);
-                }
-                break;
-            }
-            default:
-                throw std::logic_error{ "c8cba597-dfec-447a-bd1c-e78a9ffaad95" };
-            }
-        }
+    //    static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<std::shared_ptr<IExpressionCommand>>& value)
+    //    {
+    //        auto commandType = static_cast<CalculationManager::CommandType>(jsonObject->GetNamedNumber(L"CommandType"));
+    //        switch (commandType)
+    //        {
+    //        case CalculationManager::CommandType::OperandCommand:
+    //        {
+    //            std::optional<COpndCommand> opndCommand;
+    //            RestoreJsonToSnapshot(jsonObject, opndCommand);
+    //            if (opndCommand.has_value())
+    //            {
+    //                value = std::make_shared<COpndCommand>(*opndCommand);
+    //            }
+    //            break;
+    //        }
+    //        case CalculationManager::CommandType::UnaryCommand:
+    //        {
+    //            std::optional<CUnaryCommand> unaryCommand;
+    //            RestoreJsonToSnapshot(jsonObject, unaryCommand);
+    //            if (unaryCommand.has_value())
+    //            {
+    //                value = std::make_shared<CUnaryCommand>(*unaryCommand);
+    //            }
+    //            break;
+    //        }
+    //        case CalculationManager::CommandType::BinaryCommand:
+    //        {
+    //            std::optional<CBinaryCommand> binaryCommand;
+    //            RestoreJsonToSnapshot(jsonObject, binaryCommand);
+    //            if (binaryCommand.has_value())
+    //            {
+    //                value = std::make_shared<CBinaryCommand>(*binaryCommand);
+    //            }
+    //            break;
+    //        }
+    //        case CalculationManager::CommandType::Parentheses:
+    //        {
+    //            std::optional<CParentheses> parenthesesCommand;
+    //            RestoreJsonToSnapshot(jsonObject, parenthesesCommand);
+    //            if (parenthesesCommand.has_value())
+    //            {
+    //                value = std::make_shared<CParentheses>(*parenthesesCommand);
+    //            }
+    //            break;
+    //        }
+    //        default:
+    //            throw std::logic_error{ "c8cba597-dfec-447a-bd1c-e78a9ffaad95" };
+    //        }
+    //    }
 
-        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<COpndCommand>& value)
-        {
-            auto isNegative = jsonObject->GetNamedBoolean(L"IsNegative");
-            auto isDecimalPresent = jsonObject->GetNamedBoolean(L"IsDecimalPresent");
-            auto isSciFmt = jsonObject->GetNamedBoolean(L"IsSciFmt");
-            std::vector<int> commands;
-            auto commandsJsonArray = jsonObject->GetNamedArray(L"Commands");
-            for (uint32_t i = 0; i < commandsJsonArray->Size; ++i)
-            {
-                commands.push_back(static_cast<int>(commandsJsonArray->GetNumberAt(i)));
-            }
-            value = COpndCommand(std::make_shared<std::vector<int>>(std::move(commands)), isNegative, isDecimalPresent, isSciFmt);
-        }
+    //    static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<COpndCommand>& value)
+    //    {
+    //        auto isNegative = jsonObject->GetNamedBoolean(L"IsNegative");
+    //        auto isDecimalPresent = jsonObject->GetNamedBoolean(L"IsDecimalPresent");
+    //        auto isSciFmt = jsonObject->GetNamedBoolean(L"IsSciFmt");
+    //        std::vector<int> commands;
+    //        auto commandsJsonArray = jsonObject->GetNamedArray(L"Commands");
+    //        for (uint32_t i = 0; i < commandsJsonArray->Size; ++i)
+    //        {
+    //            commands.push_back(static_cast<int>(commandsJsonArray->GetNumberAt(i)));
+    //        }
+    //        value = COpndCommand(std::make_shared<std::vector<int>>(std::move(commands)), isNegative, isDecimalPresent, isSciFmt);
+    //    }
 
-        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<CUnaryCommand>& value)
-        {
-            std::vector<int> commands;
-            auto commandsJsonArray = jsonObject->GetNamedArray(L"Commands");
-            if (commandsJsonArray->Size == 1)
-            {
-                value = CUnaryCommand(static_cast<int>(commandsJsonArray->GetNumberAt(0)));
-            }
-            else if (commandsJsonArray->Size == 2)
-            {
-                value = CUnaryCommand(static_cast<int>(commandsJsonArray->GetNumberAt(0)), static_cast<int>(commandsJsonArray->GetNumberAt(1)));
-            }
-        }
+    //    static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<CUnaryCommand>& value)
+    //    {
+    //        std::vector<int> commands;
+    //        auto commandsJsonArray = jsonObject->GetNamedArray(L"Commands");
+    //        if (commandsJsonArray->Size == 1)
+    //        {
+    //            value = CUnaryCommand(static_cast<int>(commandsJsonArray->GetNumberAt(0)));
+    //        }
+    //        else if (commandsJsonArray->Size == 2)
+    //        {
+    //            value = CUnaryCommand(static_cast<int>(commandsJsonArray->GetNumberAt(0)), static_cast<int>(commandsJsonArray->GetNumberAt(1)));
+    //        }
+    //    }
 
-        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<CBinaryCommand>& value)
-        {
-            value = CBinaryCommand(static_cast<int>(jsonObject->GetNamedNumber(L"Command")));
-        }
+    //    static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<CBinaryCommand>& value)
+    //    {
+    //        value = CBinaryCommand(static_cast<int>(jsonObject->GetNamedNumber(L"Command")));
+    //    }
 
-        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<CParentheses>& value)
-        {
-            value = CParentheses(static_cast<int>(jsonObject->GetNamedNumber(L"Command")));
-        }
+    //    static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<CParentheses>& value)
+    //    {
+    //        value = CParentheses(static_cast<int>(jsonObject->GetNamedNumber(L"Command")));
+    //    }
 
-        static std::vector<std::pair<std::wstring, int>> RestoreExpressionTokensFromJsonArray(Windows::Data::Json::JsonArray ^ jsonArray)
-        {
-            std::vector<std::pair<std::wstring, int>> tokens;
-            for (uint32_t i = 0; i < jsonArray->Size; ++i)
-            {
-                auto tokenJsonArray = jsonArray->GetArrayAt(i);
-                if (tokenJsonArray->Size == 2 && tokenJsonArray->GetAt(0)->ValueType == Windows::Data::Json::JsonValueType::String
-                    && tokenJsonArray->GetAt(1)->ValueType == Windows::Data::Json::JsonValueType::Number)
-                {
-                    tokens.emplace_back(std::wstring(tokenJsonArray->GetAt(0)->GetString()->Data()), static_cast<int>(tokenJsonArray->GetAt(1)->GetNumber()));
-                }
-                else
-                {
-                    return {};
-                }
-            }
-            return tokens;
-        }
+    //    static std::vector<std::pair<std::wstring, int>> RestoreExpressionTokensFromJsonArray(Windows::Data::Json::JsonArray ^ jsonArray)
+    //    {
+    //        std::vector<std::pair<std::wstring, int>> tokens;
+    //        for (uint32_t i = 0; i < jsonArray->Size; ++i)
+    //        {
+    //            auto tokenJsonArray = jsonArray->GetArrayAt(i);
+    //            if (tokenJsonArray->Size == 2 && tokenJsonArray->GetAt(0)->ValueType == Windows::Data::Json::JsonValueType::String
+    //                && tokenJsonArray->GetAt(1)->ValueType == Windows::Data::Json::JsonValueType::Number)
+    //            {
+    //                tokens.emplace_back(std::wstring(tokenJsonArray->GetAt(0)->GetString()->Data()), static_cast<int>(tokenJsonArray->GetAt(1)->GetNumber()));
+    //            }
+    //            else
+    //            {
+    //                return {};
+    //            }
+    //        }
+    //        return tokens;
+    //    }
 
-        static std::vector<std::shared_ptr<IExpressionCommand>> RestoreExpressionCommandsFromJsonArray(Windows::Data::Json::JsonArray ^ jsonArray)
-        {
-            std::vector<std::shared_ptr<IExpressionCommand>> commands;
-            for (uint32_t i = 0; i < jsonArray->Size; ++i)
-            {
-                std::optional<std::shared_ptr<IExpressionCommand>> command;
-                RestoreJsonToSnapshot(jsonArray->GetObjectAt(i), command);
-                if (command.has_value())
-                {
-                    commands.push_back(*command);
-                }
-                else
-                {
-                    return {};
-                }
-            }
-            return commands;
-        }
+    //    static std::vector<std::shared_ptr<IExpressionCommand>> RestoreExpressionCommandsFromJsonArray(Windows::Data::Json::JsonArray ^ jsonArray)
+    //    {
+    //        std::vector<std::shared_ptr<IExpressionCommand>> commands;
+    //        for (uint32_t i = 0; i < jsonArray->Size; ++i)
+    //        {
+    //            std::optional<std::shared_ptr<IExpressionCommand>> command;
+    //            RestoreJsonToSnapshot(jsonArray->GetObjectAt(i), command);
+    //            if (command.has_value())
+    //            {
+    //                commands.push_back(*command);
+    //            }
+    //            else
+    //            {
+    //                return {};
+    //            }
+    //        }
+    //        return commands;
+    //    }
 
-        static bool IsJsonParsingException(Platform::COMException ^ e)
-        {
-            return e->HResult == WEB_E_JSON_VALUE_NOT_FOUND || e->HResult == E_ILLEGAL_METHOD_CALL;
-        }
-    };
+    //    static bool IsJsonParsingException(Platform::COMException ^ e)
+    //    {
+    //        return e->HResult == WEB_E_JSON_VALUE_NOT_FOUND || e->HResult == E_ILLEGAL_METHOD_CALL;
+    //    }
+    //};
 }
 
 ApplicationViewModel::ApplicationViewModel()
@@ -712,47 +712,47 @@ void ApplicationViewModel::SetDisplayNormalAlwaysOnTopOption()
         m_mode == ViewMode::Standard && ApplicationView::GetForCurrentView()->IsViewModeSupported(ApplicationViewMode::CompactOverlay) && !IsAlwaysOnTop;
 }
 
-Windows::Data::Json::JsonObject ^ ApplicationViewModel::SaveApplicationSnapshot()
-{
-    ApplicationSnapshot applicationSnapshot;
-    applicationSnapshot.SnapshotVersion = SnapshotHelper::SnapshotVersion;
-    applicationSnapshot.Mode = static_cast<int>(Mode);
-    if (m_CalculatorViewModel != nullptr && m_mode == ViewMode::Standard)
-    {
-        // Standard calculator is the only supported mode so far.
-        applicationSnapshot.StandardCalc = m_CalculatorViewModel->GetStandardCalculatorSnapshot();
-    }
-    return SnapshotHelper::SaveSnapshotToJson(applicationSnapshot);
-}
-
-bool ApplicationViewModel::TryRestoreFromSnapshot(Windows::Data::Json::JsonObject ^ jsonObject)
-{
-    std::optional<ApplicationSnapshot> applicationSnapshot;
-    try
-    {
-        SnapshotHelper::RestoreJsonToSnapshot(jsonObject, applicationSnapshot);
-    }
-    catch (Platform::COMException ^ e)
-    {
-        if (SnapshotHelper::IsJsonParsingException(e))
-        {
-            return false;
-        }
-        throw;
-    }
-
-    if (applicationSnapshot.has_value())
-    {
-        Mode = static_cast<ViewMode>(applicationSnapshot->Mode);
-        if (applicationSnapshot->StandardCalc.has_value())
-        {
-            if (m_CalculatorViewModel == nullptr)
-            {
-                m_CalculatorViewModel = ref new StandardCalculatorViewModel();
-            }
-            m_CalculatorViewModel->SetStandardCalculatorSnapshot(applicationSnapshot->StandardCalc.value());
-        }
-        return true;
-    }
-    return false;
-}
+//Windows::Data::Json::JsonObject ^ ApplicationViewModel::SaveApplicationSnapshot()
+//{
+//    ApplicationSnapshot applicationSnapshot;
+//    applicationSnapshot.SnapshotVersion = SnapshotHelper::SnapshotVersion;
+//    applicationSnapshot.Mode = static_cast<int>(Mode);
+//    if (m_CalculatorViewModel != nullptr && m_mode == ViewMode::Standard)
+//    {
+//        // Standard calculator is the only supported mode so far.
+//        applicationSnapshot.StandardCalc = m_CalculatorViewModel->GetStandardCalculatorSnapshot();
+//    }
+//    return SnapshotHelper::SaveSnapshotToJson(applicationSnapshot);
+//}
+//
+//bool ApplicationViewModel::TryRestoreFromSnapshot(Windows::Data::Json::JsonObject ^ jsonObject)
+//{
+//    std::optional<ApplicationSnapshot> applicationSnapshot;
+//    try
+//    {
+//        SnapshotHelper::RestoreJsonToSnapshot(jsonObject, applicationSnapshot);
+//    }
+//    catch (Platform::COMException ^ e)
+//    {
+//        if (SnapshotHelper::IsJsonParsingException(e))
+//        {
+//            return false;
+//        }
+//        throw;
+//    }
+//
+//    if (applicationSnapshot.has_value())
+//    {
+//        Mode = static_cast<ViewMode>(applicationSnapshot->Mode);
+//        if (applicationSnapshot->StandardCalc.has_value())
+//        {
+//            if (m_CalculatorViewModel == nullptr)
+//            {
+//                m_CalculatorViewModel = ref new StandardCalculatorViewModel();
+//            }
+//            m_CalculatorViewModel->SetStandardCalculatorSnapshot(applicationSnapshot->StandardCalc.value());
+//        }
+//        return true;
+//    }
+//    return false;
+//}
