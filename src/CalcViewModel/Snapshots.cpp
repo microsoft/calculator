@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <cassert>
 #include <stdexcept>
+#include <vector>
 
 #include "Snapshots.h"
 
@@ -11,25 +12,29 @@ namespace
 {
     ref struct UnaryCommand sealed : public CalculatorApp::ViewModel::ICalcManagerIExprCommand
     {
-        property Windows::Foundation::Collections::IVector<int> ^ Commands;
+        internal :;
+        std::vector<int> Commands;
     };
 
     ref struct BinaryCommand sealed : public CalculatorApp::ViewModel::ICalcManagerIExprCommand
     {
-        property int Command;
+        internal :;
+        int Command;
     };
 
     ref struct OperandCommand sealed : public CalculatorApp::ViewModel::ICalcManagerIExprCommand
     {
-        property bool IsNegative;
-        property bool IsDecimalPresent;
-        property bool IsSciFmt;
-        property Windows::Foundation::Collections::IVector<int> ^ Commands;
+        internal :;
+        bool IsNegative;
+        bool IsDecimalPresent;
+        bool IsSciFmt;
+        std::vector<int> Commands;
     };
 
     ref struct Parentheses sealed : public CalculatorApp::ViewModel::ICalcManagerIExprCommand
     {
-        property int Command;
+        internal :;
+        int Command;
     };
 
     CalculatorApp::ViewModel::ICalcManagerIExprCommand ^ CreateExprCommand(const IExpressionCommand* exprCmd) {
@@ -39,10 +44,9 @@ namespace
         {
             auto cmd = static_cast<const IUnaryCommand*>(exprCmd);
             auto result = ref new UnaryCommand();
-            result->Commands = ref new Platform::Collections::Vector<int>();
             for (auto& subcmd : *cmd->GetCommands())
             {
-                result->Commands->Append(subcmd);
+                result->Commands.push_back(subcmd);
             }
             return result;
         }
@@ -60,10 +64,9 @@ namespace
             result->IsNegative = cmd->IsNegative();
             result->IsDecimalPresent = cmd->IsDecimalPresent();
             result->IsSciFmt = cmd->IsSciFmt();
-            result->Commands = ref new Platform::Collections::Vector<int>();
             for (auto& subcmd : *cmd->GetCommands())
             {
-                result->Commands->Append(subcmd);
+                result->Commands.push_back(subcmd);
             }
             return result;
         }

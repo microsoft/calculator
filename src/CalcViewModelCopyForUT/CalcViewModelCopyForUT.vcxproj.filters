@@ -87,6 +87,7 @@
       <Filter>GraphingCalculator</Filter>
     </ClCompile>
     <ClCompile Include="..\CalcViewModel\Common\RadixType.cpp" />
+    <ClCompile Include="..\CalcViewModel\Snapshots.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CalcViewModel\Common\AppResourceProvider.h">
@@ -204,6 +205,7 @@
     <ClInclude Include="..\CalcViewModel\Common\AlwaysSelectedCollectionView.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Snapshots.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\CalcViewModel\DataLoaders\DefaultFromToCurrency.json">

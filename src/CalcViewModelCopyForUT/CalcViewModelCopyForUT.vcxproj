@@ -333,6 +333,7 @@
     <ClInclude Include="..\CalcViewModel\HistoryViewModel.h" />
     <ClInclude Include="..\CalcViewModel\MemoryItemViewModel.h" />
     <ClInclude Include="..\CalcViewModel\pch.h" />
+    <ClInclude Include="..\CalcViewModel\Snapshots.h" />
     <ClInclude Include="..\CalcViewModel\StandardCalculatorViewModel.h" />
     <ClInclude Include="..\CalcViewModel\targetver.h" />
     <ClInclude Include="..\CalcViewModel\UnitConverterViewModel.h" />
@@ -375,6 +376,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\CalcViewModel\Snapshots.cpp" />
     <ClCompile Include="..\CalcViewModel\StandardCalculatorViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\UnitConverterViewModel.cpp" />
   </ItemGroup>
