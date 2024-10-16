@@ -65,7 +65,6 @@ namespace CalculatorApp
         [Windows::UI::Xaml::Data::Bindable] public ref class StandardCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
-            StandardCalculatorViewModel();
             void UpdateOperand(int pos, Platform::String ^ text);
 
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
@@ -269,10 +268,12 @@ namespace CalculatorApp
                 }
             }
 
-            property StandardCalculatorSnapshot ^ Snapshot { StandardCalculatorSnapshot ^ get() { return GetSnapshot(); } }
+            property StandardCalculatorSnapshot
+                ^ Snapshot { StandardCalculatorSnapshot ^ get() { return GetSnapshot(); } }
 
-            // Used by unit tests
-            void ResetCalcManager(bool clearMemory);
+                // Used by unit tests
+                void
+                ResetCalcManager(bool clearMemory);
             void SendCommandToCalcManager(int command);
 
         public:
@@ -325,7 +326,8 @@ namespace CalculatorApp
                 return m_CurrentAngleType;
             }
 
-            // void SetStandardCalculatorSnapshot(const StandardCalculatorSnapshot& state);
+            internal :;
+            explicit StandardCalculatorViewModel(StandardCalculatorSnapshot ^ snapshot = nullptr);
 
         private:
             StandardCalculatorSnapshot ^ GetSnapshot() const;

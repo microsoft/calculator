@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include <vector>
+#include <memory>
+
 #include "CalcManager/CalculatorManager.h"
 
 namespace CalculatorApp::ViewModel
@@ -56,19 +59,23 @@ public
     ref struct ExpressionDisplaySnapshot sealed
     {
         property Windows::Foundation::Collections::IVector<CalcManagerHistoryToken ^> ^ Tokens;
-        // TODO: commands
+        property Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ Commands;
 
         internal :;
         using CalcHistoryToken = std::pair<std::wstring, int>;
-        explicit ExpressionDisplaySnapshot(const std::vector<CalcHistoryToken>& tokens);
+        explicit ExpressionDisplaySnapshot(const std::vector<CalcHistoryToken>& tokens, const std::vector<std::shared_ptr<IExpressionCommand>>& commands);
     };
 
 public
     ref struct StandardCalculatorSnapshot sealed
     {
-        property CalcManagerSnapshot ^ CalcManager;                                                // mandatory
-        property PrimaryDisplaySnapshot ^ PrimaryDisplay;                                          // mandatory
-        property ExpressionDisplaySnapshot ^ ExpressionDisplay;                                    // optional
-        property Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ Commands; // mandatory
+        property CalcManagerSnapshot ^ CalcManager;                                                       // mandatory
+        property PrimaryDisplaySnapshot ^ PrimaryDisplay;                                                 // mandatory
+        property ExpressionDisplaySnapshot ^ ExpressionDisplay;                                           // optional
+        property Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ DisplayCommands; // mandatory
     };
+
+    ICalcManagerIExprCommand ^ CreateExprCommand(const IExpressionCommand* exprCmd);
+    std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> ToUnderlying(Windows::Foundation::Collections::IVector<CalcManagerHistoryItem ^> ^ items);
+
 } // namespace CalculatorApp::ViewModel

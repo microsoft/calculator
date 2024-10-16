@@ -37,7 +37,11 @@ namespace
         int Command;
     };
 
-    CalculatorApp::ViewModel::ICalcManagerIExprCommand ^ CreateExprCommand(const IExpressionCommand* exprCmd) {
+} // namespace
+
+namespace CalculatorApp::ViewModel
+{
+    ICalcManagerIExprCommand ^ CreateExprCommand(const IExpressionCommand* exprCmd) {
         switch (exprCmd->GetCommandType())
         {
         case CalculationManager::CommandType::UnaryCommand:
@@ -81,10 +85,7 @@ namespace
             throw std::logic_error{ "unhandled command type." };
         }
     }
-} // namespace
 
-namespace CalculatorApp::ViewModel
-{
     CalcManagerHistoryToken::CalcManagerHistoryToken(Platform::String ^ opCodeName, int cmdIndex)
     {
         assert(opCodeName != nullptr && "opCodeName is mandatory.");
@@ -95,14 +96,16 @@ namespace CalculatorApp::ViewModel
     CalcManagerHistoryItem::CalcManagerHistoryItem(const CalculationManager::HISTORYITEM& item)
     {
         Tokens = ref new Platform::Collections::Vector<CalcManagerHistoryToken ^>();
-        Commands = ref new Platform::Collections::Vector<ICalcManagerIExprCommand ^>();
-        if (item.historyItemVector.spTokens != nullptr)
+        assert(item.historyItemVector.spTokens != nullptr && "spTokens shall not be null.");
+        for (auto& [opCode, cmdIdx] : *item.historyItemVector.spTokens)
         {
-            for (auto& [opCode, cmdIdx] : *item.historyItemVector.spTokens)
-            {
-                Tokens->Append(ref new CalcManagerHistoryToken(ref new Platform::String(opCode.c_str()), cmdIdx));
-                // Commands->Append();
-            }
+            Tokens->Append(ref new CalcManagerHistoryToken(ref new Platform::String(opCode.c_str()), cmdIdx));
+        }
+        Commands = ref new Platform::Collections::Vector<ICalcManagerIExprCommand ^>();
+        assert(item.historyItemVector.spCommands != nullptr && "spCommands shall not be null.");
+        for (auto& cmd : *item.historyItemVector.spCommands)
+        {
+            Commands->Append(CreateExprCommand(cmd.get()));
         }
         Expression = ref new Platform::String(item.historyItemVector.expression.c_str());
         Result = ref new Platform::String(item.historyItemVector.result.c_str());
@@ -113,6 +116,7 @@ namespace CalculatorApp::ViewModel
         auto& items = calcMgr.GetHistoryItems();
         if (!items.empty())
         {
+            HistoryItems = ref new Platform::Collections::Vector<CalcManagerHistoryItem ^>();
             for (auto& item : items)
             {
                 HistoryItems->Append(ref new CalcManagerHistoryItem(*item));
@@ -127,12 +131,25 @@ namespace CalculatorApp::ViewModel
         IsError = isError;
     }
 
-    ExpressionDisplaySnapshot::ExpressionDisplaySnapshot(const std::vector<CalcHistoryToken>& tokens)
+    ExpressionDisplaySnapshot::ExpressionDisplaySnapshot(
+        const std::vector<CalcHistoryToken>& tokens,
+        const std::vector<std::shared_ptr<IExpressionCommand>>& commands)
     {
         Tokens = ref new Platform::Collections::Vector<CalcManagerHistoryToken ^>();
         for (auto& [opCode, cmdIdx] : tokens)
         {
             Tokens->Append(ref new CalcManagerHistoryToken(ref new Platform::String(opCode.c_str()), cmdIdx));
         }
+
+        Commands = ref new Platform::Collections::Vector<ICalcManagerIExprCommand ^>();
+        for (auto& cmd : commands)
+        {
+            Commands->Append(CreateExprCommand(cmd.get()));
+        }
     }
-}
+
+    std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> ToUnderlying(Windows::Foundation::Collections::IVector<CalcManagerHistoryItem ^> ^ items)
+    {
+        return {}; // TODO
+    }
+} // namespace CalculatorApp::ViewModel
