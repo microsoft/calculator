@@ -7,31 +7,36 @@
 namespace CalculatorApp::ViewModel
 {
 public
-    ref struct CalcEngineHistoryToken sealed
+    interface struct ICalcManagerIExprCommand
+    {
+    };
+
+public
+    ref struct CalcManagerHistoryToken sealed
     {
         property Platform::String ^ OpCodeName; // mandatory
         property int CommandIndex;
 
         internal :;
-        explicit CalcEngineHistoryToken(Platform::String ^ opCodeName, int cmdIndex);
+        explicit CalcManagerHistoryToken(Platform::String ^ opCodeName, int cmdIndex);
     };
 
 public
-    ref struct CalcEnginHistoryItem sealed
+    ref struct CalcManagerHistoryItem sealed
     {
-        property Windows::Foundation::Collections::IVector<CalcEngineHistoryToken ^> ^ Tokens; // mandatory
-        // TODO: commands
-        property Platform::String ^ Expression; // mandatory
-        property Platform::String ^ Result;     // mandatory
+        property Windows::Foundation::Collections::IVector<CalcManagerHistoryToken ^> ^ Tokens;    // mandatory
+        property Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ Commands; // mandatory
+        property Platform::String ^ Expression;                                                    // mandatory
+        property Platform::String ^ Result;                                                        // mandatory
 
         internal :;
-        explicit CalcEnginHistoryItem(const CalculationManager::HISTORYITEM& item);
+        explicit CalcManagerHistoryItem(const CalculationManager::HISTORYITEM& item);
     };
 
 public
     ref struct CalcManagerSnapshot sealed
     {
-        property Windows::Foundation::Collections::IVector<CalcEnginHistoryItem ^> ^ HistoryItems; // optional
+        property Windows::Foundation::Collections::IVector<CalcManagerHistoryItem ^> ^ HistoryItems; // optional
 
         internal :;
         explicit CalcManagerSnapshot(const CalculationManager::CalculatorManager& calcMgr);
@@ -50,7 +55,7 @@ public
 public
     ref struct ExpressionDisplaySnapshot sealed
     {
-        property Windows::Foundation::Collections::IVector<CalcEngineHistoryToken ^> ^ Tokens;
+        property Windows::Foundation::Collections::IVector<CalcManagerHistoryToken ^> ^ Tokens;
         // TODO: commands
 
         internal :;
@@ -61,9 +66,9 @@ public
 public
     ref struct StandardCalculatorSnapshot sealed
     {
-        property CalcManagerSnapshot ^ CalcManager;             // mandatory
-        property PrimaryDisplaySnapshot ^ PrimaryDisplay;       // mandatory
-        property ExpressionDisplaySnapshot ^ ExpressionDisplay; // optional
-        // TODO: commands
+        property CalcManagerSnapshot ^ CalcManager;                                                // mandatory
+        property PrimaryDisplaySnapshot ^ PrimaryDisplay;                                          // mandatory
+        property ExpressionDisplaySnapshot ^ ExpressionDisplay;                                    // optional
+        property Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ Commands; // mandatory
     };
-}
+} // namespace CalculatorApp::ViewModel

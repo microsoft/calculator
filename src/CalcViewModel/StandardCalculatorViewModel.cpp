@@ -1789,6 +1789,7 @@ void StandardCalculatorViewModel::SetBitshiftRadioButtonCheckedAnnouncement(Plat
 
 StandardCalculatorSnapshot ^ StandardCalculatorViewModel::GetSnapshot() const
 {
+    CUnaryCommand;
     auto result = ref new StandardCalculatorSnapshot();
     result->CalcManager = ref new CalcManagerSnapshot(m_standardCalculatorManager);
     result->PrimaryDisplay = ref new PrimaryDisplaySnapshot(m_DisplayValue, m_IsInError);
