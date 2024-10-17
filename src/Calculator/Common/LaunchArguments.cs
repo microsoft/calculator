@@ -7,16 +7,27 @@ namespace CalculatorApp
 {
     internal class SnapshotLaunchArguments
     {
-        public ApplicationSnapshot Snapshot;
+        public bool HasError { get; set; }
+        public ApplicationSnapshot Snapshot { get; set; }
     }
 
     internal static class LaunchExtensions
     {
-        public static bool IsSnapshotProtocol(this IActivatedEventArgs args) =>
-            args is IProtocolActivatedEventArgs protoArgs &&
-            protoArgs.Uri != null &&
-            protoArgs.Uri.Segments != null &&
-            protoArgs.Uri.Segments.Length == 2 &&
-            protoArgs.Uri.Segments[0] == "snapshot/";
+        public static bool TryGetSnapshotProtocol(this IActivatedEventArgs args, out IProtocolActivatedEventArgs result)
+        {
+            result = null;
+            var protoArgs = args as IProtocolActivatedEventArgs;
+            if (protoArgs == null || protoArgs.Uri == null)
+            {
+                return false;
+            }
+            result = protoArgs;
+            return true;
+        }
+
+        public static SnapshotLaunchArguments GetSnapshotLaunchArgs(this IProtocolActivatedEventArgs args)
+        {
+            return null;
+        }
     }
 }
