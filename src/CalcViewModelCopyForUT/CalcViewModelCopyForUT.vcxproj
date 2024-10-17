@@ -394,6 +394,14 @@
   <ItemDefinitionGroup Condition="!Exists('..\CalcViewModel\DataLoaders\DataLoaderConstants.h')">
     <ClCompile>
       <AdditionalOptions>/DUSE_MOCK_DATA %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <Choose>

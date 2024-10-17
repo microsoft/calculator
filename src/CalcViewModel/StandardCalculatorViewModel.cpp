@@ -194,11 +194,11 @@ StandardCalculatorViewModel::StandardCalculatorViewModel(StandardCalculatorSnaps
         std::vector<int> commands;
         if (snapshot->ExpressionDisplay != nullptr && snapshot->ExpressionDisplay->Tokens->GetAt(snapshot->ExpressionDisplay->Tokens->Size))
         {
-            // commands = GetCommandsFromExpressionCommands(Snapshot->ExpressionDisplay->Commands);
+            commands = GetCommandsFromExpressionCommands(ToUnderlying(snapshot->ExpressionDisplay->Commands));
         }
         if (commands.empty() && snapshot->DisplayCommands->Size > 0)
         {
-            // commands = GetCommandsFromExpressionCommands(snapshot->DisplayCommands);
+            commands = GetCommandsFromExpressionCommands(ToUnderlying(snapshot->DisplayCommands));
         }
         for (auto cmd : commands)
         {
@@ -206,9 +206,18 @@ StandardCalculatorViewModel::StandardCalculatorViewModel(StandardCalculatorSnaps
         }
         if (snapshot->ExpressionDisplay != nullptr)
         {
-            // SetExpressionDisplay();
+            using RawTokenCollection = std::vector<std::pair<std::wstring, int>>;
+            RawTokenCollection rawTokens;
+            for (CalcManagerHistoryToken ^ token : snapshot->ExpressionDisplay->Tokens)
+            {
+                rawTokens.push_back(std::pair{ token->OpCodeName->Data(), token->CommandIndex });
+            }
+            snapshot->ExpressionDisplay->Tokens;
+            SetExpressionDisplay(
+                std::make_shared<RawTokenCollection>(rawTokens),
+                std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>(ToUnderlying(snapshot->ExpressionDisplay->Commands)));
         }
-        // SetPrimaryDisplay();
+        SetPrimaryDisplay(snapshot->PrimaryDisplay->DisplayValue, snapshot->PrimaryDisplay->IsError);
     }
 }
 

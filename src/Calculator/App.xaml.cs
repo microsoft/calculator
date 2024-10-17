@@ -81,8 +81,7 @@ namespace CalculatorApp
                 OnAppLaunch(args,
                     new SnapshotLaunchArguments
                     {
-                        ActivityId = protoArgs.Uri.GetActivityId(),
-                        LaunchUri = protoArgs.Uri
+                        Snapshot = null // TODO:
                     },
                     false);
             }

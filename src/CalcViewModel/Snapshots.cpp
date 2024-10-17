@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <vector>
 
+#include "CalcManager/ExpressionCommand.h"
 #include "Snapshots.h"
 
 namespace
@@ -151,5 +152,42 @@ namespace CalculatorApp::ViewModel
     std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> ToUnderlying(Windows::Foundation::Collections::IVector<CalcManagerHistoryItem ^> ^ items)
     {
         return {}; // TODO
+    }
+
+    std::vector<std::shared_ptr<IExpressionCommand>> ToUnderlying(Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ commands)
+    {
+        std::vector<std::shared_ptr<IExpressionCommand>> result;
+        for (ICalcManagerIExprCommand ^ cmdEntry : commands)
+        {
+            if (auto unary = dynamic_cast<UnaryCommand ^>(cmdEntry); unary != nullptr)
+            {
+                if (unary->Commands.size() == 1)
+                {
+                    result.push_back(std::make_shared<CUnaryCommand>(unary->Commands[0]));
+                }
+                else if (unary->Commands.size() == 2)
+                {
+                    result.push_back(std::make_shared<CUnaryCommand>(unary->Commands[0], unary->Commands[1]));
+                }
+                else
+                {
+                    throw std::logic_error{ "ill-formed command." };
+                }
+            }
+            else if (auto binary = dynamic_cast<BinaryCommand ^>(cmdEntry); binary != nullptr)
+            {
+                result.push_back(std::make_shared<CBinaryCommand>(binary->Command));
+            }
+            else if (auto paren = dynamic_cast<Parentheses ^>(cmdEntry); paren != nullptr)
+            {
+                result.push_back(std::make_shared<CParentheses>(paren->Command));
+            }
+            else if (auto operand = dynamic_cast<OperandCommand ^>(cmdEntry); operand != nullptr)
+            {
+                auto subcmds = std::make_shared<std::vector<int>>(operand->Commands);
+                result.push_back(std::make_shared<COpndCommand>(std::move(subcmds), operand->IsNegative, operand->IsDecimalPresent, operand->IsSciFmt));
+            }
+        }
+        return result;
     }
 } // namespace CalculatorApp::ViewModel

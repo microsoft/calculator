@@ -75,7 +75,15 @@ public
         property Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ DisplayCommands; // mandatory
     };
 
+public
+    ref struct ApplicationSnapshot sealed
+    {
+        property int Mode;
+        property StandardCalculatorSnapshot ^ StandardCalculator; // optional
+    };
+
     ICalcManagerIExprCommand ^ CreateExprCommand(const IExpressionCommand* exprCmd);
+    std::vector<std::shared_ptr<IExpressionCommand>> ToUnderlying(Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ commands);
     std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> ToUnderlying(Windows::Foundation::Collections::IVector<CalcManagerHistoryItem ^> ^ items);
 
 } // namespace CalculatorApp::ViewModel

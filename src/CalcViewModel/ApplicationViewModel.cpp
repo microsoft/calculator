@@ -38,9 +38,8 @@ namespace
     StringReference CategoriesPropertyName(L"Categories");
     StringReference ClearMemoryVisibilityPropertyName(L"ClearMemoryVisibility");
 
-    //struct SnapshotHelper
+    // struct SnapshotHelper
     //{
-    //    static constexpr int SnapshotVersion = 0;
 
     //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const ApplicationSnapshot& value)
     //    {
@@ -121,8 +120,9 @@ namespace
     //    static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CalculationManager::HISTORYITEM& value)
     //    {
     //        auto jsonObject = ref new Windows::Data::Json::JsonObject();
-    //        jsonObject->SetNamedValue(L"Expression", Windows::Data::Json::JsonValue::CreateStringValue(ref new Platform::String(value.historyItemVector.expression.c_str())));
-    //        jsonObject->SetNamedValue(L"Result", Windows::Data::Json::JsonValue::CreateStringValue(ref new Platform::String(value.historyItemVector.result.c_str())));
+    //        jsonObject->SetNamedValue(L"Expression", Windows::Data::Json::JsonValue::CreateStringValue(ref new
+    //        Platform::String(value.historyItemVector.expression.c_str()))); jsonObject->SetNamedValue(L"Result",
+    //        Windows::Data::Json::JsonValue::CreateStringValue(ref new Platform::String(value.historyItemVector.result.c_str())));
 
     //        auto tokensJsonArray = ref new Windows::Data::Json::JsonArray();
     //        for (const auto& token : *value.historyItemVector.spTokens)
@@ -512,6 +512,17 @@ void ApplicationViewModel::Categories::set(IObservableVector<NavCategoryGroup ^>
     }
 }
 
+ApplicationSnapshot ^ ApplicationViewModel::Snapshot::get()
+{
+    auto snapshot = ref new ApplicationSnapshot();
+    snapshot->Mode = static_cast<int>(Mode);
+    if (m_CalculatorViewModel != nullptr && m_mode == ViewMode::Standard)
+    {
+        snapshot->StandardCalculator = m_CalculatorViewModel->Snapshot;
+    }
+    return snapshot;
+}
+
 void ApplicationViewModel::Initialize(ViewMode mode)
 {
     if (!NavCategoryStates::IsValidViewMode(mode) || !NavCategoryStates::IsViewModeEnabled(mode))
@@ -543,6 +554,12 @@ void ApplicationViewModel::Initialize(ViewMode mode)
             throw;
         }
     }
+}
+
+void ApplicationViewModel::Initialize(ApplicationSnapshot ^ snapshot)
+{
+    // TODO: restore 
+    Initialize(static_cast<ViewMode>(snapshot->Mode));
 }
 
 bool ApplicationViewModel::TryRecoverFromNavigationModeFailure()
@@ -712,47 +729,47 @@ void ApplicationViewModel::SetDisplayNormalAlwaysOnTopOption()
         m_mode == ViewMode::Standard && ApplicationView::GetForCurrentView()->IsViewModeSupported(ApplicationViewMode::CompactOverlay) && !IsAlwaysOnTop;
 }
 
-//Windows::Data::Json::JsonObject ^ ApplicationViewModel::SaveApplicationSnapshot()
+// Windows::Data::Json::JsonObject ^ ApplicationViewModel::SaveApplicationSnapshot()
 //{
-//    ApplicationSnapshot applicationSnapshot;
-//    applicationSnapshot.SnapshotVersion = SnapshotHelper::SnapshotVersion;
-//    applicationSnapshot.Mode = static_cast<int>(Mode);
-//    if (m_CalculatorViewModel != nullptr && m_mode == ViewMode::Standard)
-//    {
-//        // Standard calculator is the only supported mode so far.
-//        applicationSnapshot.StandardCalc = m_CalculatorViewModel->GetStandardCalculatorSnapshot();
-//    }
-//    return SnapshotHelper::SaveSnapshotToJson(applicationSnapshot);
-//}
+//     ApplicationSnapshot applicationSnapshot;
+//     applicationSnapshot.SnapshotVersion = SnapshotHelper::SnapshotVersion;
+//     applicationSnapshot.Mode = static_cast<int>(Mode);
+//     if (m_CalculatorViewModel != nullptr && m_mode == ViewMode::Standard)
+//     {
+//         // Standard calculator is the only supported mode so far.
+//         applicationSnapshot.StandardCalc = m_CalculatorViewModel->GetStandardCalculatorSnapshot();
+//     }
+//     return SnapshotHelper::SaveSnapshotToJson(applicationSnapshot);
+// }
 //
-//bool ApplicationViewModel::TryRestoreFromSnapshot(Windows::Data::Json::JsonObject ^ jsonObject)
+// bool ApplicationViewModel::TryRestoreFromSnapshot(Windows::Data::Json::JsonObject ^ jsonObject)
 //{
-//    std::optional<ApplicationSnapshot> applicationSnapshot;
-//    try
-//    {
-//        SnapshotHelper::RestoreJsonToSnapshot(jsonObject, applicationSnapshot);
-//    }
-//    catch (Platform::COMException ^ e)
-//    {
-//        if (SnapshotHelper::IsJsonParsingException(e))
-//        {
-//            return false;
-//        }
-//        throw;
-//    }
+//     std::optional<ApplicationSnapshot> applicationSnapshot;
+//     try
+//     {
+//         SnapshotHelper::RestoreJsonToSnapshot(jsonObject, applicationSnapshot);
+//     }
+//     catch (Platform::COMException ^ e)
+//     {
+//         if (SnapshotHelper::IsJsonParsingException(e))
+//         {
+//             return false;
+//         }
+//         throw;
+//     }
 //
-//    if (applicationSnapshot.has_value())
-//    {
-//        Mode = static_cast<ViewMode>(applicationSnapshot->Mode);
-//        if (applicationSnapshot->StandardCalc.has_value())
-//        {
-//            if (m_CalculatorViewModel == nullptr)
-//            {
-//                m_CalculatorViewModel = ref new StandardCalculatorViewModel();
-//            }
-//            m_CalculatorViewModel->SetStandardCalculatorSnapshot(applicationSnapshot->StandardCalc.value());
-//        }
-//        return true;
-//    }
-//    return false;
-//}
+//     if (applicationSnapshot.has_value())
+//     {
+//         Mode = static_cast<ViewMode>(applicationSnapshot->Mode);
+//         if (applicationSnapshot->StandardCalc.has_value())
+//         {
+//             if (m_CalculatorViewModel == nullptr)
+//             {
+//                 m_CalculatorViewModel = ref new StandardCalculatorViewModel();
+//             }
+//             m_CalculatorViewModel->SetStandardCalculatorSnapshot(applicationSnapshot->StandardCalc.value());
+//         }
+//         return true;
+//     }
+//     return false;
+// }

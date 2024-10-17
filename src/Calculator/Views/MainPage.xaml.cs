@@ -69,8 +69,7 @@ namespace CalculatorApp
                 }
                 var channel = UserActivityChannel.GetDefault();
                 var activity = await channel.GetOrCreateUserActivityAsync($"{Guid.NewGuid()}");
-                activity.ActivationUri = new Uri($"ms-calculator:snapshots/{activity.ActivityId}");
-                activity.ContentInfo = UserActivityContentInfo.FromJson(Model.SaveApplicationSnapshot().Stringify());
+                activity.ActivationUri = new Uri($"ms-calculator:snapshot/TODO");
                 activity.IsRoamable = false;
                 var resProvider = AppResourceProvider.GetInstance();
                 activity.VisualElements.DisplayText =
@@ -165,22 +164,22 @@ namespace CalculatorApp
             }
             else if (e.Parameter is SnapshotLaunchArguments snapshotArgs)
             {
-                _ = Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                {
-                    var channel = UserActivityChannel.GetDefault();
-                    var activity = await channel.GetOrCreateUserActivityAsync(snapshotArgs.ActivityId);
+                //_ = Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                //{
+                //    var channel = UserActivityChannel.GetDefault();
+                //    var activity = await channel.GetOrCreateUserActivityAsync(snapshotArgs.ActivityId);
 
-                    if (TryRestoreFromActivity(snapshotArgs, activity, out var errorMessage))
-                    {
-                        TraceLogger.GetInstance().LogRecallRestore(Model.Mode);
-                        SelectNavigationItemByModel();
-                    }
-                    else
-                    {
-                        TraceLogger.GetInstance().LogRecallError(Model.Mode, errorMessage);
-                    }
-                });
-                Model.Initialize(initialMode);
+                //    if (TryRestoreFromActivity(snapshotArgs, activity, out var errorMessage))
+                //    {
+                //        TraceLogger.GetInstance().LogRecallRestore(Model.Mode);
+                //        SelectNavigationItemByModel();
+                //    }
+                //    else
+                //    {
+                //        TraceLogger.GetInstance().LogRecallError(Model.Mode, errorMessage);
+                //    }
+                //});
+                Model.Initialize(snapshotArgs.Snapshot);
             }
             else
             {
@@ -188,37 +187,37 @@ namespace CalculatorApp
             }
         }
 
-        private bool TryRestoreFromActivity(SnapshotLaunchArguments snapshotArgs, UserActivity activity, out string errorMessage)
-        {
-            if (!snapshotArgs.VerifyIncomingActivity(activity))
-            {
-                errorMessage = "IncomingActivityFailed";
-                return false;
-            }
+        //private bool TryRestoreFromActivity(SnapshotLaunchArguments snapshotArgs, UserActivity activity, out string errorMessage)
+        //{
+        //    if (!snapshotArgs.VerifyIncomingActivity(activity))
+        //    {
+        //        errorMessage = "IncomingActivityFailed";
+        //        return false;
+        //    }
 
-            // Work around for bug https://microsoft.visualstudio.com/DefaultCollection/OS/_workitems/edit/48931227
-            // where ContentInfo can't be directly accessed.
-            if (!JsonObject.TryParse(activity.ToJson(), out var activityJson))
-            {
-                errorMessage = "ParseJsonError";
-                return false;
-            }
+        //    // Work around for bug https://microsoft.visualstudio.com/DefaultCollection/OS/_workitems/edit/48931227
+        //    // where ContentInfo can't be directly accessed.
+        //    if (!JsonObject.TryParse(activity.ToJson(), out var activityJson))
+        //    {
+        //        errorMessage = "ParseJsonError";
+        //        return false;
+        //    }
 
-            if (!activityJson.ContainsKey("contentInfo"))
-            {
-                errorMessage = "ContentInfoNotExist";
-                return false;
-            }
+        //    if (!activityJson.ContainsKey("contentInfo"))
+        //    {
+        //        errorMessage = "ContentInfoNotExist";
+        //        return false;
+        //    }
 
-            if (!Model.TryRestoreFromSnapshot(activityJson.GetNamedObject("contentInfo")))
-            {
-                errorMessage = "RestoreFromSnapshotFailed";
-                return false;
-            }
+        //    if (!Model.TryRestoreFromSnapshot(activityJson.GetNamedObject("contentInfo")))
+        //    {
+        //        errorMessage = "RestoreFromSnapshotFailed";
+        //        return false;
+        //    }
 
-            errorMessage = string.Empty;
-            return true;
-        }
+        //    errorMessage = string.Empty;
+        //    return true;
+        //}
 
         private void InitializeNavViewCategoriesSource()
         {
