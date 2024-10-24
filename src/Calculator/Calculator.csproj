@@ -167,6 +167,7 @@
     <Compile Include="Selectors\NavViewMenuItemTemplateSelector.cs" />
     <Compile Include="Utils\ResourceVirtualKey.cs" />
     <Compile Include="Utils\ResourceString.cs" />
+    <Compile Include="Utils\SerdeUtils.cs" />
     <Compile Include="Utils\ThemeHelper.cs" />
     <Compile Include="Views\GraphingCalculator\EquationStylePanelControl.xaml.cs">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
@@ -799,6 +800,9 @@
       <Version>6.2.14</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.1" />
+    <PackageReference Include="System.Text.Json">
+      <Version>8.0.5</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">

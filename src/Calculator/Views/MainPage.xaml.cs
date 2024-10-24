@@ -23,6 +23,7 @@ using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
 
 using wuxc = Windows.UI.Xaml.Controls;
+using System.Text.Json;
 
 namespace CalculatorApp
 {
@@ -69,6 +70,8 @@ namespace CalculatorApp
                 }
                 var channel = UserActivityChannel.GetDefault();
                 var activity = await channel.GetOrCreateUserActivityAsync($"{Guid.NewGuid()}");
+                var s = Model.Snapshot;
+                var j = JsonSerializer.Serialize(s);
                 activity.ActivationUri = new Uri($"ms-calculator:snapshot/TODO");
                 activity.IsRoamable = false;
                 var resProvider = AppResourceProvider.GetInstance();

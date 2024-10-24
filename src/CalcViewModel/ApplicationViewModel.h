@@ -20,7 +20,7 @@ namespace CalculatorApp
 
             [Windows::Foundation::Metadata::DefaultOverload]
             void Initialize(CalculatorApp::ViewModel::Common::ViewMode mode); // Use for first init, use deserialize for rehydration
-            void Initialize(ApplicationSnapshot^ snapshot);
+            void Initialize(CalculatorApp::ViewModel::Snapshot::ApplicationSnapshot^ snapshot);
 
             OBSERVABLE_OBJECT();
             OBSERVABLE_PROPERTY_RW(StandardCalculatorViewModel ^, CalculatorViewModel);
@@ -73,9 +73,9 @@ namespace CalculatorApp
                 }
             }
 
-            property ApplicationSnapshot  ^ Snapshot
+            property CalculatorApp::ViewModel::Snapshot::ApplicationSnapshot  ^ Snapshot
             {
-                ApplicationSnapshot ^ get();
+                CalculatorApp::ViewModel::Snapshot::ApplicationSnapshot ^ get();
             }
 
             static property Platform::String ^ LaunchedLocalSettings

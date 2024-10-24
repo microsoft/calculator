@@ -9,78 +9,64 @@
 #include "CalcManager/ExpressionCommand.h"
 #include "Snapshots.h"
 
-namespace
+namespace CalculatorApp::ViewModel::Snapshot
 {
-    ref struct UnaryCommand sealed : public CalculatorApp::ViewModel::ICalcManagerIExprCommand
+    UnaryCommand::UnaryCommand(Windows::Foundation::Collections::IVectorView<int> ^ cmds)
     {
-        internal :;
-        std::vector<int> Commands;
-    };
+        for (auto cmd : cmds)
+        {
+            m_cmds.push_back(cmd);
+        }
+    }
 
-    ref struct BinaryCommand sealed : public CalculatorApp::ViewModel::ICalcManagerIExprCommand
+    Windows::Foundation::Collections::IVectorView<int> ^ UnaryCommand::Commands::get()
     {
-        internal :;
-        int Command;
-    };
+        return ref new Platform::Collections::VectorView<int>(m_cmds);
+    }
 
-    ref struct OperandCommand sealed : public CalculatorApp::ViewModel::ICalcManagerIExprCommand
+    OperandCommand::OperandCommand(bool isNegative, bool isDecimal, bool isSciFmt, Windows::Foundation::Collections::IVectorView<int> ^ cmds)
     {
-        internal :;
-        bool IsNegative;
-        bool IsDecimalPresent;
-        bool IsSciFmt;
-        std::vector<int> Commands;
-    };
+        IsNegative = isNegative;
+        IsDecimalPresent = isDecimal;
+        IsSciFmt = isSciFmt;
+        for (auto cmd : cmds)
+        {
+            m_cmds.push_back(cmd);
+        }
+    }
 
-    ref struct Parentheses sealed : public CalculatorApp::ViewModel::ICalcManagerIExprCommand
-    {
-        internal :;
-        int Command;
-    };
-
-} // namespace
-
-namespace CalculatorApp::ViewModel
-{
     ICalcManagerIExprCommand ^ CreateExprCommand(const IExpressionCommand* exprCmd) {
         switch (exprCmd->GetCommandType())
         {
         case CalculationManager::CommandType::UnaryCommand:
         {
             auto cmd = static_cast<const IUnaryCommand*>(exprCmd);
-            auto result = ref new UnaryCommand();
+            std::vector<int> cmdlist;
             for (auto& subcmd : *cmd->GetCommands())
             {
-                result->Commands.push_back(subcmd);
+                cmdlist.push_back(subcmd);
             }
-            return result;
+            return ref new UnaryCommand(std::move(cmdlist));
         }
         case CalculationManager::CommandType::BinaryCommand:
         {
             auto cmd = static_cast<const IBinaryCommand*>(exprCmd);
-            auto result = ref new BinaryCommand();
-            result->Command = cmd->GetCommand();
-            return result;
+            return ref new BinaryCommand(cmd->GetCommand());
         }
         case CalculationManager::CommandType::OperandCommand:
         {
             auto cmd = static_cast<const IOpndCommand*>(exprCmd);
-            auto result = ref new OperandCommand();
-            result->IsNegative = cmd->IsNegative();
-            result->IsDecimalPresent = cmd->IsDecimalPresent();
-            result->IsSciFmt = cmd->IsSciFmt();
+            std::vector<int> cmdlist;
             for (auto& subcmd : *cmd->GetCommands())
             {
-                result->Commands.push_back(subcmd);
+                cmdlist.push_back(subcmd);
             }
-            return result;
+            return ref new OperandCommand(cmd->IsNegative(), cmd->IsDecimalPresent(), cmd->IsSciFmt(), std::move(cmdlist));
         }
         case CalculationManager::CommandType::Parentheses:
         {
             auto cmd = static_cast<const IParenthesisCommand*>(exprCmd);
-            auto result = ref new Parentheses();
-            result->Command = cmd->GetCommand();
-            return result;
+            return ref new Parentheses(cmd->GetCommand());
         }
         default:
             throw std::logic_error{ "unhandled command type." };
@@ -161,13 +147,13 @@ namespace CalculatorApp::ViewModel
         {
             if (auto unary = dynamic_cast<UnaryCommand ^>(cmdEntry); unary != nullptr)
             {
-                if (unary->Commands.size() == 1)
+                if (unary->m_cmds.size() == 1)
                 {
-                    result.push_back(std::make_shared<CUnaryCommand>(unary->Commands[0]));
+                    result.push_back(std::make_shared<CUnaryCommand>(unary->m_cmds[0]));
                 }
-                else if (unary->Commands.size() == 2)
+                else if (unary->m_cmds.size() == 2)
                 {
-                    result.push_back(std::make_shared<CUnaryCommand>(unary->Commands[0], unary->Commands[1]));
+                    result.push_back(std::make_shared<CUnaryCommand>(unary->m_cmds[0], unary->m_cmds[1]));
                 }
                 else
                 {
@@ -184,7 +170,7 @@ namespace CalculatorApp::ViewModel
             }
             else if (auto operand = dynamic_cast<OperandCommand ^>(cmdEntry); operand != nullptr)
             {
-                auto subcmds = std::make_shared<std::vector<int>>(operand->Commands);
+                auto subcmds = std::make_shared<std::vector<int>>(operand->m_cmds);
                 result.push_back(std::make_shared<COpndCommand>(std::move(subcmds), operand->IsNegative, operand->IsDecimalPresent, operand->IsSciFmt));
             }
         }

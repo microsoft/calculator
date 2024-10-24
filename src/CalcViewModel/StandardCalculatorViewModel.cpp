@@ -115,7 +115,7 @@ namespace CalculatorResourceKeys
     StringReference DisplayCopied(L"Display_Copied");
 }
 
-StandardCalculatorViewModel::StandardCalculatorViewModel(StandardCalculatorSnapshot ^ snapshot)
+StandardCalculatorViewModel::StandardCalculatorViewModel(CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ snapshot)
     : m_DisplayValue(L"0")
     , m_DecimalDisplayValue(L"0")
     , m_HexDisplayValue(L"0")
@@ -208,7 +208,7 @@ StandardCalculatorViewModel::StandardCalculatorViewModel(StandardCalculatorSnaps
         {
             using RawTokenCollection = std::vector<std::pair<std::wstring, int>>;
             RawTokenCollection rawTokens;
-            for (CalcManagerHistoryToken ^ token : snapshot->ExpressionDisplay->Tokens)
+            for (CalculatorApp::ViewModel::Snapshot::CalcManagerHistoryToken ^ token : snapshot->ExpressionDisplay->Tokens)
             {
                 rawTokens.push_back(std::pair{ token->OpCodeName->Data(), token->CommandIndex });
             }
@@ -1823,18 +1823,18 @@ void StandardCalculatorViewModel::SetBitshiftRadioButtonCheckedAnnouncement(Plat
     Announcement = CalculatorAnnouncement::GetBitShiftRadioButtonCheckedAnnouncement(announcement);
 }
 
-StandardCalculatorSnapshot ^ StandardCalculatorViewModel::GetSnapshot() const
+CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ StandardCalculatorViewModel::GetSnapshot() const
 {
-    auto result = ref new StandardCalculatorSnapshot();
-    result->CalcManager = ref new CalcManagerSnapshot(m_standardCalculatorManager);
-    result->PrimaryDisplay = ref new PrimaryDisplaySnapshot(m_DisplayValue, m_IsInError);
-    result->ExpressionDisplay = ref new ExpressionDisplaySnapshot(*m_tokens, *m_commands);
-    result->DisplayCommands = ref new Platform::Collections::Vector<ICalcManagerIExprCommand ^>();
+    auto result = ref new CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot();
+    result->CalcManager = ref new CalculatorApp::ViewModel::Snapshot::CalcManagerSnapshot(m_standardCalculatorManager);
+    result->PrimaryDisplay = ref new CalculatorApp::ViewModel::Snapshot::PrimaryDisplaySnapshot(m_DisplayValue, m_IsInError);
+    result->ExpressionDisplay = ref new CalculatorApp::ViewModel::Snapshot::ExpressionDisplaySnapshot(*m_tokens, *m_commands);
+    result->DisplayCommands = ref new Platform::Collections::Vector<CalculatorApp::ViewModel::Snapshot::ICalcManagerIExprCommand ^>();
     for (auto cmd : m_standardCalculatorManager.GetDisplayCommandsSnapshot())
     {
-        result->DisplayCommands->Append(CreateExprCommand(cmd.get()));
+        result->DisplayCommands->Append(CalculatorApp::ViewModel::Snapshot::CreateExprCommand(cmd.get()));
     }
-    return nullptr;
+    return result;
 }
 
 // StandardCalculatorSnapshot StandardCalculatorViewModel::GetStandardCalculatorSnapshot() const

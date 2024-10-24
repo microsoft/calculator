@@ -268,8 +268,8 @@ namespace CalculatorApp
                 }
             }
 
-            property StandardCalculatorSnapshot
-                ^ Snapshot { StandardCalculatorSnapshot ^ get() { return GetSnapshot(); } }
+            property CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot
+                ^ Snapshot { CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ get() { return GetSnapshot(); } }
 
                 // Used by unit tests
                 void
@@ -327,10 +327,10 @@ namespace CalculatorApp
             }
 
             internal :;
-            explicit StandardCalculatorViewModel(StandardCalculatorSnapshot ^ snapshot = nullptr);
+            explicit StandardCalculatorViewModel(CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ snapshot = nullptr);
 
         private:
-            StandardCalculatorSnapshot ^ GetSnapshot() const;
+            CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ GetSnapshot() const;
             void SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers);
             void UpdateProgrammerPanelDisplay();
             void HandleUpdatedOperandData(CalculationManager::Command cmdenum);

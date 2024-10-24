@@ -1,7 +1,5 @@
-using System;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.UserActivities;
-using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel.Snapshot;
 
 namespace CalculatorApp
 {

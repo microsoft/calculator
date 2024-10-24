@@ -7,11 +7,62 @@
 
 #include "CalcManager/CalculatorManager.h"
 
-namespace CalculatorApp::ViewModel
+namespace CalculatorApp::ViewModel::Snapshot
 {
 public
     interface struct ICalcManagerIExprCommand
     {
+    };
+
+    ref struct UnaryCommand sealed : public ICalcManagerIExprCommand
+    {
+        property Windows::Foundation::Collections::IVectorView<int> ^ Commands { Windows::Foundation::Collections::IVectorView<int> ^ get(); };
+
+        explicit UnaryCommand(Windows::Foundation::Collections::IVectorView<int> ^ cmds);
+
+        internal :;
+        explicit UnaryCommand(std::vector<int> cmds)
+            : m_cmds(std::move(cmds))
+        {
+        }
+        std::vector<int> m_cmds;
+    };
+
+    ref struct BinaryCommand sealed : public ICalcManagerIExprCommand
+    {
+        property int Command;
+        explicit BinaryCommand(int cmd)
+        {
+            Command = cmd;
+        }
+    };
+
+    ref struct OperandCommand sealed : public ICalcManagerIExprCommand
+    {
+        property bool IsNegative;
+        property bool IsDecimalPresent;
+        property bool IsSciFmt;
+        property Windows::Foundation::Collections::IVectorView<int> ^ Commands { Windows::Foundation::Collections::IVectorView<int> ^ get(); };
+
+        explicit OperandCommand(bool isNegative, bool isDecimal, bool isSciFmt, Windows::Foundation::Collections::IVectorView<int> ^ cmds);
+        internal :;
+        explicit OperandCommand(bool isNegative, bool isDecimal, bool isSciFmt, std::vector<int> cmds)
+        {
+            IsNegative = isNegative;
+            IsDecimalPresent = isDecimal;
+            IsSciFmt = isSciFmt;
+            m_cmds = std::move(cmds);
+        }
+        std::vector<int> m_cmds;
+    };
+
+    ref struct Parentheses sealed : public ICalcManagerIExprCommand
+    {
+        property int Command;
+        explicit Parentheses(int cmd)
+        {
+            Command = cmd;
+        }
     };
 
 public
@@ -20,7 +71,6 @@ public
         property Platform::String ^ OpCodeName; // mandatory
         property int CommandIndex;
 
-        internal :;
         explicit CalcManagerHistoryToken(Platform::String ^ opCodeName, int cmdIndex);
     };
 
@@ -31,6 +81,12 @@ public
         property Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ Commands; // mandatory
         property Platform::String ^ Expression;                                                    // mandatory
         property Platform::String ^ Result;                                                        // mandatory
+
+        // explicit CalcManagerHistoryItem(
+        //     Windows::Foundation::Collections::IVector<CalcManagerHistoryToken ^> ^ tokens,
+        //     Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ commands,
+        //     Platform::String ^ expression,
+        //     Platform::String ^ result);
 
         internal :;
         explicit CalcManagerHistoryItem(const CalculationManager::HISTORYITEM& item);

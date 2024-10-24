@@ -512,9 +512,9 @@ void ApplicationViewModel::Categories::set(IObservableVector<NavCategoryGroup ^>
     }
 }
 
-ApplicationSnapshot ^ ApplicationViewModel::Snapshot::get()
+CalculatorApp::ViewModel::Snapshot::ApplicationSnapshot ^ ApplicationViewModel::Snapshot::get()
 {
-    auto snapshot = ref new ApplicationSnapshot();
+    auto snapshot = ref new CalculatorApp::ViewModel::Snapshot::ApplicationSnapshot();
     snapshot->Mode = static_cast<int>(Mode);
     if (m_CalculatorViewModel != nullptr && m_mode == ViewMode::Standard)
     {
@@ -556,7 +556,7 @@ void ApplicationViewModel::Initialize(ViewMode mode)
     }
 }
 
-void ApplicationViewModel::Initialize(ApplicationSnapshot ^ snapshot)
+void ApplicationViewModel::Initialize(CalculatorApp::ViewModel::Snapshot::ApplicationSnapshot ^ snapshot)
 {
     // TODO: restore 
     Initialize(static_cast<ViewMode>(snapshot->Mode));
