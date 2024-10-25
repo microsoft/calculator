@@ -24,6 +24,9 @@ using CalculatorApp.ViewModel.Common.Automation;
 
 using wuxc = Windows.UI.Xaml.Controls;
 using System.Text.Json;
+using System.IO.Compression;
+using System.IO;
+using System.Text;
 
 namespace CalculatorApp
 {
@@ -62,25 +65,40 @@ namespace CalculatorApp
 
             UserActivityRequestManager.GetForCurrentView().UserActivityRequested += async (_, args) =>
             {
-                var deferral = args.GetDeferral();
-                if (deferral == null)
+                using (var deferral = args.GetDeferral())
                 {
-                    // Windows Bug in ni_moment won't return the deferral propoerly, see https://microsoft.visualstudio.com/DefaultCollection/OS/_workitems/edit/47775705/
-                    return;
+                    if (deferral == null)
+                    {
+                        // Windows Bug in ni_moment won't return the deferral propoerly, see https://microsoft.visualstudio.com/DefaultCollection/OS/_workitems/edit/47775705/
+                        return;
+                    }
+                    var channel = UserActivityChannel.GetDefault();
+                    var activity = await channel.GetOrCreateUserActivityAsync($"{Guid.NewGuid()}");
+                    string embeddedData;
+                    try
+                    {
+                        var json = JsonSerializer.Serialize(new SerdeUtils.ApplicationSnapshotAlias { Value = Model.Snapshot });
+                        var json2 = JsonSerializer.Serialize(Model.Snapshot);
+                        embeddedData = Convert.ToBase64String(Compress(json));
+                        var e2 = Convert.ToBase64String(Compress(json2));
+                        var diff = embeddedData.Length - e2.Length;
+                    }
+                    catch (Exception)
+                    {
+                        // TODO: trace errors
+                        deferral.Complete();
+                        return;
+                    }
+                    activity.ActivationUri = new Uri($"ms-calculator:snapshot/{embeddedData}");
+                    activity.IsRoamable = false;
+                    var resProvider = AppResourceProvider.GetInstance();
+                    activity.VisualElements.DisplayText =
+                        $"{resProvider.GetResourceString("AppName")} - {resProvider.GetResourceString(NavCategoryStates.GetNameResourceKey(Model.Mode))}";
+                    await activity.SaveAsync();
+                    args.Request.SetUserActivity(activity);
+                    deferral.Complete();
+                    TraceLogger.GetInstance().LogRecallSnapshot(Model.Mode);
                 }
-                var channel = UserActivityChannel.GetDefault();
-                var activity = await channel.GetOrCreateUserActivityAsync($"{Guid.NewGuid()}");
-                var s = Model.Snapshot;
-                var j = JsonSerializer.Serialize(s);
-                activity.ActivationUri = new Uri($"ms-calculator:snapshot/TODO");
-                activity.IsRoamable = false;
-                var resProvider = AppResourceProvider.GetInstance();
-                activity.VisualElements.DisplayText =
-                    $"{resProvider.GetResourceString("AppName")} - {resProvider.GetResourceString(NavCategoryStates.GetNameResourceKey(Model.Mode))}";
-                await activity.SaveAsync();
-                args.Request.SetUserActivity(activity);
-                deferral.Complete();
-                TraceLogger.GetInstance().LogRecallSnapshot(Model.Mode);
             };
         }
 
@@ -703,6 +721,41 @@ namespace CalculatorApp
                 DefaultButton = wuxc.ContentDialogButton.Close
             };
             await dialog.ShowAsync();
+        }
+
+        private static byte[] Compress(string text)
+        {
+            var data = Encoding.UTF8.GetBytes(text);
+            using (var compressed = new MemoryStream())
+            {
+                using (var deflater = new DeflateStream(compressed, CompressionLevel.Optimal))
+                {
+                    deflater.Write(data, 0, data.Length);
+                }
+                return compressed.ToArray();
+            }
+
+            //encodedSnapshot = null;
+            //try
+            //{
+            //    var rawJson = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new SerdeUtils.ApplicationSnapshotAlias { Value = Model.Snapshot }));
+            //    using (var compressed = new MemoryStream())
+            //    {
+            //        using (var deflater = new DeflateStream(compressed, CompressionLevel.Optimal, true))
+            //        {
+            //            deflater.Write(rawJson, 0, rawJson.Length);
+            //        }
+            //        byte[] data;
+            //        compressed.Read(data, 0, );
+            //        Convert.ToBase64String(compressed.GetBuffer());
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    // TODO: trace errors
+            //    return false;
+            //}
+            //return true;
         }
 
         private Calculator m_calculator;

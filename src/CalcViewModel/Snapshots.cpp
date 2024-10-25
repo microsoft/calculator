@@ -35,6 +35,11 @@ namespace CalculatorApp::ViewModel::Snapshot
         }
     }
 
+    Windows::Foundation::Collections::IVectorView<int> ^ OperandCommand::Commands::get()
+    {
+        return ref new Platform::Collections::VectorView<int>(m_cmds);
+    }
+
     ICalcManagerIExprCommand ^ CreateExprCommand(const IExpressionCommand* exprCmd) {
         switch (exprCmd->GetCommandType())
         {

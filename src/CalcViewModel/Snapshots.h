@@ -14,6 +14,7 @@ public
     {
     };
 
+public
     ref struct UnaryCommand sealed : public ICalcManagerIExprCommand
     {
         property Windows::Foundation::Collections::IVectorView<int> ^ Commands { Windows::Foundation::Collections::IVectorView<int> ^ get(); };
@@ -28,6 +29,7 @@ public
         std::vector<int> m_cmds;
     };
 
+public
     ref struct BinaryCommand sealed : public ICalcManagerIExprCommand
     {
         property int Command;
@@ -37,6 +39,7 @@ public
         }
     };
 
+public
     ref struct OperandCommand sealed : public ICalcManagerIExprCommand
     {
         property bool IsNegative;
@@ -56,6 +59,7 @@ public
         std::vector<int> m_cmds;
     };
 
+public
     ref struct Parentheses sealed : public ICalcManagerIExprCommand
     {
         property int Command;
