@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using CalculatorApp.ViewModel.Snapshot;
+using Windows.ApplicationModel;
 
 namespace CalculatorApp.JsonUtils
 {
@@ -18,7 +19,11 @@ namespace CalculatorApp.JsonUtils
             set => Value.OpCodeName = value;
         }
         [JsonPropertyName("c")]
-        public int CommandIndex { get => Value.CommandIndex; }
+        public int CommandIndex
+        {
+            get => Value.CommandIndex;
+            set => Value.CommandIndex = value;
+        }
     }
 
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "$t")]
@@ -36,7 +41,11 @@ namespace CalculatorApp.JsonUtils
         public UnaryCommand Value;
 
         [JsonPropertyName("c")]
-        public IList<int> Commands { get => Value.Commands.ToList(); }
+        public IReadOnlyList<int> Commands
+        {
+            get => Value.Commands;
+            set => Value.Commands = value;
+        }
     }
 
     internal class BinaryCommandAlias : ICalcManagerIExprCommandAlias
@@ -45,7 +54,11 @@ namespace CalculatorApp.JsonUtils
         public BinaryCommand Value;
 
         [JsonPropertyName("c")]
-        public int Command { get => Value.Command; }
+        public int Command
+        {
+            get => Value.Command;
+            set => Value.Command = value;
+        }
     }
 
     internal class OperandCommandAlias : ICalcManagerIExprCommandAlias
@@ -54,13 +67,29 @@ namespace CalculatorApp.JsonUtils
         public OperandCommand Value;
 
         [JsonPropertyName("n")]
-        public bool IsNegative { get => Value.IsNegative; }
+        public bool IsNegative
+        {
+            get => Value.IsNegative;
+            set => Value.IsNegative = value;
+        }
         [JsonPropertyName("d")]
-        public bool IsDecimalPresent { get => Value.IsDecimalPresent; }
+        public bool IsDecimalPresent
+        {
+            get => Value.IsDecimalPresent;
+            set => Value.IsDecimalPresent = value;
+        }
         [JsonPropertyName("s")]
-        public bool IsSciFmt { get => Value.IsSciFmt; }
+        public bool IsSciFmt
+        {
+            get => Value.IsSciFmt;
+            set => Value.IsSciFmt = value;
+        }
         [JsonPropertyName("c")]
-        public IList<int> Commands { get => Value.Commands.ToList(); }
+        public IReadOnlyList<int> Commands
+        {
+            get => Value.Commands;
+            set => Value.Commands = value;
+        }
     }
 
     internal class ParenthesesAlias : ICalcManagerIExprCommandAlias
@@ -69,7 +98,11 @@ namespace CalculatorApp.JsonUtils
         public Parentheses Value;
 
         [JsonPropertyName("c")]
-        public int Command { get => Value.Command; }
+        public int Command
+        {
+            get => Value.Command;
+            set => Value.Command = value;
+        }
     }
 
     internal class CalcManagerHistoryItemAlias
@@ -78,23 +111,32 @@ namespace CalculatorApp.JsonUtils
         public CalcManagerHistoryItem Value;
 
         [JsonPropertyName("t")]
-        public IList<CalcManagerHistoryTokenAlias> Tokens
+        public IEnumerable<CalcManagerHistoryTokenAlias> Tokens
         {
-            get => Value.Tokens.Select(x => new CalcManagerHistoryTokenAlias { Value = x }).ToList();
+            get => Value.Tokens.Select(x => new CalcManagerHistoryTokenAlias { Value = x });
+            set => Value.Tokens = value.Select(Helpers.MapHistoryToken).ToList();
         }
 
         [JsonPropertyName("c")]
-        public IList<ICalcManagerIExprCommandAlias> Commands
+        public IEnumerable<ICalcManagerIExprCommandAlias> Commands
         {
-            get => Value.Commands.Select(Helpers.MapCommandAlias).ToList();
+            get => Value.Commands.Select(Helpers.MapCommandAlias);
+            set => Value.Commands = value.Select(Helpers.MapCommandAlias).ToList();
         }
 
         [JsonPropertyName("e")]
-        public string Expression { get => Value.Expression; }
+        public string Expression
+        {
+            get => Value.Expression;
+            set => Value.Expression = value;
+        }
 
         [JsonPropertyName("r")]
-        public string Result { get => Value.Result; }
-
+        public string Result
+        {
+            get => Value.Result;
+            set => Value.Result = value;
+        }
     }
 
     internal class CalcManagerSnapshotAlias
@@ -103,7 +145,11 @@ namespace CalculatorApp.JsonUtils
         public CalcManagerSnapshot Value;
 
         [JsonPropertyName("h")]
-        public IList<CalcManagerHistoryItemAlias> HistoryItems { get => Value.HistoryItems.Select(x => new CalcManagerHistoryItemAlias { Value = x }).ToList(); }
+        public IEnumerable<CalcManagerHistoryItemAlias> HistoryItems
+        {
+            get => Value.HistoryItems.Select(x => new CalcManagerHistoryItemAlias { Value = x });
+            set => Value.HistoryItems = value.Select(x => new CalcManagerHistoryItem { Tokens = x.Tokens.Select(Helpers.MapHistoryToken).ToList() }).ToList();
+        }
     }
 
     internal class PrimaryDisplaySnapshotAlias
@@ -112,9 +158,17 @@ namespace CalculatorApp.JsonUtils
         public PrimaryDisplaySnapshot Value;
 
         [JsonPropertyName("d")]
-        public string DisplayValue { get => Value.DisplayValue; }
+        public string DisplayValue
+        {
+            get => Value.DisplayValue;
+            set => Value.DisplayValue = value;
+        }
         [JsonPropertyName("e")]
-        public bool IsError { get => Value.IsError; }
+        public bool IsError
+        {
+            get => Value.IsError;
+            set => IsError = value;
+        }
     }
 
     internal class ExpressionDisplaySnapshotAlias
@@ -123,9 +177,17 @@ namespace CalculatorApp.JsonUtils
         public ExpressionDisplaySnapshot Value;
 
         [JsonPropertyName("t")]
-        public IList<CalcManagerHistoryTokenAlias> Tokens { get => Value.Tokens.Select(x => new CalcManagerHistoryTokenAlias { Value = x }).ToList(); }
+        public IEnumerable<CalcManagerHistoryTokenAlias> Tokens
+        {
+            get => Value.Tokens.Select(x => new CalcManagerHistoryTokenAlias { Value = x });
+            set => Value.Tokens = value.Select(Helpers.MapHistoryToken).ToList();
+        }
         [JsonPropertyName("c")]
-        public IList<ICalcManagerIExprCommandAlias> Commands { get => Value.Commands.Select(Helpers.MapCommandAlias).ToList(); }
+        public IEnumerable<ICalcManagerIExprCommandAlias> Commands
+        {
+            get => Value.Commands.Select(Helpers.MapCommandAlias);
+            set => Value.Commands = value.Select(Helpers.MapCommandAlias).ToList();
+        }
     }
 
     internal class StandardCalculatorSnapshotAlias
@@ -134,13 +196,29 @@ namespace CalculatorApp.JsonUtils
         public StandardCalculatorSnapshot Value;
 
         [JsonPropertyName("m")]
-        public CalcManagerSnapshotAlias CalcManager { get => new CalcManagerSnapshotAlias { Value = Value.CalcManager }; }
+        public CalcManagerSnapshotAlias CalcManager
+        {
+            get => new CalcManagerSnapshotAlias { Value = Value.CalcManager };
+            set => Value.CalcManager = value.Value;
+        }
         [JsonPropertyName("p")]
-        public PrimaryDisplaySnapshotAlias PrimaryDisplay { get => new PrimaryDisplaySnapshotAlias { Value = Value.PrimaryDisplay }; }
+        public PrimaryDisplaySnapshotAlias PrimaryDisplay
+        {
+            get => new PrimaryDisplaySnapshotAlias { Value = Value.PrimaryDisplay };
+            set => Value.PrimaryDisplay = value.Value;
+        }
         [JsonPropertyName("e")]
-        public ExpressionDisplaySnapshotAlias ExpressionDisplay { get => new ExpressionDisplaySnapshotAlias { Value = Value.ExpressionDisplay }; }
+        public ExpressionDisplaySnapshotAlias ExpressionDisplay
+        {
+            get => new ExpressionDisplaySnapshotAlias { Value = Value.ExpressionDisplay };
+            set => Value.ExpressionDisplay = value.Value;
+        }
         [JsonPropertyName("c")]
-        public IList<ICalcManagerIExprCommandAlias> Commands { get => Value.DisplayCommands.Select(Helpers.MapCommandAlias).ToList(); }
+        public IEnumerable<ICalcManagerIExprCommandAlias> Commands
+        {
+            get => Value.DisplayCommands.Select(Helpers.MapCommandAlias);
+            set => Value.DisplayCommands = value.Select(Helpers.MapCommandAlias).ToList();
+        }
     }
 
     internal class ApplicationSnapshotAlias
@@ -149,13 +227,22 @@ namespace CalculatorApp.JsonUtils
         public ApplicationSnapshot Value;
 
         [JsonPropertyName("m")]
-        public int Mode { get => Value.Mode; }
+        public int Mode { get => Value.Mode; set => Value.Mode = value; }
         [JsonPropertyName("s")]
-        public StandardCalculatorSnapshotAlias StandardCalculatorSnapshot { get => new StandardCalculatorSnapshotAlias { Value = Value.StandardCalculator }; }
+        public StandardCalculatorSnapshotAlias StandardCalculatorSnapshot
+        {
+            get => new StandardCalculatorSnapshotAlias { Value = Value.StandardCalculator };
+            set => Value.StandardCalculator = value.Value;
+        }
     }
 
     internal static class Helpers
     {
+        public static CalcManagerHistoryToken MapHistoryToken(CalcManagerHistoryTokenAlias token)
+        {
+            return new CalcManagerHistoryToken { OpCodeName = token.OpCodeName, CommandIndex = token.CommandIndex };
+        }
+
         public static ICalcManagerIExprCommandAlias MapCommandAlias(ICalcManagerIExprCommand exprCmd)
         {
             if (exprCmd is UnaryCommand unary)
@@ -173,6 +260,33 @@ namespace CalculatorApp.JsonUtils
             else if (exprCmd is Parentheses paren)
             {
                 return new ParenthesesAlias { Value = paren };
+            }
+            throw new NotImplementedException("unhandled command type.");
+        }
+
+        public static ICalcManagerIExprCommand MapCommandAlias(ICalcManagerIExprCommandAlias exprCmd)
+        {
+            if (exprCmd is UnaryCommandAlias unary)
+            {
+                return new UnaryCommand { Commands = unary.Commands };
+            }
+            else if (exprCmd is BinaryCommandAlias binary)
+            {
+                return new BinaryCommand { Command = binary.Command };
+            }
+            else if (exprCmd is OperandCommandAlias operand)
+            {
+                return new OperandCommand
+                {
+                    IsNegative = operand.IsNegative,
+                    IsDecimalPresent = operand.IsDecimalPresent,
+                    IsSciFmt = operand.IsSciFmt,
+                    Commands = operand.Commands
+                };
+            }
+            else if (exprCmd is ParenthesesAlias paren)
+            {
+                return new Parentheses { Command = paren.Command };
             }
             throw new NotImplementedException("unhandled command type.");
         }

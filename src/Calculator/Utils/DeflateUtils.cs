@@ -20,24 +20,15 @@ namespace CalculatorApp
             }
         }
 
-        public static bool TryDecompress(byte[] data, out string text)
+        public static string Decompress(byte[] data)
         {
-            text = null;
-            try
+            using (var srcStream = new MemoryStream(data))
+            using (var deflateStream = new DeflateStream(srcStream, CompressionMode.Decompress))
+            using (var resultStream = new MemoryStream())
             {
-                using (var srcStream = new MemoryStream(data))
-                using (var deflateStream = new DeflateStream(srcStream, CompressionMode.Decompress))
-                using (var resultStream = new MemoryStream())
-                {
-                    deflateStream.CopyTo(resultStream);
-                    byte[] decompressed = resultStream.ToArray();
-                    text = Encoding.UTF8.GetString(decompressed);
-                    return true;
-                }
-            }
-            catch (Exception)
-            {
-                return false;
+                deflateStream.CopyTo(resultStream);
+                byte[] decompressed = resultStream.ToArray();
+                return Encoding.UTF8.GetString(decompressed);
             }
         }
     }

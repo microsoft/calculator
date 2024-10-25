@@ -1,5 +1,10 @@
+using System;
+using System.Linq;
+using System.Text.Json;
 using Windows.ApplicationModel.Activation;
+
 using CalculatorApp.ViewModel.Snapshot;
+using CalculatorApp.JsonUtils;
 
 namespace CalculatorApp
 {
@@ -29,7 +34,18 @@ namespace CalculatorApp
 
         public static SnapshotLaunchArguments GetSnapshotLaunchArgs(this IProtocolActivatedEventArgs args)
         {
-            return null;
+            try
+            {
+                var rawbase64 = args.Uri.Segments.Skip(1).Aggregate((folded, x) => folded += x);
+                var compressed = Convert.FromBase64String(rawbase64);
+                var jsonStr = DeflateUtils.Decompress(compressed);
+                var snapshot = JsonSerializer.Deserialize<ApplicationSnapshotAlias>(jsonStr);
+                return new SnapshotLaunchArguments { HasError = false, Snapshot = snapshot.Value };
+            }
+            catch (Exception)
+            {
+                return new SnapshotLaunchArguments { HasError = true };
+            }
         }
     }
 }

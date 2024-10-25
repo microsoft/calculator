@@ -11,12 +11,13 @@
 
 namespace CalculatorApp::ViewModel::Snapshot
 {
-    UnaryCommand::UnaryCommand(Windows::Foundation::Collections::IVectorView<int> ^ cmds)
+    UnaryCommand::UnaryCommand()
     {
-        for (auto cmd : cmds)
-        {
-            m_cmds.push_back(cmd);
-        }
+    }
+
+    UnaryCommand::UnaryCommand(std::vector<int> cmds)
+        : m_cmds(std::move(cmds))
+    {
     }
 
     Windows::Foundation::Collections::IVectorView<int> ^ UnaryCommand::Commands::get()
@@ -24,20 +25,62 @@ namespace CalculatorApp::ViewModel::Snapshot
         return ref new Platform::Collections::VectorView<int>(m_cmds);
     }
 
-    OperandCommand::OperandCommand(bool isNegative, bool isDecimal, bool isSciFmt, Windows::Foundation::Collections::IVectorView<int> ^ cmds)
+    void UnaryCommand::Commands::set(Windows::Foundation::Collections::IVectorView<int> ^ commands)
     {
-        IsNegative = isNegative;
-        IsDecimalPresent = isDecimal;
-        IsSciFmt = isSciFmt;
-        for (auto cmd : cmds)
+        m_cmds.clear();
+        for (auto cmd : commands)
         {
             m_cmds.push_back(cmd);
         }
     }
 
+    BinaryCommand::BinaryCommand()
+    {
+        Command = 0;
+    }
+
+    BinaryCommand::BinaryCommand(int cmd)
+    {
+        Command = cmd;
+    }
+
+    OperandCommand::OperandCommand()
+    {
+        IsNegative = false;
+        IsDecimalPresent = false;
+        IsSciFmt = false;
+    }
+
+    OperandCommand::OperandCommand(bool isNegative, bool isDecimal, bool isSciFmt, std::vector<int> cmds)
+    {
+        IsNegative = isNegative;
+        IsDecimalPresent = isDecimal;
+        IsSciFmt = isSciFmt;
+        m_cmds = std::move(cmds);
+    }
+
     Windows::Foundation::Collections::IVectorView<int> ^ OperandCommand::Commands::get()
     {
         return ref new Platform::Collections::VectorView<int>(m_cmds);
+    }
+
+    void OperandCommand::Commands::set(Windows::Foundation::Collections::IVectorView<int> ^ commands)
+    {
+        m_cmds.clear();
+        for (auto cmd : commands)
+        {
+            m_cmds.push_back(cmd);
+        }
+    }
+
+    Parentheses::Parentheses()
+    {
+        Command = 0;
+    }
+
+    Parentheses::Parentheses(int cmd)
+    {
+        Command = cmd;
     }
 
     ICalcManagerIExprCommand ^ CreateExprCommand(const IExpressionCommand* exprCmd) {
@@ -78,11 +121,25 @@ namespace CalculatorApp::ViewModel::Snapshot
         }
     }
 
+    CalcManagerHistoryToken::CalcManagerHistoryToken()
+    {
+        OpCodeName = nullptr;
+        CommandIndex = 0;
+    }
+
     CalcManagerHistoryToken::CalcManagerHistoryToken(Platform::String ^ opCodeName, int cmdIndex)
     {
         assert(opCodeName != nullptr && "opCodeName is mandatory.");
         OpCodeName = opCodeName;
         CommandIndex = cmdIndex;
+    }
+
+    CalcManagerHistoryItem::CalcManagerHistoryItem()
+    {
+        Tokens = ref new Platform::Collections::Vector<CalcManagerHistoryToken ^>();
+        Commands = ref new Platform::Collections::Vector<ICalcManagerIExprCommand ^>();
+        Expression = ref new Platform::String();
+        Result = ref new Platform::String();
     }
 
     CalcManagerHistoryItem::CalcManagerHistoryItem(const CalculationManager::HISTORYITEM& item)
@@ -103,6 +160,11 @@ namespace CalculatorApp::ViewModel::Snapshot
         Result = ref new Platform::String(item.historyItemVector.result.c_str());
     }
 
+    CalcManagerSnapshot::CalcManagerSnapshot()
+    {
+        HistoryItems = nullptr;
+    }
+
     CalcManagerSnapshot::CalcManagerSnapshot(const CalculationManager::CalculatorManager& calcMgr)
     {
         auto& items = calcMgr.GetHistoryItems();
@@ -116,11 +178,23 @@ namespace CalculatorApp::ViewModel::Snapshot
         }
     }
 
+    PrimaryDisplaySnapshot::PrimaryDisplaySnapshot()
+    {
+        DisplayValue = ref new Platform::String();
+        IsError = false;
+    }
+
     PrimaryDisplaySnapshot::PrimaryDisplaySnapshot(Platform::String ^ display, bool isError)
     {
         assert(display != nullptr && "display is mandatory");
         DisplayValue = display;
         IsError = isError;
+    }
+
+    ExpressionDisplaySnapshot::ExpressionDisplaySnapshot()
+    {
+        Tokens = ref new Platform::Collections::Vector<CalcManagerHistoryToken ^>();
+        Commands = ref new Platform::Collections::Vector<ICalcManagerIExprCommand ^>();
     }
 
     ExpressionDisplaySnapshot::ExpressionDisplaySnapshot(
@@ -138,6 +212,14 @@ namespace CalculatorApp::ViewModel::Snapshot
         {
             Commands->Append(CreateExprCommand(cmd.get()));
         }
+    }
+
+    StandardCalculatorSnapshot::StandardCalculatorSnapshot()
+    {
+        CalcManager = ref new CalcManagerSnapshot();
+        PrimaryDisplay = ref new PrimaryDisplaySnapshot();
+        ExpressionDisplay = nullptr;
+        DisplayCommands = ref new Platform::Collections::Vector<ICalcManagerIExprCommand ^>();
     }
 
     std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> ToUnderlying(Windows::Foundation::Collections::IVector<CalcManagerHistoryItem ^> ^ items)
