@@ -74,7 +74,7 @@ namespace CalculatorApp
                     string embeddedData;
                     try
                     {
-                        var json = JsonSerializer.Serialize(new ApplicationSnapshotAlias { Value = Model.Snapshot });
+                        var json = JsonSerializer.Serialize(new ApplicationSnapshotAlias(Model.Snapshot));
                         embeddedData = Convert.ToBase64String(DeflateUtils.Compress(json));
                     }
                     catch (Exception)

@@ -558,7 +558,7 @@ void ApplicationViewModel::Initialize(ViewMode mode)
 
 void ApplicationViewModel::Initialize(CalculatorApp::ViewModel::Snapshot::ApplicationSnapshot ^ snapshot)
 {
-    // TODO: restore 
+    m_CalculatorViewModel = ref new StandardCalculatorViewModel(snapshot->StandardCalculator);
     Initialize(static_cast<ViewMode>(snapshot->Mode));
 }
 
