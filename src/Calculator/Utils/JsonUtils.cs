@@ -24,6 +24,9 @@ namespace CalculatorApp.JsonUtils
             get => Value.CommandIndex;
             set => Value.CommandIndex = value;
         }
+
+        public CalcManagerHistoryTokenAlias() => Value = new CalcManagerHistoryToken();
+        public CalcManagerHistoryTokenAlias(CalcManagerHistoryToken value) => Value = value;
     }
 
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "$t")]
@@ -46,6 +49,9 @@ namespace CalculatorApp.JsonUtils
             get => Value.Commands;
             set => Value.Commands = value;
         }
+
+        public UnaryCommandAlias() => Value = new UnaryCommand();
+        public UnaryCommandAlias(UnaryCommand value) => Value = value;
     }
 
     internal class BinaryCommandAlias : ICalcManagerIExprCommandAlias
@@ -59,6 +65,8 @@ namespace CalculatorApp.JsonUtils
             get => Value.Command;
             set => Value.Command = value;
         }
+        public BinaryCommandAlias() => Value = new BinaryCommand();
+        public BinaryCommandAlias(BinaryCommand value) => Value = value;
     }
 
     internal class OperandCommandAlias : ICalcManagerIExprCommandAlias
@@ -90,6 +98,9 @@ namespace CalculatorApp.JsonUtils
             get => Value.Commands;
             set => Value.Commands = value;
         }
+
+        public OperandCommandAlias() => Value = new OperandCommand();
+        public OperandCommandAlias(OperandCommand value) => Value = value;
     }
 
     internal class ParenthesesAlias : ICalcManagerIExprCommandAlias
@@ -103,6 +114,8 @@ namespace CalculatorApp.JsonUtils
             get => Value.Command;
             set => Value.Command = value;
         }
+        public ParenthesesAlias() => Value = new Parentheses();
+        public ParenthesesAlias(Parentheses value) => Value = value;
     }
 
     internal class CalcManagerHistoryItemAlias
@@ -113,7 +126,7 @@ namespace CalculatorApp.JsonUtils
         [JsonPropertyName("t")]
         public IEnumerable<CalcManagerHistoryTokenAlias> Tokens
         {
-            get => Value.Tokens.Select(x => new CalcManagerHistoryTokenAlias { Value = x });
+            get => Value.Tokens.Select(x => new CalcManagerHistoryTokenAlias(x));
             set => Value.Tokens = value.Select(Helpers.MapHistoryToken).ToList();
         }
 
@@ -137,6 +150,8 @@ namespace CalculatorApp.JsonUtils
             get => Value.Result;
             set => Value.Result = value;
         }
+        public CalcManagerHistoryItemAlias() => Value = new CalcManagerHistoryItem();
+        public CalcManagerHistoryItemAlias(CalcManagerHistoryItem value) => Value = value;
     }
 
     internal class CalcManagerSnapshotAlias
@@ -150,6 +165,9 @@ namespace CalculatorApp.JsonUtils
             get => Value.HistoryItems.Select(x => new CalcManagerHistoryItemAlias { Value = x });
             set => Value.HistoryItems = value.Select(x => new CalcManagerHistoryItem { Tokens = x.Tokens.Select(Helpers.MapHistoryToken).ToList() }).ToList();
         }
+
+        public CalcManagerSnapshotAlias() => Value = new CalcManagerSnapshot();
+        public CalcManagerSnapshotAlias(CalcManagerSnapshot value) => Value = value;
     }
 
     internal class PrimaryDisplaySnapshotAlias
@@ -167,8 +185,11 @@ namespace CalculatorApp.JsonUtils
         public bool IsError
         {
             get => Value.IsError;
-            set => IsError = value;
+            set => Value.IsError = value;
         }
+
+        public PrimaryDisplaySnapshotAlias() => Value = new PrimaryDisplaySnapshot();
+        public PrimaryDisplaySnapshotAlias(PrimaryDisplaySnapshot value) => Value = value;
     }
 
     internal class ExpressionDisplaySnapshotAlias
@@ -179,7 +200,7 @@ namespace CalculatorApp.JsonUtils
         [JsonPropertyName("t")]
         public IEnumerable<CalcManagerHistoryTokenAlias> Tokens
         {
-            get => Value.Tokens.Select(x => new CalcManagerHistoryTokenAlias { Value = x });
+            get => Value.Tokens.Select(x => new CalcManagerHistoryTokenAlias(x));
             set => Value.Tokens = value.Select(Helpers.MapHistoryToken).ToList();
         }
         [JsonPropertyName("c")]
@@ -188,6 +209,9 @@ namespace CalculatorApp.JsonUtils
             get => Value.Commands.Select(Helpers.MapCommandAlias);
             set => Value.Commands = value.Select(Helpers.MapCommandAlias).ToList();
         }
+
+        public ExpressionDisplaySnapshotAlias() => Value = new ExpressionDisplaySnapshot();
+        public ExpressionDisplaySnapshotAlias(ExpressionDisplaySnapshot value) => Value = value;
     }
 
     internal class StandardCalculatorSnapshotAlias
@@ -198,19 +222,19 @@ namespace CalculatorApp.JsonUtils
         [JsonPropertyName("m")]
         public CalcManagerSnapshotAlias CalcManager
         {
-            get => new CalcManagerSnapshotAlias { Value = Value.CalcManager };
+            get => new CalcManagerSnapshotAlias(Value.CalcManager);
             set => Value.CalcManager = value.Value;
         }
         [JsonPropertyName("p")]
         public PrimaryDisplaySnapshotAlias PrimaryDisplay
         {
-            get => new PrimaryDisplaySnapshotAlias { Value = Value.PrimaryDisplay };
+            get => new PrimaryDisplaySnapshotAlias(Value.PrimaryDisplay);
             set => Value.PrimaryDisplay = value.Value;
         }
         [JsonPropertyName("e")]
         public ExpressionDisplaySnapshotAlias ExpressionDisplay
         {
-            get => new ExpressionDisplaySnapshotAlias { Value = Value.ExpressionDisplay };
+            get => new ExpressionDisplaySnapshotAlias(Value.ExpressionDisplay);
             set => Value.ExpressionDisplay = value.Value;
         }
         [JsonPropertyName("c")]
@@ -219,6 +243,9 @@ namespace CalculatorApp.JsonUtils
             get => Value.DisplayCommands.Select(Helpers.MapCommandAlias);
             set => Value.DisplayCommands = value.Select(Helpers.MapCommandAlias).ToList();
         }
+
+        public StandardCalculatorSnapshotAlias() => Value = new StandardCalculatorSnapshot();
+        public StandardCalculatorSnapshotAlias(StandardCalculatorSnapshot value) => Value = value;
     }
 
     internal class ApplicationSnapshotAlias
@@ -231,9 +258,12 @@ namespace CalculatorApp.JsonUtils
         [JsonPropertyName("s")]
         public StandardCalculatorSnapshotAlias StandardCalculatorSnapshot
         {
-            get => new StandardCalculatorSnapshotAlias { Value = Value.StandardCalculator };
+            get => new StandardCalculatorSnapshotAlias(Value.StandardCalculator);
             set => Value.StandardCalculator = value.Value;
         }
+
+        public ApplicationSnapshotAlias() => Value = new ApplicationSnapshot();
+        public ApplicationSnapshotAlias(ApplicationSnapshot value) => Value = value;
     }
 
     internal static class Helpers
@@ -247,19 +277,19 @@ namespace CalculatorApp.JsonUtils
         {
             if (exprCmd is UnaryCommand unary)
             {
-                return new UnaryCommandAlias { Value = unary };
+                return new UnaryCommandAlias(unary);
             }
             else if (exprCmd is BinaryCommand binary)
             {
-                return new BinaryCommandAlias { Value = binary };
+                return new BinaryCommandAlias(binary);
             }
             else if (exprCmd is OperandCommand operand)
             {
-                return new OperandCommandAlias { Value = operand };
+                return new OperandCommandAlias(operand);
             }
             else if (exprCmd is Parentheses paren)
             {
-                return new ParenthesesAlias { Value = paren };
+                return new ParenthesesAlias(paren);
             }
             throw new NotImplementedException("unhandled command type.");
         }
