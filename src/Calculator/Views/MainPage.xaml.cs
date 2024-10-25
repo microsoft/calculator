@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 using Windows.ApplicationModel.UserActivities;
@@ -23,10 +24,6 @@ using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
 
 using wuxc = Windows.UI.Xaml.Controls;
-using System.Text.Json;
-using System.IO.Compression;
-using System.IO;
-using System.Text;
 
 namespace CalculatorApp
 {
@@ -78,7 +75,7 @@ namespace CalculatorApp
                     try
                     {
                         var json = JsonSerializer.Serialize(new ApplicationSnapshotAlias { Value = Model.Snapshot });
-                        embeddedData = Convert.ToBase64String(Compress(json));
+                        embeddedData = Convert.ToBase64String(DeflateUtils.Compress(json));
                     }
                     catch (Exception)
                     {
@@ -718,19 +715,6 @@ namespace CalculatorApp
                 DefaultButton = wuxc.ContentDialogButton.Close
             };
             await dialog.ShowAsync();
-        }
-
-        private static byte[] Compress(string text)
-        {
-            var data = Encoding.UTF8.GetBytes(text);
-            using (var compressed = new MemoryStream())
-            {
-                using (var deflater = new DeflateStream(compressed, CompressionLevel.Optimal))
-                {
-                    deflater.Write(data, 0, data.Length);
-                }
-                return compressed.ToArray();
-            }
         }
 
         private Calculator m_calculator;

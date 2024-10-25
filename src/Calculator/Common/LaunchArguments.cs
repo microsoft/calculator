@@ -15,7 +15,11 @@ namespace CalculatorApp
         {
             result = null;
             var protoArgs = args as IProtocolActivatedEventArgs;
-            if (protoArgs == null || protoArgs.Uri == null)
+            if (protoArgs == null ||
+                protoArgs.Uri == null ||
+                protoArgs.Uri.Segments == null ||
+                protoArgs.Uri.Segments.Length < 2 ||
+                protoArgs.Uri.Segments[0] != "snapshot/")
             {
                 return false;
             }

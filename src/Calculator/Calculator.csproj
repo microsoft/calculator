@@ -165,6 +165,7 @@
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
     <Compile Include="Selectors\NavViewMenuItemTemplateSelector.cs" />
+    <Compile Include="Utils\DeflateUtils.cs" />
     <Compile Include="Utils\ResourceVirtualKey.cs" />
     <Compile Include="Utils\ResourceString.cs" />
     <Compile Include="Utils\JsonUtils.cs" />
