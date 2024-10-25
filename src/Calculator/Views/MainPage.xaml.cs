@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 
 using Windows.ApplicationModel.UserActivities;
-using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.Storage;
@@ -18,6 +17,7 @@ using Microsoft.UI.Xaml.Controls;
 
 using CalculatorApp.Common;
 using CalculatorApp.Converters;
+using CalculatorApp.JsonUtils;
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
@@ -77,11 +77,8 @@ namespace CalculatorApp
                     string embeddedData;
                     try
                     {
-                        var json = JsonSerializer.Serialize(new SerdeUtils.ApplicationSnapshotAlias { Value = Model.Snapshot });
-                        var json2 = JsonSerializer.Serialize(Model.Snapshot);
+                        var json = JsonSerializer.Serialize(new ApplicationSnapshotAlias { Value = Model.Snapshot });
                         embeddedData = Convert.ToBase64String(Compress(json));
-                        var e2 = Convert.ToBase64String(Compress(json2));
-                        var diff = embeddedData.Length - e2.Length;
                     }
                     catch (Exception)
                     {
@@ -734,28 +731,6 @@ namespace CalculatorApp
                 }
                 return compressed.ToArray();
             }
-
-            //encodedSnapshot = null;
-            //try
-            //{
-            //    var rawJson = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new SerdeUtils.ApplicationSnapshotAlias { Value = Model.Snapshot }));
-            //    using (var compressed = new MemoryStream())
-            //    {
-            //        using (var deflater = new DeflateStream(compressed, CompressionLevel.Optimal, true))
-            //        {
-            //            deflater.Write(rawJson, 0, rawJson.Length);
-            //        }
-            //        byte[] data;
-            //        compressed.Read(data, 0, );
-            //        Convert.ToBase64String(compressed.GetBuffer());
-            //    }
-            //}
-            //catch (Exception)
-            //{
-            //    // TODO: trace errors
-            //    return false;
-            //}
-            //return true;
         }
 
         private Calculator m_calculator;

@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text.Json.Serialization;
 using CalculatorApp.ViewModel.Snapshot;
 
-namespace CalculatorApp.SerdeUtils
+namespace CalculatorApp.JsonUtils
 {
     internal class CalcManagerHistoryTokenAlias
     {
