@@ -18,9 +18,8 @@ namespace CalculatorApp
         public:
             ApplicationViewModel();
 
-            [Windows::Foundation::Metadata::DefaultOverload]
             void Initialize(CalculatorApp::ViewModel::Common::ViewMode mode); // Use for first init, use deserialize for rehydration
-            void Initialize(CalculatorApp::ViewModel::Snapshot::ApplicationSnapshot^ snapshot);
+            void RestoreFromSnapshot(CalculatorApp::ViewModel::Snapshot::ApplicationSnapshot^ snapshot);
 
             OBSERVABLE_OBJECT();
             OBSERVABLE_PROPERTY_RW(StandardCalculatorViewModel ^, CalculatorViewModel);
@@ -103,8 +102,6 @@ namespace CalculatorApp
             }
 
             void ToggleAlwaysOnTop(float width, float height);
-
-            //bool TryRestoreFromSnapshot(Windows::Data::Json::JsonObject ^ jsonObject);
 
         private:
             bool TryRecoverFromNavigationModeFailure();

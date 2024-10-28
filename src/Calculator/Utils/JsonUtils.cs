@@ -163,7 +163,13 @@ namespace CalculatorApp.JsonUtils
         public IEnumerable<CalcManagerHistoryItemAlias> HistoryItems
         {
             get => Value.HistoryItems.Select(x => new CalcManagerHistoryItemAlias { Value = x });
-            set => Value.HistoryItems = value.Select(x => new CalcManagerHistoryItem { Tokens = x.Tokens.Select(Helpers.MapHistoryToken).ToList() }).ToList();
+            set => Value.HistoryItems = value.Select(x => new CalcManagerHistoryItem
+            {
+                Tokens = x.Tokens.Select(Helpers.MapHistoryToken).ToList(),
+                Commands = x.Commands.Select(Helpers.MapCommandAlias).ToList(),
+                Expression = x.Expression,
+                Result = x.Result
+            }).ToList();
         }
 
         public CalcManagerSnapshotAlias() => Value = new CalcManagerSnapshot();

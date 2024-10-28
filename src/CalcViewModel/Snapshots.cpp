@@ -123,7 +123,7 @@ namespace CalculatorApp::ViewModel::Snapshot
 
     CalcManagerHistoryToken::CalcManagerHistoryToken()
     {
-        OpCodeName = nullptr;
+        OpCodeName = ref new Platform::String();
         CommandIndex = 0;
     }
 
@@ -224,7 +224,22 @@ namespace CalculatorApp::ViewModel::Snapshot
 
     std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> ToUnderlying(Windows::Foundation::Collections::IVector<CalcManagerHistoryItem ^> ^ items)
     {
-        return {}; // TODO
+        std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> result;
+        for (CalcManagerHistoryItem ^ item : items)
+        {
+            CalculationManager::HISTORYITEMVECTOR nativeItem;
+            nativeItem.spTokens = std::make_shared<std::vector<std::pair<std::wstring, int>>>();
+            for (CalcManagerHistoryToken ^ token : item->Tokens)
+            {
+                nativeItem.spTokens->push_back(std::make_pair(token->OpCodeName->Data(), token->CommandIndex));
+            }
+            nativeItem.spCommands = std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>(ToUnderlying(item->Commands));
+            nativeItem.expression = item->Expression->Data();
+            nativeItem.result = item->Result->Data();
+            auto spItem = std::make_shared<CalculationManager::HISTORYITEM>(CalculationManager::HISTORYITEM{ std::move(nativeItem) });
+            result.push_back(std::move(std::move(spItem)));
+        }
+        return result;
     }
 
     std::vector<std::shared_ptr<IExpressionCommand>> ToUnderlying(Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ commands)

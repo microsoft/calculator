@@ -37,31 +37,6 @@ namespace CalculatorApp
             bool canSendNegate;
         };
 
-        // struct CalculatorManagerSnapshot
-        //{
-        //     std::optional<std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>> HistoryItems;
-        // };
-
-        // struct PrimaryDisplaySnapshot
-        //{
-        //     Platform::String ^ DisplayValue;
-        //     bool IsError = false;
-        // };
-
-        // struct ExpressionDisplaySnapshot
-        //{
-        //     std::vector<std::pair<std::wstring, int>> Tokens;
-        //     std::vector<std::shared_ptr<IExpressionCommand>> Commands;
-        // };
-
-        // struct StandardCalculatorSnapshot
-        //{
-        //     CalculatorManagerSnapshot CalcManager;
-        //     PrimaryDisplaySnapshot PrimaryDisplay;
-        //     std::optional<ExpressionDisplaySnapshot> ExpressionDisplay;
-        //     std::vector<std::shared_ptr<IExpressionCommand>> DisplayCommands;
-        // };
-
         [Windows::UI::Xaml::Data::Bindable] public ref class StandardCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
@@ -268,12 +243,13 @@ namespace CalculatorApp
                 }
             }
 
-            property CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot
-                ^ Snapshot { CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ get() { return GetSnapshot(); } }
+            property CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ Snapshot {
+                CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ get();
+                void set(CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ snapshot);
+            };
 
-                // Used by unit tests
-                void
-                ResetCalcManager(bool clearMemory);
+            // Used by unit tests
+            void ResetCalcManager(bool clearMemory);
             void SendCommandToCalcManager(int command);
 
         public:
@@ -327,10 +303,9 @@ namespace CalculatorApp
             }
 
             internal :;
-            explicit StandardCalculatorViewModel(CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ snapshot = nullptr);
+            explicit StandardCalculatorViewModel();
 
         private:
-            CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ GetSnapshot() const;
             void SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers);
             void UpdateProgrammerPanelDisplay();
             void HandleUpdatedOperandData(CalculationManager::Command cmdenum);
