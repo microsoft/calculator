@@ -77,9 +77,9 @@ namespace CalculatorApp
                         var json = JsonSerializer.Serialize(new ApplicationSnapshotAlias(Model.Snapshot));
                         embeddedData = Convert.ToBase64String(DeflateUtils.Compress(json));
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        // TODO: trace errors
+                        TraceLogger.GetInstance().LogRecallError($"Error occurs during the serialization of Snapshot. Exception: {ex}");
                         deferral.Complete();
                         return;
                     }
@@ -179,8 +179,18 @@ namespace CalculatorApp
             }
             else if (e.Parameter is SnapshotLaunchArguments snapshotArgs)
             {
-                Model.RestoreFromSnapshot(snapshotArgs.Snapshot);
                 Model.Initialize(initialMode);
+                if (!snapshotArgs.HasError)
+                {
+                    Model.RestoreFromSnapshot(snapshotArgs.Snapshot);
+                    TraceLogger.GetInstance().LogRecallRestore((ViewMode)snapshotArgs.Snapshot.Mode);
+                }
+                else
+                {
+                    _ = Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                        async () => await ShowSnapshotLaunchErrorAsync());
+                    TraceLogger.GetInstance().LogRecallError("OnNavigatedTo:Found errors.");
+                }
             }
             else
             {

@@ -23,10 +23,10 @@ namespace CalculatorApp
         public static string Decompress(byte[] data)
         {
             using (var srcStream = new MemoryStream(data))
-            using (var deflateStream = new DeflateStream(srcStream, CompressionMode.Decompress))
+            using (var inflater = new DeflateStream(srcStream, CompressionMode.Decompress))
             using (var resultStream = new MemoryStream())
             {
-                deflateStream.CopyTo(resultStream);
+                inflater.CopyTo(resultStream);
                 byte[] decompressed = resultStream.ToArray();
                 return Encoding.UTF8.GetString(decompressed);
             }

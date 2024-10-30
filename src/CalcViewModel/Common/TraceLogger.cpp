@@ -345,10 +345,9 @@ namespace CalculatorApp
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_RECALL_RESTORE), fields);
     }
 
-    void TraceLogger::LogRecallError(CalculatorApp::ViewModel::Common::ViewMode mode, Platform::String^ message)
+    void TraceLogger::LogRecallError(Platform::String^ message)
     {
         auto fields = ref new LoggingFields();
-        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
         fields->AddString(StringReference(L"FunctionName"), L"Recall");
         fields->AddString(StringReference(L"Message"), message);
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_EXCEPTION), fields);

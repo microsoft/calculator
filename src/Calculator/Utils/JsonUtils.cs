@@ -65,6 +65,7 @@ namespace CalculatorApp.JsonUtils
             get => Value.Command;
             set => Value.Command = value;
         }
+
         public BinaryCommandAlias() => Value = new BinaryCommand();
         public BinaryCommandAlias(BinaryCommand value) => Value = value;
     }
@@ -114,6 +115,7 @@ namespace CalculatorApp.JsonUtils
             get => Value.Command;
             set => Value.Command = value;
         }
+
         public ParenthesesAlias() => Value = new Parentheses();
         public ParenthesesAlias(Parentheses value) => Value = value;
     }
@@ -129,27 +131,25 @@ namespace CalculatorApp.JsonUtils
             get => Value.Tokens.Select(x => new CalcManagerHistoryTokenAlias(x));
             set => Value.Tokens = value.Select(Helpers.MapHistoryToken).ToList();
         }
-
         [JsonPropertyName("c")]
         public IEnumerable<ICalcManagerIExprCommandAlias> Commands
         {
             get => Value.Commands.Select(Helpers.MapCommandAlias);
             set => Value.Commands = value.Select(Helpers.MapCommandAlias).ToList();
         }
-
         [JsonPropertyName("e")]
         public string Expression
         {
             get => Value.Expression;
             set => Value.Expression = value;
         }
-
         [JsonPropertyName("r")]
         public string Result
         {
             get => Value.Result;
             set => Value.Result = value;
         }
+
         public CalcManagerHistoryItemAlias() => Value = new CalcManagerHistoryItem();
         public CalcManagerHistoryItemAlias(CalcManagerHistoryItem value) => Value = value;
     }

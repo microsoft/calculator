@@ -5,6 +5,7 @@ using Windows.ApplicationModel.Activation;
 
 using CalculatorApp.ViewModel.Snapshot;
 using CalculatorApp.JsonUtils;
+using CalculatorApp.ViewModel.Common;
 
 namespace CalculatorApp
 {
@@ -42,8 +43,9 @@ namespace CalculatorApp
                 var snapshot = JsonSerializer.Deserialize<ApplicationSnapshotAlias>(jsonStr);
                 return new SnapshotLaunchArguments { HasError = false, Snapshot = snapshot.Value };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                TraceLogger.GetInstance().LogRecallError($"Error occurs during the deserialization of Snapshot. Exception: {ex}");
                 return new SnapshotLaunchArguments { HasError = true };
             }
         }
