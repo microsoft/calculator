@@ -1827,7 +1827,7 @@ void CalculatorApp::ViewModel::StandardCalculatorViewModel::Snapshot::set(Calcul
     {
         using RawTokenCollection = std::vector<std::pair<std::wstring, int>>;
         RawTokenCollection rawTokens;
-        for (CalculatorApp::ViewModel::Snapshot::CalcManagerHistoryToken ^ token : snapshot->ExpressionDisplay->Tokens)
+        for (CalculatorApp::ViewModel::Snapshot::CalcManagerToken ^ token : snapshot->ExpressionDisplay->Tokens)
         {
             rawTokens.push_back(std::pair{ token->OpCodeName->Data(), token->CommandIndex });
         }

@@ -121,13 +121,13 @@ namespace CalculatorApp::ViewModel::Snapshot
         }
     }
 
-    CalcManagerHistoryToken::CalcManagerHistoryToken()
+    CalcManagerToken::CalcManagerToken()
     {
         OpCodeName = ref new Platform::String();
         CommandIndex = 0;
     }
 
-    CalcManagerHistoryToken::CalcManagerHistoryToken(Platform::String ^ opCodeName, int cmdIndex)
+    CalcManagerToken::CalcManagerToken(Platform::String ^ opCodeName, int cmdIndex)
     {
         assert(opCodeName != nullptr && "opCodeName is mandatory.");
         OpCodeName = opCodeName;
@@ -136,7 +136,7 @@ namespace CalculatorApp::ViewModel::Snapshot
 
     CalcManagerHistoryItem::CalcManagerHistoryItem()
     {
-        Tokens = ref new Platform::Collections::Vector<CalcManagerHistoryToken ^>();
+        Tokens = ref new Platform::Collections::Vector<CalcManagerToken ^>();
         Commands = ref new Platform::Collections::Vector<ICalcManagerIExprCommand ^>();
         Expression = ref new Platform::String();
         Result = ref new Platform::String();
@@ -144,11 +144,11 @@ namespace CalculatorApp::ViewModel::Snapshot
 
     CalcManagerHistoryItem::CalcManagerHistoryItem(const CalculationManager::HISTORYITEM& item)
     {
-        Tokens = ref new Platform::Collections::Vector<CalcManagerHistoryToken ^>();
+        Tokens = ref new Platform::Collections::Vector<CalcManagerToken ^>();
         assert(item.historyItemVector.spTokens != nullptr && "spTokens shall not be null.");
         for (auto& [opCode, cmdIdx] : *item.historyItemVector.spTokens)
         {
-            Tokens->Append(ref new CalcManagerHistoryToken(ref new Platform::String(opCode.c_str()), cmdIdx));
+            Tokens->Append(ref new CalcManagerToken(ref new Platform::String(opCode.c_str()), cmdIdx));
         }
         Commands = ref new Platform::Collections::Vector<ICalcManagerIExprCommand ^>();
         assert(item.historyItemVector.spCommands != nullptr && "spCommands shall not be null.");
@@ -193,7 +193,7 @@ namespace CalculatorApp::ViewModel::Snapshot
 
     ExpressionDisplaySnapshot::ExpressionDisplaySnapshot()
     {
-        Tokens = ref new Platform::Collections::Vector<CalcManagerHistoryToken ^>();
+        Tokens = ref new Platform::Collections::Vector<CalcManagerToken ^>();
         Commands = ref new Platform::Collections::Vector<ICalcManagerIExprCommand ^>();
     }
 
@@ -201,10 +201,10 @@ namespace CalculatorApp::ViewModel::Snapshot
         const std::vector<CalcHistoryToken>& tokens,
         const std::vector<std::shared_ptr<IExpressionCommand>>& commands)
     {
-        Tokens = ref new Platform::Collections::Vector<CalcManagerHistoryToken ^>();
+        Tokens = ref new Platform::Collections::Vector<CalcManagerToken ^>();
         for (auto& [opCode, cmdIdx] : tokens)
         {
-            Tokens->Append(ref new CalcManagerHistoryToken(ref new Platform::String(opCode.c_str()), cmdIdx));
+            Tokens->Append(ref new CalcManagerToken(ref new Platform::String(opCode.c_str()), cmdIdx));
         }
 
         Commands = ref new Platform::Collections::Vector<ICalcManagerIExprCommand ^>();
@@ -229,7 +229,7 @@ namespace CalculatorApp::ViewModel::Snapshot
         {
             CalculationManager::HISTORYITEMVECTOR nativeItem;
             nativeItem.spTokens = std::make_shared<std::vector<std::pair<std::wstring, int>>>();
-            for (CalcManagerHistoryToken ^ token : item->Tokens)
+            for (CalcManagerToken ^ token : item->Tokens)
             {
                 nativeItem.spTokens->push_back(std::make_pair(token->OpCodeName->Data(), token->CommandIndex));
             }

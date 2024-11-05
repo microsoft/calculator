@@ -7,10 +7,10 @@ using Windows.ApplicationModel;
 
 namespace CalculatorApp.JsonUtils
 {
-    internal class CalcManagerHistoryTokenAlias
+    internal class CalcManagerTokenAlias
     {
         [JsonIgnore]
-        public CalcManagerHistoryToken Value;
+        public CalcManagerToken Value;
 
         [JsonPropertyName("t")]
         public string OpCodeName
@@ -25,8 +25,8 @@ namespace CalculatorApp.JsonUtils
             set => Value.CommandIndex = value;
         }
 
-        public CalcManagerHistoryTokenAlias() => Value = new CalcManagerHistoryToken();
-        public CalcManagerHistoryTokenAlias(CalcManagerHistoryToken value) => Value = value;
+        public CalcManagerTokenAlias() => Value = new CalcManagerToken();
+        public CalcManagerTokenAlias(CalcManagerToken value) => Value = value;
     }
 
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "$t")]
@@ -126,9 +126,9 @@ namespace CalculatorApp.JsonUtils
         public CalcManagerHistoryItem Value;
 
         [JsonPropertyName("t")]
-        public IEnumerable<CalcManagerHistoryTokenAlias> Tokens
+        public IEnumerable<CalcManagerTokenAlias> Tokens
         {
-            get => Value.Tokens.Select(x => new CalcManagerHistoryTokenAlias(x));
+            get => Value.Tokens.Select(x => new CalcManagerTokenAlias(x));
             set => Value.Tokens = value.Select(Helpers.MapHistoryToken).ToList();
         }
         [JsonPropertyName("c")]
@@ -204,9 +204,9 @@ namespace CalculatorApp.JsonUtils
         public ExpressionDisplaySnapshot Value;
 
         [JsonPropertyName("t")]
-        public IEnumerable<CalcManagerHistoryTokenAlias> Tokens
+        public IEnumerable<CalcManagerTokenAlias> Tokens
         {
-            get => Value.Tokens.Select(x => new CalcManagerHistoryTokenAlias(x));
+            get => Value.Tokens.Select(x => new CalcManagerTokenAlias(x));
             set => Value.Tokens = value.Select(Helpers.MapHistoryToken).ToList();
         }
         [JsonPropertyName("c")]
@@ -274,9 +274,9 @@ namespace CalculatorApp.JsonUtils
 
     internal static class Helpers
     {
-        public static CalcManagerHistoryToken MapHistoryToken(CalcManagerHistoryTokenAlias token)
+        public static CalcManagerToken MapHistoryToken(CalcManagerTokenAlias token)
         {
-            return new CalcManagerHistoryToken { OpCodeName = token.OpCodeName, CommandIndex = token.CommandIndex };
+            return new CalcManagerToken { OpCodeName = token.OpCodeName, CommandIndex = token.CommandIndex };
         }
 
         public static ICalcManagerIExprCommandAlias MapCommandAlias(ICalcManagerIExprCommand exprCmd)

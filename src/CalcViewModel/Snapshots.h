@@ -70,21 +70,21 @@ public
     };
 
 public
-    ref struct CalcManagerHistoryToken sealed
+    ref struct CalcManagerToken sealed
     {
         property Platform::String ^ OpCodeName; // mandatory
         property int CommandIndex;
 
-        CalcManagerHistoryToken();
+        CalcManagerToken();
 
         internal :;
-        explicit CalcManagerHistoryToken(Platform::String ^ opCodeName, int cmdIndex);
+        explicit CalcManagerToken(Platform::String ^ opCodeName, int cmdIndex);
     };
 
 public
     ref struct CalcManagerHistoryItem sealed
     {
-        property Windows::Foundation::Collections::IVector<CalcManagerHistoryToken ^> ^ Tokens;    // mandatory
+        property Windows::Foundation::Collections::IVector<CalcManagerToken ^> ^ Tokens;           // mandatory
         property Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ Commands; // mandatory
         property Platform::String ^ Expression;                                                    // mandatory
         property Platform::String ^ Result;                                                        // mandatory
@@ -121,7 +121,7 @@ public
 public
     ref struct ExpressionDisplaySnapshot sealed
     {
-        property Windows::Foundation::Collections::IVector<CalcManagerHistoryToken ^> ^ Tokens;
+        property Windows::Foundation::Collections::IVector<CalcManagerToken ^> ^ Tokens;
         property Windows::Foundation::Collections::IVector<ICalcManagerIExprCommand ^> ^ Commands;
 
         ExpressionDisplaySnapshot();
