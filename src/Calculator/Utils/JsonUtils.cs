@@ -160,10 +160,10 @@ namespace CalculatorApp.JsonUtils
         public CalcManagerSnapshot Value;
 
         [JsonPropertyName("h")]
-        public IEnumerable<CalcManagerHistoryItemAlias> HistoryItems
+        public IEnumerable<CalcManagerHistoryItemAlias> HistoryItems // optional
         {
-            get => Value.HistoryItems.Select(x => new CalcManagerHistoryItemAlias { Value = x });
-            set => Value.HistoryItems = value.Select(x => new CalcManagerHistoryItem
+            get => Value?.HistoryItems.Select(x => new CalcManagerHistoryItemAlias { Value = x });
+            set => Value.HistoryItems = value?.Select(x => new CalcManagerHistoryItem
             {
                 Tokens = x.Tokens.Select(Helpers.MapHistoryToken).ToList(),
                 Commands = x.Commands.Select(Helpers.MapCommandAlias).ToList(),
@@ -238,10 +238,10 @@ namespace CalculatorApp.JsonUtils
             set => Value.PrimaryDisplay = value.Value;
         }
         [JsonPropertyName("e")]
-        public ExpressionDisplaySnapshotAlias ExpressionDisplay
+        public ExpressionDisplaySnapshotAlias ExpressionDisplay // optional
         {
-            get => new ExpressionDisplaySnapshotAlias(Value.ExpressionDisplay);
-            set => Value.ExpressionDisplay = value.Value;
+            get => Value != null ? new ExpressionDisplaySnapshotAlias(Value.ExpressionDisplay) : null;
+            set => Value.ExpressionDisplay = value?.Value;
         }
         [JsonPropertyName("c")]
         public IEnumerable<ICalcManagerIExprCommandAlias> Commands
@@ -262,10 +262,10 @@ namespace CalculatorApp.JsonUtils
         [JsonPropertyName("m")]
         public int Mode { get => Value.Mode; set => Value.Mode = value; }
         [JsonPropertyName("s")]
-        public StandardCalculatorSnapshotAlias StandardCalculatorSnapshot
+        public StandardCalculatorSnapshotAlias StandardCalculatorSnapshot // optional
         {
-            get => new StandardCalculatorSnapshotAlias(Value.StandardCalculator);
-            set => Value.StandardCalculator = value.Value;
+            get => Value != null ? new StandardCalculatorSnapshotAlias(Value.StandardCalculator) : null;
+            set => Value.StandardCalculator = value?.Value;
         }
 
         public ApplicationSnapshotAlias() => Value = new ApplicationSnapshot();
