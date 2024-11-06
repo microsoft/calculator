@@ -129,7 +129,7 @@ namespace CalculatorApp.JsonUtils
         public IEnumerable<CalcManagerTokenAlias> Tokens
         {
             get => Value.Tokens.Select(x => new CalcManagerTokenAlias(x));
-            set => Value.Tokens = value.Select(Helpers.MapHistoryToken).ToList();
+            set => Value.Tokens = value.Select(Helpers.MapToken).ToList();
         }
         [JsonPropertyName("c")]
         public IEnumerable<ICalcManagerIExprCommandAlias> Commands
@@ -165,7 +165,7 @@ namespace CalculatorApp.JsonUtils
             get => Value.HistoryItems?.Select(x => new CalcManagerHistoryItemAlias { Value = x });
             set => Value.HistoryItems = value?.Select(x => new CalcManagerHistoryItem
             {
-                Tokens = x.Tokens.Select(Helpers.MapHistoryToken).ToList(),
+                Tokens = x.Tokens.Select(Helpers.MapToken).ToList(),
                 Commands = x.Commands.Select(Helpers.MapCommandAlias).ToList(),
                 Expression = x.Expression,
                 Result = x.Result
@@ -207,7 +207,7 @@ namespace CalculatorApp.JsonUtils
         public IEnumerable<CalcManagerTokenAlias> Tokens
         {
             get => Value.Tokens.Select(x => new CalcManagerTokenAlias(x));
-            set => Value.Tokens = value.Select(Helpers.MapHistoryToken).ToList();
+            set => Value.Tokens = value.Select(Helpers.MapToken).ToList();
         }
         [JsonPropertyName("c")]
         public IEnumerable<ICalcManagerIExprCommandAlias> Commands
@@ -274,7 +274,7 @@ namespace CalculatorApp.JsonUtils
 
     internal static class Helpers
     {
-        public static CalcManagerToken MapHistoryToken(CalcManagerTokenAlias token)
+        public static CalcManagerToken MapToken(CalcManagerTokenAlias token)
         {
             return new CalcManagerToken { OpCodeName = token.OpCodeName, CommandIndex = token.CommandIndex };
         }
