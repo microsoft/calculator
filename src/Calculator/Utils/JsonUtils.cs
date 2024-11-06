@@ -162,7 +162,7 @@ namespace CalculatorApp.JsonUtils
         [JsonPropertyName("h")]
         public IEnumerable<CalcManagerHistoryItemAlias> HistoryItems // optional
         {
-            get => Value?.HistoryItems.Select(x => new CalcManagerHistoryItemAlias { Value = x });
+            get => Value.HistoryItems?.Select(x => new CalcManagerHistoryItemAlias { Value = x });
             set => Value.HistoryItems = value?.Select(x => new CalcManagerHistoryItem
             {
                 Tokens = x.Tokens.Select(Helpers.MapHistoryToken).ToList(),
@@ -240,7 +240,7 @@ namespace CalculatorApp.JsonUtils
         [JsonPropertyName("e")]
         public ExpressionDisplaySnapshotAlias ExpressionDisplay // optional
         {
-            get => Value != null ? new ExpressionDisplaySnapshotAlias(Value.ExpressionDisplay) : null;
+            get => Value.ExpressionDisplay != null ? new ExpressionDisplaySnapshotAlias(Value.ExpressionDisplay) : null;
             set => Value.ExpressionDisplay = value?.Value;
         }
         [JsonPropertyName("c")]
@@ -264,7 +264,7 @@ namespace CalculatorApp.JsonUtils
         [JsonPropertyName("s")]
         public StandardCalculatorSnapshotAlias StandardCalculatorSnapshot // optional
         {
-            get => Value != null ? new StandardCalculatorSnapshotAlias(Value.StandardCalculator) : null;
+            get => Value.StandardCalculator != null ? new StandardCalculatorSnapshotAlias(Value.StandardCalculator) : null;
             set => Value.StandardCalculator = value?.Value;
         }
 

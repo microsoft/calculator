@@ -1792,7 +1792,10 @@ CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ StandardCalcula
     auto result = ref new CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot();
     result->CalcManager = ref new CalculatorApp::ViewModel::Snapshot::CalcManagerSnapshot(m_standardCalculatorManager);
     result->PrimaryDisplay = ref new CalculatorApp::ViewModel::Snapshot::PrimaryDisplaySnapshot(m_DisplayValue, m_IsInError);
-    result->ExpressionDisplay = ref new CalculatorApp::ViewModel::Snapshot::ExpressionDisplaySnapshot(*m_tokens, *m_commands);
+    if (!m_tokens->empty() && !m_commands->empty())
+    {
+        result->ExpressionDisplay = ref new CalculatorApp::ViewModel::Snapshot::ExpressionDisplaySnapshot(*m_tokens, *m_commands);
+    }
     result->DisplayCommands = ref new Platform::Collections::Vector<CalculatorApp::ViewModel::Snapshot::ICalcManagerIExprCommand ^>();
     for (auto cmd : m_standardCalculatorManager.GetDisplayCommandsSnapshot())
     {
