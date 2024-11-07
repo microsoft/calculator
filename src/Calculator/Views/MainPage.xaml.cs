@@ -66,7 +66,8 @@ namespace CalculatorApp
                 {
                     if (deferral == null)
                     {
-                        // Windows Bug in ni_moment won't return the deferral propoerly, see https://microsoft.visualstudio.com/DefaultCollection/OS/_workitems/edit/47775705/
+                        // FIXME: https://microsoft.visualstudio.com/DefaultCollection/OS/_workitems/edit/47775705/
+                        TraceLogger.GetInstance().LogRecallError("55e29ba5-6097-40ec-8960-458750be3039");
                         return;
                     }
                     var channel = UserActivityChannel.GetDefault();
