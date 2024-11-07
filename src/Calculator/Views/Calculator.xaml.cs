@@ -245,6 +245,7 @@ namespace CalculatorApp
             HistoryFlyout.FlyoutPresenterStyle.Setters.Add(new Setter(AutomationProperties.NameProperty, historyPaneName));
             string memoryPaneName = AppResourceProvider.GetInstance().GetResourceString("MemoryPane");
             MemoryFlyout.FlyoutPresenterStyle.Setters.Add(new Setter(AutomationProperties.NameProperty, memoryPaneName));
+            OnIsInErrorPropertyChanged();
 
             // Delay load things later when we get a chance.
             WeakReference weakThis = new WeakReference(this);

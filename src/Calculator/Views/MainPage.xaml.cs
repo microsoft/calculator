@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 using Windows.ApplicationModel.UserActivities;
-using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.Storage;
@@ -18,6 +18,7 @@ using Microsoft.UI.Xaml.Controls;
 
 using CalculatorApp.Common;
 using CalculatorApp.Converters;
+using CalculatorApp.JsonUtils;
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
@@ -61,24 +62,38 @@ namespace CalculatorApp
 
             UserActivityRequestManager.GetForCurrentView().UserActivityRequested += async (_, args) =>
             {
-                var deferral = args.GetDeferral();
-                if (deferral == null)
+                using (var deferral = args.GetDeferral())
                 {
-                    // Windows Bug in ni_moment won't return the deferral propoerly, see https://microsoft.visualstudio.com/DefaultCollection/OS/_workitems/edit/47775705/
-                    return;
+                    if (deferral == null)
+                    {
+                        // FIXME: https://microsoft.visualstudio.com/DefaultCollection/OS/_workitems/edit/47775705/
+                        TraceLogger.GetInstance().LogRecallError("55e29ba5-6097-40ec-8960-458750be3039");
+                        return;
+                    }
+                    var channel = UserActivityChannel.GetDefault();
+                    var activity = await channel.GetOrCreateUserActivityAsync($"{Guid.NewGuid()}");
+                    string embeddedData;
+                    try
+                    {
+                        var json = JsonSerializer.Serialize(new ApplicationSnapshotAlias(Model.Snapshot));
+                        embeddedData = Convert.ToBase64String(DeflateUtils.Compress(json));
+                    }
+                    catch (Exception ex)
+                    {
+                        TraceLogger.GetInstance().LogRecallError($"Error occurs during the serialization of Snapshot. Exception: {ex}");
+                        deferral.Complete();
+                        return;
+                    }
+                    activity.ActivationUri = new Uri($"ms-calculator:snapshot/{embeddedData}");
+                    activity.IsRoamable = false;
+                    var resProvider = AppResourceProvider.GetInstance();
+                    activity.VisualElements.DisplayText =
+                        $"{resProvider.GetResourceString("AppName")} - {resProvider.GetResourceString(NavCategoryStates.GetNameResourceKey(Model.Mode))}";
+                    await activity.SaveAsync();
+                    args.Request.SetUserActivity(activity);
+                    deferral.Complete();
+                    TraceLogger.GetInstance().LogRecallSnapshot(Model.Mode);
                 }
-                var channel = UserActivityChannel.GetDefault();
-                var activity = await channel.GetOrCreateUserActivityAsync($"{Guid.NewGuid()}");
-                activity.ActivationUri = new Uri($"ms-calculator:snapshots/{activity.ActivityId}");
-                activity.ContentInfo = UserActivityContentInfo.FromJson(Model.SaveApplicationSnapshot().Stringify());
-                activity.IsRoamable = false;
-                var resProvider = AppResourceProvider.GetInstance();
-                activity.VisualElements.DisplayText =
-                    $"{resProvider.GetResourceString("AppName")} - {resProvider.GetResourceString(NavCategoryStates.GetNameResourceKey(Model.Mode))}";
-                await activity.SaveAsync();
-                args.Request.SetUserActivity(activity);
-                deferral.Complete();
-                TraceLogger.GetInstance().LogRecallSnapshot(Model.Mode);
             };
         }
 
@@ -165,59 +180,23 @@ namespace CalculatorApp
             }
             else if (e.Parameter is SnapshotLaunchArguments snapshotArgs)
             {
-                _ = Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                {
-                    var channel = UserActivityChannel.GetDefault();
-                    var activity = await channel.GetOrCreateUserActivityAsync(snapshotArgs.ActivityId);
-
-                    if (TryRestoreFromActivity(snapshotArgs, activity, out var errorMessage))
-                    {
-                        TraceLogger.GetInstance().LogRecallRestore(Model.Mode);
-                        SelectNavigationItemByModel();
-                    }
-                    else
-                    {
-                        TraceLogger.GetInstance().LogRecallError(Model.Mode, errorMessage);
-                    }
-                });
                 Model.Initialize(initialMode);
+                if (!snapshotArgs.HasError)
+                {
+                    Model.RestoreFromSnapshot(snapshotArgs.Snapshot);
+                    TraceLogger.GetInstance().LogRecallRestore((ViewMode)snapshotArgs.Snapshot.Mode);
+                }
+                else
+                {
+                    _ = Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                        async () => await ShowSnapshotLaunchErrorAsync());
+                    TraceLogger.GetInstance().LogRecallError("OnNavigatedTo:Found errors.");
+                }
             }
             else
             {
                 Environment.FailFast("cd75d5af-0f47-4cc2-910c-ed792ed16fe6");
             }
-        }
-
-        private bool TryRestoreFromActivity(SnapshotLaunchArguments snapshotArgs, UserActivity activity, out string errorMessage)
-        {
-            if (!snapshotArgs.VerifyIncomingActivity(activity))
-            {
-                errorMessage = "IncomingActivityFailed";
-                return false;
-            }
-
-            // Work around for bug https://microsoft.visualstudio.com/DefaultCollection/OS/_workitems/edit/48931227
-            // where ContentInfo can't be directly accessed.
-            if (!JsonObject.TryParse(activity.ToJson(), out var activityJson))
-            {
-                errorMessage = "ParseJsonError";
-                return false;
-            }
-
-            if (!activityJson.ContainsKey("contentInfo"))
-            {
-                errorMessage = "ContentInfoNotExist";
-                return false;
-            }
-
-            if (!Model.TryRestoreFromSnapshot(activityJson.GetNamedObject("contentInfo")))
-            {
-                errorMessage = "RestoreFromSnapshotFailed";
-                return false;
-            }
-
-            errorMessage = string.Empty;
-            return true;
         }
 
         private void InitializeNavViewCategoriesSource()

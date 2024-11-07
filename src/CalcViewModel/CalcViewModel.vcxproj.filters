@@ -89,6 +89,7 @@
     <ClCompile Include="MemoryItemViewModel.cpp" />
     <ClCompile Include="StandardCalculatorViewModel.cpp" />
     <ClCompile Include="UnitConverterViewModel.cpp" />
+    <ClCompile Include="Snapshots.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="StandardCalculatorViewModel.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UnitConverterViewModel.h" />
+    <ClInclude Include="Snapshots.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json">

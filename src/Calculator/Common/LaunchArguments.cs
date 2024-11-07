@@ -1,48 +1,53 @@
 using System;
-
+using System.Linq;
+using System.Text.Json;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.UserActivities;
+
+using CalculatorApp.ViewModel.Snapshot;
+using CalculatorApp.JsonUtils;
+using CalculatorApp.ViewModel.Common;
 
 namespace CalculatorApp
 {
     internal class SnapshotLaunchArguments
     {
-        public string ActivityId { get; set; }
-        public Uri LaunchUri { get; set; }
+        public bool HasError { get; set; }
+        public ApplicationSnapshot Snapshot { get; set; }
     }
 
     internal static class LaunchExtensions
     {
-        public static bool IsSnapshotProtocol(this IActivatedEventArgs args) =>
-            args is IProtocolActivatedEventArgs protoArgs &&
-            protoArgs.Uri != null &&
-            protoArgs.Uri.Segments != null &&
-            protoArgs.Uri.Segments.Length == 2 &&
-            protoArgs.Uri.Segments[0] == "snapshots/";
-
-        /// <summary>
-        /// GetActivityId() requires the parameter `launchUri` to be a well-formed
-        /// snapshot URI.
-        /// </summary>
-        /// <param name="launchUri">the Uri to launch with a snapshot context.</param>
-        /// <returns>Activity ID</returns>
-        public static string GetActivityId(this Uri launchUri)
+        public static bool TryGetSnapshotProtocol(this IActivatedEventArgs args, out IProtocolActivatedEventArgs result)
         {
-            return launchUri.Segments[1].Trim();
-        }
-
-        public static bool VerifyIncomingActivity(this SnapshotLaunchArguments launchArgs, UserActivity activity)
-        {
-            if (activity.State != UserActivityState.Published ||
-                string.IsNullOrEmpty(activity.ActivityId) ||
-                activity.ActivationUri == null ||
-                activity.ActivationUri.Segments == null ||
-                activity.ActivationUri.Segments.Length != 2 ||
-                activity.ActivationUri.Segments[0] != "snapshots/")
+            result = null;
+            var protoArgs = args as IProtocolActivatedEventArgs;
+            if (protoArgs == null ||
+                protoArgs.Uri == null ||
+                protoArgs.Uri.Segments == null ||
+                protoArgs.Uri.Segments.Length < 2 ||
+                protoArgs.Uri.Segments[0] != "snapshot/")
             {
                 return false;
             }
-            return activity.ActivityId == GetActivityId(launchArgs.LaunchUri);
+            result = protoArgs;
+            return true;
+        }
+
+        public static SnapshotLaunchArguments GetSnapshotLaunchArgs(this IProtocolActivatedEventArgs args)
+        {
+            try
+            {
+                var rawbase64 = args.Uri.Segments.Skip(1).Aggregate((folded, x) => folded += x);
+                var compressed = Convert.FromBase64String(rawbase64);
+                var jsonStr = DeflateUtils.Decompress(compressed);
+                var snapshot = JsonSerializer.Deserialize<ApplicationSnapshotAlias>(jsonStr);
+                return new SnapshotLaunchArguments { HasError = false, Snapshot = snapshot.Value };
+            }
+            catch (Exception ex)
+            {
+                TraceLogger.GetInstance().LogRecallError($"Error occurs during the deserialization of Snapshot. Exception: {ex}");
+                return new SnapshotLaunchArguments { HasError = true };
+            }
         }
     }
 }

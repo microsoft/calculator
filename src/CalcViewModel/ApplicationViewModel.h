@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "Snapshots.h"
 #include "StandardCalculatorViewModel.h"
 #include "DateCalculatorViewModel.h"
 #include "GraphingCalculator/GraphingCalculatorViewModel.h"
@@ -12,19 +13,13 @@ namespace CalculatorApp
 {
     namespace ViewModel
     {
-        struct ApplicationSnapshot
-        {
-            int SnapshotVersion;
-            int Mode;
-            std::optional<StandardCalculatorSnapshot> StandardCalc;
-        };
-
         [Windows::UI::Xaml::Data::Bindable] public ref class ApplicationViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
             ApplicationViewModel();
 
             void Initialize(CalculatorApp::ViewModel::Common::ViewMode mode); // Use for first init, use deserialize for rehydration
+            void RestoreFromSnapshot(CalculatorApp::ViewModel::Snapshot::ApplicationSnapshot^ snapshot);
 
             OBSERVABLE_OBJECT();
             OBSERVABLE_PROPERTY_RW(StandardCalculatorViewModel ^, CalculatorViewModel);
@@ -77,6 +72,11 @@ namespace CalculatorApp
                 }
             }
 
+            property CalculatorApp::ViewModel::Snapshot::ApplicationSnapshot  ^ Snapshot
+            {
+                CalculatorApp::ViewModel::Snapshot::ApplicationSnapshot ^ get();
+            }
+
             static property Platform::String ^ LaunchedLocalSettings
             {
                 Platform::String ^ get()
@@ -102,9 +102,6 @@ namespace CalculatorApp
             }
 
             void ToggleAlwaysOnTop(float width, float height);
-
-            Windows::Data::Json::JsonObject ^ SaveApplicationSnapshot();
-            bool TryRestoreFromSnapshot(Windows::Data::Json::JsonObject ^ jsonObject);
 
         private:
             bool TryRecoverFromNavigationModeFailure();
