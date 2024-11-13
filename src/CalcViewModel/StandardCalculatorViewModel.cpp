@@ -1813,30 +1813,49 @@ void CalculatorApp::ViewModel::StandardCalculatorViewModel::Snapshot::set(Calcul
         m_standardCalculatorManager.SetHistoryItems(ToUnderlying(snapshot->CalcManager->HistoryItems));
     }
 
-    std::vector<int> commands;
-    if (snapshot->ExpressionDisplay != nullptr && snapshot->ExpressionDisplay->Tokens->GetAt(snapshot->ExpressionDisplay->Tokens->Size - 1)->OpCodeName == L"=")
-    {
-        commands = GetCommandsFromExpressionCommands(ToUnderlying(snapshot->ExpressionDisplay->Commands));
-    }
-    if (commands.empty() && snapshot->DisplayCommands->Size > 0)
-    {
-        commands = GetCommandsFromExpressionCommands(ToUnderlying(snapshot->DisplayCommands));
-    }
-    for (auto cmd : commands)
-    {
-        m_standardCalculatorManager.SendCommand(static_cast<Command>(cmd));
-    }
     if (snapshot->ExpressionDisplay != nullptr)
     {
-        using RawTokenCollection = std::vector<std::pair<std::wstring, int>>;
-        RawTokenCollection rawTokens;
-        for (CalculatorApp::ViewModel::Snapshot::CalcManagerToken ^ token : snapshot->ExpressionDisplay->Tokens)
+        if (snapshot->DisplayCommands->Size == 0)
         {
-            rawTokens.push_back(std::pair{ token->OpCodeName->Data(), token->CommandIndex });
+            // use case: the current expression was evaluated before. load from history.
+            assert(!snapshot->PrimaryDisplay->IsError);
+            using RawTokenCollection = std::vector<std::pair<std::wstring, int>>;
+            RawTokenCollection rawTokens;
+            for (CalculatorApp::ViewModel::Snapshot::CalcManagerToken ^ token : snapshot->ExpressionDisplay->Tokens)
+            {
+                rawTokens.push_back(std::pair{ token->OpCodeName->Data(), token->CommandIndex });
+            }
+            auto tokens = std::make_shared<RawTokenCollection>(rawTokens);
+            auto commands = std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>(ToUnderlying(snapshot->ExpressionDisplay->Commands));
+            SetHistoryExpressionDisplay(tokens, commands);
+            SetExpressionDisplay(tokens, commands);
+            SetPrimaryDisplay(snapshot->PrimaryDisplay->DisplayValue, false);
         }
-        SetExpressionDisplay(
-            std::make_shared<RawTokenCollection>(rawTokens),
-            std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>(ToUnderlying(snapshot->ExpressionDisplay->Commands)));
+        else
+        {
+            // use case: the current expression was not evaluated before, or it was an error.
+            auto displayCommands = GetCommandsFromExpressionCommands(ToUnderlying(snapshot->DisplayCommands));
+            for (auto cmd : displayCommands)
+            {
+                m_standardCalculatorManager.SendCommand(static_cast<Command>(cmd));
+            }
+        }
     }
-    SetPrimaryDisplay(snapshot->PrimaryDisplay->DisplayValue, snapshot->PrimaryDisplay->IsError);
+    else
+    {
+        if (snapshot->PrimaryDisplay->IsError)
+        {
+            // use case: user copy-pasted an invalid expression to Calculator and caused an error.
+            SetPrimaryDisplay(snapshot->PrimaryDisplay->DisplayValue, true);
+        }
+        else
+        {
+            // use case: there was no expression but user was inputing some numbers (including negative numbers).
+            auto commands = GetCommandsFromExpressionCommands(ToUnderlying(snapshot->DisplayCommands));
+            for (auto cmd : commands)
+            {
+                m_standardCalculatorManager.SendCommand(static_cast<Command>(cmd));
+            }
+        }
+    }
 }
