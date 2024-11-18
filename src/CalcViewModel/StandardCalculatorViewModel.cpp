@@ -1839,6 +1839,10 @@ void CalculatorApp::ViewModel::StandardCalculatorViewModel::Snapshot::set(Calcul
             {
                 m_standardCalculatorManager.SendCommand(static_cast<Command>(cmd));
             }
+            if (snapshot->PrimaryDisplay->IsError)
+            {
+                SetPrimaryDisplay(snapshot->PrimaryDisplay->DisplayValue, true);
+            }
         }
     }
     else
