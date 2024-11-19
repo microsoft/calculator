@@ -10,6 +10,7 @@ namespace CalculatorUITests
     public class CurrencyConverterFunctionalTests
     {
         private static readonly UnitConverterPage page = new UnitConverterPage();
+        private static MockedCurrencyServer _currencyServer;
 
         public TestContext TestContext { get; set; }
 
@@ -22,7 +23,7 @@ namespace CalculatorUITests
         {
             // Create session to launch a Calculator window
             CalculatorDriver.Instance.SetupCalculatorSession(context);
-            context.Properties.Add("MockedDataServer", new MockedCurrencyServer());
+            _currencyServer = new MockedCurrencyServer();
         }
 
         /// <summary>
@@ -33,6 +34,7 @@ namespace CalculatorUITests
         {
             // Tear down Calculator session.
             CalculatorDriver.Instance.TearDownCalculatorSession();
+            _currencyServer.Dispose();
         }
 
         /// <summary>
