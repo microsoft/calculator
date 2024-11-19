@@ -3,6 +3,18 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="MockCurrencyConverterData.json" />
+    <None Remove="MockCurrencyStaticData.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MockCurrencyConverterData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MockCurrencyStaticData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Appium.WebDriver" Version="4.4.0" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
     <PackageReference Include="System.Drawing.Common" Version="4.7.3" />

@@ -22,6 +22,7 @@ namespace CalculatorUITests
         {
             // Create session to launch a Calculator window
             CalculatorDriver.Instance.SetupCalculatorSession(context);
+            context.Properties.Add("MockedDataServer", new MockedCurrencyServer());
         }
 
         /// <summary>

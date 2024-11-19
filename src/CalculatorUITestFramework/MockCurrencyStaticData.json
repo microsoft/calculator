@@ -1,0 +1,72 @@
+[
+  {
+    "CountryCode": "MAR",
+    "CountryName": "Mars",
+    "CurrencyCode": "MAR",
+    "CurrencyName": "The Martian Dollar",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "MON",
+    "CountryName": "Moon",
+    "CurrencyCode": "MON",
+    "CurrencyName": "Moon Bucks",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "NEP",
+    "CountryName": "Neptune",
+    "CurrencyCode": "NEP",
+    "CurrencyName": "Space Coins",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "SAT",
+    "CountryName": "Saturn",
+    "CurrencyCode": "SAT",
+    "CurrencyName": "Rings",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "URA",
+    "CountryName": "Uranus",
+    "CurrencyCode": "URA",
+    "CurrencyName": "Galaxy Credits",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "VEN",
+    "CountryName": "Venus",
+    "CurrencyCode": "VEN",
+    "CurrencyName": "Venusian Seashells",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "JUP",
+    "CountryName": "Jupiter",
+    "CurrencyCode": "JUP",
+    "CurrencyName": "Gas Money",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "MER",
+    "CountryName": "Mercury",
+    "CurrencyCode": "MER",
+    "CurrencyName": "Sun Notes",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "TEST1",
+    "CountryName": "Test No Fractional Digits",
+    "CurrencyCode": "JPY",
+    "CurrencyName": "Test No Fractional Digits",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "TEST2",
+    "CountryName": "Test Fractional Digits",
+    "CurrencyCode": "JOD",
+    "CurrencyName": "Test Fractional Digits",
+    "CurrencySymbol": "¤"
+  }
+]
