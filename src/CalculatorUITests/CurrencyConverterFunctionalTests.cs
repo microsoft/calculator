@@ -22,8 +22,8 @@ namespace CalculatorUITests
         public static void ClassInitialize(TestContext context)
         {
             // Create session to launch a Calculator window
-            CalculatorDriver.Instance.SetupCalculatorSession(context);
             _currencyServer = new MockedCurrencyServer();
+            CalculatorDriver.Instance.SetupCalculatorSession(context);
         }
 
         /// <summary>
