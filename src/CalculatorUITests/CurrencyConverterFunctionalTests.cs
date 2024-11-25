@@ -1,5 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
+using System.Diagnostics;
 using CalculatorUITestFramework;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -43,6 +45,7 @@ namespace CalculatorUITests
         [TestInitialize]
         public void TestInit()
         {
+            VerifyConnection();
             CalculatorApp.EnsureCalculatorHasFocus();
             page.EnsureCalculatorIsCurrencyMode();
             page.EnsureCalculatorResultTextIsZero();
@@ -53,6 +56,25 @@ namespace CalculatorUITests
         public void TestCleanup()
         {
             page.ClearAll();
+        }
+
+        private static void VerifyConnection()
+        {
+            var process = new Process();
+            var startInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Hidden,
+                FileName = "cmd.exe",
+                Arguments = @"/C curl ""http://localhost/calctesting/file/?id=currency+converter+data&localCurrency=""",
+                RedirectStandardOutput = true, // Redirect the standard output
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            process.StartInfo = startInfo;
+            process.Start();
+            var debug = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            Console.WriteLine($"----------- exitcode: {process.ExitCode}, curl result: {debug}");
         }
 
         private string NormalizeCurrencyText(string realValue, int fractionDigits)
