@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
          xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
          xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
@@ -64,5 +64,6 @@
     <Capabilities>
         <Capability Name="internetClient" />
         <Capability Name="internetClientServer"/>
+        <Capability Name="privateNetworkClientServer"/>
     </Capabilities>
 </Package>
