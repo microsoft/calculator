@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System;
 using System.Diagnostics;
+using System.Threading;
 using CalculatorUITestFramework;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,6 +26,7 @@ namespace CalculatorUITests
         {
             // Create session to launch a Calculator window
             _currencyServer = new MockedCurrencyServer();
+            Thread.Sleep(5000);
             CalculatorDriver.Instance.SetupCalculatorSession(context);
         }
 
@@ -45,8 +47,10 @@ namespace CalculatorUITests
         [TestInitialize]
         public void TestInit()
         {
-            VerifyConnection();
+            VerifyConnection("http://localhost/calctesting/file/?id=currency+converter+data&localCurrency=en-US");
+            VerifyConnection("http://localhost/calctesting/file/?id=currency+static+data&localizeFor=en-US");
             CalculatorApp.EnsureCalculatorHasFocus();
+            Thread.Sleep(5000);
             page.EnsureCalculatorIsCurrencyMode();
             page.EnsureCalculatorResultTextIsZero();
             page.EnsureSameUnitsAreSelected();
@@ -58,14 +62,15 @@ namespace CalculatorUITests
             page.ClearAll();
         }
 
-        private static void VerifyConnection()
+        private static void VerifyConnection(string url)
         {
+            Console.WriteLine($"VerifyConnection begins: url: {url}");
             var process = new Process();
             var startInfo = new ProcessStartInfo
             {
                 WindowStyle = ProcessWindowStyle.Hidden,
                 FileName = "cmd.exe",
-                Arguments = @"/C curl ""http://localhost/calctesting/file/?id=currency+converter+data&localCurrency=""",
+                Arguments = @$"/C curl ""{url}""",
                 RedirectStandardOutput = true, // Redirect the standard output
                 UseShellExecute = false,
                 CreateNoWindow = true
@@ -74,7 +79,7 @@ namespace CalculatorUITests
             process.Start();
             var debug = process.StandardOutput.ReadToEnd();
             process.WaitForExit();
-            Console.WriteLine($"----------- exitcode: {process.ExitCode}, curl result: {debug}");
+            Console.WriteLine($"VerifyConnection ends: exitcode: {process.ExitCode}, curl result: {debug}");
         }
 
         private string NormalizeCurrencyText(string realValue, int fractionDigits)
