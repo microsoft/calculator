@@ -16,12 +16,13 @@ namespace CalculatorUITestFramework
                 Prefixes =
                 {
                     // to trust below URL on your dev machine, run below command in cmd as admin
-                    // netsh http add urlacl url="http://localhost:4724/calctesting/file" user=everyone
-                    "http://localhost:4724/calctesting/file/",
+                    // netsh http add urlacl url="http://127.0.0.1:80/calctesting/file" user=everyone
+                    "http://127.0.0.1/calctesting/file/",
                 }
             };
             _listener.Start();
             _listener.BeginGetContext(OnGetContext, _listener);
+            Console.WriteLine("MockedCurrencyServer started.");
         }
 
         ~MockedCurrencyServer() { DisposeImpl(); }
@@ -49,6 +50,7 @@ namespace CalculatorUITestFramework
             {
                 return;
             }
+            Console.WriteLine($"MockedCurrencyServer: on request, url = {context.Request.Url}");
             var request = context.Request;
             var response = context.Response;
             if (request.HttpMethod == "GET" && TryGetServerFile(request.Url, out var content))
@@ -61,6 +63,7 @@ namespace CalculatorUITestFramework
                 response.OutputStream.Write(data, 0, data.Length);
                 response.OutputStream.Close();
                 response.Close();
+                Console.WriteLine($"MockedCurrencyServer: on request, completed.");
             }
             else
             {
