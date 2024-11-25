@@ -160,9 +160,9 @@ jobs:
       shell: powershell
       name: Install WindowsApplicationDriver
     - run: |
-        netsh http add urlacl url="http://localhost:80/calctesting/file" user=everyone
+        netsh http add urlacl url="http://localhost:4724/calctesting/file" user=everyone
       shell: powershell
-      name: enable local urls
+      name: Enable local urls
     - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
       name: Setup dev tools
     - run: |

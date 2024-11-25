@@ -16,8 +16,8 @@ namespace CalculatorUITestFramework
                 Prefixes =
                 {
                     // to trust below URL on your dev machine, run below command in cmd as admin
-                    // netsh http add urlacl url="http://localhost:80/calctesting/file" user=everyone
-                    "http://localhost/calctesting/file/",
+                    // netsh http add urlacl url="http://localhost:4724/calctesting/file" user=everyone
+                    "http://localhost:4724/calctesting/file/",
                 }
             };
             _listener.Start();
