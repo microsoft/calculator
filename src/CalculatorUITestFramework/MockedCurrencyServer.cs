@@ -40,7 +40,15 @@ namespace CalculatorUITestFramework
         private static void OnGetContext(IAsyncResult result)
         {
             var listener = (HttpListener)result.AsyncState;
-            var context = listener.EndGetContext(result);
+            HttpListenerContext context;
+            try
+            {
+                context = listener.EndGetContext(result);
+            }
+            catch (HttpListenerException)
+            {
+                return;
+            }
             var request = context.Request;
             var response = context.Response;
             if (request.HttpMethod == "GET" && TryGetServerFile(request.Url, out var content))
