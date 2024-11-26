@@ -89,9 +89,8 @@ namespace CalculatorApp
     }
 }
 
-CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> client, const wchar_t* forcedResponseLanguage)
-    : m_client(move(client))
-    , m_loadStatus(CurrencyLoadStatus::NotLoaded)
+CurrencyDataLoader::CurrencyDataLoader(const wchar_t* forcedResponseLanguage)
+    : m_loadStatus(CurrencyLoadStatus::NotLoaded)
     , m_responseLanguage(L"en-US")
     , m_ratioFormat(L"")
     , m_timestampFormat(L"")
@@ -122,12 +121,7 @@ CurrencyDataLoader::CurrencyDataLoader(_In_ unique_ptr<ICurrencyHttpClient> clie
         }
     }
 
-    if (m_client != nullptr)
-    {
-        m_client->SetSourceCurrencyCode(StringReference(DefaultCurrencyCode.data()));
-        m_client->SetResponseLanguage(m_responseLanguage);
-    }
-
+    m_client.Initialize(StringReference{ DefaultCurrencyCode.data() }, m_responseLanguage);
     auto localizationService = LocalizationService::GetInstance();
     if (CoreWindow::GetForCurrentThread() != nullptr)
     {
@@ -199,26 +193,29 @@ void CurrencyDataLoader::LoadData()
     if (!LoadFinished())
     {
         RegisterForNetworkBehaviorChanges();
-        create_task([this]() -> task<bool> {
-            vector<function<future<bool>()>> loadFunctions = {
-                [this]() { return TryLoadDataFromCacheAsync(); },
-                [this]() { return TryLoadDataFromWebAsync(); },
-            };
-
-            bool didLoad = false;
-            for (auto& f : loadFunctions)
+        create_task(
+            [this]() -> task<bool>
             {
-                didLoad = co_await f();
-                if (didLoad)
-                {
-                    break;
-                }
-            }
+                vector<function<future<bool>()>> loadFunctions = {
+                    [this]() { return TryLoadDataFromCacheAsync(); },
+                    [this]() { return TryLoadDataFromWebAsync(); },
+                };
 
-            co_return didLoad;
-        })
+                bool didLoad = false;
+                for (auto& f : loadFunctions)
+                {
+                    didLoad = co_await f();
+                    if (didLoad)
+                    {
+                        break;
+                    }
+                }
+
+                co_return didLoad;
+            })
             .then(
-                [this](bool didLoad) {
+                [this](bool didLoad)
+                {
                     UpdateDisplayedTimestamp();
                     NotifyDataLoadFinished(didLoad);
                 },
@@ -283,9 +280,7 @@ double CurrencyDataLoader::RoundCurrencyRatio(double ratio)
     int numberDecimals = FORMATTER_RATE_MIN_DECIMALS;
     if (ratio < 1)
     {
-        numberDecimals = max(
-            FORMATTER_RATE_MIN_DECIMALS,
-            (int)(-log10(ratio)) + FORMATTER_RATE_MIN_SIGNIFICANT_DECIMALS);
+        numberDecimals = max(FORMATTER_RATE_MIN_DECIMALS, (int)(-log10(ratio)) + FORMATTER_RATE_MIN_SIGNIFICANT_DECIMALS);
     }
 
     unsigned long long scale = (unsigned long long)powl(10l, numberDecimals);
@@ -314,8 +309,7 @@ pair<wstring, wstring> CurrencyDataLoader::GetCurrencyRatioEquality(_In_ const U
                 auto ratioString = LocalizationStringUtil::GetLocalizedString(
                     m_ratioFormat, digitSymbol, StringReference(unit1.abbreviation.c_str()), roundedFormat, StringReference(unit2.abbreviation.c_str()));
 
-                auto accessibleRatioString =
-                    LocalizationStringUtil::GetLocalizedString(
+                auto accessibleRatioString = LocalizationStringUtil::GetLocalizedString(
                     m_ratioFormat, digitSymbol, StringReference(unit1.accessibleName.c_str()), roundedFormat, StringReference(unit2.accessibleName.c_str()));
 
                 return make_pair(ratioString->Data(), accessibleRatioString->Data());
@@ -415,18 +409,14 @@ future<bool> CurrencyDataLoader::TryLoadDataFromWebAsync()
     {
         ResetLoadStatus();
 
-        if (m_client == nullptr)
-        {
-            co_return false;
-        }
-
         if (m_networkAccessBehavior == NetworkAccessBehavior::Offline || (m_networkAccessBehavior == NetworkAccessBehavior::OptIn && !m_meteredOverrideSet))
         {
             co_return false;
         }
 
-        String ^ staticDataResponse = co_await m_client->GetCurrencyMetadata();
-        String ^ allRatiosResponse = co_await m_client->GetCurrencyRatios();
+        // TODO: determine if below getters are awaitables in production.
+        String ^ staticDataResponse = m_client.GetCurrencyMetadata();
+        String ^ allRatiosResponse = m_client.GetCurrencyRatios();
         if (staticDataResponse == nullptr || allRatiosResponse == nullptr)
         {
             co_return false;
@@ -550,9 +540,7 @@ bool CurrencyDataLoader::TryParseStaticData(_In_ String ^ rawJson, _Inout_ vecto
         staticData[i] = CurrencyStaticData{ countryCode, countryName, currencyCode, currencyName, currencySymbol };
     }
 
-    auto sortCountryNames = [](const UCM::CurrencyStaticData & s) {
-        return ref new String(s.countryName.c_str());
-    };
+    auto sortCountryNames = [](const UCM::CurrencyStaticData& s) { return ref new String(s.countryName.c_str()); };
 
     LocalizationService::GetInstance()->Sort<UCM::CurrencyStaticData>(staticData, sortCountryNames);
 
@@ -577,7 +565,7 @@ bool CurrencyDataLoader::TryParseAllRatiosData(_In_ String ^ rawJson, _Inout_ Cu
         {
             obj = data->GetAt(i)->GetObject();
         }
-        catch (COMException^ e)
+        catch (COMException ^ e)
         {
             if (e->HResult == E_ILLEGAL_METHOD_CALL)
             {

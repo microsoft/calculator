@@ -171,12 +171,6 @@
     <ClInclude Include="DataLoaders\CurrencyHttpClient.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
-    <ClInclude Include="DataLoaders\DataLoaderMockConstants.h">
-      <Filter>DataLoaders</Filter>
-    </ClInclude>
-    <ClInclude Include="DataLoaders\ICurrencyHttpClient.h">
-      <Filter>DataLoaders</Filter>
-    </ClInclude>
     <ClInclude Include="DataLoaders\UnitConverterDataConstants.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
