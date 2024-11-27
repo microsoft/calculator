@@ -49,6 +49,7 @@ namespace
     "Rt": 0.25
   }
 ])";
+
     constexpr auto MockCurrencyStaticData = LR"(
 [
   {

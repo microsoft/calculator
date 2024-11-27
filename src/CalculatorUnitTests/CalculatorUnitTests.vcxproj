@@ -207,7 +207,6 @@
   <ItemGroup>
     <ClInclude Include="DateUtils.h" />
     <ClInclude Include="Helpers.h" />
-    <ClInclude Include="Mocks\CurrencyHttpClient.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="UnitConverterViewModelUnitTests.h" />
     <ClInclude Include="UnitTestApp.xaml.h">
@@ -243,7 +242,6 @@
     <ClCompile Include="HistoryTests.cpp" />
     <ClCompile Include="LocalizationServiceUnitTests.cpp" />
     <ClCompile Include="LocalizationSettingsUnitTests.cpp" />
-    <ClCompile Include="Mocks\CurrencyHttpClient.cpp" />
     <ClCompile Include="MultiWindowUnitTests.cpp" />
     <ClCompile Include="NarratorAnnouncementUnitTests.cpp" />
     <ClCompile Include="NavCategoryUnitTests.cpp" />

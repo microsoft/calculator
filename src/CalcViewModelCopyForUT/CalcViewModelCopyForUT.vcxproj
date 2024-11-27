@@ -356,7 +356,6 @@
     <ClCompile Include="..\CalcViewModel\Common\TraceLogger.cpp" />
     <ClCompile Include="..\CalcViewModel\Common\Utils.cpp" />
     <ClCompile Include="..\CalcViewModel\DataLoaders\CurrencyDataLoader.cpp" />
-    <ClCompile Include="..\CalcViewModel\DataLoaders\CurrencyHttpClient.cpp" />
     <ClCompile Include="..\CalcViewModel\DataLoaders\UnitConverterDataLoader.cpp" />
     <ClCompile Include="..\CalcViewModel\DateCalculatorViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\GraphingCalculator\EquationViewModel.cpp" />
@@ -378,6 +377,7 @@
     <ClCompile Include="..\CalcViewModel\Snapshots.cpp" />
     <ClCompile Include="..\CalcViewModel\StandardCalculatorViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\UnitConverterViewModel.cpp" />
+    <ClCompile Include="CurrencyHttpClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">
