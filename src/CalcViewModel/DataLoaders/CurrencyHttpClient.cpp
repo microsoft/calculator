@@ -127,6 +127,7 @@ namespace
 
 namespace CalculatorApp::ViewModel::DataLoaders
 {
+    bool CurrencyHttpClient::ForceWebFailure = false;
     void CurrencyHttpClient::Initialize(Platform::String ^ sourceCurrencyCode, Platform::String ^ responseLanguage)
     {
         m_sourceCurrencyCode = sourceCurrencyCode;

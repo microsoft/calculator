@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "CalcViewModel/DataLoaders/CurrencyHttpClient.h"
+#include "DataLoaders/CurrencyHttpClient.h"
 
 namespace
 {
@@ -14,6 +14,7 @@ namespace
 
 namespace CalculatorApp::ViewModel::DataLoaders
 {
+    bool CurrencyHttpClient::ForceWebFailure = false;
     void CurrencyHttpClient::Initialize(Platform::String ^ sourceCurrencyCode, Platform::String ^ responseLanguage)
     {
         m_sourceCurrencyCode = sourceCurrencyCode;
@@ -22,12 +23,20 @@ namespace CalculatorApp::ViewModel::DataLoaders
 
     Platform::String ^ CurrencyHttpClient::GetCurrencyMetadata() const
     {
+        if (ForceWebFailure)
+        {
+            throw ref new Platform::Exception(E_FAIL, L"Mocked Network Failure: failed to load currency metadata");
+        }
         (void)m_responseLanguage; // to be used in production.
         return ref new Platform::String(MockCurrencyStaticData);
     }
 
     Platform::String ^ CurrencyHttpClient::GetCurrencyRatios() const
     {
+        if (ForceWebFailure)
+        {
+            throw ref new Platform::Exception(E_FAIL, L"Mocked Network Failure: failed to load currency metadata");
+        }
         (void)m_sourceCurrencyCode; // to be used in production.
         return ref new Platform::String(MockCurrencyConverterData);
     }

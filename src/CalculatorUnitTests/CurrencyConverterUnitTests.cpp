@@ -52,6 +52,27 @@ private:
 
 namespace CalculatorUnitTests
 {
+    namespace
+    {
+        template <class F>
+        auto ScopeGuard(F&& f)
+        {
+            struct ScopeExit
+            {
+                explicit ScopeExit(F&& ef)
+                    : ExitFunctor(std::forward<F>(ef))
+                {
+                }
+                ~ScopeExit()
+                {
+                    ExitFunctor();
+                }
+                F ExitFunctor;
+            };
+            return ScopeExit{ std::forward<F>(f) };
+        }
+    }
+
     constexpr auto sc_Language_EN = L"en-US";
 
     String^ SerializeContent(const std::vector<String^>& data)
@@ -165,6 +186,8 @@ TEST_METHOD(LoadFromCache_Fail_OlderThanADay)
     dayOld.UniversalTime = now.UniversalTime - CurrencyDataLoaderConstants::DayDuration - 1;
     InsertToLocalSettings(CurrencyDataLoaderConstants::CacheTimestampKey, dayOld);
 
+    auto guard = ScopeGuard([] { CurrencyHttpClient::ForceWebFailure = false; });
+    CurrencyHttpClient::ForceWebFailure = true;
     CurrencyDataLoader loader{ L"en-US" };
 
     bool didLoad = loader.TryLoadDataFromCacheAsync().get();
@@ -245,19 +268,10 @@ TEST_METHOD(LoadFromCache_Success)
     VERIFY_IS_TRUE(loader.LoadedFromCache());
 }
 
-TEST_METHOD(LoadFromWeb_Fail_ClientIsNullptr)
-{
-    CurrencyDataLoader loader{ L"en-US" };
-
-    bool didLoad = loader.TryLoadDataFromWebAsync().get();
-
-    VERIFY_IS_FALSE(didLoad);
-    VERIFY_IS_FALSE(loader.LoadFinished());
-    VERIFY_IS_FALSE(loader.LoadedFromWeb());
-}
-
 TEST_METHOD(LoadFromWeb_Fail_WebException)
 {
+    auto guard = ScopeGuard([] { CurrencyHttpClient::ForceWebFailure = false; });
+    CurrencyHttpClient::ForceWebFailure = true;
     CurrencyDataLoader loader{ L"en-US" };
 
     bool didLoad = loader.TryLoadDataFromWebAsync().get();

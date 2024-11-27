@@ -8,6 +8,7 @@ namespace CalculatorApp::ViewModel::DataLoaders
     class CurrencyHttpClient
     {
     public:
+        static bool ForceWebFailure;
         void Initialize(Platform::String ^ sourceCurrencyCode, Platform::String ^ responseLanguage);
 
         Platform::String ^ GetCurrencyMetadata() const;

@@ -319,7 +319,6 @@
     <ClInclude Include="..\CalcViewModel\Common\TraceLogger.h" />
     <ClInclude Include="..\CalcViewModel\Common\Utils.h" />
     <ClInclude Include="..\CalcViewModel\DataLoaders\CurrencyDataLoader.h" />
-    <ClInclude Include="..\CalcViewModel\DataLoaders\CurrencyHttpClient.h" />
     <ClInclude Include="..\CalcViewModel\DataLoaders\UnitConverterDataConstants.h" />
     <ClInclude Include="..\CalcViewModel\DataLoaders\UnitConverterDataLoader.h" />
     <ClInclude Include="..\CalcViewModel\DateCalculatorViewModel.h" />
@@ -377,7 +376,7 @@
     <ClCompile Include="..\CalcViewModel\Snapshots.cpp" />
     <ClCompile Include="..\CalcViewModel\StandardCalculatorViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\UnitConverterViewModel.cpp" />
-    <ClCompile Include="CurrencyHttpClient.cpp" />
+    <ClCompile Include="DataLoaders\CurrencyHttpClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">
