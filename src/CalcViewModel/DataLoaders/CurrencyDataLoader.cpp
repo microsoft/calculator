@@ -414,9 +414,8 @@ future<bool> CurrencyDataLoader::TryLoadDataFromWebAsync()
             co_return false;
         }
 
-        // TODO: determine if below getters are awaitables in production.
-        String ^ staticDataResponse = m_client.GetCurrencyMetadata();
-        String ^ allRatiosResponse = m_client.GetCurrencyRatios();
+        String ^ staticDataResponse = co_await m_client.GetCurrencyMetadata();
+        String ^ allRatiosResponse = co_await m_client.GetCurrencyRatios();
         if (staticDataResponse == nullptr || allRatiosResponse == nullptr)
         {
             co_return false;

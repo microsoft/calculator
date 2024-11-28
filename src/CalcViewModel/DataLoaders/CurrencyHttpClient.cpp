@@ -134,15 +134,15 @@ namespace CalculatorApp::ViewModel::DataLoaders
         m_responseLanguage = responseLanguage;
     }
 
-    Platform::String ^ CurrencyHttpClient::GetCurrencyMetadata() const
+    MockAwaitable<Platform::String ^> CurrencyHttpClient::GetCurrencyMetadata() const
     {
         (void)m_responseLanguage; // to be used in production.
-        return ref new Platform::String(MockCurrencyStaticData);
+        return MockAwaitable<Platform::String ^>{ ref new Platform::String(MockCurrencyStaticData) };
     }
 
-    Platform::String ^ CurrencyHttpClient::GetCurrencyRatios() const
+    MockAwaitable<Platform::String ^> CurrencyHttpClient::GetCurrencyRatios() const
     {
         (void)m_sourceCurrencyCode; // to be used in production.
-        return ref new Platform::String(MockCurrencyConverterData);
+        return MockAwaitable<Platform::String ^>{ ref new Platform::String(MockCurrencyConverterData) };
     }
 } // namespace CalculatorApp::ViewModel::DataLoaders

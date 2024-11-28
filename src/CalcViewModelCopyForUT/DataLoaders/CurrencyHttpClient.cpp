@@ -21,23 +21,23 @@ namespace CalculatorApp::ViewModel::DataLoaders
         m_responseLanguage = responseLanguage;
     }
 
-    Platform::String ^ CurrencyHttpClient::GetCurrencyMetadata() const
+    MockAwaitable<Platform::String ^> CurrencyHttpClient::GetCurrencyMetadata() const
     {
         if (ForceWebFailure)
         {
             throw ref new Platform::Exception(E_FAIL, L"Mocked Network Failure: failed to load currency metadata");
         }
         (void)m_responseLanguage; // to be used in production.
-        return ref new Platform::String(MockCurrencyStaticData);
+        return MockAwaitable<Platform::String ^>{ ref new Platform::String(MockCurrencyStaticData) };
     }
 
-    Platform::String ^ CurrencyHttpClient::GetCurrencyRatios() const
+    MockAwaitable<Platform::String ^> CurrencyHttpClient::GetCurrencyRatios() const
     {
         if (ForceWebFailure)
         {
             throw ref new Platform::Exception(E_FAIL, L"Mocked Network Failure: failed to load currency metadata");
         }
         (void)m_sourceCurrencyCode; // to be used in production.
-        return ref new Platform::String(MockCurrencyConverterData);
+        return MockAwaitable<Platform::String ^>{ ref new Platform::String(MockCurrencyConverterData) };
     }
 } // namespace CalculatorApp::ViewModel::DataLoaders
