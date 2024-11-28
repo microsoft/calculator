@@ -1,29 +1,43 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
+#include <cassert>
 
-#include "ICurrencyHttpClient.h"
-
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel::DataLoaders
 {
-    namespace ViewModel::DataLoaders
+    template <class T>
+    struct MockAwaitable
     {
-        class CurrencyHttpClient : public ICurrencyHttpClient
+        T Value;
+
+        bool await_ready() const noexcept
         {
-        public:
-            CurrencyHttpClient();
+            return true;
+        }
 
-            void SetSourceCurrencyCode(Platform::String ^ sourceCurrencyCode) override;
-            void SetResponseLanguage(Platform::String ^ responseLanguage) override;
+        void await_suspend(std::experimental::coroutine_handle<>) const noexcept
+        {
+            assert(false && "not implemented.");
+        }
 
-            Windows::Foundation::IAsyncOperationWithProgress<Platform::String ^, Windows::Web::Http::HttpProgress> ^ GetCurrencyMetadata() override;
-            Windows::Foundation::IAsyncOperationWithProgress<Platform::String ^, Windows::Web::Http::HttpProgress> ^ GetCurrencyRatios() override;
+        T await_resume() noexcept
+        {
+            return std::move(Value);
+        }
+    };
 
-        private:
-            Windows::Web::Http::HttpClient ^ m_client;
-            Platform::String ^ m_responseLanguage;
-            Platform::String ^ m_sourceCurrencyCode;
-        };
-    }
+    class CurrencyHttpClient
+    {
+    public:
+        static bool ForceWebFailure;
+        void Initialize(Platform::String ^ sourceCurrencyCode, Platform::String ^ responseLanguage);
+
+        MockAwaitable<Platform::String ^> GetCurrencyMetadataAsync() const;
+        MockAwaitable<Platform::String ^> GetCurrencyRatiosAsync() const;
+
+    private:
+        Platform::String ^ m_sourceCurrencyCode;
+        Platform::String ^ m_responseLanguage;
+    };
 }

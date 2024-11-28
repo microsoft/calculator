@@ -62,7 +62,6 @@
 #include "CalcViewModel/Common/CalculatorButtonUser.h"
 #include "CalcViewModel/Common/NetworkManager.h"
 
-#include "Mocks/CurrencyHttpClient.h"
 #include "Helpers.h"
 
 #include "UnitTestApp.xaml.h"

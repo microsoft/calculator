@@ -171,8 +171,8 @@ void ApplicationViewModel::OnModeChanged()
         if (!m_ConverterViewModel)
         {
             auto dataLoader = std::make_shared<UnitConverterDataLoader>(ref new GeographicRegion());
-            auto currencyDataLoader = std::make_shared<CurrencyDataLoader>(std::make_unique<CurrencyHttpClient>());
-            m_ConverterViewModel = ref new UnitConverterViewModel(std::make_shared<UnitConversionManager::UnitConverter>(dataLoader, currencyDataLoader));
+            m_ConverterViewModel =
+                ref new UnitConverterViewModel(std::make_shared<UnitConversionManager::UnitConverter>(dataLoader, std::make_shared<CurrencyDataLoader>()));
         }
 
         m_ConverterViewModel->Mode = m_mode;

@@ -319,8 +319,6 @@
     <ClInclude Include="..\CalcViewModel\Common\TraceLogger.h" />
     <ClInclude Include="..\CalcViewModel\Common\Utils.h" />
     <ClInclude Include="..\CalcViewModel\DataLoaders\CurrencyDataLoader.h" />
-    <ClInclude Include="..\CalcViewModel\DataLoaders\CurrencyHttpClient.h" />
-    <ClInclude Include="..\CalcViewModel\DataLoaders\ICurrencyHttpClient.h" />
     <ClInclude Include="..\CalcViewModel\DataLoaders\UnitConverterDataConstants.h" />
     <ClInclude Include="..\CalcViewModel\DataLoaders\UnitConverterDataLoader.h" />
     <ClInclude Include="..\CalcViewModel\DateCalculatorViewModel.h" />
@@ -357,7 +355,6 @@
     <ClCompile Include="..\CalcViewModel\Common\TraceLogger.cpp" />
     <ClCompile Include="..\CalcViewModel\Common\Utils.cpp" />
     <ClCompile Include="..\CalcViewModel\DataLoaders\CurrencyDataLoader.cpp" />
-    <ClCompile Include="..\CalcViewModel\DataLoaders\CurrencyHttpClient.cpp" />
     <ClCompile Include="..\CalcViewModel\DataLoaders\UnitConverterDataLoader.cpp" />
     <ClCompile Include="..\CalcViewModel\DateCalculatorViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\GraphingCalculator\EquationViewModel.cpp" />
@@ -379,6 +376,7 @@
     <ClCompile Include="..\CalcViewModel\Snapshots.cpp" />
     <ClCompile Include="..\CalcViewModel\StandardCalculatorViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\UnitConverterViewModel.cpp" />
+    <ClCompile Include="DataLoaders\CurrencyHttpClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">
@@ -391,31 +389,6 @@
       <Project>{fc81ff41-02cd-4cd9-9bc5-45a1e39ac6ed}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemDefinitionGroup Condition="!Exists('..\CalcViewModel\DataLoaders\DataLoaderConstants.h')">
-    <ClCompile>
-      <AdditionalOptions>/DUSE_MOCK_DATA %(AdditionalOptions)</AdditionalOptions>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">stdcpp17</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">stdcpp17</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">stdcpp17</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">stdcpp17</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp17</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdcpp17</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp17</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp17</LanguageStandard>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <Choose>
-    <When Condition="Exists('..\CalcViewModel\DataLoaders\DataLoaderConstants.h')">
-      <ItemGroup>
-        <ClInclude Include="..\CalcViewModel\DataLoaders\DataLoaderConstants.h" />
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <ClInclude Include="..\CalcViewModel\DataLoaders\DataLoaderMockConstants.h" />
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
   <ItemGroup>
     <None Include="..\CalcViewModel\DataLoaders\DefaultFromToCurrency.json" />
   </ItemGroup>
