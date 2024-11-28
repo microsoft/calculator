@@ -21,9 +21,9 @@ namespace CalculatorApp::ViewModel::DataLoaders
             assert(false && "not implemented.");
         }
 
-        T&& await_resume() noexcept
+        T await_resume() noexcept
         {
-            return std::forward<T>(Value);
+            return std::move(Value);
         }
     };
 
