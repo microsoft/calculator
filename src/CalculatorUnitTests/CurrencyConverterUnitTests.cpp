@@ -63,6 +63,8 @@ namespace CalculatorUnitTests
                     : ExitFunctor(std::forward<F>(ef))
                 {
                 }
+                ScopeExit(const ScopeExit&) = delete;
+                ScopeExit(ScopeExit&&) = delete;
                 ~ScopeExit()
                 {
                     ExitFunctor();
