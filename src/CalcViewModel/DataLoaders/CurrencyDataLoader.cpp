@@ -414,8 +414,8 @@ future<bool> CurrencyDataLoader::TryLoadDataFromWebAsync()
             co_return false;
         }
 
-        String ^ staticDataResponse = co_await m_client.GetCurrencyMetadata();
-        String ^ allRatiosResponse = co_await m_client.GetCurrencyRatios();
+        String ^ staticDataResponse = co_await m_client.GetCurrencyMetadataAsync();
+        String ^ allRatiosResponse = co_await m_client.GetCurrencyRatiosAsync();
         if (staticDataResponse == nullptr || allRatiosResponse == nullptr)
         {
             co_return false;

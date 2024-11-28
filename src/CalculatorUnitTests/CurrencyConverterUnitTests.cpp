@@ -160,8 +160,8 @@ namespace CalculatorUnitTests
 
         VERIFY_IS_TRUE(DeleteCurrencyCacheFiles());
 
-        VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::StaticDataFilename, CurrencyHttpClient{}.GetCurrencyMetadata().Value));
-        VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::AllRatiosDataFilename, CurrencyHttpClient{}.GetCurrencyRatios().Value));
+        VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::StaticDataFilename, CurrencyHttpClient{}.GetCurrencyMetadataAsync().Value));
+        VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::AllRatiosDataFilename, CurrencyHttpClient{}.GetCurrencyRatiosAsync().Value));
     }
 
     TEST_CLASS(CurrencyConverterLoadTests){ public: TEST_METHOD_INITIALIZE(DeleteCacheFiles){ DeleteCurrencyCacheFiles();
@@ -207,7 +207,7 @@ TEST_METHOD(LoadFromCache_Fail_StaticDataFileDoesNotExist)
     InsertToLocalSettings(CurrencyDataLoaderConstants::CacheTimestampKey, now);
 
     VERIFY_IS_TRUE(DeleteFileFromLocalCacheFolder(CurrencyDataLoaderConstants::StaticDataFilename));
-    VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::AllRatiosDataFilename, CurrencyHttpClient{}.GetCurrencyRatios().Value));
+    VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::AllRatiosDataFilename, CurrencyHttpClient{}.GetCurrencyRatiosAsync().Value));
 
     CurrencyDataLoader loader{ L"en-US" };
 
@@ -225,7 +225,7 @@ TEST_METHOD(LoadFromCache_Fail_AllRatiosDataFileDoesNotExist)
     DateTime now = Utils::GetUniversalSystemTime();
     InsertToLocalSettings(CurrencyDataLoaderConstants::CacheTimestampKey, now);
 
-    VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::StaticDataFilename, CurrencyHttpClient{}.GetCurrencyMetadata().Value));
+    VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::StaticDataFilename, CurrencyHttpClient{}.GetCurrencyMetadataAsync().Value));
     VERIFY_IS_TRUE(DeleteFileFromLocalCacheFolder(CurrencyDataLoaderConstants::AllRatiosDataFilename));
 
     CurrencyDataLoader loader{ L"en-US" };
@@ -245,7 +245,7 @@ TEST_METHOD(LoadFromCache_Fail_ResponseLanguageChanged)
     // Tests always use en-US as response language. Insert a different lang-code to fail the test.
     InsertToLocalSettings(CurrencyDataLoaderConstants::CacheLangcodeKey, L"ar-SA");
 
-    VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::StaticDataFilename, CurrencyHttpClient{}.GetCurrencyMetadata().Value));
+    VERIFY_IS_TRUE(WriteToFileInLocalCacheFolder(CurrencyDataLoaderConstants::StaticDataFilename, CurrencyHttpClient{}.GetCurrencyMetadataAsync().Value));
     VERIFY_IS_TRUE(DeleteFileFromLocalCacheFolder(CurrencyDataLoaderConstants::AllRatiosDataFilename));
 
     CurrencyDataLoader loader{ L"en-US" };

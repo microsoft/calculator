@@ -33,8 +33,8 @@ namespace CalculatorApp::ViewModel::DataLoaders
         static bool ForceWebFailure;
         void Initialize(Platform::String ^ sourceCurrencyCode, Platform::String ^ responseLanguage);
 
-        MockAwaitable<Platform::String ^> GetCurrencyMetadata() const;
-        MockAwaitable<Platform::String ^> GetCurrencyRatios() const;
+        MockAwaitable<Platform::String ^> GetCurrencyMetadataAsync() const;
+        MockAwaitable<Platform::String ^> GetCurrencyRatiosAsync() const;
 
     private:
         Platform::String ^ m_sourceCurrencyCode;

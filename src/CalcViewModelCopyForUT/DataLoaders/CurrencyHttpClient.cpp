@@ -21,7 +21,7 @@ namespace CalculatorApp::ViewModel::DataLoaders
         m_responseLanguage = responseLanguage;
     }
 
-    MockAwaitable<Platform::String ^> CurrencyHttpClient::GetCurrencyMetadata() const
+    MockAwaitable<Platform::String ^> CurrencyHttpClient::GetCurrencyMetadataAsync() const
     {
         if (ForceWebFailure)
         {
@@ -31,7 +31,7 @@ namespace CalculatorApp::ViewModel::DataLoaders
         return MockAwaitable<Platform::String ^>{ ref new Platform::String(MockCurrencyStaticData) };
     }
 
-    MockAwaitable<Platform::String ^> CurrencyHttpClient::GetCurrencyRatios() const
+    MockAwaitable<Platform::String ^> CurrencyHttpClient::GetCurrencyRatiosAsync() const
     {
         if (ForceWebFailure)
         {
