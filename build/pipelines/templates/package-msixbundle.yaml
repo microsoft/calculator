@@ -91,7 +91,7 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        vstsPackageVersion: 0.0.109
+        vstsPackageVersion: 0.0.111
 
   - task: PowerShell@2
     displayName: Generate MsixBundle mapping
@@ -120,20 +120,24 @@ jobs:
     - pwsh: |
         $configPath = "$(Build.SourcesDirectory)\Tools\Build\Signing\ESRP-codesign.json"
         $config = Get-Content -Raw $configPath | ConvertFrom-Json
-        $esrpClientId = $config.AppRegistrationClientId
-        $esrpTenantId = $config.AppRegistrationTenantId
-        echo ClientId:$esrpClientId, TenantId:$esrpTenantId
+        $esrpAppRegClientId = $config.AppRegistrationClientId
+        $esrpAppRegTenantId = $config.AppRegistrationClientId
+        $esrpClientId = $config.EsrpClientId
+        echo AppRegistrationClientId:$esrpAppRegClientId, AppRegTenantId:$esrpAppRegTenantId, EsrpClientId:$esrpClientId
+        echo "##vso[task.setvariable variable=EsrpAppRegClientId]$esrpAppRegClientId"
+        echo "##vso[task.setvariable variable=EsrpAppRegTenantId]$esrpAppRegTenantId"
         echo "##vso[task.setvariable variable=EsrpClientId]$esrpClientId"
-        echo "##vso[task.setvariable variable=EsrpTenantId]$esrpTenantId"
       displayName: Get ESRP config
 
     - task: EsrpCodeSigning@5
       displayName: Send msixbundle to code signing service
       inputs:
-        ConnectedServiceName: Essential Experiences Codesign ARM
-        AppRegistrationClientId: $(EsrpClientId)
-        AppRegistrationTenantId: $(EsrpTenantId)
-        AuthAKVName: EE-CodeSignKeyVault
+        ConnectedServiceName: Essential Experiences Codesign PME
+        UseMSIAuthentication: true
+        AppRegistrationClientId: $(EsrpAppRegClientId)
+        AppRegistrationTenantId: $(EsrpAppRegTenantId)
+        EsrpClientId: $(EsrpClientId)
+        AuthAKVName: EE-Apps-CodeSign-KV
         AuthCertName: EE-Auth-Cert
         AuthSignCertName: EE-Codesign-Cert
         FolderPath: $(Build.ArtifactStagingDirectory)\msixBundle
