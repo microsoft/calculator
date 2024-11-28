@@ -127,22 +127,25 @@ namespace
 
 namespace CalculatorApp::ViewModel::DataLoaders
 {
-    bool CurrencyHttpClient::ForceWebFailure = false;
     void CurrencyHttpClient::Initialize(Platform::String ^ sourceCurrencyCode, Platform::String ^ responseLanguage)
     {
         m_sourceCurrencyCode = sourceCurrencyCode;
         m_responseLanguage = responseLanguage;
     }
 
-    MockAwaitable<Platform::String ^> CurrencyHttpClient::GetCurrencyMetadataAsync() const
+    std::future<Platform::String ^> CurrencyHttpClient::GetCurrencyMetadataAsync() const
     {
         (void)m_responseLanguage; // to be used in production.
-        return MockAwaitable<Platform::String ^>{ ref new Platform::String(MockCurrencyStaticData) };
+        std::promise<Platform::String ^> mockedTask;
+        mockedTask.set_value(ref new Platform::String(MockCurrencyStaticData));
+        return mockedTask.get_future();
     }
 
-    MockAwaitable<Platform::String ^> CurrencyHttpClient::GetCurrencyRatiosAsync() const
+    std::future<Platform::String ^> CurrencyHttpClient::GetCurrencyRatiosAsync() const
     {
         (void)m_sourceCurrencyCode; // to be used in production.
-        return MockAwaitable<Platform::String ^>{ ref new Platform::String(MockCurrencyConverterData) };
+        std::promise<Platform::String ^> mockedTask;
+        mockedTask.set_value(ref new Platform::String(MockCurrencyConverterData));
+        return mockedTask.get_future();
     }
 } // namespace CalculatorApp::ViewModel::DataLoaders

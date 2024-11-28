@@ -3,38 +3,20 @@
 
 #pragma once
 #include <cassert>
+#include <future>
 
 namespace CalculatorApp::ViewModel::DataLoaders
 {
-    template <class T>
-    struct MockAwaitable
-    {
-        T Value;
-
-        bool await_ready() const noexcept
-        {
-            return true;
-        }
-
-        void await_suspend(std::experimental::coroutine_handle<>) const noexcept
-        {
-            assert(false && "not implemented.");
-        }
-
-        T await_resume() noexcept
-        {
-            return std::move(Value);
-        }
-    };
-
     class CurrencyHttpClient
     {
     public:
+#ifdef VIEWMODEL_FOR_UT
         static bool ForceWebFailure;
+#endif
         void Initialize(Platform::String ^ sourceCurrencyCode, Platform::String ^ responseLanguage);
 
-        MockAwaitable<Platform::String ^> GetCurrencyMetadataAsync() const;
-        MockAwaitable<Platform::String ^> GetCurrencyRatiosAsync() const;
+        std::future<Platform::String ^> GetCurrencyMetadataAsync() const;
+        std::future<Platform::String ^> GetCurrencyRatiosAsync() const;
 
     private:
         Platform::String ^ m_sourceCurrencyCode;
