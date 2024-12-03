@@ -727,7 +727,8 @@
                              Grid.Row="2"
                              Grid.RowSpan="4"
                              Grid.Column="1"
-                             Grid.ColumnSpan="3"
+                             Grid.ColumnSpan="4"
+                             ExtraColumns="1"
                              ButtonStyle="{StaticResource NumericButtonStyle18}"
                              CurrentRadixType="{x:Bind Model.CurrentRadixType, Mode=OneWay}"/>
         </Grid>
