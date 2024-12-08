@@ -1,9 +1,8 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-<#
-.SYNOPSIS
-    Generates a mapping file to be used with the MakeAppx tool. It generates the file based on
+<# 
+Synopsis   Generates a mapping file to be used with the MakeAppx tool. It generates the file based on
     a folder structure grouped by architecture then by project, like this example:
 
     drop\
