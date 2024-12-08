@@ -1,4 +1,5 @@
 # Calculator Manual Tests
+(The)
 These manual tests are run before every release of the Calculator app.
 
 ## Smoke Tests
