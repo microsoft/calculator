@@ -1,10 +1,9 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
-
 <#
 .SYNOPSIS
     Updates the version number in an AppxManifest file.
-
+*.
 .PARAMETER AppxManifest
     The path to the AppxManifest file.
 
