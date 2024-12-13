@@ -1,0 +1,54 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "cobol",
+            "request": "launch",
+            "name": "COBOL (native): Remote-SSH",
+            "program": "<insert-program-name-here>",
+            "env": {
+                "TERM": "xterm",
+                "DISPLAY": "<hostname-or-ip:D.S>"
+            },
+            "stopOnEntry": true,
+            "console": "externalTerminal"
+        },
+        {
+            "type": "cobol",
+            "request": "launch",
+            "name": "COBOL: (debugCurrentFile)",
+            "program": "${workspaceFolder}/${fileBasenameNoExtension}.int",
+            "cwd": "${workspaceFolder}",
+            "stopOnEntry": true
+        },
+
+        {
+            "type": "cobol",
+            "request": "launch",
+            "name": "COBOL (native): Enterprise Server",
+            "enterpriseServer": {
+                "serverName": "Please enter the name of the server to debug.",
+                "serverAddress": "Please enter the address of the 'mfcs-mp' or 'soap' listener for the server. eg tcp:127.0.0.1:<nnn>."
+            }
+        },
+
+
+        {
+            "type": "cobol",
+            "request": "launch",
+            "name": "COBOL (native): Launch",
+            "program": "${workspaceFolder}/<insert-program-name-here>",
+            "cwd": "${workspaceFolder}",
+            "stopOnEntry": true
+        },
+        {
+            "type": "cobol",
+            "request": "attach",
+            "name": "COBOL (native): Attach to process",
+            "processId": "${command:pickProcess}"
+        }
+    ]
+}
