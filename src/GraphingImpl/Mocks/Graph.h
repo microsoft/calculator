@@ -44,7 +44,7 @@ namespace MockGraphingImpl
             return m_variables;
         }
 
-        virtual void SetArgValue(std::wstring variableName, double value)
+        virtual void SetArgValue(std::wstring variableName, double /*value*/)
         {
         }
 

@@ -22,33 +22,33 @@ namespace MockGraphingImpl
         {
         }
 
-        virtual HRESULT SetGraphSize(unsigned int width, unsigned int height)
+        virtual HRESULT SetGraphSize(unsigned int /*width*/, unsigned int /*height*/)
         {
             return S_OK;
         }
-        virtual HRESULT SetDpi(float dpiX, float dpiY)
+        virtual HRESULT SetDpi(float /*dpiX*/, float /*dpiY*/)
         {
             return S_OK;
         }
 
-        virtual HRESULT DrawD2D1(ID2D1Factory* pDirect2dFactory, ID2D1RenderTarget* pRenderTarget, bool& hasSomeMissingDataOut)
+        virtual HRESULT DrawD2D1(ID2D1Factory* /*pDirect2dFactory*/, ID2D1RenderTarget* /*pRenderTarget*/, bool& hasSomeMissingDataOut)
         {
             hasSomeMissingDataOut = false;
             return S_OK;
         }
 
         virtual HRESULT GetClosePointData(
-            double inScreenPointX,
-            double inScreenPointY,
+            double /*inScreenPointX*/,
+            double /*inScreenPointY*/,
             double precision,
             int& formulaIdOut,
             float& xScreenPointOut,
             float& yScreenPointOut,
             double& xValueOut,
             double& yValueOut,
-            double& rhoValueOut,
-            double& thetaValueOut,
-            double& tValueOut)
+            double& /*rhoValueOut*/,
+            double& /*thetaValueOut*/,
+            double& /*tValueOut*/)
         {
             formulaIdOut = 0;
             xScreenPointOut = 0;
@@ -68,11 +68,11 @@ namespace MockGraphingImpl
             return S_OK;
         }
 
-        virtual HRESULT ChangeRange(Graphing::Renderer::ChangeRangeAction action)
+        virtual HRESULT ChangeRange(Graphing::Renderer::ChangeRangeAction /*action*/)
         {
             return S_OK;
         }
-        virtual HRESULT MoveRangeByRatio(double ratioX, double ratioY)
+        virtual HRESULT MoveRangeByRatio(double /*ratioX*/, double /*ratioY*/)
         {
             return S_OK;
         }

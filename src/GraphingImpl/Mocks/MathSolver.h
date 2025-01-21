@@ -10,11 +10,11 @@ namespace MockGraphingImpl
     class ParsingOptions : public Graphing::IParsingOptions
     {
     public:
-        void SetFormatType(Graphing::FormatType type) override
+        void SetFormatType(Graphing::FormatType /*type*/) override
         {
         }
 
-        void SetLocalizationType(Graphing::LocalizationType value) override
+        void SetLocalizationType(Graphing::LocalizationType /*value*/) override
         {
         }
     };
@@ -43,15 +43,15 @@ namespace MockGraphingImpl
     class FormatOptions : public Graphing::IFormatOptions
     {
     public:
-        void SetFormatType(Graphing::FormatType type) override
+        void SetFormatType(Graphing::FormatType /*type*/) override
         {
         }
 
-        void SetMathMLPrefix(const std::wstring& value) override
+        void SetMathMLPrefix(const std::wstring& /*value*/) override
         {
         }
 
-        void SetLocalizationType(Graphing::LocalizationType value) override
+        void SetLocalizationType(Graphing::LocalizationType /*value*/) override
         {
         }
     };
@@ -115,7 +115,7 @@ namespace MockGraphingImpl
             return m_formatOptions;
         }
 
-        std::unique_ptr<Graphing::IExpression> ParseInput(const std::wstring& input, int& errorCodeOut, int& errorTypeOut) override
+        std::unique_ptr<Graphing::IExpression> ParseInput(const std::wstring& input, int& /*errorCodeOut*/, int& /*errorTypeOut*/) override
         {
             if (input.empty())
             {
@@ -125,7 +125,7 @@ namespace MockGraphingImpl
             return std::make_unique<MockExpression>(MockExpression{});
         }
 
-        void HRErrorToErrorInfo(HRESULT hr, int& errorCodeOut, int& errorTypeOut)
+        void HRErrorToErrorInfo(HRESULT /*hr*/, int& /*errorCodeOut*/, int& /*errorTypeOut*/)
         {
         }
 
@@ -133,12 +133,12 @@ namespace MockGraphingImpl
 
         std::shared_ptr<Graphing::IGraph> CreateGrapher() override;
 
-        std::wstring Serialize(const Graphing::IExpression* expression) override
+        std::wstring Serialize(const Graphing::IExpression* /*expression*/) override
         {
             return L"";
         }
 
-        Graphing::IGraphFunctionAnalysisData IMathSolver::Analyze(const Graphing::Analyzer::IGraphAnalyzer* analyzer)
+        Graphing::IGraphFunctionAnalysisData IMathSolver::Analyze(const Graphing::Analyzer::IGraphAnalyzer* /*analyzer*/)
         {
             return Graphing::IGraphFunctionAnalysisData{};
         }

@@ -80,8 +80,6 @@ namespace GraphControl
         auto cw = CoreWindow::GetForCurrentThread();
         cw->KeyDown += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyDown);
         cw->KeyUp += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyUp);
-
-        auto& formatOptions = m_solver->FormatOptions();
     }
 
     void Grapher::ZoomFromCenter(double scale)
@@ -505,7 +503,6 @@ namespace GraphControl
                 if (graphVar->GetVariableName() != s_X && graphVar->GetVariableName() != s_Y)
                 {
                     auto key = ref new String(graphVar->GetVariableName().data());
-                    double value = 1.0;
 
                     Variable ^ variable;
 
@@ -602,7 +599,7 @@ namespace GraphControl
         TryUpdateGraph(false);
     }
 
-    void Grapher::OnUseCommaDecimalSeperatorPropertyChanged(bool oldValue, bool newValue)
+    void Grapher::OnUseCommaDecimalSeperatorPropertyChanged(bool /*oldValue*/, bool newValue)
     {
         if (newValue)
         {
@@ -1063,7 +1060,7 @@ winrt::fire_and_forget Grapher::OnGridLinesColorPropertyChanged(Windows::UI::Col
     }
 }
 
-void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
+void Grapher::OnLineWidthPropertyChanged(double /*oldValue*/, double /*newValue*/)
 {
     if (m_graph)
     {
