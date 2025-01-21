@@ -129,8 +129,8 @@ namespace GraphControl::DX
         if (m_swapChainPanel != nullptr)
         {
             // Initialize the active tracing location to just above and to the right of the center of the graph area
-            m_activeTracingPointerLocation.X = m_swapChainPanel->ActualWidth / 2 + 40;
-            m_activeTracingPointerLocation.Y = m_swapChainPanel->ActualHeight / 2 - 40;
+            m_activeTracingPointerLocation.X = static_cast<float>(m_swapChainPanel->ActualWidth / 2 + 40);
+            m_activeTracingPointerLocation.Y = static_cast<float>(m_swapChainPanel->ActualHeight / 2 - 40);
         }
     }
 
