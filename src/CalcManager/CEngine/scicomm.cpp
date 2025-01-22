@@ -780,6 +780,11 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         DisplayNum();
         break;
 
+    case IDC_ENG:
+        m_nFE = NumberFormat::Engineering;
+        DisplayNum();
+        break;
+
     case IDC_EXP:
         if (m_bRecord && !m_fIntegerMode && m_input.TryBeginExponent())
         {
