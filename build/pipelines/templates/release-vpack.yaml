@@ -35,7 +35,7 @@ jobs:
       downloadDirectory: $(Build.SourcesDirectory)
       vstsFeed: WindowsInboxApps
       vstsFeedPackage: calculator-internals
-      vstsPackageVersion: 0.0.112
+      vstsPackageVersion: 0.0.114
 
   - pwsh: |
       $configPath = "$(Build.SourcesDirectory)\Tools\Build\Signing\ESRP-auth.json"

@@ -55,7 +55,7 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        vstsPackageVersion: 0.0.112
+        vstsPackageVersion: 0.0.114
 
   - task: NuGetToolInstaller@1
     displayName: Use NuGet 6.x
