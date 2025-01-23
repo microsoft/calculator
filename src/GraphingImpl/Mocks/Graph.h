@@ -29,7 +29,7 @@ namespace MockGraphingImpl
             return std::nullopt;
         }
 
-        HRESULT GetInitializationError()
+        HRESULT GetInitializationError() const
         {
             return S_OK;
         }
