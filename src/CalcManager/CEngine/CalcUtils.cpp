@@ -44,7 +44,6 @@ bool IsGuiSettingOpCode(OpCode opCode)
     case IDC_FE:
     case IDC_MCLEAR:
     case IDC_BACK:
-    case IDC_EXP:
     case IDC_STORE:
     case IDC_MPLUS:
     case IDC_MMINUS:
