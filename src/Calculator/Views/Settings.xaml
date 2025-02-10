@@ -131,8 +131,8 @@
 
                                 <HyperlinkButton x:Name="AboutEULA"
                                                  Padding="0"
-                                                 NavigateUri="https://go.microsoft.com/fwlink/?LinkID=529064"
-                                                 ToolTipService.ToolTip="https://go.microsoft.com/fwlink/?LinkID=529064">
+                                                 NavigateUri="ms-settings:about"
+                                                 ToolTipService.ToolTip="ms-settings:about">
                                     <TextBlock FontSize="{ThemeResource BodyFontSize}"
                                                Text="{utils:ResourceString Name=AboutEULA/Text}"
                                                TextWrapping="Wrap"/>
