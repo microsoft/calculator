@@ -29,6 +29,7 @@
 #define IDM_RAD 322
 #define IDM_GRAD 323
 #define IDM_DEGREES 324
+#define IDC_ENG 326
 
 #define IDC_HEX IDM_HEX
 #define IDC_DEC IDM_DEC

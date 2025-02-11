@@ -51,7 +51,7 @@ namespace CalculatorUITests
             }
             CalculatorApp.EnsureCalculatorHasFocus();
             page.ScientificOperators.SetAngleOperator(AngleOperatorState.Degrees);
-            page.ScientificOperators.ResetFEButton(FEButtonState.Normal);
+            page.ScientificOperators.SetNumberFormat(FEButtonState.Auto);
         }
 
         [TestCleanup]
@@ -161,11 +161,22 @@ namespace CalculatorUITests
 
         [TestMethod]
         [Priority(0)]
-        public void SmokeTest_FixedToExponential()
+        public void SmokeTest_ScientificFormat()
         {
-            page.ScientificOperators.FixedToExponentialButton.Click();
+            page.ScientificOperators.SetNumberFormat(FEButtonState.Scientific);
+            page.StandardOperators.NumberPad.Input(0.123);
             page.StandardOperators.EqualButton.Click();
-            Assert.AreEqual("0.e+0", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("1.23e-1", page.CalculatorResults.GetCalculatorResultText());
+        }
+
+        [TestMethod]
+        [Priority(0)]
+        public void SmokeTest_EngineeringFormat()
+        {
+            page.ScientificOperators.SetNumberFormat(FEButtonState.Engineering);
+            page.StandardOperators.NumberPad.Input(0.123);
+            page.StandardOperators.EqualButton.Click();
+            Assert.AreEqual("123.e-3", page.CalculatorResults.GetCalculatorResultText());
         }
         #endregion
 
