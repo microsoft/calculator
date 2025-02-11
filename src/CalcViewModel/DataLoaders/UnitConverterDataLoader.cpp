@@ -175,9 +175,9 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
 
     bool useWattInsteadOfKilowatt = m_currentRegionCode == "GB";
 
-    // Use Pyeong, a Korean floorspace unit.
-    // https://en.wikipedia.org/wiki/Korean_units_of_measurement#Area
-    bool usePyeong = m_currentRegionCode == L"KP" || m_currentRegionCode == L"KR";
+    // Use 坪(Tsubo), or Pyeong in Korean, a Japanese unit of floorspace.
+    // https://en.wikipedia.org/wiki/Japanese_units_of_measurement#Area
+    bool usePyeong = m_currentRegionCode == L"JP" || m_currentRegionCode == L"TW" || m_currentRegionCode == L"KP" || m_currentRegionCode == L"KR";
 
     vector<OrderedUnit> areaUnits;
     areaUnits.push_back(
