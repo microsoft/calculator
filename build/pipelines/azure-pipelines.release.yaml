@@ -8,10 +8,15 @@ trigger: none
 pr: none
 
 variables:
-  versionMajor: 1 #temp change
-  versionMinor: 2502
-  versionBuild: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
-  versionPatch: 0
+  - name: versionMajor
+    value: 1 #temp change
+  - name: versionMinor
+    value: 2502
+  - name: versionBuild
+    value: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
+  - name: versionPatch
+    value: 0
+  - group: CalculatorTSAConfig
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
 
@@ -33,7 +38,6 @@ resources:
     name: 1ESPipelineTemplates/1ESPipelineTemplates
     ref: refs/tags/release
   variables:
-  - group: CalculatorTSAConfig
 
 extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
