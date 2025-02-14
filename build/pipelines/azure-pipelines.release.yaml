@@ -32,6 +32,8 @@ resources:
     type: git
     name: 1ESPipelineTemplates/1ESPipelineTemplates
     ref: refs/tags/release
+  variables:
+  - group: CalculatorTSAConfig
 
 extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
@@ -43,6 +45,13 @@ extends:
     sdl:
       tsa:
         enabled: true
+        config:
+          codebaseName: $(CodebaseName)
+          notificationAliases: $(NotificationAliases)
+          instanceUrl: $(InstanceUrl)
+          projectName: $(ProjectName)
+          areaPath: $(AreaPath)
+          serviceTreeID: $(ServiceTreeID)
       codeql:
         tsaEnabled: true
 
