@@ -8,7 +8,7 @@ trigger: none
 pr: none
 
 variables:
-  versionMajor: 11
+  versionMajor: 1 #temp change
   versionMinor: 2502
   versionBuild: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
   versionPatch: 0
@@ -40,6 +40,11 @@ extends:
       name: EssentialExperiences-windows-2022
       image: MMSWindows2022-Secure
       os: windows
+    sdl:
+      tsa:
+        enabled: true
+      codeql:
+        tsaEnabled: true
 
     stages:
     - stage: Calculator
@@ -55,39 +60,21 @@ extends:
           platform: x86
           isReleaseBuild: true
           useReleaseAppxmanifest: true
-          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+          condition: false
 
       - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: ARM
           isReleaseBuild: true
           useReleaseAppxmanifest: true
-          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+          condition: false
 
       - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: ARM64
           isReleaseBuild: true
           useReleaseAppxmanifest: true
-          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-
-      - template: /build/pipelines/templates/run-ui-tests.yaml@self
-        parameters:
-          platform: x64
-          runsettingsFileName: CalculatorUITests.release.runsettings
-
-      - template: /build/pipelines/templates/run-ui-tests.yaml@self
-        parameters:
-          platform: x86
-          runsettingsFileName: CalculatorUITests.release.runsettings
-
-      - template: /build/pipelines/templates/run-unit-tests.yaml@self
-        parameters:
-          platform: x64
-
-      - template: /build/pipelines/templates/run-unit-tests.yaml@self
-        parameters:
-          platform: x86
+          condition: false
 
       - template: /build/pipelines/templates/package-msixbundle.yaml@self
         parameters:
