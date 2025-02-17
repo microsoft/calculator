@@ -11,16 +11,18 @@ namespace UnitConversionManager::NumberFormattingUtils
     /// <param name="number">number to trim</param>
     void TrimTrailingZeros(_Inout_ wstring& number)
     {
+        //check if the number contains a decimal point.
         if (number.find(L'.') == wstring::npos)
         {
-            return;
+            return; //no trailing zeros or decimal to trim.
         }
 
+        //find the last non-zero digit and erase and triling zeros.
         if (auto i = number.find_last_not_of(L'0'); i != wstring::npos)
         {
             number.erase(number.cbegin() + i + 1, number.cend());
         }
-
+        //remove the trailing decimal point if it exists.
         if (number.back() == L'.')
         {
             number.pop_back();
@@ -32,12 +34,15 @@ namespace UnitConversionManager::NumberFormattingUtils
     /// <param name="value">the number</param>
     unsigned int GetNumberDigits(wstring value)
     {
+        //trim trailing zeros and decimal point.
         TrimTrailingZeros(value);
         unsigned int numberSignificantDigits = static_cast<unsigned int>(value.size());
+        //if the number contains a decimal point, reduce the count by one.
         if (value.find(L'.') != wstring::npos)
         {
             --numberSignificantDigits;
         }
+        //if the number is negative, reduce the count by one
         if (value.find(L'-') != wstring::npos)
         {
             --numberSignificantDigits;
