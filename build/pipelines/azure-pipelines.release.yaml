@@ -49,12 +49,12 @@ extends:
       tsa:
         enabled: true
         config:
-          codebaseName: $(CodebaseName)
-          notificationAliases: $(NotificationAliases)
-          instanceUrl: $(InstanceUrl)
-          projectName: $(ProjectName)
-          areaPath: $(AreaPath)
-          serviceTreeID: $(ServiceTreeID)
+          codebaseName: $(TSA.CodebaseName)
+          notificationAliases: $(TSA.NotificationAliases)
+          instanceUrl: $(TSA.InstanceUrl)
+          projectName: $(TSA.ProjectName)
+          areaPath: $(TSA.AreaPath)
+          serviceTreeID: $(TSA.ServiceTreeID)
       codeql:
         tsaEnabled: true
 
