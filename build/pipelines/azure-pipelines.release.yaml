@@ -55,6 +55,7 @@ extends:
           projectName: $(TSA.ProjectName)
           areaPath: $(TSA.AreaPath)
           serviceTreeID: $(TSA.ServiceTreeID)
+          allTools: true
       codeql:
         tsaEnabled: true
 
@@ -72,21 +73,39 @@ extends:
           platform: x86
           isReleaseBuild: true
           useReleaseAppxmanifest: true
-          condition: false
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
       - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: ARM
           isReleaseBuild: true
           useReleaseAppxmanifest: true
-          condition: false
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
       - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
           platform: ARM64
           isReleaseBuild: true
           useReleaseAppxmanifest: true
-          condition: false
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
+        parameters:
+          platform: x64
+          runsettingsFileName: CalculatorUITests.release.runsettings
+
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
+        parameters:
+          platform: x86
+          runsettingsFileName: CalculatorUITests.release.runsettings
+
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
+        parameters:
+          platform: x64
+
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
+        parameters:
+          platform: x86
 
       - template: /build/pipelines/templates/package-msixbundle.yaml@self
         parameters:
