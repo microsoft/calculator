@@ -9,7 +9,7 @@ pr: none
 
 variables:
   - name: versionMajor
-    value: 1 #temp
+    value: 11
   - name: versionMinor
     value: 2502
   - name: versionBuild
