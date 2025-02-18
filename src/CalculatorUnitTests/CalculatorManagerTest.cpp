@@ -752,6 +752,11 @@ namespace CalculatorManagerTest
 
         Command commands10[] = { Command::ModeProgrammer, Command::Command1, Command::CommandRORC, Command::CommandRORC, Command::CommandNULL };
         TestDriver::Test(L"-9,223,372,036,854,775,808", L"RoR(RoR(1))", commands10, true, false);
+
+        Command commands11[] = { Command::ModeProgrammer, Command::CommandDec, Command::Command4, Command::Command2, Command::Command9,   Command::Command4,
+                                Command::Command9,       Command::Command6,   Command::Command7, Command::Command2, Command::Command9,   Command::Command6,
+                                Command::CommandDIV,     Command::Command2,   Command::Command5, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"16,843,009", L"4294967296 \x00F7 255=", commands11, true, false);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestMemory()
