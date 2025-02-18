@@ -8,10 +8,15 @@ trigger: none
 pr: none
 
 variables:
-  versionMajor: 11
-  versionMinor: 2502
-  versionBuild: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
-  versionPatch: 0
+  - name: versionMajor
+    value: 11
+  - name: versionMinor
+    value: 2502
+  - name: versionBuild
+    value: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
+  - name: versionPatch
+    value: 0
+  - group: CalculatorTSAConfig
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
 
@@ -40,6 +45,19 @@ extends:
       name: EssentialExperiences-windows-2022
       image: MMSWindows2022-Secure
       os: windows
+    sdl:
+      tsa:
+        enabled: true
+        config:
+          codebaseName: $(TSA.CodebaseName)
+          notificationAliases: $(TSA.NotificationAliases)
+          instanceUrl: $(TSA.InstanceUrl)
+          projectName: $(TSA.ProjectName)
+          areaPath: $(TSA.AreaPath)
+          serviceTreeID: $(TSA.ServiceTreeID)
+          allTools: true
+      codeql:
+        tsaEnabled: true
 
     stages:
     - stage: Calculator
