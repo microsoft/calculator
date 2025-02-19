@@ -303,6 +303,12 @@ void intrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
         DUPRAT(pret, *px);
         remrat(&pret, rat_one);
 
+        // Flatten pret in case it's not aligned with px after remrat operation
+        if (!equnum((*px)->pq, pret->pq))
+        {
+            flatrat(pret, radix, precision);
+        }
+
         subrat(px, pret, precision);
         destroyrat(pret);
 
