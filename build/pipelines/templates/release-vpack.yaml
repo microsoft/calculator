@@ -28,6 +28,15 @@ jobs:
       contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
       targetFolder: $(Pipeline.Workspace)\vpack\msixBundle
 
+  - task: AzureCLI@2
+    displayName: Register SBOM sign service connection
+    inputs:
+      azureSubscription: Essential Experiences SBOMSign PME
+      scriptType: ps
+      scriptLocation: inlineScript
+      inlineScript: Write-Host "Registering service connection for current run"
+      visibleAzLogin: false
+
   - task: UniversalPackages@0
     displayName: Download internals package
     inputs:
@@ -35,7 +44,7 @@ jobs:
       downloadDirectory: $(Build.SourcesDirectory)
       vstsFeed: WindowsInboxApps
       vstsFeedPackage: calculator-internals
-      vstsPackageVersion: 0.0.114
+      vstsPackageVersion: 0.0.117
 
   - pwsh: |
       $configPath = "$(Build.SourcesDirectory)\Tools\Build\Signing\ESRP-auth.json"
