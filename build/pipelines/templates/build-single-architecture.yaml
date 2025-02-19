@@ -32,6 +32,8 @@ jobs:
     sdl:
       binskim:
         analyzeTargetGlob: +:f|$(Agent.BuildDirectory)\binskim\**\*
+      prefast:
+        enable: true
 
     outputs:
     - output: pipelineArtifact
@@ -42,6 +44,14 @@ jobs:
   steps:
   - checkout: self
     fetchDepth: 1
+
+  - task: WinUndockNativeCompiler@1
+    displayName: Use LKG native compiler
+    inputs:
+      compilerPackageName: 'DevDiv.rel.LKG18.VCTools'
+      compilerPackageVersion: '19.42.3443710001+DevDivGIT.CI20250110.04-466784EE54DF2F302AD0CD6790031C954EF41DA23DA4415D73A76ADF260F2D21'
+      slnDirectory: $(Build.SourcesDirectory)\src
+      runPrefastDuring: Build
 
   - ${{ if eq(parameters.isOSSBuild, true) }}:
     - task: nuget-security-analysis@0
