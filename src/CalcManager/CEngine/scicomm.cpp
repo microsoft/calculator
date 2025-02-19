@@ -482,8 +482,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         ResolveHighestPrecedenceOperation();
         while (m_fPrecedence && m_precedenceOpCount > 0)
         {
-            m_precedenceOpCount--;
-            m_nOpCode = m_nPrecOp[m_precedenceOpCount];
+            m_nOpCode = m_nPrecOp[--m_precedenceOpCount];
             m_lastVal = m_precedenceVals[m_precedenceOpCount];
 
             // Precedence Inversion check
@@ -601,9 +600,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             m_HistoryCollector.AddCloseBraceToHistory();
 
             // Now get back the operation and opcode at the beginning of this parenthesis pair
-
-            m_openParenCount -= 1;
-            m_lastVal = m_parenVals[m_openParenCount];
+            m_lastVal = m_parenVals[--m_openParenCount];
             m_nOpCode = m_nOp[m_openParenCount];
 
             // m_bChangeOp should be true if m_nOpCode is valid
