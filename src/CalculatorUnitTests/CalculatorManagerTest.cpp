@@ -757,6 +757,26 @@ namespace CalculatorManagerTest
                                 Command::Command9,       Command::Command6,   Command::Command7, Command::Command2, Command::Command9,   Command::Command6,
                                 Command::CommandDIV,     Command::Command2,   Command::Command5, Command::Command5, Command::CommandEQU, Command::CommandNULL };
         TestDriver::Test(L"16,843,009", L"4294967296 \x00F7 255=", commands11, true, false);
+
+        Command commands12[] = {
+            Command::ModeProgrammer, Command::CommandDec, Command::Command4, Command::Command2, Command::Command9,   Command::Command4,
+            Command::Command9,       Command::Command6,   Command::Command7, Command::Command3, Command::Command0,   Command::Command3,
+            Command::CommandDIV,     Command::Command2,   Command::Command5, Command::Command5, Command::CommandEQU, Command::CommandNULL
+        };
+        TestDriver::Test(L"16,843,009", L"4294967303 \x00F7 255=", commands12, true, false);
+
+        Command commands13[] = {
+            Command::ModeProgrammer, Command::CommandDec, Command::Command1, Command::Command0, Command::Command0, Command::Command0,
+            Command::Command0, Command::Command0, Command::Command0, Command::Command0, Command::Command0, Command::Command0, Command::CommandDIV,
+            Command::Command6, Command::Command4, Command::Command4, Command::Command8, Command::Command7, Command::CommandEQU, Command::CommandNULL
+        };
+        TestDriver::Test(L"15,507", L"1000000000 \x00F7 64487=", commands13, true, false);
+
+        Command commands14[] = { Command::ModeProgrammer, Command::CommandDec, Command::Command1,   Command::Command0,   Command::Command0,
+                                 Command::Command0,       Command::Command0,   Command::Command0,   Command::Command0,   Command::Command0,
+                                 Command::Command0,       Command::Command0,   Command::CommandDIV, Command::Command6,   Command::Command4,
+                                 Command::Command4,       Command::Command8,   Command::Command8,   Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"15,506", L"1000000000 \x00F7 64488=", commands14, true, false);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestMemory()
