@@ -75,7 +75,7 @@ namespace
     // TODO: unit testing.
     std::optional<std::wstring> ParseLanguageCode(const wchar_t* bcp47)
     {
-        // the IETF BCP 47 language tag syntax is: language[-script][-region][-variant[*][-extension*][-privateuse*]]
+        // the IETF BCP 47 language tag syntax is: language[-script][-region]...
         std::vector<std::wstring> segments;
         std::wstring cur;
         // TODO: use C++20 - ranges::views::split_view in the future.
@@ -102,10 +102,30 @@ namespace
 
         switch (segments.size())
         {
+        case 1:
+            return segments[0];
         case 2:
-            return segments[0] + L"-" + segments[1];
+            if (segments[1].size() == 2)
+            { // segments[1] is a region subtag.
+                return segments[0] + L"-" + segments[1];
+            }
+            else
+            {
+                return segments[0];
+            }
         case 3:
-            return segments[0] + L"-" + segments[2];
+            if (segments[1].size() == 2)
+            { // segments[1] is a region subtag.
+                return segments[0] + L"-" + segments[1];
+            }
+            else if (segments[1].size() != 2 && segments[2].size() == 2)
+            { // segments[2] is a region subtag.
+                return segments[0] + L"-" + segments[2];
+            }
+            else
+            {
+                return segments[0];
+            }
         default:
             return std::nullopt;
         }
@@ -144,20 +164,14 @@ CurrencyDataLoader::CurrencyDataLoader(const wchar_t* forcedResponseLanguage)
 {
     if (forcedResponseLanguage != nullptr)
     {
+        assert(wcslen(forcedResponseLanguage) > 0 && "forcedResponseLanguage shall not be empty.");
         m_responseLanguage = ref new Platform::String(forcedResponseLanguage);
     }
-    else
+    else if (GlobalizationPreferences::Languages->Size > 0)
     {
-        if (GlobalizationPreferences::Languages->Size > 0)
+        if (auto lang = ParseLanguageCode(GlobalizationPreferences::Languages->GetAt(0)->Data()); lang.has_value())
         {
-            if (auto lang = ParseLanguageCode(GlobalizationPreferences::Languages->GetAt(0)->Data()); lang.has_value())
-            {
-                m_responseLanguage = ref new String{ lang->c_str() };
-            }
-        }
-        else
-        {
-            m_responseLanguage = L"en-US";
+            m_responseLanguage = ref new Platform::String{ lang->c_str() };
         }
     }
 
