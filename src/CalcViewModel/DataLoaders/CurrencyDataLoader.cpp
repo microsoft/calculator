@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include <optional>
+
 #include "CurrencyDataLoader.h"
 #include "Common/AppResourceProvider.h"
 #include "Common/LocalizationStringUtil.h"
@@ -31,41 +33,104 @@ using namespace Windows::System::UserProfile;
 using namespace Windows::UI::Core;
 using namespace Windows::Web::Http;
 
-static constexpr auto CURRENCY_UNIT_FROM_KEY = L"CURRENCY_UNIT_FROM_KEY";
-static constexpr auto CURRENCY_UNIT_TO_KEY = L"CURRENCY_UNIT_TO_KEY";
+namespace
+{
+    constexpr auto CURRENCY_UNIT_FROM_KEY = L"CURRENCY_UNIT_FROM_KEY";
+    constexpr auto CURRENCY_UNIT_TO_KEY = L"CURRENCY_UNIT_TO_KEY";
 
-// Calculate number of 100-nanosecond intervals-per-day
-// (1 interval/100 nanosecond)(100 nanosecond/1e-7 s)(60 s/1 min)(60 min/1 hr)(24 hr/1 day) = (interval/day)
-static constexpr long long DAY_DURATION = 1LL * 60 * 60 * 24 * 10000000;
-static constexpr long long WEEK_DURATION = DAY_DURATION * 7;
+    // Calculate number of 100-nanosecond intervals-per-day
+    // (1 interval/100 nanosecond)(100 nanosecond/1e-7 s)(60 s/1 min)(60 min/1 hr)(24 hr/1 day) = (interval/day)
+    constexpr long long DAY_DURATION = 1LL * 60 * 60 * 24 * 10000000;
+    constexpr long long WEEK_DURATION = DAY_DURATION * 7;
 
-static constexpr int FORMATTER_RATE_FRACTION_PADDING = 2;
-static constexpr int FORMATTER_RATE_MIN_DECIMALS = 4;
-static constexpr int FORMATTER_RATE_MIN_SIGNIFICANT_DECIMALS = 4;
+    constexpr int FORMATTER_RATE_FRACTION_PADDING = 2;
+    constexpr int FORMATTER_RATE_MIN_DECIMALS = 4;
+    constexpr int FORMATTER_RATE_MIN_SIGNIFICANT_DECIMALS = 4;
 
-static constexpr auto CACHE_TIMESTAMP_KEY = L"CURRENCY_CONVERTER_TIMESTAMP";
-static constexpr auto CACHE_LANGCODE_KEY = L"CURRENCY_CONVERTER_LANGCODE";
-static constexpr auto CACHE_DELIMITER = L"%";
+    constexpr auto CACHE_TIMESTAMP_KEY = L"CURRENCY_CONVERTER_TIMESTAMP";
+    constexpr auto CACHE_LANGCODE_KEY = L"CURRENCY_CONVERTER_LANGCODE";
+    constexpr auto CACHE_DELIMITER = L"%";
 
-static constexpr auto STATIC_DATA_FILENAME = L"CURRENCY_CONVERTER_STATIC_DATA.txt";
-static constexpr array<wstring_view, 5> STATIC_DATA_PROPERTIES = { wstring_view{ L"CountryCode", 11 },
-                                                                   wstring_view{ L"CountryName", 11 },
-                                                                   wstring_view{ L"CurrencyCode", 12 },
-                                                                   wstring_view{ L"CurrencyName", 12 },
-                                                                   wstring_view{ L"CurrencySymbol", 14 } };
+    constexpr auto STATIC_DATA_FILENAME = L"CURRENCY_CONVERTER_STATIC_DATA.txt";
+    constexpr array<wstring_view, 5> STATIC_DATA_PROPERTIES = { wstring_view{ L"CountryCode", 11 },
+                                                                wstring_view{ L"CountryName", 11 },
+                                                                wstring_view{ L"CurrencyCode", 12 },
+                                                                wstring_view{ L"CurrencyName", 12 },
+                                                                wstring_view{ L"CurrencySymbol", 14 } };
 
-static constexpr auto ALL_RATIOS_DATA_FILENAME = L"CURRENCY_CONVERTER_ALL_RATIOS_DATA.txt";
-static constexpr auto RATIO_KEY = L"Rt";
-static constexpr auto CURRENCY_CODE_KEY = L"An";
-static constexpr array<wstring_view, 2> ALL_RATIOS_DATA_PROPERTIES = { wstring_view{ RATIO_KEY, 2 }, wstring_view{ CURRENCY_CODE_KEY, 2 } };
+    constexpr auto ALL_RATIOS_DATA_FILENAME = L"CURRENCY_CONVERTER_ALL_RATIOS_DATA.txt";
+    constexpr auto RATIO_KEY = L"Rt";
+    constexpr auto CURRENCY_CODE_KEY = L"An";
+    constexpr array<wstring_view, 2> ALL_RATIOS_DATA_PROPERTIES = { wstring_view{ RATIO_KEY, 2 }, wstring_view{ CURRENCY_CODE_KEY, 2 } };
 
-static constexpr auto DEFAULT_FROM_TO_CURRENCY_FILE_URI = L"ms-appx:///DataLoaders/DefaultFromToCurrency.json";
-static constexpr auto FROM_KEY = L"from";
-static constexpr auto TO_KEY = L"to";
+    constexpr auto DEFAULT_FROM_TO_CURRENCY_FILE_URI = L"ms-appx:///DataLoaders/DefaultFromToCurrency.json";
+    constexpr auto FROM_KEY = L"from";
+    constexpr auto TO_KEY = L"to";
 
-// Fallback default values.
-static constexpr auto DEFAULT_FROM_CURRENCY = DefaultCurrencyCode.data();
-static constexpr auto DEFAULT_TO_CURRENCY = L"EUR";
+    // Fallback default values.
+    constexpr auto DEFAULT_FROM_CURRENCY = DefaultCurrencyCode.data();
+    constexpr auto DEFAULT_TO_CURRENCY = L"EUR";
+
+    // ParseLanguageCode returns language code in form of `lang-region`
+    // TODO: unit testing.
+    std::optional<std::wstring> ParseLanguageCode(const wchar_t* bcp47)
+    {
+        // the IETF BCP 47 language tag syntax is: language[-script][-region]...
+        std::vector<std::wstring> segments;
+        std::wstring cur;
+        // TODO: use C++20 - ranges::views::split_view in the future.
+        for (; *bcp47 != L'\0' && segments.size() < 3; ++bcp47)
+        {
+            auto ch = *bcp47;
+            if (std::isalpha(static_cast<unsigned char>(ch)))
+            {
+                cur += ch;
+            }
+            else if (ch == L'-')
+            {
+                segments.push_back(std::exchange(cur, {}));
+            }
+            else
+            {
+                return std::nullopt;
+            }
+        }
+        if (!cur.empty())
+        {
+            segments.push_back(std::move(cur));
+        }
+
+        switch (segments.size())
+        {
+        case 1:
+            return segments[0];
+        case 2:
+            if (segments[1].size() == 2)
+            { // segments[1] is a region subtag.
+                return segments[0] + L"-" + segments[1];
+            }
+            else
+            {
+                return segments[0];
+            }
+        case 3:
+            if (segments[1].size() == 2)
+            { // segments[1] is a region subtag.
+                return segments[0] + L"-" + segments[1];
+            }
+            else if (segments[1].size() != 2 && segments[2].size() == 2)
+            { // segments[2] is a region subtag.
+                return segments[0] + L"-" + segments[2];
+            }
+            else
+            {
+                return segments[0];
+            }
+        default:
+            return std::nullopt;
+        }
+    }
+} // namespace
 
 namespace CalculatorApp
 {
@@ -99,25 +164,14 @@ CurrencyDataLoader::CurrencyDataLoader(const wchar_t* forcedResponseLanguage)
 {
     if (forcedResponseLanguage != nullptr)
     {
+        assert(wcslen(forcedResponseLanguage) > 0 && "forcedResponseLanguage shall not be empty.");
         m_responseLanguage = ref new Platform::String(forcedResponseLanguage);
     }
-    else
+    else if (GlobalizationPreferences::Languages->Size > 0)
     {
-        if (GlobalizationPreferences::Languages->Size > 0)
+        if (auto lang = ParseLanguageCode(GlobalizationPreferences::Languages->GetAt(0)->Data()); lang.has_value())
         {
-            m_responseLanguage = GlobalizationPreferences::Languages->GetAt(0);
-
-            // Workaround for Simplified Chinese localization issue of currency API.
-            std::wstring_view responseLanguage(m_responseLanguage->Data(), m_responseLanguage->Length());
-            std::match_results<std::wstring_view::const_iterator> match;
-            if (std::regex_match(responseLanguage.cbegin(), responseLanguage.cend(), match, std::wregex(L"zh-hans-[a-z]+", std::regex_constants::icase)))
-            {
-                m_responseLanguage = L"zh-CN";
-            }
-        }
-        else
-        {
-            m_responseLanguage = L"en-US";
+            m_responseLanguage = ref new Platform::String{ lang->c_str() };
         }
     }
 
