@@ -11,7 +11,7 @@ variables:
   - name: versionMajor
     value: 11
   - name: versionMinor
-    value: 2502
+    value: 2503
   - name: versionBuild
     value: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
   - name: versionPatch
