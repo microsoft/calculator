@@ -2680,11 +2680,11 @@
     <comment>The exact ratio between converted currencies, e.g. "1 USD = 0.8885 EUR". %1 will always be '1'. %2 is the From currency code. %3 is the formatted conversion ratio. %4 is the To currency code.</comment>
   </data>
   <data name="CurrencyTimestampFormat" xml:space="preserve">
-    <value>Güncelleştirilmiş %1 %2</value>
+    <value>Son güncelleme: %1 %2</value>
     <comment>The timestamp of currency conversion ratios fetched from an online service. %1 is the date. %2 is the time. Example: "Updated Sep 28, 2016 5:42 PM"</comment>
   </data>
   <data name="RefreshButtonText.Content" xml:space="preserve">
-    <value>Ücretleri güncelleştir</value>
+    <value>Döviz kurlarını güncelle</value>
     <comment>The text displayed for a hyperlink button that refreshes currency converter ratios.</comment>
   </data>
   <data name="DataChargesMayApply" xml:space="preserve">
@@ -2704,11 +2704,11 @@
     <comment>This string is what is read by Narrator, and other screen readers, when the "Update rates" button in the Currency Converter is clicked.</comment>
   </data>
   <data name="CurrencyRatesUpdated" xml:space="preserve">
-    <value>Döviz kuru güncelleştirildi</value>
+    <value>Döviz kuru güncellendi</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have successfully updated.</comment>
   </data>
   <data name="CurrencyRatesUpdateFailed" xml:space="preserve">
-    <value>Ücretler güncelleştirilemedi</value>
+    <value>Döviz kurları güncellenemedi</value>
     <comment>This string is what is read by Narrator, and other screen readers, when the currency rates in Currency converter have failed to update.</comment>
   </data>
   <data name="HistoryButton.AccessKey" xml:space="preserve">
