@@ -162,8 +162,7 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
       name: Setup dev tools
     - run: |
-        dotnet test ${{ github.workspace }}\download\publish\CalculatorUITests.dll `
-          /Platform:x64 `
-          -- --settings ${{ github.workspace }}\download\publish\CalculatorUITests.ci.runsettings
+        ${{ github.workspace }}\download\publish\CalculatorUITests.exe `
+          --settings ${{ github.workspace }}\download\publish\CalculatorUITests.ci.runsettings
       shell: pwsh
       name: Run UI tests
