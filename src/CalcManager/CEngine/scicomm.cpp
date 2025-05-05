@@ -163,7 +163,15 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     {
         m_bRecord = true;
         m_input.Clear();
-        CheckAndAddLastBinOpToHistory();
+
+        /*
+         * Account for scenarios where an equation includes any input after closing parenthesis - i.e. "(8)2=16".
+         * This prevents the calculator from ending an equation and adding to history prematurely.
+         */
+        if (m_nLastCom != IDC_CLOSEP)
+        {
+            CheckAndAddLastBinOpToHistory();
+        }
     }
 
     // Interpret digit keys.
@@ -185,6 +193,38 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             return;
         }
 
+        // Check if the last command was a closing parenthesis
+        if (m_nLastCom == IDC_CLOSEP)
+        {
+            // Treat this as an implicit multiplication
+            m_nOpCode = IDC_MUL;
+            m_lastVal = m_currentVal;
+
+            // We need to clear any previous state from last calculation
+            m_holdVal = Rational(0);
+            m_bNoPrevEqu = true;
+
+            // Add the operand to history before adding the implicit multiplication
+            if (!m_HistoryCollector.FOpndAddedToHistory())
+            {
+                m_HistoryCollector.AddOpenBraceToHistory();
+                m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
+                m_HistoryCollector.AddCloseBraceToHistory();
+            }
+
+            // Add the implicit multiplication to history
+            m_HistoryCollector.AddBinOpToHistory(m_nOpCode, m_fIntegerMode);
+
+            m_bChangeOp = true;
+            m_nPrevOpCode = 0;
+
+            // Clear any pending operations in the precedence stack
+            while (m_precedenceOpCount > 0)
+            {
+                m_precedenceOpCount--;
+                m_nPrecOp[m_precedenceOpCount] = 0;
+            }
+        }
         DisplayNum();
 
         return;
@@ -504,11 +544,13 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         {
             wstring groupedString = GroupDigitsPerRadix(m_numberString, m_radix);
             m_HistoryCollector.CompleteEquation(groupedString);
+
+            m_lastVal = m_currentVal;
+            m_nPrevOpCode = 0; 
+            m_precedenceOpCount = 0;
         }
 
         m_bChangeOp = false;
-        m_nPrevOpCode = 0;
-
         break;
 
     case IDC_OPENP:

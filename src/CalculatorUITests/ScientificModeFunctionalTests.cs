@@ -4,6 +4,7 @@
 using CalculatorUITestFramework;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace CalculatorUITests
 {
@@ -131,6 +132,47 @@ namespace CalculatorUITests
             page.ScientificOperators.ParenthesisRightButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("12", page.CalculatorResults.GetCalculatorResultText());
+        }
+
+        [TestMethod]
+        [Priority(0)]
+        public void SmokeTest_CloseParenthesis()
+        {
+            /*
+             * TEST #1
+             */
+            page.ScientificOperators.ParenthesisLeftButton.Click();
+            page.StandardOperators.NumberPad.Input(8);
+            page.ScientificOperators.ParenthesisRightButton.Click();
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.EqualButton.Click();
+
+            // Assert calculator & history results
+            Assert.AreEqual("16", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("(8) \x00D7 2=", page.CalculatorResults.GetCalculatorExpressionText());
+
+            var historyItems0 = page.HistoryPanel.GetAllHistoryListViewItems();
+            Assert.IsTrue(historyItems0[0].GetValue().Equals("16", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems0[0].GetExpression().Equals("(8) \x00D7 2=", StringComparison.InvariantCultureIgnoreCase));
+
+            /*
+             * TEST #2
+             */
+            page.ScientificOperators.ParenthesisLeftButton.Click();
+            page.StandardOperators.NumberPad.Input(7);
+            page.StandardOperators.MultiplyButton.Click();
+            page.StandardOperators.NumberPad.Input(2);
+            page.ScientificOperators.ParenthesisRightButton.Click();
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.EqualButton.Click();
+
+            // Assert calculator & history results
+            Assert.AreEqual("28", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("(7 \x00D7 2) \x00D7 2=", page.CalculatorResults.GetCalculatorExpressionText());
+
+            var historyItems1 = page.HistoryPanel.GetAllHistoryListViewItems();
+            Assert.IsTrue(historyItems1[0].GetValue().Equals("28", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems1[0].GetExpression().Equals("(7 \x00D7 2) \x00D7 2=", StringComparison.InvariantCultureIgnoreCase));
         }
 
         [TestMethod]
