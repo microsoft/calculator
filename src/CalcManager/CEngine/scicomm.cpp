@@ -832,6 +832,40 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         break;
 
     case IDC_PNT:
+
+        // Check if the last command was a closing parenthesis
+        if (m_nLastCom == IDC_CLOSEP)
+        {
+            // Treat this as an implicit multiplication
+            m_nOpCode = IDC_MUL;
+            m_lastVal = m_currentVal;
+
+            // We need to clear any previous state from last calculation
+            m_holdVal = Rational(0);
+            m_bNoPrevEqu = true;
+
+            // Add the operand to history before adding the implicit multiplication
+            if (!m_HistoryCollector.FOpndAddedToHistory())
+            {
+                m_HistoryCollector.AddOpenBraceToHistory();
+                m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
+                m_HistoryCollector.AddCloseBraceToHistory();
+            }
+
+            // Add the implicit multiplication to history
+            m_HistoryCollector.AddBinOpToHistory(m_nOpCode, m_fIntegerMode);
+
+            m_bChangeOp = true;
+            m_nPrevOpCode = 0;
+
+            // Clear any pending operations in the precedence stack
+            while (m_precedenceOpCount > 0)
+            {
+                m_precedenceOpCount--;
+                m_nPrecOp[m_precedenceOpCount] = 0;
+            }
+        }
+
         if (m_bRecord && !m_fIntegerMode && m_input.TryAddDecimalPt())
         {
             DisplayNum();

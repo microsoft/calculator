@@ -173,6 +173,40 @@ namespace CalculatorUITests
             var historyItems1 = page.HistoryPanel.GetAllHistoryListViewItems();
             Assert.IsTrue(historyItems1[0].GetValue().Equals("28", StringComparison.InvariantCultureIgnoreCase));
             Assert.IsTrue(historyItems1[0].GetExpression().Equals("(7 \x00D7 2) \x00D7 2=", StringComparison.InvariantCultureIgnoreCase));
+
+            /*
+             * TEST #3
+             */
+            page.ScientificOperators.ParenthesisLeftButton.Click();
+            page.StandardOperators.NumberPad.Input(8);
+            page.ScientificOperators.ParenthesisRightButton.Click();
+            page.StandardOperators.NumberPad.Input(0.5);
+            page.StandardOperators.EqualButton.Click();
+
+            // Assert calculator & history results
+            Assert.AreEqual("4", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("(8) \x00D7 0.5=", page.CalculatorResults.GetCalculatorExpressionText());
+
+            var historyItems2 = page.HistoryPanel.GetAllHistoryListViewItems();
+            Assert.IsTrue(historyItems2[0].GetValue().Equals("4", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems2[0].GetExpression().Equals("(8) \x00D7 0.5=", StringComparison.InvariantCultureIgnoreCase));
+
+            /*
+             * TEST #4
+             */
+            page.ScientificOperators.ParenthesisLeftButton.Click();
+            page.StandardOperators.NumberPad.Input(8);
+            page.ScientificOperators.ParenthesisRightButton.Click();
+            page.StandardOperators.NumberPad.Input(.5);
+            page.StandardOperators.EqualButton.Click();
+
+            // Assert calculator & history results
+            Assert.AreEqual("4", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("(8) \x00D7 0.5=", page.CalculatorResults.GetCalculatorExpressionText());
+
+            var historyItems3 = page.HistoryPanel.GetAllHistoryListViewItems();
+            Assert.IsTrue(historyItems3[0].GetValue().Equals("4", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems3[0].GetExpression().Equals("(8) \x00D7 0.5=", StringComparison.InvariantCultureIgnoreCase));
         }
 
         [TestMethod]
