@@ -275,72 +275,75 @@ namespace DateCalculationUnitTests
         /* Duration Between Two Date Tests -- Timediff obtained after calculation should be checked to be identical */
         TEST_METHOD(TestDateDiff)
         {
-            // TODO - MSFT 10331900, fix this test
+            for (int testIndex = 0; testIndex < c_diffTestCase; testIndex++)
+            {
+                DateDifference diff;
+                DateUnit dateOutputFormat;
 
-            // for (int testIndex = 0; testIndex < c_diffTestCase; testIndex++)
-            //{
-            //    DateDifference diff;
-            //    DateUnit dateOutputFormat;
+                switch (testIndex)
+                {
+                case 0:
+                case 2:
+                    dateOutputFormat = DateUnit::Year | DateUnit::Month | DateUnit::Day;
+                    break;
+                case 1:
+                    dateOutputFormat = DateUnit::Day;
+                    break;
+                case 3:
+                case 8:
+                    dateOutputFormat = DateUnit::Week | DateUnit::Day;
+                    break;
+                case 7:
+                    dateOutputFormat = DateUnit::Year | DateUnit::Month | DateUnit::Day;
+                    break;
+                case 4:
+                case 6:
+                    dateOutputFormat = DateUnit::Month | DateUnit::Day;
+                    break;
+                case 5:
+                    dateOutputFormat = DateUnit::Day;
+                    break;
+                default:
+                    dateOutputFormat = DateUnit::Year | DateUnit::Month | DateUnit::Day;
+                    break;
+                }
 
-            //    switch (testIndex)
-            //    {
-            //    case 0:
-            //    case 2:
-            //        dateOutputFormat = DateUnit::Year | DateUnit::Month | DateUnit::Day;
-            //        break;
-            //    case 1:
-            //        dateOutputFormat = DateUnit::Day;
-            //        break;
-            //    case 3:
-            //    case 8:
-            //        dateOutputFormat = DateUnit::Week | DateUnit::Day;
-            //        break;
-            //    case 7:
-            //        dateOutputFormat = DateUnit::Year | DateUnit::Month | DateUnit::Day;
-            //        break;
-            //    case 4:
-            //    case 6:
-            //        dateOutputFormat = DateUnit::Month | DateUnit::Day;
-            //        break;
-            //    case 5:
-            //        dateOutputFormat = DateUnit::Day;
-            //        break;
-            //    }
+                // Calculate the difference
+                bool success = m_DateCalcEngine->TryGetDateDifference(
+                    DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].startDate),
+                    DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].endDate), 
+                    dateOutputFormat, 
+                    &diff);
 
-            //    // Calculate the difference
-            //    m_DateCalcEngine->TryGetDateDifference(DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].startDate),
-            //    DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].endDate), dateOutputFormat, &diff);
+                // Assert for the result
+                VERIFY_IS_TRUE(success);
+                
+                bool areIdentical = true;
+                if (diff.year != datetimeDifftest[testIndex].dateDiff.year ||
+                    diff.month != datetimeDifftest[testIndex].dateDiff.month ||
+                    diff.week != datetimeDifftest[testIndex].dateDiff.week ||
+                    diff.day != datetimeDifftest[testIndex].dateDiff.day)
+                {
+                    areIdentical = false;
+                }
 
-            //    // Assert for the result
-            //    bool areIdentical = true;
-            //    if (diff.year != datetimeDifftest[testIndex].dateDiff.year ||
-            //        diff.month != datetimeDifftest[testIndex].dateDiff.month ||
-            //        diff.week != datetimeDifftest[testIndex].dateDiff.week ||
-            //        diff.day != datetimeDifftest[testIndex].dateDiff.day)
-            //    {
-            //        areIdentical = false;
-            //    }
-
-            //    VERIFY_IS_TRUE(areIdentical);
-            //}
+                VERIFY_IS_TRUE(areIdentical);
+            }
         }
 
         /*Add Out of bound Tests*/
         TEST_METHOD(TestAddOob)
         {
-            // TODO - MSFT 10331900, fix this test
+            for (int testIndex = 0; testIndex < c_numAddOobDate; testIndex++)
+            {
+                // Add Duration
+                auto endDate = m_DateCalcEngine->AddDuration(
+                    DateUtils::SystemTimeToDateTime(datetimeBoundAdd[testIndex].startDate), 
+                    datetimeBoundAdd[testIndex].dateDiff);
 
-            // for (int testIndex = 0; testIndex< c_numAddOobDate; testIndex++)
-            //{
-            //    DateTime endDate;
-
-            //    // Add Duration
-            //    bool isValid = m_DateCalcEngine->AddDuration(DateUtils::SystemTimeToDateTime(datetimeBoundAdd[testIndex].startDate),
-            //    datetimeBoundAdd[testIndex].dateDiff, &endDate);
-
-            //    // Assert for the result
-            //    VERIFY_IS_FALSE(isValid);
-            //}
+                // Assert for the result
+                VERIFY_IS_NULL(endDate);
+            }
         }
 
         /*Subtract Out of bound Tests*/
@@ -360,59 +363,55 @@ namespace DateCalculationUnitTests
         // Add Tests
         TEST_METHOD(TestAddition)
         {
-            // TODO - MSFT 10331900, fix this test
+            for (int testIndex = 0; testIndex < c_addCases; testIndex++)
+            {
+                // Add Duration
+                auto endDate = m_DateCalcEngine->AddDuration(
+                    DateUtils::SystemTimeToDateTime(datetimeAddCase[testIndex].startDate), 
+                    datetimeAddCase[testIndex].dateDiff);
 
-            // for (int testIndex = 0; testIndex < c_addCases; testIndex++)
-            //{
-            //    DateTime endDate;
+                // Assert for the result
+                VERIFY_IS_NOT_NULL(endDate);
 
-            //    // Add Duration
-            //    bool isValid = m_DateCalcEngine->AddDuration(DateUtils::SystemTimeToDateTime(datetimeAddCase[testIndex].startDate),
-            //    datetimeAddCase[testIndex].dateDiff, &endDate);
+                SYSTEMTIME systemTime = DateUtils::DateTimeToSystemTime(*endDate);
+                bool isValid = true;
+                if (systemTime.wYear != datetimeAddCase[testIndex].endDate.wYear ||
+                    systemTime.wMonth != datetimeAddCase[testIndex].endDate.wMonth ||
+                    systemTime.wDay != datetimeAddCase[testIndex].endDate.wDay ||
+                    systemTime.wDayOfWeek != datetimeAddCase[testIndex].endDate.wDayOfWeek)
+                {
+                    isValid = false;
+                }
 
-            //    // Assert for the result
-            //    VERIFY_IS_TRUE(isValid);
-
-            //    SYSTEMTIME systemTime = DateUtils::DateTimeToSystemTime(endDate);
-            //    if (systemTime.wYear != datetimeAddCase[testIndex].endDate.wYear ||
-            //        systemTime.wMonth != datetimeAddCase[testIndex].endDate.wMonth ||
-            //        systemTime.wDay != datetimeAddCase[testIndex].endDate.wDay ||
-            //        systemTime.wDayOfWeek != datetimeAddCase[testIndex].endDate.wDayOfWeek)
-            //    {
-            //        isValid = false;
-            //    }
-
-            //    VERIFY_IS_TRUE(isValid);
-            //}
+                VERIFY_IS_TRUE(isValid);
+            }
         }
 
         // Subtract Tests
         TEST_METHOD(TestSubtraction)
         {
-            // TODO - MSFT 10331900, fix this test
+            for (int testIndex = 0; testIndex < c_subtractCases; testIndex++)
+            {
+                // Subtract Duration
+                auto endDate = m_DateCalcEngine->SubtractDuration(
+                    DateUtils::SystemTimeToDateTime(datetimeSubtractCase[testIndex].startDate), 
+                    datetimeSubtractCase[testIndex].dateDiff);
 
-            // for (int testIndex = 0; testIndex < c_subtractCases; testIndex++)
-            //{
-            //    DateTime endDate;
+                // assert for the result
+                VERIFY_IS_NOT_NULL(endDate);
 
-            //    // Subtract Duration
-            //    bool isValid = m_DateCalcEngine->SubtractDuration(DateUtils::SystemTimeToDateTime(datetimeSubtractCase[testIndex].startDate),
-            //    datetimeSubtractCase[testIndex].dateDiff, &endDate);
+                SYSTEMTIME systemTime = DateUtils::DateTimeToSystemTime(*endDate);
+                bool isValid = true;
+                if (systemTime.wYear != datetimeSubtractCase[testIndex].endDate.wYear ||
+                    systemTime.wMonth != datetimeSubtractCase[testIndex].endDate.wMonth ||
+                    systemTime.wDay != datetimeSubtractCase[testIndex].endDate.wDay ||
+                    systemTime.wDayOfWeek != datetimeSubtractCase[testIndex].endDate.wDayOfWeek)
+                {
+                    isValid = false;
+                }
 
-            //    // assert for the result
-            //    VERIFY_IS_TRUE(isValid);
-
-            //    SYSTEMTIME systemTime = DateUtils::DateTimeToSystemTime(endDate);
-            //    if (systemTime.wYear != datetimeSubtractCase[testIndex].endDate.wYear ||
-            //        systemTime.wMonth != datetimeSubtractCase[testIndex].endDate.wMonth ||
-            //        systemTime.wDay != datetimeSubtractCase[testIndex].endDate.wDay ||
-            //        systemTime.wDayOfWeek != datetimeSubtractCase[testIndex].endDate.wDayOfWeek)
-            //    {
-            //        isValid = false;
-            //    }
-
-            //    VERIFY_IS_TRUE(isValid);
-            //}
+                VERIFY_IS_TRUE(isValid);
+            }
         }
     };
 
