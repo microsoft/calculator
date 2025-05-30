@@ -87,6 +87,11 @@ namespace CalcEngine
         return m_q;
     }
 
+    bool Rational::IsZero() const
+    {
+        return m_p.IsZero();
+    }
+
     Rational Rational::operator-() const
     {
         return Rational{ Number{ -1 * m_p.Sign(), m_p.Exp(), m_p.Mantissa() }, m_q };
