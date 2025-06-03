@@ -54,6 +54,8 @@ extends:
           useReleaseAppxManifest: false
           platform: ARM64
 
+      - template: /build/pipelines/templates/run-compliance-checks.yaml@self
+
       - template: /build/pipelines/templates/run-ui-tests.yaml@self
         parameters:
           platform: x64
