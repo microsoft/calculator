@@ -1,0 +1,47 @@
+jobs:
+- job: ComplianceChecks
+  displayName: Run compliance checks
+  timeoutInMinutes: 60
+  pool:
+    name: EssentialExperiences-windows-2022
+  steps:
+  - checkout: self
+
+  - task: UniversalPackages@0
+    displayName: Download internals package
+    inputs:
+      command: download
+      downloadDirectory: $(Build.SourcesDirectory)
+      vstsFeed: WindowsInboxApps
+      vstsFeedPackage: calculator-internals
+      vstsPackageVersion: 0.0.117
+
+  - task: NuGetToolInstaller@0
+    displayName: Use NuGet 6.x
+    inputs:
+      versionSpec: 6.x
+
+  - task: NuGetCommand@2
+    displayName: NuGet restore src/Calculator.sln
+    inputs:
+      command: custom
+      arguments: restore src/Calculator.sln -Verbosity Detailed -NonInteractive
+
+  - task: PowerShell@2
+    displayName: Set version number in AppxManifest
+    inputs:
+      filePath: $(Build.SourcesDirectory)\build\scripts\UpdateAppxManifestVersion.ps1
+      arguments: '-AppxManifest $(Build.SourcesDirectory)\src\Calculator\Package.appxmanifest -Version $(Build.BuildNumber)'
+
+  - task: securedevelopmentteam.vss-secure-development-tools.build-task-prefast.SDLNativeRules@3
+    displayName: 'Run the PREfast SDL Native Rules'
+    inputs:
+      userProvideBuildInfo: msBuildInfo
+      setupCommandlines: '"%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsMSBuildCmd.bat"'
+      msBuildArchitecture: 'amd64'
+      msBuildCommandline: 'msbuild.exe $(Build.SourcesDirectory)\src\Calculator.sln /p:AppVersion=$(Build.BuildNumber) /p:OutDir=$(Build.BinariesDirectory)\ /p:Configuration=Release /p:Platform=x64 /m /p:IsStoreBuild=true'
+      rulesetName: Custom
+      customRuleset: $(Build.SourcesDirectory)\.config\tvs.ruleset
+
+  - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+    displayName: 'Publish Guardian Artifacts'
