@@ -112,10 +112,11 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 {
     // Save the last command.  Some commands are not saved in this manor, these
     // commands are:
-    // Inv, Deg, Rad, Grad, Stat, FE, MClear, Back, and Exp.  The excluded
+    // Inv, Deg, Rad, Grad, Stat, FE, MClear, and Back.  The excluded
     // commands are not
     // really mathematical operations, rather they are GUI mode settings.
-
+    //
+    // UDATE:  We now save the last command for the Exp command as well.
     if (!IsGuiSettingOpCode(wParam))
     {
         m_nLastCom = m_nTempCom;
@@ -144,6 +145,11 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             HandleErrorCommand(wParam);
             return;
         }
+    }
+
+    if (wParam == IDC_SUB && m_nLastCom == IDC_EXP)
+    {
+        wParam = IDC_SIGN;
     }
 
     // Toggle Record/Display mode if appropriate.
@@ -187,11 +193,27 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 
         DisplayNum();
 
-        return;
+        /*
+            Addressing issues:
+                #1541 https://github.com/microsoft/calculator/issues/1541
+                #1311 https://github.com/microsoft/calculator/issues/1311
+            Solution:
+                Consider the previous '-' Binary Op as a '+/-' sign value if
+                the first opnd is 0.
+        */
+        if (m_bFlagSign)
+        {
+            wParam = IDC_SIGN;
+            m_bFlagSign = false;
+        }
+        else
+        {
+            return;
+        }
     }
 
     // BINARY OPERATORS:
-    if (IsBinOpCode(wParam))
+    if (IsBinOpCode(wParam)) 
     {
         // Change the operation if last input was operation.
         if (IsBinOpCode(m_nLastCom))
@@ -298,9 +320,19 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         }
 
         DisplayAnnounceBinaryOperator();
+
+        // consider this sub as +/- for the upcoming number
+        if ( wParam == IDC_SUB && m_currentVal.IsZero())
+        {
+            m_bFlagSign = true;
+        }
+
         m_lastVal = m_currentVal;
         m_nOpCode = (int)wParam;
-        m_HistoryCollector.AddBinOpToHistory(m_nOpCode, m_fIntegerMode);
+        if (!m_bFlagSign)
+        {
+            m_HistoryCollector.AddBinOpToHistory(m_nOpCode, m_fIntegerMode);
+        }
         m_bNoPrevEqu = m_bChangeOp = true;
         return;
     }
