@@ -1277,6 +1277,10 @@
     <value>tasse (É.-U.)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
+  <data name="UnitAbbreviation_Angstrom" xml:space="preserve">
+    <value>A</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
     <value>ac</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
@@ -1851,6 +1855,10 @@
   </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
     <value>Nanomètres</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Angstrom" xml:space="preserve">
+    <value>Angströms</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
@@ -3228,7 +3236,7 @@
     <comment>Label for a radio button that toggles rotate circular behavior for the shift operations.</comment>
   </data>
   <data name="rotateCarryShiftButton.Content" xml:space="preserve">
-    <value>Faire pivoter via le déplacement circulaire de transport</value>
+    <value>Rotation circulaire via retenue</value>
     <comment>Label for a radio button that toggles rotate circular with carry behavior for the shift operations.</comment>
   </data>
   <data name="cubeRootButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
