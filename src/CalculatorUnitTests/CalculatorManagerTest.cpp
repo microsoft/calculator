@@ -643,6 +643,26 @@ namespace CalculatorManagerTest
         Command commands5[] = { Command::Command2,   Command::CommandOPENP, Command::Command2,   Command::CommandCLOSEP,
                                 Command::CommandADD, Command::CommandEQU,   Command::CommandNULL };
         TestDriver::Test(L"8", L"2 \x00D7 (2) + 4=", commands5, true, true);
+
+        Command commands6[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"16", L"(8) \x00D7 2=", commands6, true, true);
+
+        Command commands7[] = { Command::CommandOPENP,  Command::Command7, Command::CommandMUL, Command::Command2,
+                                Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"28", L"(7 \x00D7 2) \x00D7 2=", commands7, true, true);
+
+        Command commands8[] = { Command::CommandOPENP,  Command::Command7, Command::CommandMUL, Command::Command2,
+                                Command::CommandCLOSEP, Command::Command2, Command::CommandEQU,
+                                Command::CommandOPENP, Command::Command1, Command::Command4, Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL};
+        TestDriver::Test(L"28", L"(14) \x00D7 2=", commands8, true, true);
+
+        Command commands9[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP,
+                                Command::Command0, Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"4", L"(8) \x00D7 0.5=", commands9, true, true);
+
+        Command commands10[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP,
+                                 Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"4", L"(8) \x00D7 0.5=", commands10, true, true);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientificError()
