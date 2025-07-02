@@ -11,7 +11,7 @@ variables:
   - name: versionMajor
     value: 11
   - name: versionMinor
-    value: 2503
+    value: 2506
   - name: versionBuild
     value: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
   - name: versionPatch
@@ -88,6 +88,8 @@ extends:
           isReleaseBuild: true
           useReleaseAppxmanifest: true
           condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+
+      - template: /build/pipelines/templates/run-compliance-checks.yaml@self
 
       - template: /build/pipelines/templates/run-ui-tests.yaml@self
         parameters:
