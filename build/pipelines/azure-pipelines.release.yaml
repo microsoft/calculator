@@ -58,6 +58,9 @@ extends:
           allTools: true
       codeql:
         tsaEnabled: true
+      policheck:
+        enabled: true
+        exclusionsFile: '$(Build.SourcesDirectory)\build\config\PoliCheckExclusions.xml'
 
     stages:
     - stage: Calculator
@@ -88,8 +91,6 @@ extends:
           isReleaseBuild: true
           useReleaseAppxmanifest: true
           condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-
-      - template: /build/pipelines/templates/run-compliance-checks.yaml@self
 
       - template: /build/pipelines/templates/run-ui-tests.yaml@self
         parameters:

@@ -32,9 +32,6 @@ jobs:
     sdl:
       binskim:
         analyzeTargetGlob: +:f|$(Agent.BuildDirectory)\binskim\**\*
-      prefast:
-        enable: true
-
     outputs:
     - output: pipelineArtifact
       displayName: Publish drop artifact
