@@ -26,6 +26,10 @@ extends:
       name: EssentialExperiences-windows-2022
       image: MMSWindows2022-Secure
       os: windows
+    sdl:
+      policheck:
+        enabled: true
+        exclusionsFile: '$(Build.SourcesDirectory)\build\config\PoliCheckExclusions.xml'
 
     stages:
     - stage:
