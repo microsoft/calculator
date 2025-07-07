@@ -2,7 +2,6 @@
 
 parameters:
   isReleaseBuild: false
-  isOSSBuild: false
   useReleaseAppxManifest: false
   platform: ''
   condition: ''
@@ -41,10 +40,6 @@ jobs:
   steps:
   - checkout: self
     fetchDepth: 1
-
-  - ${{ if eq(parameters.isOSSBuild, true) }}:
-    - task: nuget-security-analysis@0
-      displayName: Secure Supply Chain Analysis
 
   - ${{ if eq(parameters.isReleaseBuild, true) }}:
     - task: UniversalPackages@0
