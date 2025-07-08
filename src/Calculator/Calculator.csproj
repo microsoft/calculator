@@ -806,6 +806,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Calculator.ManagedViewModels\Calculator.ManagedViewModels.csproj">
+      <Project>{2179cfde-cded-4df0-8c24-a0ef6b425771}</Project>
+      <Name>Calculator.ManagedViewModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
       <Project>{812d1a7b-b8ac-49e4-8e6d-af5d59500d56}</Project>
       <Name>CalcViewModel</Name>
