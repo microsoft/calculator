@@ -206,12 +206,14 @@ namespace CalculatorApp.ManagedViewModels
             var DefaultSize = new Size(320, 394);
             const string LaunchedSettingsKey = "calculatorAlwaysOnTopLaunched";
             var settings = ApplicationData.Current.LocalSettings;
-            bool success;
             if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.CompactOverlay)
             {
                 settings.Values[WidthLocalSettingsKey] = width;
                 settings.Values[HeightLocalSettingsKey] = height;
-                success = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.Default);
+                bool success = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.Default);
+                _calcVm.HistoryVM.AreHistoryShortcutsEnabled = success;
+                _calcVm.IsAlwaysOnTop = !success;
+                IsAlwaysOnTop = !success;
             }
             else
             {
@@ -233,11 +235,11 @@ namespace CalculatorApp.ManagedViewModels
                         compactOptions.CustomSize = DefaultSize;
                     }
                 }
-                success = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, compactOptions);
+                bool success = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, compactOptions);
+                _calcVm.HistoryVM.AreHistoryShortcutsEnabled = !success;
+                _calcVm.IsAlwaysOnTop = success;
+                IsAlwaysOnTop = success;
             }
-            _calcVm.HistoryVM.AreHistoryShortcutsEnabled = success;
-            _calcVm.IsAlwaysOnTop = !success;
-            IsAlwaysOnTop = !success;
             SetDisplayNormalAlwaysOnTopOption();
         }
 
