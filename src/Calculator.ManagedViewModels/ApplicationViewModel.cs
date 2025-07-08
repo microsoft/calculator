@@ -31,7 +31,7 @@ namespace CalculatorApp.ManagedViewModels
         private bool _isAlwaysOnTop = false;
         private bool _displayNormalAlwaysOnTopOption;
         private string _categoryName;
-        private IList<NavCategoryGroup> _categories;
+        private IList<NavCategoryGroup> _categories = NavCategoryStates.CreateMenuOptions();
 
         public const string WidthLocalSettingsKey = "calculatorAlwaysOnTopLastWidth";
         public const string HeightLocalSettingsKey = "calculatorAlwaysOnTopLastHeight";
@@ -194,11 +194,6 @@ namespace CalculatorApp.ManagedViewModels
                     RaisePropertyChanged();
                 }
             }
-        }
-
-        public ApplicationViewModel()
-        {
-            Categories = NavCategoryStates.CreateMenuOptions();
         }
 
         public async Task ToggleAlwaysOnTop(float width, float height)
