@@ -158,6 +158,11 @@ namespace CalculatorApp
             internal : UnitConverterViewModel(const std::shared_ptr<UnitConversionManager::IUnitConverter>& model);
 
         public:
+            UnitConverterViewModel();
+            virtual ~UnitConverterViewModel()
+            {
+            }
+
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
 
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<Category ^> ^, Categories);
@@ -238,14 +243,13 @@ namespace CalculatorApp
             void OnPaste(Platform::String ^ stringToPaste);
             void RefreshCurrencyRatios();
             void OnValueActivated(IActivatable ^ control);
+            void OnCopyCommand(Platform::Object ^ parameter);
+            void OnPasteCommand(Platform::Object ^ parameter);
 
             internal : void ResetView();
             void PopulateData();
             CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum MapCharacterToButtonId(const wchar_t ch, bool& canSendNegate);
             void DisplayPasteError();
-
-            void OnCopyCommand(Platform::Object ^ parameter);
-            void OnPasteCommand(Platform::Object ^ parameter);
 
             enum class CurrencyFormatterParameter
             {

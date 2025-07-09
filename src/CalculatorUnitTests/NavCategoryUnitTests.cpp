@@ -98,14 +98,14 @@ namespace CalculatorUnitTests
     public:
         TEST_METHOD(CreateNavCategoryGroup)
         {
-            IObservableVector<NavCategoryGroup ^> ^ menuOptions = NavCategoryStates::CreateMenuOptions();
+            IVector<NavCategoryGroup ^> ^ menuOptions = NavCategoryStates::CreateMenuOptions();
 
             VERIFY_ARE_EQUAL(2, menuOptions->Size);
 
             NavCategoryGroup ^ calculatorGroup = menuOptions->GetAt(0);
             VERIFY_ARE_EQUAL(CategoryGroupType::Calculator, calculatorGroup->GroupType);
 
-            IObservableVector<NavCategory ^> ^ calculatorCategories = calculatorGroup->Categories;
+            IVector<NavCategory ^> ^ calculatorCategories = calculatorGroup->Categories;
             ValidateNavCategory(calculatorCategories, 0u, ViewMode::Standard);
             ValidateNavCategory(calculatorCategories, 1u, ViewMode::Scientific);
             ValidateNavCategory(calculatorCategories, 2u, ViewMode::Graphing);
@@ -116,7 +116,7 @@ namespace CalculatorUnitTests
             NavCategoryGroup ^ converterGroup = menuOptions->GetAt(1);
             VERIFY_ARE_EQUAL(CategoryGroupType::Converter, converterGroup->GroupType);
 
-            IObservableVector<NavCategory ^> ^ converterCategories = converterGroup->Categories;
+            IVector<NavCategory ^> ^ converterCategories = converterGroup->Categories;
             VERIFY_ARE_EQUAL(13, converterCategories->Size);
             ValidateNavCategory(converterCategories, 0u, ViewMode::Currency);
             ValidateNavCategory(converterCategories, 1u, ViewMode::Volume);
@@ -134,7 +134,7 @@ namespace CalculatorUnitTests
         }
 
     private:
-        void ValidateNavCategory(IObservableVector<NavCategory ^> ^ categories, unsigned int index, ViewMode expectedMode)
+        void ValidateNavCategory(IVector<NavCategory ^> ^ categories, unsigned int index, ViewMode expectedMode)
         {
             VERIFY_IS_LESS_THAN(0u, categories->Size);
             VERIFY_IS_GREATER_THAN(categories->Size, index);

@@ -40,6 +40,7 @@ namespace CalculatorApp
         [Windows::UI::Xaml::Data::Bindable] public ref class StandardCalculatorViewModel sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
         public:
+            StandardCalculatorViewModel();
             void UpdateOperand(int pos, Platform::String ^ text);
 
             OBSERVABLE_OBJECT_CALLBACK(OnPropertyChanged);
@@ -267,9 +268,11 @@ namespace CalculatorApp
             void SwitchAngleType(CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum num);
             void FtoEButtonToggled();
 
-            internal : void OnPaste(Platform::String ^ pastedString);
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
+            void SetCalculatorType(CalculatorApp::ViewModel::Common::ViewMode targetState);
+
+            internal : void OnPaste(Platform::String ^ pastedString);
 
             ButtonInfo MapCharacterToButtonId(char16 ch);
 
@@ -284,7 +287,6 @@ namespace CalculatorApp
 
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);
-            void SetCalculatorType(CalculatorApp::ViewModel::Common::ViewMode targetState);
 
             Platform::String ^ GetRawDisplayValue();
             void Recalculate(bool fromHistory = false);
@@ -301,9 +303,6 @@ namespace CalculatorApp
             {
                 return m_CurrentAngleType;
             }
-
-            internal :;
-            explicit StandardCalculatorViewModel();
 
         private:
             void SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers);
