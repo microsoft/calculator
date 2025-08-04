@@ -327,6 +327,15 @@
     <data name="Meters-Angstroms">
         <value>0.0000000001</value>
     </data>
+    <data name="Meters-LightYears">
+        <value>9460730472580800</value>
+    </data>
+    <data name="Meters-AstronomicalUnits">
+        <value>149597870700</value>
+    </data>
+    <data name="AstronomicalUnits-Parsecs">
+        <value>206264.80624709635515647335733078</value>
+    </data>
     <data name="Meters-Centimeters">
         <value>0.01</value>
     </data>
