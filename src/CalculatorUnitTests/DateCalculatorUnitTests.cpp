@@ -309,14 +309,14 @@ namespace DateCalculationUnitTests
                 }
 
                 // Calculate the difference
-                bool success = m_DateCalcEngine->TryGetDateDifference(
+                auto boxedDiff = m_DateCalcEngine->TryGetDateDifference(
                     DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].startDate),
-                    DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].endDate), 
-                    dateOutputFormat, 
-                    &diff);
+                    DateUtils::SystemTimeToDateTime(datetimeDifftest[testIndex].endDate),
+                    dateOutputFormat);
 
                 // Assert for the result
-                VERIFY_IS_TRUE(success);
+                VERIFY_IS_NOT_NULL(boxedDiff);
+                diff = boxedDiff->Value;
                 
                 bool areIdentical = true;
                 if (diff.year != datetimeDifftest[testIndex].dateDiff.year ||
@@ -373,7 +373,7 @@ namespace DateCalculationUnitTests
                 // Assert for the result
                 VERIFY_IS_NOT_NULL(endDate);
 
-                SYSTEMTIME systemTime = DateUtils::DateTimeToSystemTime(*endDate);
+                SYSTEMTIME systemTime = DateUtils::DateTimeToSystemTime(endDate->Value);
                 bool isValid = true;
                 if (systemTime.wYear != datetimeAddCase[testIndex].endDate.wYear ||
                     systemTime.wMonth != datetimeAddCase[testIndex].endDate.wMonth ||
@@ -400,7 +400,7 @@ namespace DateCalculationUnitTests
                 // assert for the result
                 VERIFY_IS_NOT_NULL(endDate);
 
-                SYSTEMTIME systemTime = DateUtils::DateTimeToSystemTime(*endDate);
+                SYSTEMTIME systemTime = DateUtils::DateTimeToSystemTime(endDate->Value);
                 bool isValid = true;
                 if (systemTime.wYear != datetimeSubtractCase[testIndex].endDate.wYear ||
                     systemTime.wMonth != datetimeSubtractCase[testIndex].endDate.wMonth ||
