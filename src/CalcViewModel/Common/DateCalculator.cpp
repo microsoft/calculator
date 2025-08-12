@@ -146,6 +146,7 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
         endDate = date1;
     }
 
+
     pivotDate = startDate;
 
     daysDiff = GetDifferenceInDays(startDate, endDate);
@@ -158,7 +159,20 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
         UINT approximateDaysInYear;
 
         // If we're unable to calculate the days-in-month or days-in-year, we'll leave the values at 0.
-        if (TryGetCalendarDaysInMonth(startDate, daysInMonth) && TryGetCalendarDaysInYear(endDate, approximateDaysInYear))
+        bool gotDaysInMonth = TryGetCalendarDaysInMonth(startDate, daysInMonth);
+        bool gotDaysInYear = TryGetCalendarDaysInYear(endDate, approximateDaysInYear);
+        
+        // Fallback for calendar functions that might fail at boundary dates
+        if (!gotDaysInMonth) {
+            // Use a reasonable default for days in month
+            daysInMonth = 31;
+        }
+        if (!gotDaysInYear) {
+            // Use a reasonable default for days in year
+            approximateDaysInYear = 365;
+        }
+        
+        if (gotDaysInMonth || gotDaysInYear)
         {
             UINT daysIn[c_unitsOfDate] = { approximateDaysInYear, daysInMonth, c_daysInWeek, 1 };
 
@@ -178,7 +192,17 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
                     {
                         try
                         {
-                            pivotDate = AdjustCalendarDate(pivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));
+                            // For very large differences, try to add in smaller chunks to avoid overflow
+                            int remainingUnits = static_cast<int>(differenceInDates[unitIndex]);
+                            DateTime tempPivot = pivotDate;
+                            
+                            while (remainingUnits > 0)
+                            {
+                                int chunkSize = min(remainingUnits, 1000); // Add at most 1000 units at a time
+                                tempPivot = AdjustCalendarDate(tempPivot, dateUnit, chunkSize);
+                                remainingUnits -= chunkSize;
+                            }
+                            pivotDate = tempPivot;
                         }
                         catch (Platform::InvalidArgumentException ^)
                         {
@@ -204,7 +228,15 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
                             }
                             differenceInDates[unitIndex] -= 1;
                             pivotDate = tempPivotDate;
-                            pivotDate = AdjustCalendarDate(pivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));
+                            
+                            // Use chunked approach for large values
+                            int remainingUnits = static_cast<int>(differenceInDates[unitIndex]);
+                            while (remainingUnits > 0)
+                            {
+                                int chunkSize = min(remainingUnits, 1000);
+                                pivotDate = AdjustCalendarDate(pivotDate, dateUnit, chunkSize);
+                                remainingUnits -= chunkSize;
+                            }
                             isEndDateHit = true;
                         }
                         else if (tempDaysDiff > 0)
@@ -230,7 +262,16 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
                         }
                     } while (tempDaysDiff != 0); // dates are the same - exit the loop
 
-                    tempPivotDate = AdjustCalendarDate(tempPivotDate, dateUnit, static_cast<int>(differenceInDates[unitIndex]));
+                    // Use chunked approach for large values
+                    int remainingUnits = static_cast<int>(differenceInDates[unitIndex]);
+                    DateTime chunkPivot = tempPivotDate;
+                    while (remainingUnits > 0)
+                    {
+                        int chunkSize = min(remainingUnits, 1000);
+                        chunkPivot = AdjustCalendarDate(chunkPivot, dateUnit, chunkSize);
+                        remainingUnits -= chunkSize;
+                    }
+                    tempPivotDate = chunkPivot;
                     pivotDate = tempPivotDate;
                     int signedDaysDiff = GetDifferenceInDays(pivotDate, endDate);
                     if (signedDaysDiff < 0)
@@ -252,6 +293,8 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
     result.month = differenceInDates[1];
     result.week = differenceInDates[2];
     result.day = differenceInDates[3];
+
+    
     return result;
 }
 
