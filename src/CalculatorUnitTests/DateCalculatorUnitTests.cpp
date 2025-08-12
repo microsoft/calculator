@@ -177,7 +177,15 @@ namespace DateCalculationUnitTests
             date[14].wSecond = 0;
             date[14].wMilliseconds = 0;
 
-            // Date Differences
+            // Date Differences - Initialize all fields to 0 first, then set specific values
+            for (int i = 0; i < c_dateDiff; i++)
+            {
+                dateDifference[i].year = 0;
+                dateDifference[i].month = 0;
+                dateDifference[i].week = 0;
+                dateDifference[i].day = 0;
+            }
+            
             dateDifference[0].year = 1;
             dateDifference[0].month = 1;
             dateDifference[1].month = 1;
@@ -538,7 +546,15 @@ namespace DateCalculationUnitTests
     date[14].wSecond = 0;
     date[14].wMilliseconds = 0;
 
-    // Date Differences
+    // Date Differences - Initialize all fields to 0 first, then set specific values
+    for (int i = 0; i < c_dateDiff; i++)
+    {
+        dateDifference[i].year = 0;
+        dateDifference[i].month = 0;
+        dateDifference[i].week = 0;
+        dateDifference[i].day = 0;
+    }
+    
     dateDifference[0].year = 1;
     dateDifference[0].month = 1;
     dateDifference[1].month = 1;
