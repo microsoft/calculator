@@ -223,9 +223,9 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
                             }
                             catch (Platform::InvalidArgumentException ^)
                             {
-                                // Operation failed due to out of bound result
-                                // For example: 31st Dec, 9999 - last valid date
-                                return nullptr;
+                                // Operation failed due to out of bound result (e.g., adding 1 more year would exceed max supported date)
+                                // Treat this as having reached the closest value for this unit and stop incrementing further.
+                                isEndDateHit = true;
                             }
                         }
                     } while (tempDaysDiff != 0); // dates are the same - exit the loop
