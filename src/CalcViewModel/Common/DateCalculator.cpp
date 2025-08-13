@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "DateCalculator.h"
+#include <algorithm>
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -198,7 +199,7 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
                             
                             while (remainingUnits > 0)
                             {
-                                int chunkSize = min(remainingUnits, 1000); // Add at most 1000 units at a time
+                                int chunkSize = std::min(remainingUnits, 1000); // Add at most 1000 units at a time
                                 tempPivot = AdjustCalendarDate(tempPivot, dateUnit, chunkSize);
                                 remainingUnits -= chunkSize;
                             }
@@ -233,7 +234,7 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
                             int remainingUnits = static_cast<int>(differenceInDates[unitIndex]);
                             while (remainingUnits > 0)
                             {
-                                int chunkSize = min(remainingUnits, 1000);
+                                int chunkSize = std::min(remainingUnits, 1000);
                                 pivotDate = AdjustCalendarDate(pivotDate, dateUnit, chunkSize);
                                 remainingUnits -= chunkSize;
                             }
@@ -267,7 +268,7 @@ IBox<DateDifference> ^ DateCalculationEngine::TryGetDateDifference(_In_ DateTime
                     DateTime chunkPivot = tempPivotDate;
                     while (remainingUnits > 0)
                     {
-                        int chunkSize = min(remainingUnits, 1000);
+                        int chunkSize = std::min(remainingUnits, 1000);
                         chunkPivot = AdjustCalendarDate(chunkPivot, dateUnit, chunkSize);
                         remainingUnits -= chunkSize;
                     }
