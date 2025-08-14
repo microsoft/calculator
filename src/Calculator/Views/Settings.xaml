@@ -109,6 +109,21 @@
                     </toolkit:SettingsExpander.Items>
                 </toolkit:SettingsExpander>
 
+                <toolkit:SettingsExpander x:Name="LanguageExpander"
+                                          Header="Language"
+                                          Description="Choose application language (requires restart for full effect)">
+                    <toolkit:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xF2B7;"/>
+                    </toolkit:SettingsExpander.HeaderIcon>
+                    <toolkit:SettingsExpander.Items>
+                        <toolkit:SettingsCard ContentAlignment="Left">
+                            <ComboBox x:Name="LanguageComboBox"
+                                      MinWidth="220"
+                                      SelectionChanged="OnLanguageSelectionChanged"/>
+                        </toolkit:SettingsCard>
+                    </toolkit:SettingsExpander.Items>
+                </toolkit:SettingsExpander>
+
                 <TextBlock x:Name="AboutGroupTitle"
                            Margin="0,30,0,4"
                            Style="{StaticResource BodyStrongTextBlockStyle}"
