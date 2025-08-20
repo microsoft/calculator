@@ -17,7 +17,7 @@
 
     <UserControl.Resources>
         <!-- Programmer mode display radio button -->
-        <Style x:Key="ProgModeRadioButtonStyle" TargetType="RadioButton">
+        <Style x:Key="ProgModeRadioButtonStyle" TargetType="controls:RadixButton">
             <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}"/>
             <Setter Property="MinHeight" Value="12"/>
             <Setter Property="MinWidth" Value="280"/>
@@ -32,7 +32,7 @@
             <Setter Property="FocusVisualMargin" Value="-3"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="RadioButton">
+                    <ControlTemplate TargetType="controls:RadixButton">
                         <Grid x:Name="ControlRoot"
                               VerticalAlignment="Stretch"
                               Background="{ThemeResource SubtleFillColorTransparentBrush}"
@@ -106,7 +106,7 @@
                                            FontWeight="{TemplateBinding FontWeight}"
                                            AutomationProperties.AccessibilityView="Raw"
                                            IsTextScaleFactorEnabled="{TemplateBinding IsTextScaleFactorEnabled}"
-                                           Text="{TemplateBinding Tag}"/>
+                                           Text="{TemplateBinding Label}"/>
                             </Grid>
                             <Grid x:Name="CheckedStatesGrid"
                                   Background="{ThemeResource SystemControlHighlightTransparentBrush}"
@@ -149,7 +149,7 @@
                                            FontWeight="{TemplateBinding FontWeight}"
                                            AutomationProperties.AccessibilityView="Raw"
                                            IsTextScaleFactorEnabled="{TemplateBinding IsTextScaleFactorEnabled}"
-                                           Text="{TemplateBinding Tag}"/>
+                                           Text="{TemplateBinding Label}"/>
                             </Grid>
                         </Grid>
                     </ControlTemplate>
@@ -158,10 +158,10 @@
         </Style>
         <contract7NotPresent:Style x:Key="ConditionalProgModeRadioButtonStyle"
                                    BasedOn="{StaticResource ProgModeRadioButtonStyle}"
-                                   TargetType="RadioButton"/>
+                                   TargetType="controls:RadixButton"/>
         <contract7Present:Style x:Key="ConditionalProgModeRadioButtonStyle"
                                 BasedOn="{StaticResource ProgModeRadioButtonStyle}"
-                                TargetType="RadioButton">
+                                TargetType="controls:RadixButton">
             <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
         </contract7Present:Style>
 
@@ -214,7 +214,7 @@
                               Content="{x:Bind Model.HexDisplayValue, Mode=OneWay}"
                               ContextFlyout="{StaticResource ProgrammerOperatorsContextMenu}"
                               GroupName="BaseConversion"
-                              Tag="{utils:ResourceString Name=hexButton/Tag}"/>
+                              Label="{utils:ResourceString Name=hexButton/Label}"/>
         <controls:RadixButton x:Name="DecimalButton"
                               Grid.Row="1"
                               HorizontalAlignment="Stretch"
@@ -227,7 +227,7 @@
                               ContextFlyout="{StaticResource ProgrammerOperatorsContextMenu}"
                               GroupName="BaseConversion"
                               IsChecked="true"
-                              Tag="{utils:ResourceString Name=decimalButton/Tag}"/>
+                              Label="{utils:ResourceString Name=decimalButton/Label}"/>
         <controls:RadixButton x:Name="OctButton"
                               Grid.Row="2"
                               HorizontalAlignment="Stretch"
@@ -239,7 +239,7 @@
                               Content="{x:Bind Model.OctalDisplayValue, Mode=OneWay}"
                               ContextFlyout="{StaticResource ProgrammerOperatorsContextMenu}"
                               GroupName="BaseConversion"
-                              Tag="{utils:ResourceString Name=octButton/Tag}"/>
+                              Label="{utils:ResourceString Name=octButton/Label}"/>
         <controls:RadixButton x:Name="BinaryButton"
                               Grid.Row="3"
                               HorizontalAlignment="Stretch"
@@ -251,6 +251,6 @@
                               Content="{x:Bind Model.BinaryDisplayValue, Mode=OneWay}"
                               ContextFlyout="{StaticResource ProgrammerOperatorsContextMenu}"
                               GroupName="BaseConversion"
-                              Tag="{utils:ResourceString Name=binaryButton/Tag}"/>
+                              Label="{utils:ResourceString Name=binaryButton/Label}"/>
     </Grid>
 </UserControl>
