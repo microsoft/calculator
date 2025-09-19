@@ -35,6 +35,20 @@ namespace CalculatorApp
         /// </summary>
         public App()
         {
+            // Ensure we choose the UI language based on System Display Language
+            // before any resources are loaded or singletons are created.
+            // If user selected a forced language, apply it; otherwise use Display Language
+            var selected = LanguageHelper.SelectedLanguage;
+            if (!string.IsNullOrEmpty(selected) && !string.Equals(selected, "system", StringComparison.OrdinalIgnoreCase))
+            {
+                LanguageHelper.ApplyUserLanguageSelection(selected);
+            }
+            else
+            {
+                LanguageHelper.InitializeDisplayLanguage();
+            }
+            LanguageHelper.LogLanguageDebugInfo(); // Debug
+
             InitializeComponent();
             NarratorNotifier.RegisterDependencyProperties();
 
@@ -149,6 +163,18 @@ namespace CalculatorApp
             // Place the frame in the current Window
             Window.Current.Content = rootFrame;
             ThemeHelper.InitializeAppTheme();
+
+            // Initialize Calculator to use System Display Language instead of Regional Settings
+            // Re-apply language at view creation based on persisted selection
+            var selected = LanguageHelper.SelectedLanguage;
+            var effective = selected == "system" ? LanguageHelper.GetSystemDisplayLanguage() : selected;
+            if (!string.IsNullOrEmpty(effective))
+            {
+                LanguageHelper.ApplyViewResourceLanguages(effective);
+                LanguageHelper.ApplyGlobalResourceLanguages(effective);
+            }
+            LanguageHelper.LogLanguageDebugInfo(); // Debug
+
             Window.Current.Activate();
         }
 
