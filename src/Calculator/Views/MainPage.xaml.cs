@@ -440,7 +440,7 @@ namespace CalculatorApp
         private void TitleBarAlwaysOnTopButtonClick(object sender, RoutedEventArgs e)
         {
             var bounds = Window.Current.Bounds;
-            Model.ToggleAlwaysOnTop((float)bounds.Width, (float)bounds.Height);
+            Model.ToggleAlwaysOnTop(bounds.Width, bounds.Height);
         }
 
         private void ShowHideControls(ViewMode mode)

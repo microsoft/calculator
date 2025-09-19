@@ -196,7 +196,7 @@ namespace CalculatorApp.ManagedViewModels
             }
         }
 
-        public async Task ToggleAlwaysOnTop(float width, float height)
+        public async Task ToggleAlwaysOnTop(double width, double height)
         {
             var DefaultSize = new Size(320, 394);
             const string LaunchedSettingsKey = "calculatorAlwaysOnTopLaunched";
@@ -223,7 +223,7 @@ namespace CalculatorApp.ManagedViewModels
                     if (settings.Values.TryGetValue(WidthLocalSettingsKey, out var oldWidth) &&
                         settings.Values.TryGetValue(HeightLocalSettingsKey, out var oldHeight))
                     {
-                        compactOptions.CustomSize = new Size((float)oldWidth, (float)oldHeight);
+                        compactOptions.CustomSize = new Size((double)oldWidth, (double)oldHeight);
                     }
                     else
                     {
