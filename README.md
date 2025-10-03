@@ -1,76 +1,52 @@
-# Calculator
-The Windows Calculator app is a modern Windows app written in C++ and C# that ships pre-installed with Windows.
-The app provides standard, scientific, and programmer calculator functionality, as well as a set of converters between various units of measurement and currencies.
+# Windows Calculator (official repo)
 
-Calculator ships regularly with new features and bug fixes. You can get the latest version of Calculator in the [Microsoft Store](https://www.microsoft.com/store/apps/9WZDNCRFHVN5).
+Welcome — this repository contains the modern Windows Calculator (C++ and C#). It ships with Windows and provides several modes and converters in a compact, accessible UI.
 
 [![Continuous Integration](https://github.com/microsoft/calculator/actions/workflows/action-ci.yml/badge.svg)](https://github.com/microsoft/calculator/actions/workflows/action-ci.yml)
 
-<img src="docs/Images/CalculatorScreenshot.png" alt="Calculator Screenshot" width="450px" />
+<img src="docs/Images/CalculatorScreenshot.png" alt="Calculator Screenshot" width="450" />
 
-## Features
-- Standard Calculator functionality which offers basic operations and evaluates commands immediately as they are entered.
-- Scientific Calculator functionality which offers expanded operations and evaluates commands using order of operations.
-- Programmer Calculator functionality which offers common mathematical operations for developers including conversion between common bases.
-- Date Calculation functionality which offers the difference between two dates, as well as the ability to add/subtract years, months and/or days to/from a given input date.
-- Calculation history and memory capabilities.
-- Conversion between many units of measurement.
-- Currency conversion based on data retrieved from [Bing](https://www.bing.com).
-- [Infinite precision](https://en.wikipedia.org/wiki/Arbitrary-precision_arithmetic) for basic
-  arithmetic operations (addition, subtraction, multiplication, division) so that calculations
-  never lose precision.
+Why this project is great
+- Multiple modes: Standard, Scientific, Programmer, Date calculation, Unit & Currency converters.
+- Precise arithmetic with arbitrary precision for many operations.
+- Accessible, localizable, and test-covered UI.
 
-## Getting started
-Prerequisites:
-- Your computer must be running Windows 11, build 22000 or newer.
-- Install the latest version of [Visual Studio](https://developer.microsoft.com/en-us/windows/downloads) (the free community edition is sufficient).
-  - Install the "Universal Windows Platform Development" workload.
-  - Install the optional "C++ Universal Windows Platform tools" component.
-  - Install the latest Windows 11 SDK.
+Quick start
+1. Clone the repository:
 
-  ![Visual Studio Installation Screenshot](docs/Images/VSInstallationScreenshot.png)
-- Install the [XAML Styler](https://marketplace.visualstudio.com/items?itemName=TeamXavalon.XAMLStyler) Visual Studio extension.
+```bash
+git clone https://github.com/Microsoft/calculator.git
+cd calculator
+```
 
-- Get the code:
-    ```
-    git clone https://github.com/Microsoft/calculator.git
-    ```
+2. Open the solution file `src/Calculator.sln` in Visual Studio (Windows 11 is required for UWP packaging and some SDKs).
 
-- Open [src\Calculator.sln](/src/Calculator.sln) in Visual Studio to build and run the Calculator app.
-- For a general description of the Calculator project architecture see [ApplicationArchitecture.md](docs/ApplicationArchitecture.md).
-- To run the UI Tests, you need to make sure that
-  [Windows Application Driver (WinAppDriver)](https://github.com/microsoft/WinAppDriver/releases/latest)
-  is installed.
+Prerequisites (short)
+- Windows 11 (build 22000+) for local development targeting the packaged app.
+- Visual Studio with the "Universal Windows Platform Development" workload and the Windows 11 SDK.
+- (Optional) XAML Styler Visual Studio extension for consistent XAML formatting.
 
-## Contributing
-Want to contribute? The team encourages community feedback and contributions. Please follow our [contributing guidelines](CONTRIBUTING.md).
+Architecture & tests
+- See `docs/ApplicationArchitecture.md` for a high-level overview.
+- UI tests are in `src/CalculatorUITests`; they require WinAppDriver for automated UI runs.
 
-If Calculator is not working properly, please file a report in the [Feedback Hub](https://insider.windows.com/en-us/fb/?contextid=130).
-We also welcome [issues submitted on GitHub](https://github.com/Microsoft/calculator/issues).
+Contributing
+- We welcome contributions of all sizes. See `CONTRIBUTING.md` for the workflow, coding guidelines, and how to get started.
+- File issues on GitHub and include reproduction steps and environment details.
 
-## Roadmap
-For information regarding Windows Calculator plans and release schedule, please see the [Windows Calculator Roadmap](docs/Roadmap.md).
+Roadmap & features
+- Graphing mode is a planned feature (the UI is in the repo, the proprietary graphing engine is not). See `docs/Roadmap.md` and issue #338 for details.
 
-### Graphing Mode
-Adding graphing calculator functionality [is on the project roadmap](https://github.com/Microsoft/calculator/issues/338) and we hope that this project can create a great end-user experience around graphing. To that end, the UI from the official in-box Windows Calculator is currently part of this repository, although the proprietary Microsoft-built graphing engine, which also drives graphing in Microsoft Mathematics and OneNote, is not. Community members can still be involved in the creation of the UI, however developer builds will not have graphing functionality due to the use of a [mock implementation of the engine](/src/GraphingImpl/Mocks) built on top of a
-[common graphing API](/src/GraphingInterfaces).
+Privacy & diagnostic data
+- The project may collect diagnostic data in non-development builds. See the privacy statement: https://go.microsoft.com/fwlink/?LinkId=521839. Diagnostic data is disabled by default in development builds.
 
-## Diagnostic Data
-This project collects usage data and sends it to Microsoft to help improve our products and services.
-Read our [privacy statement](https://go.microsoft.com/fwlink/?LinkId=521839) to learn more.
-Diagnostic data is disabled in development builds by default, and can be enabled with the `SEND_DIAGNOSTICS`
-build flag.
+Currency converter
+- Developer builds use mock currency data (planets, static values) that differs from the retail Microsoft service data.
 
-## Currency Converter
-Windows Calculator includes a currency converter feature that uses mock data in developer builds. The data that
-Microsoft uses for the currency converter feature (e.g., in the retail version of the application) is not licensed
-for your use. The mock data will be clearly identifiable as it references planets instead of countries,
-and remains static regardless of selected inputs.
+Reporting security issues
+- Please follow `SECURITY.md`.
 
-## Reporting Security Issues
-Please refer to [SECURITY.md](./SECURITY.md).
+License
+- Licensed under the MIT License. See `LICENSE` for full terms.
 
-## License
-Copyright (c) Microsoft Corporation. All rights reserved.
-
-Licensed under the [MIT License](./LICENSE).
+Thanks for checking out the project — if you'd like, pick a "good first issue" and open a PR! 🎉
