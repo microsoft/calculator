@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3352,11 +3352,11 @@
     <comment>Label text for the step text box</comment>
   </data>
   <data name="MinTextBlock.Text" xml:space="preserve">
-    <value>Min</value>
+    <value>מינימום</value>
     <comment>Label text for the min text box</comment>
   </data>
   <data name="MaxTextBlock.Text" xml:space="preserve">
-    <value>Max</value>
+    <value>מקסימום</value>
     <comment>Label text for the max text box</comment>
   </data>
   <data name="LineColorText.Text" xml:space="preserve">
