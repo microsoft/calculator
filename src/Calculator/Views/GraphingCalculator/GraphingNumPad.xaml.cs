@@ -1,22 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.ViewModel.Common;
 
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System;
+using System.Collections.Generic;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace CalculatorApp
 {
@@ -152,8 +145,7 @@ namespace CalculatorApp
             var mathRichEdit = GetActiveRichEdit();
             if (mathRichEdit != null)
             {
-                string text;
-                mathRichEdit.TextDocument.GetText(Windows.UI.Text.TextGetOptions.NoHidden, out text);
+                mathRichEdit.TextDocument.GetText(Windows.UI.Text.TextGetOptions.NoHidden, out string text);
 
                 if (!string.IsNullOrEmpty(text))
                 {
@@ -189,14 +181,13 @@ namespace CalculatorApp
         // Adding event because the ShowMode property is ignored in xaml.
         private void Flyout_Opening(object sender, object e)
         {
-            var flyout = sender as Flyout;
-            if (flyout != null)
+            if (sender is Flyout flyout)
             {
                 flyout.ShowMode = FlyoutShowMode.Transient;
             }
         }
 
-        private static readonly Dictionary<NumbersAndOperatorsEnum, Tuple<string, int, int>> buttonOutput = new Dictionary<NumbersAndOperatorsEnum, Tuple<string, int, int>>()
+        private static readonly Dictionary<NumbersAndOperatorsEnum, Tuple<string, int, int>> buttonOutput = new Dictionary<NumbersAndOperatorsEnum, Tuple<string, int, int>>
         {
             { NumbersAndOperatorsEnum.Sin, Tuple.Create("sin()", 4, 0) },
             { NumbersAndOperatorsEnum.Cos, Tuple.Create("cos()", 4, 0) },
@@ -269,8 +260,7 @@ namespace CalculatorApp
 
         private static Tuple<string, int, int> GetButtonOutput(NumbersAndOperatorsEnum id)
         {
-            Tuple<string, int, int> output;
-            if (buttonOutput.TryGetValue(id, out output))
+            if (buttonOutput.TryGetValue(id, out Tuple<string, int, int> output))
             {
                 return output;
             }

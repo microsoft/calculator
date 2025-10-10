@@ -7,10 +7,12 @@
 #include "Common/CalculatorDisplay.h"
 #include "Common/EngineResourceProvider.h"
 #include "Common/CalculatorButtonUser.h"
-#include "HistoryViewModel.h"
-#include "MemoryItemViewModel.h"
 #include "Common/BitLength.h"
 #include "Common/NumberBase.h"
+
+#include "HistoryViewModel.h"
+#include "MemoryItemViewModel.h"
+#include "Snapshots.h"
 
 namespace CalculatorUnitTests
 {
@@ -25,9 +27,11 @@ namespace CalculatorApp
     namespace ViewModel
     {
 #define ASCII_0 48
-        public delegate void HideMemoryClickedHandler();
+    public
+        delegate void HideMemoryClickedHandler();
 
-        public value struct ButtonInfo
+    public
+        value struct ButtonInfo
         {
             CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum buttonId;
             bool canSendNegate;
@@ -111,7 +115,7 @@ namespace CalculatorApp
             static property Platform::String
                 ^ IsBitFlipCheckedPropertyName { Platform::String ^ get() { return Platform::StringReference(L"IsBitFlipChecked"); } }
 
-            property CalculatorApp::ViewModel::Common::BitLength ValueBitLength
+                property CalculatorApp::ViewModel::Common::BitLength ValueBitLength
             {
                 CalculatorApp::ViewModel::Common::BitLength get()
                 {
@@ -191,7 +195,7 @@ namespace CalculatorApp
             static property Platform::String
                 ^ IsProgrammerPropertyName { Platform::String ^ get() { return Platform::StringReference(L"IsProgrammer"); } }
 
-            property bool IsEditingEnabled
+                property bool IsEditingEnabled
             {
                 bool get()
                 {
@@ -240,6 +244,11 @@ namespace CalculatorApp
                 }
             }
 
+            property CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ Snapshot {
+                CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ get();
+                void set(CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ snapshot);
+            };
+
             // Used by unit tests
             void ResetCalcManager(bool clearMemory);
             void SendCommandToCalcManager(int command);
@@ -259,10 +268,11 @@ namespace CalculatorApp
             void SwitchAngleType(CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum num);
             void FtoEButtonToggled();
 
-        internal:
-            void OnPaste(Platform::String ^ pastedString);
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);
+            void SetCalculatorType(CalculatorApp::ViewModel::Common::ViewMode targetState);
+
+            internal : void OnPaste(Platform::String ^ pastedString);
 
             ButtonInfo MapCharacterToButtonId(char16 ch);
 
@@ -277,14 +287,13 @@ namespace CalculatorApp
 
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);
-            void SetCalculatorType(CalculatorApp::ViewModel::Common::ViewMode targetState);
 
             Platform::String ^ GetRawDisplayValue();
             void Recalculate(bool fromHistory = false);
             bool IsOperator(CalculationManager::Command cmdenum);
-            void SetMemorizedNumbersString();   
+            void SetMemorizedNumbersString();
             void ResetRadixAndUpdateMemory(bool resetRadix);
-          
+
             void SetPrecision(int32_t precision);
             void UpdateMaxIntDigits()
             {
@@ -294,7 +303,7 @@ namespace CalculatorApp
             {
                 return m_CurrentAngleType;
             }
-            
+
         private:
             void SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers);
             void UpdateProgrammerPanelDisplay();
@@ -344,8 +353,7 @@ namespace CalculatorApp
             Common::DisplayExpressionToken ^ m_selectedExpressionToken;
 
             Platform::String ^ LocalizeDisplayValue(_In_ std::wstring const& displayValue);
-            Platform::String
-                ^ CalculateNarratorDisplayValue(_In_ std::wstring const& displayValue, _In_ Platform::String ^ localizedDisplayValue);
+            Platform::String ^ CalculateNarratorDisplayValue(_In_ std::wstring const& displayValue, _In_ Platform::String ^ localizedDisplayValue);
             CalculatorApp::ViewModel::Common::Automation::NarratorAnnouncement ^ GetDisplayUpdatedNarratorAnnouncement();
             Platform::String ^ GetCalculatorExpressionAutomationName();
             Platform::String ^ GetNarratorStringReadRawNumbers(_In_ Platform::String ^ localizedDisplayValue);

@@ -3,7 +3,6 @@
 
 #include "Header Files/CalcEngine.h"
 #include "Command.h"
-#include "ExpressionCommand.h"
 #include "winerror_cross_platform.h"
 
 constexpr int ASCII_0 = 48;
@@ -66,47 +65,7 @@ CHistoryCollector::~CHistoryCollector()
 
 void CHistoryCollector::AddOpndToHistory(wstring_view numStr, Rational const& rat, bool fRepetition)
 {
-    std::shared_ptr<std::vector<int>> commands = std::make_shared<vector<int>>();
-    // Check for negate
-    bool fNegative = (numStr[0] == L'-');
-    bool fSciFmt = false;
-    bool fDecimal = false;
-
-    for (size_t i = (fNegative ? 1 : 0); i < numStr.length(); i++)
-    {
-        if (numStr[i] == m_decimalSymbol)
-        {
-            commands->push_back(IDC_PNT);
-            if (!fSciFmt)
-            {
-                fDecimal = true;
-            }
-        }
-        else if (numStr[i] == L'e')
-        {
-            commands->push_back(IDC_EXP);
-            fSciFmt = true;
-        }
-        else if (numStr[i] == L'-')
-        {
-            commands->push_back(IDC_SIGN);
-        }
-        else if (numStr[i] == L'+')
-        {
-            // Ignore.
-        }
-        // Number
-        else
-        {
-            int num = static_cast<int>(numStr[i]) - ASCII_0;
-            num += IDC_0;
-            commands->push_back(num);
-        }
-    }
-
-    auto operandCommand = std::make_shared<COpndCommand>(commands, fNegative, fDecimal, fSciFmt);
-    operandCommand->Initialize(rat);
-    int iCommandEnd = AddCommand(operandCommand);
+    int iCommandEnd = AddCommand(GetOperandCommandsFromString(numStr, rat));
     m_lastOpStartIndex = IchAddSzToEquationSz(numStr, iCommandEnd);
 
     if (fRepetition)
@@ -143,14 +102,14 @@ void CHistoryCollector::AddBinOpToHistory(int nOpCode, bool isIntegerMode, bool 
 // This is expected to be called when a binary op in the last say 1+2+ is changing to another one say 1+2* (+ changed to *)
 // It needs to know by this change a Precedence inversion happened. i.e. previous op was lower or equal to its previous op, but the new
 // one isn't. (Eg. 1*2* to 1*2^). It can add explicit brackets to ensure the precedence is inverted. (Eg. (1*2) ^)
-void CHistoryCollector::ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher, bool isIntgerMode)
+void CHistoryCollector::ChangeLastBinOp(int nOpCode, bool fPrecInvToHigher, bool isIntegerMode)
 {
     TruncateEquationSzFromIch(m_lastBinOpStartIndex);
     if (fPrecInvToHigher)
     {
         EnclosePrecInversionBrackets();
     }
-    AddBinOpToHistory(nOpCode, isIntgerMode);
+    AddBinOpToHistory(nOpCode, isIntegerMode);
 }
 
 void CHistoryCollector::PushLastOpndStart(int ichOpndStart)
@@ -201,7 +160,7 @@ void CHistoryCollector::EnclosePrecInversionBrackets()
     IchAddSzToEquationSz(CCalcEngine::OpCodeToString(IDC_CLOSEP), -1);
 }
 
-bool CHistoryCollector::FOpndAddedToHistory()
+bool CHistoryCollector::FOpndAddedToHistory() const
 {
     return (-1 != m_lastOpStartIndex);
 }
@@ -465,7 +424,7 @@ void CHistoryCollector::SetDecimalSymbol(wchar_t decimalSymbol)
 }
 
 // Update the commands corresponding to the passed string Number
-std::shared_ptr<std::vector<int>> CHistoryCollector::GetOperandCommandsFromString(wstring_view numStr)
+std::shared_ptr<std::vector<int>> CHistoryCollector::GetOperandCommandsFromString(wstring_view numStr) const
 {
     std::shared_ptr<std::vector<int>> commands = std::make_shared<std::vector<int>>();
     // Check for negate
@@ -502,6 +461,61 @@ std::shared_ptr<std::vector<int>> CHistoryCollector::GetOperandCommandsFromStrin
     if (fNegative)
     {
         commands->push_back(IDC_SIGN);
+    }
+    return commands;
+}
+
+std::shared_ptr<COpndCommand> CHistoryCollector::GetOperandCommandsFromString(std::wstring_view numStr, Rational const& rat) const
+{
+    std::shared_ptr<std::vector<int>> commands = std::make_shared<vector<int>>();
+    // Check for negate
+    bool fNegative = (numStr[0] == L'-');
+    bool fSciFmt = false;
+    bool fDecimal = false;
+
+    for (size_t i = (fNegative ? 1 : 0); i < numStr.length(); i++)
+    {
+        if (numStr[i] == m_decimalSymbol)
+        {
+            commands->push_back(IDC_PNT);
+            if (!fSciFmt)
+            {
+                fDecimal = true;
+            }
+        }
+        else if (numStr[i] == L'e')
+        {
+            commands->push_back(IDC_EXP);
+            fSciFmt = true;
+        }
+        else if (numStr[i] == L'-')
+        {
+            commands->push_back(IDC_SIGN);
+        }
+        else if (numStr[i] == L'+')
+        {
+            // Ignore.
+        }
+        // Number
+        else
+        {
+            int num = static_cast<int>(numStr[i]) - ASCII_0;
+            num += IDC_0;
+            commands->push_back(num);
+        }
+    }
+
+    auto operandCommand = std::make_shared<COpndCommand>(commands, fNegative, fDecimal, fSciFmt);
+    operandCommand->Initialize(rat);
+    return operandCommand;
+}
+
+std::vector<std::shared_ptr<IExpressionCommand>> CHistoryCollector::GetCommands() const
+{
+    std::vector<std::shared_ptr<IExpressionCommand>> commands;
+    if (m_spCommands != nullptr)
+    {
+        commands = *m_spCommands;
     }
     return commands;
 }

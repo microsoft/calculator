@@ -1,7 +1,6 @@
 # This template contains jobs to run unit tests.
 
 parameters:
-  isOSSBuild: false
   platform: ''
   runsettingsFileName: ''
 
@@ -10,30 +9,24 @@ jobs:
   displayName: UnitTests ${{ parameters.platform }}
   dependsOn: Build${{ parameters.platform }}
   condition: succeeded()
-  pool:
-    ${{ if eq(parameters.isOSSBuild, true) }}:
-      name: EssentialExperiencesOpenSource-windows-2022
-    ${{ if eq(parameters.isOSSBuild, false) }}:
-      name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
+    UnitTestsDir: $(Pipeline.Workspace)\drop-${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test
   steps:
-  - checkout: none
+  - checkout: self
+    fetchDepth: 1
   
-  - task: DownloadBuildArtifacts@0
+  - download: current
     displayName: Download CalculatorUnitTests
-    inputs:
-      artifactName: drop
-      itemPattern: drop/Release/${{ parameters.platform }}/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test/**
+    artifact: drop-${{ parameters.platform }}
+    patterns: '**/CalculatorUnitTests_Test/**'
 
-  - task: PowerShell@2
-    displayName: Install Certificate
-    inputs:
-      filePath: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\Add-AppDevPackage.ps1
-      arguments: -CertificatePath $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.cer -Force
+  - powershell: |
+      $(Build.SourcesDirectory)/build/scripts/SignTestApp.ps1 -AppToSign '$(UnitTestsDir)\CalculatorUnitTests.msix'
+    displayName: Sign unit tests
 
   - task: VSTest@2
     displayName: Run CalculatorUnitTests
     inputs:
-      testAssemblyVer2: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.msix
+      testAssemblyVer2: $(UnitTestsDir)\CalculatorUnitTests.msix
       otherConsoleOptions: /Platform:${{ parameters.platform }}

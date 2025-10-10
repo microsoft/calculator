@@ -3,12 +3,13 @@
 
 using System;
 using System.Runtime.InteropServices;
+
+using Windows.ApplicationModel;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
-using Windows.ApplicationModel;
 
 namespace CalculatorApp
 {
@@ -16,14 +17,14 @@ namespace CalculatorApp
     {
         namespace Windows_2004_Prerelease
         {
-            public enum RichEditMathMode : int
+            public enum RichEditMathMode
             {
                 NoMath,
                 MathOnly
             }
 
             [Guid("619c20f2-cb3b-4521-981f-2865b1b93f04")]
-            interface ITextDocument4
+            internal interface ITextDocument4
             {
                 int SetMath(string value);
                 int GetMath(out string value);
@@ -40,44 +41,29 @@ namespace CalculatorApp
 
         public sealed class MathRichEditBoxSubmission
         {
-            public bool HasTextChanged
-            {
-                get => m_HasTextChanged;
-            }
+            public bool HasTextChanged { get; }
 
-            public EquationSubmissionSource Source
-            {
-                get => m_Source;
-            }
+            public EquationSubmissionSource Source { get; }
 
             public MathRichEditBoxSubmission(bool hasTextChanged, EquationSubmissionSource source)
             {
-                m_HasTextChanged = hasTextChanged;
-                m_Source = source;
+                HasTextChanged = hasTextChanged;
+                Source = source;
             }
-            private bool m_HasTextChanged;
-            private EquationSubmissionSource m_Source;
+
         }
 
         public sealed class MathRichEditBoxFormatRequest
         {
-            public string OriginalText
-            {
-                get => m_OriginalText;
-            }
+            public string OriginalText { get; }
 
-            public string FormattedText
-            {
-                get => m_FormattedText;
-                set => m_FormattedText = value;
-            }
+            public string FormattedText { get; set; }
 
             public MathRichEditBoxFormatRequest(string originalText)
             {
-                m_OriginalText = originalText;
+                OriginalText = originalText;
             }
-            private string m_OriginalText;
-            private string m_FormattedText;
+
         }
 
         public sealed class MathRichEditBox : Windows.UI.Xaml.Controls.RichEditBox
@@ -86,14 +72,14 @@ namespace CalculatorApp
             {
                 string packageName = Package.Current.Id.Name;
 
-                if(packageName == "Microsoft.WindowsCalculator.Dev")
+                if (packageName == "Microsoft.WindowsCalculator.Dev")
                 {
                     LimitedAccessFeatures.TryUnlockFeature(
                                 "com.microsoft.windows.richeditmath",
                                 "BeDD/jxKhz/yfVNA11t4uA==", // Microsoft.WindowsCalculator.Dev
                                 "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.");
                 }
-                else if(packageName == "Microsoft.WindowsCalculator")
+                else if (packageName == "Microsoft.WindowsCalculator")
                 {
                     LimitedAccessFeatures.TryUnlockFeature(
                                 "com.microsoft.windows.richeditmath",
@@ -108,8 +94,8 @@ namespace CalculatorApp
 
             public string MathText
             {
-                get { return (string)GetValue(MathTextProperty); }
-                set { SetValue(MathTextProperty, value); }
+                get => (string)GetValue(MathTextProperty);
+                set => SetValue(MathTextProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for MathText.  This enables animation, styling, binding, etc...

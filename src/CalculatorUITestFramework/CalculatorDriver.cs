@@ -2,52 +2,43 @@
 // Licensed under the MIT License.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
+
 using System;
-using System.Diagnostics;
 
 namespace CalculatorUITestFramework
 {
-    public sealed class WinAppDriver
+    public sealed class CalculatorDriver
     {
-        private WindowsDriverLocalService windowsDriverService = null;
-        public MemoryPanel MemoryPanel = new MemoryPanel();
         private const string defaultAppId = "Microsoft.WindowsCalculator.Dev_8wekyb3d8bbwe!App";
-        private static WinAppDriver instance = null;
-        public static WinAppDriver Instance
+
+        private static CalculatorDriver instance = null;
+        public static CalculatorDriver Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new WinAppDriver();
+                    instance = new CalculatorDriver();
                 }
                 return instance;
             }
 
         }
 
+        private WinAppDriverLocalServer server;
+
         public WindowsDriver<WindowsElement> CalculatorSession { get; private set; }
 
-        private WinAppDriver()
+        private CalculatorDriver()
         {
         }
 
         public void SetupCalculatorSession(TestContext context)
         {
-            this.windowsDriverService = new WindowsDriverServiceBuilder().Build();
-
-            this.windowsDriverService.OutputDataReceived += (sender, e) =>
-            {
-                var outputData = e.Data?.Replace("\0", string.Empty);
-                if (!String.IsNullOrEmpty(outputData))
-                {
-                    Console.WriteLine(outputData);
-                }
-            };
-
-            this.windowsDriverService.Start();
+            this.server = new WinAppDriverLocalServer();
 
             // Launch Calculator application if it is not yet launched
             if (this.CalculatorSession == null)
@@ -66,7 +57,7 @@ namespace CalculatorUITestFramework
                 }
 
                 options.AddAdditionalCapability("deviceName", "WindowsPC");
-                this.CalculatorSession = new WindowsDriver<WindowsElement>(this.windowsDriverService.ServiceUrl, options);
+                this.CalculatorSession = new WindowsDriver<WindowsElement>(this.server.ServiceUrl, options);
                 this.CalculatorSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 Assert.IsNotNull(this.CalculatorSession);
             }
@@ -81,12 +72,11 @@ namespace CalculatorUITestFramework
                 this.CalculatorSession = null;
             }
 
-            if (this.windowsDriverService != null)
+            if (this.server != null)
             {
-                this.windowsDriverService.Dispose();
-                this.windowsDriverService = null;
+                this.server.Dispose();
+                this.server = null;
             }
         }
-
     }
 }

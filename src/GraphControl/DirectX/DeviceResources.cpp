@@ -169,16 +169,16 @@ namespace GraphControl::DX
         ComPtr<ID3D11DeviceContext> context;
 
         HRESULT hr = D3D11CreateDevice(
-            nullptr,                    // Specify nullptr to use the default adapter.
-            D3D_DRIVER_TYPE_HARDWARE,   // Create a device using the hardware graphics driver.
-            0,                          // Should be 0 unless the driver is D3D_DRIVER_TYPE_SOFTWARE.
-            creationFlags,              // Set debug and Direct2D compatibility flags.
-            featureLevels.data(),       // List of feature levels this app can support.
-            featureLevels.size(),       // Size of the list above.
-            D3D11_SDK_VERSION,          // Always set this to D3D11_SDK_VERSION for Windows Store apps.
-            &device,                    // Returns the Direct3D device created.
-            &m_d3dFeatureLevel,         // Returns feature level of device created.
-            &context                    // Returns the device immediate context.
+            nullptr,                                 // Specify nullptr to use the default adapter.
+            D3D_DRIVER_TYPE_HARDWARE,                // Create a device using the hardware graphics driver.
+            0,                                       // Should be 0 unless the driver is D3D_DRIVER_TYPE_SOFTWARE.
+            creationFlags,                           // Set debug and Direct2D compatibility flags.
+            featureLevels.data(),                    // List of feature levels this app can support.
+            static_cast<UINT>(featureLevels.size()), // Size of the list above.
+            D3D11_SDK_VERSION,                       // Always set this to D3D11_SDK_VERSION for Windows Store apps.
+            &device,                                 // Returns the Direct3D device created.
+            &m_d3dFeatureLevel,                      // Returns feature level of device created.
+            &context                                 // Returns the device immediate context.
         );
 
         if (FAILED(hr))
@@ -193,7 +193,7 @@ namespace GraphControl::DX
                     0,
                     creationFlags,
                     featureLevels.data(),
-                    featureLevels.size(),
+                    static_cast<UINT>(featureLevels.size()),
                     D3D11_SDK_VERSION,
                     &device,
                     &m_d3dFeatureLevel,

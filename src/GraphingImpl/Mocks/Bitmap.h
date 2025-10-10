@@ -9,7 +9,7 @@ namespace MockGraphingImpl
 {
     class Bitmap : public Graphing::IBitmap
     {
-        virtual const std::vector<BYTE>& GetData() const
+        virtual std::vector<BYTE> GetData() const
         {
             return std::vector<BYTE>();
         }

@@ -3,8 +3,9 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
+
 using OpenQA.Selenium.Appium.Windows;
-using System;
+
 using System.Diagnostics;
 using System.Threading;
 

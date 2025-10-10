@@ -1,17 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.ViewModel;
-
-using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using System.ComponentModel;
+
+using Windows.UI.Xaml;
 
 namespace CalculatorApp
 {
@@ -33,7 +25,7 @@ namespace CalculatorApp
 
         public CalculatorApp.ViewModel.EquationViewModel ViewModel
         {
-            get { return m_viewModel; }
+            get => m_viewModel;
             set
             {
                 if (m_viewModel != value)

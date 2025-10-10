@@ -3,7 +3,7 @@
 
 using namespace std;
 
-namespace CalcManager::NumberFormattingUtils
+namespace UnitConversionManager::NumberFormattingUtils
 {
     /// <summary>
     /// Trims out any trailing zeros or decimals in the given input string

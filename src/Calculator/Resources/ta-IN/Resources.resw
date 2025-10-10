@@ -1277,6 +1277,10 @@
     <value>கோப்பை (US)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
+  <data name="UnitAbbreviation_Angstrom" xml:space="preserve">
+    <value>A</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
     <value>ஏக்</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
@@ -1384,6 +1388,10 @@
   <data name="UnitAbbreviation_Joule" xml:space="preserve">
     <value>J</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
+    <value>kWh</value>
+    <comment>An abbreviation for a measurement unit of electricity consumption</comment>
   </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
     <value>K</value>
@@ -1573,6 +1581,10 @@
     <value>MiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
+  <data name="UnitAbbreviation_Nibble" xml:space="preserve">
+    <value>nybl</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
     <value>Pi</value>
     <comment>An abbreviation for a measurement unit of data</comment>
@@ -1749,6 +1761,10 @@
     <value>ஜூல்கள்</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Kilowatthour" xml:space="preserve">
+    <value>கிலோவாட்-மணிநேரங்கள்</value>
+    <comment>A measurement unit for electricity consumption. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
     <value>கெல்வின்</value>
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
@@ -1833,8 +1849,16 @@
     <value>நிமிடங்கள்</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Nibble" xml:space="preserve">
+    <value>நிபில்</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
     <value>நானோமீட்டர்கள்</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Angstrom" xml:space="preserve">
+    <value>ஆங்ஸ்ட்ரோம்கள்</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
@@ -2330,11 +2354,11 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>அங்கு இதுவரை வரலாறு ஏதுமில்லை</value>
+    <value>இங்கு இதுவரை வரலாறு ஏதுமில்லை.</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>நினைவகத்தில் எதுவும் சேமிக்கப்படவில்லை</value>
+    <value>நினைவகத்தில் எதுவும் சேமிக்கப்படவில்லை.</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3594,7 +3618,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>செல்லுபடியாகாத கோவை</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>கோவை காலியாக உள்ளது</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3606,7 +3630,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>சார்பின் பெயருக்குப் பிறகு பிறை அடைப்பு விடுபட்டுள்ளது</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>ஒரு கணிதச் செயல்பாடு தவறான அளவுருக்களின் எண்ணிக்கையைக் கொண்டுள்ளது</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3742,7 +3766,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>கிராஃப் பார்த்தல் சாளரம், %1 மற்றும் %2-இல் x அச்சு பிணைக்கப்பட்டது, %3 மற்றும் %4-இல் y அச்சு பிணைக்கப்பட்டது, %5 சமன்பாடுகளைக் காட்டுகிறது</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>ஸ்லைடரை உள்ளமை</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3859,7 +3883,7 @@
     <value>கோவையை உள்ளிடவும்</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>நகலெடு</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3884,11 +3908,11 @@
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>சார்பு உள்ளீட்டுப் பட்டியல் உருப்படி</value>
+    <value>சார்பு உள்ளீடு</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>சார்பு உள்ளீட்டுப் பட்டியல்</value>
+    <value>சார்பு உள்ளீடு</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4135,16 +4159,16 @@
     <value>தோற்றம்</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
-    <value>பயன்பாட்டு தீம்</value>
+  <data name="AppThemeExpander.Header" xml:space="preserve">
+    <value>பயன்பாட்டுக் கருப்பொருள்</value>
     <comment>Title of App theme expander</comment>
   </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Description" xml:space="preserve">
     <value>எந்தப் பயன்பாட்டு கருப்பொருளைக் காண்பிக்க வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும்</value>
     <comment>Description of App theme expander</comment>
   </data>
   <data name="LightThemeRadioButton.Content" xml:space="preserve">
-    <value>லைட்</value>
+    <value>வெளிச்சம்</value>
     <comment>Lable for light theme option</comment>
   </data>
   <data name="DarkThemeRadioButton.Content" xml:space="preserve">
@@ -4163,8 +4187,16 @@
     <value>அமைப்புகள் பக்கம்</value>
     <comment>Announcement used when Settings page is opened</comment>
   </data>
-  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>பயன்பாட்டின் கருப்பொருள் அமைப்பு</value>
-    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
+  <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>கிடைக்கக்கூடிய செயல்களுக்கு சூழல் மெனுவைத் திறக்கவும்</value>
+    <comment>Screen reader prompt for the context menu of the expression box</comment>
+  </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>சரி</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>இந்த நொடிப்புச்சேமிப்பை மீட்டெடுக்க முடியவில்லை.</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
   </data>
 </root>

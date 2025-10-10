@@ -1,19 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-
-using Windows.Foundation;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using CalculatorApp;
-using CalculatorApp.Common;
-using CalculatorApp.Controls;
 
 namespace CalculatorApp
 {
@@ -27,8 +16,8 @@ namespace CalculatorApp
 
             public string Text
             {
-                get { return (string)GetValue(TextProperty); }
-                set { SetValue(TextProperty, value); }
+                get => (string)GetValue(TextProperty);
+                set => SetValue(TextProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for Text.  This enables animation, styling, binding, etc...
@@ -37,8 +26,8 @@ namespace CalculatorApp
 
             public string Glyph
             {
-                get { return (string)GetValue(GlyphProperty); }
-                set { SetValue(GlyphProperty, value); }
+                get => (string)GetValue(GlyphProperty);
+                set => SetValue(GlyphProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for Glyph.  This enables animation, styling, binding, etc...
@@ -47,8 +36,8 @@ namespace CalculatorApp
 
             public double GlyphFontSize
             {
-                get { return (double)GetValue(GlyphFontSizeProperty); }
-                set { SetValue(GlyphFontSizeProperty, value); }
+                get => (double)GetValue(GlyphFontSizeProperty);
+                set => SetValue(GlyphFontSizeProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for GlyphFontSize.  This enables animation, styling, binding, etc...
@@ -57,8 +46,8 @@ namespace CalculatorApp
 
             public double ChevronFontSize
             {
-                get { return (double)GetValue(ChevronFontSizeProperty); }
-                set { SetValue(ChevronFontSizeProperty, value); }
+                get => (double)GetValue(ChevronFontSizeProperty);
+                set => SetValue(ChevronFontSizeProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for ChevronFontSize.  This enables animation, styling, binding, etc...
@@ -67,8 +56,8 @@ namespace CalculatorApp
 
             public Flyout FlyoutMenu
             {
-                get { return (Flyout)GetValue(FlyoutMenuProperty); }
-                set { SetValue(FlyoutMenuProperty, value); }
+                get => (Flyout)GetValue(FlyoutMenuProperty);
+                set => SetValue(FlyoutMenuProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for FlyoutMenu.  This enables animation, styling, binding, etc...

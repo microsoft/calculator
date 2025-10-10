@@ -6,26 +6,11 @@
 // Declaration of the CalculatorScientificOperators class
 //
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Common;
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace CalculatorApp
 {
@@ -39,15 +24,12 @@ namespace CalculatorApp
             ExpButton.SetValue(KeyboardShortcutManager.VirtualKeyProperty, MyVirtualKey.E);
         }
 
-        public StandardCalculatorViewModel Model
-        {
-            get { return (StandardCalculatorViewModel)this.DataContext; }
-        }
+        public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
 
         public bool IsErrorVisualState
         {
-            get { return (bool)GetValue(IsErrorVisualStateProperty); }
-            set { SetValue(IsErrorVisualStateProperty, value); }
+            get => (bool)GetValue(IsErrorVisualStateProperty);
+            set => SetValue(IsErrorVisualStateProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsErrorVisualState.  This enables animation, styling, binding, etc...
@@ -142,11 +124,11 @@ namespace CalculatorApp
             {
                 InverseHyperbolicTrigFunctions.Visibility = Visibility.Visible;
             }
-            else if (isShiftChecked && !isHypeChecked)
+            else if (isShiftChecked)
             {
                 InverseTrigFunctions.Visibility = Visibility.Visible;
             }
-            else if (!isShiftChecked && isHypeChecked)
+            else if (isHypeChecked)
             {
                 HyperbolicTrigFunctions.Visibility = Visibility.Visible;
             }

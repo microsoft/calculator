@@ -13,7 +13,7 @@
     <AppContainerApplication>true</AppContainerApplication>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <!-- We want to manually control the MinVersion/MaxVersionTested in the manifest so turn of the replacement. -->
     <AppxOSMinVersionReplaceManifestVersion>false</AppxOSMinVersionReplaceManifestVersion>
@@ -24,8 +24,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateKeyFile>WindowsDev_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <AppxBundle>Always</AppxBundle>
     <GenerateProjectSpecificOutputFolder>true</GenerateProjectSpecificOutputFolder>
@@ -143,9 +142,9 @@
     </Compile>
     <Compile Include="Common\AlwaysSelectedCollectionView.cs" />
     <Compile Include="Common\AppLifecycleLogger.cs" />
-    <Compile Include="Common\KeyboardShortcuManager.cs" />
+    <Compile Include="Common\KeyboardShortcutManager.cs" />
+    <Compile Include="Common\LaunchArguments.cs" />
     <Compile Include="Common\ValidatingConverters.cs" />
-    <Compile Include="Common\ViewState.cs" />
     <Compile Include="Controls\CalculationResult.cs" />
     <Compile Include="Controls\CalculationResultAutomationPeer.cs" />
     <Compile Include="Controls\CalculatorButton.cs" />
@@ -165,11 +164,16 @@
     <Compile Include="Converters\ItemSizeToVisibilityConverter.cs" />
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
+    <Compile Include="Selectors\NavViewMenuItemTemplateSelector.cs" />
+    <Compile Include="Utils\DeflateUtils.cs" />
+    <Compile Include="Utils\ResourceVirtualKey.cs" />
+    <Compile Include="Utils\ResourceString.cs" />
+    <Compile Include="Utils\JsonUtils.cs" />
     <Compile Include="Utils\ThemeHelper.cs" />
     <Compile Include="Views\GraphingCalculator\EquationStylePanelControl.xaml.cs">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GraphingCalculator\KeyGraphFeaturesTemplateSelector.cs" />
+    <Compile Include="Selectors\KeyGraphFeaturesTemplateSelector.cs" />
     <Compile Include="Utils\DelegateCommandUtils.cs" />
     <Compile Include="Views\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
@@ -235,7 +239,7 @@
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StateTriggers\AspectRatioTrigger.cs" />
-    <Compile Include="Views\StateTriggers\CalculatorProgrammerDisplayPanel.xaml.cs">
+    <Compile Include="Views\CalculatorProgrammerDisplayPanel.xaml.cs">
       <DependentUpon>CalculatorProgrammerDisplayPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StateTriggers\ControlSizeTrigger.cs" />
@@ -248,7 +252,6 @@
     <Compile Include="Views\UnitConverter.xaml.cs">
       <DependentUpon>UnitConverter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WindowFrameService.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseReleaseAppxManifest)' == 'True'">
     <AppxManifest Include="Package.Release.appxmanifest">
@@ -773,7 +776,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StateTriggers\CalculatorProgrammerDisplayPanel.xaml">
+    <Page Include="Views\CalculatorProgrammerDisplayPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -791,12 +794,22 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.10</Version>
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls">
+      <Version>8.0.230823-rc</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.UI.Xaml" Version="2.7.0" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.14</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.1" />
+    <PackageReference Include="System.Text.Json">
+      <Version>8.0.5</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Calculator.ManagedViewModels\Calculator.ManagedViewModels.csproj">
+      <Project>{2179cfde-cded-4df0-8c24-a0ef6b425771}</Project>
+      <Name>Calculator.ManagedViewModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
       <Project>{812d1a7b-b8ac-49e4-8e6d-af5d59500d56}</Project>
       <Name>CalcViewModel</Name>
@@ -812,7 +825,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\CalculatorIcons.ttf" />
-    <None Include="WindowsDev_TemporaryKey.pfx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

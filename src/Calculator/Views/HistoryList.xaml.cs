@@ -1,8 +1,9 @@
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
-using System;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+
 using MUXC = Microsoft.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -19,10 +20,7 @@ namespace CalculatorApp
             HistoryEmpty.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
         }
 
-        public CalculatorApp.ViewModel.HistoryViewModel Model
-        {
-            get => (CalculatorApp.ViewModel.HistoryViewModel)DataContext;
-        }
+        public CalculatorApp.ViewModel.HistoryViewModel Model => (CalculatorApp.ViewModel.HistoryViewModel)DataContext;
 
         public void ScrollToBottom()
         {
@@ -35,8 +33,8 @@ namespace CalculatorApp
 
         public Windows.UI.Xaml.GridLength RowHeight
         {
-            get { return (Windows.UI.Xaml.GridLength)GetValue(RowHeightProperty); }
-            set { SetValue(RowHeightProperty, value); }
+            get => (Windows.UI.Xaml.GridLength)GetValue(RowHeightProperty);
+            set => SetValue(RowHeightProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for RowHeight.  This enables animation, styling, binding, etc...
@@ -50,11 +48,8 @@ namespace CalculatorApp
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            HistoryViewModel historyVM = (DataContext as HistoryViewModel);
-            HistoryItemViewModel clickedItem = (e.ClickedItem as HistoryItemViewModel);
-
             // When the user clears the history list in the overlay view and presses enter, the clickedItem is nullptr
-            if (clickedItem != null && historyVM != null)
+            if (e.ClickedItem is HistoryItemViewModel clickedItem && DataContext is HistoryViewModel historyVM)
             {
                 historyVM.ShowItem(clickedItem);
             }
@@ -62,8 +57,7 @@ namespace CalculatorApp
         private void OnCopyMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var listViewItem = HistoryContextMenu.Target;
-            var itemViewModel = (HistoryListView.ItemFromContainer(listViewItem) as HistoryItemViewModel);
-            if (itemViewModel != null)
+            if (HistoryListView.ItemFromContainer(listViewItem) is HistoryItemViewModel itemViewModel)
             {
                 CopyPasteManager.CopyToClipboard(itemViewModel.Result);
             }
@@ -71,16 +65,14 @@ namespace CalculatorApp
         private void OnDeleteMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var listViewItem = HistoryContextMenu.Target;
-            var itemViewModel = (HistoryListView.ItemFromContainer(listViewItem) as HistoryItemViewModel);
-            if (itemViewModel != null)
+            if (HistoryListView.ItemFromContainer(listViewItem) is HistoryItemViewModel itemViewModel)
             {
                 Model.DeleteItem(itemViewModel);
             }
         }
         private void OnDeleteSwipeInvoked(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs e)
         {
-            var swipedItem = (e.SwipeControl.DataContext as HistoryItemViewModel);
-            if (swipedItem != null)
+            if (e.SwipeControl.DataContext is HistoryItemViewModel swipedItem)
             {
                 Model.DeleteItem(swipedItem);
             }

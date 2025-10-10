@@ -43,6 +43,8 @@ namespace CalculatorApp
     constexpr auto EVENT_NAME_VARIABLE_SETTING_CHANGED = L"VariableSettingChanged";
     constexpr auto EVENT_NAME_GRAPH_SETTINGS_CHANGED = L"GraphSettingsChanged";
     constexpr auto EVENT_NAME_GRAPH_THEME = L"GraphTheme";
+    constexpr auto EVENT_NAME_RECALL_SNAPSHOT = L"RecallSnapshot";
+    constexpr auto EVENT_NAME_RECALL_RESTORE = L"RecallRestore";
 
     constexpr auto EVENT_NAME_EXCEPTION = L"Exception";
 
@@ -79,7 +81,7 @@ namespace CalculatorApp
     {
         auto fields = ref new LoggingFields();
 
-        fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
         fields->AddString(StringReference(L"VisualState"), state);
         fields->AddBoolean(StringReference(L"IsAlwaysOnTop"), isAlwaysOnTop);
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_VISUAL_STATE_CHANGED), fields);
@@ -94,18 +96,17 @@ namespace CalculatorApp
         }
 
         auto fields = ref new LoggingFields();
-        fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
         fields->AddUInt64(StringReference(L"NumOfOpenWindows"), currentWindowCount);
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_WINDOW_ON_CREATED), fields);
     }
 
     void TraceLogger::LogModeChange(ViewMode mode)
     {
-        if (NavCategory::IsValidViewMode(mode))
+        if (NavCategoryStates::IsValidViewMode(mode))
         {
             auto fields = ref new LoggingFields();
-            ;
-            fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(mode));
+            fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
             TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_MODE_CHANGED), fields);
         }
     }
@@ -113,7 +114,7 @@ namespace CalculatorApp
     void TraceLogger::LogHistoryItemLoad(ViewMode mode, int historyListSize, int loadedIndex)
     {
         auto fields = ref new LoggingFields();
-        fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
         fields->AddInt32(StringReference(L"HistoryListSize"), historyListSize);
         fields->AddInt32(StringReference(L"HistoryItemIndex"), loadedIndex);
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_HISTORY_ITEM_LOAD), fields);
@@ -122,7 +123,7 @@ namespace CalculatorApp
     void TraceLogger::LogMemoryItemLoad(ViewMode mode, int memoryListSize, int loadedIndex)
     {
         auto fields = ref new LoggingFields();
-        fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
         fields->AddInt32(StringReference(L"MemoryListSize"), memoryListSize);
         fields->AddInt32(StringReference(L"MemoryItemIndex"), loadedIndex);
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_MEMORY_ITEM_LOAD), fields);
@@ -131,7 +132,7 @@ namespace CalculatorApp
     void TraceLogger::LogError(ViewMode mode, Platform::String ^ functionName, Platform::String ^ errorString)
     {
         auto fields = ref new LoggingFields();
-        fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
         fields->AddString(StringReference(L"FunctionName"), functionName);
         fields->AddString(StringReference(L"Message"), errorString);
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_EXCEPTION), fields);
@@ -140,7 +141,7 @@ namespace CalculatorApp
     void TraceLogger::LogStandardException(ViewMode mode, wstring_view functionName, const exception& e)
     {
         auto fields = ref new LoggingFields();
-        fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
         fields->AddString(StringReference(L"FunctionName"), StringReference(functionName.data()));
         wstringstream exceptionMessage;
         exceptionMessage << e.what();
@@ -151,7 +152,7 @@ namespace CalculatorApp
     void TraceLogger::LogPlatformExceptionInfo(CalculatorApp::ViewModel::Common::ViewMode mode, Platform::String ^ functionName, Platform::String^ message, int hresult)
     {
         auto fields = ref new LoggingFields();
-        fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
         fields->AddString(StringReference(L"FunctionName"), functionName);
         fields->AddString(StringReference(L"Message"), message);
         fields->AddInt32(StringReference(L"HRESULT"), hresult);
@@ -223,7 +224,7 @@ namespace CalculatorApp
         Platform::String ^ buttonUsageString;
         for (size_t i = 0; i < buttonLog.size(); i++)
         {
-            buttonUsageString += NavCategory::GetFriendlyName(buttonLog[i].mode);
+            buttonUsageString += NavCategoryStates::GetFriendlyName(buttonLog[i].mode);
             buttonUsageString += "|";
             buttonUsageString += buttonLog[i].button.ToString();
             buttonUsageString += "|";
@@ -245,7 +246,7 @@ namespace CalculatorApp
     {
         const wchar_t* calculationType = AddSubtractMode ? L"AddSubtractMode" : L"DateDifferenceMode";
         auto fields = ref new LoggingFields();
-        fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(ViewMode::Date));
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(ViewMode::Date));
         fields->AddString(StringReference(L"CalculationType"), StringReference(calculationType));
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_DATE_CALCULATION_MODE_USED), fields);
     }
@@ -253,7 +254,7 @@ namespace CalculatorApp
     void TraceLogger::LogConverterInputReceived(ViewMode mode)
     {
         auto fields = ref new LoggingFields();
-        fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_CONVERTER_INPUT_RECEIVED), fields);
     }
 
@@ -266,7 +267,7 @@ namespace CalculatorApp
     void TraceLogger::LogInputPasted(ViewMode mode)
     {
         auto fields = ref new LoggingFields();
-        fields->AddString(StringReference(CALC_MODE), NavCategory::GetFriendlyName(mode));
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_INPUT_PASTED), fields);
     }
 
@@ -328,5 +329,27 @@ namespace CalculatorApp
         fields->AddString(L"GraphTheme", graphTheme);
 
         TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_GRAPH_THEME), fields);
+    }
+
+    void TraceLogger::LogRecallSnapshot(ViewMode mode)
+    {
+        auto fields = ref new LoggingFields();
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_RECALL_SNAPSHOT), fields);
+    }
+
+    void TraceLogger::LogRecallRestore(ViewMode mode)
+    {
+        auto fields = ref new LoggingFields();
+        fields->AddString(StringReference(CALC_MODE), NavCategoryStates::GetFriendlyName(mode));
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_RECALL_RESTORE), fields);
+    }
+
+    void TraceLogger::LogRecallError(Platform::String^ message)
+    {
+        auto fields = ref new LoggingFields();
+        fields->AddString(StringReference(L"FunctionName"), L"Recall");
+        fields->AddString(StringReference(L"Message"), message);
+        TraceLoggingCommon::GetInstance()->LogLevel2Event(StringReference(EVENT_NAME_EXCEPTION), fields);
     }
 }

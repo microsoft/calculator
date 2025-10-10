@@ -4,39 +4,69 @@
 jobs:
 - job: ReleaseVPack
   dependsOn: Package
-  pool:
-    name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
+  templateContext:
+    outputs:
+    - output: pipelineArtifact
+      displayName: Publish vpack\app artifact with vpack manifest
+      targetPath: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
+      artifactName: vpackManifest
+      sbomEnabled: false
+
   steps:
   - checkout: none
 
-  - task: DownloadBuildArtifacts@0
+  - download: current
     displayName: Download msixBundleSigned artifact
-    inputs:
-      artifactName: msixBundleSigned
+    artifact: msixBundleSigned
 
   - task: CopyFiles@2
     displayName: Copy signed MsixBundle to vpack staging folder
     inputs:
-      sourceFolder: $(Build.ArtifactStagingDirectory)\msixBundleSigned
+      sourceFolder: $(Pipeline.Workspace)\msixBundleSigned
       contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
-      targetFolder: $(Build.ArtifactStagingDirectory)\vpack\msixBundle
+      targetFolder: $(Pipeline.Workspace)\vpack\msixBundle
+
+  - task: AzureCLI@2
+    displayName: Register SBOM sign service connection
+    inputs:
+      azureSubscription: Essential Experiences SBOMSign PME
+      scriptType: ps
+      scriptLocation: inlineScript
+      inlineScript: Write-Host "Registering service connection for current run"
+      visibleAzLogin: false
+
+  - task: UniversalPackages@0
+    displayName: Download internals package
+    inputs:
+      command: download
+      downloadDirectory: $(Build.SourcesDirectory)
+      vstsFeed: WindowsInboxApps
+      vstsFeedPackage: calculator-internals
+      vstsPackageVersion: 0.0.119
+
+  - pwsh: |
+      $configPath = "$(Build.SourcesDirectory)\Tools\Build\Signing\ESRP-auth.json"
+      $auth = Get-Content -Raw $configPath | ConvertFrom-Json
+      $sbomKeyCode = $auth._ExtraContext.SbomKeyCode
+      echo $sbomKeyCode
+      echo "##vso[task.setvariable variable=SbomKeyCode]$sbomKeyCode"
+    displayName: Get SBOM Key Code
 
   - task: PkgESVPack@12
     displayName: Create and push vpack for app
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     inputs:
-      sourceDirectory: $(Build.ArtifactStagingDirectory)\vpack\msixBundle
+      sourceDirectory: $(Pipeline.Workspace)\vpack\msixBundle
       description: VPack for the Calculator Application
       pushPkgName: calculator.app
       version: $(versionMajor).$(versionMinor).$(versionBuild)
       owner: paxeeapps
       provData: true
-
-  - task: PublishBuildArtifacts@1
-    displayName: Publish vpack\app artifact with vpack manifest
-    inputs:
-      pathtoPublish: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
-      artifactName: vpackManifest
+      taskLogVerbosity: Diagnostic
+      coseUsageScenario: 'product'
+      signSbom: true
+      sbomKeyCode: $(SbomKeyCode)
+      pathToEsrpAuthJson: '$(Build.SourcesDirectory)\Tools\Build\Signing\ESRP-auth.json'

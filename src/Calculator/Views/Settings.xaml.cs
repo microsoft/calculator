@@ -1,21 +1,18 @@
 using CalculatorApp.Utils;
 using CalculatorApp.ViewModel.Common;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using CalculatorApp.ViewModel.Common.Automation;
+
+using System;
+using System.Diagnostics;
+using System.Linq;
+
+using Windows.ApplicationModel;
+using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Automation.Provider;
+using Windows.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -23,14 +20,14 @@ namespace CalculatorApp
 {
     public sealed partial class Settings : UserControl
     {
-        private const string BUILD_YEAR = "2022";
+        private const string BUILD_YEAR = "2025";
 
         public event Windows.UI.Xaml.RoutedEventHandler BackButtonClick;
 
         public GridLength TitleBarHeight
         {
-            get { return (GridLength)GetValue(TitleBarHeightProperty); }
-            set { SetValue(TitleBarHeightProperty, value); }
+            get => (GridLength)GetValue(TitleBarHeightProperty);
+            set => SetValue(TitleBarHeightProperty, value);
         }
         public static readonly DependencyProperty TitleBarHeightProperty =
             DependencyProperty.Register(nameof(TitleBarHeight), typeof(GridLength), typeof(Settings), new PropertyMetadata(default(GridLength)));
@@ -48,7 +45,7 @@ namespace CalculatorApp
 
             var copyrightText =
                 LocalizationStringUtil.GetLocalizedString(resourceLoader.GetResourceString("AboutControlCopyright"), BUILD_YEAR);
-            AboutControlCopyrightRun.Text = copyrightText;
+            AboutExpander.Description = copyrightText;
 
             InitializeContributeTextBlock();
         }
@@ -111,8 +108,8 @@ namespace CalculatorApp
         private void SetVersionString()
         {
             PackageVersion version = Package.Current.Id.Version;
-            string appName = AppResourceProvider.GetInstance().GetResourceString("AppName");
-            AboutBuildVersion.Text = appName + " " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
+            AboutExpander.Header = AppResourceProvider.GetInstance().GetResourceString("AppName");
+            AboutBuildVersion.Text = version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision;
         }
 
         private void InitializeContributeTextBlock()

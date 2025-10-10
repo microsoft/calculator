@@ -1,0 +1,169 @@
+name: Windows Calculator Continuous Integration Pipeline
+run-name: WinCalc-CI-0.${{ github.run_number }}
+on:
+  push:
+    branches: [main, release/**, feature/**]
+  pull_request:
+    branches: [main, release/**, feature/**]
+  workflow_dispatch:
+jobs:
+  defineBuilds:
+    name: Define builds
+    runs-on: windows-latest 
+    env:
+      isPR: ${{ github.event_name == 'pull_request' }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      platformList: ${{ steps.platformList.outputs.platformList }}
+      unitTestPlatformList: ${{ steps.unitTestPlatformList.outputs.unitTestPlatformList }}
+    steps:
+      - name: Generate version number
+        id: version
+        run: |
+          $version = "0.${{ github.run_number }}.${{ github.run_attempt }}.0"
+          "version=`"$version`"" | Out-File $env:GITHUB_OUTPUT -Append
+        shell: pwsh
+      - name: Choose platforms to build
+        id: platformList
+        run: |
+          if ($env:isPR -eq $false) {
+            'platformList=["x64", "x86", "ARM64", "ARM"]' | Out-File $env:GITHUB_OUTPUT -Append
+            echo 'Build all platforms.'
+          }
+          else {
+            'platformList=["x64"]' | Out-File $env:GITHUB_OUTPUT -Append
+            echo 'Build x64 only.'
+          }
+        shell: pwsh
+      - name: Choose platforms for unit test
+        id: unitTestPlatformList
+        run: |
+          if ($env:isPR -eq $false){
+            'unitTestPlatformList=["x64", "x86"]' | Out-File $env:GITHUB_OUTPUT -Append
+            echo 'Test x64, x86'
+          }
+          else{
+            'unitTestPlatformList=["x64"]' | Out-File $env:GITHUB_OUTPUT -Append
+            echo 'Test x64'
+          }
+        shell: pwsh
+
+  build:
+    needs: defineBuilds
+    name: Build
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        platform: ${{ fromJSON(needs.defineBuilds.outputs.platformList) }}
+    env:
+      buildVersion: ${{ fromJSON(needs.defineBuilds.outputs.version) }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: microsoft/setup-msbuild@v2
+      name: Setup msbuild
+    - uses: nuget/setup-nuget@v2
+      name: Use nuget 6.x
+      with:
+        nuget-version: '6.x'
+    - run: nuget restore ./src/Calculator.sln
+      name: Restore nuget dependencies
+    - run: |
+        ./build/scripts/UpdateAppxManifestVersion.ps1 `
+          -AppxManifest ./src/Calculator/Package.appxmanifest `
+          -Version ${{ env.buildVersion }}
+      shell: pwsh
+      name: Set version number in AppxManifest
+    - run: |
+        msbuild ./src/Calculator.sln `
+          -bl:${{ github.workspace }}/output/Calculator.binlog `
+          -p:OutDir=${{ github.workspace }}\output\ `
+          -p:Platform=${{ matrix.platform }} `
+          -p:Configuration=Release `
+          -p:GenerateProjectSpecificOutputFolder=true `
+          -p:Version=${{ env.buildVersion }} `
+          -maxCpuCount `
+          -t:Publish `
+          -p:PublishDir=${{ github.workspace }}\output\publish\
+      shell: pwsh
+      name: Build calculator.sln
+    - uses: actions/upload-artifact@v4
+      name: Upload build outputs
+      with:
+        name: Build-${{ matrix.platform }}
+        path: ${{ github.workspace }}/output
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Tools-${{ matrix.platform }}
+        path: ${{ github.workspace }}/build/scripts/SignTestApp.ps1
+
+  unitTests:
+    needs: [defineBuilds, build]
+    runs-on: windows-latest
+    name: Run unit tests
+    strategy:
+      matrix:
+        platform: ${{ fromJSON(needs.defineBuilds.outputs.unitTestPlatformList) }}
+    env:
+      testDir: ${{ github.workspace }}/download/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test
+    steps:
+    - uses: actions/download-artifact@v4
+      name: Download build outputs
+      with:
+        name: Build-${{ matrix.platform }}
+        path: ${{ github.workspace }}/download
+    - uses: actions/download-artifact@v4
+      name: Download tools
+      with:
+        name: Tools-${{ matrix.platform }}
+        path: ${{ github.workspace }}/download/tools
+    - run: |
+        ${{ github.workspace }}/download/tools/SignTestApp.ps1 -AppToSign ${{ env.testDir }}/CalculatorUnitTests.msix
+      shell: pwsh
+      name: Install test certificate
+    - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
+      name: Setup dev tools
+    - run: vstest.console.exe ${{ env.testDir }}/CalculatorUnitTests.msix /Platform:${{ matrix.platform }}
+      name: Run unit tests
+        
+  uiTests:
+    needs: build
+    runs-on: windows-latest
+    name: Run UI tests (x64)
+    env:
+      appDir: ${{ github.workspace }}/download/Calculator/AppPackages/Calculator*_Test
+      pubDir: ${{ github.workspace }}/download/publish
+    steps:
+    - uses: actions/download-artifact@v4
+      name: Download build outputs
+      with:
+        name: Build-x64
+        path: ${{ github.workspace }}/download
+    - uses: actions/download-artifact@v4
+      name: Download tools
+      with:
+        name: Tools-x64
+        path: ${{ github.workspace }}/download/tools
+    - run: |
+        Set-DisplayResolution -Width 1920 -Height 1080 -Force
+      shell: pwsh
+      name: Set screen resolution
+    - run: |
+        ${{ github.workspace }}/download/tools/SignTestApp.ps1 -AppToSign '${{ env.appDir }}/Calculator_*.msixbundle'
+        ${{ env.appDir }}/Add-AppDevPackage.ps1 -Force
+      shell: powershell
+      name: Install app
+    - run: |
+        Invoke-WebRequest 'https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi' `
+          -OutFile (New-Item -Path '${{ github.workspace }}/download2/wad.msi' -Force)
+        cd ${{ github.workspace }}/download2
+        msiexec.exe /i wad.msi /quiet /passive
+      shell: powershell
+      name: Install WindowsApplicationDriver
+    - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
+      name: Setup dev tools
+    - run: |
+        vstest.console.exe ${{ github.workspace }}\download\publish\CalculatorUITests.dll `
+          /Platform:x64 `
+          /Settings:${{ github.workspace }}\download\publish\CalculatorUITests.ci.runsettings
+      shell: pwsh
+      name: Run UI tests

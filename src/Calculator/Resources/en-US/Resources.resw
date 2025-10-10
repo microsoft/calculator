@@ -1665,6 +1665,10 @@
     <value>cup (US)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
+  <data name="UnitAbbreviation_Angstrom" xml:space="preserve">
+    <value>A</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
     <value>ac</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
@@ -1772,6 +1776,10 @@
   <data name="UnitAbbreviation_Joule" xml:space="preserve">
     <value>J</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
+    <value>kWh</value>
+    <comment>An abbreviation for a measurement unit of electricity consumption</comment>
   </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
     <value>K</value>
@@ -1961,6 +1969,10 @@
     <value>MiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
+  <data name="UnitAbbreviation_Nibble" xml:space="preserve">
+    <value>nybl</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
     <value>Pi</value>
     <comment>An abbreviation for a measurement unit of data</comment>
@@ -2137,6 +2149,10 @@
     <value>Joules</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Kilowatthour" xml:space="preserve">
+    <value>Kilowatt-hours</value>
+    <comment>A measurement unit for electricity consumption. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
     <value>Kelvin</value>
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
@@ -2221,8 +2237,16 @@
     <value>Minutes</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Nibble" xml:space="preserve">
+    <value>Nibble</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
     <value>Nanometers</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Angstrom" xml:space="preserve">
+    <value>Angstroms</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
@@ -2708,7 +2732,7 @@
   <data name="PreviewTag.Text" xml:space="preserve">
     <value>Preview</value>
     <comment>Label displayed next to upcoming features</comment>
-  </data>  
+  </data>
   <data name="AboutControlPrivacyStatement.Text" xml:space="preserve">
     <value>Microsoft Privacy Statement</value>
     <comment>Displayed on a link to the Microsoft Privacy Statement on the About panel</comment>
@@ -2762,11 +2786,11 @@
     <comment>{Locked}The Octal button</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>There’s no history yet</value>
+    <value>There’s no history yet.</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>There’s nothing saved in memory</value>
+    <value>There’s nothing saved in memory.</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3839,11 +3863,11 @@
     <value>Automatic best fit</value>
     <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set</comment>
   </data>
-    <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
+  <data name="GraphViewManualAdjustmentAnnouncement" xml:space="preserve">
     <value>Manual adjustment</value>
     <comment>Announcement used in Graphing Calculator when graph view button is clicked and manual adjustment is set</comment>
   </data>
-    <data name="GridResetAnnouncement" xml:space="preserve">
+  <data name="GridResetAnnouncement" xml:space="preserve">
     <value>Graph view has been reset</value>
     <comment>Announcement used in Graphing Calculator when graph view button is clicked and automatic best fit is set, resetting the graph</comment>
   </data>
@@ -4118,11 +4142,11 @@
     <value>The equation contains logical conditions that are mutually exclusive</value>
     <comment>Error that occurs during graphing when mutually exclusive conditions are used.</comment>
   </data>
-    <data name="OutOfDomain" xml:space="preserve">
+  <data name="OutOfDomain" xml:space="preserve">
     <value>Equation is out of domain</value>
     <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
-    <data name="GE_NotSupported" xml:space="preserve">
+  <data name="GE_NotSupported" xml:space="preserve">
     <value>Graphing this equation is not supported</value>
     <comment>Error that occurs during graphing when the equation is not supported.</comment>
   </data>
@@ -4165,19 +4189,19 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>Invalid expression</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
-    <data name="EmptyExpression" xml:space="preserve">
+  </data>
+  <data name="EmptyExpression" xml:space="preserve">
     <value>The expression is empty</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
   </data>
-    <data name="EqualWithoutEquation" xml:space="preserve">
+  <data name="EqualWithoutEquation" xml:space="preserve">
     <value>Equal was used without an equation</value>
     <comment>Error that occurs during graphing when equal is used without an equation. Ex: sin(x=y)</comment>
   </data>
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>Parenthesis missing after function name</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>A mathematical operation has the incorrect number of parameters</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -4234,7 +4258,7 @@
     <value>Cannot use complex numbers in inequalities</value>
     <comment>Error that occurs during graphing when complex numbers are used in inequalities.</comment>
   </data>
-    <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+  <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Back to function list</value>
     <comment>This is the tooltip for the back button in the equation analysis page in the graphing calculator</comment>
   </data>
@@ -4294,7 +4318,7 @@
     <value>Hide equation</value>
     <comment>This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator.</comment>
   </data>
-<data name="showEquationButtonAutomationName" xml:space="preserve">
+  <data name="showEquationButtonAutomationName" xml:space="preserve">
     <value>Show equation %1</value>
     <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to hidden in the graphing calculator. %1 is the equation number.</comment>
   </data>
@@ -4302,7 +4326,6 @@
     <value>Hide equation %1</value>
     <comment>{Locked="%1"}, This is the tooltip/automation name shown when visibility is set to visible in the graphing calculator. %1 is the equation number.</comment>
   </data>
-    
   <data name="disableTracingButtonToolTip" xml:space="preserve">
     <value>Stop tracing</value>
     <comment>This is the tooltip/automation name for the graphing calculator stop tracing button</comment>
@@ -4314,7 +4337,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>Graph viewing window, x-axis bounded by %1 and %2, y-axis bounded by %3 and %4, displaying %5 equations</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Configure slider</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -4431,7 +4454,7 @@
     <value>Enter an expression</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>Copy</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -4454,13 +4477,13 @@
   <data name="selectAllEquationMenuItem.Text" xml:space="preserve">
     <value>Select all</value>
     <comment>Select all menu item from the Equation TextBox</comment>
-  </data>    
+  </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Function input list item</value>
+    <value>Function input</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Function input list</value>
+    <value>Function input</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4571,19 +4594,19 @@
     <value>White</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationHighContrastColor1AutomationName" xml:space="preserve">
+  <data name="equationHighContrastColor1AutomationName" xml:space="preserve">
     <value>Color 1</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationHighContrastColor2AutomationName" xml:space="preserve">
+  <data name="equationHighContrastColor2AutomationName" xml:space="preserve">
     <value>Color 2</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationHighContrastColor3AutomationName" xml:space="preserve">
+  <data name="equationHighContrastColor3AutomationName" xml:space="preserve">
     <value>Color 3</value>
     <comment>Name of color in the color picker</comment>
   </data>
-    <data name="equationHighContrastColor4AutomationName" xml:space="preserve">
+  <data name="equationHighContrastColor4AutomationName" xml:space="preserve">
     <value>Color 4</value>
     <comment>Name of color in the color picker</comment>
   </data>
@@ -4647,7 +4670,7 @@
     <value>X</value>
     <comment>Screen reader prompt for the X button on the graphing calculator operator keypad</comment>
   </data>
-    <data name="yButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="yButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Y</value>
     <comment>Screen reader prompt for the Y button on the graphing calculator operator keypad</comment>
   </data>
@@ -4707,11 +4730,11 @@
     <value>Appearance</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Header" xml:space="preserve">
     <value>App theme</value>
     <comment>Title of App theme expander</comment>
   </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Description" xml:space="preserve">
     <value>Select which app theme to display</value>
     <comment>Description of App theme expander</comment>
   </data>
@@ -4735,8 +4758,16 @@
     <value>Settings page</value>
     <comment>Announcement used when Settings page is opened</comment>
   </data>
-  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>App theme setting</value>
-    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
+  <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Open the context menu for available actions</value>
+    <comment>Screen reader prompt for the context menu of the expression box</comment>
+  </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>OK</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>Couldn't restore this snapshot.</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
   </data>
 </root>

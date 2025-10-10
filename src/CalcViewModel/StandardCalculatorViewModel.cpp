@@ -42,6 +42,57 @@ namespace
     StringReference IsBitFlipCheckedPropertyName(L"IsBitFlipChecked");
     StringReference CalcAlwaysOnTop(L"CalcAlwaysOnTop");
     StringReference CalcBackToFullView(L"CalcBackToFullView");
+
+    std::vector<int> GetCommandsFromExpressionCommands(const std::vector<std::shared_ptr<IExpressionCommand>>& expressionCommands)
+    {
+        vector<int> commands;
+        for (const auto& command : expressionCommands)
+        {
+            CommandType commandType = command->GetCommandType();
+
+            if (commandType == CommandType::UnaryCommand)
+            {
+                shared_ptr<IUnaryCommand> spCommand = dynamic_pointer_cast<IUnaryCommand>(command);
+                const shared_ptr<vector<int>>& unaryCommands = spCommand->GetCommands();
+
+                for (int nUCode : *unaryCommands)
+                {
+                    commands.push_back(nUCode);
+                }
+            }
+
+            if (commandType == CommandType::BinaryCommand)
+            {
+                shared_ptr<IBinaryCommand> spCommand = dynamic_pointer_cast<IBinaryCommand>(command);
+                commands.push_back(spCommand->GetCommand());
+            }
+
+            if (commandType == CommandType::Parentheses)
+            {
+                shared_ptr<IParenthesisCommand> spCommand = dynamic_pointer_cast<IParenthesisCommand>(command);
+                commands.push_back(spCommand->GetCommand());
+            }
+
+            if (commandType == CommandType::OperandCommand)
+            {
+                shared_ptr<IOpndCommand> spCommand = dynamic_pointer_cast<IOpndCommand>(command);
+                const shared_ptr<vector<int>>& opndCommands = spCommand->GetCommands();
+                bool fNeedIDCSign = spCommand->IsNegative();
+
+                for (int nOCode : *opndCommands)
+                {
+                    commands.push_back(nOCode);
+
+                    if (fNeedIDCSign && nOCode != IDC_0)
+                    {
+                        commands.push_back(static_cast<int>(CalculationManager::Command::CommandSIGN));
+                        fNeedIDCSign = false;
+                    }
+                }
+            }
+        }
+        return commands;
+    }
 }
 
 namespace CalculatorResourceKeys
@@ -137,6 +188,13 @@ StandardCalculatorViewModel::StandardCalculatorViewModel()
 String ^ StandardCalculatorViewModel::LocalizeDisplayValue(_In_ wstring const& displayValue)
 {
     wstring result(displayValue);
+
+    // Adds leading padding 0's to Programmer Mode's Binary Display
+    if (IsProgrammer && CurrentRadixType == NumberBase::BinBase)
+    {
+        result = AddPadding(result);
+    }
+
     LocalizationSettings::GetInstance()->LocalizeDisplayValue(&result);
     return ref new Platform::String(result.c_str());
 }
@@ -169,7 +227,7 @@ String ^ StandardCalculatorViewModel::CalculateNarratorDisplayValue(_In_ wstring
 String ^ StandardCalculatorViewModel::GetNarratorStringReadRawNumbers(_In_ String ^ localizedDisplayValue)
 {
     wstring ws;
-    LocalizationSettings^ locSettings = LocalizationSettings::GetInstance();
+    LocalizationSettings ^ locSettings = LocalizationSettings::GetInstance();
 
     // Insert a space after each digit in the string, to force Narrator to read them as separate numbers.
     for (const wchar_t& c : localizedDisplayValue)
@@ -328,7 +386,7 @@ void StandardCalculatorViewModel::SetTokens(_Inout_ shared_ptr<vector<pair<wstri
         return;
     }
 
-    LocalizationSettings^ localizer = LocalizationSettings::GetInstance();
+    LocalizationSettings ^ localizer = LocalizationSettings::GetInstance();
 
     const wstring separator = L" ";
     for (unsigned int i = 0; i < nTokens; ++i)
@@ -391,7 +449,7 @@ String ^ StandardCalculatorViewModel::GetCalculatorExpressionAutomationName()
 
 void StandardCalculatorViewModel::SetMemorizedNumbers(const vector<wstring>& newMemorizedNumbers)
 {
-    LocalizationSettings^ localizer = LocalizationSettings::GetInstance();
+    LocalizationSettings ^ localizer = LocalizationSettings::GetInstance();
     if (newMemorizedNumbers.size() == 0) // Memory has been cleared
     {
         MemorizedNumbers->Clear();
@@ -719,7 +777,7 @@ void StandardCalculatorViewModel::OnPasteCommand(Object ^ parameter)
     }
 
     // Ensure that the paste happens on the UI thread
-    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategory::GetGroupType(mode), numberBase, bitLengthType))
+    create_task(CopyPasteManager::GetStringToPaste(mode, NavCategoryStates::GetGroupType(mode), numberBase, bitLengthType))
         .then([that, mode](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 
@@ -1002,8 +1060,8 @@ ButtonInfo StandardCalculatorViewModel::MapCharacterToButtonId(char16 ch)
     {
         if (LocalizationSettings::GetInstance()->IsLocalizedDigit(ch))
         {
-            result.buttonId =
-                NumbersAndOperatorsEnum::Zero + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance()->GetDigitSymbolFromEnUsDigit('0'));
+            result.buttonId = NumbersAndOperatorsEnum::Zero
+                              + static_cast<NumbersAndOperatorsEnum>(ch - LocalizationSettings::GetInstance()->GetDigitSymbolFromEnUsDigit('0'));
             result.canSendNegate = true;
         }
     }
@@ -1381,55 +1439,8 @@ void StandardCalculatorViewModel::Recalculate(bool fromHistory)
 {
     // Recalculate
     Command currentDegreeMode = m_standardCalculatorManager.GetCurrentDegreeMode();
-    shared_ptr<vector<shared_ptr<IExpressionCommand>>> savedCommands = make_shared<vector<shared_ptr<IExpressionCommand>>>();
-    vector<int> currentCommands;
-
-    for (const auto& command : *m_commands)
-    {
-        savedCommands->push_back(command);
-        CommandType commandType = command->GetCommandType();
-
-        if (commandType == CommandType::UnaryCommand)
-        {
-            shared_ptr<IUnaryCommand> spCommand = dynamic_pointer_cast<IUnaryCommand>(command);
-            const shared_ptr<vector<int>>& unaryCommands = spCommand->GetCommands();
-
-            for (int nUCode : *unaryCommands)
-            {
-                currentCommands.push_back(nUCode);
-            }
-        }
-
-        if (commandType == CommandType::BinaryCommand)
-        {
-            shared_ptr<IBinaryCommand> spCommand = dynamic_pointer_cast<IBinaryCommand>(command);
-            currentCommands.push_back(spCommand->GetCommand());
-        }
-
-        if (commandType == CommandType::Parentheses)
-        {
-            shared_ptr<IParenthesisCommand> spCommand = dynamic_pointer_cast<IParenthesisCommand>(command);
-            currentCommands.push_back(spCommand->GetCommand());
-        }
-
-        if (commandType == CommandType::OperandCommand)
-        {
-            shared_ptr<IOpndCommand> spCommand = dynamic_pointer_cast<IOpndCommand>(command);
-            const shared_ptr<vector<int>>& opndCommands = spCommand->GetCommands();
-            bool fNeedIDCSign = spCommand->IsNegative();
-
-            for (int nOCode : *opndCommands)
-            {
-                currentCommands.push_back(nOCode);
-
-                if (fNeedIDCSign && nOCode != IDC_0)
-                {
-                    currentCommands.push_back(static_cast<int>(CalculationManager::Command::CommandSIGN));
-                    fNeedIDCSign = false;
-                }
-            }
-        }
-    }
+    shared_ptr<vector<shared_ptr<IExpressionCommand>>> savedCommands = std::make_shared<std::vector<shared_ptr<IExpressionCommand>>>(*m_commands);
+    vector<int> currentCommands = GetCommandsFromExpressionCommands(*m_commands);
 
     shared_ptr<vector<pair<wstring, int>>> savedTokens = make_shared<vector<pair<wstring, int>>>();
 
@@ -1577,7 +1588,7 @@ void StandardCalculatorViewModel::UpdateProgrammerPanelDisplay()
             binaryDisplayString = m_standardCalculatorManager.GetResultForRadix(2, precision, true);
         }
     }
-    LocalizationSettings^ localizer = LocalizationSettings::GetInstance();
+    LocalizationSettings ^ localizer = LocalizationSettings::GetInstance();
     binaryDisplayString = AddPadding(binaryDisplayString);
 
     localizer->LocalizeDisplayValue(&hexDisplayString);
@@ -1774,4 +1785,81 @@ void StandardCalculatorViewModel::SendCommandToCalcManager(int commandId)
 void StandardCalculatorViewModel::SetBitshiftRadioButtonCheckedAnnouncement(Platform::String ^ announcement)
 {
     Announcement = CalculatorAnnouncement::GetBitShiftRadioButtonCheckedAnnouncement(announcement);
+}
+
+CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ StandardCalculatorViewModel::Snapshot::get()
+{
+    auto result = ref new CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot();
+    result->CalcManager = ref new CalculatorApp::ViewModel::Snapshot::CalcManagerSnapshot(m_standardCalculatorManager);
+    result->PrimaryDisplay = ref new CalculatorApp::ViewModel::Snapshot::PrimaryDisplaySnapshot(m_DisplayValue, m_IsInError);
+    if (!m_tokens->empty() && !m_commands->empty())
+    {
+        result->ExpressionDisplay = ref new CalculatorApp::ViewModel::Snapshot::ExpressionDisplaySnapshot(*m_tokens, *m_commands);
+    }
+    result->DisplayCommands = ref new Platform::Collections::Vector<CalculatorApp::ViewModel::Snapshot::ICalcManagerIExprCommand ^>();
+    for (auto cmd : m_standardCalculatorManager.GetDisplayCommandsSnapshot())
+    {
+        result->DisplayCommands->Append(CalculatorApp::ViewModel::Snapshot::CreateExprCommand(cmd.get()));
+    }
+    return result;
+}
+
+void CalculatorApp::ViewModel::StandardCalculatorViewModel::Snapshot::set(CalculatorApp::ViewModel::Snapshot::StandardCalculatorSnapshot ^ snapshot)
+{
+    assert(snapshot != nullptr);
+    m_standardCalculatorManager.Reset();
+    if (snapshot->CalcManager->HistoryItems != nullptr)
+    {
+        m_standardCalculatorManager.SetHistoryItems(ToUnderlying(snapshot->CalcManager->HistoryItems));
+    }
+
+    if (snapshot->ExpressionDisplay != nullptr)
+    {
+        if (snapshot->DisplayCommands->Size == 0)
+        {
+            // use case: the current expression was evaluated before. load from history.
+            assert(!snapshot->PrimaryDisplay->IsError);
+            using RawTokenCollection = std::vector<std::pair<std::wstring, int>>;
+            RawTokenCollection rawTokens;
+            for (CalculatorApp::ViewModel::Snapshot::CalcManagerToken ^ token : snapshot->ExpressionDisplay->Tokens)
+            {
+                rawTokens.push_back(std::pair{ token->OpCodeName->Data(), token->CommandIndex });
+            }
+            auto tokens = std::make_shared<RawTokenCollection>(rawTokens);
+            auto commands = std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>(ToUnderlying(snapshot->ExpressionDisplay->Commands));
+            SetHistoryExpressionDisplay(tokens, commands);
+            SetExpressionDisplay(tokens, commands);
+            SetPrimaryDisplay(snapshot->PrimaryDisplay->DisplayValue, false);
+        }
+        else
+        {
+            // use case: the current expression was not evaluated before, or it was an error.
+            auto displayCommands = GetCommandsFromExpressionCommands(ToUnderlying(snapshot->DisplayCommands));
+            for (auto cmd : displayCommands)
+            {
+                m_standardCalculatorManager.SendCommand(static_cast<Command>(cmd));
+            }
+            if (snapshot->PrimaryDisplay->IsError)
+            {
+                SetPrimaryDisplay(snapshot->PrimaryDisplay->DisplayValue, true);
+            }
+        }
+    }
+    else
+    {
+        if (snapshot->PrimaryDisplay->IsError)
+        {
+            // use case: user copy-pasted an invalid expression to Calculator and caused an error.
+            SetPrimaryDisplay(snapshot->PrimaryDisplay->DisplayValue, true);
+        }
+        else
+        {
+            // use case: there was no expression but user was inputing some numbers (including negative numbers).
+            auto commands = GetCommandsFromExpressionCommands(ToUnderlying(snapshot->DisplayCommands));
+            for (auto cmd : commands)
+            {
+                m_standardCalculatorManager.SendCommand(static_cast<Command>(cmd));
+            }
+        }
+    }
 }

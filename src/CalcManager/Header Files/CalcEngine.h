@@ -89,6 +89,8 @@ public:
     void UpdateMaxIntDigits();
     wchar_t DecimalSeparator() const;
 
+    std::vector<std::shared_ptr<IExpressionCommand>> GetHistoryCollectorCommandsSnapshot() const;
+
     // Static methods for the instance
     static void
     InitialOneTimeOnlySetup(CalculationManager::IResourceProvider& resourceProvider); // Once per load time to call to initialize all shared global variables
@@ -179,7 +181,7 @@ private:
     CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op);
     CalcEngine::Rational DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs);
     void SetRadixTypeAndNumWidth(RadixType radixtype, NUM_WIDTH numwidth);
-    int32_t DwWordBitWidthFromeNumWidth(NUM_WIDTH numwidth);
+    int32_t DwWordBitWidthFromNumWidth(NUM_WIDTH numwidth);
     uint32_t NRadixFromRadixType(RadixType radixtype);
     double GenerateRandomNumber();
 

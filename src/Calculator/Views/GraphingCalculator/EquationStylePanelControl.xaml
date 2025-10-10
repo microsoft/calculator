@@ -1,16 +1,17 @@
-﻿<UserControl x:Class="CalculatorApp.EquationStylePanelControl"
+<UserControl x:Class="CalculatorApp.EquationStylePanelControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="using:CalculatorApp.Utils"
              mc:Ignorable="d">
     <StackPanel>
-        <TextBlock x:Uid="LineOptionsHeading"
-                   Margin="8,0,0,16"
+        <TextBlock Margin="8,0,0,16"
                    FontSize="20"
                    FontWeight="Medium"
-                   AutomationProperties.HeadingLevel="Level2"/>
+                   AutomationProperties.HeadingLevel="Level2"
+                   Text="{utils:ResourceString Name=LineOptionsHeading/Text}"/>
         <GridView x:Name="ColorChooser"
                   ItemsSource="{x:Bind AvailableColors}"
                   Loaded="ColorChooserLoaded"
@@ -65,9 +66,8 @@
                                              VerticalAlignment="Stretch"
                                              Fill="Transparent"
                                              Stroke="Transparent"
-                                             StrokeThickness="2"
-                                             UseLayoutRounding="false"/>
-                                    <ContentPresenter x:Name="ItemContent" UseLayoutRounding="false"/>
+                                             StrokeThickness="2"/>
+                                    <ContentPresenter x:Name="ItemContent"/>
                                 </Grid>
                             </ControlTemplate>
                         </Setter.Value>
@@ -75,9 +75,9 @@
                 </Style>
             </GridView.Resources>
             <GridView.Header>
-                <TextBlock x:Uid="LineColorText"
-                           Margin="8,0,8,8"
-                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                <TextBlock Margin="8,0,8,8"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="{utils:ResourceString Name=LineColorText/Text}"/>
             </GridView.Header>
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="Brush">
@@ -87,8 +87,7 @@
                              Fill="{x:Bind}"
                              StrokeThickness="0"
                              AutomationProperties.Name="{x:Bind local:EquationStylePanelControl.GetColorAutomationName((Brush))}"
-                             ToolTipService.ToolTip="{x:Bind local:EquationStylePanelControl.GetColorAutomationName((Brush))}"
-                             UseLayoutRounding="false"/>
+                             ToolTipService.ToolTip="{x:Bind local:EquationStylePanelControl.GetColorAutomationName((Brush))}"/>
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemsPanel>
@@ -108,9 +107,9 @@
                   Visibility="Visible"
                   IsEnabled="{x:Bind EnableLineStylePicker, Mode=OneWay}">
             <ComboBox.Header>
-                <TextBlock x:Uid="StyleChooserBoxHeading"
-                           Margin="0,0,8,8"
-                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                <TextBlock Margin="0,0,8,8"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="{utils:ResourceString Name=StyleChooserBoxHeading/Text}"/>
             </ComboBox.Header>
             <ComboBox.ItemTemplate>
                 <!-- Set x:DataType to be Platform::Object so that we can pass it to the x:Bind function directly since we cannot pass an enum in c++/cx -->

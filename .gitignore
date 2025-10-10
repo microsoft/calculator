@@ -93,6 +93,9 @@ ipch/
 *.vspx
 *.sap
 
+# Visual Studio Code
+.vscode/
+
 # TFS 2012 Local Workspace
 $tf/
 
@@ -197,7 +200,6 @@ ClientBin/
 *.dbmdl
 *.dbproj.schemaview
 *.jfm
-*.pfx
 *.publishsettings
 orleans.codegen.cs
 
@@ -291,8 +293,6 @@ __pycache__/
 Generated Files/
 src/GraphControl/GraphingImplOverrides.props
 src/CalcViewModel/DataLoaders/DataLoaderConstants.h
-!src/Calculator/WindowsDev_TemporaryKey.pfx
-!src/CalculatorUnitTests/WindowsDev_TemporaryKey.pfx
 !src/x64
 !src/x86
 !src/out

@@ -8,7 +8,8 @@
              xmlns:converters="using:CalculatorApp.Converters"
              xmlns:local="using:CalculatorApp"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-             xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives">
+             xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives"
+             xmlns:utils="using:CalculatorApp.Utils">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -790,7 +791,6 @@
                                                TextWrapping="NoWrap"/>
                                 </ScrollViewer>
                                 <HyperlinkButton x:Name="ScrollLeft"
-                                                 x:Uid="CalculationResultScrollLeft"
                                                  Grid.Column="0"
                                                  Width="20"
                                                  MinWidth="20"
@@ -803,6 +803,7 @@
                                                  Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                                                  BorderThickness="0"
                                                  AutomationProperties.AutomationId="CalculationResultScrollLeft"
+                                                 AutomationProperties.Name="{utils:ResourceString Name=CalculationResultScrollLeft/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                  Visibility="Collapsed">
                                     <FontIcon x:Name="ScrollLeftText"
                                               FontFamily="{ThemeResource CalculatorFontFamily}"
@@ -810,7 +811,6 @@
                                               Glyph="&#xE96F;"/>
                                 </HyperlinkButton>
                                 <HyperlinkButton x:Name="ScrollRight"
-                                                 x:Uid="CalculationResultScrollRight"
                                                  Grid.Column="2"
                                                  Width="20"
                                                  MinWidth="20"
@@ -823,6 +823,7 @@
                                                  Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
                                                  BorderThickness="0"
                                                  AutomationProperties.AutomationId="CalculationResultScrollRight"
+                                                 AutomationProperties.Name="{utils:ResourceString Name=CalculationResultScrollRight/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                  Visibility="Collapsed">
                                     <FontIcon x:Name="ScrollRightText"
                                               FontFamily="{ThemeResource CalculatorFontFamily}"
@@ -957,7 +958,7 @@
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlBackgroundTertiaryBrush}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppControlForegroundSecondaryBrush}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextFillColorSecondaryBrush}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrush}"/>

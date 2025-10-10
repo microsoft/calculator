@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using CalculatorApp.ViewModel.Common;
+
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
@@ -14,8 +15,8 @@ namespace CalculatorApp
         {
             public NumbersAndOperatorsEnum ButtonId
             {
-                get { return (NumbersAndOperatorsEnum)GetValue(ButtonIdProperty); }
-                set { SetValue(ButtonIdProperty, value); }
+                get => (NumbersAndOperatorsEnum)GetValue(ButtonIdProperty);
+                set => SetValue(ButtonIdProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for ButtonId.  This enables animation, styling, binding, etc...
@@ -24,8 +25,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Media.Brush HoverBackground
             {
-                get { return (Windows.UI.Xaml.Media.Brush)GetValue(HoverBackgroundProperty); }
-                set { SetValue(HoverBackgroundProperty, value); }
+                get => (Windows.UI.Xaml.Media.Brush)GetValue(HoverBackgroundProperty);
+                set => SetValue(HoverBackgroundProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for HoverBackground.  This enables animation, styling, binding, etc...
@@ -34,8 +35,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Media.Brush HoverForeground
             {
-                get { return (Windows.UI.Xaml.Media.Brush)GetValue(HoverForegroundProperty); }
-                set { SetValue(HoverForegroundProperty, value); }
+                get => (Windows.UI.Xaml.Media.Brush)GetValue(HoverForegroundProperty);
+                set => SetValue(HoverForegroundProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for HoverForeground.  This enables animation, styling, binding, etc...
@@ -44,8 +45,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Media.Brush PressBackground
             {
-                get { return (Windows.UI.Xaml.Media.Brush)GetValue(PressBackgroundProperty); }
-                set { SetValue(PressBackgroundProperty, value); }
+                get => (Windows.UI.Xaml.Media.Brush)GetValue(PressBackgroundProperty);
+                set => SetValue(PressBackgroundProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for PressBackground.  This enables animation, styling, binding, etc...
@@ -54,8 +55,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Media.Brush PressForeground
             {
-                get { return (Windows.UI.Xaml.Media.Brush)GetValue(PressForegroundProperty); }
-                set { SetValue(PressForegroundProperty, value); }
+                get => (Windows.UI.Xaml.Media.Brush)GetValue(PressForegroundProperty);
+                set => SetValue(PressForegroundProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for PressForeground.  This enables animation, styling, binding, etc...

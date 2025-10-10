@@ -5,48 +5,75 @@
 #
 
 trigger:
-- master
+- main
 - release/*
 - feature/*
 pr: none
 
 name: 0.$(Date:yyMM).$(DayOfMonth)$(Rev:rr).0
 
-jobs:
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    isReleaseBuild: true
-    useReleaseAppxManifest: false
-    platform: x64
+resources:
+  repositories:
+  - repository: 1esPipelines
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
 
-- template: ./templates/build-single-architecture.yaml
+extends:
+  template: v1/1ES.Unofficial.PipelineTemplate.yml@1esPipelines
   parameters:
-    isReleaseBuild: true
-    useReleaseAppxManifest: false
-    platform: x86
+    pool:
+      name: EssentialExperiences-windows-2022
+      image: MMSWindows2022-Secure
+      os: windows
+    sdl:
+      policheck:
+        enabled: true
+        exclusionsFile: '$(Build.SourcesDirectory)\build\config\PoliCheckExclusions.xml'
 
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    isReleaseBuild: true
-    useReleaseAppxManifest: false
-    platform: ARM
+    stages:
+    - stage:
+      jobs:
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
+        parameters:
+          isReleaseBuild: true
+          useReleaseAppxManifest: false
+          platform: x64
 
-- template: ./templates/run-ui-tests.yaml
-  parameters:
-    platform: x64
-    runsettingsFileName: CalculatorUITests.ci-internal.runsettings
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
+        parameters:
+          isReleaseBuild: true
+          useReleaseAppxManifest: false
+          platform: x86
 
-- template: ./templates/run-ui-tests.yaml
-  parameters:
-    platform: x86
-    runsettingsFileName: CalculatorUITests.ci-internal.runsettings
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
+        parameters:
+          isReleaseBuild: true
+          useReleaseAppxManifest: false
+          platform: ARM
 
-- template: ./templates/run-unit-tests.yaml
-  parameters:
-    platform: x64
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
+        parameters:
+          isReleaseBuild: true
+          useReleaseAppxManifest: false
+          platform: ARM64
 
-- template: ./templates/run-unit-tests.yaml
-  parameters:
-    platform: x86
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
+        parameters:
+          platform: x64
+          runsettingsFileName: CalculatorUITests.ci-internal.runsettings
 
-- template: ./templates/package-msixbundle.yaml
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
+        parameters:
+          platform: x86
+          runsettingsFileName: CalculatorUITests.ci-internal.runsettings
+
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
+        parameters:
+          platform: x64
+
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
+        parameters:
+          platform: x86
+
+      - template: /build/pipelines/templates/package-msixbundle.yaml@self

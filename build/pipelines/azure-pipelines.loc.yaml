@@ -5,20 +5,21 @@
 # resources to run.
 #
 
-# Expects a variable called LocServiceKey to contain the OAuth client secret for Touchdown.
-
 schedules:
 - cron: "0 5 * * *"
   displayName: Daily sync
   branches:
     include:
-    - master
+    - main
   always: true
 
 trigger: none
 pr: none
 
 name: $(BuildDefinitionName)_$(date:yyMM).$(date:dd)$(rev:rrr)
+
+variables:
+  isMainBranch: ${{ eq(variables['Build.SourceBranch'], 'refs/heads/main') }}
 
 jobs:
 - job: Localize
@@ -27,16 +28,21 @@ jobs:
   variables:
     skipComponentGovernanceDetection: true
   steps:
-  - task: MicrosoftTDBuild.tdbuild-task.tdbuild-task.TouchdownBuildTask@1
+  - checkout: self
+    clean: true
+
+  - task: MicrosoftTDBuild.tdbuild-task.tdbuild-task.TouchdownBuildTask@5
     displayName: Send resources to Touchdown Build
     inputs:
       teamId: 86
-      authId: bf6d44ca-3210-4cfa-833f-c79f164ea27b
-      authKey: $(LocServiceKey)
+      authType: FederatedIdentity
+      FederatedIdentityServiceConnection: EE-TDBuild-Localization-FC
       isPreview: false
       relativePathRoot: src/Calculator/Resources/en-US/
       resourceFilePath: '*.resw'
       outputDirectoryRoot: src/Calculator/Resources/
+      ${{ if eq(variables['isMainBranch'], false) }}:
+        localizationTarget: false
 
   - script: |
       cd $(Build.SourcesDirectory)
@@ -48,7 +54,7 @@ jobs:
 
   - task: PublishPipelineArtifact@0
     displayName: Publish patch file as artifact
-    condition: eq(variables['hasChanges'], '1')
+    condition: and(eq(variables['hasChanges'], '1'), eq(variables['isMainBranch'], true))
     inputs:
       artifactName: Patch
       targetPath: $(Build.ArtifactStagingDirectory)

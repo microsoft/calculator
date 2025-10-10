@@ -3,28 +3,15 @@
 // Declaration of the MyUserControl class
 //
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
 
 //using Graphing;
-using GraphControl;
-using CalculatorApp;
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace CalculatorApp
 {
@@ -33,20 +20,16 @@ namespace CalculatorApp
     {
         public GraphingSettings()
         {
-            m_ViewModel = new GraphingSettingsViewModel();
+            ViewModel = new GraphingSettingsViewModel();
             m_IsMatchAppTheme = false;
             InitializeComponent();
         }
 
-        public CalculatorApp.ViewModel.GraphingSettingsViewModel ViewModel
-        {
-            get { return m_ViewModel; }
-            set { m_ViewModel = value; }
-        }
+        public CalculatorApp.ViewModel.GraphingSettingsViewModel ViewModel { get; set; }
 
         public bool IsMatchAppTheme
         {
-            get { return m_IsMatchAppTheme; }
+            get => m_IsMatchAppTheme;
             set
             {
                 if (m_IsMatchAppTheme == value)
@@ -73,7 +56,7 @@ namespace CalculatorApp
 
         public void SetGrapher(GraphControl.Grapher grapher)
         {
-            m_ViewModel.SetGrapher(grapher);
+            ViewModel.SetGrapher(grapher);
         }
 
         public void RefreshRanges()
@@ -133,6 +116,5 @@ namespace CalculatorApp
         }
 
         private bool m_IsMatchAppTheme;
-        private CalculatorApp.ViewModel.GraphingSettingsViewModel m_ViewModel;
     };
 }

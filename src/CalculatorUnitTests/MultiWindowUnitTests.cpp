@@ -735,8 +735,8 @@ TEST_METHOD(MultipleConverterModeCalculationTest)
     IObservableVector<Unit ^> ^ unitsList[3];
 
     // viewModels 0 & 1 have same category(Volume) and viewModel 2 has different category(Length)
-    int volumeIndex = NavCategory::GetIndexInGroup(ViewMode::Volume, CategoryGroupType::Converter);
-    int lengthIndex = NavCategory::GetIndexInGroup(ViewMode::Length, CategoryGroupType::Converter);
+    int volumeIndex = NavCategoryStates::GetIndexInGroup(ViewMode::Volume, CategoryGroupType::Converter);
+    int lengthIndex = NavCategoryStates::GetIndexInGroup(ViewMode::Length, CategoryGroupType::Converter);
     viewModels[0]->CurrentCategory = categoryList->GetAt(volumeIndex);
     viewModels[1]->CurrentCategory = categoryList->GetAt(volumeIndex);
     viewModels[2]->CurrentCategory = categoryList->GetAt(lengthIndex);
@@ -814,7 +814,7 @@ TEST_METHOD(TestStandardUnitConverterAndDateViewModels)
     dateCalcViewModel->IsAddMode = true;
 
     // Initialize Unit Converter
-    int volumeCategoryIndex = NavCategory::GetIndexInGroup(ViewMode::Volume, CategoryGroupType::Converter);
+    int volumeCategoryIndex = NavCategoryStates::GetIndexInGroup(ViewMode::Volume, CategoryGroupType::Converter);
     IObservableVector<Category ^> ^ categories = unitConverterViewModel->Categories;
     unitConverterViewModel->CurrentCategory = categories->GetAt(volumeCategoryIndex);
     unitConverterViewModel->Unit1 = unitConverterViewModel->Units->GetAt(2);

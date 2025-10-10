@@ -1,7 +1,6 @@
 # This template contains jobs to run UI tests using WinAppDriver.
 
 parameters:
-  isOSSBuild: false
   platform: ''
   runsettingsFileName: ''
 
@@ -11,45 +10,44 @@ jobs:
   dependsOn: Build${{ parameters.platform }}
   condition: succeeded()
   pool:
-    ${{ if eq(parameters.isOSSBuild, true) }}:
-      name: EssentialExperiencesOpenSource-windows-2022
-    ${{ if eq(parameters.isOSSBuild, false) }}:
-      name: EssentialExperiences-windows-2022
+    name: EssentialExperiences-Win11
+    image: Win11Enterprise-BuildTools2022
   variables:
     skipComponentGovernanceDetection: true
+    DropName: drop-${{ parameters.platform }}
+
   steps:
-  - checkout: none
+  - checkout: self
+    fetchDepth: 1
 
-  - powershell: Set-DisplayResolution -Width 1920 -Height 1080 -Force	
-    displayName: Set resolution to 1920x1080	
-    continueOnError: true	
+  - task: PowerShell@2
+    displayName: Turn off animation effects
+    inputs:
+      filePath: $(Build.SourcesDirectory)\build\scripts\TurnOffAnimationEffects.ps1
 
-  - task: DownloadBuildArtifacts@0
+  - task: ScreenResolutionUtility@1
+    displayName: Set resolution to 1920x1080
+    inputs:
+      displaySettings: 'specific'
+      width: 1920
+      height: 1080
+
+  - download: current
     displayName: Download MsixBundle and CalculatorUITests
-    inputs:
-      artifactName: drop
-      itemPattern: |
-        drop/Release/${{ parameters.platform }}/Calculator/AppPackages/**
-        drop/Release/${{ parameters.platform }}/publish/**
+    artifact: $(DropName)
+    patterns: |
+      Calculator/AppPackages/**
+      publish/**
 
-  - task: PowerShell@2
-    displayName: Install certificate
-    inputs:
-      filePath: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
-      arguments: -CertificatePath $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Calculator_$(Build.BuildNumber)_${{ parameters.platform }}.cer -Force
-
-  - task: PowerShell@2
+  - powershell: |
+      $(Build.SourcesDirectory)/build/scripts/SignTestApp.ps1 -AppToSign '$(Pipeline.Workspace)/$(DropName)/Calculator/AppPackages/Calculator_*_Test/Calculator_*.msixbundle'
+      $(Pipeline.Workspace)/$(DropName)/Calculator/AppPackages/Calculator_*_Test/Add-AppDevPackage.ps1 -Force
     displayName: Install app
-    inputs:
-      filePath: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/Calculator/AppPackages/Calculator_$(Build.BuildNumber)_Test/Add-AppDevPackage.ps1
-      arguments: -Force
 
   - task: VSTest@2
     displayName: Run CalculatorUITests
     inputs:
-      testAssemblyVer2: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/CalculatorUITests.dll
-      runSettingsFile: $(Build.ArtifactStagingDirectory)/drop/Release/${{ parameters.platform }}/publish/${{ parameters.runsettingsFileName }}
+      testAssemblyVer2: $(Pipeline.Workspace)/$(DropName)/publish/CalculatorUITests.dll
+      runSettingsFile: $(Pipeline.Workspace)/$(DropName)/publish/${{ parameters.runsettingsFileName }}
       platform: ${{ parameters.platform }}
       configuration: Release
-      ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-        testFiltercriteria: Priority=0 

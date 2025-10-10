@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using OpenQA.Selenium.Interactions;
+
 using System.Drawing;
 
 namespace CalculatorUITestFramework
@@ -18,9 +20,9 @@ namespace CalculatorUITestFramework
         public NavigationMenu NavigationMenu = new NavigationMenu();
         public WindowsElement EnterAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("NormalAlwaysOnTopButton");
         public WindowsElement ExitAlwaysOnTopButton => this.session.TryFindElementByAccessibilityId("ExitAlwaysOnTopButton");
-        public AppiumWebElement ToolTip => WinAppDriver.Instance.CalculatorSession.FindElementByClassName("ToolTip").FindElementByClassName("TextBlock");
+        public AppiumWebElement ToolTip => CalculatorDriver.Instance.CalculatorSession.FindElementByClassName("ToolTip").FindElementByClassName("TextBlock");
 
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
 
         ///// <summary>
         ///// Navigates from AoT(Keep on top) to Standard
@@ -57,7 +59,7 @@ namespace CalculatorUITestFramework
             {
                 this.EnterAlwaysOnTopButton.Click();
                 this.ExitAlwaysOnTopButton.WaitForDisplayed();
-                source = WinAppDriver.Instance.CalculatorSession.PageSource;
+                source = CalculatorDriver.Instance.CalculatorSession.PageSource;
                 if (source.Contains("Header"))
                 {
                     throw new NotFoundException("Failed to enter 'Keep on top' mode; In AoT mode, Calculator does not have header");
@@ -75,13 +77,13 @@ namespace CalculatorUITestFramework
             {
                 if (source.Contains("Keep on top"))
                 {
-                    Actions moveToAoTButton = new Actions(WinAppDriver.Instance.CalculatorSession);
+                    Actions moveToAoTButton = new Actions(CalculatorDriver.Instance.CalculatorSession);
                     moveToAoTButton.MoveToElement(EnterAlwaysOnTopButton);
                     moveToAoTButton.Perform();
                 }
                 else
                 {
-                    Actions moveToBackToFullViewVButton = new Actions(WinAppDriver.Instance.CalculatorSession);
+                    Actions moveToBackToFullViewVButton = new Actions(CalculatorDriver.Instance.CalculatorSession);
                     moveToBackToFullViewVButton.MoveToElement(ExitAlwaysOnTopButton);
                     moveToBackToFullViewVButton.Perform();
                 }
@@ -93,40 +95,29 @@ namespace CalculatorUITestFramework
             return ToolTip.Text;
         }
 
-        ///// <summary>
-        ///// Checks in AoT (Keep on top) button is present
-        ///// </summary>
-        public string GetAoTPresence()
+        /// <summary>
+        /// Checks in AoT (Keep on top) button is present
+        /// </summary>
+        public bool IsKeepOnTopButtonPresent()
         {
-            bool AoTPresent;
             string source = this.session.PageSource;
-            if (source.Contains("Keep on top"))
-            {
-                AoTPresent = true;
-            }
-            else
-            {
-                AoTPresent = false;
-            }
-            return AoTPresent.ToString();
+            return source.Contains("Keep on top");
         }
 
-        ///// <summary>
-        ///// Checks Standard calculator to see if it's in AoT (Keep on top)
-        ///// </summary>
-        public string AoTModeCheck()
+        /// <summary>
+        /// Checks Standard calculator to see if it's in AoT (Keep on top)
+        /// </summary>
+        public bool IsInAlwaysOnTopMode()
         {
-            bool InAoTMode;
             string source = this.session.PageSource;
             if ((source.Contains("Keep on top")) && (source.Contains("Header")))
             {
-                InAoTMode = false;
+                return false;
             }
             else
             {
-                InAoTMode = true;
+                return true;
             }
-            return InAoTMode.ToString();
         }
 
         /// <summary>
@@ -136,65 +127,27 @@ namespace CalculatorUITestFramework
         public void ResizeAoTWindowToDisplayInvertButton()
         {
             // Put the calculator in the upper left region of the screen
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
-            GrowWindowToShowInvertButton(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Height);
+            CalculatorDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
+            GrowWindowToShowInvertButton(CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size.Height);
         }
 
         /// <summary>
-        /// Increases the size of the window until History label for the History panel is visible
+        /// Increases the height of the window until invert button is visible
         /// </summary>
         private void GrowWindowToShowInvertButton(int height)
         {
-            if (height > 1000)
+            if (height > 700)
             {
                 throw new NotFoundException("Could not find the Invert Button");
             }
 
             if (!this.session.PageSource.Contains("invertButton"))
             {
-                var width = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width;
-                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
+                var width = CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size.Width;
+                CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
                 //give window time to render new size
                 System.Threading.Thread.Sleep(10);
-                GrowWindowToShowInvertButton(width + 100);
-            }
-        }
-        /// <summary>
-        /// If the Invert button is not displayed, resize the window
-        /// Two attempts are made, the the button is not found a "not found" exception is thrown
-        /// </summary>
-        public void ResizeAoTWindowToDiplayInvertButton()
-        {
-            Point newWindowPostion = new Point(8, 8);
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = newWindowPostion;
-            string source0 = this.session.PageSource;
-            if (source0.Contains("invertButton"))
-            {
-                return;
-            }
-            else
-            {
-                Size newWindowSize = new Size(502, 502);
-                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize;
-                string source1 = this.session.PageSource;
-                if (source1.Contains("invertButton"))
-                {
-                    return;
-                }
-                else
-                {
-                    Size newWindowSize2 = new Size(750, 750);
-                    WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = newWindowSize2;
-                }
-                string source2 = this.session.PageSource;
-                if (source2.Contains("invertButton"))
-                {
-                    return;
-                }
-                else
-                {
-                    throw new NotFoundException("Could not find the Invert Button");
-                }
+                GrowWindowToShowInvertButton(height + 100);
             }
         }
     }

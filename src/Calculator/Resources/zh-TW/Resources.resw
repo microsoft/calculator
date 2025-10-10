@@ -1277,6 +1277,10 @@
     <value>杯 (美制)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
+  <data name="UnitAbbreviation_Angstrom" xml:space="preserve">
+    <value>A</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
     <value>ac</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
@@ -1384,6 +1388,10 @@
   <data name="UnitAbbreviation_Joule" xml:space="preserve">
     <value>J</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
+    <value>千瓦小時</value>
+    <comment>An abbreviation for a measurement unit of electricity consumption</comment>
   </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
     <value>K</value>
@@ -1573,6 +1581,10 @@
     <value>MiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
+  <data name="UnitAbbreviation_Nibble" xml:space="preserve">
+    <value>nybl</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
     <value>Pi</value>
     <comment>An abbreviation for a measurement unit of data</comment>
@@ -1749,6 +1761,10 @@
     <value>焦耳</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Kilowatthour" xml:space="preserve">
+    <value>千瓦時數</value>
+    <comment>A measurement unit for electricity consumption. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
     <value>開氏</value>
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
@@ -1794,7 +1810,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Megabyte" xml:space="preserve">
-    <value>Megabyte</value>
+    <value>Mega 位元組</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Meter" xml:space="preserve">
@@ -1833,8 +1849,16 @@
     <value>分鐘</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Nibble" xml:space="preserve">
+    <value>半位元組</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
     <value>奈米</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Angstrom" xml:space="preserve">
+    <value>埃</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
@@ -1842,11 +1866,11 @@
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabit" xml:space="preserve">
-    <value>Petabit</value>
+    <value>Peta 位元</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Petabyte" xml:space="preserve">
-    <value>P 位元組</value>
+    <value>Peta 位元組</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Second" xml:space="preserve">
@@ -1886,7 +1910,7 @@
     <comment>A measurement unit for area. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabit" xml:space="preserve">
-    <value>T 位元</value>
+    <value>Tera 位元</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Terabyte" xml:space="preserve">
@@ -2330,11 +2354,11 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>尚無歷程記錄</value>
+    <value>尚無歷程記錄。</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>記憶中沒有儲存任何項目</value>
+    <value>記憶體中沒有儲存任何項目。</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -2350,11 +2374,11 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gibibytes" xml:space="preserve">
-    <value>Gibibyte</value>
+    <value>Gibi 位元組</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibits" xml:space="preserve">
-    <value>Kibibit</value>
+    <value>Kibi 位元</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Kibibytes" xml:space="preserve">
@@ -2386,7 +2410,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabits" xml:space="preserve">
-    <value>Exabit</value>
+    <value>Exa 位元</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exabytes" xml:space="preserve">
@@ -2398,15 +2422,15 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Exbibytes" xml:space="preserve">
-    <value>Exbibyte</value>
+    <value>Exbi 位元組</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabits" xml:space="preserve">
-    <value>Zetabit</value>
+    <value>Zeta 位元</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zetabytes" xml:space="preserve">
-    <value>Zetabyte</value>
+    <value>Zeta 位元組</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zebibits" xml:space="preserve">
@@ -2414,7 +2438,7 @@
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Zebibytes" xml:space="preserve">
-    <value>Zebibyte</value>
+    <value>Zebi 位元組</value>
     <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Yottabit" xml:space="preserve">
@@ -3436,7 +3460,7 @@
     <comment>Message displayed when the graph does not have any y-intercepts</comment>
   </data>
   <data name="Domain" xml:space="preserve">
-    <value>網域</value>
+    <value>領域</value>
     <comment>Title for KeyGraphFeatures Domain Property</comment>
   </data>
   <data name="HorizontalAsymptotes" xml:space="preserve">
@@ -3593,7 +3617,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>運算式無效</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>運算式為空白</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3605,7 +3629,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>函數名稱後面遺漏了括號</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>數學運算的參數數目不正確</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3741,7 +3765,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>圖形查看視窗，X 軸由 %1 和 %2 所界定，y 軸由 %3 和 %4，顯示 %5 方程式</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>設定滑杆</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3858,7 +3882,7 @@
     <value>輸入運算式</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>複製</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3883,11 +3907,11 @@
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>函數輸入清單項目</value>
+    <value>函數輸入</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>函數輸入清單</value>
+    <value>函數輸入</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4134,11 +4158,11 @@
     <value>外觀</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Header" xml:space="preserve">
     <value>應用程式佈景主題</value>
     <comment>Title of App theme expander</comment>
   </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Description" xml:space="preserve">
     <value>選取要顯示的應用程式佈景主題</value>
     <comment>Description of App theme expander</comment>
   </data>
@@ -4162,8 +4186,16 @@
     <value>設定頁面</value>
     <comment>Announcement used when Settings page is opened</comment>
   </data>
-  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>應用程式佈景主題設定</value>
-    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
+  <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>開啟操作功能表以執行可用的動作</value>
+    <comment>Screen reader prompt for the context menu of the expression box</comment>
+  </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>確定</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>無法還原此快照。</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
   </data>
 </root>

@@ -1277,6 +1277,10 @@
     <value>чашка (США)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
+  <data name="UnitAbbreviation_Angstrom" xml:space="preserve">
+    <value>А</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
     <value>акр</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
@@ -1384,6 +1388,10 @@
   <data name="UnitAbbreviation_Joule" xml:space="preserve">
     <value>Дж</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
+    <value>кВтч</value>
+    <comment>An abbreviation for a measurement unit of electricity consumption</comment>
   </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
     <value>K</value>
@@ -1573,6 +1581,10 @@
     <value>МиБ</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
+  <data name="UnitAbbreviation_Nibble" xml:space="preserve">
+    <value>nybl</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
     <value>Пи</value>
     <comment>An abbreviation for a measurement unit of data</comment>
@@ -1749,6 +1761,10 @@
     <value>джоулей</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Kilowatthour" xml:space="preserve">
+    <value>Киловатт-часы</value>
+    <comment>A measurement unit for electricity consumption. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
     <value>шкала Кельвина</value>
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
@@ -1833,8 +1849,16 @@
     <value>минут</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Nibble" xml:space="preserve">
+    <value>Полубайт</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
     <value>Нанометры</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Angstrom" xml:space="preserve">
+    <value>Ангстремы</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
@@ -2318,7 +2342,7 @@
     <comment>{Locked="%1"}. Copyright statement, displayed on the About panel. %1 = the current year (4 digits)</comment>
   </data>
   <data name="AboutControlContribute" xml:space="preserve">
-    <value>Чтобы узнать, как вы можете участвовать в Windows калькулятора, изучите проект на %HL%GitHub%HL%.</value>
+    <value>Чтобы узнать, как вы можете участвовать в разработке калькулятора Windows, изучите проект на %HL%GitHub%HL%.</value>
     <comment>{Locked="%HL%GitHub%HL%"}. GitHub link, Displayed on the About panel</comment>
   </data>
   <data name="AboutGroupTitle.Text" xml:space="preserve">
@@ -2330,11 +2354,11 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>Журнала еще нет</value>
+    <value>Журнала еще нет.</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>В памяти ничего не сохранено</value>
+    <value>Нет сохраненных элементов в памяти.</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3368,7 +3392,7 @@
     <comment>String describing constant monotonicity of a function</comment>
   </data>
   <data name="KGFMonotonicityDecreasing" xml:space="preserve">
-    <value>Уменьшающаяся</value>
+    <value>Убывающая</value>
     <comment>String describing decreasing monotonicity of a function</comment>
   </data>
   <data name="KGFMonotonicityError" xml:space="preserve">
@@ -3376,7 +3400,7 @@
     <comment>Error displayed when monotonicity cannot be determined</comment>
   </data>
   <data name="KGFMonotonicityIncreasing" xml:space="preserve">
-    <value>Увеличивающаяся</value>
+    <value>Возрастающая</value>
     <comment>String describing increasing monotonicity of a function</comment>
   </data>
   <data name="KGFMonotonicityUnknown" xml:space="preserve">
@@ -3436,7 +3460,7 @@
     <comment>Message displayed when the graph does not have any y-intercepts</comment>
   </data>
   <data name="Domain" xml:space="preserve">
-    <value>Домен</value>
+    <value>Область</value>
     <comment>Title for KeyGraphFeatures Domain Property</comment>
   </data>
   <data name="HorizontalAsymptotes" xml:space="preserve">
@@ -3476,11 +3500,11 @@
     <comment>Title for KeyGraphFeatures Parity Property</comment>
   </data>
   <data name="Periodicity" xml:space="preserve">
-    <value>Цикл</value>
+    <value>Период</value>
     <comment>Title for KeyGraphFeatures Periodicity Property. The period of a mathematical function is the smallest interval in its input values such that its output values repeat every such interval.</comment>
   </data>
   <data name="Range" xml:space="preserve">
-    <value>Диапазон</value>
+    <value>Область значений</value>
     <comment>Title for KeyGraphFeatures Range Property</comment>
   </data>
   <data name="VerticalAsymptotes" xml:space="preserve">
@@ -3499,11 +3523,11 @@
     <value>Не удалось выполнить анализ функции.</value>
   </data>
   <data name="KGFDomainNone" xml:space="preserve">
-    <value>Не удалось вычислить домен для этой функции.</value>
+    <value>Не удается вычислить область для этой функции.</value>
     <comment>Error displayed when Domain is not returned from the analyzer.</comment>
   </data>
   <data name="KGFRangeNone" xml:space="preserve">
-    <value>Не удается вычислить диапазон для этой функции.</value>
+    <value>Не удается вычислить область значений для этой функции.</value>
     <comment>Error displayed when Range is not returned from the analyzer.</comment>
   </data>
   <data name="Overflow" xml:space="preserve">
@@ -3531,7 +3555,7 @@
     <comment>Error that occurs during graphing when a factorial has a large n</comment>
   </data>
   <data name="ModuloCannotPerformOnFloat" xml:space="preserve">
-    <value>По модулю можно использовать только целые числа</value>
+    <value>По модулю можно брать только целые числа</value>
     <comment>Error that occurs during graphing when modulo is used with a float.</comment>
   </data>
   <data name="EquationHasNoSolution" xml:space="preserve">
@@ -3547,7 +3571,7 @@
     <comment>Error that occurs during graphing when mutually exclusive conditions are used.</comment>
   </data>
   <data name="OutOfDomain" xml:space="preserve">
-    <value>Уравнение вне домена</value>
+    <value>Уравнение вне области определения</value>
     <comment>Error that occurs during graphing when the equation is out of domain.</comment>
   </data>
   <data name="GE_NotSupported" xml:space="preserve">
@@ -3567,7 +3591,7 @@
     <comment>Error that occurs during graphing when a number has too many decimals. Ex: 1.2.3</comment>
   </data>
   <data name="DecimalPointWithoutDigits" xml:space="preserve">
-    <value>В десятичной запятой отсутствуют цифры</value>
+    <value>Десятичная запятая не имеет цифр</value>
     <comment>Error that occurs during graphing with a decimal point without digits</comment>
   </data>
   <data name="UnexpectedEndOfExpression" xml:space="preserve">
@@ -3593,21 +3617,21 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>Неверное выражение</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>Пустое выражение</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
   </data>
   <data name="EqualWithoutEquation" xml:space="preserve">
-    <value>Равный был использован без уравнения</value>
+    <value>Знак равенства использован без уравнения</value>
     <comment>Error that occurs during graphing when equal is used without an equation. Ex: sin(x=y)</comment>
   </data>
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>Скобки отсутствуют после имени функции</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
-    <value>Математическая операция имеет неверное количество параметров</value>
+    <value>Неверное количество параметров функции</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
   </data>
   <data name="InvalidVariableNameFormat" xml:space="preserve">
@@ -3627,11 +3651,11 @@
     <comment>Error that occurs during graphing when i or I is used.</comment>
   </data>
   <data name="GeneralError" xml:space="preserve">
-    <value>Уравнение не может быть построено</value>
+    <value>График уравнения не может быть построен</value>
     <comment>General error that occurs during graphing.</comment>
   </data>
   <data name="InvalidNumberDigit" xml:space="preserve">
-    <value>Цифра не может быть разрешена для данной базы</value>
+    <value>Не удалось определить цифру для заданного основания</value>
     <comment>Error that occurs during graphing when trying to use bases incorrect. Ex: base(2,1020).</comment>
   </data>
   <data name="InvalidNumberBase" xml:space="preserve">
@@ -3639,7 +3663,7 @@
     <comment>Error that occurs during graphing when the base is out of range.</comment>
   </data>
   <data name="InvalidVariableSpecification" xml:space="preserve">
-    <value>Математическая операция требует, чтобы один из ее параметров был переменной</value>
+    <value>Один из параметров функции должен быть переменной</value>
     <comment>Error that occurs during graphing when a function requires a variable in a particular position. Ex: 2nd argument of deriv.</comment>
   </data>
   <data name="ExpectingLogicalOperands" xml:space="preserve">
@@ -3655,11 +3679,11 @@
     <comment>Error that occurs during graphing when x or y is used in the limit point.</comment>
   </data>
   <data name="CannotUseComplexInfinityInReal" xml:space="preserve">
-    <value>Не может использовать сложную бесконечность</value>
+    <value>Нельзя использовать комплексную бесконечность</value>
     <comment>Error that occurs during graphing when complex infinity is used</comment>
   </data>
   <data name="CannotUseIInInequalitySolving" xml:space="preserve">
-    <value>Не может использовать комплексные числа в неравенствах</value>
+    <value>Нельзя использовать комплексные числа в неравенствах</value>
     <comment>Error that occurs during graphing when complex numbers are used in inequalities.</comment>
   </data>
   <data name="equationAnalysisBack.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -3741,7 +3765,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>Окно для просмотра графа, ось x с осью %1 и %2, ось y, привязанная %3 и %4, отображает %5 уравнения</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Настроить ползунок</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3755,7 +3779,7 @@
     <comment>Used in Graphing Calculator to switch the view to the equation mode</comment>
   </data>
   <data name="GraphSwitchToGraphMode" xml:space="preserve">
-    <value>Перейти в режим графа</value>
+    <value>Перейти в режим графика</value>
     <comment>Used in Graphing Calculator to switch the view to the graph mode</comment>
   </data>
   <data name="SwitchModeToggleButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3858,7 +3882,7 @@
     <value>Введите выражение</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>Копировать</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3883,11 +3907,11 @@
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Элемент входного списка функций</value>
+    <value>Ввод функции</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Входной список функций</value>
+    <value>Ввод функции</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4134,11 +4158,11 @@
     <value>Внешний вид</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Header" xml:space="preserve">
     <value>Тема приложения</value>
     <comment>Title of App theme expander</comment>
   </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Description" xml:space="preserve">
     <value>Выберите тему приложения для отображения</value>
     <comment>Description of App theme expander</comment>
   </data>
@@ -4162,8 +4186,16 @@
     <value>Страница параметров</value>
     <comment>Announcement used when Settings page is opened</comment>
   </data>
-  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Параметр темы приложения</value>
-    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
+  <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Открыть контекстное меню для просмотра доступных действий</value>
+    <comment>Screen reader prompt for the context menu of the expression box</comment>
+  </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>ОК</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>Не удалось восстановить этот моментальный снимок.</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
   </data>
 </root>

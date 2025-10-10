@@ -3,11 +3,8 @@
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Windows;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Runtime.InteropServices.ComTypes;
+
 using System;
-using System.Diagnostics;
 
 namespace CalculatorUITestFramework
 {
@@ -29,7 +26,7 @@ namespace CalculatorUITestFramework
     /// </summary>
     public class ScientificOperatorsPanel
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         public WindowsElement XPower3Button => this.session.TryFindElementByAccessibilityId("xpower3Button");
         public WindowsElement XPowerYButton => this.session.TryFindElementByAccessibilityId("powerButton");
         public WindowsElement PowerOf10Button => this.session.TryFindElementByAccessibilityId("powerOf10Button");
@@ -112,25 +109,17 @@ namespace CalculatorUITestFramework
         public void SetAngleOperator(AngleOperatorState value)
         {
             //set the desired string value for the button
-                string desiredId;
-                switch (value)
-                {
-                    case AngleOperatorState.Degrees:
-                        desiredId = "degButton";
-                        break;
-                    case AngleOperatorState.Gradians:
-                        desiredId = "gradButton";
-                        break;
-                    case AngleOperatorState.Radians:
-                        desiredId = "radButton";
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
-                while (this.DegRadGradButton.GetAttribute("AutomationId") != desiredId)
-                {
-                    this.DegRadGradButton.Click();
-                }
+            string desiredId = value switch
+            {
+                AngleOperatorState.Degrees => "degButton",
+                AngleOperatorState.Gradians => "gradButton",
+                AngleOperatorState.Radians => "radButton",
+                _ => throw new NotImplementedException()
+            };
+            while (this.DegRadGradButton.GetAttribute("AutomationId") != desiredId)
+            {
+                this.DegRadGradButton.Click();
+            }
         }
 
         public void ResetFEButton(FEButtonState value)

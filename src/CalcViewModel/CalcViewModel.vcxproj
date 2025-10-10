@@ -42,8 +42,8 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.19041.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -154,9 +154,11 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -171,10 +173,12 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ControlFlowGuard>Guard</ControlFlowGuard>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -189,9 +193,11 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -206,10 +212,12 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ControlFlowGuard>Guard</ControlFlowGuard>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -224,9 +232,11 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -241,10 +251,12 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ControlFlowGuard>Guard</ControlFlowGuard>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -259,9 +271,11 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -276,10 +290,12 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ControlFlowGuard>Guard</ControlFlowGuard>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -298,7 +314,6 @@
     <ResourceCompile Include="CalcViewModel.rc" PreprocessorDefinitions="%(PreprocessorDefinitions);APP_VERSION_MAJOR=$(Version.Split(`.`)[0]);APP_VERSION_MINOR=$(Version.Split(`.`)[1]);APP_VERSION_BUILD=$(Version.Split(`.`)[2]);APP_VERSION_REVISION=$(Version.Split(`.`)[3])" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ApplicationViewModel.h" />
     <ClInclude Include="Common\AppResourceProvider.h" />
     <ClInclude Include="Common\Automation\NarratorAnnouncement.h" />
     <ClInclude Include="Common\Automation\NarratorNotifier.h" />
@@ -325,7 +340,6 @@
     <ClInclude Include="Common\Utils.h" />
     <ClInclude Include="DataLoaders\CurrencyDataLoader.h" />
     <ClInclude Include="DataLoaders\CurrencyHttpClient.h" />
-    <ClInclude Include="DataLoaders\ICurrencyHttpClient.h" />
     <ClInclude Include="DataLoaders\UnitConverterDataConstants.h" />
     <ClInclude Include="DataLoaders\UnitConverterDataLoader.h" />
     <ClInclude Include="DateCalculatorViewModel.h" />
@@ -338,12 +352,12 @@
     <ClInclude Include="HistoryViewModel.h" />
     <ClInclude Include="MemoryItemViewModel.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Snapshots.h" />
     <ClInclude Include="StandardCalculatorViewModel.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UnitConverterViewModel.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ApplicationViewModel.cpp" />
     <ClCompile Include="Common\AppResourceProvider.cpp" />
     <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp" />
     <ClCompile Include="Common\Automation\NarratorNotifier.cpp" />
@@ -380,6 +394,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Snapshots.cpp" />
     <ClCompile Include="StandardCalculatorViewModel.cpp" />
     <ClCompile Include="UnitConverterViewModel.cpp" />
   </ItemGroup>
@@ -394,23 +409,6 @@
       <Project>{fc81ff41-02cd-4cd9-9bc5-45a1e39ac6ed}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemDefinitionGroup Condition="!Exists('DataLoaders\DataLoaderConstants.h')">
-    <ClCompile>
-      <AdditionalOptions>/DUSE_MOCK_DATA %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <Choose>
-    <When Condition="Exists('DataLoaders\DataLoaderConstants.h')">
-      <ItemGroup>
-        <ClInclude Include="DataLoaders\DataLoaderConstants.h" />
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <ClInclude Include="DataLoaders\DataLoaderMockConstants.h" />
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json" />
   </ItemGroup>

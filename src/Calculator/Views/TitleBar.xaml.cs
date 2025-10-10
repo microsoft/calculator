@@ -1,4 +1,5 @@
 using CalculatorApp.ViewModel.Common;
+
 using Windows.ApplicationModel.Core;
 using Windows.System.Profile;
 using Windows.UI.Core;
@@ -34,8 +35,8 @@ namespace CalculatorApp
 
         public bool IsAlwaysOnTopMode
         {
-            get { return (bool)GetValue(IsAlwaysOnTopModeProperty); }
-            set { SetValue(IsAlwaysOnTopModeProperty, value); }
+            get => (bool)GetValue(IsAlwaysOnTopModeProperty);
+            set => SetValue(IsAlwaysOnTopModeProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsAlwaysOnTopMode.  This enables animation, styling, binding, etc...
@@ -89,9 +90,9 @@ namespace CalculatorApp
 
         private void RootFrame_RequestedThemeChanged(DependencyObject sender, DependencyProperty dp)
         {
-            if(Frame.RequestedThemeProperty == dp)
+            if (Frame.RequestedThemeProperty == dp)
             {
-                _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => { SetTitleBarControlColors(); }));
+                _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, SetTitleBarControlColors);
             }
         }
 
@@ -119,8 +120,8 @@ namespace CalculatorApp
                 return;
             }
 
-            double leftAddition = 0;
-            double rightAddition = 0;
+            double leftAddition;
+            double rightAddition;
 
             if (FlowDirection == FlowDirection.LeftToRight)
             {
@@ -139,18 +140,14 @@ namespace CalculatorApp
 
         private void ColorValuesChanged(Windows.UI.ViewManagement.UISettings sender, object e)
         {
-            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => { SetTitleBarControlColors(); }));
+            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, SetTitleBarControlColors);
         }
 
         private void SetTitleBarControlColors()
         {
             var applicationView = ApplicationView.GetForCurrentView();
-            if (applicationView == null)
-            {
-                return;
-            }
 
-            var applicationTitleBar = applicationView.TitleBar;
+            var applicationTitleBar = applicationView?.TitleBar;
             if (applicationTitleBar == null)
             {
                 return;
@@ -183,11 +180,11 @@ namespace CalculatorApp
 
         private void OnHighContrastChanged(Windows.UI.ViewManagement.AccessibilitySettings sender, object args)
         {
-            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 SetTitleBarControlColors();
                 SetTitleBarVisibility(false);
-            }));
+            });
         }
 
         private void OnWindowActivated(object sender, WindowActivatedEventArgs e)
@@ -210,64 +207,64 @@ namespace CalculatorApp
         // Dependency properties for the color of the system title bar buttons
         public Windows.UI.Xaml.Media.SolidColorBrush ButtonBackground
         {
-            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonBackgroundProperty); }
-            set { SetValue(ButtonBackgroundProperty, value); }
+            get => (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonBackgroundProperty);
+            set => SetValue(ButtonBackgroundProperty, value);
         }
         public static readonly DependencyProperty ButtonBackgroundProperty =
             DependencyProperty.Register(nameof(ButtonBackground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
 
         public Windows.UI.Xaml.Media.SolidColorBrush ButtonForeground
         {
-            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonForegroundProperty); }
-            set { SetValue(ButtonForegroundProperty, value); }
+            get => (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonForegroundProperty);
+            set => SetValue(ButtonForegroundProperty, value);
         }
         public static readonly DependencyProperty ButtonForegroundProperty =
             DependencyProperty.Register(nameof(ButtonForeground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
 
         public Windows.UI.Xaml.Media.SolidColorBrush ButtonInactiveBackground
         {
-            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonInactiveBackgroundProperty); }
-            set { SetValue(ButtonInactiveBackgroundProperty, value); }
+            get => (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonInactiveBackgroundProperty);
+            set => SetValue(ButtonInactiveBackgroundProperty, value);
         }
         public static readonly DependencyProperty ButtonInactiveBackgroundProperty =
             DependencyProperty.Register(nameof(ButtonInactiveBackground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
 
         public Windows.UI.Xaml.Media.SolidColorBrush ButtonInactiveForeground
         {
-            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonInactiveForegroundProperty); }
-            set { SetValue(ButtonInactiveForegroundProperty, value); }
+            get => (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonInactiveForegroundProperty);
+            set => SetValue(ButtonInactiveForegroundProperty, value);
         }
         public static readonly DependencyProperty ButtonInactiveForegroundProperty =
             DependencyProperty.Register(nameof(ButtonInactiveForeground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
 
         public Windows.UI.Xaml.Media.SolidColorBrush ButtonHoverBackground
         {
-            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonHoverBackgroundProperty); }
-            set { SetValue(ButtonHoverBackgroundProperty, value); }
+            get => (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonHoverBackgroundProperty);
+            set => SetValue(ButtonHoverBackgroundProperty, value);
         }
         public static readonly DependencyProperty ButtonHoverBackgroundProperty =
             DependencyProperty.Register(nameof(ButtonHoverBackground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
 
         public Windows.UI.Xaml.Media.SolidColorBrush ButtonHoverForeground
         {
-            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonHoverForegroundProperty); }
-            set { SetValue(ButtonHoverForegroundProperty, value); }
+            get => (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonHoverForegroundProperty);
+            set => SetValue(ButtonHoverForegroundProperty, value);
         }
         public static readonly DependencyProperty ButtonHoverForegroundProperty =
             DependencyProperty.Register(nameof(ButtonHoverForeground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
 
         public Windows.UI.Xaml.Media.SolidColorBrush ButtonPressedBackground
         {
-            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonPressedBackgroundProperty); }
-            set { SetValue(ButtonPressedBackgroundProperty, value); }
+            get => (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonPressedBackgroundProperty);
+            set => SetValue(ButtonPressedBackgroundProperty, value);
         }
         public static readonly DependencyProperty ButtonPressedBackgroundProperty =
             DependencyProperty.Register(nameof(ButtonPressedBackground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
 
         public Windows.UI.Xaml.Media.SolidColorBrush ButtonPressedForeground
         {
-            get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonPressedForegroundProperty); }
-            set { SetValue(ButtonPressedForegroundProperty, value); }
+            get => (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(ButtonPressedForegroundProperty);
+            set => SetValue(ButtonPressedForegroundProperty, value);
         }
         public static readonly DependencyProperty ButtonPressedForegroundProperty =
             DependencyProperty.Register(nameof(ButtonPressedForeground), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(TitleBar), new PropertyMetadata(null));
@@ -280,15 +277,16 @@ namespace CalculatorApp
         public static readonly DependencyProperty BackButtonSpaceReservedProperty =
             DependencyProperty.Register(
                 nameof(BackButtonSpaceReserved), typeof(bool), typeof(TitleBar),
-                new PropertyMetadata(false, new PropertyChangedCallback((sender, args)=> {
+                new PropertyMetadata(false, (sender, args) =>
+                {
                     var self = sender as TitleBar;
                     VisualStateManager.GoToState(
                         self, (bool)args.NewValue ? self.BackButtonVisible.Name : self.BackButtonCollapsed.Name, true);
-                })));
+                }));
 
-        private Windows.ApplicationModel.Core.CoreApplicationViewTitleBar m_coreTitleBar;
-        private Windows.UI.ViewManagement.UISettings m_uiSettings;
-        private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
+        private readonly Windows.ApplicationModel.Core.CoreApplicationViewTitleBar m_coreTitleBar;
+        private readonly Windows.UI.ViewManagement.UISettings m_uiSettings;
+        private readonly Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
         private Utils.ThemeHelper.ThemeChangedCallbackToken m_rootFrameRequestedThemeCallbackToken;
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -15,15 +15,13 @@ namespace CalculatorApp
         {
             public object Convert(object value, Type targetType, object parameter, string language)
             {
-                var boxedBool = value as bool?;
-                var boolValue = (boxedBool != null && boxedBool.Value);
+                var boolValue = (value is bool boxedBool && boxedBool);
                 return !boolValue;
             }
 
             public object ConvertBack(object value, Type targetType, object parameter, string language)
             {
-                var boxedBool = (value as bool?);
-                var boolValue = (boxedBool != null && boxedBool.Value);
+                var boolValue = (value is bool boxedBool && boxedBool);
                 return !boolValue;
             }
         }

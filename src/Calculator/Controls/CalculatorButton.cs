@@ -1,19 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Controls;
 using CalculatorApp.ViewModel.Common;
+
 using Windows.System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Data;
-using Windows.Foundation.Collections;
-using Windows.Storage.Pickers;
+using Windows.UI.Xaml.Input;
 
 namespace CalculatorApp
 {
@@ -25,43 +18,45 @@ namespace CalculatorApp
             {
                 // Set the default bindings for this button, these can be overwritten by Xaml if needed
                 // These are a replacement for binding in styles
-                Binding commandBinding = new Binding();
-                commandBinding.Path = new PropertyPath("ButtonPressed");
+                Binding commandBinding = new Binding
+                {
+                    Path = new PropertyPath("ButtonPressed")
+                };
                 this.SetBinding(CommandProperty, commandBinding);
             }
 
             public NumbersAndOperatorsEnum ButtonId
             {
-                get { return (NumbersAndOperatorsEnum)GetValue(ButtonIdProperty); }
-                set { SetValue(ButtonIdProperty, value); }
+                get => (NumbersAndOperatorsEnum)GetValue(ButtonIdProperty);
+                set => SetValue(ButtonIdProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for ButtonId.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ButtonIdProperty =
-                DependencyProperty.Register(nameof(ButtonId), typeof(NumbersAndOperatorsEnum), typeof(CalculatorButton), new PropertyMetadata(default(NumbersAndOperatorsEnum), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(ButtonId), typeof(NumbersAndOperatorsEnum), typeof(CalculatorButton), new PropertyMetadata(default(NumbersAndOperatorsEnum), (sender, args) =>
                 {
                     var self = (CalculatorButton)sender;
                     self.OnButtonIdPropertyChanged((NumbersAndOperatorsEnum)args.OldValue, (NumbersAndOperatorsEnum)args.NewValue);
-                })));
+                }));
 
             public string AuditoryFeedback
             {
-                get { return (string)GetValue(AuditoryFeedbackProperty); }
-                set { SetValue(AuditoryFeedbackProperty, value); }
+                get => (string)GetValue(AuditoryFeedbackProperty);
+                set => SetValue(AuditoryFeedbackProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for AuditoryFeedback.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty AuditoryFeedbackProperty =
-                DependencyProperty.Register(nameof(AuditoryFeedback), typeof(string), typeof(CalculatorButton), new PropertyMetadata(string.Empty, new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(AuditoryFeedback), typeof(string), typeof(CalculatorButton), new PropertyMetadata(string.Empty, (sender, args) =>
                 {
                     var self = (CalculatorButton)sender;
                     self.OnAuditoryFeedbackPropertyChanged((string)args.OldValue, (string)args.NewValue);
-                })));
+                }));
 
             public Windows.UI.Xaml.Media.Brush HoverBackground
             {
-                get { return (Windows.UI.Xaml.Media.Brush)GetValue(HoverBackgroundProperty); }
-                set { SetValue(HoverBackgroundProperty, value); }
+                get => (Windows.UI.Xaml.Media.Brush)GetValue(HoverBackgroundProperty);
+                set => SetValue(HoverBackgroundProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for HoverBackground.  This enables animation, styling, binding, etc...
@@ -70,8 +65,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Media.Brush HoverForeground
             {
-                get { return (Windows.UI.Xaml.Media.Brush)GetValue(HoverForegroundProperty); }
-                set { SetValue(HoverForegroundProperty, value); }
+                get => (Windows.UI.Xaml.Media.Brush)GetValue(HoverForegroundProperty);
+                set => SetValue(HoverForegroundProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for HoverForeground.  This enables animation, styling, binding, etc...
@@ -80,8 +75,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Media.Brush PressBackground
             {
-                get { return (Windows.UI.Xaml.Media.Brush)GetValue(PressBackgroundProperty); }
-                set { SetValue(PressBackgroundProperty, value); }
+                get => (Windows.UI.Xaml.Media.Brush)GetValue(PressBackgroundProperty);
+                set => SetValue(PressBackgroundProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for PressBackground.  This enables animation, styling, binding, etc...
@@ -90,8 +85,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Media.Brush PressForeground
             {
-                get { return (Windows.UI.Xaml.Media.Brush)GetValue(PressForegroundProperty); }
-                set { SetValue(PressForegroundProperty, value); }
+                get => (Windows.UI.Xaml.Media.Brush)GetValue(PressForegroundProperty);
+                set => SetValue(PressForegroundProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for PressForeground.  This enables animation, styling, binding, etc...
@@ -100,8 +95,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Media.Brush DisabledBackground
             {
-                get { return (Windows.UI.Xaml.Media.Brush)GetValue(DisabledBackgroundProperty); }
-                set { SetValue(DisabledBackgroundProperty, value); }
+                get => (Windows.UI.Xaml.Media.Brush)GetValue(DisabledBackgroundProperty);
+                set => SetValue(DisabledBackgroundProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for DisabledBackground.  This enables animation, styling, binding, etc...
@@ -110,8 +105,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Media.Brush DisabledForeground
             {
-                get { return (Windows.UI.Xaml.Media.Brush)GetValue(DisabledForegroundProperty); }
-                set { SetValue(DisabledForegroundProperty, value); }
+                get => (Windows.UI.Xaml.Media.Brush)GetValue(DisabledForegroundProperty);
+                set => SetValue(DisabledForegroundProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for DisabledForeground.  This enables animation, styling, binding, etc...

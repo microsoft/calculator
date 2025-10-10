@@ -4,9 +4,9 @@ The app provides standard, scientific, and programmer calculator functionality, 
 
 Calculator ships regularly with new features and bug fixes. You can get the latest version of Calculator in the [Microsoft Store](https://www.microsoft.com/store/apps/9WZDNCRFHVN5).
 
-[![Build Status](https://dev.azure.com/ms/calculator/_apis/build/status/Calculator-CI?branchName=master)](https://dev.azure.com/ms/calculator/_build/latest?definitionId=57&branchName=master)
+[![Continuous Integration](https://github.com/microsoft/calculator/actions/workflows/action-ci.yml/badge.svg)](https://github.com/microsoft/calculator/actions/workflows/action-ci.yml)
 
-  ![Calculator Screenshot](docs/Images/CalculatorScreenshot.png)
+<img src="docs/Images/CalculatorScreenshot.png" alt="Calculator Screenshot" width="450px" />
 
 ## Features
 - Standard Calculator functionality which offers basic operations and evaluates commands immediately as they are entered.
@@ -22,7 +22,7 @@ Calculator ships regularly with new features and bug fixes. You can get the late
 
 ## Getting started
 Prerequisites:
-- Your computer must be running Windows 10, version 1809 or newer. Windows 11 is recommended.
+- Your computer must be running Windows 11, build 22000 or newer.
 - Install the latest version of [Visual Studio](https://developer.microsoft.com/en-us/windows/downloads) (the free community edition is sufficient).
   - Install the "Universal Windows Platform Development" workload.
   - Install the optional "C++ Universal Windows Platform tools" component.

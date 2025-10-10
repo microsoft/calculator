@@ -67,7 +67,7 @@ void CopyPasteManager::CopyToClipboard(String ^ stringToCopy)
     // Copy the string to the clipboard
     auto dataPackage = ref new DataPackage();
     dataPackage->SetText(stringToCopy);
-    Clipboard::SetContent(dataPackage);
+    Clipboard::SetContentWithOptions(dataPackage, nullptr);
 }
 
 IAsyncOperation<String ^> ^ CopyPasteManager::GetStringToPaste(ViewMode mode, CategoryGroupType modeType, NumberBase programmerNumberBase, BitLength bitLengthType)
@@ -97,7 +97,7 @@ bool CopyPasteManager::HasStringToPaste()
 
 String ^ CopyPasteManager::ValidatePasteExpression(String ^ pastedText, ViewMode mode, NumberBase programmerNumberBase, BitLength bitLengthType)
 {
-    return ValidatePasteExpression(pastedText, mode, NavCategory::GetGroupType(mode), programmerNumberBase, bitLengthType);
+    return ValidatePasteExpression(pastedText, mode, NavCategoryStates::GetGroupType(mode), programmerNumberBase, bitLengthType);
 }
 
 // return "NoOp" if pastedText is invalid else return pastedText
@@ -288,9 +288,8 @@ bool CopyPasteManager::ExpressionRegExMatch(
     }
     else if (mode == ViewMode::Programmer)
     {
-        patterns.assign(
-            programmerModePatterns[(int)programmerNumberBase - (int)NumberBase::HexBase].begin(),
-            programmerModePatterns[(int)programmerNumberBase - (int)NumberBase::HexBase].end());
+        auto pattern = &programmerModePatterns[static_cast<int>(programmerNumberBase) - static_cast<int>(NumberBase::HexBase)];
+        patterns.assign(pattern->begin(), pattern->end());
     }
     else if (modeType == CategoryGroupType::Converter)
     {
@@ -505,18 +504,15 @@ ULONG32 CopyPasteManager::StandardScientificOperandLength(Platform::String ^ ope
     const bool hasDecimal = operandWstring.find('.') != wstring::npos;
     auto length = operandWstring.length();
 
-    if (hasDecimal)
+    if (hasDecimal && length >= 2)
     {
-        if (length >= 2)
+        if ((operandWstring[0] == L'0') && (operandWstring[1] == L'.'))
         {
-            if ((operandWstring[0] == L'0') && (operandWstring[1] == L'.'))
-            {
-                length -= 2;
-            }
-            else
-            {
-                length -= 1;
-            }
+            length -= 2;
+        }
+        else
+        {
+            length -= 1;
         }
     }
 

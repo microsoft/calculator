@@ -3,7 +3,6 @@
 # this job also signs the bundle and creates StoreBroker packages.
 
 parameters:
-  isOSSBuild: false
   signBundle: false
   createStoreBrokerPackages: false
 
@@ -13,33 +12,78 @@ jobs:
     - Buildx64
     - Buildx86
     - BuildARM
+    - BuildARM64
   condition: |
     and
     (
       in(dependencies.Buildx64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
       in(dependencies.Buildx86.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
-      in(dependencies.BuildARM.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
-    ) 
-  pool:
-    ${{ if eq(parameters.isOSSBuild, true) }}:
-      name: EssentialExperiencesOpenSource-windows-2022
-    ${{ if eq(parameters.isOSSBuild, false) }}:
-      name: EssentialExperiences-windows-2022
+      in(dependencies.BuildARM.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+      in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+    )
   variables:
     skipComponentGovernanceDetection: true
     StoreBrokerMediaRootPath: $(TEMP)\SBMedia
     StoreBrokerPackagePath: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
+    PackageX86: $[in(dependencies.Buildx86.result, 'Succeeded', 'SucceededWithIssues')]
+    PackageX64: $[in(dependencies.Buildx64.result, 'Succeeded', 'SucceededWithIssues')]
+    PackageARM: $[in(dependencies.BuildARM.result, 'Succeeded', 'SucceededWithIssues')]
+    PackageARM64: $[in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues')]
+  templateContext:
+    outputs:
+    - ${{ if eq(parameters.signBundle, false) }}:
+      - output: pipelineArtifact
+        displayName: Publish MsixBundle artifact
+        targetPath: $(Build.ArtifactStagingDirectory)\msixBundle
+        artifactName: msixBundle
+    - ${{ else }}:
+      - output: pipelineArtifact
+        displayName: Publish MsixBundleSigned artifact
+        targetPath: $(Build.ArtifactStagingDirectory)\msixBundle
+        artifactName: msixBundleSigned
+      - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:
+        - output: pipelineArtifact
+          displayName: Publish StoreBroker Payload artifact
+          targetPath: $(StoreBrokerPackagePath)
+          artifactName: storeBrokerPayload
+
   steps:
   - checkout: self
     fetchDepth: 1
 
-  - task: DownloadBuildArtifacts@0
-    displayName: Download all .msix artifacts
+  - task: DownloadPipelineArtifact@2
+    displayName: Download all .msix artifacts (x86)
+    condition: and(succeeded(), eq(variables.PackageX86, 'true'))
     inputs:
-      artifactName: drop
+      artifactName: drop-x86
       itemPattern: '**/*.msix'
+      targetPath: $(Build.ArtifactStagingDirectory)\drop\x86
 
-  - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:
+  - task: DownloadPipelineArtifact@2
+    displayName: Download all .msix artifacts (x64)
+    condition: and(succeeded(), eq(variables.PackageX64, 'true'))
+    inputs:
+      artifactName: drop-x64
+      itemPattern: '**/*.msix'
+      targetPath: $(Build.ArtifactStagingDirectory)\drop\x64
+
+  - task: DownloadPipelineArtifact@2
+    displayName: Download all .msix artifacts (ARM)
+    condition: and(succeeded(), eq(variables.PackageARM, 'true'))
+    inputs:
+      artifactName: drop-ARM
+      itemPattern: '**/*.msix'
+      targetPath: $(Build.ArtifactStagingDirectory)\drop\ARM
+
+  - task: DownloadPipelineArtifact@2
+    displayName: Download all .msix artifacts (ARM64)
+    condition: and(succeeded(), eq(variables.PackageARM64, 'true'))
+    inputs:
+      artifactName: drop-ARM64
+      itemPattern: '**/*.msix'
+      targetPath: $(Build.ArtifactStagingDirectory)\drop\ARM64
+
+  - ${{ if or(eq(parameters.createStoreBrokerPackages, true), eq(parameters.signBundle, true)) }}:
     - task: UniversalPackages@0
       displayName: Download internals package
       inputs:
@@ -47,18 +91,18 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        vstsPackageVersion: 0.0.78
+        vstsPackageVersion: 0.0.119
 
   - task: PowerShell@2
     displayName: Generate MsixBundle mapping
     inputs:
       filePath: $(Build.SourcesDirectory)\build\scripts\CreateMsixBundleMapping.ps1
-      arguments: '-InputPath $(Build.ArtifactStagingDirectory)\drop\Release -ProjectName Calculator -OutputFile $(Build.BinariesDirectory)\MsixBundleMapping.txt'
+      arguments: '-InputPath $(Build.ArtifactStagingDirectory)\drop -ProjectName Calculator -OutputFile $(Build.BinariesDirectory)\MsixBundleMapping.txt'
 
   - powershell: |
       $buildVersion = [version]$Env:BUILDVERSION
       $bundleVersion = "2021.$($buildVersion.Minor).$($buildVersion.Build).$($buildVersion.Revision)"
-      & "C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64\MakeAppx.exe" bundle /v /bv $bundleVersion /f $Env:MAPPINGFILEPATH /p $Env:OUTPUTPATH
+      & "C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64\MakeAppx.exe" bundle /v /bv $bundleVersion /f $Env:MAPPINGFILEPATH /p $Env:OUTPUTPATH
     displayName: Make MsixBundle
     env:
       BUILDVERSION: $(Build.BuildNumber)
@@ -72,17 +116,30 @@ jobs:
       contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
       targetFolder: $(Build.ArtifactStagingDirectory)\msixBundle
 
-  - task: PublishBuildArtifacts@1
-    displayName: Publish MsixBundle artifact
-    inputs:
-      artifactName: msixBundle
-      pathToPublish: $(Build.ArtifactStagingDirectory)\msixBundle
-
   - ${{ if eq(parameters.signBundle, true) }}:
-    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+    - pwsh: |
+        $configPath = "$(Build.SourcesDirectory)\Tools\Build\Signing\ESRP-codesign.json"
+        $config = Get-Content -Raw $configPath | ConvertFrom-Json
+        $esrpAppRegClientId = $config.AppRegistrationClientId
+        $esrpAppRegTenantId = $config.AppRegistrationClientId
+        $esrpClientId = $config.EsrpClientId
+        echo AppRegistrationClientId:$esrpAppRegClientId, AppRegTenantId:$esrpAppRegTenantId, EsrpClientId:$esrpClientId
+        echo "##vso[task.setvariable variable=EsrpAppRegClientId]$esrpAppRegClientId"
+        echo "##vso[task.setvariable variable=EsrpAppRegTenantId]$esrpAppRegTenantId"
+        echo "##vso[task.setvariable variable=EsrpClientId]$esrpClientId"
+      displayName: Get ESRP config
+
+    - task: EsrpCodeSigning@5
       displayName: Send msixbundle to code signing service
       inputs:
-        ConnectedServiceName: Essential Experiences Codesign
+        ConnectedServiceName: Essential Experiences Codesign PME
+        UseMSIAuthentication: true
+        AppRegistrationClientId: $(EsrpAppRegClientId)
+        AppRegistrationTenantId: $(EsrpAppRegTenantId)
+        EsrpClientId: $(EsrpClientId)
+        AuthAKVName: EE-Apps-CodeSign-KV
+        AuthCertName: EE-Auth-Cert
+        AuthSignCertName: EE-Codesign-Cert
         FolderPath: $(Build.ArtifactStagingDirectory)\msixBundle
         Pattern: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
         signConfigType: inlineSignParams
@@ -112,13 +169,8 @@ jobs:
               "ToolVersion": "1.0"
             }
           ]
-    - task: PublishBuildArtifacts@1
-      displayName: Publish MsixBundleSigned artifact
-      inputs:
-        pathtoPublish: $(Build.ArtifactStagingDirectory)\msixBundle
-        artifactName: msixBundleSigned
 
-    - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:      
+    - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:
       - powershell: |
           # Just modify this line to indicate where your en-us PDP file is. Leave the other lines alone.
           $enUSPdpFilePath = "$(Build.SourcesDirectory)\PDP\en-US\PDP.xml"
@@ -137,11 +189,11 @@ jobs:
           vstsFeed: WindowsInboxApps
           vstsFeedPackage: calculator-pdp-media
           vstsPackageVersion: $(SBMediaReleaseVersion)
-      
-      - task: MS-RDX-MRO.windows-store-publish-dev.package-task.store-package@2
+
+      - task: MS-RDX-MRO.windows-store-publish-dev.package-task.store-package@3
         displayName: Create StoreBroker Payload
         inputs:
-          serviceEndpoint: Calculator StoreBroker Connection
+          serviceEndpoint: Calculator StoreBroker FC
           sbConfigPath: Tools/Build/StoreBroker/SBCalculatorConfig.json
           sourceFolder: $(Build.ArtifactStagingDirectory)/msixBundle
           contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
@@ -150,9 +202,3 @@ jobs:
           pdpMediaPath: $(StoreBrokerMediaRootPath)
           outSBPackagePath: $(StoreBrokerPackagePath)
           outSBName: SBCalculator
-
-      - task: PublishBuildArtifacts@1
-        displayName: Publish StoreBroker Payload artifact
-        inputs:
-          pathtoPublish: $(StoreBrokerPackagePath)
-          artifactName: storeBrokerPayload

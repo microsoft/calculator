@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Appium.Windows;
 
 namespace CalculatorUITestFramework
@@ -11,7 +10,7 @@ namespace CalculatorUITestFramework
     /// </summary>
     public class ScientificCalculatorPage
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         public ScientificOperatorsPanel ScientificOperators = new ScientificOperatorsPanel();
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();

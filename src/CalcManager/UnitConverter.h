@@ -156,13 +156,12 @@ namespace UnitConversionManager
         std::wstring targetCurrencyCode;
     };
 
-    typedef std::tuple<std::vector<UnitConversionManager::Unit>, UnitConversionManager::Unit, UnitConversionManager::Unit> CategorySelectionInitializer;
-    typedef std::unordered_map<
+    using CategorySelectionInitializer = std::tuple<std::vector<UnitConversionManager::Unit>, UnitConversionManager::Unit, UnitConversionManager::Unit>;
+    using UnitToUnitToConversionDataMap = std::unordered_map<
         UnitConversionManager::Unit,
         std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>,
-        UnitConversionManager::UnitHash>
-        UnitToUnitToConversionDataMap;
-    typedef std::unordered_map<int, std::vector<UnitConversionManager::Unit>> CategoryToUnitVectorMap;
+        UnitConversionManager::UnitHash>;
+    using CategoryToUnitVectorMap = std::unordered_map<int, std::vector<UnitConversionManager::Unit>>;
 
     class IViewModelCurrencyCallback
     {

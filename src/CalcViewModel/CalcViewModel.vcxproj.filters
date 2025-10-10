@@ -82,13 +82,13 @@
     <ClCompile Include="GraphingCalculator\GraphingSettingsViewModel.cpp">
       <Filter>GraphingCalculator</Filter>
     </ClCompile>
-    <ClCompile Include="ApplicationViewModel.cpp" />
     <ClCompile Include="DateCalculatorViewModel.cpp" />
     <ClCompile Include="HistoryItemViewModel.cpp" />
     <ClCompile Include="HistoryViewModel.cpp" />
     <ClCompile Include="MemoryItemViewModel.cpp" />
     <ClCompile Include="StandardCalculatorViewModel.cpp" />
     <ClCompile Include="UnitConverterViewModel.cpp" />
+    <ClCompile Include="Snapshots.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -170,12 +170,6 @@
     <ClInclude Include="DataLoaders\CurrencyHttpClient.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
-    <ClInclude Include="DataLoaders\DataLoaderMockConstants.h">
-      <Filter>DataLoaders</Filter>
-    </ClInclude>
-    <ClInclude Include="DataLoaders\ICurrencyHttpClient.h">
-      <Filter>DataLoaders</Filter>
-    </ClInclude>
     <ClInclude Include="DataLoaders\UnitConverterDataConstants.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
@@ -194,7 +188,6 @@
     <ClInclude Include="GraphingCalculator\VariableViewModel.h">
       <Filter>GraphingCalculator</Filter>
     </ClInclude>
-    <ClInclude Include="ApplicationViewModel.h" />
     <ClInclude Include="DateCalculatorViewModel.h" />
     <ClInclude Include="GraphingCalculatorEnums.h" />
     <ClInclude Include="HistoryItemViewModel.h" />
@@ -203,10 +196,14 @@
     <ClInclude Include="StandardCalculatorViewModel.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UnitConverterViewModel.h" />
+    <ClInclude Include="Snapshots.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataLoaders\DefaultFromToCurrency.json">
       <Filter>DataLoaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CalcViewModel.rc" />
   </ItemGroup>
 </Project>

@@ -8,46 +8,114 @@ trigger: none
 pr: none
 
 variables:
-  versionMajor: 11
-  versionMinor: 2203
-  versionBuild: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
-  versionPatch: 0
+  - name: versionMajor
+    value: 11
+  - name: versionMinor
+    value: 2509
+  - name: versionBuild
+    value: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
+  - name: versionPatch
+    value: 0
+  - group: CalculatorTSAConfig
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
 
-jobs:
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    platform: x64
-    isReleaseBuild: true
-    useReleaseAppxmanifest: true
+parameters:
+- name: publishStore
+  displayName: Publish and flight the package on Store
+  type: boolean
+  default: true
 
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    platform: x86
-    isReleaseBuild: true
-    useReleaseAppxmanifest: true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+- name: publishVPack
+  displayName: Publish as undocked inbox app via VPack
+  type: boolean
+  default: true
 
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    platform: ARM
-    isReleaseBuild: true
-    useReleaseAppxmanifest: true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+resources:
+  repositories:
+  - repository: 1esPipelines
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
 
-- template: ./templates/run-unit-tests.yaml
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
   parameters:
-    platform: x64
+    pool:
+      name: EssentialExperiences-windows-2022
+      image: MMSWindows2022-Secure
+      os: windows
+    sdl:
+      tsa:
+        enabled: true
+        config:
+          codebaseName: $(TSA.CodebaseName)
+          notificationAliases: $(TSA.NotificationAliases)
+          instanceUrl: $(TSA.InstanceUrl)
+          projectName: $(TSA.ProjectName)
+          areaPath: $(TSA.AreaPath)
+          serviceTreeID: $(TSA.ServiceTreeID)
+          allTools: true
+      codeql:
+        tsaEnabled: true
+      policheck:
+        enabled: true
+        exclusionsFile: '$(Build.SourcesDirectory)\build\config\PoliCheckExclusions.xml'
 
-- template: ./templates/run-unit-tests.yaml
-  parameters:
-    platform: x86
+    stages:
+    - stage: Calculator
+      jobs:
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
+        parameters:
+          platform: x64
+          isReleaseBuild: true
+          useReleaseAppxmanifest: true
 
-- template: ./templates/package-msixbundle.yaml
-  parameters:
-    signBundle: true
-    createStoreBrokerPackages: true
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
+        parameters:
+          platform: x86
+          isReleaseBuild: true
+          useReleaseAppxmanifest: true
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
 
-- template: ./templates/release-store.yaml
-- template: ./templates/release-vpack.yaml
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
+        parameters:
+          platform: ARM
+          isReleaseBuild: true
+          useReleaseAppxmanifest: true
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
+        parameters:
+          platform: ARM64
+          isReleaseBuild: true
+          useReleaseAppxmanifest: true
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
+        parameters:
+          platform: x64
+          runsettingsFileName: CalculatorUITests.release.runsettings
+
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
+        parameters:
+          platform: x86
+          runsettingsFileName: CalculatorUITests.release.runsettings
+
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
+        parameters:
+          platform: x64
+
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
+        parameters:
+          platform: x86
+
+      - template: /build/pipelines/templates/package-msixbundle.yaml@self
+        parameters:
+          signBundle: true
+          createStoreBrokerPackages: true
+
+      - ${{ if eq(parameters.publishStore, true) }}:
+        - template: /build/pipelines/templates/release-store.yaml@self
+      - ${{ if eq(parameters.publishVPack, true) }}:
+        - template: /build/pipelines/templates/release-vpack.yaml@self

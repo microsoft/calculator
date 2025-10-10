@@ -1,33 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Common;
-using CalculatorApp.Controls;
-
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Devices.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.ApplicationModel.Store;
 
 namespace CalculatorApp
 {
     namespace Controls
     {
-        public enum OverflowButtonPlacement : int
+        public enum OverflowButtonPlacement
         {
             InLine,
             Above
@@ -47,36 +31,36 @@ namespace CalculatorApp
 
             public bool TokensUpdated
             {
-                get { return (bool)GetValue(TokensUpdatedProperty); }
-                set { SetValue(TokensUpdatedProperty, value); }
+                get => (bool)GetValue(TokensUpdatedProperty);
+                set => SetValue(TokensUpdatedProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for TokensUpdated.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty TokensUpdatedProperty =
-                DependencyProperty.Register(nameof(TokensUpdated), typeof(bool), typeof(OverflowTextBlock), new PropertyMetadata(default(bool), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(TokensUpdated), typeof(bool), typeof(OverflowTextBlock), new PropertyMetadata(default(bool), (sender, args) =>
                 {
                     var self = (OverflowTextBlock)sender;
                     self.OnTokensUpdatedPropertyChanged((bool)args.OldValue, (bool)args.NewValue);
-                })));
+                }));
 
             public OverflowButtonPlacement ScrollButtonsPlacement
             {
-                get { return (OverflowButtonPlacement)GetValue(ScrollButtonsPlacementProperty); }
-                set { SetValue(ScrollButtonsPlacementProperty, value); }
+                get => (OverflowButtonPlacement)GetValue(ScrollButtonsPlacementProperty);
+                set => SetValue(ScrollButtonsPlacementProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for ScrollButtonsPlacement.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ScrollButtonsPlacementProperty =
-                DependencyProperty.Register(nameof(ScrollButtonsPlacement), typeof(OverflowButtonPlacement), typeof(OverflowTextBlock), new PropertyMetadata(default(OverflowButtonPlacement), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(ScrollButtonsPlacement), typeof(OverflowButtonPlacement), typeof(OverflowTextBlock), new PropertyMetadata(default(OverflowButtonPlacement), (sender, args) =>
                 {
                     var self = (OverflowTextBlock)sender;
                     self.OnScrollButtonsPlacementPropertyChanged((OverflowButtonPlacement)args.OldValue, (OverflowButtonPlacement)args.NewValue);
-                })));
+                }));
 
             public bool IsActive
             {
-                get { return (bool)GetValue(IsActiveProperty); }
-                set { SetValue(IsActiveProperty, value); }
+                get => (bool)GetValue(IsActiveProperty);
+                set => SetValue(IsActiveProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for IsActive.  This enables animation, styling, binding, etc...
@@ -85,8 +69,8 @@ namespace CalculatorApp
 
             public Windows.UI.Xaml.Style TextStyle
             {
-                get { return (Style)GetValue(TextStyleProperty); }
-                set { SetValue(TextStyleProperty, value); }
+                get => (Style)GetValue(TextStyleProperty);
+                set => SetValue(TextStyleProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for TextStyle.  This enables animation, styling, binding, etc...
@@ -95,8 +79,8 @@ namespace CalculatorApp
 
             public double ScrollButtonsWidth
             {
-                get { return (double)GetValue(ScrollButtonsWidthProperty); }
-                set { SetValue(ScrollButtonsWidthProperty, value); }
+                get => (double)GetValue(ScrollButtonsWidthProperty);
+                set => SetValue(ScrollButtonsWidthProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for ScrollButtonsWidth.  This enables animation, styling, binding, etc...
@@ -105,8 +89,8 @@ namespace CalculatorApp
 
             public double ScrollButtonsFontSize
             {
-                get { return (double)GetValue(ScrollButtonsFontSizeProperty); }
-                set { SetValue(ScrollButtonsFontSizeProperty, value); }
+                get => (double)GetValue(ScrollButtonsFontSizeProperty);
+                set => SetValue(ScrollButtonsFontSizeProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for ScrollButtonsFontSize.  This enables animation, styling, binding, etc...
@@ -279,14 +263,7 @@ namespace CalculatorApp
 
             private void UpdateVisualState()
             {
-                if (IsActive)
-                {
-                    VisualStateManager.GoToState(this, "Active", true);
-                }
-                else
-                {
-                    VisualStateManager.GoToState(this, "Normal", true);
-                }
+                VisualStateManager.GoToState(this, IsActive ? "Active" : "Normal", true);
             }
 
             private void UpdateAllState()

@@ -18,7 +18,6 @@
 #include <sstream>
 #include "Header Files/CalcEngine.h"
 #include "Header Files/CalcUtils.h"
-#include "NumberFormattingUtils.h"
 
 using namespace std;
 using namespace CalcEngine;
@@ -31,17 +30,31 @@ namespace
     // 0 is returned. Higher the number, higher the precedence of the operator.
     int NPrecedenceOfOp(int nopCode)
     {
-        static uint16_t rgbPrec[] = { 0,        0, IDC_OR,    0, IDC_XOR, 0, IDC_AND, 1, IDC_NAND, 1, IDC_NOR, 1, IDC_ADD,  2, IDC_SUB,      2, IDC_RSHF, 3,
-                                      IDC_LSHF, 3, IDC_RSHFL, 3, IDC_MOD, 3, IDC_DIV, 3, IDC_MUL,  3, IDC_PWR, 4, IDC_ROOT, 4, IDC_LOGBASEY, 4 };
-
-        for (unsigned int iPrec = 0; iPrec < size(rgbPrec); iPrec += 2)
+        switch (nopCode)
         {
-            if (nopCode == rgbPrec[iPrec])
-            {
-                return rgbPrec[iPrec + 1];
-            }
+        default:
+        case IDC_OR:
+        case IDC_XOR:
+            return 0;
+        case IDC_AND:
+        case IDC_NAND:
+        case IDC_NOR:
+            return 1;
+        case IDC_ADD:
+        case IDC_SUB:
+            return 2;
+        case IDC_LSHF:
+        case IDC_RSHF:
+        case IDC_RSHFL:
+        case IDC_MOD:
+        case IDC_DIV:
+        case IDC_MUL:
+            return 3;
+        case IDC_PWR:
+        case IDC_ROOT:
+        case IDC_LOGBASEY:
+            return 4;
         }
-        return 0;
     }
 }
 
@@ -150,7 +163,15 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
     {
         m_bRecord = true;
         m_input.Clear();
-        CheckAndAddLastBinOpToHistory();
+
+        /*
+         * Account for scenarios where an equation includes any input after closing parenthesis - i.e. "(8)2=16".
+         * This prevents the calculator from ending an equation and adding to history prematurely.
+         */
+        if (m_nLastCom != IDC_CLOSEP)
+        {
+            CheckAndAddLastBinOpToHistory();
+        }
     }
 
     // Interpret digit keys.
@@ -172,6 +193,38 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
             return;
         }
 
+        // Check if the last command was a closing parenthesis
+        if (m_nLastCom == IDC_CLOSEP)
+        {
+            // Treat this as an implicit multiplication
+            m_nOpCode = IDC_MUL;
+            m_lastVal = m_currentVal;
+
+            // We need to clear any previous state from last calculation
+            m_holdVal = Rational(0);
+            m_bNoPrevEqu = true;
+
+            // Add the operand to history before adding the implicit multiplication
+            if (!m_HistoryCollector.FOpndAddedToHistory())
+            {
+                m_HistoryCollector.AddOpenBraceToHistory();
+                m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
+                m_HistoryCollector.AddCloseBraceToHistory();
+            }
+
+            // Add the implicit multiplication to history
+            m_HistoryCollector.AddBinOpToHistory(m_nOpCode, m_fIntegerMode);
+
+            m_bChangeOp = true;
+            m_nPrevOpCode = 0;
+
+            // Clear any pending operations in the precedence stack
+            while (m_precedenceOpCount > 0)
+            {
+                m_precedenceOpCount--;
+                m_nPrecOp[m_precedenceOpCount] = 0;
+            }
+        }
         DisplayNum();
 
         return;
@@ -491,11 +544,13 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         {
             wstring groupedString = GroupDigitsPerRadix(m_numberString, m_radix);
             m_HistoryCollector.CompleteEquation(groupedString);
+
+            m_lastVal = m_currentVal;
+            m_nPrevOpCode = 0; 
+            m_precedenceOpCount = 0;
         }
 
         m_bChangeOp = false;
-        m_nPrevOpCode = 0;
-
         break;
 
     case IDC_OPENP:
@@ -519,7 +574,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
 
         if (wParam == IDC_OPENP)
         {
-            // if there's an omitted multiplication sign 
+            // if there's an omitted multiplication sign
             if (IsDigitOpCode(m_nLastCom) || IsUnaryOpCode(m_nLastCom) || m_nLastCom == IDC_PNT || m_nLastCom == IDC_CLOSEP)
             {
                 ProcessCommand(IDC_MUL);
@@ -763,7 +818,7 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         break;
     case IDC_FE:
         // Toggle exponential notation display.
-        m_nFE = NumberFormat(!(int)m_nFE);
+        m_nFE = m_nFE == NumberFormat::Float ? NumberFormat::Scientific : NumberFormat::Float;
         DisplayNum();
         break;
 
@@ -777,6 +832,40 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         break;
 
     case IDC_PNT:
+
+        // Check if the last command was a closing parenthesis
+        if (m_nLastCom == IDC_CLOSEP)
+        {
+            // Treat this as an implicit multiplication
+            m_nOpCode = IDC_MUL;
+            m_lastVal = m_currentVal;
+
+            // We need to clear any previous state from last calculation
+            m_holdVal = Rational(0);
+            m_bNoPrevEqu = true;
+
+            // Add the operand to history before adding the implicit multiplication
+            if (!m_HistoryCollector.FOpndAddedToHistory())
+            {
+                m_HistoryCollector.AddOpenBraceToHistory();
+                m_HistoryCollector.AddOpndToHistory(m_numberString, m_currentVal);
+                m_HistoryCollector.AddCloseBraceToHistory();
+            }
+
+            // Add the implicit multiplication to history
+            m_HistoryCollector.AddBinOpToHistory(m_nOpCode, m_fIntegerMode);
+
+            m_bChangeOp = true;
+            m_nPrevOpCode = 0;
+
+            // Clear any pending operations in the precedence stack
+            while (m_precedenceOpCount > 0)
+            {
+                m_precedenceOpCount--;
+                m_nPrecOp[m_precedenceOpCount] = 0;
+            }
+        }
+
         if (m_bRecord && !m_fIntegerMode && m_input.TryAddDecimalPt())
         {
             DisplayNum();

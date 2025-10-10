@@ -2,11 +2,15 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:automation="using:CalculatorApp.ViewModel.Common.Automation"
+      xmlns:common="using:CalculatorApp.Common"
       xmlns:converters="using:CalculatorApp.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:CalculatorApp"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:selectors="using:CalculatorApp.TemplateSelectors"
+      xmlns:utils="using:CalculatorApp.Utils"
+      xmlns:vmcom="using:CalculatorApp.ViewModel.Common"
       x:Name="PageRoot"
       muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
       Loaded="OnPageLoaded"
@@ -25,6 +29,27 @@
         <Style x:Key="NavViewItemStyle" TargetType="muxc:NavigationViewItem">
             <Setter Property="KeyTipPlacementMode" Value="Right"/>
         </Style>
+        <DataTemplate x:Key="NavViewCategoryItemDataTemplate" x:DataType="vmcom:NavCategory">
+            <muxc:NavigationViewItem Style="{StaticResource NavViewItemStyle}"
+                                     AccessKey="{x:Bind AccessKey}"
+                                     AutomationProperties.AutomationId="{x:Bind AutomationId}"
+                                     AutomationProperties.Name="{x:Bind AutomationName}"
+                                     Content="{x:Bind Name}"
+                                     Tag="{x:Bind ViewMode}"
+                                     IsEnabled="{x:Bind IsEnabled, Mode=OneWay}">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon FontFamily="{StaticResource CalculatorFontFamily}" Glyph="{x:Bind Glyph}"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
+        </DataTemplate>
+        <DataTemplate x:Key="NavViewCategoryGroupItemDataTemplate" x:DataType="vmcom:NavCategoryGroup">
+            <muxc:NavigationViewItemHeader AutomationProperties.HeadingLevel="Level1"
+                                           AutomationProperties.Name="{x:Bind AutomationName}"
+                                           Content="{x:Bind Name}"/>
+        </DataTemplate>
+        <selectors:NavViewMenuItemTemplateSelector x:Key="NavViewMenuItemTemplateSelector"
+                                                   CategoryGroupItemTemplate="{StaticResource NavViewCategoryGroupItemDataTemplate}"
+                                                   CategoryItemTemplate="{StaticResource NavViewCategoryItemDataTemplate}"/>
 
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
@@ -66,16 +91,16 @@
                 they are not to be shown, only to have the command and shortcut assigned to them.
             -->
             <Button x:Name="CopyButton"
-                    x:Uid="copyButton"
+                    common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=copyButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                     Command="{x:Bind Model.CopyCommand}"/>
             <Button x:Name="PasteButton"
-                    x:Uid="pasteButton"
+                    common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=pasteButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                     Command="{x:Bind Model.PasteCommand}"/>
             <Button x:Name="CopyButtonAlternate"
-                    x:Uid="copyButtonAlternate"
+                    common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=copyButtonAlternate/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                     Command="{x:Bind Model.CopyCommand}"/>
             <Button x:Name="PasteButtonAlternate"
-                    x:Uid="pasteButtonAlternate"
+                    common:KeyboardShortcutManager.VirtualKeyShiftChord="{utils:ResourceVirtualKey Name=pasteButtonAlternate/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyShiftChord}"
                     Command="{x:Bind Model.PasteCommand}"/>
         </StackPanel>
 
@@ -86,8 +111,8 @@
                         IsAlwaysOnTopMode="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
 
         <muxc:NavigationView x:Name="NavView"
-                             x:Uid="NavView"
                              Grid.Row="1"
+                             AccessKey="{utils:ResourceString Name=NavView/AccessKey}"
                              CompactModeThresholdWidth="Infinity"
                              DataContext="{x:Bind Model}"
                              ExpandedModeThresholdWidth="Infinity"
@@ -96,10 +121,11 @@
                              IsSettingsVisible="True"
                              ItemInvoked="OnNavItemInvoked"
                              Loaded="OnNavLoaded"
-                             MenuItemsSource="{x:Bind CreateUIElementsForCategories(Model.Categories), Mode=OneWay}"
+                             MenuItemTemplateSelector="{StaticResource NavViewMenuItemTemplateSelector}"
+                             MenuItemsSource="{x:Bind NavViewCategoriesSource, Mode=OneWay}"
                              OpenPaneLength="{x:Bind NavigationViewOpenPaneLength(Model.IsAlwaysOnTop), Mode=OneWay}"
-                             PaneDisplayMode="LeftMinimal"
                              PaneClosed="OnNavPaneClosed"
+                             PaneDisplayMode="LeftMinimal"
                              PaneOpened="OnNavPaneOpened"
                              SelectionChanged="OnNavSelectionChanged"
                              TabIndex="1"
@@ -137,13 +163,14 @@
                                Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
 
                     <Button x:Name="NormalAlwaysOnTopButton"
-                            x:Uid="EnterAlwaysOnTopButton"
                             Grid.Column="2"
                             Style="{StaticResource SquareIconButtonStyle}"
                             AutomationProperties.AutomationId="NormalAlwaysOnTopButton"
+                            AutomationProperties.Name="{utils:ResourceString Name=EnterAlwaysOnTopButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                             Click="AlwaysOnTopButtonClick"
                             Content="&#xEE49;"
                             TabIndex="3"
+                            ToolTipService.ToolTip="{utils:ResourceString Name=EnterAlwaysOnTopButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                             Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}">
                         <Button.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Up" Modifiers="Menu"/>

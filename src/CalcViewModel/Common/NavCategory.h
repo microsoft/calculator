@@ -59,46 +59,21 @@ namespace CalculatorApp::ViewModel
     private
         struct NavCategoryInitializer
         {
-            constexpr NavCategoryInitializer(
-                ViewMode mode,
-                int id,
-                wchar_t const* name,
-                wchar_t const* nameKey,
-                wchar_t const* glyph,
-                CategoryGroupType group,
-                MyVirtualKey vKey,
-                wchar_t const* aKey,
-                bool categorySupportsNegative,
-                bool enabled)
-                : viewMode(mode)
-                , serializationId(id)
-                , friendlyName(name)
-                , nameResourceKey(nameKey)
-                , glyph(glyph)
-                , groupType(group)
-                , virtualKey(vKey)
-                , accessKey(aKey)
-                , supportsNegative(categorySupportsNegative)
-                , isEnabled(enabled)
-            {
-            }
-
-            const ViewMode viewMode;
-            const int serializationId;
-            const wchar_t* const friendlyName;
-            const wchar_t* const nameResourceKey;
-            const wchar_t* const glyph;
-            const CategoryGroupType groupType;
-            const MyVirtualKey virtualKey;
-            const wchar_t* const accessKey;
-            const bool supportsNegative;
-            bool isEnabled;
+            ViewMode viewMode;
+            int serializationId;
+            const wchar_t* friendlyName;
+            const wchar_t* nameResourceKey;
+            const wchar_t* glyph;
+            CategoryGroupType groupType;
+            MyVirtualKey virtualKey;
+            std::optional<std::wstring> accessKey;
+            bool supportsNegative;
         };
 
     private
         struct NavCategoryGroupInitializer
         {
-            constexpr NavCategoryGroupInitializer(CategoryGroupType t, wchar_t const* h, wchar_t const* n, wchar_t const* a)
+            NavCategoryGroupInitializer(CategoryGroupType t, wchar_t const* h, wchar_t const* n, wchar_t const* a)
                 : type(t)
                 , headerResourceKey(h)
                 , modeResourceKey(n)
@@ -112,36 +87,85 @@ namespace CalculatorApp::ViewModel
             const wchar_t* automationResourceKey;
         };
 
-        [Windows::UI::Xaml::Data::Bindable] public ref class NavCategory sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+        [Windows::UI::Xaml::Data::Bindable]
+        public ref class NavCategory sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
         {
+        private:
+            using ViewModeType = ::CalculatorApp::ViewModel::Common::ViewMode;
         public:
             OBSERVABLE_OBJECT();
             PROPERTY_R(Platform::String ^, Name);
             PROPERTY_R(Platform::String ^, AutomationName);
             PROPERTY_R(Platform::String ^, Glyph);
-            PROPERTY_R(ViewMode, Mode);
+            PROPERTY_R(ViewModeType, ViewMode);
             PROPERTY_R(Platform::String ^, AccessKey);
             PROPERTY_R(bool, SupportsNegative);
-            PROPERTY_R(bool, IsEnabled);
+            PROPERTY_RW(bool, IsEnabled);
 
             property Platform::String
-                ^ AutomationId { Platform::String ^ get() { return m_Mode.ToString(); } }
+                ^ AutomationId { Platform::String ^ get() { return m_ViewMode.ToString(); } }
 
+            static bool IsCalculatorViewMode(ViewModeType mode);
+            static bool IsGraphingCalculatorViewMode(ViewModeType mode);
+            static bool IsDateCalculatorViewMode(ViewModeType mode);
+            static bool IsConverterViewMode(ViewModeType mode);
+
+            internal : NavCategory(
+                           Platform::String ^ name,
+                           Platform::String ^ automationName,
+                           Platform::String ^ glyph,
+                           Platform::String ^ accessKey,
+                           Platform::String ^ mode,
+                           ViewModeType viewMode,
+                           bool supportsNegative,
+                           bool isEnabled)
+                : m_Name(name)
+                , m_AutomationName(automationName)
+                , m_Glyph(glyph)
+                , m_AccessKey(accessKey)
+                , m_modeString(mode)
+                , m_ViewMode(viewMode)
+                , m_SupportsNegative(supportsNegative)
+                , m_IsEnabled(isEnabled)
+            {
+            }
+
+        private:
+            static bool IsModeInCategoryGroup(ViewModeType mode, CategoryGroupType groupType);
+
+            Platform::String ^ m_modeString;
+        };
+
+        [Windows::UI::Xaml::Data::Bindable]
+        public ref class NavCategoryGroup sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
+        {
+        internal:
+            NavCategoryGroup(const NavCategoryGroupInitializer& groupInitializer);
+        public:
+            OBSERVABLE_OBJECT();
+            OBSERVABLE_PROPERTY_R(Platform::String ^, Name);
+            OBSERVABLE_PROPERTY_R(Platform::String ^, AutomationName);
+            OBSERVABLE_PROPERTY_R(CategoryGroupType, GroupType);
+            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IVector<NavCategory ^> ^, Categories);
+        };
+
+        public ref class NavCategoryStates sealed
+        {
+        public:
+            static void SetCurrentUser(Platform::String^ user);
+            static Windows::Foundation::Collections::IVector<NavCategoryGroup ^> ^ CreateMenuOptions();
+            static NavCategoryGroup ^ CreateCalculatorCategoryGroup();
+            static NavCategoryGroup ^ CreateConverterCategoryGroup();
+
+            static bool IsValidViewMode(ViewMode mode);
+            static bool IsViewModeEnabled(ViewMode mode);
 
             // For saving/restoring last mode used.
             static int Serialize(ViewMode mode);
             static ViewMode Deserialize(Platform::Object ^ obj);
+
+            // Query properties from states
             static ViewMode GetViewModeForFriendlyName(Platform::String ^ name);
-
-            static bool IsValidViewMode(ViewMode mode);
-            static bool IsViewModeEnabled(ViewMode mode);
-            static bool IsCalculatorViewMode(ViewMode mode);
-            static bool IsGraphingCalculatorViewMode(ViewMode mode);
-            static bool IsDateCalculatorViewMode(ViewMode mode);
-            static bool IsConverterViewMode(ViewMode mode);
-
-            static void InitializeCategoryManifest(Windows::System::User ^ user);
-
             static Platform::String ^ GetFriendlyName(ViewMode mode);
             static Platform::String ^ GetNameResourceKey(ViewMode mode);
             static CategoryGroupType GetGroupType(ViewMode mode);
@@ -152,51 +176,9 @@ namespace CalculatorApp::ViewModel
             static int GetIndexInGroup(ViewMode mode, CategoryGroupType type);
             static int GetPosition(ViewMode mode);
 
+            // Virtual key related
             static ViewMode GetViewModeForVirtualKey(MyVirtualKey virtualKey);
             static void GetCategoryAcceleratorKeys(Windows::Foundation::Collections::IVector<MyVirtualKey> ^ resutls);
-
-            internal : NavCategory(
-                           Platform::String ^ name,
-                           Platform::String ^ automationName,
-                           Platform::String ^ glyph,
-                           Platform::String ^ accessKey,
-                           Platform::String ^ mode,
-                           ViewMode viewMode,
-                           bool supportsNegative,
-                           bool isEnabled)
-                : m_Name(name)
-                , m_AutomationName(automationName)
-                , m_Glyph(glyph)
-                , m_AccessKey(accessKey)
-                , m_modeString(mode)
-                , m_Mode(viewMode)
-                , m_SupportsNegative(supportsNegative)
-                , m_IsEnabled(isEnabled)
-            {
-            }
-
-        private:
-            static bool IsModeInCategoryGroup(ViewMode mode, CategoryGroupType groupType);
-
-            Platform::String ^ m_modeString;
-        };
-
-        [Windows::UI::Xaml::Data::Bindable] public ref class NavCategoryGroup sealed : public Windows::UI::Xaml::Data::INotifyPropertyChanged
-        {
-        public:
-            OBSERVABLE_OBJECT();
-            OBSERVABLE_PROPERTY_R(Platform::String ^, Name);
-            OBSERVABLE_PROPERTY_R(Platform::String ^, AutomationName);
-            OBSERVABLE_PROPERTY_R(CategoryGroupType, GroupType);
-            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<NavCategory ^> ^, Categories);
-
-            static Windows::Foundation::Collections::IObservableVector<NavCategoryGroup ^> ^ CreateMenuOptions();
-
-            static NavCategoryGroup ^ CreateCalculatorCategory();
-            static NavCategoryGroup ^ CreateConverterCategory();
-
-        private:
-            NavCategoryGroup(const NavCategoryGroupInitializer& groupInitializer);
         };
     }
 }

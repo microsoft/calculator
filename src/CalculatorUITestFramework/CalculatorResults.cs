@@ -1,15 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using OpenQA.Selenium.Appium.Windows;
+
 using System;
-using OpenQA.Selenium.Interactions;
 
 namespace CalculatorUITestFramework
 {
     public class CalculatorResults
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         private WindowsElement CalculatorAlwaysOnTopResults => this.session.TryFindElementByAccessibilityId("CalculatorAlwaysOnTopResults");
         private WindowsElement CalculatorResult => this.session.TryFindElementByAccessibilityId("CalculatorResults");
         private WindowsElement CalculatorExpression => this.session.TryFindElementByAccessibilityId("CalculatorExpression");
@@ -56,7 +57,7 @@ namespace CalculatorUITestFramework
         /// <returns>The string shown in the UI.</returns>
         public void IsResultsExpressionClear()
         {
-            string source = WinAppDriver.Instance.CalculatorSession.PageSource;
+            string source = CalculatorDriver.Instance.CalculatorSession.PageSource;
             if (source.Contains("CalculatorExpression"))
             {
                 throw new Exception("The Calculator Expression is not clear");

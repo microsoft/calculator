@@ -152,6 +152,13 @@ UnitConverterViewModel::UnitConverterViewModel(const shared_ptr<UCM::IUnitConver
     PopulateData();
 }
 
+UnitConverterViewModel::UnitConverterViewModel()
+    : UnitConverterViewModel(std::make_shared<UCM::UnitConverter>(                                     //
+        std::make_shared<UnitConverterDataLoader>(ref new Windows::Globalization::GeographicRegion()), //
+        std::make_shared<CurrencyDataLoader>()))
+{
+}
+
 void UnitConverterViewModel::ResetView()
 {
     m_model->SendCommand(UCM::Command::Reset);
@@ -537,7 +544,7 @@ void UnitConverterViewModel::OnPasteCommand(Platform::Object ^ parameter)
     // Any converter ViewMode is fine here.
 
     auto that(this);
-    create_task(CopyPasteManager::GetStringToPaste(m_Mode, NavCategory::GetGroupType(m_Mode), NumberBase::Unknown, BitLength::BitLengthUnknown))
+    create_task(CopyPasteManager::GetStringToPaste(m_Mode, NavCategoryStates::GetGroupType(m_Mode), NumberBase::Unknown, BitLength::BitLengthUnknown))
         .then([that](String ^ pastedString) { that->OnPaste(pastedString); }, concurrency::task_continuation_context::use_current());
 }
 

@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 using Windows.Foundation;
 using Windows.UI.Xaml;
 
@@ -17,8 +15,8 @@ namespace CalculatorApp.Views.StateTriggers
 
         public FrameworkElement Source
         {
-            get { return (FrameworkElement)GetValue(SourceProperty); }
-            set { SetValue(SourceProperty, value); }
+            get => (FrameworkElement)GetValue(SourceProperty);
+            set => SetValue(SourceProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
@@ -31,8 +29,8 @@ namespace CalculatorApp.Views.StateTriggers
 
         public double MinHeight
         {
-            get { return (double)GetValue(MinHeightProperty); }
-            set { SetValue(MinHeightProperty, value); }
+            get => (double)GetValue(MinHeightProperty);
+            set => SetValue(MinHeightProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for MinHeight.  This enables animation, styling, binding, etc...
@@ -41,8 +39,8 @@ namespace CalculatorApp.Views.StateTriggers
 
         public double MinWidth
         {
-            get { return (double)GetValue(MinWidthProperty); }
-            set { SetValue(MinWidthProperty, value); }
+            get => (double)GetValue(MinWidthProperty);
+            set => SetValue(MinWidthProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for MinWidth.  This enables animation, styling, binding, etc...

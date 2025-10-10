@@ -3,12 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Windows10version1803="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract, 7)"
              xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
+             xmlns:common="using:CalculatorApp.Common"
              xmlns:controls="using:CalculatorApp.Controls"
              xmlns:converters="using:CalculatorApp.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:triggers="using:CalculatorApp.Views.StateTriggers"
+             xmlns:utils="using:CalculatorApp.Utils"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
@@ -335,7 +337,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Grid x:Name="GraphingOperators" UseLayoutRounding="False">
+        <Grid x:Name="GraphingOperators">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="OperatorPanelRow" Height="Auto"/>
                 <RowDefinition Height="1*"/>
@@ -354,16 +356,17 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <controls:OperatorPanelListView x:Uid="ScientificOperatorPanel"
-                                            Grid.ColumnSpan="5"
-                                            AutomationProperties.HeadingLevel="Level1">
+            <controls:OperatorPanelListView Grid.ColumnSpan="5"
+                                            AutomationProperties.HeadingLevel="Level1"
+                                            AutomationProperties.Name="{utils:ResourceString Name=ScientificOperatorPanel/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
 
                 <controls:OperatorPanelButton x:Name="TrigButton"
-                                              x:Uid="trigButton"
                                               Style="{StaticResource OperatorPanelButtonStyle}"
                                               AutomationProperties.AutomationId="trigButton"
+                                              AutomationProperties.Name="{utils:ResourceString Name=trigButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                               Glyph="&#xF892;"
-                                              IsTabStop="false">
+                                              IsTabStop="false"
+                                              Text="{utils:ResourceString Name=trigButton/Text}">
 
                     <controls:OperatorPanelButton.FlyoutMenu>
                         <Flyout x:Name="Trigflyout"
@@ -393,10 +396,10 @@
                                     causing the shortcut keys to be used when the control would normally be disabled.
                                 -->
                                 <ToggleButton x:Name="TrigShiftButton"
-                                              x:Uid="trigShiftButton"
                                               Style="{StaticResource CaptionToggleEmphasizedButtonStyle}"
                                               FontFamily="{StaticResource CalculatorFontFamily}"
                                               AutomationProperties.AutomationId="trigShiftButton"
+                                              AutomationProperties.Name="{utils:ResourceString Name=trigShiftButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                               Checked="TrigFlyoutShift_Toggle"
                                               Content="&#xF897;"
                                               IsTabStop="false"
@@ -404,10 +407,10 @@
                                               IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                 <ToggleButton x:Name="HypButton"
-                                              x:Uid="hypButton"
                                               Grid.Row="1"
                                               Style="{StaticResource CaptionToggleEmphasizedButtonStyle}"
                                               AutomationProperties.AutomationId="hypShiftButton"
+                                              AutomationProperties.Name="{utils:ResourceString Name=hypButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                               Checked="TrigFlyoutHyp_Toggle"
                                               Content="hyp"
                                               IsEnabledChanged="ShiftButton_IsEnabledChanged"
@@ -431,19 +434,21 @@
                                     </Grid.ColumnDefinitions>
 
                                     <controls:CalculatorButton x:Name="SinButton"
-                                                               x:Uid="sinButton"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=sinButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                                                AutomationProperties.AutomationId="sinButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=sinButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="Sin"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="sin"
                                                                IsTabStop="false"/>
 
                                     <controls:CalculatorButton x:Name="CosButton"
-                                                               x:Uid="cosButton"
                                                                Grid.Column="1"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=cosButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                                                AutomationProperties.AutomationId="cosButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=cosButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="Cos"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="cos"
@@ -451,10 +456,11 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="TanButton"
-                                                               x:Uid="tanButton"
                                                                Grid.Column="2"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=tanButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                                                AutomationProperties.AutomationId="tanButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=tanButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="Tan"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="tan"
@@ -462,10 +468,11 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="SecButton"
-                                                               x:Uid="secButton"
                                                                Grid.Row="1"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=secButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                                                AutomationProperties.AutomationId="secButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=secButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="Sec"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="sec"
@@ -473,11 +480,12 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="CscButton"
-                                                               x:Uid="cscButton"
                                                                Grid.Row="1"
                                                                Grid.Column="1"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=cscButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                                                AutomationProperties.AutomationId="cscButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=cscButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="Csc"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="csc"
@@ -485,11 +493,12 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="CotButton"
-                                                               x:Uid="cotButton"
                                                                Grid.Row="1"
                                                                Grid.Column="2"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=cotButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                                                AutomationProperties.AutomationId="cotButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=cotButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="Cot"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="cot"
@@ -513,9 +522,10 @@
                                     </Grid.ColumnDefinitions>
 
                                     <controls:CalculatorButton x:Name="InvsinButton"
-                                                               x:Uid="invsinButton"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyShiftChord="{utils:ResourceVirtualKey Name=invsinButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyShiftChord}"
                                                                AutomationProperties.AutomationId="invsinButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=invsinButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="InvSin"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="sin⁻¹"
@@ -523,10 +533,11 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="InvcosButton"
-                                                               x:Uid="invcosButton"
                                                                Grid.Column="1"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyShiftChord="{utils:ResourceVirtualKey Name=invcosButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyShiftChord}"
                                                                AutomationProperties.AutomationId="invcosButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=invcosButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="InvCos"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="cos⁻¹"
@@ -534,10 +545,11 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="InvtanButton"
-                                                               x:Uid="invtanButton"
                                                                Grid.Column="2"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyShiftChord="{utils:ResourceVirtualKey Name=invtanButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyShiftChord}"
                                                                AutomationProperties.AutomationId="invtanButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=invtanButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="InvTan"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="tan⁻¹"
@@ -545,10 +557,11 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="InvsecButton"
-                                                               x:Uid="invsecButton"
                                                                Grid.Row="1"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyShiftChord="{utils:ResourceVirtualKey Name=invsecButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyShiftChord}"
                                                                AutomationProperties.AutomationId="invsecButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=invsecButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="InvSec"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="sec⁻¹"
@@ -556,11 +569,12 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="InvcscButton"
-                                                               x:Uid="invcscButton"
                                                                Grid.Row="1"
                                                                Grid.Column="1"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyShiftChord="{utils:ResourceVirtualKey Name=invcscButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyShiftChord}"
                                                                AutomationProperties.AutomationId="invcscButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=invcscButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="InvCsc"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="csc⁻¹"
@@ -568,11 +582,12 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="InvcotButton"
-                                                               x:Uid="invcotButton"
                                                                Grid.Row="1"
                                                                Grid.Column="2"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyShiftChord="{utils:ResourceVirtualKey Name=invcotButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyShiftChord}"
                                                                AutomationProperties.AutomationId="invcotButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=invcotButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="InvCot"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="cot⁻¹"
@@ -596,9 +611,10 @@
                                     </Grid.ColumnDefinitions>
 
                                     <controls:CalculatorButton x:Name="SinhButton"
-                                                               x:Uid="sinhButton"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=sinhButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                                                AutomationProperties.AutomationId="sinhButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=sinhButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="Sinh"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="sinh"
@@ -606,10 +622,11 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="CoshButton"
-                                                               x:Uid="coshButton"
                                                                Grid.Column="1"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=coshButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                                                AutomationProperties.AutomationId="coshButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=coshButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="Cosh"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="cosh"
@@ -617,10 +634,11 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="TanhButton"
-                                                               x:Uid="tanhButton"
                                                                Grid.Column="2"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=tanhButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                                                AutomationProperties.AutomationId="tanhButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=tanhButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="Tanh"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="tanh"
@@ -628,10 +646,11 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="SechButton"
-                                                               x:Uid="sechButton"
                                                                Grid.Row="1"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=sechButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                                                AutomationProperties.AutomationId="sechButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=sechButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="Sech"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="sech"
@@ -639,11 +658,12 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="CschButton"
-                                                               x:Uid="cschButton"
                                                                Grid.Row="1"
                                                                Grid.Column="1"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=cschButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                                                AutomationProperties.AutomationId="cschButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=cschButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="Csch"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="csch"
@@ -651,11 +671,12 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="CothButton"
-                                                               x:Uid="cothButton"
                                                                Grid.Row="1"
                                                                Grid.Column="2"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=cothButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                                                AutomationProperties.AutomationId="cothButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=cothButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="Coth"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="coth"
@@ -678,9 +699,10 @@
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
                                     <controls:CalculatorButton x:Name="InvsinhButton"
-                                                               x:Uid="invsinhButton"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyControlShiftChord="{utils:ResourceVirtualKey Name=invsinhButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlShiftChord}"
                                                                AutomationProperties.AutomationId="invsinhButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=invsinhButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="InvSinh"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="sinh⁻¹"
@@ -688,10 +710,11 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="InvcoshButton"
-                                                               x:Uid="invcoshButton"
                                                                Grid.Column="1"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyControlShiftChord="{utils:ResourceVirtualKey Name=invcoshButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlShiftChord}"
                                                                AutomationProperties.AutomationId="invcoshButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=invcoshButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="InvCosh"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="cosh⁻¹"
@@ -699,10 +722,11 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="InvtanhButton"
-                                                               x:Uid="invtanhButton"
                                                                Grid.Column="2"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyControlShiftChord="{utils:ResourceVirtualKey Name=invtanhButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlShiftChord}"
                                                                AutomationProperties.AutomationId="invtanhButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=invtanhButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="InvTanh"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="tanh⁻¹"
@@ -710,10 +734,11 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="InvsechButton"
-                                                               x:Uid="invsechButton"
                                                                Grid.Row="1"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyControlShiftChord="{utils:ResourceVirtualKey Name=invsechButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlShiftChord}"
                                                                AutomationProperties.AutomationId="invsechButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=invsechButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="InvSech"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="sech⁻¹"
@@ -721,11 +746,12 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="InvcschButton"
-                                                               x:Uid="invcschButton"
                                                                Grid.Row="1"
                                                                Grid.Column="1"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyControlShiftChord="{utils:ResourceVirtualKey Name=invcschButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlShiftChord}"
                                                                AutomationProperties.AutomationId="invcschButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=invcschButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="InvCsch"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="csch⁻¹"
@@ -733,11 +759,12 @@
                                                                IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
                                     <controls:CalculatorButton x:Name="InvcothButton"
-                                                               x:Uid="invcothButton"
                                                                Grid.Row="1"
                                                                Grid.Column="2"
                                                                Style="{StaticResource OperatorButtonStyle}"
+                                                               common:KeyboardShortcutManager.VirtualKeyControlShiftChord="{utils:ResourceVirtualKey Name=invcothButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlShiftChord}"
                                                                AutomationProperties.AutomationId="invcothButton"
+                                                               AutomationProperties.Name="{utils:ResourceString Name=invcothButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                ButtonId="InvCoth"
                                                                Click="FlyoutButton_Clicked"
                                                                Content="coth⁻¹"
@@ -750,11 +777,12 @@
                 </controls:OperatorPanelButton>
 
                 <controls:OperatorPanelButton x:Name="InequalityButton"
-                                              x:Uid="inequalityButton"
                                               Style="{StaticResource OperatorPanelButtonStyle}"
                                               AutomationProperties.AutomationId="inequalityButton"
+                                              AutomationProperties.Name="{utils:ResourceString Name=inequalityButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                               Glyph="&#xF894;"
-                                              IsTabStop="false">
+                                              IsTabStop="false"
+                                              Text="{utils:ResourceString Name=inequalityButton/Text}">
                     <controls:OperatorPanelButton.FlyoutMenu>
 
                         <Flyout x:Name="InequalityFlyout"
@@ -779,9 +807,9 @@
                                 </Grid.ColumnDefinitions>
 
                                 <controls:CalculatorButton x:Name="LessThanFlyoutButton"
-                                                           x:Uid="lessThanFlyoutButton"
                                                            Style="{StaticResource SymbolOperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="lessThanFlyoutButton"
+                                                           AutomationProperties.Name="{utils:ResourceString Name=lessThanFlyoutButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="LessThan"
                                                            Click="FlyoutButton_Clicked"
                                                            Content="&#xF88A;"
@@ -789,10 +817,10 @@
                                                            IsEnabled="{x:Bind InequalityButton.IsEnabled, Mode=OneWay}"/>
 
                                 <controls:CalculatorButton x:Name="LessThanOrEqualFlyoutButton"
-                                                           x:Uid="lessThanOrEqualFlyoutButton"
                                                            Grid.Column="1"
                                                            Style="{StaticResource SymbolOperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="lessThanOrEqualFlyoutButton"
+                                                           AutomationProperties.Name="{utils:ResourceString Name=lessThanOrEqualFlyoutButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="LessThanOrEqualTo"
                                                            Click="FlyoutButton_Clicked"
                                                            Content="&#xF88B;"
@@ -800,10 +828,10 @@
                                                            IsEnabled="{x:Bind InequalityButton.IsEnabled, Mode=OneWay}"/>
 
                                 <controls:CalculatorButton x:Name="EqualsFlyoutButton"
-                                                           x:Uid="equalsFlyoutButton"
                                                            Grid.Column="2"
                                                            Style="{StaticResource SymbolOperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="equalsFlyoutButton"
+                                                           AutomationProperties.Name="{utils:ResourceString Name=equalsFlyoutButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Equals"
                                                            Click="FlyoutButton_Clicked"
                                                            Content="&#xE94E;"
@@ -811,10 +839,10 @@
                                                            IsEnabled="{x:Bind InequalityButton.IsEnabled, Mode=OneWay}"/>
 
                                 <controls:CalculatorButton x:Name="GreaterThanOrEqualFlyoutButton"
-                                                           x:Uid="greaterThanOrEqualFlyoutButton"
                                                            Grid.Column="3"
                                                            Style="{StaticResource SymbolOperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="greaterThanOrEqualFlyoutButton"
+                                                           AutomationProperties.Name="{utils:ResourceString Name=greaterThanOrEqualFlyoutButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="GreaterThanOrEqualTo"
                                                            Click="FlyoutButton_Clicked"
                                                            Content="&#xF88D;"
@@ -822,10 +850,10 @@
                                                            IsEnabled="{x:Bind InequalityButton.IsEnabled, Mode=OneWay}"/>
 
                                 <controls:CalculatorButton x:Name="GreaterThanFlyoutButton"
-                                                           x:Uid="greaterThanFlyoutButton"
                                                            Grid.Column="4"
                                                            Style="{StaticResource SymbolOperatorButtonStyle}"
                                                            AutomationProperties.AutomationId="greaterThanFlyoutButton"
+                                                           AutomationProperties.Name="{utils:ResourceString Name=greaterThanFlyoutButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="GreaterThan"
                                                            Click="FlyoutButton_Clicked"
                                                            Content="&#xF88C;"
@@ -838,11 +866,12 @@
                 </controls:OperatorPanelButton>
 
                 <controls:OperatorPanelButton x:Name="FuncButton"
-                                              x:Uid="funcButton"
                                               Style="{StaticResource OperatorPanelButtonStyle}"
                                               AutomationProperties.AutomationId="funcButton"
+                                              AutomationProperties.Name="{utils:ResourceString Name=funcButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                               Glyph="&#xF893;"
-                                              IsTabStop="false">
+                                              IsTabStop="false"
+                                              Text="{utils:ResourceString Name=funcButton/Text}">
 
                     <controls:OperatorPanelButton.FlyoutMenu>
                         <Flyout x:Name="FuncFlyout"
@@ -865,9 +894,10 @@
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
                                 <controls:CalculatorButton x:Name="AbsFlyoutButton"
-                                                           x:Uid="absButton"
                                                            Style="{StaticResource SymbolOperatorButtonStyle}"
+                                                           common:KeyboardShortcutManager.Character="{utils:ResourceString Name=absButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                                            AutomationProperties.AutomationId="absButton"
+                                                           AutomationProperties.Name="{utils:ResourceString Name=absButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Abs"
                                                            Click="FlyoutButton_Clicked"
                                                            Content="&#xF884;"
@@ -875,10 +905,11 @@
                                                            IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
 
                                 <controls:CalculatorButton x:Name="FloorButton"
-                                                           x:Uid="floorButton"
                                                            Grid.Column="1"
                                                            Style="{StaticResource SymbolOperatorButtonStyle}"
+                                                           common:KeyboardShortcutManager.Character="{utils:ResourceString Name=floorButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                                            AutomationProperties.AutomationId="floorButton"
+                                                           AutomationProperties.Name="{utils:ResourceString Name=floorButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Floor"
                                                            Click="FlyoutButton_Clicked"
                                                            Content="&#xF885;"
@@ -886,10 +917,11 @@
                                                            IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
 
                                 <controls:CalculatorButton x:Name="CeilButton"
-                                                           x:Uid="ceilButton"
                                                            Grid.Column="2"
                                                            Style="{StaticResource SymbolOperatorButtonStyle}"
+                                                           common:KeyboardShortcutManager.Character="{utils:ResourceString Name=ceilButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                                            AutomationProperties.AutomationId="ceilButton"
+                                                           AutomationProperties.Name="{utils:ResourceString Name=ceilButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Ceil"
                                                            Click="FlyoutButton_Clicked"
                                                            Content="&#xF886;"
@@ -902,12 +934,12 @@
             </controls:OperatorPanelListView>
 
             <ToggleButton x:Name="ShiftButton"
-                          x:Uid="shiftButton"
                           Grid.Row="1"
                           Style="{StaticResource CaptionToggleEmphasizedButtonStyle}"
                           FontFamily="{StaticResource CalculatorFontFamily}"
                           FontSize="20"
                           AutomationProperties.AutomationId="shiftButton"
+                          AutomationProperties.Name="{utils:ResourceString Name=shiftButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                           Checked="ShiftButton_Check"
                           Content="&#xF897;"
                           IsEnabledChanged="ShiftButton_IsEnabledChanged"
@@ -916,34 +948,36 @@
                           IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
 
             <controls:CalculatorButton x:Name="PiButton"
-                                       x:Uid="piButton"
                                        Grid.Row="1"
                                        Grid.Column="1"
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
                                        FontSize="14"
+                                       common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=piButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                        AutomationProperties.AutomationId="piButton"
+                                       AutomationProperties.Name="{utils:ResourceString Name=piButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Pi"
                                        Click="Button_Clicked"
                                        Content="&#xf7cf;"
                                        IsTabStop="false"/>
 
             <controls:CalculatorButton x:Name="EulerButton"
-                                       x:Uid="eulerButton"
                                        Grid.Row="1"
                                        Grid.Column="2"
                                        Style="{StaticResource OperatorButtonStyle}"
                                        FontSize="14"
+                                       common:KeyboardShortcutManager.VirtualKeyShiftChord="{utils:ResourceVirtualKey Name=eulerButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyShiftChord}"
                                        AutomationProperties.AutomationId="eulerButton"
+                                       AutomationProperties.Name="{utils:ResourceString Name=eulerButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Euler"
                                        Click="Button_Clicked"
                                        Content="e"
                                        IsTabStop="false"/>
             <Grid x:Name="DisplayControls"
-                  x:Uid="DisplayControls"
                   Grid.Row="1"
                   Grid.Column="2"
                   Grid.ColumnSpan="3"
-                  AutomationProperties.HeadingLevel="Level1">
+                  AutomationProperties.HeadingLevel="Level1"
+                  AutomationProperties.Name="{utils:ResourceString Name=DisplayControls/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -951,33 +985,35 @@
                 </Grid.ColumnDefinitions>
 
                 <controls:CalculatorButton x:Name="ClearButton"
-                                           x:Uid="clearButton"
                                            Grid.Column="1"
                                            Style="{StaticResource OperatorButtonStyle}"
                                            FontSize="16"
+                                           common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=clearButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                            AutomationProperties.AutomationId="clearButton"
+                                           AutomationProperties.Name="{utils:ResourceString Name=clearButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Clear"
                                            Click="ClearButton_Clicked"
                                            Content="C"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="BackSpaceButton"
-                                           x:Uid="backSpaceButton"
                                            Grid.Column="2"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
                                            FontFamily="{StaticResource CalculatorFontFamily}"
                                            FontSize="16"
+                                           common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=backSpaceButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                            AutomationProperties.AutomationId="backSpaceButton"
+                                           AutomationProperties.Name="{utils:ResourceString Name=backSpaceButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Backspace"
                                            Click="BackSpaceButton_Clicked"
                                            Content="&#xE94F;"
                                            IsTabStop="false"/>
             </Grid>
 
-            <Grid x:Uid="ScientificFunctions"
-                  Grid.Row="2"
+            <Grid Grid.Row="2"
                   Grid.RowSpan="6"
-                  AutomationProperties.HeadingLevel="Level1">
+                  AutomationProperties.HeadingLevel="Level1"
+                  AutomationProperties.Name="{utils:ResourceString Name=ScientificFunctions/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
                 <!-- Scientific Row 1 -->
                 <Grid x:Name="Row1">
                     <Grid.RowDefinitions>
@@ -990,59 +1026,67 @@
                     </Grid.RowDefinitions>
 
                     <controls:CalculatorButton x:Name="XPower2Button"
-                                               x:Uid="xpower2Button"
                                                Style="{StaticResource SymbolOperatorButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=xpower2Button/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                                AutomationProperties.AutomationId="xpower2Button"
+                                               AutomationProperties.Name="{utils:ResourceString Name=xpower2Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="XPower2"
                                                Click="Button_Clicked"
                                                Content="&#xf7c8;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="SquareRootButton"
-                                               x:Uid="squareRootButton"
                                                Grid.Row="1"
                                                Style="{StaticResource SymbolOperatorButtonStyle}"
+                                               common:KeyboardShortcutManager.Character="{utils:ResourceString Name=squareRootButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                                AutomationProperties.AutomationId="squareRootButton"
+                                               AutomationProperties.Name="{utils:ResourceString Name=squareRootButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="Sqrt"
                                                Click="Button_Clicked"
                                                Content="&#xF899;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="PowerButton"
-                                               x:Uid="powerButton"
                                                Grid.Row="2"
                                                Style="{StaticResource SymbolOperatorButtonStyle}"
+                                               common:KeyboardShortcutManager.Character="{utils:ResourceString Name=powerButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
+                                               common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=powerButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
+                                               AuditoryFeedback="{utils:ResourceString Name=powerButton/[using:CalculatorApp.Controls]CalculatorButton/AuditoryFeedback}"
                                                AutomationProperties.AutomationId="powerButton"
+                                               AutomationProperties.Name="{utils:ResourceString Name=powerButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="XPowerY"
                                                Click="Button_Clicked"
                                                Content="&#xf7ca;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="PowerOf10Button"
-                                               x:Uid="powerOf10Button"
                                                Grid.Row="3"
                                                Style="{StaticResource SymbolOperatorButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=powerOf10Button/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                                AutomationProperties.AutomationId="powerOf10Button"
+                                               AutomationProperties.Name="{utils:ResourceString Name=powerOf10Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="TenPowerX"
                                                Click="Button_Clicked"
                                                Content="&#xF7CC;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="LogBase10Button"
-                                               x:Uid="logBase10Button"
                                                Grid.Row="4"
                                                Style="{StaticResource OperatorButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=logBase10Button/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                                AutomationProperties.AutomationId="logBase10Button"
+                                               AutomationProperties.Name="{utils:ResourceString Name=logBase10Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="LogBase10"
                                                Click="Button_Clicked"
                                                Content="log"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="LogBaseEButton"
-                                               x:Uid="logBaseEButton"
                                                Grid.Row="5"
                                                Style="{StaticResource OperatorButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=logBaseEButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                                AutomationProperties.AutomationId="logBaseEButton"
+                                               AutomationProperties.Name="{utils:ResourceString Name=logBaseEButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="LogBaseE"
                                                Click="Button_Clicked"
                                                Content="ln"
@@ -1061,59 +1105,66 @@
                     </Grid.RowDefinitions>
 
                     <controls:CalculatorButton x:Name="XPower3Button"
-                                               x:Uid="xpower3Button"
                                                Style="{StaticResource EmphasizedCalcButtonStyle}"
+                                               common:KeyboardShortcutManager.Character="{utils:ResourceString Name=xpower3Button/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                                AutomationProperties.AutomationId="xpower3Button"
+                                               AutomationProperties.Name="{utils:ResourceString Name=xpower3Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="Cube"
                                                Click="ShiftButton_Uncheck"
                                                Content="&#xf7cb;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="CubeRootButton"
-                                               x:Uid="cubeRootButton"
                                                Grid.Row="1"
                                                Style="{StaticResource EmphasizedCalcButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=cubeRootButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                                AutomationProperties.AutomationId="cubeRootButton"
+                                               AutomationProperties.Name="{utils:ResourceString Name=cubeRootButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="CubeRoot"
                                                Click="ShiftButton_Uncheck"
                                                Content="&#xF881;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="YSquareRootButton"
-                                               x:Uid="ySquareRootButton"
                                                Grid.Row="2"
                                                Style="{StaticResource EmphasizedCalcButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=ySquareRootButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
+                                               AuditoryFeedback="{utils:ResourceString Name=ySquareRootButton/[using:CalculatorApp.Controls]CalculatorButton/AuditoryFeedback}"
                                                AutomationProperties.AutomationId="ySquareRootButton"
+                                               AutomationProperties.Name="{utils:ResourceString Name=ySquareRootButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="YRootX"
                                                Click="ShiftButton_Uncheck"
                                                Content="&#xf7cd;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="TwoPowerXButton"
-                                               x:Uid="twoPowerXButton"
                                                Grid.Row="3"
                                                Style="{StaticResource EmphasizedCalcButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=twoPowerXButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                                AutomationProperties.AutomationId="twoPowerXButton"
+                                               AutomationProperties.Name="{utils:ResourceString Name=twoPowerXButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="TwoPowerX"
                                                Click="ShiftButton_Uncheck"
                                                Content="&#xF882;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="LogBaseY"
-                                               x:Uid="logBaseY"
                                                Grid.Row="4"
                                                Style="{StaticResource EmphasizedCalcButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKeyShiftChord="{utils:ResourceVirtualKey Name=logBaseY/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyShiftChord}"
                                                AutomationProperties.AutomationId="logBaseY"
+                                               AutomationProperties.Name="{utils:ResourceString Name=logBaseY/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="LogBaseY"
                                                Click="ShiftButton_Uncheck"
                                                Content="&#xF883;"
                                                IsTabStop="false"/>
 
                     <controls:CalculatorButton x:Name="PowerOfEButton"
-                                               x:Uid="powerOfEButton"
                                                Grid.Row="5"
                                                Style="{StaticResource EmphasizedCalcButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=powerOfEButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                                AutomationProperties.AutomationId="powerOfEButton"
+                                               AutomationProperties.Name="{utils:ResourceString Name=powerOfEButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                ButtonId="EPowerX"
                                                Click="ShiftButton_Uncheck"
                                                Content="&#xf7ce;"
@@ -1133,41 +1184,45 @@
                 </Grid.ColumnDefinitions>
 
                 <controls:CalculatorButton x:Name="InvertButton"
-                                           x:Uid="invertButton"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
+                                           common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=invertButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                            AutomationProperties.AutomationId="invertButton"
+                                           AutomationProperties.Name="{utils:ResourceString Name=invertButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Invert"
                                            Click="Button_Clicked"
                                            Content="&#xf7c9;"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="AbsButton"
-                                           x:Uid="absButton"
                                            Grid.Column="1"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
+                                           common:KeyboardShortcutManager.Character="{utils:ResourceString Name=absButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                            AutomationProperties.AutomationId="absButton"
+                                           AutomationProperties.Name="{utils:ResourceString Name=absButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Abs"
                                            Click="Button_Clicked"
                                            Content="&#xF884;"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="XButton"
-                                           x:Uid="xButton"
                                            Grid.Column="2"
                                            Style="{StaticResource OperatorButtonStyle}"
                                            FontSize="16"
+                                           common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=xButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                            AutomationProperties.AutomationId="xButton"
+                                           AutomationProperties.Name="{utils:ResourceString Name=xButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="X"
                                            Click="Button_Clicked"
                                            Content="𝑥"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="YButton"
-                                           x:Uid="yButton"
                                            Grid.Column="3"
                                            Style="{StaticResource OperatorButtonStyle}"
                                            FontSize="16"
+                                           common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=yButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                            AutomationProperties.AutomationId="yButton"
+                                           AutomationProperties.Name="{utils:ResourceString Name=yButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Y"
                                            Click="Button_Clicked"
                                            Content="𝑦"
@@ -1175,46 +1230,50 @@
             </Grid>
 
             <controls:CalculatorButton x:Name="OpenParenthesisButton"
-                                       x:Uid="openParenthesisButton"
                                        Grid.Row="3"
                                        Grid.Column="1"
                                        Style="{StaticResource ParenthesisCalcButtonStyle}"
                                        FontSize="19"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=openParenthesisButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                        AutomationProperties.AutomationId="openParenthesisButton"
+                                       AutomationProperties.Name="{utils:ResourceString Name=openParenthesisButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="OpenParenthesis"
                                        Click="Button_Clicked"
                                        Content="("
                                        IsTabStop="false"/>
 
             <controls:CalculatorButton x:Name="CloseParenthesisButton"
-                                       x:Uid="closeParenthesisButton"
                                        Grid.Row="3"
                                        Grid.Column="2"
                                        Style="{StaticResource OperatorButtonStyle}"
                                        FontSize="19"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=closeParenthesisButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                        AutomationProperties.AutomationId="closeParenthesisButton"
+                                       AutomationProperties.Name="{utils:ResourceString Name=closeParenthesisButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="CloseParenthesis"
                                        Click="Button_Clicked"
                                        Content=")"
                                        IsTabStop="false"/>
 
             <controls:CalculatorButton x:Name="EqualButton"
-                                       x:Uid="equalButton"
                                        Grid.Row="3"
                                        Grid.Column="3"
                                        Style="{StaticResource SymbolOperatorButtonStyle}"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=equalButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
+                                       common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=equalButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                        AutomationProperties.AutomationId="equalButton"
+                                       AutomationProperties.Name="{utils:ResourceString Name=equalButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Equals"
                                        Click="Button_Clicked"
                                        Content="&#xE94E;"
                                        IsTabStop="false"/>
 
             <Grid x:Name="StandardOperators"
-                  x:Uid="StandardOperators"
                   Grid.Row="3"
                   Grid.RowSpan="5"
                   Grid.Column="4"
-                  AutomationProperties.HeadingLevel="Level1">
+                  AutomationProperties.HeadingLevel="Level1"
+                  AutomationProperties.Name="{utils:ResourceString Name=StandardOperators/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -1223,165 +1282,185 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <controls:CalculatorButton x:Name="DivideButton"
-                                           x:Uid="divideButton"
                                            Grid.Row="0"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
+                                           common:KeyboardShortcutManager.Character="{utils:ResourceString Name=divideButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
+                                           AuditoryFeedback="{utils:ResourceString Name=divideButton/[using:CalculatorApp.Controls]CalculatorButton/AuditoryFeedback}"
                                            AutomationProperties.AutomationId="divideButton"
+                                           AutomationProperties.Name="{utils:ResourceString Name=divideButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Divide"
                                            Click="Button_Clicked"
                                            Content="&#xE94A;"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="MultiplyButton"
-                                           x:Uid="multiplyButton"
                                            Grid.Row="1"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
+                                           common:KeyboardShortcutManager.Character="{utils:ResourceString Name=multiplyButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
+                                           AuditoryFeedback="{utils:ResourceString Name=multiplyButton/[using:CalculatorApp.Controls]CalculatorButton/AuditoryFeedback}"
                                            AutomationProperties.AutomationId="multiplyButton"
+                                           AutomationProperties.Name="{utils:ResourceString Name=multiplyButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Multiply"
                                            Click="Button_Clicked"
                                            Content="&#xE947;"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="MinusButton"
-                                           x:Uid="minusButton"
                                            Grid.Row="2"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
+                                           common:KeyboardShortcutManager.Character="{utils:ResourceString Name=minusButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
+                                           AuditoryFeedback="{utils:ResourceString Name=minusButton/[using:CalculatorApp.Controls]CalculatorButton/AuditoryFeedback}"
                                            AutomationProperties.AutomationId="minusButton"
+                                           AutomationProperties.Name="{utils:ResourceString Name=minusButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Subtract"
                                            Click="Button_Clicked"
                                            Content="&#xE949;"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="PlusButton"
-                                           x:Uid="plusButton"
                                            Grid.Row="3"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
+                                           common:KeyboardShortcutManager.Character="{utils:ResourceString Name=plusButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
+                                           AuditoryFeedback="{utils:ResourceString Name=plusButton/[using:CalculatorApp.Controls]CalculatorButton/AuditoryFeedback}"
                                            AutomationProperties.AutomationId="plusButton"
+                                           AutomationProperties.Name="{utils:ResourceString Name=plusButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Add"
                                            Click="Button_Clicked"
                                            Content="&#xE948;"
                                            IsTabStop="false"/>
 
                 <controls:CalculatorButton x:Name="SubmitButton"
-                                           x:Uid="submitButton"
                                            Grid.Row="4"
                                            Style="{StaticResource AccentEmphasizedCalcButtonStyle}"
                                            FontFamily="{StaticResource SymbolThemeFontFamily}"
                                            AutomationProperties.AutomationId="submitButton"
+                                           AutomationProperties.Name="{utils:ResourceString Name=submitButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            Click="SubmitButton_Clicked"
                                            Content="&#xE751;"
                                            IsTabStop="false"/>
             </Grid>
 
             <controls:CalculatorButton x:Name="NegateButton"
-                                       x:Uid="negateButton"
                                        Grid.Row="7"
                                        Grid.Column="1"
                                        Style="{StaticResource SymbolOperatorKeypadButtonStyle}"
                                        FontSize="16"
                                        FontWeight="Normal"
+                                       common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=negateButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                        AutomationProperties.AutomationId="negateButton"
+                                       AutomationProperties.Name="{utils:ResourceString Name=negateButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Negate"
                                        Click="Button_Clicked"
                                        Content="&#xE3B5;"
                                        IsTabStop="false"/>
 
             <controls:CalculatorButton x:Name="Num0Button"
-                                       x:Uid="num0Button"
                                        Grid.Row="7"
                                        Grid.Column="2"
                                        Style="{StaticResource NumericButtonStyle24}"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=num0Button/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                        AutomationProperties.AutomationId="num0Button"
+                                       AutomationProperties.Name="{utils:ResourceString Name=num0Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Zero"
                                        Click="Button_Clicked"
                                        IsTabStop="false"/>
             <controls:CalculatorButton x:Name="Num1Button"
-                                       x:Uid="num1Button"
                                        Grid.Row="6"
                                        Grid.Column="1"
                                        Style="{StaticResource NumericButtonStyle24}"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=num1Button/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                        AutomationProperties.AutomationId="num1Button"
+                                       AutomationProperties.Name="{utils:ResourceString Name=num1Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="One"
                                        Click="Button_Clicked"
                                        IsTabStop="false"/>
             <controls:CalculatorButton x:Name="Num2Button"
-                                       x:Uid="num2Button"
                                        Grid.Row="6"
                                        Grid.Column="2"
                                        Style="{StaticResource NumericButtonStyle24}"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=num2Button/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                        AutomationProperties.AutomationId="num2Button"
+                                       AutomationProperties.Name="{utils:ResourceString Name=num2Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Two"
                                        Click="Button_Clicked"
                                        IsTabStop="false"/>
             <controls:CalculatorButton x:Name="Num3Button"
-                                       x:Uid="num3Button"
                                        Grid.Row="6"
                                        Grid.Column="3"
                                        Style="{StaticResource NumericButtonStyle24}"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=num3Button/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                        AutomationProperties.AutomationId="num3Button"
+                                       AutomationProperties.Name="{utils:ResourceString Name=num3Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Three"
                                        Click="Button_Clicked"
                                        IsTabStop="false"/>
             <controls:CalculatorButton x:Name="Num4Button"
-                                       x:Uid="num4Button"
                                        Grid.Row="5"
                                        Grid.Column="1"
                                        Style="{StaticResource NumericButtonStyle24}"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=num4Button/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                        AutomationProperties.AutomationId="num4Button"
+                                       AutomationProperties.Name="{utils:ResourceString Name=num4Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Four"
                                        Click="Button_Clicked"
                                        IsTabStop="false"/>
             <controls:CalculatorButton x:Name="Num5Button"
-                                       x:Uid="num5Button"
                                        Grid.Row="5"
                                        Grid.Column="2"
                                        Style="{StaticResource NumericButtonStyle24}"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=num5Button/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                        AutomationProperties.AutomationId="num5Button"
+                                       AutomationProperties.Name="{utils:ResourceString Name=num5Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Five"
                                        Click="Button_Clicked"
                                        IsTabStop="false"/>
             <controls:CalculatorButton x:Name="Num6Button"
-                                       x:Uid="num6Button"
                                        Grid.Row="5"
                                        Grid.Column="3"
                                        Style="{StaticResource NumericButtonStyle24}"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=num6Button/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                        AutomationProperties.AutomationId="num6Button"
+                                       AutomationProperties.Name="{utils:ResourceString Name=num6Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Six"
                                        Click="Button_Clicked"
                                        IsTabStop="false"/>
             <controls:CalculatorButton x:Name="Num7Button"
-                                       x:Uid="num7Button"
                                        Grid.Row="4"
                                        Grid.Column="1"
                                        Style="{StaticResource NumericButtonStyle24}"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=num7Button/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                        AutomationProperties.AutomationId="num7Button"
+                                       AutomationProperties.Name="{utils:ResourceString Name=num7Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Seven"
                                        Click="Button_Clicked"
                                        IsTabStop="false"/>
             <controls:CalculatorButton x:Name="Num8Button"
-                                       x:Uid="num8Button"
                                        Grid.Row="4"
                                        Grid.Column="2"
                                        Style="{StaticResource NumericButtonStyle24}"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=num8Button/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                        AutomationProperties.AutomationId="num8Button"
+                                       AutomationProperties.Name="{utils:ResourceString Name=num8Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Eight"
                                        Click="Button_Clicked"
                                        IsTabStop="false"/>
             <controls:CalculatorButton x:Name="Num9Button"
-                                       x:Uid="num9Button"
                                        Grid.Row="4"
                                        Grid.Column="3"
                                        Style="{StaticResource NumericButtonStyle24}"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=num9Button/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
                                        AutomationProperties.AutomationId="num9Button"
+                                       AutomationProperties.Name="{utils:ResourceString Name=num9Button/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Nine"
                                        Click="Button_Clicked"
                                        IsTabStop="false"/>
             <controls:CalculatorButton x:Name="DecimalSeparatorButton"
-                                       x:Uid="decimalSeparatorButton"
                                        Grid.Row="7"
                                        Grid.Column="3"
                                        Style="{StaticResource NumericButtonStyle24}"
+                                       common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=decimalSeparatorButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
                                        AutomationProperties.AutomationId="decimalSeparatorButton"
+                                       AutomationProperties.Name="{utils:ResourceString Name=decimalSeparatorButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Decimal"
                                        Click="Button_Clicked"
                                        IsTabStop="false"/>

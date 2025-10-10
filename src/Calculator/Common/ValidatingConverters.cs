@@ -44,16 +44,12 @@ namespace CalculatorApp
             {
                 // The value to be valid has to be a boxed int32 value
                 // extract that value and ensure it is valid, ie >= 0
-                if (value != null)
+                if (value is Windows.Foundation.IPropertyValue box && box.Type == Windows.Foundation.PropertyType.Int32)
                 {
-                    var box = value as Windows.Foundation.IPropertyValue;
-                    if (box != null && box.Type == Windows.Foundation.PropertyType.Int32)
+                    int index = box.GetInt32();
+                    if (index >= 0)
                     {
-                        int index = box.GetInt32();
-                        if (index >= 0)
-                        {
-                            return value;
-                        }
+                        return value;
                     }
                 }
                 // The value is not valid therefore stop the binding right here

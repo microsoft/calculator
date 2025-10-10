@@ -24,7 +24,6 @@
     <ClCompile Include="..\CalcViewModel\Common\Automation\NarratorNotifier.cpp">
       <Filter>Common\Automation</Filter>
     </ClCompile>
-    <ClCompile Include="..\CalcViewModel\ApplicationViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\DateCalculatorViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\HistoryItemViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\HistoryViewModel.cpp" />
@@ -71,9 +70,6 @@
     <ClCompile Include="..\CalcViewModel\DataLoaders\CurrencyDataLoader.cpp">
       <Filter>DataLoaders</Filter>
     </ClCompile>
-    <ClCompile Include="..\CalcViewModel\DataLoaders\CurrencyHttpClient.cpp">
-      <Filter>DataLoaders</Filter>
-    </ClCompile>
     <ClCompile Include="..\CalcViewModel\DataLoaders\UnitConverterDataLoader.cpp">
       <Filter>DataLoaders</Filter>
     </ClCompile>
@@ -87,6 +83,8 @@
       <Filter>GraphingCalculator</Filter>
     </ClCompile>
     <ClCompile Include="..\CalcViewModel\Common\RadixType.cpp" />
+    <ClCompile Include="..\CalcViewModel\Snapshots.cpp" />
+    <ClCompile Include="DataLoaders\CurrencyHttpClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CalcViewModel\Common\AppResourceProvider.h">
@@ -98,7 +96,6 @@
     <ClInclude Include="..\CalcViewModel\Common\Automation\NarratorNotifier.h">
       <Filter>Common\Automation</Filter>
     </ClInclude>
-    <ClInclude Include="..\CalcViewModel\ApplicationViewModel.h" />
     <ClInclude Include="..\CalcViewModel\DateCalculatorViewModel.h" />
     <ClInclude Include="..\CalcViewModel\HistoryItemViewModel.h" />
     <ClInclude Include="..\CalcViewModel\HistoryViewModel.h" />
@@ -173,15 +170,6 @@
     <ClInclude Include="..\CalcViewModel\DataLoaders\CurrencyDataLoader.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
-    <ClInclude Include="..\CalcViewModel\DataLoaders\CurrencyHttpClient.h">
-      <Filter>DataLoaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CalcViewModel\DataLoaders\DataLoaderMockConstants.h">
-      <Filter>DataLoaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CalcViewModel\DataLoaders\ICurrencyHttpClient.h">
-      <Filter>DataLoaders</Filter>
-    </ClInclude>
     <ClInclude Include="..\CalcViewModel\DataLoaders\UnitConverterDataConstants.h">
       <Filter>DataLoaders</Filter>
     </ClInclude>
@@ -204,6 +192,7 @@
     <ClInclude Include="..\CalcViewModel\Common\AlwaysSelectedCollectionView.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\CalcViewModel\Snapshots.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\CalcViewModel\DataLoaders\DefaultFromToCurrency.json">

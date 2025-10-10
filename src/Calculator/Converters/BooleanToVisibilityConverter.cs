@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+
 using Windows.UI.Xaml;
 
 namespace CalculatorApp
@@ -21,15 +22,13 @@ namespace CalculatorApp
 
             public object Convert(object value, Type targetType, object parameter, string language)
             {
-                var boxedBool = (value as bool?);
-                var boolValue = (boxedBool != null && boxedBool.Value);
+                var boolValue = (value is bool boxedBool && boxedBool);
                 return BooleanToVisibilityConverter.Convert(boolValue);
             }
 
             public object ConvertBack(object value, Type targetType, object parameter, string language)
             {
-                var visibility = (value as Visibility?);
-                return (visibility != null && visibility.Value == Visibility.Visible);
+                return (value is Visibility visibility && visibility == Visibility.Visible);
             }
         }
 
@@ -41,15 +40,13 @@ namespace CalculatorApp
         {
             public object Convert(object value, Type targetType, object parameter, string language)
             {
-                var boxedBool = (value as bool?);
-                var boolValue = (boxedBool != null && boxedBool.Value);
+                var boolValue = (value is bool boxedBool && boxedBool);
                 return BooleanToVisibilityConverter.Convert(!boolValue);
             }
 
             public object ConvertBack(object value, Type targetType, object parameter, string language)
             {
-                var visibility = (value as Visibility?);
-                return (visibility != null && visibility.Value != Visibility.Visible);
+                return (value is Visibility visibility && visibility != Visibility.Visible);
             }
         }
     }

@@ -53,7 +53,7 @@ bool UnitConverterDataLoader::SupportsCategory(const UCM::Category& target)
         GetCategories(supportedCategories);
     }
 
-    static int currencyId = NavCategory::Serialize(ViewMode::Currency);
+    static int currencyId = NavCategoryStates::Serialize(ViewMode::Currency);
     auto itr = find_if(supportedCategories->begin(), supportedCategories->end(), [&](const UCM::Category& category) {
         return currencyId != category.id && target.id == category.id;
     });
@@ -79,7 +79,7 @@ void UnitConverterDataLoader::LoadData()
     this->m_ratioMap->clear();
     for (UCM::Category objectCategory : *m_categoryList)
     {
-        ViewMode categoryViewMode = NavCategory::Deserialize(objectCategory.id);
+        ViewMode categoryViewMode = NavCategoryStates::Deserialize(objectCategory.id);
         assert(NavCategory::IsConverterViewMode(categoryViewMode));
         if (categoryViewMode == ViewMode::Currency)
         {
@@ -148,11 +148,11 @@ void UnitConverterDataLoader::LoadData()
 void UnitConverterDataLoader::GetCategories(_In_ shared_ptr<vector<UCM::Category>> categoriesList)
 {
     categoriesList->clear();
-    auto converterCategory = NavCategoryGroup::CreateConverterCategory();
+    auto converterCategory = NavCategoryStates::CreateConverterCategoryGroup();
     for (auto const& category : converterCategory->Categories)
     {
         /* Id, CategoryName, SupportsNegative */
-        categoriesList->emplace_back(NavCategory::Serialize(category->Mode), category->Name->Data(), category->SupportsNegative);
+        categoriesList->emplace_back(NavCategoryStates::Serialize(category->ViewMode), category->Name->Data(), category->SupportsNegative);
     }
 }
 
@@ -175,9 +175,9 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
 
     bool useWattInsteadOfKilowatt = m_currentRegionCode == "GB";
 
-    // Use Pyeong, a Korean floorspace unit.
-    // https://en.wikipedia.org/wiki/Korean_units_of_measurement#Area
-    bool usePyeong = m_currentRegionCode == L"KP" || m_currentRegionCode == L"KR";
+    // Use 坪(Tsubo), or Pyeong in Korean, a Japanese unit of floorspace.
+    // https://en.wikipedia.org/wiki/Japanese_units_of_measurement#Area
+    bool usePyeong = m_currentRegionCode == L"JP" || m_currentRegionCode == L"TW" || m_currentRegionCode == L"KP" || m_currentRegionCode == L"KR";
 
     vector<OrderedUnit> areaUnits;
     areaUnits.push_back(
@@ -250,81 +250,83 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
     dataUnits.push_back(
         OrderedUnit{ UnitConverterUnits::Data_Bit, GetLocalizedStringName(L"UnitName_Bit"), GetLocalizedStringName(L"UnitAbbreviation_Bit"), 1 });
     dataUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Data_Byte, GetLocalizedStringName(L"UnitName_Byte"), GetLocalizedStringName(L"UnitAbbreviation_Byte"), 2 });
+        OrderedUnit{ UnitConverterUnits::Data_Byte, GetLocalizedStringName(L"UnitName_Byte"), GetLocalizedStringName(L"UnitAbbreviation_Byte"), 3 });
     dataUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Data_Exabits, GetLocalizedStringName(L"UnitName_Exabits"), GetLocalizedStringName(L"UnitAbbreviation_Exabits"), 23 });
+        OrderedUnit{ UnitConverterUnits::Data_Exabits, GetLocalizedStringName(L"UnitName_Exabits"), GetLocalizedStringName(L"UnitAbbreviation_Exabits"), 24 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Exabytes, GetLocalizedStringName(L"UnitName_Exabytes"), GetLocalizedStringName(L"UnitAbbreviation_Exabytes"), 25 });
+        UnitConverterUnits::Data_Exabytes, GetLocalizedStringName(L"UnitName_Exabytes"), GetLocalizedStringName(L"UnitAbbreviation_Exabytes"), 26 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Exbibits, GetLocalizedStringName(L"UnitName_Exbibits"), GetLocalizedStringName(L"UnitAbbreviation_Exbibits"), 24 });
+        UnitConverterUnits::Data_Exbibits, GetLocalizedStringName(L"UnitName_Exbibits"), GetLocalizedStringName(L"UnitAbbreviation_Exbibits"), 25 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Exbibytes, GetLocalizedStringName(L"UnitName_Exbibytes"), GetLocalizedStringName(L"UnitAbbreviation_Exbibytes"), 26 });
+        UnitConverterUnits::Data_Exbibytes, GetLocalizedStringName(L"UnitName_Exbibytes"), GetLocalizedStringName(L"UnitAbbreviation_Exbibytes"), 27 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Gibibits, GetLocalizedStringName(L"UnitName_Gibibits"), GetLocalizedStringName(L"UnitAbbreviation_Gibibits"), 12 });
+        UnitConverterUnits::Data_Gibibits, GetLocalizedStringName(L"UnitName_Gibibits"), GetLocalizedStringName(L"UnitAbbreviation_Gibibits"), 13 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Gibibytes, GetLocalizedStringName(L"UnitName_Gibibytes"), GetLocalizedStringName(L"UnitAbbreviation_Gibibytes"), 14 });
+        UnitConverterUnits::Data_Gibibytes, GetLocalizedStringName(L"UnitName_Gibibytes"), GetLocalizedStringName(L"UnitAbbreviation_Gibibytes"), 15 });
     dataUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Data_Gigabit, GetLocalizedStringName(L"UnitName_Gigabit"), GetLocalizedStringName(L"UnitAbbreviation_Gigabit"), 11 });
+        OrderedUnit{ UnitConverterUnits::Data_Gigabit, GetLocalizedStringName(L"UnitName_Gigabit"), GetLocalizedStringName(L"UnitAbbreviation_Gigabit"), 12 });
     dataUnits.push_back(OrderedUnit{ UnitConverterUnits::Data_Gigabyte,
                                      GetLocalizedStringName(L"UnitName_Gigabyte"),
                                      GetLocalizedStringName(L"UnitAbbreviation_Gigabyte"),
-                                     13,
+                                     14,
                                      true,
                                      false,
                                      false });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Kibibits, GetLocalizedStringName(L"UnitName_Kibibits"), GetLocalizedStringName(L"UnitAbbreviation_Kibibits"), 4 });
+        UnitConverterUnits::Data_Kibibits, GetLocalizedStringName(L"UnitName_Kibibits"), GetLocalizedStringName(L"UnitAbbreviation_Kibibits"), 5 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Kibibytes, GetLocalizedStringName(L"UnitName_Kibibytes"), GetLocalizedStringName(L"UnitAbbreviation_Kibibytes"), 6 });
+        UnitConverterUnits::Data_Kibibytes, GetLocalizedStringName(L"UnitName_Kibibytes"), GetLocalizedStringName(L"UnitAbbreviation_Kibibytes"), 7 });
     dataUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Data_Kilobit, GetLocalizedStringName(L"UnitName_Kilobit"), GetLocalizedStringName(L"UnitAbbreviation_Kilobit"), 3 });
+        OrderedUnit{ UnitConverterUnits::Data_Kilobit, GetLocalizedStringName(L"UnitName_Kilobit"), GetLocalizedStringName(L"UnitAbbreviation_Kilobit"), 4 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Kilobyte, GetLocalizedStringName(L"UnitName_Kilobyte"), GetLocalizedStringName(L"UnitAbbreviation_Kilobyte"), 5 });
+        UnitConverterUnits::Data_Kilobyte, GetLocalizedStringName(L"UnitName_Kilobyte"), GetLocalizedStringName(L"UnitAbbreviation_Kilobyte"), 6 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Mebibits, GetLocalizedStringName(L"UnitName_Mebibits"), GetLocalizedStringName(L"UnitAbbreviation_Mebibits"), 8 });
+        UnitConverterUnits::Data_Mebibits, GetLocalizedStringName(L"UnitName_Mebibits"), GetLocalizedStringName(L"UnitAbbreviation_Mebibits"), 9 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Mebibytes, GetLocalizedStringName(L"UnitName_Mebibytes"), GetLocalizedStringName(L"UnitAbbreviation_Mebibytes"), 10 });
+        UnitConverterUnits::Data_Mebibytes, GetLocalizedStringName(L"UnitName_Mebibytes"), GetLocalizedStringName(L"UnitAbbreviation_Mebibytes"), 11 });
     dataUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Data_Megabit, GetLocalizedStringName(L"UnitName_Megabit"), GetLocalizedStringName(L"UnitAbbreviation_Megabit"), 7 });
+        OrderedUnit{ UnitConverterUnits::Data_Megabit, GetLocalizedStringName(L"UnitName_Megabit"), GetLocalizedStringName(L"UnitAbbreviation_Megabit"), 8 });
     dataUnits.push_back(OrderedUnit{ UnitConverterUnits::Data_Megabyte,
                                      GetLocalizedStringName(L"UnitName_Megabyte"),
                                      GetLocalizedStringName(L"UnitAbbreviation_Megabyte"),
-                                     9,
+                                     10,
                                      false,
                                      true,
                                      false });
+	dataUnits.push_back(OrderedUnit{
+        UnitConverterUnits::Data_Nibble, GetLocalizedStringName(L"UnitName_Nibble"), GetLocalizedStringName(L"UnitAbbreviation_Nibble"), 2 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Pebibits, GetLocalizedStringName(L"UnitName_Pebibits"), GetLocalizedStringName(L"UnitAbbreviation_Pebibits"), 20 });
+        UnitConverterUnits::Data_Pebibits, GetLocalizedStringName(L"UnitName_Pebibits"), GetLocalizedStringName(L"UnitAbbreviation_Pebibits"), 21 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Pebibytes, GetLocalizedStringName(L"UnitName_Pebibytes"), GetLocalizedStringName(L"UnitAbbreviation_Pebibytes"), 22 });
+        UnitConverterUnits::Data_Pebibytes, GetLocalizedStringName(L"UnitName_Pebibytes"), GetLocalizedStringName(L"UnitAbbreviation_Pebibytes"), 23 });
     dataUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Data_Petabit, GetLocalizedStringName(L"UnitName_Petabit"), GetLocalizedStringName(L"UnitAbbreviation_Petabit"), 19 });
+        OrderedUnit{ UnitConverterUnits::Data_Petabit, GetLocalizedStringName(L"UnitName_Petabit"), GetLocalizedStringName(L"UnitAbbreviation_Petabit"), 20 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Petabyte, GetLocalizedStringName(L"UnitName_Petabyte"), GetLocalizedStringName(L"UnitAbbreviation_Petabyte"), 21 });
+        UnitConverterUnits::Data_Petabyte, GetLocalizedStringName(L"UnitName_Petabyte"), GetLocalizedStringName(L"UnitAbbreviation_Petabyte"), 22 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Tebibits, GetLocalizedStringName(L"UnitName_Tebibits"), GetLocalizedStringName(L"UnitAbbreviation_Tebibits"), 16 });
+        UnitConverterUnits::Data_Tebibits, GetLocalizedStringName(L"UnitName_Tebibits"), GetLocalizedStringName(L"UnitAbbreviation_Tebibits"), 17 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Tebibytes, GetLocalizedStringName(L"UnitName_Tebibytes"), GetLocalizedStringName(L"UnitAbbreviation_Tebibytes"), 18 });
+        UnitConverterUnits::Data_Tebibytes, GetLocalizedStringName(L"UnitName_Tebibytes"), GetLocalizedStringName(L"UnitAbbreviation_Tebibytes"), 19 });
     dataUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Data_Terabit, GetLocalizedStringName(L"UnitName_Terabit"), GetLocalizedStringName(L"UnitAbbreviation_Terabit"), 15 });
+        OrderedUnit{ UnitConverterUnits::Data_Terabit, GetLocalizedStringName(L"UnitName_Terabit"), GetLocalizedStringName(L"UnitAbbreviation_Terabit"), 16 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Terabyte, GetLocalizedStringName(L"UnitName_Terabyte"), GetLocalizedStringName(L"UnitAbbreviation_Terabyte"), 17 });
+        UnitConverterUnits::Data_Terabyte, GetLocalizedStringName(L"UnitName_Terabyte"), GetLocalizedStringName(L"UnitAbbreviation_Terabyte"), 18 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Yobibits, GetLocalizedStringName(L"UnitName_Yobibits"), GetLocalizedStringName(L"UnitAbbreviation_Yobibits"), 32 });
+        UnitConverterUnits::Data_Yobibits, GetLocalizedStringName(L"UnitName_Yobibits"), GetLocalizedStringName(L"UnitAbbreviation_Yobibits"), 33 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Yobibytes, GetLocalizedStringName(L"UnitName_Yobibytes"), GetLocalizedStringName(L"UnitAbbreviation_Yobibytes"), 34 });
+        UnitConverterUnits::Data_Yobibytes, GetLocalizedStringName(L"UnitName_Yobibytes"), GetLocalizedStringName(L"UnitAbbreviation_Yobibytes"), 35 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Yottabit, GetLocalizedStringName(L"UnitName_Yottabit"), GetLocalizedStringName(L"UnitAbbreviation_Yottabit"), 31 });
+        UnitConverterUnits::Data_Yottabit, GetLocalizedStringName(L"UnitName_Yottabit"), GetLocalizedStringName(L"UnitAbbreviation_Yottabit"), 32 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Yottabyte, GetLocalizedStringName(L"UnitName_Yottabyte"), GetLocalizedStringName(L"UnitAbbreviation_Yottabyte"), 33 });
+        UnitConverterUnits::Data_Yottabyte, GetLocalizedStringName(L"UnitName_Yottabyte"), GetLocalizedStringName(L"UnitAbbreviation_Yottabyte"), 34 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Zebibits, GetLocalizedStringName(L"UnitName_Zebibits"), GetLocalizedStringName(L"UnitAbbreviation_Zebibits"), 28 });
+        UnitConverterUnits::Data_Zebibits, GetLocalizedStringName(L"UnitName_Zebibits"), GetLocalizedStringName(L"UnitAbbreviation_Zebibits"), 29 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Zebibytes, GetLocalizedStringName(L"UnitName_Zebibytes"), GetLocalizedStringName(L"UnitAbbreviation_Zebibytes"), 30 });
+        UnitConverterUnits::Data_Zebibytes, GetLocalizedStringName(L"UnitName_Zebibytes"), GetLocalizedStringName(L"UnitAbbreviation_Zebibytes"), 31 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Zetabits, GetLocalizedStringName(L"UnitName_Zetabits"), GetLocalizedStringName(L"UnitAbbreviation_Zetabits"), 27 });
+        UnitConverterUnits::Data_Zetabits, GetLocalizedStringName(L"UnitName_Zetabits"), GetLocalizedStringName(L"UnitAbbreviation_Zetabits"), 28 });
     dataUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Data_Zetabytes, GetLocalizedStringName(L"UnitName_Zetabytes"), GetLocalizedStringName(L"UnitAbbreviation_Zetabytes"), 29 });
+        UnitConverterUnits::Data_Zetabytes, GetLocalizedStringName(L"UnitName_Zetabytes"), GetLocalizedStringName(L"UnitAbbreviation_Zetabytes"), 30 });
     dataUnits.push_back(OrderedUnit{ UnitConverterUnits::Data_FloppyDisk,
                                      GetLocalizedStringName(L"UnitName_FloppyDisk"),
                                      GetLocalizedStringName(L"UnitAbbreviation_FloppyDisk"),
@@ -355,6 +357,13 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
                                        GetLocalizedStringName(L"UnitName_Joule"),
                                        GetLocalizedStringName(L"UnitAbbreviation_Joule"),
                                        2,
+                                       true,
+                                       false,
+                                       false });
+    energyUnits.push_back(OrderedUnit{ UnitConverterUnits::Energy_Kilowatthour,
+                                       GetLocalizedStringName(L"UnitName_Kilowatthour"),
+                                       GetLocalizedStringName(L"UnitAbbreviation_Kilowatthour"),
+                                       166,
                                        true,
                                        false,
                                        false });
@@ -391,53 +400,55 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
     unitMap.emplace(ViewMode::Energy, energyUnits);
 
     vector<OrderedUnit> lengthUnits;
+    lengthUnits.push_back(OrderedUnit{
+        UnitConverterUnits::Length_Angstrom, GetLocalizedStringName(L"UnitName_Angstrom"), GetLocalizedStringName(L"UnitAbbreviation_Angstrom"), 1 });
     lengthUnits.push_back(OrderedUnit{ UnitConverterUnits::Length_Centimeter,
                                        GetLocalizedStringName(L"UnitName_Centimeter"),
                                        GetLocalizedStringName(L"UnitAbbreviation_Centimeter"),
-                                       4,
+                                       5,
                                        useUSCustomary,
                                        useSI,
                                        false });
     lengthUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Length_Foot, GetLocalizedStringName(L"UnitName_Foot"), GetLocalizedStringName(L"UnitAbbreviation_Foot"), 8 });
+        OrderedUnit{ UnitConverterUnits::Length_Foot, GetLocalizedStringName(L"UnitName_Foot"), GetLocalizedStringName(L"UnitAbbreviation_Foot"), 9 });
     lengthUnits.push_back(OrderedUnit{ UnitConverterUnits::Length_Inch,
                                        GetLocalizedStringName(L"UnitName_Inch"),
                                        GetLocalizedStringName(L"UnitAbbreviation_Inch"),
-                                       7,
+                                       8,
                                        useSI,
                                        useUSCustomary,
                                        false });
     lengthUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Length_Kilometer, GetLocalizedStringName(L"UnitName_Kilometer"), GetLocalizedStringName(L"UnitAbbreviation_Kilometer"), 6 });
+        UnitConverterUnits::Length_Kilometer, GetLocalizedStringName(L"UnitName_Kilometer"), GetLocalizedStringName(L"UnitAbbreviation_Kilometer"), 7 });
     lengthUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Length_Meter, GetLocalizedStringName(L"UnitName_Meter"), GetLocalizedStringName(L"UnitAbbreviation_Meter"), 5 });
+        OrderedUnit{ UnitConverterUnits::Length_Meter, GetLocalizedStringName(L"UnitName_Meter"), GetLocalizedStringName(L"UnitAbbreviation_Meter"), 6 });
     lengthUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Length_Micron, GetLocalizedStringName(L"UnitName_Micron"), GetLocalizedStringName(L"UnitAbbreviation_Micron"), 2 });
+        OrderedUnit{ UnitConverterUnits::Length_Micron, GetLocalizedStringName(L"UnitName_Micron"), GetLocalizedStringName(L"UnitAbbreviation_Micron"), 3 });
     lengthUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Length_Mile, GetLocalizedStringName(L"UnitName_Mile"), GetLocalizedStringName(L"UnitAbbreviation_Mile"), 10 });
+        OrderedUnit{ UnitConverterUnits::Length_Mile, GetLocalizedStringName(L"UnitName_Mile"), GetLocalizedStringName(L"UnitAbbreviation_Mile"), 11 });
     lengthUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Length_Millimeter, GetLocalizedStringName(L"UnitName_Millimeter"), GetLocalizedStringName(L"UnitAbbreviation_Millimeter"), 3 });
+        UnitConverterUnits::Length_Millimeter, GetLocalizedStringName(L"UnitName_Millimeter"), GetLocalizedStringName(L"UnitAbbreviation_Millimeter"), 4 });
     lengthUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Length_Nanometer, GetLocalizedStringName(L"UnitName_Nanometer"), GetLocalizedStringName(L"UnitAbbreviation_Nanometer"), 1 });
+        UnitConverterUnits::Length_Nanometer, GetLocalizedStringName(L"UnitName_Nanometer"), GetLocalizedStringName(L"UnitAbbreviation_Nanometer"), 2 });
     lengthUnits.push_back(OrderedUnit{ UnitConverterUnits::Length_NauticalMile,
                                        GetLocalizedStringName(L"UnitName_NauticalMile"),
                                        GetLocalizedStringName(L"UnitAbbreviation_NauticalMile"),
-                                       11 });
+                                       12 });
     lengthUnits.push_back(
-        OrderedUnit{ UnitConverterUnits::Length_Yard, GetLocalizedStringName(L"UnitName_Yard"), GetLocalizedStringName(L"UnitAbbreviation_Yard"), 9 });
+        OrderedUnit{ UnitConverterUnits::Length_Yard, GetLocalizedStringName(L"UnitName_Yard"), GetLocalizedStringName(L"UnitAbbreviation_Yard"), 10 });
     lengthUnits.push_back(OrderedUnit{ UnitConverterUnits::Length_Paperclip,
                                        GetLocalizedStringName(L"UnitName_Paperclip"),
                                        GetLocalizedStringName(L"UnitAbbreviation_Paperclip"),
-                                       12,
+                                       13,
                                        false,
                                        false,
                                        true });
     lengthUnits.push_back(OrderedUnit{
-        UnitConverterUnits::Length_Hand, GetLocalizedStringName(L"UnitName_Hand"), GetLocalizedStringName(L"UnitAbbreviation_Hand"), 13, false, false, true });
+        UnitConverterUnits::Length_Hand, GetLocalizedStringName(L"UnitName_Hand"), GetLocalizedStringName(L"UnitAbbreviation_Hand"), 14, false, false, true });
     lengthUnits.push_back(OrderedUnit{ UnitConverterUnits::Length_JumboJet,
                                        GetLocalizedStringName(L"UnitName_JumboJet"),
                                        GetLocalizedStringName(L"UnitAbbreviation_JumboJet"),
-                                       14,
+                                       15,
                                        false,
                                        false,
                                        true });
@@ -789,6 +800,7 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
                                                    { ViewMode::Area, UnitConverterUnits::Area_Pyeong, 400.0 / 121.0 },
 
                                                    { ViewMode::Data, UnitConverterUnits::Data_Bit, 0.000000125 },
+												   { ViewMode::Data, UnitConverterUnits::Data_Nibble, 0.0000005 },
                                                    { ViewMode::Data, UnitConverterUnits::Data_Byte, 0.000001 },
                                                    { ViewMode::Data, UnitConverterUnits::Data_Kilobyte, 0.001 },
                                                    { ViewMode::Data, UnitConverterUnits::Data_Megabyte, 1 },
@@ -823,13 +835,14 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
                                                    { ViewMode::Data, UnitConverterUnits::Data_Yobibits, 151115727451828646.838272 },
                                                    { ViewMode::Data, UnitConverterUnits::Data_Yobibytes, 1208925819614629174.706176 },
                                                    { ViewMode::Data, UnitConverterUnits::Data_FloppyDisk, 1.474560 },
-                                                   { ViewMode::Data, UnitConverterUnits::Data_CD, 734.003200 },
-                                                   { ViewMode::Data, UnitConverterUnits::Data_DVD, 5046.586573 },
+                                                   { ViewMode::Data, UnitConverterUnits::Data_CD, 700 },
+                                                   { ViewMode::Data, UnitConverterUnits::Data_DVD, 4700 },
 
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_Calorie, 4.184 },
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_Kilocalorie, 4184 },
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_BritishThermalUnit, 1055.056 },
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_Kilojoule, 1000 },
+                                                   { ViewMode::Energy, UnitConverterUnits::Energy_Kilowatthour, 3600000 },
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_ElectronVolt, 0.0000000000000000001602176565 },
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_Joule, 1 },
                                                    { ViewMode::Energy, UnitConverterUnits::Energy_FootPound, 1.3558179483314 },
@@ -844,6 +857,7 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
                                                    { ViewMode::Length, UnitConverterUnits::Length_Micron, 0.000001 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Millimeter, 0.001 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Nanometer, 0.000000001 },
+                                                   { ViewMode::Length, UnitConverterUnits::Length_Angstrom, 0.0000000001 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Centimeter, 0.01 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Meter, 1 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Kilometer, 1000 },

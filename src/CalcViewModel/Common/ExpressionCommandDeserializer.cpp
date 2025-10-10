@@ -17,24 +17,16 @@ std::shared_ptr<IExpressionCommand> CommandDeserializer::Deserialize(_In_ Calcul
     switch (cmdType)
     {
     case CalculationManager::CommandType::OperandCommand:
-
         return std::make_shared<COpndCommand>(DeserializeOperand());
-        break;
 
     case CalculationManager::CommandType::Parentheses:
-
         return std::make_shared<CParentheses>(DeserializeParentheses());
-        break;
 
     case CalculationManager::CommandType::UnaryCommand:
-
         return std::make_shared<CUnaryCommand>(DeserializeUnary());
-        break;
 
     case CalculationManager::CommandType::BinaryCommand:
-
         return std::make_shared<CBinaryCommand>(DeserializeBinary());
-        break;
 
     default:
         throw ref new Platform::Exception(E_INVALIDARG, ref new Platform::String(L"Unknown command type"));

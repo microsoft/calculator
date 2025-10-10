@@ -11,7 +11,7 @@
 
 using namespace std;
 using namespace UnitConversionManager;
-using namespace CalcManager::NumberFormattingUtils;
+using namespace UnitConversionManager::NumberFormattingUtils;
 
 static constexpr uint32_t EXPECTEDSERIALIZEDCATEGORYTOKENCOUNT = 3U;
 static constexpr uint32_t EXPECTEDSERIALIZEDUNITTOKENCOUNT = 6U;

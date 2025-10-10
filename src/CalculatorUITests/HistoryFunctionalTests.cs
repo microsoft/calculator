@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using CalculatorUITestFramework;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+
 using System;
 
 namespace CalculatorUITests
@@ -12,7 +15,7 @@ namespace CalculatorUITests
     [TestClass]
     public class HistoryFunctionalTests
     {
-        private static StandardCalculatorPage page = new StandardCalculatorPage();
+        private static readonly StandardCalculatorPage page = new StandardCalculatorPage();
 
         /// <summary>
         /// Initializes the WinAppDriver web driver session.
@@ -22,7 +25,7 @@ namespace CalculatorUITests
         public static void ClassInitialize(TestContext context)
         {
             // Create session to launch a Calculator window
-            WinAppDriver.Instance.SetupCalculatorSession(context);
+            CalculatorDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in standard mode
             page.NavigateToStandardCalculator();
@@ -38,7 +41,7 @@ namespace CalculatorUITests
         public static void ClassCleanup()
         {
             // Tear down Calculator session.
-            WinAppDriver.Instance.TearDownCalculatorSession();
+            CalculatorDriver.Instance.TearDownCalculatorSession();
         }
 
         /// <summary>
@@ -95,21 +98,21 @@ namespace CalculatorUITests
 
             Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
 
-            Actions clickHistoryItemsw1 = new Actions(WinAppDriver.Instance.CalculatorSession);
+            Actions clickHistoryItemsw1 = new Actions(CalculatorDriver.Instance.CalculatorSession);
             clickHistoryItemsw1.Click(historyItems[1].Item);
             clickHistoryItemsw1.Perform();
 
             Assert.AreEqual("-5.6", page.CalculatorResults.GetCalculatorResultText());
             Assert.AreEqual("-3 + -2.6=", page.CalculatorResults.GetCalculatorExpressionText());
 
-            Actions clickHistoryItemsw0 = new Actions(WinAppDriver.Instance.CalculatorSession);
+            Actions clickHistoryItemsw0 = new Actions(CalculatorDriver.Instance.CalculatorSession);
             clickHistoryItemsw0.Click(historyItems[0].Item);
             clickHistoryItemsw0.Perform();
 
             Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
 
             page.HistoryPanel.ClearHistory();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
         }
 
         [TestMethod]
@@ -161,10 +164,10 @@ namespace CalculatorUITests
             page.HistoryPanel.ClearHistoryButton.Click();
 
             page.HistoryPanel.OpenHistoryFlyout();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
 
             page.HistoryPanel.OpenHistoryPanel();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
         }
 
         #endregion

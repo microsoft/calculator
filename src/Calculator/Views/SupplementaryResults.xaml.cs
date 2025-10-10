@@ -1,7 +1,9 @@
 ﻿using CalculatorApp.ViewModel;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -13,8 +15,10 @@ namespace CalculatorApp
     {
         public DelighterUnitToStyleConverter()
         {
-            m_delighters = new Windows.UI.Xaml.ResourceDictionary();
-            m_delighters.Source = new Uri(@"ms-appx:///Views/DelighterUnitStyles.xaml");
+            m_delighters = new Windows.UI.Xaml.ResourceDictionary
+            {
+                Source = new Uri(@"ms-appx:///Views/DelighterUnitStyles.xaml")
+            };
         }
 
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -37,7 +41,7 @@ namespace CalculatorApp
             return null;
         }
 
-        private Windows.UI.Xaml.ResourceDictionary m_delighters;
+        private readonly Windows.UI.Xaml.ResourceDictionary m_delighters;
     }
 
     public sealed class SupplementaryResultDataTemplateSelector : Windows.UI.Xaml.Controls.DataTemplateSelector
@@ -45,17 +49,9 @@ namespace CalculatorApp
         public SupplementaryResultDataTemplateSelector()
         { }
 
-        public Windows.UI.Xaml.DataTemplate RegularTemplate
-        {
-            get => m_regularTemplate;
-            set => m_regularTemplate = value;
-        }
+        public Windows.UI.Xaml.DataTemplate RegularTemplate { get; set; }
 
-        public Windows.UI.Xaml.DataTemplate DelighterTemplate
-        {
-            get => m_delighterTemplate;
-            set => m_delighterTemplate = value;
-        }
+        public Windows.UI.Xaml.DataTemplate DelighterTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
@@ -69,9 +65,6 @@ namespace CalculatorApp
                 return RegularTemplate;
             }
         }
-
-        private Windows.UI.Xaml.DataTemplate m_regularTemplate;
-        private Windows.UI.Xaml.DataTemplate m_delighterTemplate;
     }
 
     public sealed class SupplementaryResultNoOverflowStackPanel : CalculatorApp.Controls.HorizontalNoOverflowStackPanel
@@ -83,14 +76,12 @@ namespace CalculatorApp
                 return false;
             }
 
-            var lastChild = Children[Children.Count - 1] as FrameworkElement;
-            if (lastChild == null)
+            if (!(Children[Children.Count - 1] is FrameworkElement lastChild))
             {
                 return false;
             }
 
-            var suppResult = lastChild.DataContext as SupplementaryResult;
-            return suppResult == null ? false : suppResult.IsWhimsical();
+            return lastChild.DataContext is SupplementaryResult suppResult && suppResult.IsWhimsical();
         }
     }
 
@@ -104,8 +95,8 @@ namespace CalculatorApp
 
         public IEnumerable<ViewModel.SupplementaryResult> Results
         {
-            get { return (IEnumerable<ViewModel.SupplementaryResult>)GetValue(ResultsProperty); }
-            set { SetValue(ResultsProperty, value); }
+            get => (IEnumerable<ViewModel.SupplementaryResult>)GetValue(ResultsProperty);
+            set => SetValue(ResultsProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Results.  This enables animation, styling, binding, etc...

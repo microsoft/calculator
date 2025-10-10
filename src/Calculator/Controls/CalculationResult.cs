@@ -1,27 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Controls;
 using CalculatorApp.ViewModel.Common;
 
-using Windows.Devices.Input;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System;
+using System.Diagnostics;
+
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
-using System.Reflection;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace CalculatorApp
 {
@@ -39,36 +27,36 @@ namespace CalculatorApp
 
             public double MinFontSize
             {
-                get { return (double)GetValue(MinFontSizeProperty); }
-                set { SetValue(MinFontSizeProperty, value); }
+                get => (double)GetValue(MinFontSizeProperty);
+                set => SetValue(MinFontSizeProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for MinFontSize.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty MinFontSizeProperty =
-                DependencyProperty.Register(nameof(MinFontSize), typeof(double), typeof(CalculationResult), new PropertyMetadata(0.0, new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(MinFontSize), typeof(double), typeof(CalculationResult), new PropertyMetadata(0.0, (sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnMinFontSizePropertyChanged((double)args.OldValue, (double)args.NewValue);
-                })));
+                }));
 
             public double MaxFontSize
             {
-                get { return (double)GetValue(MaxFontSizeProperty); }
-                set { SetValue(MaxFontSizeProperty, value); }
+                get => (double)GetValue(MaxFontSizeProperty);
+                set => SetValue(MaxFontSizeProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for MaxFontSize.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty MaxFontSizeProperty =
-                DependencyProperty.Register(nameof(MaxFontSize), typeof(double), typeof(CalculationResult), new PropertyMetadata(30.0, new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(MaxFontSize), typeof(double), typeof(CalculationResult), new PropertyMetadata(30.0, (sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnMaxFontSizePropertyChanged((double)args.OldValue, (double)args.NewValue);
-                })));
+                }));
 
             public Thickness DisplayMargin
             {
-                get { return (Thickness)GetValue(DisplayMarginProperty); }
-                set { SetValue(DisplayMarginProperty, value); }
+                get => (Thickness)GetValue(DisplayMarginProperty);
+                set => SetValue(DisplayMarginProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for DisplayMargin.  This enables animation, styling, binding, etc...
@@ -77,50 +65,50 @@ namespace CalculatorApp
 
             public bool IsActive
             {
-                get { return (bool)GetValue(IsActiveProperty); }
-                set { SetValue(IsActiveProperty, value); }
+                get => (bool)GetValue(IsActiveProperty);
+                set => SetValue(IsActiveProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for IsActive.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty IsActiveProperty =
-                DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(CalculationResult), new PropertyMetadata(default(bool), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(CalculationResult), new PropertyMetadata(default(bool), (sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnIsActivePropertyChanged((bool)args.OldValue, (bool)args.NewValue);
-                })));
+                }));
 
             public string DisplayValue
             {
-                get { return (string)GetValue(DisplayValueProperty); }
-                set { SetValue(DisplayValueProperty, value); }
+                get => (string)GetValue(DisplayValueProperty);
+                set => SetValue(DisplayValueProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for DisplayValue.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty DisplayValueProperty =
-                DependencyProperty.Register(nameof(DisplayValue), typeof(string), typeof(CalculationResult), new PropertyMetadata(string.Empty, new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(DisplayValue), typeof(string), typeof(CalculationResult), new PropertyMetadata(string.Empty, (sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnDisplayValuePropertyChanged((string)args.OldValue, (string)args.NewValue);
-                })));
+                }));
 
             public bool IsInError
             {
-                get { return (bool)GetValue(IsInErrorProperty); }
-                set { SetValue(IsInErrorProperty, value); }
+                get => (bool)GetValue(IsInErrorProperty);
+                set => SetValue(IsInErrorProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for IsInError.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty IsInErrorProperty =
-                DependencyProperty.Register(nameof(IsInError), typeof(bool), typeof(CalculationResult), new PropertyMetadata(default(bool), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(IsInError), typeof(bool), typeof(CalculationResult), new PropertyMetadata(default(bool), (sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnIsInErrorPropertyChanged((bool)args.OldValue, (bool)args.NewValue);
-                })));
+                }));
 
             public bool IsOperatorCommand
             {
-                get { return (bool)GetValue(IsOperatorCommandProperty); }
-                set { SetValue(IsOperatorCommandProperty, value); }
+                get => (bool)GetValue(IsOperatorCommandProperty);
+                set => SetValue(IsOperatorCommandProperty, value);
             }
 
             // Using a DependencyProperty as the backing store for IsOperatorCommand.  This enables animation, styling, binding, etc...
@@ -163,7 +151,7 @@ namespace CalculatorApp
 
                     if (widthDiff > WIDTHCUTOFF)
                     {
-                        fontSizeChange = Math.Min((double)Math.Max((double)Math.Floor(WIDTHTOFONTSCALAR * widthDiff) - WIDTHTOFONTOFFSET, INCREMENTOFFSET), MAXFONTINCREMENT);
+                        fontSizeChange = Math.Min(Math.Max(Math.Floor(WIDTHTOFONTSCALAR * widthDiff) - WIDTHTOFONTOFFSET, INCREMENTOFFSET), MAXFONTINCREMENT);
                     }
                     if (m_textBlock.ActualWidth < containerSize && Math.Abs(m_textBlock.FontSize - MaxFontSize) > FONTTOLERANCE && !m_haveCalculatedMax)
                     {
@@ -278,7 +266,7 @@ namespace CalculatorApp
             {
                 var requestedElement = e.OriginalSource;
 
-                if (requestedElement.Equals(m_textBlock as object))
+                if (requestedElement.Equals(m_textBlock))
                 {
                     m_textBlock.Focus(FocusState.Programmatic);
                 }
@@ -364,14 +352,7 @@ namespace CalculatorApp
 
             private void UpdateVisualState()
             {
-                if (IsActive)
-                {
-                    VisualStateManager.GoToState(this, "Active", true);
-                }
-                else
-                {
-                    VisualStateManager.GoToState(this, "Normal", true);
-                }
+                VisualStateManager.GoToState(this, IsActive ? "Active" : "Normal", true);
             }
 
             private void OnScrollLeftClick(object sender, RoutedEventArgs e)
@@ -387,14 +368,13 @@ namespace CalculatorApp
             private void ModifyFontAndMargin(TextBlock textBox, double fontChange)
             {
                 double cur = textBox.FontSize;
-                double newFontSize = 0.0;
                 double scaleFactor = SCALEFACTOR;
                 if (m_textContainer.ActualHeight <= HEIGHTCUTOFF)
                 {
                     scaleFactor = SMALLHEIGHTSCALEFACTOR;
                 }
 
-                newFontSize = Math.Min(Math.Max(cur + fontChange, MinFontSize), MaxFontSize);
+                double newFontSize = Math.Min(Math.Max(cur + fontChange, MinFontSize), MaxFontSize);
                 m_textContainer.Padding = new Thickness(0, 0, 0, scaleFactor * Math.Abs(cur - newFontSize));
                 textBox.FontSize = newFontSize;
             }

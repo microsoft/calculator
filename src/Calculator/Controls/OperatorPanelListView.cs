@@ -1,18 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Controls;
-
-using Windows.Foundation;
 using Windows.Devices.Input;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace CalculatorApp
 {
@@ -151,7 +143,7 @@ namespace CalculatorApp
                 m_scrollViewer.ChangeView(offset, null, null);
             }
 
-            private double scrollRatio = 0.7;
+            private readonly double scrollRatio = 0.7;
 
             private bool m_isPointerEntered;
 

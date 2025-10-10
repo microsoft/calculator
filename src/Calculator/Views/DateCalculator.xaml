@@ -12,6 +12,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="using:CalculatorApp.Utils"
              d:DesignHeight="300"
              d:DesignWidth="400"
              Loaded="OnLoaded"
@@ -222,7 +223,7 @@
                                         <VisualState x:Name="Focused">
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Background" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CalendarDatePickerBackgroundFocused}"/>
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SubtleFillColorTransparentBrush}"/>
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
@@ -918,7 +919,6 @@
                                                       Margin="2"
                                                       Style="{StaticResource ScrollViewerStyle}"
                                                       IsFocusEngagementEnabled="True"
-                                                      UseLayoutRounding="False"
                                                       Visibility="Collapsed">
                                             <ScrollViewer.RenderTransform>
                                                 <ScaleTransform x:Name="YearViewTransform"
@@ -931,7 +931,6 @@
                                                       Margin="2"
                                                       Style="{StaticResource ScrollViewerStyle}"
                                                       IsFocusEngagementEnabled="True"
-                                                      UseLayoutRounding="False"
                                                       Visibility="Collapsed">
                                             <ScrollViewer.RenderTransform>
                                                 <ScaleTransform x:Name="DecadeViewTransform"
@@ -1003,11 +1002,11 @@
 
         <!-- ComboBox for Date Calculation options -->
         <ComboBox x:Name="DateCalculationOption"
-                  x:Uid="DateCalculationOption"
                   Grid.Row="1"
                   Margin="-12,0,0,0"
                   Background="{ThemeResource SubtleFillColorTransparentBrush}"
                   BorderThickness="{ThemeResource ControlBorderThemeThickness}"
+                  AutomationProperties.Name="{utils:ResourceString Name=DateCalculationOption/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                   SelectedIndex="0">
             <ComboBox.Resources>
                 <ResourceDictionary>
@@ -1024,16 +1023,21 @@
                             <StaticResource x:Key="ComboBoxBackgroundUnfocused" ResourceKey="SubtleFillColorTransparentBrush"/>
                             <StaticResource x:Key="ComboBoxBackgroundFocused" ResourceKey="SubtleFillColorTransparentBrush"/>
                         </ResourceDictionary>
-                        <ResourceDictionary x:Key="HighContrast"/>
+                        <ResourceDictionary x:Key="HighContrast">
+                            <StaticResource x:Key="ComboBoxBackgroundPointerOver" ResourceKey="SubtleFillColorSecondaryBrush"/>
+                            <StaticResource x:Key="ComboBoxBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush"/>
+                            <StaticResource x:Key="ComboBoxBackgroundUnfocused" ResourceKey="SubtleFillColorTransparentBrush"/>
+                            <StaticResource x:Key="ComboBoxBackgroundFocused" ResourceKey="SubtleFillColorTransparentBrush"/>
+                        </ResourceDictionary>
                     </ResourceDictionary.ThemeDictionaries>
                 </ResourceDictionary>
             </ComboBox.Resources>
-            <ComboBoxItem x:Uid="Date_DifferenceOption"
-                          MinWidth="276"
+            <ComboBoxItem MinWidth="276"
+                          Content="{utils:ResourceString Name=Date_DifferenceOption/Content}"
                           ContentTemplate="{StaticResource ComboBoxItemContentTemplate}"
                           IsSelected="{Binding IsDateDiffMode, Mode=TwoWay}"/>
-            <ComboBoxItem x:Uid="Date_AddSubtractOption"
-                          MinWidth="276"
+            <ComboBoxItem MinWidth="276"
+                          Content="{utils:ResourceString Name=Date_AddSubtractOption/Content}"
                           ContentTemplate="{StaticResource ComboBoxItemContentTemplate}"
                           IsSelected="{Binding IsDateDiffMode, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"/>
         </ComboBox>
@@ -1056,28 +1060,28 @@
 
             <!-- From Date -->
             <CalendarDatePicker x:Name="DateDiff_FromDate"
-                                x:Uid="DateDiff_FromHeader"
                                 Grid.Row="1"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
                                 Closed="CalendarFlyoutClosed"
-                                DateChanged="FromDate_DateChanged"/>
+                                DateChanged="FromDate_DateChanged"
+                                Header="{utils:ResourceString Name=DateDiff_FromHeader/Header}"/>
 
             <!-- To Date -->
             <CalendarDatePicker x:Name="DateDiff_ToDate"
-                                x:Uid="DateDiff_ToHeader"
                                 Grid.Row="3"
                                 Margin="0,0,0,0"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
                                 Closed="CalendarFlyoutClosed"
-                                DateChanged="ToDate_DateChanged"/>
+                                DateChanged="ToDate_DateChanged"
+                                Header="{utils:ResourceString Name=DateDiff_ToHeader/Header}"/>
 
             <!-- Difference Result -->
-            <TextBlock x:Uid="Date_DifferenceLabel"
-                       Grid.Row="5"
+            <TextBlock Grid.Row="5"
                        Margin="0,0,0,0"
-                       Style="{ThemeResource DateCalculation_CaptionTextStyle}"/>
+                       Style="{ThemeResource DateCalculation_CaptionTextStyle}"
+                       Text="{utils:ResourceString Name=Date_DifferenceLabel/Text}"/>
             <TextBlock x:Name="DateDiffAllUnitsResultLabel"
                        Grid.Row="6"
                        Margin="0,4,0,0"
@@ -1116,13 +1120,13 @@
 
             <!-- From Date -->
             <CalendarDatePicker x:Name="AddSubtract_FromDate"
-                                x:Uid="AddSubtract_Date_FromHeader"
                                 Grid.Row="1"
                                 Margin="0,0,0,0"
                                 Style="{StaticResource DateCalculation_CalendarPickerStyle}"
                                 CalendarViewStyle="{StaticResource DateCalculation_CalendarViewStyle}"
                                 Closed="CalendarFlyoutClosed"
-                                DateChanged="AddSubtract_DateChanged"/>
+                                DateChanged="AddSubtract_DateChanged"
+                                Header="{utils:ResourceString Name=AddSubtract_Date_FromHeader/Header}"/>
 
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
@@ -1131,20 +1135,20 @@
                 </Grid.ColumnDefinitions>
 
                 <RadioButton x:Name="AddOption"
-                             x:Uid="AddOption"
                              MinWidth="80"
                              MaxWidth="160"
                              VerticalAlignment="Top"
                              Checked="AddSubtractOption_Checked"
+                             Content="{utils:ResourceString Name=AddOption/Content}"
                              IsChecked="{Binding IsAddMode, Mode=TwoWay}"/>
                 <RadioButton x:Name="SubtractOption"
-                             x:Uid="SubtractOption"
                              Grid.Column="1"
                              MinWidth="80"
                              MaxWidth="160"
                              Margin="20,0,0,0"
                              VerticalAlignment="Top"
                              Checked="AddSubtractOption_Checked"
+                             Content="{utils:ResourceString Name=SubtractOption/Content}"
                              IsChecked="{Binding IsAddMode, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"/>
 
             </Grid>
@@ -1164,9 +1168,9 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock x:Name="YearsLabel"
-                           x:Uid="YearsLabel"
                            Margin="0,0,0,6"
                            Style="{StaticResource DateCalculation_CaptionTextStyle}"
+                           Text="{utils:ResourceString Name=YearsLabel/Text}"
                            TextWrapping="Wrap"/>
                 <ComboBox x:Name="YearsValue"
                           Grid.Row="1"
@@ -1177,10 +1181,10 @@
                           SelectedIndex="{Binding YearsOffset, Mode=TwoWay}"
                           SelectionChanged="OffsetValue_Changed"/>
                 <TextBlock x:Name="MonthsLabel"
-                           x:Uid="MonthsLabel"
                            Grid.Column="1"
                            Margin="12,0,12,6"
                            Style="{StaticResource DateCalculation_CaptionTextStyle}"
+                           Text="{utils:ResourceString Name=MonthsLabel/Text}"
                            TextWrapping="Wrap"/>
                 <ComboBox x:Name="MonthsValue"
                           Grid.Row="1"
@@ -1193,10 +1197,10 @@
                           SelectedIndex="{Binding MonthsOffset, Mode=TwoWay}"
                           SelectionChanged="OffsetValue_Changed"/>
                 <TextBlock x:Name="DaysLabel"
-                           x:Uid="DaysLabel"
                            Grid.Column="2"
                            Margin="0,0,0,6"
                            Style="{StaticResource DateCalculation_CaptionTextStyle}"
+                           Text="{utils:ResourceString Name=DaysLabel/Text}"
                            TextWrapping="Wrap"/>
                 <ComboBox x:Name="DaysValue"
                           Grid.Row="1"
@@ -1210,9 +1214,9 @@
             </Grid>
 
             <!-- Resulting Date -->
-            <TextBlock x:Uid="DateLabel"
-                       Grid.Row="7"
-                       Style="{StaticResource DateCalculation_CaptionTextStyle}"/>
+            <TextBlock Grid.Row="7"
+                       Style="{StaticResource DateCalculation_CaptionTextStyle}"
+                       Text="{utils:ResourceString Name=DateLabel/Text}"/>
 
             <TextBlock x:Name="DateResultLabel"
                        Grid.Row="8"

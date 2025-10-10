@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+
 using Windows.UI.Xaml;
 
 namespace CalculatorApp
@@ -16,8 +17,7 @@ namespace CalculatorApp
         {
             public object Convert(object value, Type targetType, object parameter, string language)
             {
-                var boxedVisibility = (value as Visibility?);
-                if (boxedVisibility != null && boxedVisibility.Value == Visibility.Collapsed)
+                if (value is Visibility boxedVisibility && boxedVisibility == Visibility.Collapsed)
                 {
                     return Visibility.Visible;
                 }

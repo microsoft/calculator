@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5" IgnorableNamespaces="uap uap3 uap5 mp">
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+         xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+         xmlns:desktop4="http://schemas.microsoft.com/appx/manifest/desktop/windows10/4"
+         xmlns:iot2="http://schemas.microsoft.com/appx/manifest/iot/windows10/2"
+         IgnorableNamespaces="uap uap3 uap5 mp desktop4 iot2">
     <Identity Name="Microsoft.WindowsCalculator.Dev" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="0.0.1.0" />
     <mp:PhoneIdentity PhoneProductId="b58171c6-c70c-4266-a2e8-8f9c994f4456" PhonePublisherId="95d94207-0c7c-47ed-82db-d75c81153c35" />
     <Properties>
@@ -8,13 +15,17 @@
         <Logo>Assets\CalculatorStoreLogo.png</Logo>
     </Properties>
     <Dependencies>
-        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.18362.0" MaxVersionTested="10.0.22000.0" />
+        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.19041.0" MaxVersionTested="10.0.22621.0" />
     </Dependencies>
     <Resources>
         <Resource Language="x-generate" />
     </Resources>
     <Applications>
-        <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Calculator.App">
+        <Application Id="App"
+                     Executable="$targetnametoken$.exe"
+                     EntryPoint="Calculator.App"
+                     desktop4:SupportsMultipleInstances="true"
+                     iot2:SupportsMultipleInstances="true">
             <uap:VisualElements DisplayName="ms-resource:DevAppName" Square150x150Logo="Assets\CalculatorMedTile.png" Square44x44Logo="Assets\CalculatorAppList.png" Description="ms-resource:DevAppDescription" BackgroundColor="transparent">
                 <uap:DefaultTile ShortName="ms-resource:DevAppName" Square310x310Logo="Assets\CalculatorLargeTile.png" Wide310x150Logo="Assets\CalculatorWideTile.png" Square71x71Logo="Assets\CalculatorSmallTile.png">
                     <uap:ShowNameOnTiles>

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using CalculatorApp.ViewModel.Common;
+
 using System;
+
 using Windows.UI.Xaml;
 
 namespace CalculatorApp
@@ -14,69 +16,31 @@ namespace CalculatorApp
         {
             protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
             {
-                DisplayExpressionToken token = (item as DisplayExpressionToken);
-                if (token != null)
+                if (item is DisplayExpressionToken token)
                 {
                     CalculatorApp.ViewModel.Common.TokenType type = token.Type;
 
                     switch (type)
                     {
                         case TokenType.Operator:
-                            return m_operatorTemplate;
+                            return OperatorTemplate;
                         case TokenType.Operand:
-                            return m_operandTemplate;
+                            return OperandTemplate;
                         case TokenType.Separator:
-                            return m_separatorTemplate;
+                            return SeparatorTemplate;
                         default:
                             throw new Exception("Invalid token type");
                     }
                 }
 
-                return m_separatorTemplate;
+                return SeparatorTemplate;
             }
 
-            public Windows.UI.Xaml.DataTemplate OperatorTemplate
-            {
-                get
-                {
-                    return m_operatorTemplate;
-                }
+            public Windows.UI.Xaml.DataTemplate OperatorTemplate { get; set; }
 
-                set
-                {
-                    m_operatorTemplate = value;
-                }
-            }
+            public Windows.UI.Xaml.DataTemplate OperandTemplate { get; set; }
 
-            public Windows.UI.Xaml.DataTemplate OperandTemplate
-            {
-                get
-                {
-                    return m_operandTemplate;
-                }
-
-                set
-                {
-                    m_operandTemplate = value;
-                }
-            }
-
-            public Windows.UI.Xaml.DataTemplate SeparatorTemplate
-            {
-                get
-                {
-                    return m_separatorTemplate;
-                }
-
-                set
-                {
-                    m_separatorTemplate = value;
-                }
-            }
-
-            private Windows.UI.Xaml.DataTemplate m_operatorTemplate;
-            private Windows.UI.Xaml.DataTemplate m_operandTemplate;
-            private Windows.UI.Xaml.DataTemplate m_separatorTemplate;
+            public Windows.UI.Xaml.DataTemplate SeparatorTemplate { get; set; }
         }
     }
 }

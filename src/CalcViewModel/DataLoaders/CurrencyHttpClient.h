@@ -1,29 +1,25 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
+#include <cassert>
+#include <future>
 
-#include "ICurrencyHttpClient.h"
-
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel::DataLoaders
 {
-    namespace ViewModel::DataLoaders
+    class CurrencyHttpClient
     {
-        class CurrencyHttpClient : public ICurrencyHttpClient
-        {
-        public:
-            CurrencyHttpClient();
+    public:
+#ifdef VIEWMODEL_FOR_UT
+        static bool ForceWebFailure;
+#endif
+        void Initialize(Platform::String ^ sourceCurrencyCode, Platform::String ^ responseLanguage);
 
-            void SetSourceCurrencyCode(Platform::String ^ sourceCurrencyCode) override;
-            void SetResponseLanguage(Platform::String ^ responseLanguage) override;
+        std::future<Platform::String ^> GetCurrencyMetadataAsync() const;
+        std::future<Platform::String ^> GetCurrencyRatiosAsync() const;
 
-            Windows::Foundation::IAsyncOperationWithProgress<Platform::String ^, Windows::Web::Http::HttpProgress> ^ GetCurrencyMetadata() override;
-            Windows::Foundation::IAsyncOperationWithProgress<Platform::String ^, Windows::Web::Http::HttpProgress> ^ GetCurrencyRatios() override;
-
-        private:
-            Windows::Web::Http::HttpClient ^ m_client;
-            Platform::String ^ m_responseLanguage;
-            Platform::String ^ m_sourceCurrencyCode;
-        };
-    }
+    private:
+        Platform::String ^ m_sourceCurrencyCode;
+        Platform::String ^ m_responseLanguage;
+    };
 }

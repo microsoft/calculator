@@ -1134,7 +1134,7 @@
     <comment>Unit conversion category name called Time</comment>
   </data>
   <data name="CategoryName_VolumeText" xml:space="preserve">
-    <value>容量</value>
+    <value>体积</value>
     <comment>Unit conversion category name called Volume (eg. cups, teaspoons, milliliters)</comment>
   </data>
   <data name="CategoryName_TemperatureText" xml:space="preserve">
@@ -1277,6 +1277,10 @@
     <value>杯（美制）</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
+  <data name="UnitAbbreviation_Angstrom" xml:space="preserve">
+    <value>A</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
     <value>英亩</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
@@ -1384,6 +1388,10 @@
   <data name="UnitAbbreviation_Joule" xml:space="preserve">
     <value>焦耳</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
+    <value>千瓦时</value>
+    <comment>An abbreviation for a measurement unit of electricity consumption</comment>
   </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
     <value>K</value>
@@ -1573,6 +1581,10 @@
     <value>MiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
+  <data name="UnitAbbreviation_Nibble" xml:space="preserve">
+    <value>nybl</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
     <value>Pi</value>
     <comment>An abbreviation for a measurement unit of data</comment>
@@ -1749,6 +1761,10 @@
     <value>焦耳</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Kilowatthour" xml:space="preserve">
+    <value>千瓦时</value>
+    <comment>A measurement unit for electricity consumption. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
     <value>开尔文</value>
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
@@ -1833,8 +1849,16 @@
     <value>分钟</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Nibble" xml:space="preserve">
+    <value>半字节</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
     <value>纳米</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Angstrom" xml:space="preserve">
+    <value>埃</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
@@ -2050,7 +2074,7 @@
     <comment>A measurement unit for weight. Note: Dekagram is spelled "decagram" everywhere except where US English is used. (EN-US dekagram, elsewhere decagram). (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Decigram" xml:space="preserve">
-    <value>十分之一克</value>
+    <value>分克</value>
     <comment>A measurement unit for weight. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_Gram" xml:space="preserve">
@@ -2330,11 +2354,11 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>尚无历史记录</value>
+    <value>尚无历史记录。</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>存储器中未保存数据</value>
+    <value>内存中未保存任何内容。</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3593,7 +3617,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>表达式无效</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>表达式为空</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3605,7 +3629,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>函数名后缺少括号</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>数学运算的参数数目不正确</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3741,7 +3765,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>图表查看窗口，x 轴由 %1 和 %2 包围，y 轴由 %3 和 %4 包围，显示 %5 公式</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>配置滑块</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3858,7 +3882,7 @@
     <value>输入表达式</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>复制</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3883,11 +3907,11 @@
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>函数输入列表项</value>
+    <value>函数输入</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>函数输入列表</value>
+    <value>函数输入</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4134,11 +4158,11 @@
     <value>外观</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Header" xml:space="preserve">
     <value>应用程序主题</value>
     <comment>Title of App theme expander</comment>
   </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Description" xml:space="preserve">
     <value>选择要显示的应用主题</value>
     <comment>Description of App theme expander</comment>
   </data>
@@ -4162,8 +4186,16 @@
     <value>“设置”页面</value>
     <comment>Announcement used when Settings page is opened</comment>
   </data>
-  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>应用主题设置</value>
-    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
+  <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>打开可用操作的上下文菜单</value>
+    <comment>Screen reader prompt for the context menu of the expression box</comment>
+  </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>确定</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>无法还原此快照。</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
   </data>
 </root>

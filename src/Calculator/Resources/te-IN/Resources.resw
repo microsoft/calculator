@@ -1277,6 +1277,10 @@
     <value>కప్ (US)</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
   </data>
+  <data name="UnitAbbreviation_Angstrom" xml:space="preserve">
+    <value>A</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
   <data name="UnitAbbreviation_Acre" xml:space="preserve">
     <value>ac</value>
     <comment>An abbreviation for a measurement unit of volume</comment>
@@ -1384,6 +1388,10 @@
   <data name="UnitAbbreviation_Joule" xml:space="preserve">
     <value>J</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
+  </data>
+  <data name="UnitAbbreviation_Kilowatthour" xml:space="preserve">
+    <value>kWh</value>
+    <comment>An abbreviation for a measurement unit of electricity consumption</comment>
   </data>
   <data name="UnitAbbreviation_Kelvin" xml:space="preserve">
     <value>K</value>
@@ -1573,6 +1581,10 @@
     <value>MiB</value>
     <comment>An abbreviation for a measurement unit of data</comment>
   </data>
+  <data name="UnitAbbreviation_Nibble" xml:space="preserve">
+    <value>nybl</value>
+    <comment>An abbreviation for a measurement unit of data</comment>
+  </data>
   <data name="UnitAbbreviation_Pebibits" xml:space="preserve">
     <value>Pi</value>
     <comment>An abbreviation for a measurement unit of data</comment>
@@ -1749,6 +1761,10 @@
     <value>జౌల్స్</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Kilowatthour" xml:space="preserve">
+    <value>కిలోవాట్-గంటలు</value>
+    <comment>A measurement unit for electricity consumption. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Kelvin" xml:space="preserve">
     <value>కెల్విన్</value>
     <comment>An option in the unit converter to select the temperature system "Kelvin" (eg. 0 degrees Celsius = 273 Kelvin). At least in English, Kelvin does not use "degrees". A measurement is just stated as "273 Kelvin".</comment>
@@ -1833,8 +1849,16 @@
     <value>నిమిషాలు</value>
     <comment>A measurement unit for time. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
+  <data name="UnitName_Nibble" xml:space="preserve">
+    <value>నిబుల్</value>
+    <comment>A measurement unit for data. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
   <data name="UnitName_Nanometer" xml:space="preserve">
     <value>నానోమీటర్లు</value>
+    <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
+  </data>
+  <data name="UnitName_Angstrom" xml:space="preserve">
+    <value>ఆంగ్‌స్ట్రామ్స్</value>
     <comment>A measurement unit for length. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
   <data name="UnitName_NauticalMile" xml:space="preserve">
@@ -2330,11 +2354,11 @@
     <comment>The text that shows in the dropdown navigation control to give the user the option to send feedback about the app and it launches Windows Feedback app</comment>
   </data>
   <data name="HistoryEmpty.Text" xml:space="preserve">
-    <value>ఇప్పటికీ చరిత్ర లేదు</value>
+    <value>ఇంకా చరిత్ర లేదు.</value>
     <comment>The text that shows as the header for the history list</comment>
   </data>
   <data name="MemoryPaneEmpty.Text" xml:space="preserve">
-    <value>మెమరీలో ఏమీ సేవ్ కాలేదు</value>
+    <value>మెమరీలో ఏదీ సేవ్ చేయబడలేదు.</value>
     <comment>The text that shows as the header for the memory list</comment>
   </data>
   <data name="MemoryFlyout.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -3593,7 +3617,7 @@
   <data name="InvalidEquationSyntax" xml:space="preserve">
     <value>చెల్లని వ్యక్తీకరణ</value>
     <comment>Error that occurs during graphing when an invalid syntax is used.</comment>
-    </data>
+  </data>
   <data name="EmptyExpression" xml:space="preserve">
     <value>వ్యక్తీకరణ ఖాళీగా ఉంది</value>
     <comment>Error that occurs during graphing when the expression is empty</comment>
@@ -3605,7 +3629,7 @@
   <data name="ExpectParenthesisAfterFunctionName" xml:space="preserve">
     <value>ఫంక్షన్ పేరు తర్వాత కుండలీకరణాలు లేవు</value>
     <comment>Error that occurs during graphing when parenthesis are missing after a function.</comment>
-    </data>
+  </data>
   <data name="IncorrectNumParameter" xml:space="preserve">
     <value>ఒక గణిత చర్యలో పారామితుల సంఖ్య తప్పుగా ఉంది</value>
     <comment>Error that occurs during graphing when a function has the wrong number of parameters</comment>
@@ -3741,7 +3765,7 @@
   <data name="graphAutomationName" xml:space="preserve">
     <value>గ్రాఫ్ వీక్షణ విండో, %1 మరియు %2 లు సరిహద్దులుగా x-అక్షం ఉంది, %3 మరియు %4 లు సరిహద్దులుగా y-అక్షం ఉంది, %5 సమీకరణాలను ప్రదర్శిస్తుంది</value>
     <comment>{Locked="%1","%2", "%3", "%4", "%5"}. </comment>
-    </data>
+  </data>
   <data name="sliderOptionsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>స్లైడర్‌ని కాంఫిగర్ చేయండి</value>
     <comment>This is the tooltip text for the slider options button in Graphing Calculator</comment>
@@ -3858,7 +3882,7 @@
     <value>సూత్రీకరణను నమోదు చేయండి</value>
     <comment>this is the placeholder text used by the textbox to enter an equation</comment>
   </data>
-  <data name="GraphCopyMenuItem.Text">
+  <data name="GraphCopyMenuItem.Text" xml:space="preserve">
     <value>కాపీ చేయి</value>
     <comment>Copy menu item for the graph context menu</comment>
   </data>
@@ -3883,11 +3907,11 @@
     <comment>Select all menu item from the Equation TextBox</comment>
   </data>
   <data name="EquationInputButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>విధి ఇన్‌పుట్ జాబితా అంశం</value>
+    <value>విధి ఇన్‌పుట్</value>
     <comment>The automation name for the Equation Input ListView item that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputList.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>విధి ఇన్‌పుట్ జాబితా</value>
+    <value>విధి ఇన్‌పుట్</value>
     <comment>The automation name for the Equation Input ListView that is shown when Calculator is in graphing mode.</comment>
   </data>
   <data name="EquationInputPanel.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
@@ -4134,11 +4158,11 @@
     <value>కనిపించే తీరు</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
-  <data name="SettingsAppThemeTitle.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Header" xml:space="preserve">
     <value>అనువర్తనం థీమ్</value>
     <comment>Title of App theme expander</comment>
   </data>
-  <data name="SettingsAppThemeDescription.Text" xml:space="preserve">
+  <data name="AppThemeExpander.Description" xml:space="preserve">
     <value>ప్రదర్శించాలనుకునే అనువర్తనం థీమ్‌ను ఎంచుకోండి</value>
     <comment>Description of App theme expander</comment>
   </data>
@@ -4162,8 +4186,16 @@
     <value>సెట్టింగ్‌ల పేజీ</value>
     <comment>Announcement used when Settings page is opened</comment>
   </data>
-  <data name="AppThemeExpander.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>అప్లికేషన్ థీమ్ సెట్టింగ్</value>
-    <comment>Screen reader prompt for the App theme Setting radio buttons group</comment>
+  <data name="MathRichEditBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>అందుబాటులో ఉన్న చర్యల కోసం సందర్భ మెనుని తెరవండి</value>
+    <comment>Screen reader prompt for the context menu of the expression box</comment>
+  </data>
+  <data name="ErrorButtonOk" xml:space="preserve">
+    <value>సరే</value>
+    <comment>The text of OK button to dismiss an error dialog.</comment>
+  </data>
+  <data name="SnapshotRestoreError" xml:space="preserve">
+    <value>ఈ స్నాప్‌షాట్‌ని పునరుద్ధరించడం సాధ్యపడలేదు.</value>
+    <comment>The error message to notify user that restoring from snapshot has failed.</comment>
   </data>
 </root>

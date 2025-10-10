@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <cstdint>
+
 // CalcErr.h
 //
 // Defines the error codes thrown by ratpak and caught by Calculator
@@ -36,7 +38,7 @@
 // This format is based loosely on an OLE HRESULT and is compatible with the
 // SUCCEEDED and FAILED macros as well as the HRESULT_CODE macro
 
-typedef int32_t ResultCode;
+using ResultCode = int32_t;
 
 // CALC_E_DIVIDEBYZERO
 //

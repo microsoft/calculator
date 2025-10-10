@@ -1,33 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Converters;
-using CalculatorApp.Controls;
 using CalculatorApp.Utils;
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 
+using System;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Globalization.NumberFormatting;
-using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
-using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.System.Threading;
-using Windows.UI.ViewManagement;
 
 namespace CalculatorApp
 {
@@ -74,15 +62,12 @@ namespace CalculatorApp
             this.SizeChanged += Calculator_SizeChanged;
         }
 
-        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model
-        {
-            get => (StandardCalculatorViewModel)this.DataContext;
-        }
+        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
 
         public bool IsStandard
         {
-            get { return (bool)GetValue(IsStandardProperty); }
-            set { SetValue(IsStandardProperty, value); }
+            get => (bool)GetValue(IsStandardProperty);
+            set => SetValue(IsStandardProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsStandard.  This enables animation, styling, binding, etc...
@@ -95,8 +80,8 @@ namespace CalculatorApp
 
         public bool IsScientific
         {
-            get { return (bool)GetValue(IsScientificProperty); }
-            set { SetValue(IsScientificProperty, value); }
+            get => (bool)GetValue(IsScientificProperty);
+            set => SetValue(IsScientificProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsScientific.  This enables animation, styling, binding, etc...
@@ -109,8 +94,8 @@ namespace CalculatorApp
 
         public bool IsProgrammer
         {
-            get { return (bool)GetValue(IsProgrammerProperty); }
-            set { SetValue(IsProgrammerProperty, value); }
+            get => (bool)GetValue(IsProgrammerProperty);
+            set => SetValue(IsProgrammerProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsProgrammer.  This enables animation, styling, binding, etc...
@@ -123,8 +108,8 @@ namespace CalculatorApp
 
         public bool IsAlwaysOnTop
         {
-            get { return (bool)GetValue(IsAlwaysOnTopProperty); }
-            set { SetValue(IsAlwaysOnTopProperty, value); }
+            get => (bool)GetValue(IsAlwaysOnTopProperty);
+            set => SetValue(IsAlwaysOnTopProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for IsAlwaysOnTop.  This enables animation, styling, binding, etc...
@@ -134,6 +119,26 @@ namespace CalculatorApp
                 var self = (Calculator)sender;
                 self.OnIsAlwaysOnTopPropertyChanged((bool)args.OldValue, (bool)args.NewValue);
             }));
+
+        public string HistoryPivotItemUiaName
+        {
+            get => (string)GetValue(HistoryPivotItemUiaNameProperty);
+            set => SetValue(HistoryPivotItemUiaNameProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for HistoryPivotItemUiaName.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty HistoryPivotItemUiaNameProperty =
+            DependencyProperty.Register(nameof(HistoryPivotItemUiaName), typeof(string), typeof(Calculator), new PropertyMetadata(string.Empty));
+
+        public string MemoryPivotItemUiaName
+        {
+            get => (string)GetValue(MemoryPivotItemUiaNameProperty);
+            set => SetValue(MemoryPivotItemUiaNameProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for MemoryPivotItemUiaName.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MemoryPivotItemUiaNameProperty =
+            DependencyProperty.Register(nameof(MemoryPivotItemUiaName), typeof(string), typeof(Calculator), new PropertyMetadata(string.Empty));
 
         public System.Windows.Input.ICommand HistoryButtonPressed
         {
@@ -152,7 +157,7 @@ namespace CalculatorApp
         }
         private System.Windows.Input.ICommand donotuse_HistoryButtonPressed;
 
-        private static UISettings uiSettings = new UISettings();
+        private static readonly UISettings uiSettings = new UISettings();
         public void AnimateCalculator(bool resultAnimate)
         {
             if (uiSettings.AnimationsEnabled)
@@ -174,8 +179,11 @@ namespace CalculatorApp
         {
             if (m_historyList == null)
             {
-                m_historyList = new HistoryList();
-                m_historyList.DataContext = historyVM;
+                historyVM.PropertyChanged += (s, e) => UpdateHistoryState();
+                m_historyList = new HistoryList
+                {
+                    DataContext = historyVM
+                };
                 historyVM.HideHistoryClicked += OnHideHistoryClicked;
                 historyVM.HistoryItemClicked += OnHistoryItemClicked;
             }
@@ -237,26 +245,21 @@ namespace CalculatorApp
             HistoryFlyout.FlyoutPresenterStyle.Setters.Add(new Setter(AutomationProperties.NameProperty, historyPaneName));
             string memoryPaneName = AppResourceProvider.GetInstance().GetResourceString("MemoryPane");
             MemoryFlyout.FlyoutPresenterStyle.Setters.Add(new Setter(AutomationProperties.NameProperty, memoryPaneName));
-
-            if (Windows.Foundation.Metadata.ApiInformation.IsEventPresent("Windows.UI.Xaml.Controls.Primitives.FlyoutBase", "Closing"))
-            {
-                HistoryFlyout.Closing += HistoryFlyout_Closing;
-                MemoryFlyout.Closing += OnMemoryFlyoutClosing;
-            }
+            OnIsInErrorPropertyChanged();
 
             // Delay load things later when we get a chance.
             WeakReference weakThis = new WeakReference(this);
             _ = this.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
+                CoreDispatcherPriority.Normal, () =>
+                {
                     if (TraceLogger.GetInstance().IsWindowIdInLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
                     {
-                        var refThis = weakThis.Target as Calculator;
-                        if (refThis != null)
+                        if (weakThis.Target is Calculator refThis)
                         {
                             refThis.GetMemory();
                         }
                     }
-                }));
+                });
         }
 
         private void LoadResourceStrings()
@@ -315,6 +318,7 @@ namespace CalculatorApp
                     MemRecall.IsEnabled = false;
                     ClearMemoryButton.IsEnabled = false;
                 }
+                MemoryPivotItemUiaName = GetMemoryPivotItemUiaString(Model.IsMemoryEmpty);
 
                 if (DockPanel.Visibility == Visibility.Visible)
                 {
@@ -347,6 +351,7 @@ namespace CalculatorApp
                 {
                     DockPivot.SelectedIndex = 0;
                 }
+                HistoryPivotItemUiaName = GetHistoryPivotItemUiaString(Model.HistoryVM.ItemsCount == 0);
             }
             else
             {
@@ -361,8 +366,7 @@ namespace CalculatorApp
 
             PasteMenuItem.IsEnabled = CopyPasteManager.HasStringToPaste();
 
-            Point point;
-            if (e.TryGetPosition(requestedElement, out point))
+            if (e.TryGetPosition(requestedElement, out Point point))
             {
                 m_displayFlyout.ShowAt(requestedElement, point);
             }
@@ -547,7 +551,7 @@ namespace CalculatorApp
 
         // Since we need different font sizes for different numeric system,
         // we use a table of optimal font sizes for each numeric system.
-        private static readonly FontTable[] fontTables = new FontTable[] {
+        private static readonly FontTable[] fontTables = {
             new FontTable { numericSystem = "Arab", fullFont = 104, fullFontMin = 29.333, portraitMin = 23, snapFont = 40,
                             fullNumPadFont = 56, snapScientificNumPadFont = 40, portraitScientificNumPadFont = 56 },
             new FontTable { numericSystem = "ArabExt", fullFont = 104, fullFontMin = 29.333, portraitMin = 23, snapFont = 40,
@@ -629,7 +633,7 @@ namespace CalculatorApp
             }
         }
 
-        private Windows.UI.Xaml.Controls.MenuFlyout m_displayFlyout;
+        private readonly Windows.UI.Xaml.Controls.MenuFlyout m_displayFlyout;
         private bool m_doAnimate;
         private bool m_resultAnimate;
         private bool m_isLastAnimatedInScientific;
@@ -664,9 +668,6 @@ namespace CalculatorApp
 
         private void HistoryFlyout_Closed(object sender, object args)
         {
-            // Ideally, this would be renamed in the Closing event because the Closed event is too late.
-            // Closing is not available until RS1+ so we set the name again here for TH2 support.
-            AutomationProperties.SetName(HistoryButton, m_openHistoryFlyoutAutomationName);
             m_fIsHistoryFlyoutOpen = false;
             EnableControls(true);
             if (HistoryButton.IsEnabled && HistoryButton.Visibility == Visibility.Visible)
@@ -759,9 +760,6 @@ namespace CalculatorApp
 
         private void OnMemoryFlyoutClosed(object sender, object args)
         {
-            // Ideally, this would be renamed in the Closing event because the Closed event is too late.
-            // Closing is not available until RS1+ so we set the name again here for TH2 support.
-            AutomationProperties.SetName(MemoryButton, m_openMemoryFlyoutAutomationName);
             m_fIsMemoryFlyoutOpen = false;
             EnableControls(true);
             if (MemoryButton.IsEnabled)
@@ -774,7 +772,10 @@ namespace CalculatorApp
 
         private void SetChildAsMemory()
         {
-            DockMemoryHolder.Child = GetMemory();
+            if (DockMemoryHolder.Child != GetMemory())
+            {
+                DockMemoryHolder.Child = GetMemory();
+            }
         }
 
         private void SetChildAsHistory()
@@ -784,7 +785,10 @@ namespace CalculatorApp
                 InitializeHistoryView(Model.HistoryVM);
             }
 
-            DockHistoryHolder.Child = m_historyList;
+            if (DockHistoryHolder.Child != m_historyList)
+            {
+                DockHistoryHolder.Child = m_historyList;
+            }
         }
 
         private Memory GetMemory()
@@ -840,8 +844,7 @@ namespace CalculatorApp
 
         private void DockPanelTapped(object sender, TappedRoutedEventArgs e)
         {
-            int index = DockPivot.SelectedIndex;
-            if (index == 1 && !IsProgrammer)
+            if (DockPivot.SelectedIndex == 1 && !IsProgrammer)
             {
                 SetChildAsMemory();
             }
@@ -869,6 +872,20 @@ namespace CalculatorApp
 
             var mode = IsStandard ? ViewMode.Standard : IsScientific ? ViewMode.Scientific : ViewMode.Programmer;
             TraceLogger.GetInstance().LogVisualStateChanged(mode, e.NewState.Name, IsAlwaysOnTop);
+        }
+
+        private string GetMemoryPivotItemUiaString(bool isEmpty)
+        {
+            var loader = ResourceLoader.GetForCurrentView();
+            var label = loader.GetString("MemoryLabel/Text");
+            return isEmpty ? $"{loader.GetString("MemoryPaneEmpty/Text")} {label}" : label;
+        }
+
+        private string GetHistoryPivotItemUiaString(bool isEmpty)
+        {
+            var loader = ResourceLoader.GetForCurrentView();
+            var label = loader.GetString("HistoryLabel/Text");
+            return isEmpty ? $"{loader.GetString("HistoryEmpty/Text")} {label}" : label;
         }
     }
 }

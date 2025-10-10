@@ -12,7 +12,7 @@
 using namespace CalculatorApp;
 using namespace CalculatorApp::ViewModel::Common;
 using namespace CalculationManager;
-using namespace CalcManager::NumberFormattingUtils;
+using namespace UnitConversionManager::NumberFormattingUtils;
 using namespace Platform;
 using namespace std;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -191,11 +191,11 @@ namespace CalculatorManagerTest
         TEST_METHOD(CalculatorManagerTestMaxDigitsReached_LeadingDecimal);
         TEST_METHOD(CalculatorManagerTestMaxDigitsReached_TrailingDecimal);
 
-        TEST_METHOD(CalculatorManagerNumberFormattingUtils_TrimTrailingZeros);
-        TEST_METHOD(CalculatorManagerNumberFormattingUtils_GetNumberDigits);
-        TEST_METHOD(CalculatorManagerNumberFormattingUtils_GetNumberDigitsWholeNumberPart);
-        TEST_METHOD(CalculatorManagerNumberFormattingUtils_RoundSignificantDigits);
-        TEST_METHOD(CalculatorManagerNumberFormattingUtils_ToScientificNumber);
+        TEST_METHOD(UnitConversionManagerNumberFormattingUtils_TrimTrailingZeros);
+        TEST_METHOD(UnitConversionManagerNumberFormattingUtils_GetNumberDigits);
+        TEST_METHOD(UnitConversionManagerNumberFormattingUtils_GetNumberDigitsWholeNumberPart);
+        TEST_METHOD(UnitConversionManagerNumberFormattingUtils_RoundSignificantDigits);
+        TEST_METHOD(UnitConversionManagerNumberFormattingUtils_ToScientificNumber);
 
         TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived);
         TEST_METHOD(CalculatorManagerTestBinaryOperatorReceived_Multiple);
@@ -643,6 +643,26 @@ namespace CalculatorManagerTest
         Command commands5[] = { Command::Command2,   Command::CommandOPENP, Command::Command2,   Command::CommandCLOSEP,
                                 Command::CommandADD, Command::CommandEQU,   Command::CommandNULL };
         TestDriver::Test(L"8", L"2 \x00D7 (2) + 4=", commands5, true, true);
+
+        Command commands6[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"16", L"(8) \x00D7 2=", commands6, true, true);
+
+        Command commands7[] = { Command::CommandOPENP,  Command::Command7, Command::CommandMUL, Command::Command2,
+                                Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"28", L"(7 \x00D7 2) \x00D7 2=", commands7, true, true);
+
+        Command commands8[] = { Command::CommandOPENP,  Command::Command7, Command::CommandMUL, Command::Command2,
+                                Command::CommandCLOSEP, Command::Command2, Command::CommandEQU,
+                                Command::CommandOPENP, Command::Command1, Command::Command4, Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL};
+        TestDriver::Test(L"28", L"(14) \x00D7 2=", commands8, true, true);
+
+        Command commands9[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP,
+                                Command::Command0, Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"4", L"(8) \x00D7 0.5=", commands9, true, true);
+
+        Command commands10[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP,
+                                 Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"4", L"(8) \x00D7 0.5=", commands10, true, true);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientificError()
@@ -752,6 +772,31 @@ namespace CalculatorManagerTest
 
         Command commands10[] = { Command::ModeProgrammer, Command::Command1, Command::CommandRORC, Command::CommandRORC, Command::CommandNULL };
         TestDriver::Test(L"-9,223,372,036,854,775,808", L"RoR(RoR(1))", commands10, true, false);
+
+        Command commands11[] = { Command::ModeProgrammer, Command::CommandDec, Command::Command4, Command::Command2, Command::Command9,   Command::Command4,
+                                Command::Command9,       Command::Command6,   Command::Command7, Command::Command2, Command::Command9,   Command::Command6,
+                                Command::CommandDIV,     Command::Command2,   Command::Command5, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"16,843,009", L"4294967296 \x00F7 255=", commands11, true, false);
+
+        Command commands12[] = {
+            Command::ModeProgrammer, Command::CommandDec, Command::Command4, Command::Command2, Command::Command9,   Command::Command4,
+            Command::Command9,       Command::Command6,   Command::Command7, Command::Command3, Command::Command0,   Command::Command3,
+            Command::CommandDIV,     Command::Command2,   Command::Command5, Command::Command5, Command::CommandEQU, Command::CommandNULL
+        };
+        TestDriver::Test(L"16,843,009", L"4294967303 \x00F7 255=", commands12, true, false);
+
+        Command commands13[] = {
+            Command::ModeProgrammer, Command::CommandDec, Command::Command1, Command::Command0, Command::Command0, Command::Command0,
+            Command::Command0, Command::Command0, Command::Command0, Command::Command0, Command::Command0, Command::Command0, Command::CommandDIV,
+            Command::Command6, Command::Command4, Command::Command4, Command::Command8, Command::Command7, Command::CommandEQU, Command::CommandNULL
+        };
+        TestDriver::Test(L"15,507", L"1000000000 \x00F7 64487=", commands13, true, false);
+
+        Command commands14[] = { Command::ModeProgrammer, Command::CommandDec, Command::Command1,   Command::Command0,   Command::Command0,
+                                 Command::Command0,       Command::Command0,   Command::Command0,   Command::Command0,   Command::Command0,
+                                 Command::Command0,       Command::Command0,   Command::CommandDIV, Command::Command6,   Command::Command4,
+                                 Command::Command4,       Command::Command8,   Command::Command8,   Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"15,506", L"1000000000 \x00F7 64488=", commands14, true, false);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestMemory()
@@ -917,7 +962,7 @@ namespace CalculatorManagerTest
         TestMaxDigitsReachedScenario(L"123,456,789,101,112.13");
     }
 
-    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_TrimTrailingZeros()
+    void CalculatorManagerTest::UnitConversionManagerNumberFormattingUtils_TrimTrailingZeros()
     {
         wstring number = L"2.1032100000000";
         TrimTrailingZeros(number);
@@ -942,7 +987,7 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(number, L"322423");
     }
 
-    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_GetNumberDigits()
+    void CalculatorManagerTest::UnitConversionManagerNumberFormattingUtils_GetNumberDigits()
     {
         wstring number = L"2.10321";
         unsigned int digitsCount = GetNumberDigits(number);
@@ -961,7 +1006,7 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(digitsCount, 8);
     }
 
-    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_GetNumberDigitsWholeNumberPart()
+    void CalculatorManagerTest::UnitConversionManagerNumberFormattingUtils_GetNumberDigitsWholeNumberPart()
     {
         unsigned int digitsCount = GetNumberDigitsWholeNumberPart(2.10321);
         VERIFY_ARE_EQUAL(digitsCount, 1);
@@ -981,7 +1026,7 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(digitsCount, 1);
     }
 
-    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_RoundSignificantDigits()
+    void CalculatorManagerTest::UnitConversionManagerNumberFormattingUtils_RoundSignificantDigits()
     {
         wstring result = RoundSignificantDigits(12.342343242, 3);
         VERIFY_ARE_EQUAL(result, L"12.342");
@@ -997,7 +1042,7 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(result, L"0.3423000");
     }
 
-    void CalculatorManagerTest::CalculatorManagerNumberFormattingUtils_ToScientificNumber()
+    void CalculatorManagerTest::UnitConversionManagerNumberFormattingUtils_ToScientificNumber()
     {
         wstring result = ToScientificNumber(3423);
         VERIFY_ARE_EQUAL(result, L"3.423000e+03");
