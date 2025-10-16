@@ -115,8 +115,8 @@
 
 #define IDC_EXP 127
 
-#define IDC_OPENP 128
-#define IDC_CLOSEP 129
+#define IDC_OPENP 128   // Open parenthesis "("
+#define IDC_CLOSEP 129  // Close parenthesis ")"
 
 #define IDC_0 130 // The controls for 0 through F must be consecutive and in order
 #define IDC_1 131

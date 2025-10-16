@@ -135,6 +135,7 @@ private:
     bool m_bError;                                                   // Error flag.
     bool m_bInv;                                                     // Inverse on/off flag.
     bool m_bNoPrevEqu;                                               /* Flag for previous equals.          */
+    bool m_bFlagSign;                                                /* Flag for +/- on next op */
 
     uint32_t m_radix;
     int32_t m_precision;

@@ -71,6 +71,7 @@ CCalcEngine::CCalcEngine(
     , m_nPrevOpCode(0)
     , m_bChangeOp(false)
     , m_bRecord(false)
+    , m_bFlagSign(false)
     , m_bSetCalcState(false)
     , m_input(DEFAULT_DEC_SEPARATOR)
     , m_nFE(NumberFormat::Float)
