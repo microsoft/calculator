@@ -3352,11 +3352,11 @@
     <comment>Label text for the step text box</comment>
   </data>
   <data name="MinTextBlock.Text" xml:space="preserve">
-    <value>מינימום</value>
+    <value>Min</value>
     <comment>Label text for the min text box</comment>
   </data>
   <data name="MaxTextBlock.Text" xml:space="preserve">
-    <value>מקסימום</value>
+    <value>Max</value>
     <comment>Label text for the max text box</comment>
   </data>
   <data name="LineColorText.Text" xml:space="preserve">
