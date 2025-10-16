@@ -91,7 +91,7 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        vstsPackageVersion: 0.0.119
+        vstsPackageVersion: 0.0.120
 
   - task: PowerShell@2
     displayName: Generate MsixBundle mapping
@@ -102,7 +102,7 @@ jobs:
   - powershell: |
       $buildVersion = [version]$Env:BUILDVERSION
       $bundleVersion = "2021.$($buildVersion.Minor).$($buildVersion.Build).$($buildVersion.Revision)"
-      & "C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64\MakeAppx.exe" bundle /v /bv $bundleVersion /f $Env:MAPPINGFILEPATH /p $Env:OUTPUTPATH
+      & "C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\MakeAppx.exe" bundle /v /bv $bundleVersion /f $Env:MAPPINGFILEPATH /p $Env:OUTPUTPATH
     displayName: Make MsixBundle
     env:
       BUILDVERSION: $(Build.BuildNumber)
