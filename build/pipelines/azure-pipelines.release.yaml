@@ -80,13 +80,6 @@ extends:
 
       - template: /build/pipelines/templates/build-single-architecture.yaml@self
         parameters:
-          platform: ARM
-          isReleaseBuild: true
-          useReleaseAppxmanifest: true
-          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
-
-      - template: /build/pipelines/templates/build-single-architecture.yaml@self
-        parameters:
           platform: ARM64
           isReleaseBuild: true
           useReleaseAppxmanifest: true
