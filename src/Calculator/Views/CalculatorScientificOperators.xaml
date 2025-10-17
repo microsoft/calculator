@@ -391,6 +391,7 @@
                         <Grid x:Name="TrigGrid"
                               MinWidth="258"
                               MinHeight="96"
+                              FlowDirection="LeftToRight"
                               XYFocusKeyboardNavigation="Enabled">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
@@ -828,6 +829,7 @@
                         <Grid x:Name="FuncGrid"
                               MinWidth="194"
                               MinHeight="96"
+                              FlowDirection="LeftToRight"
                               XYFocusKeyboardNavigation="Enabled">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
