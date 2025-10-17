@@ -296,4 +296,3 @@ src/CalcViewModel/DataLoaders/DataLoaderConstants.h
 !src/x64
 !src/x86
 !src/out
-!src/ARM
