@@ -21,7 +21,7 @@
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
     </UserControl.Resources>
 
-    <Grid x:Name="ProgRadixOps">
+    <Grid x:Name="ProgRadixOps" FlowDirection="LeftToRight">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="OperatorPanelRow" Height="Auto"/>
             <RowDefinition Height="1*"/>
@@ -230,6 +230,7 @@
 
         <controls:OperatorPanelListView Grid.ColumnSpan="6"
                                         Background="{ThemeResource AppOperatorPanelBackground}"
+                                        FlowDirection="{x:Bind FlowDirection}"
                                         AutomationProperties.HeadingLevel="Level1"
                                         AutomationProperties.Name="{utils:ResourceString Name=ProgrammerOperatorPanel/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
 
@@ -248,6 +249,7 @@
                         <Grid x:Name="BitwiseGrid"
                               MinWidth="258"
                               MinHeight="96"
+                              FlowDirection="LeftToRight"
                               XYFocusKeyboardNavigation="Enabled">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>

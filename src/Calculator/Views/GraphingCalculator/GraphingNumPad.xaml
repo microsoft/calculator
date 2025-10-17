@@ -19,7 +19,8 @@
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
     </UserControl.Resources>
 
-    <Border Background="{ThemeResource AppOperatorPanelBackground}" PointerPressed="GraphingNumPad_PointerPressed">
+    <Border Background="{ThemeResource AppOperatorPanelBackground}" PointerPressed="GraphingNumPad_PointerPressed"
+            FlowDirection="LeftToRight">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="SizeLayouts">
                 <VisualState x:Name="Large">
@@ -357,6 +358,7 @@
             </Grid.ColumnDefinitions>
 
             <controls:OperatorPanelListView Grid.ColumnSpan="5"
+                                            FlowDirection="{x:Bind FlowDirection}"
                                             AutomationProperties.HeadingLevel="Level1"
                                             AutomationProperties.Name="{utils:ResourceString Name=ScientificOperatorPanel/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
 
@@ -379,6 +381,7 @@
                             <Grid x:Name="TrigGrid"
                                   MinWidth="258"
                                   MinHeight="96"
+                                  FlowDirection="LeftToRight"
                                   XYFocusKeyboardNavigation="Enabled">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="1*"/>
@@ -793,6 +796,7 @@
                                 Placement="Bottom">
 
                             <Grid x:Name="InequalityGrid"
+                                  FlowDirection="LeftToRight"
                                   MinWidth="312"
                                   MinHeight="48">
                                 <Grid.RowDefinitions>
@@ -884,6 +888,7 @@
                             <Grid x:Name="FuncGrid"
                                   MinWidth="194"
                                   MinHeight="48"
+                                  FlowDirection="LeftToRight"
                                   XYFocusKeyboardNavigation="Enabled">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="1*"/>
