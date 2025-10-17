@@ -68,14 +68,6 @@ jobs:
       targetPath: $(Build.ArtifactStagingDirectory)\drop\x64
 
   - task: DownloadPipelineArtifact@2
-    displayName: Download all .msix artifacts (ARM)
-    condition: and(succeeded(), eq(variables.PackageARM, 'true'))
-    inputs:
-      artifactName: drop-ARM
-      itemPattern: '**/*.msix'
-      targetPath: $(Build.ArtifactStagingDirectory)\drop\ARM
-
-  - task: DownloadPipelineArtifact@2
     displayName: Download all .msix artifacts (ARM64)
     condition: and(succeeded(), eq(variables.PackageARM64, 'true'))
     inputs:
