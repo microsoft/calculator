@@ -12,7 +12,7 @@
              XYFocusKeyboardNavigation="Enabled"
              mc:Ignorable="d">
 
-    <Grid x:Name="Root">
+    <Grid x:Name="Root" FlowDirection="LeftToRight">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="R0" Height="1*"/>
             <RowDefinition x:Name="R1" Height="1*"/>

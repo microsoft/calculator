@@ -601,7 +601,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Grid FlowDirection="LeftToRight">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="RowHamburger" Height="{StaticResource HamburgerHeightGridLength}"/>
                 <RowDefinition x:Name="RowExpression"
@@ -623,6 +623,7 @@
                                         Grid.Row="1"
                                         Margin="6,0,6,0"
                                         VerticalAlignment="Bottom"
+                                        FlowDirection="LeftToRight"
                                         Style="{StaticResource NormalStyle}"
                                         AutomationProperties.AutomationId="CalculatorExpression"
                                         AutomationProperties.Name="{x:Bind Model.CalculationExpressionAutomationName, Mode=OneWay}"
@@ -633,6 +634,7 @@
                                         x:Uid="CalculatorResults"
                                         Grid.Row="2"
                                         Margin="0,0,0,0"
+                                        FlowDirection="LeftToRight"
                                         Style="{StaticResource ResultsStyle}"
                                         AutomationProperties.AutomationId="CalculatorResults"
                                         AutomationProperties.HeadingLevel="Level1"
@@ -649,6 +651,7 @@
                                         Grid.Row="2"
                                         Margin="6,0,6,0"
                                         HorizontalContentAlignment="Right"
+                                        FlowDirection="LeftToRight"
                                         Style="{StaticResource AOTResultsStyle}"
                                         FontSize="40"
                                         AutomationProperties.AutomationId="CalculatorAlwaysOnTopResults"
@@ -662,6 +665,33 @@
                                         UseSystemFocusVisuals="True"
                                         Visibility="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
 
+            <!--History button-->
+            <Grid FlowDirection="LeftToRight">
+                <Button x:Name="HistoryButton"
+                        Grid.Row="0"
+                        Style="{StaticResource HistoryButtonStyle}"
+                        common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=HistoryButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
+                        AccessKey="{utils:ResourceString Name=HistoryButton/AccessKey}"
+                        AutomationProperties.AutomationId="HistoryButton"
+                        Command="{x:Bind HistoryButtonPressed, Mode=OneTime}"
+                        Content="&#xe81c;"
+                        ExitDisplayModeOnAccessKeyInvoked="False"
+                        TabIndex="2"
+                        ToolTipService.ToolTip="{utils:ResourceString Name=HistoryButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
+                        Visibility="{x:Bind local:Calculator.ShouldDisplayHistoryButton(Model.IsAlwaysOnTop, Model.IsProgrammer, DockPanel.Visibility), Mode=OneWay}"
+                        IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout x:Name="HistoryFlyout"
+                                AutomationProperties.AutomationId="HistoryFlyout"
+                                Closed="HistoryFlyout_Closed"
+                                Closing="HistoryFlyout_Closing"
+                                FlyoutPresenterStyle="{StaticResource HistoryFlyoutStyle}"
+                                Opened="HistoryFlyout_Opened"
+                                Placement="Full"/>
+                    </FlyoutBase.AttachedFlyout>
+                </Button>
+            </Grid>
+            
             <!-- Programmer display panel controls -->
             <local:CalculatorProgrammerOperators x:Name="ProgrammerOperators"
                                                  Grid.Row="3"
@@ -676,30 +706,6 @@
                                                     Visibility="{x:Bind Model.IsProgrammer, Mode=OneWay}"
                                                     IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
                                                     x:Load="False"/>
-
-            <Button x:Name="HistoryButton"
-                    Grid.Row="0"
-                    Style="{StaticResource HistoryButtonStyle}"
-                    common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=HistoryButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
-                    AccessKey="{utils:ResourceString Name=HistoryButton/AccessKey}"
-                    AutomationProperties.AutomationId="HistoryButton"
-                    Command="{x:Bind HistoryButtonPressed, Mode=OneTime}"
-                    Content="&#xe81c;"
-                    ExitDisplayModeOnAccessKeyInvoked="False"
-                    TabIndex="2"
-                    ToolTipService.ToolTip="{utils:ResourceString Name=HistoryButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                    Visibility="{x:Bind local:Calculator.ShouldDisplayHistoryButton(Model.IsAlwaysOnTop, Model.IsProgrammer, DockPanel.Visibility), Mode=OneWay}"
-                    IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
-                <FlyoutBase.AttachedFlyout>
-                    <Flyout x:Name="HistoryFlyout"
-                            AutomationProperties.AutomationId="HistoryFlyout"
-                            Closed="HistoryFlyout_Closed"
-                            Closing="HistoryFlyout_Closing"
-                            FlyoutPresenterStyle="{StaticResource HistoryFlyoutStyle}"
-                            Opened="HistoryFlyout_Opened"
-                            Placement="Full"/>
-                </FlyoutBase.AttachedFlyout>
-            </Button>
 
             <!-- Scientific angle buttons -->
             <local:CalculatorScientificAngleButtons x:Name="ScientificAngleButtons"
