@@ -9,9 +9,6 @@ jobs:
   displayName: UITests ${{ parameters.platform }}
   dependsOn: Build${{ parameters.platform }}
   condition: succeeded()
-  pool:
-    name: EssentialExperiences-Win11
-    image: Win11Enterprise-BuildTools2022
   variables:
     skipComponentGovernanceDetection: true
     DropName: drop-${{ parameters.platform }}
