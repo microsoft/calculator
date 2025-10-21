@@ -2227,9 +2227,14 @@
                                         Foreground="{ThemeResource SystemAltMediumHighColor}"
                                         FontFamily="{ThemeResource CalculatorFontFamily}"
                                         FontSize="12"
-                                        Content="&#xE96F;"
                                         IsTabStop="False"
-                                        Visibility="Collapsed"/>
+                                        Visibility="Collapsed">
+                                    <FontIcon x:Name="ScrollLeftText"
+                                              FontFamily="{ThemeResource CalculatorFontFamily}"
+                                              FontSize="12"
+                                              MirroredWhenRightToLeft="True"
+                                              Glyph="&#xE96F;"/>
+                                </Button>
                                 <Button x:Name="ScrollRight"
                                         Grid.Row="1"
                                         MinWidth="20"
@@ -2240,9 +2245,14 @@
                                         Foreground="{ThemeResource SystemAltMediumHighColor}"
                                         FontFamily="{ThemeResource CalculatorFontFamily}"
                                         FontSize="12"
-                                        Content="&#xE970;"
                                         IsTabStop="False"
-                                        Visibility="Collapsed"/>
+                                        Visibility="Collapsed">
+                                    <FontIcon x:Name="ScrollRightText"
+                                              FontFamily="{ThemeResource CalculatorFontFamily}"
+                                              FontSize="12"
+                                              MirroredWhenRightToLeft="True"
+                                              Glyph="&#xE970;"/>
+                                </Button>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>

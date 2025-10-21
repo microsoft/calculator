@@ -21,7 +21,7 @@
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
     </UserControl.Resources>
-    <Grid x:Name="ScientificOperators">
+    <Grid x:Name="ScientificOperators" FlowDirection="LeftToRight">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="OperatorPanelRow" Height="Auto"/>
             <RowDefinition Height="1*"/>
@@ -372,6 +372,7 @@
 
         <controls:OperatorPanelListView Grid.ColumnSpan="5"
                                         Background="{ThemeResource AppOperatorPanelBackground}"
+                                        FlowDirection="{x:Bind FlowDirection}"
                                         AutomationProperties.HeadingLevel="Level1"
                                         AutomationProperties.Name="{utils:ResourceString Name=ScientificOperatorPanel/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
 
@@ -390,6 +391,7 @@
                         <Grid x:Name="TrigGrid"
                               MinWidth="258"
                               MinHeight="96"
+                              FlowDirection="LeftToRight"
                               XYFocusKeyboardNavigation="Enabled">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
@@ -827,6 +829,7 @@
                         <Grid x:Name="FuncGrid"
                               MinWidth="194"
                               MinHeight="96"
+                              FlowDirection="LeftToRight"
                               XYFocusKeyboardNavigation="Enabled">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
