@@ -1171,7 +1171,7 @@ wstring NumberToString(_Inout_ PNUMBER& pnum, NumberFormat format, uint32_t radi
         {
             if (format == NumberFormat::Engineering)
             {
-                exponent = (eout % 3);
+                exponent = (3 + (eout % 3)) % 3;
                 eout -= exponent;
                 exponent++;
 

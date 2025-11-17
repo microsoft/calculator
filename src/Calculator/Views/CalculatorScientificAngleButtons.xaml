@@ -98,21 +98,32 @@
                 CommandParameter="2"
                 Content="GRAD"
                 Visibility="Collapsed"/>
-        <ToggleButton x:Name="FtoeButton"
-                      Grid.Column="1"
-                      Style="{StaticResource CaptionToggleButtonWithIndicatorStyle}"
-                      Background="{ThemeResource SystemControlBackgroundTransparentBrush}"
-                      common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=ftoeButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
-                      AutomationProperties.AutomationId="ftoeButton"
-                      AutomationProperties.Name="{utils:ResourceString Name=ftoeButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                      Checked="FToEButton_Toggled"
-                      Content="F-E"
-                      IsChecked="{x:Bind Model.IsFToEChecked, Mode=OneWay}"
-                      Unchecked="FToEButton_Toggled"
-                      IsEnabled="{x:Bind Model.IsFToEEnabled, Mode=OneWay}">
-            <ToggleButton.CommandParameter>
-                <local:NumbersAndOperatorsEnum>FToE</local:NumbersAndOperatorsEnum>
-            </ToggleButton.CommandParameter>
-        </ToggleButton>
+
+        <Button x:Name="AutoButton"
+                x:Uid="AutoButton"
+                Grid.Column="1"
+                Style="{StaticResource CaptionButtonSmallStyle}"
+                AutomationProperties.AutomationId="autoButton"
+                Command="{x:Bind NotationPressed}"
+                CommandParameter="0"
+                Content="AUTO"/>
+        <Button x:Name="SciButton"
+                x:Uid="SciButton"
+                Grid.Column="1"
+                Style="{StaticResource CaptionButtonSmallStyle}"
+                AutomationProperties.AutomationId="sciButton"
+                Command="{x:Bind NotationPressed}"
+                CommandParameter="1"
+                Content="SCI"
+                Visibility="Collapsed"/>
+        <Button x:Name="EngButton"
+                x:Uid="EngButton"
+                Grid.Column="1"
+                Style="{StaticResource CaptionButtonSmallStyle}"
+                AutomationProperties.AutomationId="engButton"
+                Command="{x:Bind NotationPressed}"
+                CommandParameter="2"
+                Content="ENG"
+                Visibility="Collapsed"/>
     </Grid>
 </UserControl>
