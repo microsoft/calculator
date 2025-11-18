@@ -220,12 +220,19 @@ namespace CalculatorApp.ManagedViewModels
                 }
                 else
                 {
-                    if (settings.Values.TryGetValue(WidthLocalSettingsKey, out var oldWidth) &&
-                        settings.Values.TryGetValue(HeightLocalSettingsKey, out var oldHeight))
+                    try
                     {
-                        compactOptions.CustomSize = new Size((double)oldWidth, (double)oldHeight);
+                        if (settings.Values.TryGetValue(WidthLocalSettingsKey, out var oldWidth) &&
+                            settings.Values.TryGetValue(HeightLocalSettingsKey, out var oldHeight))
+                        {
+                            compactOptions.CustomSize = new Size((double)oldWidth, (double)oldHeight);
+                        }
+                        else
+                        {
+                            compactOptions.CustomSize = DefaultSize;
+                        }
                     }
-                    else
+                    catch (InvalidCastException)
                     {
                         compactOptions.CustomSize = DefaultSize;
                     }
