@@ -50,12 +50,6 @@ extends:
         parameters:
           isReleaseBuild: true
           useReleaseAppxManifest: false
-          platform: ARM
-
-      - template: /build/pipelines/templates/build-single-architecture.yaml@self
-        parameters:
-          isReleaseBuild: true
-          useReleaseAppxManifest: false
           platform: ARM64
 
       - template: /build/pipelines/templates/run-ui-tests.yaml@self

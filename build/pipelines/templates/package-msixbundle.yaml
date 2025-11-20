@@ -1,5 +1,5 @@
 # This template contains a job which takes .msix packages which were built separately for each
-# architecture (arm, x86, etc.) and combines them into a single .msixbundle. In release builds,
+# architecture (arm64, x86, etc.) and combines them into a single .msixbundle. In release builds,
 # this job also signs the bundle and creates StoreBroker packages.
 
 parameters:
@@ -11,14 +11,12 @@ jobs:
   dependsOn:
     - Buildx64
     - Buildx86
-    - BuildARM
     - BuildARM64
   condition: |
     and
     (
       in(dependencies.Buildx64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
       in(dependencies.Buildx86.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
-      in(dependencies.BuildARM.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
       in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     )
   variables:
@@ -27,7 +25,6 @@ jobs:
     StoreBrokerPackagePath: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
     PackageX86: $[in(dependencies.Buildx86.result, 'Succeeded', 'SucceededWithIssues')]
     PackageX64: $[in(dependencies.Buildx64.result, 'Succeeded', 'SucceededWithIssues')]
-    PackageARM: $[in(dependencies.BuildARM.result, 'Succeeded', 'SucceededWithIssues')]
     PackageARM64: $[in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues')]
   templateContext:
     outputs:
@@ -68,14 +65,6 @@ jobs:
       targetPath: $(Build.ArtifactStagingDirectory)\drop\x64
 
   - task: DownloadPipelineArtifact@2
-    displayName: Download all .msix artifacts (ARM)
-    condition: and(succeeded(), eq(variables.PackageARM, 'true'))
-    inputs:
-      artifactName: drop-ARM
-      itemPattern: '**/*.msix'
-      targetPath: $(Build.ArtifactStagingDirectory)\drop\ARM
-
-  - task: DownloadPipelineArtifact@2
     displayName: Download all .msix artifacts (ARM64)
     condition: and(succeeded(), eq(variables.PackageARM64, 'true'))
     inputs:
@@ -91,7 +80,7 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        vstsPackageVersion: 0.0.119
+        vstsPackageVersion: 0.0.122
 
   - task: PowerShell@2
     displayName: Generate MsixBundle mapping
@@ -102,7 +91,7 @@ jobs:
   - powershell: |
       $buildVersion = [version]$Env:BUILDVERSION
       $bundleVersion = "2021.$($buildVersion.Minor).$($buildVersion.Build).$($buildVersion.Revision)"
-      & "C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64\MakeAppx.exe" bundle /v /bv $bundleVersion /f $Env:MAPPINGFILEPATH /p $Env:OUTPUTPATH
+      & "C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\MakeAppx.exe" bundle /v /bv $bundleVersion /f $Env:MAPPINGFILEPATH /p $Env:OUTPUTPATH
     displayName: Make MsixBundle
     env:
       BUILDVERSION: $(Build.BuildNumber)

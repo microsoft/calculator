@@ -27,7 +27,7 @@ jobs:
         id: platformList
         run: |
           if ($env:isPR -eq $false) {
-            'platformList=["x64", "x86", "ARM64", "ARM"]' | Out-File $env:GITHUB_OUTPUT -Append
+            'platformList=["x64", "x86", "ARM64"]' | Out-File $env:GITHUB_OUTPUT -Append
             echo 'Build all platforms.'
           }
           else {
