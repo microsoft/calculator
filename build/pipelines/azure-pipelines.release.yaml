@@ -9,7 +9,7 @@ pr: none
 
 variables:
   - name: versionMajor
-    value: 11
+    value: 0
   - name: versionMinor
     value: 2508
   - name: versionBuild
