@@ -52,48 +52,56 @@ namespace CalculatorApp::ViewModel
 
     void EquationViewModel::PopulateKeyGraphFeatures(KeyGraphFeaturesInfo ^ graphEquation)
     {
-        if (graphEquation->AnalysisError != 0)
+        try
+        {
+            if (graphEquation->AnalysisError != 0)
+            {
+                AnalysisErrorVisible = true;
+                if (graphEquation->AnalysisError == static_cast<int>(AnalysisErrorType::AnalysisCouldNotBePerformed))
+                {
+                    AnalysisErrorString = m_resourceLoader->GetString(L"KGFAnalysisCouldNotBePerformed");
+                }
+                else if (graphEquation->AnalysisError == static_cast<int>(AnalysisErrorType::AnalysisNotSupported))
+                {
+                    AnalysisErrorString = m_resourceLoader->GetString(L"KGFAnalysisNotSupported");
+                }
+                else if (graphEquation->AnalysisError == static_cast<int>(AnalysisErrorType::VariableIsNotX))
+                {
+                    AnalysisErrorString = m_resourceLoader->GetString(L"KGFVariableIsNotX");
+                }
+                return;
+            }
+    
+            KeyGraphFeaturesItems->Clear();
+    
+            AddKeyGraphFeature(m_resourceLoader->GetString(L"Domain"), graphEquation->Domain, m_resourceLoader->GetString(L"KGFDomainNone"));
+            AddKeyGraphFeature(m_resourceLoader->GetString(L"Range"), graphEquation->Range, m_resourceLoader->GetString(L"KGFRangeNone"));
+            AddKeyGraphFeature(m_resourceLoader->GetString(L"XIntercept"), graphEquation->XIntercept, m_resourceLoader->GetString(L"KGFXInterceptNone"));
+            AddKeyGraphFeature(m_resourceLoader->GetString(L"YIntercept"), graphEquation->YIntercept, m_resourceLoader->GetString(L"KGFYInterceptNone"));
+            AddKeyGraphFeature(m_resourceLoader->GetString(L"Minima"), graphEquation->Minima, m_resourceLoader->GetString(L"KGFMinimaNone"));
+            AddKeyGraphFeature(m_resourceLoader->GetString(L"Maxima"), graphEquation->Maxima, m_resourceLoader->GetString(L"KGFMaximaNone"));
+            AddKeyGraphFeature(
+                m_resourceLoader->GetString(L"InflectionPoints"), graphEquation->InflectionPoints, m_resourceLoader->GetString(L"KGFInflectionPointsNone"));
+            AddKeyGraphFeature(
+                m_resourceLoader->GetString(L"VerticalAsymptotes"), graphEquation->VerticalAsymptotes, m_resourceLoader->GetString(L"KGFVerticalAsymptotesNone"));
+            AddKeyGraphFeature(
+                m_resourceLoader->GetString(L"HorizontalAsymptotes"),
+                graphEquation->HorizontalAsymptotes,
+                m_resourceLoader->GetString(L"KGFHorizontalAsymptotesNone"));
+            AddKeyGraphFeature(
+                m_resourceLoader->GetString(L"ObliqueAsymptotes"), graphEquation->ObliqueAsymptotes, m_resourceLoader->GetString(L"KGFObliqueAsymptotesNone"));
+            AddParityKeyGraphFeature(graphEquation);
+            AddPeriodicityKeyGraphFeature(graphEquation);
+            AddMonotoncityKeyGraphFeature(graphEquation);
+            AddTooComplexKeyGraphFeature(graphEquation);
+    
+            AnalysisErrorVisible = false;
+        }
+        catch (Exception^ ex)
         {
             AnalysisErrorVisible = true;
-            if (graphEquation->AnalysisError == static_cast<int>(AnalysisErrorType::AnalysisCouldNotBePerformed))
-            {
-                AnalysisErrorString = m_resourceLoader->GetString(L"KGFAnalysisCouldNotBePerformed");
-            }
-            else if (graphEquation->AnalysisError == static_cast<int>(AnalysisErrorType::AnalysisNotSupported))
-            {
-                AnalysisErrorString = m_resourceLoader->GetString(L"KGFAnalysisNotSupported");
-            }
-            else if (graphEquation->AnalysisError == static_cast<int>(AnalysisErrorType::VariableIsNotX))
-            {
-                AnalysisErrorString = m_resourceLoader->GetString(L"KGFVariableIsNotX");
-            }
-            return;
-        }
-
-        KeyGraphFeaturesItems->Clear();
-
-        AddKeyGraphFeature(m_resourceLoader->GetString(L"Domain"), graphEquation->Domain, m_resourceLoader->GetString(L"KGFDomainNone"));
-        AddKeyGraphFeature(m_resourceLoader->GetString(L"Range"), graphEquation->Range, m_resourceLoader->GetString(L"KGFRangeNone"));
-        AddKeyGraphFeature(m_resourceLoader->GetString(L"XIntercept"), graphEquation->XIntercept, m_resourceLoader->GetString(L"KGFXInterceptNone"));
-        AddKeyGraphFeature(m_resourceLoader->GetString(L"YIntercept"), graphEquation->YIntercept, m_resourceLoader->GetString(L"KGFYInterceptNone"));
-        AddKeyGraphFeature(m_resourceLoader->GetString(L"Minima"), graphEquation->Minima, m_resourceLoader->GetString(L"KGFMinimaNone"));
-        AddKeyGraphFeature(m_resourceLoader->GetString(L"Maxima"), graphEquation->Maxima, m_resourceLoader->GetString(L"KGFMaximaNone"));
-        AddKeyGraphFeature(
-            m_resourceLoader->GetString(L"InflectionPoints"), graphEquation->InflectionPoints, m_resourceLoader->GetString(L"KGFInflectionPointsNone"));
-        AddKeyGraphFeature(
-            m_resourceLoader->GetString(L"VerticalAsymptotes"), graphEquation->VerticalAsymptotes, m_resourceLoader->GetString(L"KGFVerticalAsymptotesNone"));
-        AddKeyGraphFeature(
-            m_resourceLoader->GetString(L"HorizontalAsymptotes"),
-            graphEquation->HorizontalAsymptotes,
-            m_resourceLoader->GetString(L"KGFHorizontalAsymptotesNone"));
-        AddKeyGraphFeature(
-            m_resourceLoader->GetString(L"ObliqueAsymptotes"), graphEquation->ObliqueAsymptotes, m_resourceLoader->GetString(L"KGFObliqueAsymptotesNone"));
-        AddParityKeyGraphFeature(graphEquation);
-        AddPeriodicityKeyGraphFeature(graphEquation);
-        AddMonotoncityKeyGraphFeature(graphEquation);
-        AddTooComplexKeyGraphFeature(graphEquation);
-
-        AnalysisErrorVisible = false;
+            AnalysisErrorString = "Invalid input: " + ex->Message;
+        }   
     }
 
     void EquationViewModel::AddKeyGraphFeature(String ^ title, String ^ expression, String ^ errorString)
