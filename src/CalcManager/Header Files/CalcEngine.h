@@ -151,7 +151,7 @@ private:
     int m_nLastCom;                          // Last command entered.
     AngleType m_angletype;                   // Current Angle type when in dec mode. one of deg, rad or grad
     NUM_WIDTH m_numwidth;                    // one of qword, dword, word or byte mode.
-    int32_t m_dwWordBitWidth;                // # of bits in currently selected word size
+    uint32_t m_dwWordBitWidth;                // # of bits in currently selected word size
 
     std::unique_ptr<std::mt19937> m_randomGeneratorEngine;
     std::unique_ptr<std::uniform_real_distribution<>> m_distr;
@@ -181,7 +181,7 @@ private:
     CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op);
     CalcEngine::Rational DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs);
     void SetRadixTypeAndNumWidth(RadixType radixtype, NUM_WIDTH numwidth);
-    int32_t DwWordBitWidthFromNumWidth(NUM_WIDTH numwidth);
+    uint32_t DwWordBitWidthFromNumWidth(NUM_WIDTH numwidth);
     uint32_t NRadixFromRadixType(RadixType radixtype);
     double GenerateRandomNumber();
 
