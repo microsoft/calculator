@@ -44,10 +44,11 @@ namespace CalculatorApp
                 // restore the selection to the way we wanted it to begin with
                 if (CurrentPosition >= 0 && CurrentPosition < m_source.Count)
                 {
-                    Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    // Fire-and-forget to avoid blocking UI thread / deadlock
+                    _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
                         CurrentChanged?.Invoke(this, null);
-                    }).AsTask().Wait();
+                    });
                 }
                 return false;
             }
