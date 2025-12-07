@@ -338,6 +338,9 @@ bool zerrat(_In_ PRAT a)
 //
 //    trimit also removes digits but it's for a different reason.
 //
+//    Notice that trigonometric functions sinrat/cosrat have specifically
+//    adjusted for approximation errors.
+//
 //-----------------------------------------------------------------------------
 
 void _snaprat(_Inout_ PRAT* pr, _In_ PRAT a, _In_opt_ PRAT b, int32_t precision)
