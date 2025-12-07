@@ -15,7 +15,6 @@
 //-----------------------------------------------------------------------------
 #include "ratpak.h"
 
-#define ABSRAT(x) (((x)->pp->sign = 1), ((x)->pq->sign = 1))
 #define NEGATE(x) ((x)->pp->sign *= -1)
 
 //-----------------------------------------------------------------------------
@@ -73,17 +72,17 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
 
     // Find the best 'A' for convergence to the required precision.
     a = i32torat(radix);
-    lograt(&a, precision);
+    _lograt(&a, precision);
     mulrat(&a, ratprec, precision);
 
     // Really is -ln(n)+1, but -ln(n) will be < 1
     // if we scale n between 0.5 and 1.5
-    addrat(&a, rat_two, precision);
+    _addrat(&a, rat_two, precision);
     DUPRAT(tmp, a);
-    lograt(&tmp, precision);
+    _lograt(&tmp, precision);
     mulrat(&tmp, *pn, precision);
-    addrat(&a, tmp, precision);
-    addrat(&a, rat_one, precision);
+    _addrat(&a, tmp, precision);
+    _addrat(&a, rat_one, precision);
 
     // Calculate the necessary bump in precision and up the precision.
     // The following code is equivalent to
@@ -91,17 +90,17 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
     DUPRAT(tmp, *pn);
     one_pt_five = i32torat(3L);
     divrat(&one_pt_five, rat_two, precision);
-    addrat(&tmp, one_pt_five, precision);
+    _addrat(&tmp, one_pt_five, precision);
     DUPRAT(term, a);
     powratcomp(&term, tmp, radix, precision);
     DUPRAT(tmp, a);
     exprat(&tmp, radix, precision);
     mulrat(&term, tmp, precision);
-    lograt(&term, precision);
+    _lograt(&term, precision);
     const auto ratRadix = i32torat(radix);
     DUPRAT(tmp, ratRadix);
-    lograt(&tmp, precision);
-    subrat(&term, tmp, precision);
+    _lograt(&tmp, precision);
+    _subrat(&term, tmp, precision);
     precision += rattoi32(term, radix, precision);
 
     // Set up initial terms for series, refer to series in above comment block.
@@ -118,10 +117,10 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
     DUPRAT(sum, rat_one);
     divrat(&sum, *pn, precision);
     DUPRAT(tmp, *pn);
-    addrat(&tmp, rat_one, precision);
+    _addrat(&tmp, rat_one, precision);
     DUPRAT(term, a);
     divrat(&term, tmp, precision);
-    subrat(&sum, term, precision);
+    _subrat(&sum, term, precision);
 
     DUPRAT(err, ratRadix);
     NEGATE(ratprec);
@@ -134,7 +133,7 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
     // Loop until precision is reached, or asked to halt.
     while (!zerrat(term) && rat_gt(term, err, precision))
     {
-        addrat(pn, rat_two, precision);
+        _addrat(pn, rat_two, precision);
 
         // WARNING: mixing numbers and  rationals here.
         // for speed and efficiency.
@@ -146,22 +145,22 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
         divrat(&factorial, a2, precision);
 
         DUPRAT(tmp, *pn);
-        addrat(&tmp, rat_one, precision);
+        _addrat(&tmp, rat_one, precision);
         destroyrat(term);
         createrat(term);
         DUPNUM(term->pp, count);
         DUPNUM(term->pq, num_one);
-        addrat(&term, rat_one, precision);
+        _addrat(&term, rat_one, precision);
         mulrat(&term, tmp, precision);
         DUPRAT(tmp, a);
         divrat(&tmp, term, precision);
 
         DUPRAT(term, rat_one);
         divrat(&term, *pn, precision);
-        subrat(&term, tmp, precision);
+        _subrat(&term, tmp, precision);
 
         divrat(&term, factorial, precision);
-        addrat(&sum, term, precision);
+        _addrat(&sum, term, precision);
         ABSRAT(term);
     }
 
@@ -214,7 +213,7 @@ void factrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     while (rat_gt(*px, rat_zero, precision) && (LOGRATRADIX(*px) > -precision))
     {
         mulrat(&fact, *px, precision);
-        subrat(px, rat_one, precision);
+        _subrat(px, rat_one, precision);
     }
 
     // Added to make numbers 'close enough' to integers use integer factorial.
@@ -226,13 +225,13 @@ void factrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 
     while (rat_lt(*px, neg_rat_one, precision))
     {
-        addrat(px, rat_one, precision);
+        _addrat(px, rat_one, precision);
         divrat(&fact, *px, precision);
     }
 
     if (rat_neq(*px, rat_zero, precision))
     {
-        addrat(px, rat_one, precision);
+        _addrat(px, rat_one, precision);
         _gamma(px, radix, precision);
         mulrat(px, fact, precision);
     }
