@@ -366,9 +366,8 @@ void _snaprat(_Inout_ PRAT* pr, _In_ PRAT a, _In_opt_ PRAT b, int32_t precision)
         }
         else
         {
-            DUPRAT(threshold, absA); 
+            DUPRAT(threshold, absA);
         }
-        
         destroyrat(absA);
         destroyrat(absB);
     }
