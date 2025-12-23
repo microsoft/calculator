@@ -177,7 +177,7 @@ void divrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision)
 //
 //    RETURN: None, changes first pointer.
 //
-//    DESCRIPTION: Does the rational equivalent of *pa += b.
+//    DESCRIPTION: Does the rational equivalent of *pa -= b.
 //    Assumes base is internal throughout.
 //
 //    subrat does snapping to zero after subtraction. All ratpak internal
