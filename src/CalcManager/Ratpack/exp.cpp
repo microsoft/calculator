@@ -119,7 +119,7 @@ void exprat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
 //   Number is scaled between one and e_to_one_half prior to taking the
 //   log. This is to keep execution time from exploding.
 //
-//   lograt tries to snapp to zero. Use _lograt inside ratpak by default.
+//   lograt tries to snap to zero. Use _lograt inside ratpak by default.
 //   __lograt is part of _lograt private implementation and should not be used.
 //
 //
