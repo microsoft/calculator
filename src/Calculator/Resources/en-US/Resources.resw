@@ -145,19 +145,19 @@
     <value>AppUpdate2</value>
     <comment>{Locked}This will Update Resources.pri File, Resource is not used in the app</comment>
   </data>
-  <data name="decimalButton.Tag" xml:space="preserve">
+  <data name="decimalButton.Label" xml:space="preserve">
     <value>DEC</value>
     <comment>{Locked}The Decimal button</comment>
   </data>
-  <data name="binaryButton.Tag" xml:space="preserve">
+  <data name="binaryButton.Label" xml:space="preserve">
     <value>BIN</value>
     <comment>{Locked}The Binary button</comment>
   </data>
-  <data name="hexButton.Tag" xml:space="preserve">
+  <data name="hexButton.Label" xml:space="preserve">
     <value>HEX</value>
     <comment>{Locked}The Hex button</comment>
   </data>
-  <data name="octButton.Tag" xml:space="preserve">
+  <data name="octButton.Label" xml:space="preserve">
     <value>OCT</value>
     <comment>{Locked}The Oct button</comment>
   </data>
