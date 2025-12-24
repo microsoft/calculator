@@ -143,6 +143,9 @@ extern PRAT rat_min_i32;
     DUPNUM((a)->pp, (b)->pp);                                                                                                                                  \
     DUPNUM((a)->pq, (b)->pq);
 
+// ABSRAT returns the absolute value of the rational
+#define ABSRAT(x) (((x)->pp->sign = 1), ((x)->pq->sign = 1))
+
 // LOG*RADIX calculates the integral portion of the log of a number in
 // the base currently being used, only accurate to within g_ratio
 
@@ -306,7 +309,7 @@ extern PRAT rat_min_i32;
 // pret += thisterm
 #define NEXTTERM(p, d, precision)                                                                                                                              \
     mulrat(&thisterm, p, precision);                                                                                                                           \
-    d addrat(&pret, thisterm, precision)
+    d _addrat(&pret, thisterm, precision)
 
 //-----------------------------------------------------------------------------
 //
@@ -420,6 +423,7 @@ extern void log10rat(_Inout_ PRAT* px, int32_t precision);
 
 // returns a new rat structure with the natural log of x->p/x->q
 extern void lograt(_Inout_ PRAT* px, int32_t precision);
+extern void _lograt(_Inout_ PRAT* px, int32_t precision);
 
 extern PRAT i32torat(int32_t ini32);
 extern PRAT Ui32torat(uint32_t inui32);
@@ -445,6 +449,7 @@ extern void _destroynum(_Frees_ptr_opt_ PNUMBER pnum);
 extern void _destroyrat(_Frees_ptr_opt_ PRAT prat);
 extern void addnum(_Inout_ PNUMBER* pa, _In_ PNUMBER b, uint32_t radix);
 extern void addrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision);
+extern void _addrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision);
 extern void andrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision);
 extern void divnum(_Inout_ PNUMBER* pa, _In_ PNUMBER b, uint32_t radix, int32_t precision);
 extern void divnumx(_Inout_ PNUMBER* pa, _In_ PNUMBER b, int32_t precision);
@@ -470,6 +475,7 @@ extern void rootrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t preci
 extern void scale2pi(_Inout_ PRAT* px, uint32_t radix, int32_t precision);
 extern void scale(_Inout_ PRAT* px, _In_ PRAT scalefact, uint32_t radix, int32_t precision);
 extern void subrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision);
+extern void _subrat(_Inout_ PRAT* pa, _In_ PRAT b, int32_t precision);
 extern void xorrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision);
 extern void lshrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision);
 extern void rshrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision);
@@ -483,3 +489,6 @@ extern void inbetween(_In_ PRAT* px, _In_ PRAT range, int32_t precision);
 extern void trimit(_Inout_ PRAT* px, int32_t precision);
 extern void _dumprawrat(_In_ const wchar_t* varname, _In_ PRAT rat, std::wostream& out);
 extern void _dumprawnum(_In_ const wchar_t* varname, _In_ PNUMBER num, std::wostream& out);
+
+// if |pr| is magnitude smaller than |a| or |b| beyond precision, snap pr to 0
+extern void _snaprat(_Inout_ PRAT* pr, _In_ PRAT a, _In_opt_ PRAT b, int32_t precision);

@@ -395,6 +395,10 @@ namespace CalculatorManagerTest
         Command commands22[] = { Command::Command1,   Command::Command0, Command::Command2, Command::Command4,   Command::CommandSQRT,
                                  Command::CommandSUB, Command::Command3, Command::Command2, Command::CommandADD, Command::CommandNULL };
         TestDriver::Test(L"0", L"0 + ", commands22);
+
+        Command commands23[] = { Command::Command2, Command::CommandPNT, Command::Command2, Command::Command5,   Command::CommandSQRT, Command::CommandSUB,
+                                 Command::Command1, Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"0", L"\x221A(2.25) - 1.5=", commands23);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientific()
@@ -482,6 +486,15 @@ namespace CalculatorManagerTest
         Command commands24[] = { Command::Command2,    Command::Command5,    Command::Command7,   Command::CommandSQRT,
                                  Command::CommandSQRT, Command::CommandSQRT, Command::CommandNULL };
         TestDriver::Test(L"2.0009748976330773374220277351385", L"\x221A(\x221A(\x221A(257)))", commands24, true, true);
+
+        Command commands25[] = { Command::Command2, Command::CommandPNT, Command::Command2, Command::Command5,   Command::CommandSQRT, Command::CommandSUB,
+                                 Command::Command1, Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"0", L"\x221A(2.25) - 1.5=", commands25, true, true);
+
+        Command commands26[] = { Command::CommandOPENP, Command::Command2,   Command::CommandPNT, Command::Command2,   Command::Command5,
+                                 Command::CommandSQRT,  Command::CommandDIV, Command::Command1,   Command::CommandPNT, Command::Command5,
+                                 Command::CommandCLOSEP, Command::CommandLOG,  Command::CommandNULL };
+        TestDriver::Test(L"0", L"log(\x221A(2.25) \x00F7 1.5)", commands26, true, true);
     }
 
     // Scientific functions from the scientific calculator

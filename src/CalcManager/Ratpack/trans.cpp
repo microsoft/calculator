@@ -107,7 +107,7 @@ void sinanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t 
     case AngleType::Degrees:
         if (rat_gt(*pa, rat_180, precision))
         {
-            subrat(pa, rat_360, precision);
+            _subrat(pa, rat_360, precision);
         }
         divrat(pa, rat_180, precision);
         mulrat(pa, pi, precision);
@@ -115,7 +115,7 @@ void sinanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t 
     case AngleType::Gradians:
         if (rat_gt(*pa, rat_200, precision))
         {
-            subrat(pa, rat_400, precision);
+            _subrat(pa, rat_400, precision);
         }
         divrat(pa, rat_200, precision);
         mulrat(pa, pi, precision);
@@ -204,7 +204,7 @@ void cosanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t 
         {
             PRAT ptmp = nullptr;
             DUPRAT(ptmp, rat_360);
-            subrat(&ptmp, *pa, precision);
+            _subrat(&ptmp, *pa, precision);
             destroyrat(*pa);
             *pa = ptmp;
         }
@@ -216,7 +216,7 @@ void cosanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t 
         {
             PRAT ptmp = nullptr;
             DUPRAT(ptmp, rat_400);
-            subrat(&ptmp, *pa, precision);
+            _subrat(&ptmp, *pa, precision);
             destroyrat(*pa);
             *pa = ptmp;
         }
@@ -272,7 +272,7 @@ void tananglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t 
     case AngleType::Degrees:
         if (rat_gt(*pa, rat_180, precision))
         {
-            subrat(pa, rat_180, precision);
+            _subrat(pa, rat_180, precision);
         }
         divrat(pa, rat_180, precision);
         mulrat(pa, pi, precision);
@@ -280,7 +280,7 @@ void tananglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t 
     case AngleType::Gradians:
         if (rat_gt(*pa, rat_200, precision))
         {
-            subrat(pa, rat_200, precision);
+            _subrat(pa, rat_200, precision);
         }
         divrat(pa, rat_200, precision);
         mulrat(pa, pi, precision);
