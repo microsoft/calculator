@@ -17,8 +17,9 @@ namespace CalculatorUITestFramework
 
     public enum FEButtonState
     {
-        Normal,
-        Exponential
+        Auto,
+        Scientific,
+        Engineering
     }
 
     /// <summary>
@@ -78,11 +79,14 @@ namespace CalculatorUITestFramework
         public WindowsElement RandButton => this.session.TryFindElementByAccessibilityId("randButton");
         public WindowsElement DmsButton => this.session.TryFindElementByAccessibilityId("dmsButton");
         public WindowsElement DegreesButton => this.session.TryFindElementByAccessibilityId("degreesButton");
-        public WindowsElement FixedToExponentialButton => this.session.TryFindElementByAccessibilityId("ftoeButton");
+        public WindowsElement AutoButton => this.session.TryFindElementByAccessibilityId("autoButton");
+        public WindowsElement SciButton => this.session.TryFindElementByAccessibilityId("sciButton");
+        public WindowsElement EngButton => this.session.TryFindElementByAccessibilityId("engButton");
         public WindowsElement NegateButton => this.session.TryFindElementByAccessibilityId("negateButton");
         public WindowsElement ShiftButton => this.session.TryFindElementByAccessibilityId("shiftButton");
         public WindowsElement TrigFlyout => this.session.TryFindElementByAccessibilityId("Trigflyout");
         public WindowsElement LightDismiss => this.session.TryFindElementByAccessibilityId("Light Dismiss");
+        private WindowsElement AutoSciEngButton => GetNumberFormatButton();
         private WindowsElement DegRadGradButton => GetAngleOperatorButton();
         private WindowsElement GetAngleOperatorButton()
         {
@@ -101,6 +105,25 @@ namespace CalculatorUITestFramework
             }
 
             throw new NotFoundException("Could not find deg, rad or grad button in page source");
+        }
+
+        private WindowsElement GetNumberFormatButton()
+        {
+            string source = this.session.PageSource;
+            if (source.Contains("autoButton"))
+            {
+                return AutoButton;
+            }
+            else if (source.Contains("sciButton"))
+            {
+                return SciButton;
+            }
+            else if (source.Contains("engButton"))
+            {
+                return EngButton;
+            }
+
+            throw new NotFoundException("Could not find auto, sci, or eng button in page source");
         }
 
         /// <summary>
@@ -122,11 +145,19 @@ namespace CalculatorUITestFramework
             }
         }
 
-        public void ResetFEButton(FEButtonState value)
+        public void SetNumberFormat(FEButtonState value)
         {
-            if (this.FixedToExponentialButton.GetAttribute("Toggle.ToggleState") != "0")
+            //set the desired string value for the button
+            string desiredId = value switch
             {
-                FixedToExponentialButton.Click();
+                FEButtonState.Auto => "autoButton",
+                FEButtonState.Scientific => "sciButton",
+                FEButtonState.Engineering => "engButton",
+                _ => throw new NotImplementedException()
+            };
+            while (this.AutoSciEngButton.GetAttribute("AutomationId") != desiredId)
+            {
+                this.AutoSciEngButton.Click();
             }
         }
 

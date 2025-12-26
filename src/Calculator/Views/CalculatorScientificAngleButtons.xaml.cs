@@ -17,10 +17,10 @@ namespace CalculatorApp
     [Windows.Foundation.Metadata.WebHostHidden]
     public sealed partial class CalculatorScientificAngleButtons
     {
-        public CalculatorScientificAngleButtons()
+        public CalculatorScientificAngleButtons()       
         {
             m_isErrorVisualState = false;
-            InitializeComponent();
+            InitializeComponent();                      
         }
 
         public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
@@ -84,10 +84,49 @@ namespace CalculatorApp
             }
         }
 
-        private void FToEButton_Toggled(object sender, RoutedEventArgs e)
+        public System.Windows.Input.ICommand NotationPressed
         {
-            var viewModel = (StandardCalculatorViewModel)this.DataContext;
-            viewModel.FtoEButtonToggled();
+            get
+            {
+                if (donotuse_NotationPressed == null)
+                {
+                    donotuse_NotationPressed = DelegateCommandUtils.MakeDelegateCommand(this,
+                        (that, param) =>
+                        {
+                            that.OnNotationButtonPressed(param);
+                        });
+                }
+                return donotuse_NotationPressed;
+            }
+        }
+        private System.Windows.Input.ICommand donotuse_NotationPressed;
+
+        private void OnNotationButtonPressed(object commandParameter)
+        {
+            string buttonId = (string)commandParameter;
+
+            AutoButton.Visibility = Visibility.Collapsed;
+            SciButton.Visibility = Visibility.Collapsed;
+            EngButton.Visibility = Visibility.Collapsed;
+
+            if (buttonId == "0")
+            {
+                Model.FtoEButtonToggled();
+                SciButton.Visibility = Visibility.Visible;
+                SciButton.Focus(FocusState.Programmatic);
+            }
+            else if (buttonId == "1")
+            {
+                Model.EngButton();
+                EngButton.Visibility = Visibility.Visible;
+                EngButton.Focus(FocusState.Programmatic);
+            }
+            else if (buttonId == "2")
+            {
+                Model.FtoEButtonToggled();
+                AutoButton.Visibility = Visibility.Visible;
+                AutoButton.Focus(FocusState.Programmatic);
+            }
         }
 
         private bool m_isErrorVisualState;

@@ -66,6 +66,7 @@ namespace CalculationManager
         CommandGRAD = 323,
         CommandDegrees = 324,
         CommandHYP = 325,
+        CommandENG = 326,
 
         CommandNULL = 0,
 
