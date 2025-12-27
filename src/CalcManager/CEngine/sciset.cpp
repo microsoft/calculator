@@ -50,7 +50,7 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RadixType radixtype, NUM_WIDTH numwidt
     DisplayNum();
 }
 
-int32_t CCalcEngine::DwWordBitWidthFromNumWidth(NUM_WIDTH numwidth)
+uint32_t CCalcEngine::DwWordBitWidthFromNumWidth(NUM_WIDTH numwidth)
 {
     switch (numwidth)
     {
@@ -103,30 +103,15 @@ bool CCalcEngine::TryToggleBit(CalcEngine::Rational& rat, uint32_t wbitno)
 }
 
 // Returns the nearest power of two
-int CCalcEngine::QuickLog2(int iNum)
+unsigned int CCalcEngine::QuickLog2(unsigned int iNum)
 {
-    int iRes = 0;
+    // Nearest power of 2 to 0 is 1
+    if (!iNum)
+        return 1;
 
-    // while first digit is a zero
-    while (!(iNum & 1))
-    {
-        iRes++;
-        iNum >>= 1;
-    }
-
-    // if our number isn't a perfect square
-    iNum = iNum >> 1;
-    if (iNum)
-    {
-        // find the largest digit
-        for (iNum = iNum >> 1; iNum; iNum = iNum >> 1)
-            ++iRes;
-
-        // and then add two
-        iRes += 2;
-    }
-
-    return iRes;
+    // Count the number of leading 0's of iNum - 1,
+    // and then shift 1 by that amount
+    return 1U << (32 - __builtin_clz(iNum - 1));
 }
 
 ////////////////////////////////////////////////////////////////////////
