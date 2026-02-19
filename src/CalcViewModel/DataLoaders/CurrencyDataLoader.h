@@ -5,7 +5,7 @@
 
 #include "CalcManager/UnitConverter.h"
 #include "Common/NetworkManager.h"
-#include "ICurrencyHttpClient.h"
+#include "CurrencyHttpClient.h"
 
 namespace CalculatorApp
 {
@@ -54,9 +54,7 @@ namespace CalculatorApp
         class CurrencyDataLoader : public UCM::IConverterDataLoader, public UCM::ICurrencyConverterDataLoader
         {
         public:
-            CurrencyDataLoader(
-                _In_ std::unique_ptr<CalculatorApp::ViewModel::DataLoaders::ICurrencyHttpClient> client,
-                const wchar_t* overrideLanguage = nullptr);
+            CurrencyDataLoader(const wchar_t* overrideLanguage = nullptr);
             ~CurrencyDataLoader();
 
             bool LoadFinished();
@@ -114,7 +112,7 @@ namespace CalculatorApp
 
         private:
             Platform::String ^ m_responseLanguage;
-            std::unique_ptr<CalculatorApp::ViewModel::DataLoaders::ICurrencyHttpClient> m_client;
+            CurrencyHttpClient m_client;
 
             bool m_isRtlLanguage;
 

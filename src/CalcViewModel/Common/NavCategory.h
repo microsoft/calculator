@@ -146,14 +146,14 @@ namespace CalculatorApp::ViewModel
             OBSERVABLE_PROPERTY_R(Platform::String ^, Name);
             OBSERVABLE_PROPERTY_R(Platform::String ^, AutomationName);
             OBSERVABLE_PROPERTY_R(CategoryGroupType, GroupType);
-            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IObservableVector<NavCategory ^> ^, Categories);
+            OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IVector<NavCategory ^> ^, Categories);
         };
 
         public ref class NavCategoryStates sealed
         {
         public:
             static void SetCurrentUser(Platform::String^ user);
-            static Windows::Foundation::Collections::IObservableVector<NavCategoryGroup ^> ^ CreateMenuOptions();
+            static Windows::Foundation::Collections::IVector<NavCategoryGroup ^> ^ CreateMenuOptions();
             static NavCategoryGroup ^ CreateCalculatorCategoryGroup();
             static NavCategoryGroup ^ CreateConverterCategoryGroup();
 

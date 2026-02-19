@@ -228,7 +228,6 @@ public enum class GraphViewChangedReason
                 {
                     if (auto render = m_graph->GetRenderer())
                     {
-                        Concurrency::critical_section::scoped_lock lock(m_renderMain->GetCriticalSection());
                         render->GetDisplayRanges(*xMin, *xMax, *yMin, *yMax);
                     }
                 }
@@ -280,7 +279,7 @@ public enum class GraphViewChangedReason
         void OnEquationsPropertyChanged(EquationCollection ^ oldValue, EquationCollection ^ newValue);
         void OnAxesColorPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
         void OnGraphBackgroundPropertyChanged(Windows::UI::Color oldValue, Windows::UI::Color newValue);
-        void OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue);
+        winrt::fire_and_forget OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue);
         void OnLineWidthPropertyChanged(double oldValue, double newValue);
         void OnEquationChanged(Equation ^ equation);
         void OnEquationStyleChanged(Equation ^ equation);

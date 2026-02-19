@@ -11,7 +11,6 @@ using namespace GraphControl;
 using namespace GraphControl::DX;
 using namespace Platform;
 using namespace Platform::Collections;
-using namespace std;
 using namespace Concurrency;
 using namespace Windows::Devices::Input;
 using namespace Windows::Foundation;
@@ -54,9 +53,9 @@ namespace
     // posX/posY are the pointer position elements and width,height are the dimensions of the graph surface.
     // The graphing engine interprets x,y position between the range [-1, 1].
     // Translate the pointer position to the [-1, 1] bounds.
-    __inline pair<double, double> PointerPositionToGraphPosition(double posX, double posY, double width, double height)
+    __inline std::pair<double, double> PointerPositionToGraphPosition(double posX, double posY, double width, double height)
     {
-        return make_pair((2 * posX / width - 1), (1 - 2 * posY / height));
+        return { (2 * posX / width - 1), (1 - 2 * posY / height) };
     }
 }
 
@@ -71,7 +70,7 @@ namespace GraphControl
 
         m_solver->ParsingOptions().SetFormatType(s_defaultFormatType);
         m_solver->FormatOptions().SetFormatType(s_defaultFormatType);
-        m_solver->FormatOptions().SetMathMLPrefix(wstring(L"mml"));
+        m_solver->FormatOptions().SetMathMLPrefix(L"mml");
 
         DefaultStyleKey = StringReference(s_defaultStyleKey);
 
@@ -81,8 +80,6 @@ namespace GraphControl
         auto cw = CoreWindow::GetForCurrentThread();
         cw->KeyDown += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyDown);
         cw->KeyUp += ref new TypedEventHandler<CoreWindow ^, KeyEventArgs ^>(this, &Grapher::OnCoreKeyUp);
-
-        auto& formatOptions = m_solver->FormatOptions();
     }
 
     void Grapher::ZoomFromCenter(double scale)
@@ -95,21 +92,10 @@ namespace GraphControl
     {
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
-            if (auto renderer = m_graph->GetRenderer())
+            if (auto renderer = m_graph->GetRenderer(); static_cast<bool>(renderer) && SUCCEEDED(renderer->ScaleRange(centerX, centerY, scale)))
             {
-                m_renderMain->GetCriticalSection().lock();
-
-                if (SUCCEEDED(renderer->ScaleRange(centerX, centerY, scale)))
-                {
-                    m_renderMain->GetCriticalSection().unlock();
-
-                    m_renderMain->RunRenderPass();
-                    GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
-                }
-                else
-                {
-                    m_renderMain->GetCriticalSection().unlock();
-                }
+                m_renderMain->RunRenderPass();
+                GraphViewChangedEvent(this, GraphViewChangedReason::Manipulation);
             }
         }
     }
@@ -251,7 +237,7 @@ namespace GraphControl
 
             if (auto analyzer = graph->GetAnalyzer())
             {
-                vector<Equation ^> equationVector;
+                std::vector<Equation ^> equationVector;
                 equationVector.push_back(equation);
                 UpdateGraphOptions(graph->GetOptions(), equationVector);
                 bool variableIsNotX;
@@ -325,15 +311,15 @@ namespace GraphControl
 
     task<bool> Grapher::TryUpdateGraph(bool keepCurrentView)
     {
-        optional<vector<shared_ptr<IEquation>>> initResult = nullopt;
+        std::optional<std::vector<std::shared_ptr<IEquation>>> initResult;
         bool successful = false;
         m_errorCode = 0;
         m_errorType = 0;
 
         if (m_renderMain && m_graph != nullptr)
         {
-            unique_ptr<IExpression> graphExpression;
-            wstring request;
+            std::unique_ptr<IExpression> graphExpression;
+            std::wstring request;
 
             auto validEqs = GetGraphableEquations();
 
@@ -371,13 +357,12 @@ namespace GraphControl
                         co_return false;
                     }
 
-                    unique_ptr<IExpression> expr;
-                    wstring parsableEquation = s_getGraphOpeningTags;
+                    std::wstring parsableEquation = s_getGraphOpeningTags;
                     parsableEquation += equationRequest;
                     parsableEquation += s_getGraphClosingTags;
 
                     // Wire up the corresponding error to an error message in the UI at some point
-                    if (!(expr = m_solver->ParseInput(parsableEquation, m_errorCode, m_errorType)))
+                    if (auto expr = m_solver->ParseInput(parsableEquation, m_errorCode, m_errorType); !static_cast<bool>(expr))
                     {
                         co_return false;
                     }
@@ -392,11 +377,11 @@ namespace GraphControl
             {
                 initResult = TryInitializeGraph(keepCurrentView, graphExpression.get());
 
-                if (initResult != nullopt)
+                if (initResult.has_value())
                 {
-                    auto graphedEquations = initResult.value();
+                    auto& graphedEquations = *initResult;
 
-                    for (int i = 0; i < validEqs.size(); i++)
+                    for (size_t i = 0; i < validEqs.size(); ++i)
                     {
                         validEqs[i]->GraphedEquation = graphedEquations[i];
                     }
@@ -407,8 +392,8 @@ namespace GraphControl
                     m_renderMain->Graph = m_graph;
 
                     // It is possible that the render fails, in that case fall through to explicit empty initialization
-                    co_await m_renderMain->RunRenderPassAsync(false);
-                    if (m_renderMain->IsRenderPassSuccesful())
+                    auto succ = co_await m_renderMain->RunRenderPassAsync(false);
+                    if (succ)
                     {
                         UpdateVariables();
                         successful = true;
@@ -417,7 +402,7 @@ namespace GraphControl
                     {
                         // If we failed to render then we have already lost the previous graph
                         shouldKeepPreviousGraph = false;
-                        initResult = nullopt;
+                        initResult.reset();
                         m_solver->HRErrorToErrorInfo(m_renderMain->GetRenderError(), m_errorCode, m_errorType);
                     }
                 }
@@ -427,15 +412,15 @@ namespace GraphControl
                 }
             }
 
-            if (initResult == nullopt)
+            if (!initResult.has_value())
             {
                 // Do not re-initialize the graph to empty if there are still valid equations graphed
                 if (!shouldKeepPreviousGraph)
                 {
                     initResult = TryInitializeGraph(false, nullptr);
-                    if (initResult != nullopt)
+                    if (initResult.has_value())
                     {
-                        UpdateGraphOptions(m_graph->GetOptions(), vector<Equation ^>());
+                        UpdateGraphOptions(m_graph->GetOptions(), {});
                         SetGraphArgs(m_graph);
 
                         m_renderMain->Graph = m_graph;
@@ -475,12 +460,10 @@ namespace GraphControl
         }
     }
 
-    void Grapher::SetGraphArgs(shared_ptr<IGraph> graph)
+    void Grapher::SetGraphArgs(std::shared_ptr<IGraph> graph)
     {
         if (graph != nullptr && m_renderMain != nullptr)
         {
-            critical_section::scoped_lock lock(m_renderMain->GetCriticalSection());
-
             for (auto variablePair : Variables)
             {
                 graph->SetArgValue(variablePair->Key->Data(), variablePair->Value->Value);
@@ -488,17 +471,17 @@ namespace GraphControl
         }
     }
 
-    shared_ptr<IGraph> Grapher::GetGraph(Equation ^ equation)
+    std::shared_ptr<IGraph> Grapher::GetGraph(Equation ^ equation)
     {
-        shared_ptr<Graphing::IGraph> graph = m_solver->CreateGrapher();
+        std::shared_ptr<Graphing::IGraph> graph = m_solver->CreateGrapher();
 
-        wstring request = s_getGraphOpeningTags;
+        std::wstring request = s_getGraphOpeningTags;
         request += equation->GetRequest()->Data();
         request += s_getGraphClosingTags;
 
-        if (unique_ptr<IExpression> graphExpression = m_solver->ParseInput(request, m_errorCode, m_errorType))
+        if (auto expr = m_solver->ParseInput(request, m_errorCode, m_errorType); static_cast<bool>(expr))
         {
-            if (graph->TryInitialize(graphExpression.get()))
+            if (graph->TryInitialize(expr.get()))
             {
                 return graph;
             }
@@ -520,7 +503,6 @@ namespace GraphControl
                 if (graphVar->GetVariableName() != s_X && graphVar->GetVariableName() != s_Y)
                 {
                     auto key = ref new String(graphVar->GetVariableName().data());
-                    double value = 1.0;
 
                     Variable ^ variable;
 
@@ -557,19 +539,12 @@ namespace GraphControl
 
         if (m_graph != nullptr && m_renderMain != nullptr)
         {
-            auto workItemHandler = ref new WorkItemHandler([this, variableName, newValue](IAsyncAction ^ action) {
-                m_renderMain->GetCriticalSection().lock();
-                m_graph->SetArgValue(variableName->Data(), newValue);
-                m_renderMain->GetCriticalSection().unlock();
-
-                m_renderMain->RunRenderPass();
-            });
-
-            ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
+            m_graph->SetArgValue(variableName->Data(), newValue);
+            [](RenderMain ^ renderMain) -> winrt::fire_and_forget { co_await renderMain->RunRenderPassAsync(); }(m_renderMain);
         }
     }
 
-    void Grapher::UpdateGraphOptions(IGraphingOptions& options, const vector<Equation ^>& validEqs)
+    void Grapher::UpdateGraphOptions(IGraphingOptions& options, const std::vector<Equation ^>& validEqs)
     {
         options.SetForceProportional(ForceProportionalAxes);
 
@@ -580,7 +555,7 @@ namespace GraphControl
 
         if (!validEqs.empty())
         {
-            vector<Graphing::Color> graphColors;
+            std::vector<Graphing::Color> graphColors;
             graphColors.reserve(validEqs.size());
             for (Equation ^ eq : validEqs)
             {
@@ -595,17 +570,17 @@ namespace GraphControl
                     }
 
                     eq->GraphedEquation->GetGraphEquationOptions()->SetLineStyle(static_cast<::Graphing::Renderer::LineStyle>(eq->EquationStyle));
-                    eq->GraphedEquation->GetGraphEquationOptions()->SetLineWidth(LineWidth);
-                    eq->GraphedEquation->GetGraphEquationOptions()->SetSelectedEquationLineWidth(LineWidth + ((LineWidth <= 2) ? 1 : 2));
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetLineWidth(static_cast<float>(LineWidth));
+                    eq->GraphedEquation->GetGraphEquationOptions()->SetSelectedEquationLineWidth(static_cast<float>(LineWidth + ((LineWidth <= 2) ? 1 : 2)));
                 }
             }
             options.SetGraphColors(graphColors);
         }
     }
 
-    vector<Equation ^> Grapher::GetGraphableEquations()
+    std::vector<Equation ^> Grapher::GetGraphableEquations()
     {
-        vector<Equation ^> validEqs;
+        std::vector<Equation ^> validEqs;
 
         for (Equation ^ eq : Equations)
         {
@@ -624,7 +599,7 @@ namespace GraphControl
         TryUpdateGraph(false);
     }
 
-    void Grapher::OnUseCommaDecimalSeperatorPropertyChanged(bool oldValue, bool newValue)
+    void Grapher::OnUseCommaDecimalSeperatorPropertyChanged(bool /*oldValue*/, bool newValue)
     {
         if (newValue)
         {
@@ -783,15 +758,10 @@ namespace GraphControl
                     translationX /= -width;
                     translationY /= height;
 
-                    m_renderMain->GetCriticalSection().lock();
-
                     if (FAILED(renderer->MoveRangeByRatio(translationX, translationY)))
                     {
-                        m_renderMain->GetCriticalSection().unlock();
                         return;
                     }
-
-                    m_renderMain->GetCriticalSection().unlock();
                     needsRenderPass = true;
                 }
 
@@ -805,15 +775,10 @@ namespace GraphControl
                     const auto& pos = e->Position;
                     const auto [centerX, centerY] = PointerPositionToGraphPosition(pos.X, pos.Y, width, height);
 
-                    m_renderMain->GetCriticalSection().lock();
-
                     if (FAILED(renderer->ScaleRange(centerX, centerY, scale)))
                     {
-                        m_renderMain->GetCriticalSection().unlock();
                         return;
                     }
-
-                    m_renderMain->GetCriticalSection().unlock();
                     needsRenderPass = true;
                 }
 
@@ -834,14 +799,14 @@ namespace GraphControl
         {
             if (auto renderer = m_graph->GetRenderer())
             {
-                shared_ptr<Graphing::IBitmap> BitmapOut;
+                std::shared_ptr<Graphing::IBitmap> BitmapOut;
                 bool hasSomeMissingDataOut = false;
                 HRESULT hr = E_FAIL;
                 hr = renderer->GetBitmap(BitmapOut, hasSomeMissingDataOut);
                 if (SUCCEEDED(hr))
                 {
                     // Get the raw data
-                    vector<BYTE> byteVector = BitmapOut->GetData();
+                    std::vector<BYTE> byteVector = BitmapOut->GetData();
                     auto arr = ArrayReference<BYTE>(byteVector.data(), (unsigned int)byteVector.size());
 
                     // create a memory stream wrapper
@@ -1085,24 +1050,24 @@ void Grapher::OnGraphBackgroundPropertyChanged(Windows::UI::Color /*oldValue*/, 
     }
 }
 
-void Grapher::OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
+winrt::fire_and_forget Grapher::OnGridLinesColorPropertyChanged(Windows::UI::Color /*oldValue*/, Windows::UI::Color newValue)
 {
     if (m_renderMain != nullptr && m_graph != nullptr)
     {
         auto gridLinesColor = Graphing::Color(newValue.R, newValue.G, newValue.B, newValue.A);
         m_graph->GetOptions().SetGridColor(gridLinesColor);
-        m_renderMain->RunRenderPassAsync();
+        co_await m_renderMain->RunRenderPassAsync();
     }
 }
 
-void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
+void Grapher::OnLineWidthPropertyChanged(double /*oldValue*/, double /*newValue*/)
 {
     if (m_graph)
     {
         UpdateGraphOptions(m_graph->GetOptions(), GetGraphableEquations());
         if (m_renderMain)
         {
-            m_renderMain->SetPointRadius(LineWidth + 1);
+            m_renderMain->SetPointRadius(static_cast<float>(LineWidth + 1));
             m_renderMain->RunRenderPass();
 
             TraceLogger::GetInstance()->LogLineWidthChanged();
@@ -1110,16 +1075,15 @@ void Grapher::OnLineWidthPropertyChanged(double oldValue, double newValue)
     }
 }
 
-optional<vector<shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bool keepCurrentView, const IExpression* graphingExp)
+std::optional<std::vector<std::shared_ptr<Graphing::IEquation>>> Grapher::TryInitializeGraph(bool keepCurrentView, const IExpression* graphingExp)
 {
-    critical_section::scoped_lock lock(m_renderMain->GetCriticalSection());
     if (keepCurrentView || IsKeepCurrentView)
     {
         auto renderer = m_graph->GetRenderer();
         double xMin, xMax, yMin, yMax;
         renderer->GetDisplayRanges(xMin, xMax, yMin, yMax);
         auto initResult = m_graph->TryInitialize(graphingExp);
-        if (initResult != nullopt)
+        if (initResult.has_value())
         {
             if (IsKeepCurrentView)
             {

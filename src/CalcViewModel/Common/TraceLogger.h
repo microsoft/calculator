@@ -85,6 +85,9 @@ namespace CalculatorApp::ViewModel::Common
         void LogGraphTheme(Platform::String ^ graphTheme);
         void LogInputPasted(CalculatorApp::ViewModel::Common::ViewMode mode);
         void LogPlatformExceptionInfo(CalculatorApp::ViewModel::Common::ViewMode mode, Platform::String ^ functionName, Platform::String ^ message, int hresult);
+        void LogRecallSnapshot(CalculatorApp::ViewModel::Common::ViewMode mode);
+        void LogRecallRestore(CalculatorApp::ViewModel::Common::ViewMode mode);
+        void LogRecallError(Platform::String ^ message);
 
         internal:
         void LogPlatformException(CalculatorApp::ViewModel::Common::ViewMode mode, Platform::String ^ functionName, Platform::Exception ^ e);

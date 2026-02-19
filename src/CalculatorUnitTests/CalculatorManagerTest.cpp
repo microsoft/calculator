@@ -395,6 +395,10 @@ namespace CalculatorManagerTest
         Command commands22[] = { Command::Command1,   Command::Command0, Command::Command2, Command::Command4,   Command::CommandSQRT,
                                  Command::CommandSUB, Command::Command3, Command::Command2, Command::CommandADD, Command::CommandNULL };
         TestDriver::Test(L"0", L"0 + ", commands22);
+
+        Command commands23[] = { Command::Command2, Command::CommandPNT, Command::Command2, Command::Command5,   Command::CommandSQRT, Command::CommandSUB,
+                                 Command::Command1, Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"0", L"\x221A(2.25) - 1.5=", commands23);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientific()
@@ -482,6 +486,15 @@ namespace CalculatorManagerTest
         Command commands24[] = { Command::Command2,    Command::Command5,    Command::Command7,   Command::CommandSQRT,
                                  Command::CommandSQRT, Command::CommandSQRT, Command::CommandNULL };
         TestDriver::Test(L"2.0009748976330773374220277351385", L"\x221A(\x221A(\x221A(257)))", commands24, true, true);
+
+        Command commands25[] = { Command::Command2, Command::CommandPNT, Command::Command2, Command::Command5,   Command::CommandSQRT, Command::CommandSUB,
+                                 Command::Command1, Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"0", L"\x221A(2.25) - 1.5=", commands25, true, true);
+
+        Command commands26[] = { Command::CommandOPENP, Command::Command2,   Command::CommandPNT, Command::Command2,   Command::Command5,
+                                 Command::CommandSQRT,  Command::CommandDIV, Command::Command1,   Command::CommandPNT, Command::Command5,
+                                 Command::CommandCLOSEP, Command::CommandLOG,  Command::CommandNULL };
+        TestDriver::Test(L"0", L"log(\x221A(2.25) \x00F7 1.5)", commands26, true, true);
     }
 
     // Scientific functions from the scientific calculator
@@ -643,6 +656,26 @@ namespace CalculatorManagerTest
         Command commands5[] = { Command::Command2,   Command::CommandOPENP, Command::Command2,   Command::CommandCLOSEP,
                                 Command::CommandADD, Command::CommandEQU,   Command::CommandNULL };
         TestDriver::Test(L"8", L"2 \x00D7 (2) + 4=", commands5, true, true);
+
+        Command commands6[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"16", L"(8) \x00D7 2=", commands6, true, true);
+
+        Command commands7[] = { Command::CommandOPENP,  Command::Command7, Command::CommandMUL, Command::Command2,
+                                Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"28", L"(7 \x00D7 2) \x00D7 2=", commands7, true, true);
+
+        Command commands8[] = { Command::CommandOPENP,  Command::Command7, Command::CommandMUL, Command::Command2,
+                                Command::CommandCLOSEP, Command::Command2, Command::CommandEQU,
+                                Command::CommandOPENP, Command::Command1, Command::Command4, Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL};
+        TestDriver::Test(L"28", L"(14) \x00D7 2=", commands8, true, true);
+
+        Command commands9[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP,
+                                Command::Command0, Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"4", L"(8) \x00D7 0.5=", commands9, true, true);
+
+        Command commands10[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP,
+                                 Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"4", L"(8) \x00D7 0.5=", commands10, true, true);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientificError()
@@ -752,6 +785,31 @@ namespace CalculatorManagerTest
 
         Command commands10[] = { Command::ModeProgrammer, Command::Command1, Command::CommandRORC, Command::CommandRORC, Command::CommandNULL };
         TestDriver::Test(L"-9,223,372,036,854,775,808", L"RoR(RoR(1))", commands10, true, false);
+
+        Command commands11[] = { Command::ModeProgrammer, Command::CommandDec, Command::Command4, Command::Command2, Command::Command9,   Command::Command4,
+                                Command::Command9,       Command::Command6,   Command::Command7, Command::Command2, Command::Command9,   Command::Command6,
+                                Command::CommandDIV,     Command::Command2,   Command::Command5, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"16,843,009", L"4294967296 \x00F7 255=", commands11, true, false);
+
+        Command commands12[] = {
+            Command::ModeProgrammer, Command::CommandDec, Command::Command4, Command::Command2, Command::Command9,   Command::Command4,
+            Command::Command9,       Command::Command6,   Command::Command7, Command::Command3, Command::Command0,   Command::Command3,
+            Command::CommandDIV,     Command::Command2,   Command::Command5, Command::Command5, Command::CommandEQU, Command::CommandNULL
+        };
+        TestDriver::Test(L"16,843,009", L"4294967303 \x00F7 255=", commands12, true, false);
+
+        Command commands13[] = {
+            Command::ModeProgrammer, Command::CommandDec, Command::Command1, Command::Command0, Command::Command0, Command::Command0,
+            Command::Command0, Command::Command0, Command::Command0, Command::Command0, Command::Command0, Command::Command0, Command::CommandDIV,
+            Command::Command6, Command::Command4, Command::Command4, Command::Command8, Command::Command7, Command::CommandEQU, Command::CommandNULL
+        };
+        TestDriver::Test(L"15,507", L"1000000000 \x00F7 64487=", commands13, true, false);
+
+        Command commands14[] = { Command::ModeProgrammer, Command::CommandDec, Command::Command1,   Command::Command0,   Command::Command0,
+                                 Command::Command0,       Command::Command0,   Command::Command0,   Command::Command0,   Command::Command0,
+                                 Command::Command0,       Command::Command0,   Command::CommandDIV, Command::Command6,   Command::Command4,
+                                 Command::Command4,       Command::Command8,   Command::Command8,   Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"15,506", L"1000000000 \x00F7 64488=", commands14, true, false);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestMemory()

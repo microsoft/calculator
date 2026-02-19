@@ -59,10 +59,10 @@ void asinhrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
         PRAT ptmp = nullptr;
         DUPRAT(ptmp, (*px));
         mulrat(&ptmp, *px, precision);
-        addrat(&ptmp, rat_one, precision);
+        _addrat(&ptmp, rat_one, precision);
         rootrat(&ptmp, rat_two, radix, precision);
-        addrat(px, ptmp, precision);
-        lograt(px, precision);
+        _addrat(px, ptmp, precision);
+        _lograt(px, precision);
         destroyrat(ptmp);
     }
     else
@@ -113,10 +113,10 @@ void acoshrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
         PRAT ptmp = nullptr;
         DUPRAT(ptmp, (*px));
         mulrat(&ptmp, *px, precision);
-        subrat(&ptmp, rat_one, precision);
+        _subrat(&ptmp, rat_one, precision);
         rootrat(&ptmp, rat_two, radix, precision);
-        addrat(px, ptmp, precision);
-        lograt(px, precision);
+        _addrat(px, ptmp, precision);
+        _lograt(px, precision);
         destroyrat(ptmp);
     }
 }
@@ -143,11 +143,11 @@ void atanhrat(_Inout_ PRAT* px, int32_t precision)
 {
     PRAT ptmp = nullptr;
     DUPRAT(ptmp, (*px));
-    subrat(&ptmp, rat_one, precision);
-    addrat(px, rat_one, precision);
+    _subrat(&ptmp, rat_one, precision);
+    _addrat(px, rat_one, precision);
     divrat(px, ptmp, precision);
     (*px)->pp->sign *= -1;
-    lograt(px, precision);
+    _lograt(px, precision);
     divrat(px, rat_two, precision);
     destroyrat(ptmp);
 }

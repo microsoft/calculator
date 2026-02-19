@@ -477,14 +477,23 @@ namespace CalculationManager
         }
     }
 
-    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems()
+    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems() const
     {
         return m_pHistory->GetHistory();
     }
 
-    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems(_In_ CalculatorMode mode)
+    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems(_In_ CalculatorMode mode) const
     {
         return (mode == CalculatorMode::Standard) ? m_pStdHistory->GetHistory() : m_pSciHistory->GetHistory();
+    }
+
+    void CalculatorManager::SetHistoryItems(_In_ std::vector<std::shared_ptr<HISTORYITEM>> const& historyItems)
+    {
+        for (auto const& historyItem : historyItems)
+        {
+            auto index = m_pHistory->AddItem(historyItem);
+            OnHistoryItemAdded(index);
+        }
     }
 
     shared_ptr<HISTORYITEM> const& CalculatorManager::GetHistoryItem(_In_ unsigned int uIdx)
@@ -587,5 +596,10 @@ namespace CalculationManager
     void CalculatorManager::SetInHistoryItemLoadMode(_In_ bool isHistoryItemLoadMode)
     {
         m_inHistoryItemLoadMode = isHistoryItemLoadMode;
+    }
+
+    std::vector<std::shared_ptr<IExpressionCommand>> CalculatorManager::GetDisplayCommandsSnapshot() const
+    {
+        return m_currentCalculatorEngine->GetHistoryCollectorCommandsSnapshot();
     }
 }

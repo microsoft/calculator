@@ -107,8 +107,9 @@ namespace CalculationManager
         void UpdateMaxIntDigits();
         wchar_t DecimalSeparator();
 
-        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems();
-        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems(_In_ CalculatorMode mode);
+        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems() const;
+        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistoryItems(_In_ CalculatorMode mode) const;
+        void SetHistoryItems(_In_ std::vector<std::shared_ptr<HISTORYITEM>> const& historyItems);
         std::shared_ptr<HISTORYITEM> const& GetHistoryItem(_In_ unsigned int uIdx);
         bool RemoveHistoryItem(_In_ unsigned int uIdx);
         void ClearHistory();
@@ -118,5 +119,6 @@ namespace CalculationManager
         }
         CalculationManager::Command GetCurrentDegreeMode();
         void SetInHistoryItemLoadMode(_In_ bool isHistoryItemLoadMode);
+        std::vector<std::shared_ptr<IExpressionCommand>> GetDisplayCommandsSnapshot() const;
     };
 }

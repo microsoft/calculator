@@ -7,10 +7,10 @@
     a folder structure grouped by architecture then by project, like this example:
 
     drop\
-        ARM\
+        ARM64\
             Project\
                 AppPackages\
-                    Project_ARM.msix
+                    Project_ARM64.msix
                     Project_scale-100.msix
         x64\
             Project\

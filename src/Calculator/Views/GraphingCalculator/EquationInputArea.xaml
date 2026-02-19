@@ -93,7 +93,8 @@
                             Style="{ThemeResource VariableContainerStyle}"
                             contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}">
                         <StackPanel Padding="12,0,12,6">
-                            <Grid HorizontalAlignment="Stretch">
+                            <Grid HorizontalAlignment="Left"
+                                  FlowDirection="LeftToRight">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
@@ -661,6 +662,7 @@
                                                                   FontSize="{TemplateBinding FontSize}"
                                                                   FontWeight="{TemplateBinding FontWeight}"
                                                                   AcceptsReturn="false"
+                                                                  AutomationProperties.Name="{utils:ResourceString Name=MathRichEditBox/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                                   InputScope="Text"
                                                                   MathText="{Binding MathEquation, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                                                   MaxLength="2048"

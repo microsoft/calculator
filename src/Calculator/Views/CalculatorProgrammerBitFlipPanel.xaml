@@ -139,6 +139,7 @@
     </UserControl.Resources>
     <Grid x:Name="BitFlipPanel"
           Margin="0,1,0,1"
+          FlowDirection="LeftToRight"
           AutomationProperties.HeadingLevel="Level1"
           AutomationProperties.Name="{utils:ResourceString Name=BitFlipPanel/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
         <Grid.RowDefinitions>

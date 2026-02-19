@@ -43,6 +43,7 @@ namespace CalculatorUITestFramework
             this.winAppDriverProcess.StartInfo.CreateNoWindow = true;
             this.winAppDriverProcess.StartInfo.FileName = path;
             this.winAppDriverProcess.StartInfo.UseShellExecute = false;
+            this.winAppDriverProcess.StartInfo.RedirectStandardInput = true;
             this.winAppDriverProcess.StartInfo.RedirectStandardOutput = true;
             this.winAppDriverProcess.StartInfo.RedirectStandardError = true;
             this.winAppDriverProcess.OutputDataReceived += this.OnProcessOutputDataReceived;

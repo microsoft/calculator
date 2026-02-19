@@ -4,47 +4,148 @@
 #include "pch.h"
 #include "CurrencyHttpClient.h"
 
-#ifdef USE_MOCK_DATA
-#include "DataLoaderMockConstants.h"
-#else
-#include "DataLoaderConstants.h"
-#endif
-
-using namespace CalculatorApp::DataLoaders;
-using namespace CalculatorApp::ViewModel::DataLoaders;
-using namespace Platform;
-using namespace std;
-using namespace Windows::Foundation;
-using namespace Windows::Web::Http;
-
-CurrencyHttpClient::CurrencyHttpClient()
-    : m_client(ref new HttpClient())
-    , m_responseLanguage(L"en-US")
+namespace
 {
-}
+    constexpr auto MockCurrencyConverterData = LR"(
+[
+  {
+    "An": "MAR",
+    "Rt": 1.00
+  },
+  {
+    "An": "MON",
+    "Rt": 0.50
+  },
+  {
+    "An": "NEP",
+    "Rt": 0.00125
+  },
+  {
+    "An": "SAT",
+    "Rt": 0.25
+  },
+  {
+    "An": "URA",
+    "Rt": 2.75
+  },
+  {
+    "An": "VEN",
+    "Rt": 900.00
+  },
+  {
+    "An": "JUP",
+    "Rt": 1.23456789123456789
+  },
+  {
+    "An": "MER",
+    "Rt": 2.00
+  },
+  {
+    "An": "JPY",
+    "Rt": 0.00125
+  },
+  {
+    "An": "JOD",
+    "Rt": 0.25
+  }
+])";
 
-void CurrencyHttpClient::SetSourceCurrencyCode(String ^ sourceCurrencyCode)
+    constexpr auto MockCurrencyStaticData = LR"(
+[
+  {
+    "CountryCode": "MAR",
+    "CountryName": "Mars",
+    "CurrencyCode": "MAR",
+    "CurrencyName": "The Martian Dollar",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "MON",
+    "CountryName": "Moon",
+    "CurrencyCode": "MON",
+    "CurrencyName": "Moon Bucks",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "NEP",
+    "CountryName": "Neptune",
+    "CurrencyCode": "NEP",
+    "CurrencyName": "Space Coins",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "SAT",
+    "CountryName": "Saturn",
+    "CurrencyCode": "SAT",
+    "CurrencyName": "Rings",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "URA",
+    "CountryName": "Uranus",
+    "CurrencyCode": "URA",
+    "CurrencyName": "Galaxy Credits",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "VEN",
+    "CountryName": "Venus",
+    "CurrencyCode": "VEN",
+    "CurrencyName": "Venusian Seashells",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "JUP",
+    "CountryName": "Jupiter",
+    "CurrencyCode": "JUP",
+    "CurrencyName": "Gas Money",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "MER",
+    "CountryName": "Mercury",
+    "CurrencyCode": "MER",
+    "CurrencyName": "Sun Notes",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "TEST1",
+    "CountryName": "Test No Fractional Digits",
+    "CurrencyCode": "JPY",
+    "CurrencyName": "Test No Fractional Digits",
+    "CurrencySymbol": "¤"
+  },
+  {
+    "CountryCode": "TEST2",
+    "CountryName": "Test Fractional Digits",
+    "CurrencyCode": "JOD",
+    "CurrencyName": "Test Fractional Digits",
+    "CurrencySymbol": "¤"
+  }
+])";
+} // namespace
+
+namespace CalculatorApp::ViewModel::DataLoaders
 {
-    m_sourceCurrencyCode = sourceCurrencyCode;
-}
+    void CurrencyHttpClient::Initialize(Platform::String ^ sourceCurrencyCode, Platform::String ^ responseLanguage)
+    {
+        m_sourceCurrencyCode = sourceCurrencyCode;
+        m_responseLanguage = responseLanguage;
+    }
 
-void CurrencyHttpClient::SetResponseLanguage(String ^ responseLanguage)
-{
-    m_responseLanguage = responseLanguage;
-}
+    std::future<Platform::String ^> CurrencyHttpClient::GetCurrencyMetadataAsync() const
+    {
+        (void)m_responseLanguage; // to be used in production.
+        std::promise<Platform::String ^> mockedTask;
+        mockedTask.set_value(ref new Platform::String(MockCurrencyStaticData));
+        return mockedTask.get_future();
+    }
 
-IAsyncOperationWithProgress<String ^, HttpProgress> ^ CurrencyHttpClient::GetCurrencyMetadata()
-{
-    wstring uri = wstring{ sc_MetadataUriLocalizeFor } + m_responseLanguage->Data();
-    auto metadataUri = ref new Uri(StringReference(uri.c_str()));
-
-    return m_client->GetStringAsync(metadataUri);
-}
-
-IAsyncOperationWithProgress<String ^, HttpProgress> ^ CurrencyHttpClient::GetCurrencyRatios()
-{
-    wstring uri = wstring{ sc_RatiosUriRelativeTo } + m_sourceCurrencyCode->Data();
-    auto ratiosUri = ref new Uri(StringReference(uri.c_str()));
-
-    return m_client->GetStringAsync(ratiosUri);
-}
+    std::future<Platform::String ^> CurrencyHttpClient::GetCurrencyRatiosAsync() const
+    {
+        (void)m_sourceCurrencyCode; // to be used in production.
+        std::promise<Platform::String ^> mockedTask;
+        mockedTask.set_value(ref new Platform::String(MockCurrencyConverterData));
+        return mockedTask.get_future();
+    }
+} // namespace CalculatorApp::ViewModel::DataLoaders

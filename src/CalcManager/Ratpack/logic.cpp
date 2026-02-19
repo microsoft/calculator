@@ -246,7 +246,7 @@ void modrat(_Inout_ PRAT* pa, _In_ PRAT b)
 
     if (needAdjust && !zerrat(*pa))
     {
-        addrat(pa, b, BASEX);
+        _addrat(pa, b, BASEX);
     }
 
     // Get *pa back in the integer over integer form.

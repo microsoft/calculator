@@ -29,7 +29,7 @@ namespace MockGraphingImpl
             return std::nullopt;
         }
 
-        HRESULT GetInitializationError()
+        HRESULT GetInitializationError() const
         {
             return S_OK;
         }
@@ -44,7 +44,7 @@ namespace MockGraphingImpl
             return m_variables;
         }
 
-        virtual void SetArgValue(std::wstring variableName, double value)
+        virtual void SetArgValue(std::wstring /*variableName*/, double /*value*/)
         {
         }
 
