@@ -772,14 +772,14 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls">
-      <Version>8.0.230823-rc</Version>
+      <Version>8.2.251219</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.1" />
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="System.Text.Json">
-      <Version>8.0.5</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
