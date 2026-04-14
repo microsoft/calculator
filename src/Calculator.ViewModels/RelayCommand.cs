@@ -3,7 +3,7 @@
 using System;
 using System.Windows.Input;
 
-namespace CalculatorApp.ManagedViewModels
+namespace CalculatorApp.ViewModel
 {
     public class RelayCommand: ICommand
     {

@@ -107,9 +107,9 @@
                       AutomationProperties.Name="{utils:ResourceString Name=ftoeButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                       Checked="FToEButton_Toggled"
                       Content="F-E"
-                      IsChecked="{x:Bind Model.IsFToEChecked, Mode=OneWay}"
+                      IsChecked="{x:Bind ViewModel.IsFToEChecked, Mode=OneWay}"
                       Unchecked="FToEButton_Toggled"
-                      IsEnabled="{x:Bind Model.IsFToEEnabled, Mode=OneWay}">
+                      IsEnabled="{x:Bind ViewModel.IsFToEEnabled, Mode=OneWay}">
             <ToggleButton.CommandParameter>
                 <local:NumbersAndOperatorsEnum>FToE</local:NumbersAndOperatorsEnum>
             </ToggleButton.CommandParameter>

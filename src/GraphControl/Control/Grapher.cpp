@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "Grapher.h"
 #include "IBitmap.h"
-#include "../../CalcViewModel/GraphingCalculatorEnums.h"
+#include "GraphingCalculatorEnums.h"
 
 using namespace Graphing;
 using namespace GraphControl;
@@ -373,7 +373,7 @@ namespace GraphControl
                 request += s_getGraphClosingTags;
             }
 
-            if (graphExpression = m_solver->ParseInput(request, m_errorCode, m_errorType))
+            if ((graphExpression = m_solver->ParseInput(request, m_errorCode, m_errorType)))
             {
                 initResult = TryInitializeGraph(keepCurrentView, graphExpression.get());
 

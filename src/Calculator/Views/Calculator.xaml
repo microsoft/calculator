@@ -393,7 +393,7 @@
 
         <!-- Miscellaneous Resources -->
 
-        <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind Model.Announcement, Mode=OneWay}"/>
+        <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind ViewModel.Announcement, Mode=OneWay}"/>
 
         <!-- Used by hidden shortcut buttons -->
         <x:Int32 x:Key="Zero">0</x:Int32>
@@ -401,11 +401,11 @@
         <MenuFlyout x:Key="DisplayContextMenu">
             <MenuFlyoutItem x:Name="CopyMenuItem"
                             x:Uid="CopyMenuItem"
-                            Command="{x:Bind Model.CopyCommand}"
+                            Command="{x:Bind ViewModel.CopyCommand}"
                             Icon="Copy"/>
             <MenuFlyoutItem x:Name="PasteMenuItem"
                             x:Uid="PasteMenuItem"
-                            Command="{x:Bind Model.PasteCommand}"
+                            Command="{x:Bind ViewModel.PasteCommand}"
                             Icon="Paste"/>
         </MenuFlyout>
     </UserControl.Resources>
@@ -626,10 +626,10 @@
                                         FlowDirection="LeftToRight"
                                         Style="{StaticResource NormalStyle}"
                                         AutomationProperties.AutomationId="CalculatorExpression"
-                                        AutomationProperties.Name="{x:Bind Model.CalculationExpressionAutomationName, Mode=OneWay}"
+                                        AutomationProperties.Name="{x:Bind local:Calculator.OrEmpty(ViewModel.CalculationExpressionAutomationName), Mode=OneWay}"
                                         IsTabStop="False"
-                                        TokensUpdated="{x:Bind Model.AreTokensUpdated, Mode=OneWay}"
-                                        Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                                        TokensUpdated="{x:Bind ViewModel.AreTokensUpdated, Mode=OneWay}"
+                                        Visibility="{x:Bind ViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
             <controls:CalculationResult x:Name="Results"
                                         x:Uid="CalculatorResults"
                                         Grid.Row="2"
@@ -638,14 +638,14 @@
                                         Style="{StaticResource ResultsStyle}"
                                         AutomationProperties.AutomationId="CalculatorResults"
                                         AutomationProperties.HeadingLevel="Level1"
-                                        AutomationProperties.Name="{x:Bind Model.CalculationResultAutomationName, Mode=OneWay}"
+                                        AutomationProperties.Name="{x:Bind local:Calculator.OrEmpty(ViewModel.CalculationResultAutomationName), Mode=OneWay}"
                                         ContextCanceled="OnContextCanceled"
                                         ContextRequested="OnContextRequested"
-                                        DisplayValue="{x:Bind Model.DisplayValue, Mode=OneWay}"
-                                        IsInError="{x:Bind Model.IsInError, Mode=OneWay}"
-                                        IsOperatorCommand="{x:Bind Model.IsOperatorCommand, Mode=OneWay}"
+                                        DisplayValue="{x:Bind ViewModel.DisplayValue, Mode=OneWay}"
+                                        IsInError="{x:Bind ViewModel.IsInError, Mode=OneWay}"
+                                        IsOperatorCommand="{x:Bind ViewModel.IsOperatorCommand, Mode=OneWay}"
                                         TabIndex="1"
-                                        Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                                        Visibility="{x:Bind ViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
             <controls:OverflowTextBlock x:Name="AlwaysOnTopResults"
                                         x:Uid="CalculatorAlwaysOnTopResults"
                                         Grid.Row="2"
@@ -656,14 +656,14 @@
                                         FontSize="40"
                                         AutomationProperties.AutomationId="CalculatorAlwaysOnTopResults"
                                         AutomationProperties.HeadingLevel="Level1"
-                                        AutomationProperties.Name="{x:Bind Model.CalculationResultAutomationName, Mode=OneWay}"
+                                        AutomationProperties.Name="{x:Bind local:Calculator.OrEmpty(ViewModel.CalculationResultAutomationName), Mode=OneWay}"
                                         IsActive="True"
                                         ScrollButtonsFontSize="28"
                                         ScrollButtonsPlacement="Above"
                                         ScrollButtonsWidth="28"
-                                        TokensUpdated="{x:Bind Model.AreAlwaysOnTopResultsUpdated, Mode=OneWay}"
+                                        TokensUpdated="{x:Bind ViewModel.AreAlwaysOnTopResultsUpdated, Mode=OneWay}"
                                         UseSystemFocusVisuals="True"
-                                        Visibility="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
+                                        Visibility="{x:Bind ViewModel.IsAlwaysOnTop, Mode=OneWay}"/>
 
             <!--History button-->
             <Grid FlowDirection="LeftToRight">
@@ -678,8 +678,8 @@
                         ExitDisplayModeOnAccessKeyInvoked="False"
                         TabIndex="2"
                         ToolTipService.ToolTip="{utils:ResourceString Name=HistoryButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                        Visibility="{x:Bind local:Calculator.ShouldDisplayHistoryButton(Model.IsAlwaysOnTop, Model.IsProgrammer, DockPanel.Visibility), Mode=OneWay}"
-                        IsEnabled="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
+                        Visibility="{x:Bind local:Calculator.ShouldDisplayHistoryButton(ViewModel.IsAlwaysOnTop, ViewModel.IsProgrammer, DockPanel.Visibility), Mode=OneWay}"
+                        IsEnabled="{x:Bind ViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
                     <FlyoutBase.AttachedFlyout>
                         <Flyout x:Name="HistoryFlyout"
                                 AutomationProperties.AutomationId="HistoryFlyout"
@@ -696,23 +696,23 @@
             <local:CalculatorProgrammerOperators x:Name="ProgrammerOperators"
                                                  Grid.Row="3"
                                                  TabIndex="6"
-                                                 Visibility="{x:Bind Model.IsProgrammer, Mode=OneWay}"
-                                                 IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
+                                                 Visibility="{x:Bind ViewModel.IsProgrammer, Mode=OneWay}"
+                                                 IsEnabled="{x:Bind ViewModel.IsProgrammer, Mode=OneWay}"
                                                  x:Load="False"/>
 
             <local:CalculatorProgrammerDisplayPanel x:Name="ProgrammerDisplayPanel"
                                                     Grid.Row="4"
                                                     TabIndex="7"
-                                                    Visibility="{x:Bind Model.IsProgrammer, Mode=OneWay}"
-                                                    IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
+                                                    Visibility="{x:Bind ViewModel.IsProgrammer, Mode=OneWay}"
+                                                    IsEnabled="{x:Bind ViewModel.IsProgrammer, Mode=OneWay}"
                                                     x:Load="False"/>
 
             <!-- Scientific angle buttons -->
             <local:CalculatorScientificAngleButtons x:Name="ScientificAngleButtons"
                                                     Grid.Row="3"
                                                     TabIndex="6"
-                                                    Visibility="{x:Bind Model.IsScientific, Mode=OneWay}"
-                                                    IsEnabled="{x:Bind Model.IsScientific, Mode=OneWay}"
+                                                    Visibility="{x:Bind ViewModel.IsScientific, Mode=OneWay}"
+                                                    IsEnabled="{x:Bind ViewModel.IsScientific, Mode=OneWay}"
                                                     x:Load="False"/>
 
             <!-- Memory panel controls -->
@@ -721,7 +721,7 @@
                   Margin="3,0,3,0"
                   AutomationProperties.HeadingLevel="Level1"
                   AutomationProperties.Name="{utils:ResourceString Name=MemoryPanel/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                  Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
+                  Visibility="{x:Bind ViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" MaxWidth="80"/>
                     <ColumnDefinition Width="1*" MaxWidth="80"/>
@@ -741,47 +741,47 @@
                                            common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=ClearMemoryButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                            AutomationProperties.AutomationId="ClearMemoryButton"
                                            AutomationProperties.Name="{utils:ResourceString Name=ClearMemoryButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                           Command="{x:Bind Model.ClearMemoryCommand}"
+                                           Command="{x:Bind ViewModel.ClearMemoryCommand}"
                                            Content="&#xF754;"
                                            TabIndex="10"
                                            ToolTipService.ToolTip="{utils:ResourceString Name=ClearMemoryButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                                           Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
+                                           Visibility="{x:Bind ViewModel.IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
                 <controls:CalculatorButton x:Name="MemRecall"
                                            Grid.Column="1"
                                            Style="{StaticResource CaptionButtonStyle}"
                                            common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=MemRecall/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                            AutomationProperties.AutomationId="MemRecall"
                                            AutomationProperties.Name="{utils:ResourceString Name=MemRecall/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                           Command="{x:Bind Model.MemoryItemPressed}"
+                                           Command="{x:Bind ViewModel.MemoryItemPressed}"
                                            CommandParameter="{StaticResource Zero}"
                                            Content="&#xF755;"
                                            TabIndex="11"
                                            ToolTipService.ToolTip="{utils:ResourceString Name=MemRecall/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                                           Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
+                                           Visibility="{x:Bind ViewModel.IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
                 <controls:CalculatorButton x:Name="MemPlus"
                                            Grid.Column="2"
                                            Style="{StaticResource CaptionButtonStyle}"
                                            common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=MemPlus/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                            AutomationProperties.AutomationId="MemPlus"
                                            AutomationProperties.Name="{utils:ResourceString Name=MemPlus/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                           Command="{x:Bind Model.MemoryAdd}"
+                                           Command="{x:Bind ViewModel.MemoryAdd}"
                                            CommandParameter="{StaticResource Zero}"
                                            Content="&#xF757;"
                                            TabIndex="12"
                                            ToolTipService.ToolTip="{utils:ResourceString Name=MemPlus/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                                           Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
+                                           Visibility="{x:Bind ViewModel.IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
                 <controls:CalculatorButton x:Name="MemMinus"
                                            Grid.Column="3"
                                            Style="{StaticResource CaptionButtonStyle}"
                                            common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=MemMinus/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
                                            AutomationProperties.AutomationId="MemMinus"
                                            AutomationProperties.Name="{utils:ResourceString Name=MemMinus/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                           Command="{x:Bind Model.MemorySubtract}"
+                                           Command="{x:Bind ViewModel.MemorySubtract}"
                                            CommandParameter="{StaticResource Zero}"
                                            Content="&#xF758;"
                                            TabIndex="13"
                                            ToolTipService.ToolTip="{utils:ResourceString Name=MemMinus/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                                           Visibility="{Binding IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
+                                           Visibility="{x:Bind ViewModel.IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
                 <controls:CalculatorButton x:Name="MemButton"
                                            Grid.Column="4"
                                            Style="{StaticResource CaptionButtonStyle}"
@@ -804,7 +804,7 @@
                         ExitDisplayModeOnAccessKeyInvoked="False"
                         TabIndex="15"
                         ToolTipService.ToolTip="{utils:ResourceString Name=MemoryButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                        IsEnabled="{x:Bind Model.IsMemoryEmpty, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
+                        IsEnabled="{x:Bind ViewModel.IsMemoryEmpty, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
                     <FlyoutBase.AttachedFlyout>
                         <Flyout x:Name="MemoryFlyout"
                                 AutomationProperties.AutomationId="MemoryFlyout"
@@ -826,7 +826,7 @@
                     <CompositeTransform/>
                 </Grid.RenderTransform>
 
-                <local:OperatorsPanel x:Name="OpsPanel" IsBitFlipChecked="{x:Bind Model.IsBitFlipChecked, Mode=OneWay}"/>
+                <local:OperatorsPanel x:Name="OpsPanel" IsBitFlipChecked="{x:Bind ViewModel.IsBitFlipChecked, Mode=OneWay}"/>
             </Grid>
         </Grid>
 

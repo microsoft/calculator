@@ -18,7 +18,7 @@ using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Snapshot;
 
-namespace CalculatorApp.ManagedViewModels
+namespace CalculatorApp.ViewModel
 {
     public class ApplicationViewModel : INotifyPropertyChanged
     {

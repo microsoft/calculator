@@ -19,7 +19,7 @@ namespace CalculatorApp
             LoadResourceStrings();
         }
 
-        public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
+        public StandardCalculatorViewModel ViewModel => this.DataContext as StandardCalculatorViewModel;
 
         public bool IsErrorVisualState
         {
@@ -126,7 +126,7 @@ namespace CalculatorApp
                 m_selectedShiftButtonMode = selectedButtonMode;
             }
 
-            Model.SetBitshiftRadioButtonCheckedAnnouncement(announcementString);
+            ViewModel.SetBitshiftRadioButtonCheckedAnnouncement(announcementString);
         }
 
         private void FlyoutButton_Clicked(object sender, RoutedEventArgs e)
@@ -191,7 +191,7 @@ namespace CalculatorApp
 
         private void OpenParenthesisButton_GotFocus(object sender, RoutedEventArgs e)
         {
-            Model.SetOpenParenthesisCountNarratorAnnouncement();
+            ViewModel.SetOpenParenthesisCountNarratorAnnouncement();
         }
 
         private void ClearEntryButton_LostFocus(object sender, RoutedEventArgs e)

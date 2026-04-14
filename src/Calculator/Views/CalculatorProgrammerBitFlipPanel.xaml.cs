@@ -35,7 +35,7 @@ namespace CalculatorApp
             return index <= GetIndexOfLastBit(length);
         }
 
-        public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
+        public StandardCalculatorViewModel ViewModel => this.DataContext as StandardCalculatorViewModel;
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -49,19 +49,19 @@ namespace CalculatorApp
 
         private void SubscribePropertyChanged()
         {
-            if (Model != null)
+            if (ViewModel != null)
             {
-                Model.PropertyChanged += OnPropertyChanged;
-                m_currentValueBitLength = Model.ValueBitLength;
+                ViewModel.PropertyChanged += OnPropertyChanged;
+                m_currentValueBitLength = ViewModel.ValueBitLength;
                 UpdateCheckedStates(true);
             }
         }
 
         private void UnsubscribePropertyChanged()
         {
-            if (Model != null)
+            if (ViewModel != null)
             {
-                Model.PropertyChanged -= OnPropertyChanged;
+                ViewModel.PropertyChanged -= OnPropertyChanged;
             }
         }
 
@@ -70,13 +70,13 @@ namespace CalculatorApp
             if (e.PropertyName == StandardCalculatorViewModel.BinaryDigitsPropertyName)
             {
                 UpdateCheckedStates(false);
-                m_currentValueBitLength = Model.ValueBitLength;
+                m_currentValueBitLength = ViewModel.ValueBitLength;
             }
             else if (
                 e.PropertyName == StandardCalculatorViewModel.IsBitFlipCheckedPropertyName
                 || e.PropertyName == StandardCalculatorViewModel.IsProgrammerPropertyName)
             {
-                if (Model.IsBitFlipChecked && Model.IsProgrammer)
+                if (ViewModel.IsBitFlipChecked && ViewModel.IsProgrammer)
                 {
                     // OnBitToggle won't update the automation properties when this control isn't displayed
                     // We need to update all automation properties names manually when the BitFlipPanel is displayed again
@@ -167,12 +167,12 @@ namespace CalculatorApp
             // Also, if the mode is switched to other Calculator modes when the BitFlip panel is open,
             // a race condition exists in which the IsProgrammerMode property is still true and the UpdatePrimaryResult() is called,
             // which continuously alters the Display Value and the state of the Bit Flip buttons.
-            if (Model.IsBitFlipChecked && Model.IsProgrammer)
+            if (ViewModel.IsBitFlipChecked && ViewModel.IsProgrammer)
             {
                 var flipButton = (FlipButtons)sender;
                 int index = (int)flipButton.Tag;
                 flipButton.SetValue(AutomationProperties.NameProperty, GenerateAutomationPropertiesName(index, flipButton.IsChecked.Value));
-                Model.ButtonPressed.Execute(flipButton.ButtonId);
+                ViewModel.ButtonPressed.Execute(flipButton.ButtonId);
             }
         }
 
@@ -188,9 +188,9 @@ namespace CalculatorApp
             else
             {
                 int lastPosition = -1;
-                if (Model != null)
+                if (ViewModel != null)
                 {
-                    lastPosition = GetIndexOfLastBit(Model.ValueBitLength);
+                    lastPosition = GetIndexOfLastBit(ViewModel.ValueBitLength);
                 }
 
                 if (position == lastPosition)
@@ -212,17 +212,17 @@ namespace CalculatorApp
             Debug.Assert(!m_updatingCheckedStates);
             Debug.Assert(m_flipButtons.Length == s_numBits);
 
-            if (Model == null)
+            if (ViewModel == null)
             {
                 return;
             }
 
             m_updatingCheckedStates = true;
             int index = 0;
-            bool mustUpdateTextOfMostSignificantDigits = m_currentValueBitLength != Model.ValueBitLength;
+            bool mustUpdateTextOfMostSignificantDigits = m_currentValueBitLength != ViewModel.ValueBitLength;
             int previousMSDPosition = GetIndexOfLastBit(m_currentValueBitLength);
-            int newMSDPosition = GetIndexOfLastBit(Model.ValueBitLength);
-            foreach (bool val in Model.BinaryDigits)
+            int newMSDPosition = GetIndexOfLastBit(ViewModel.ValueBitLength);
+            foreach (bool val in ViewModel.BinaryDigits)
             {
                 if (index < m_flipButtons.Length)
                 {

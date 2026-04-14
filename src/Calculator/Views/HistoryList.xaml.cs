@@ -17,10 +17,10 @@ namespace CalculatorApp
         {
             InitializeComponent();
 
-            HistoryEmpty.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
+            HistoryEmpty.FlowDirection = LocalizationSettings.GetInstance().GetFlowDirection();
         }
 
-        public CalculatorApp.ViewModel.HistoryViewModel Model => (CalculatorApp.ViewModel.HistoryViewModel)DataContext;
+        public CalculatorApp.ViewModel.HistoryViewModel ViewModel => (CalculatorApp.ViewModel.HistoryViewModel)DataContext;
 
         public void ScrollToBottom()
         {
@@ -67,14 +67,14 @@ namespace CalculatorApp
             var listViewItem = HistoryContextMenu.Target;
             if (HistoryListView.ItemFromContainer(listViewItem) is HistoryItemViewModel itemViewModel)
             {
-                Model.DeleteItem(itemViewModel);
+                ViewModel.DeleteItem(itemViewModel);
             }
         }
         private void OnDeleteSwipeInvoked(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs e)
         {
             if (e.SwipeControl.DataContext is HistoryItemViewModel swipedItem)
             {
-                Model.DeleteItem(swipedItem);
+                ViewModel.DeleteItem(swipedItem);
             }
         }
     }

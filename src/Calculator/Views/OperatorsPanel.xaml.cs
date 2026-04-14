@@ -8,7 +8,7 @@ namespace CalculatorApp
     [Windows.Foundation.Metadata.WebHostHidden]
     public sealed partial class OperatorsPanel : UserControl
     {
-        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model => (CalculatorApp.ViewModel.StandardCalculatorViewModel)DataContext;
+        public CalculatorApp.ViewModel.StandardCalculatorViewModel ViewModel => (CalculatorApp.ViewModel.StandardCalculatorViewModel)DataContext;
 
         public OperatorsPanel()
         {
@@ -53,15 +53,15 @@ namespace CalculatorApp
 
         private void OnIsErrorVisualStatePropertyChanged(bool oldValue, bool newValue)
         {
-            if (Model.IsStandard)
+            if (ViewModel.IsStandard)
             {
                 StandardOperators.IsErrorVisualState = newValue;
             }
-            else if (Model.IsScientific)
+            else if (ViewModel.IsScientific)
             {
                 ScientificOperators.IsErrorVisualState = newValue;
             }
-            else if (Model.IsProgrammer)
+            else if (ViewModel.IsProgrammer)
             {
                 ProgrammerRadixOperators.IsErrorVisualState = newValue;
             }

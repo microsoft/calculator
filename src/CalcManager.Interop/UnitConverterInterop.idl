@@ -1,0 +1,119 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace CalcManager.Interop
+{
+    enum UnitConverterCommand
+    {
+        Zero = 0,
+        One = 1,
+        Two = 2,
+        Three = 3,
+        Four = 4,
+        Five = 5,
+        Six = 6,
+        Seven = 7,
+        Eight = 8,
+        Nine = 9,
+        Decimal = 10,
+        Negate = 11,
+        Backspace = 12,
+        Clear = 13,
+        Reset = 14,
+        None = 15,
+    };
+
+    struct UnitWrapper
+    {
+        Int32 Id;
+        String Name;
+        String AccessibleName;
+        String Abbreviation;
+        Boolean IsConversionSource;
+        Boolean IsConversionTarget;
+        Boolean IsWhimsical;
+    };
+
+    struct CategoryWrapper
+    {
+        Int32 Id;
+        String Name;
+        Boolean SupportsNegative;
+    };
+
+    struct ConversionDataWrapper
+    {
+        Double Ratio;
+        Double Offset;
+        Boolean OffsetFirst;
+    };
+
+    struct UnitConversionEntry
+    {
+        UnitWrapper Unit;
+        Double Ratio;
+        Double Offset;
+        Boolean OffsetFirst;
+    };
+
+    struct SuggestedValueWrapper
+    {
+        String Value;
+        UnitWrapper Unit;
+    };
+
+    runtimeclass CategorySelectionResult
+    {
+        CategorySelectionResult();
+        UnitWrapper[] Units{ get; };
+        UnitWrapper FromUnit{ get; };
+        UnitWrapper ToUnit{ get; };
+    };
+
+    unsealed runtimeclass UnitConverterVMCallbackBase
+    {
+        UnitConverterVMCallbackBase();
+        void DisplayCallback(String fromValue, String toValue);
+        void SuggestedValueCallback(SuggestedValueWrapper[] suggestedValues);
+        void MaxDigitsReached();
+    };
+
+    unsealed runtimeclass ViewModelCurrencyCallbackBase
+    {
+        ViewModelCurrencyCallbackBase();
+        void CurrencyDataLoadFinished(Boolean didLoad);
+        void CurrencySymbolsCallback(String fromSymbol, String toSymbol);
+        void CurrencyRatiosCallback(String ratioEquality, String accRatioEquality);
+        void CurrencyTimestampCallback(String timestamp, Boolean isWeekOldData);
+        void NetworkBehaviorChanged(Int32 newBehavior);
+    };
+
+    unsealed runtimeclass ConverterDataLoaderBase
+    {
+        ConverterDataLoaderBase();
+        void LoadData();
+        CategoryWrapper[] GetOrderedCategories();
+        UnitWrapper[] GetOrderedUnits(CategoryWrapper category);
+        UnitConversionEntry[] LoadOrderedRatios(UnitWrapper unit);
+        Boolean SupportsCategory(CategoryWrapper target);
+    };
+
+    runtimeclass UnitConverterWrapper
+    {
+        UnitConverterWrapper(ConverterDataLoaderBase dataLoader);
+        void Initialize();
+        CategoryWrapper[] GetCategories();
+        CategorySelectionResult SetCurrentCategory(CategoryWrapper category);
+        CategoryWrapper GetCurrentCategory();
+        void SetCurrentUnitTypes(UnitWrapper fromType, UnitWrapper toType);
+        void SwitchActive(String newValue);
+        Boolean IsSwitchedActive{ get; };
+        String SaveUserPreferences();
+        void RestoreUserPreferences(String userPreference);
+        void SendCommand(UnitConverterCommand command);
+        void SetViewModelCallback(UnitConverterVMCallbackBase callback);
+        void SetViewModelCurrencyCallback(ViewModelCurrencyCallbackBase callback);
+        void Calculate();
+        void ResetCategoriesAndRatios();
+    };
+}

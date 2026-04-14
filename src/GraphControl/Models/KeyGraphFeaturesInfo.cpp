@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "KeyGraphFeaturesInfo.h"
-#include "../../CalcViewModel/GraphingCalculatorEnums.h"
+#include "GraphingCalculatorEnums.h"
 
 using namespace Platform;
 using namespace Platform::Collections;

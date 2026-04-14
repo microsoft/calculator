@@ -312,7 +312,7 @@
                               ButtonId="BINPOS63"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 63), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 63), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>63</x:Int32>
             </controls:FlipButtons.Tag>
@@ -324,7 +324,7 @@
                               ButtonId="BINPOS62"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 62), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 62), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>62</x:Int32>
             </controls:FlipButtons.Tag>
@@ -336,7 +336,7 @@
                               ButtonId="BINPOS61"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 61), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 61), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>61</x:Int32>
             </controls:FlipButtons.Tag>
@@ -348,7 +348,7 @@
                               ButtonId="BINPOS60"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 60), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 60), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>60</x:Int32>
             </controls:FlipButtons.Tag>
@@ -361,7 +361,7 @@
                               ButtonId="BINPOS59"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 59), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 59), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>59</x:Int32>
             </controls:FlipButtons.Tag>
@@ -373,7 +373,7 @@
                               ButtonId="BINPOS58"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 58), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 58), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>58</x:Int32>
             </controls:FlipButtons.Tag>
@@ -385,7 +385,7 @@
                               ButtonId="BINPOS57"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 57), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 57), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>57</x:Int32>
             </controls:FlipButtons.Tag>
@@ -397,7 +397,7 @@
                               ButtonId="BINPOS56"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 56), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 56), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>56</x:Int32>
             </controls:FlipButtons.Tag>
@@ -410,7 +410,7 @@
                               ButtonId="BINPOS55"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 55), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 55), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>55</x:Int32>
             </controls:FlipButtons.Tag>
@@ -422,7 +422,7 @@
                               ButtonId="BINPOS54"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 54), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 54), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>54</x:Int32>
             </controls:FlipButtons.Tag>
@@ -434,7 +434,7 @@
                               ButtonId="BINPOS53"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 53), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 53), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>53</x:Int32>
             </controls:FlipButtons.Tag>
@@ -446,7 +446,7 @@
                               ButtonId="BINPOS52"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 52), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 52), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>52</x:Int32>
             </controls:FlipButtons.Tag>
@@ -459,7 +459,7 @@
                               ButtonId="BINPOS51"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 51), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 51), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>51</x:Int32>
             </controls:FlipButtons.Tag>
@@ -471,7 +471,7 @@
                               ButtonId="BINPOS50"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 50), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 50), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>50</x:Int32>
             </controls:FlipButtons.Tag>
@@ -483,7 +483,7 @@
                               ButtonId="BINPOS49"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 49), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 49), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>49</x:Int32>
             </controls:FlipButtons.Tag>
@@ -495,7 +495,7 @@
                               ButtonId="BINPOS48"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 48), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 48), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>48</x:Int32>
             </controls:FlipButtons.Tag>
@@ -508,7 +508,7 @@
                               ButtonId="BINPOS47"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 47), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 47), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>47</x:Int32>
             </controls:FlipButtons.Tag>
@@ -520,7 +520,7 @@
                               ButtonId="BINPOS46"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 46), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 46), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>46</x:Int32>
             </controls:FlipButtons.Tag>
@@ -532,7 +532,7 @@
                               ButtonId="BINPOS45"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 45), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 45), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>45</x:Int32>
             </controls:FlipButtons.Tag>
@@ -544,7 +544,7 @@
                               ButtonId="BINPOS44"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 44), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 44), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>44</x:Int32>
             </controls:FlipButtons.Tag>
@@ -557,7 +557,7 @@
                               ButtonId="BINPOS43"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 43), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 43), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>43</x:Int32>
             </controls:FlipButtons.Tag>
@@ -569,7 +569,7 @@
                               ButtonId="BINPOS42"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 42), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 42), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>42</x:Int32>
             </controls:FlipButtons.Tag>
@@ -581,7 +581,7 @@
                               ButtonId="BINPOS41"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 41), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 41), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>41</x:Int32>
             </controls:FlipButtons.Tag>
@@ -593,7 +593,7 @@
                               ButtonId="BINPOS40"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 40), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 40), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>40</x:Int32>
             </controls:FlipButtons.Tag>
@@ -606,7 +606,7 @@
                               ButtonId="BINPOS39"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 39), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 39), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>39</x:Int32>
             </controls:FlipButtons.Tag>
@@ -618,7 +618,7 @@
                               ButtonId="BINPOS38"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 38), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 38), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>38</x:Int32>
             </controls:FlipButtons.Tag>
@@ -630,7 +630,7 @@
                               ButtonId="BINPOS37"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 37), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 37), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>37</x:Int32>
             </controls:FlipButtons.Tag>
@@ -642,7 +642,7 @@
                               ButtonId="BINPOS36"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 36), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 36), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>36</x:Int32>
             </controls:FlipButtons.Tag>
@@ -655,7 +655,7 @@
                               ButtonId="BINPOS35"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 35), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 35), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>35</x:Int32>
             </controls:FlipButtons.Tag>
@@ -667,7 +667,7 @@
                               ButtonId="BINPOS34"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 34), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 34), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>34</x:Int32>
             </controls:FlipButtons.Tag>
@@ -679,7 +679,7 @@
                               ButtonId="BINPOS33"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 33), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 33), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>33</x:Int32>
             </controls:FlipButtons.Tag>
@@ -691,7 +691,7 @@
                               ButtonId="BINPOS32"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 32), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 32), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>32</x:Int32>
             </controls:FlipButtons.Tag>
@@ -704,7 +704,7 @@
                               ButtonId="BINPOS31"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 31), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 31), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>31</x:Int32>
             </controls:FlipButtons.Tag>
@@ -716,7 +716,7 @@
                               ButtonId="BINPOS30"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 30), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 30), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>30</x:Int32>
             </controls:FlipButtons.Tag>
@@ -728,7 +728,7 @@
                               ButtonId="BINPOS29"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 29), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 29), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>29</x:Int32>
             </controls:FlipButtons.Tag>
@@ -740,7 +740,7 @@
                               ButtonId="BINPOS28"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 28), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 28), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>28</x:Int32>
             </controls:FlipButtons.Tag>
@@ -753,7 +753,7 @@
                               ButtonId="BINPOS27"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 27), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 27), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>27</x:Int32>
             </controls:FlipButtons.Tag>
@@ -765,7 +765,7 @@
                               ButtonId="BINPOS26"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 26), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 26), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>26</x:Int32>
             </controls:FlipButtons.Tag>
@@ -777,7 +777,7 @@
                               ButtonId="BINPOS25"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 25), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 25), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>25</x:Int32>
             </controls:FlipButtons.Tag>
@@ -789,7 +789,7 @@
                               ButtonId="BINPOS24"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 24), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 24), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>24</x:Int32>
             </controls:FlipButtons.Tag>
@@ -802,7 +802,7 @@
                               ButtonId="BINPOS23"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 23), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 23), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>23</x:Int32>
             </controls:FlipButtons.Tag>
@@ -814,7 +814,7 @@
                               ButtonId="BINPOS22"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 22), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 22), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>22</x:Int32>
             </controls:FlipButtons.Tag>
@@ -826,7 +826,7 @@
                               ButtonId="BINPOS21"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 21), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 21), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>21</x:Int32>
             </controls:FlipButtons.Tag>
@@ -838,7 +838,7 @@
                               ButtonId="BINPOS20"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 20), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 20), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>20</x:Int32>
             </controls:FlipButtons.Tag>
@@ -851,7 +851,7 @@
                               ButtonId="BINPOS19"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 19), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 19), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>19</x:Int32>
             </controls:FlipButtons.Tag>
@@ -863,7 +863,7 @@
                               ButtonId="BINPOS18"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 18), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 18), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>18</x:Int32>
             </controls:FlipButtons.Tag>
@@ -875,7 +875,7 @@
                               ButtonId="BINPOS17"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 17), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 17), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>17</x:Int32>
             </controls:FlipButtons.Tag>
@@ -887,7 +887,7 @@
                               ButtonId="BINPOS16"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 16), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 16), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>16</x:Int32>
             </controls:FlipButtons.Tag>
@@ -900,7 +900,7 @@
                               ButtonId="BINPOS15"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 15), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 15), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>15</x:Int32>
             </controls:FlipButtons.Tag>
@@ -912,7 +912,7 @@
                               ButtonId="BINPOS14"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 14), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 14), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>14</x:Int32>
             </controls:FlipButtons.Tag>
@@ -924,7 +924,7 @@
                               ButtonId="BINPOS13"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 13), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 13), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>13</x:Int32>
             </controls:FlipButtons.Tag>
@@ -936,7 +936,7 @@
                               ButtonId="BINPOS12"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 12), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 12), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>12</x:Int32>
             </controls:FlipButtons.Tag>
@@ -949,7 +949,7 @@
                               ButtonId="BINPOS11"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 11), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 11), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>11</x:Int32>
             </controls:FlipButtons.Tag>
@@ -961,7 +961,7 @@
                               ButtonId="BINPOS10"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 10), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 10), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>10</x:Int32>
             </controls:FlipButtons.Tag>
@@ -973,7 +973,7 @@
                               ButtonId="BINPOS9"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 9), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 9), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>9</x:Int32>
             </controls:FlipButtons.Tag>
@@ -985,7 +985,7 @@
                               ButtonId="BINPOS8"
                               Checked="OnBitToggled"
                               Unchecked="OnBitToggled"
-                              IsEnabled="{x:Bind ShouldEnableBit(Model.ValueBitLength, 8), Mode=OneWay}">
+                              IsEnabled="{x:Bind ShouldEnableBit(ViewModel.ValueBitLength, 8), Mode=OneWay}">
             <controls:FlipButtons.Tag>
                 <x:Int32>8</x:Int32>
             </controls:FlipButtons.Tag>

@@ -40,10 +40,12 @@ namespace CalculatorApp
 
     public sealed partial class UnitConverter : UserControl
     {
+        public static string OrEmpty(string value) => value ?? string.Empty;
+
         public UnitConverter()
         {
             m_meteredConnectionOverride = false;
-            LayoutDirection = LocalizationService.GetInstance().GetFlowDirection();
+            LayoutDirection = LocalizationSettings.GetInstance().GetFlowDirection();
             FlowDirectionHorizontalAlignment = LayoutDirection == FlowDirection.RightToLeft ? HorizontalAlignment.Right : HorizontalAlignment.Left;
 
             InitializeComponent();
@@ -80,7 +82,14 @@ namespace CalculatorApp
             }
         }
 
-        public CalculatorApp.ViewModel.UnitConverterViewModel Model => (CalculatorApp.ViewModel.UnitConverterViewModel)this.DataContext;
+        public CalculatorApp.ViewModel.UnitConverterViewModel ViewModel
+        {
+            get => (CalculatorApp.ViewModel.UnitConverterViewModel)GetValue(ViewModelProperty);
+            set => SetValue(ViewModelProperty, value);
+        }
+
+        public static readonly DependencyProperty ViewModelProperty =
+            DependencyProperty.Register(nameof(ViewModel), typeof(CalculatorApp.ViewModel.UnitConverterViewModel), typeof(UnitConverter), new PropertyMetadata(null));
 
         public Windows.UI.Xaml.FlowDirection LayoutDirection { get; } = default;
 
@@ -141,8 +150,8 @@ namespace CalculatorApp
             UnitConverter that = this;
             _ = Task.Run(async () =>
             {
-                string pastedString = await CopyPasteManager.GetStringToPaste(Model.Mode, CategoryGroupType.Converter, NumberBase.Unknown, BitLength.BitLengthUnknown);
-                that.Model.OnPaste(pastedString);
+                string pastedString = await CopyPasteManager.GetStringToPaste(ViewModel.Mode, CategoryGroupType.Converter, NumberBase.Unknown, BitLength.BitLengthUnknown);
+                that.ViewModel.OnPaste(pastedString);
             });
         }
 
@@ -168,14 +177,14 @@ namespace CalculatorApp
         {
             // If IsCurrencyLoadingVisible is true that means CurrencyRefreshButton_Click was recently called
             // and is still executing. In this case there is no reason to process the click.
-            if (!Model.IsCurrencyLoadingVisible)
+            if (!ViewModel.IsCurrencyLoadingVisible)
             {
-                if (Model.NetworkBehavior == NetworkAccessBehavior.OptIn)
+                if (ViewModel.NetworkBehavior == NetworkAccessBehavior.OptIn)
                 {
                     m_meteredConnectionOverride = true;
                 }
 
-                Model.RefreshCurrencyRatios();
+                ViewModel.RefreshCurrencyRatios();
             }
         }
 
@@ -200,21 +209,21 @@ namespace CalculatorApp
 
         private void OnDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
-            Model.PropertyChanged -= OnPropertyChanged;
-            Model.PropertyChanged += OnPropertyChanged;
+            ViewModel.PropertyChanged -= OnPropertyChanged;
+            ViewModel.PropertyChanged += OnPropertyChanged;
 
             OnNetworkBehaviorChanged();
         }
 
         private void OnIsDisplayVisibleChanged()
         {
-            if (!Model.IsCurrencyCurrentCategory)
+            if (!ViewModel.IsCurrencyCurrentCategory)
             {
                 VisualStateManager.GoToState(this, UnitLoadedState.Name, false);
             }
             else
             {
-                if (Model.IsCurrencyLoadingVisible)
+                if (ViewModel.IsCurrencyLoadingVisible)
                 {
                     VisualStateManager.GoToState(this, UnitNotLoadedState.Name, false);
                     StartProgressRingWithDelay();
@@ -222,7 +231,7 @@ namespace CalculatorApp
                 else
                 {
                     HideProgressRing();
-                    VisualStateManager.GoToState(this, !string.IsNullOrEmpty(Model.CurrencyTimestamp) ? UnitLoadedState.Name : UnitNotLoadedState.Name, true);
+                    VisualStateManager.GoToState(this, !string.IsNullOrEmpty(ViewModel.CurrencyTimestamp) ? UnitLoadedState.Name : UnitNotLoadedState.Name, true);
                 }
             }
         }
@@ -237,7 +246,7 @@ namespace CalculatorApp
 
         private void OnNetworkBehaviorChanged()
         {
-            switch (Model.NetworkBehavior)
+            switch (ViewModel.NetworkBehavior)
             {
                 case NetworkAccessBehavior.Normal:
                     OnNormalNetworkAccess();
@@ -256,7 +265,7 @@ namespace CalculatorApp
             CurrencyRefreshBlockControl.Visibility = Visibility.Visible;
             OfflineBlock.Visibility = Visibility.Collapsed;
 
-            if (Model.CurrencyDataLoadFailed)
+            if (ViewModel.CurrencyDataLoadFailed)
             {
                 SetFailedToRefreshStatus();
             }
@@ -271,7 +280,7 @@ namespace CalculatorApp
             CurrencyRefreshBlockControl.Visibility = Visibility.Visible;
             OfflineBlock.Visibility = Visibility.Collapsed;
 
-            if (m_meteredConnectionOverride && Model.CurrencyDataLoadFailed)
+            if (m_meteredConnectionOverride && ViewModel.CurrencyDataLoadFailed)
             {
                 SetFailedToRefreshStatus();
             }
@@ -335,7 +344,7 @@ namespace CalculatorApp
 
         private void SetCurrencyTimestampFontWeight()
         {
-            if (Model.CurrencyDataIsWeekOld)
+            if (ViewModel.CurrencyDataIsWeekOld)
             {
                 VisualStateManager.GoToState(this, "WeekOldTimestamp", false);
             }
@@ -381,7 +390,8 @@ namespace CalculatorApp
 
         private void OnVisualStateChanged(object sender, Windows.UI.Xaml.VisualStateChangedEventArgs e)
         {
-            var mode = NavCategoryStates.Deserialize(Model.CurrentCategory.GetModelCategoryId());
+            if (ViewModel?.CurrentCategory == null) return;
+            var mode = NavCategoryStates.Deserialize(ViewModel.CurrentCategory.GetModelCategoryId());
             TraceLogger.GetInstance().LogVisualStateChanged(mode, e.NewState.Name, false);
         }
 

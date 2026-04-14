@@ -10,24 +10,24 @@
     <Grid>
         <local:CalculatorStandardOperators x:Name="StandardOperators"
                                            TabIndex="17"
-                                           IsEnabled="{x:Bind Model.IsStandard, Mode=OneWay}"
-                                           x:Load="{x:Bind Model.IsStandard, Mode=OneWay}"/>
+                                           IsEnabled="{x:Bind ViewModel.IsStandard, Mode=OneWay}"
+                                           x:Load="{x:Bind ViewModel.IsStandard, Mode=OneWay}"/>
 
         <local:CalculatorScientificOperators x:Name="ScientificOperators"
                                              TabIndex="16"
-                                             Visibility="{x:Bind Model.IsScientific, Mode=OneWay}"
-                                             IsEnabled="{x:Bind Model.IsScientific, Mode=OneWay}"
+                                             Visibility="{x:Bind ViewModel.IsScientific, Mode=OneWay}"
+                                             IsEnabled="{x:Bind ViewModel.IsScientific, Mode=OneWay}"
                                              x:Load="False"/>
 
         <local:CalculatorProgrammerBitFlipPanel x:Name="BitFlipPanel"
-                                                Visibility="{x:Bind Model.IsBinaryBitFlippingEnabled, Mode=OneWay}"
-                                                IsEnabled="{x:Bind Model.IsBinaryBitFlippingEnabled, Mode=OneWay}"
+                                                Visibility="{x:Bind ViewModel.IsBinaryBitFlippingEnabled, Mode=OneWay}"
+                                                IsEnabled="{x:Bind ViewModel.IsBinaryBitFlippingEnabled, Mode=OneWay}"
                                                 x:Load="False"/>
 
         <local:CalculatorProgrammerRadixOperators x:Name="ProgrammerRadixOperators"
                                                   TabIndex="16"
-                                                  Visibility="{x:Bind Model.AreProgrammerRadixOperatorsVisible, Mode=OneWay}"
-                                                  IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
+                                                  Visibility="{x:Bind ViewModel.AreProgrammerRadixOperatorsVisible, Mode=OneWay}"
+                                                  IsEnabled="{x:Bind ViewModel.IsProgrammer, Mode=OneWay}"
                                                   x:Load="False"/>
 
     </Grid>

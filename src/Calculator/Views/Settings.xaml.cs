@@ -34,7 +34,7 @@ namespace CalculatorApp
 
         public Settings()
         {
-            var locService = LocalizationService.GetInstance();
+            var locService = LocalizationSettings.GetInstance();
             var resourceLoader = AppResourceProvider.GetInstance();
 
             InitializeComponent();

@@ -61,9 +61,9 @@
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <converters:BooleanToVisibilityNegationConverter x:Key="BooleanToVisibilityNegationConverter"/>
 
-            <DataTemplate x:Key="ComboBoxItemContentTemplate">
+            <DataTemplate x:Key="ComboBoxItemContentTemplate" x:DataType="x:String">
                 <TextBlock Style="{StaticResource BodyTextBlockStyle}"
-                           Text="{Binding}"
+                           Text="{x:Bind}"
                            TextWrapping="WrapWholeWords"/>
             </DataTemplate>
 
@@ -1035,17 +1035,17 @@
             <ComboBoxItem MinWidth="276"
                           Content="{utils:ResourceString Name=Date_DifferenceOption/Content}"
                           ContentTemplate="{StaticResource ComboBoxItemContentTemplate}"
-                          IsSelected="{Binding IsDateDiffMode, Mode=TwoWay}"/>
+                          IsSelected="{x:Bind ViewModel.IsDateDiffMode, Mode=TwoWay}"/>
             <ComboBoxItem MinWidth="276"
                           Content="{utils:ResourceString Name=Date_AddSubtractOption/Content}"
                           ContentTemplate="{StaticResource ComboBoxItemContentTemplate}"
-                          IsSelected="{Binding IsDateDiffMode, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"/>
+                          IsSelected="{x:Bind ViewModel.IsDateDiffMode, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"/>
         </ComboBox>
 
         <!-- Grid to Calculate Difference between Two Dates -->
         <Grid x:Name="DateDiffGrid"
               Grid.Row="2"
-              Visibility="{Binding IsDateDiffMode, Converter={StaticResource BooleanToVisibilityConverter}}">
+              Visibility="{x:Bind ViewModel.IsDateDiffMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" MaxHeight="17"/>
                 <RowDefinition Height="Auto" MinHeight="32"/>
@@ -1087,16 +1087,16 @@
                        Margin="0,4,0,0"
                        Style="{ThemeResource BodyTextBlockStyle}"
                        AutomationProperties.LiveSetting="Polite"
-                       AutomationProperties.Name="{Binding StrDateDiffResultAutomationName}"
+                       AutomationProperties.Name="{x:Bind local:DateCalculator.OrEmpty(ViewModel.StrDateDiffResultAutomationName), Mode=OneWay}"
                        ContextFlyout="{StaticResource ResultsContextMenu}"
                        IsTextSelectionEnabled="True"
-                       Text="{Binding StrDateDiffResult}"/>
+                       Text="{x:Bind ViewModel.StrDateDiffResult, Mode=OneWay}"/>
             <TextBlock Grid.Row="8"
                        Style="{ThemeResource DateCalculation_CaptionTextStyle}"
                        ContextFlyout="{StaticResource ResultsContextMenu}"
                        IsTextSelectionEnabled="True"
-                       Text="{Binding StrDateDiffResultInDays, Mode=OneWay}"
-                       Visibility="{Binding IsDiffInDays, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
+                       Text="{x:Bind ViewModel.StrDateDiffResultInDays, Mode=OneWay}"
+                       Visibility="{x:Bind ViewModel.IsDiffInDays, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
         </Grid>
 
         <!-- Grid for Add/Subtract Date -->
@@ -1104,7 +1104,7 @@
               Grid.Row="2"
               x:DeferLoadStrategy="Lazy"
               Loaded="AddSubtractDateGrid_Loaded"
-              Visibility="{Binding IsDateDiffMode, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+              Visibility="{x:Bind ViewModel.IsDateDiffMode, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" MaxHeight="17"/>
@@ -1140,7 +1140,7 @@
                              VerticalAlignment="Top"
                              Checked="AddSubtractOption_Checked"
                              Content="{utils:ResourceString Name=AddOption/Content}"
-                             IsChecked="{Binding IsAddMode, Mode=TwoWay}"/>
+                             IsChecked="{x:Bind ViewModel.IsAddMode, Mode=TwoWay}"/>
                 <RadioButton x:Name="SubtractOption"
                              Grid.Column="1"
                              MinWidth="80"
@@ -1149,7 +1149,7 @@
                              VerticalAlignment="Top"
                              Checked="AddSubtractOption_Checked"
                              Content="{utils:ResourceString Name=SubtractOption/Content}"
-                             IsChecked="{Binding IsAddMode, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"/>
+                             IsChecked="{x:Bind ViewModel.IsAddMode, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"/>
 
             </Grid>
 
@@ -1177,8 +1177,8 @@
                           MinWidth="84"
                           AutomationProperties.LabeledBy="{Binding ElementName=YearsLabel}"
                           DropDownClosed="OffsetDropDownClosed"
-                          ItemsSource="{Binding OffsetValues, Mode=OneTime}"
-                          SelectedIndex="{Binding YearsOffset, Mode=TwoWay}"
+                          ItemsSource="{x:Bind ViewModel.OffsetValues}"
+                          SelectedIndex="{x:Bind ViewModel.YearsOffset, Mode=TwoWay}"
                           SelectionChanged="OffsetValue_Changed"/>
                 <TextBlock x:Name="MonthsLabel"
                            Grid.Column="1"
@@ -1193,8 +1193,8 @@
                           Margin="12,0,12,0"
                           AutomationProperties.LabeledBy="{Binding ElementName=MonthsLabel}"
                           DropDownClosed="OffsetDropDownClosed"
-                          ItemsSource="{Binding OffsetValues, Mode=OneTime}"
-                          SelectedIndex="{Binding MonthsOffset, Mode=TwoWay}"
+                          ItemsSource="{x:Bind ViewModel.OffsetValues}"
+                          SelectedIndex="{x:Bind ViewModel.MonthsOffset, Mode=TwoWay}"
                           SelectionChanged="OffsetValue_Changed"/>
                 <TextBlock x:Name="DaysLabel"
                            Grid.Column="2"
@@ -1208,8 +1208,8 @@
                           MinWidth="84"
                           AutomationProperties.LabeledBy="{Binding ElementName=DaysLabel}"
                           DropDownClosed="OffsetDropDownClosed"
-                          ItemsSource="{Binding OffsetValues, Mode=OneTime}"
-                          SelectedIndex="{Binding DaysOffset, Mode=TwoWay}"
+                          ItemsSource="{x:Bind ViewModel.OffsetValues}"
+                          SelectedIndex="{x:Bind ViewModel.DaysOffset, Mode=TwoWay}"
                           SelectionChanged="OffsetValue_Changed"/>
             </Grid>
 
@@ -1224,10 +1224,10 @@
                        Style="{ThemeResource BodyTextBlockStyle}"
                        FontSize="{x:Bind DateDiffAllUnitsResultLabel.FontSize, Mode=OneWay}"
                        AutomationProperties.LiveSetting="Polite"
-                       AutomationProperties.Name="{Binding StrDateResultAutomationName}"
+                       AutomationProperties.Name="{x:Bind local:DateCalculator.OrEmpty(ViewModel.StrDateResultAutomationName), Mode=OneWay}"
                        ContextFlyout="{StaticResource ResultsContextMenu}"
                        IsTextSelectionEnabled="True"
-                       Text="{Binding StrDateResult}"/>
+                       Text="{x:Bind ViewModel.StrDateResult, Mode=OneWay}"/>
         </Grid>
     </Grid>
 </UserControl>

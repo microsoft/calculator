@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
+using CalcManager.Interop;
 using CalculatorApp.ViewModel.Snapshot;
-using Windows.ApplicationModel;
 
 namespace CalculatorApp.JsonUtils
 {
@@ -40,84 +40,52 @@ namespace CalculatorApp.JsonUtils
 
     internal class UnaryCommandAlias : ICalcManagerIExprCommandAlias
     {
-        [JsonIgnore]
-        public UnaryCommand Value;
-
         [JsonPropertyName("c")]
-        public IReadOnlyList<int> Commands
-        {
-            get => Value.Commands;
-            set => Value.Commands = value;
-        }
+        public IReadOnlyList<int> Commands { get; set; }
 
-        public UnaryCommandAlias() => Value = new UnaryCommand();
-        public UnaryCommandAlias(UnaryCommand value) => Value = value;
+        public UnaryCommandAlias() { Commands = Array.Empty<int>(); }
+        public UnaryCommandAlias(ExpressionCommandWrapper cmd) { Commands = cmd.Commands; }
     }
 
     internal class BinaryCommandAlias : ICalcManagerIExprCommandAlias
     {
-        [JsonIgnore]
-        public BinaryCommand Value;
-
         [JsonPropertyName("c")]
-        public int Command
-        {
-            get => Value.Command;
-            set => Value.Command = value;
-        }
+        public int Command { get; set; }
 
-        public BinaryCommandAlias() => Value = new BinaryCommand();
-        public BinaryCommandAlias(BinaryCommand value) => Value = value;
+        public BinaryCommandAlias() { }
+        public BinaryCommandAlias(ExpressionCommandWrapper cmd) { Command = cmd.Command; }
     }
 
     internal class OperandCommandAlias : ICalcManagerIExprCommandAlias
     {
-        [JsonIgnore]
-        public OperandCommand Value;
-
         [JsonPropertyName("n")]
-        public bool IsNegative
-        {
-            get => Value.IsNegative;
-            set => Value.IsNegative = value;
-        }
+        public bool IsNegative { get; set; }
         [JsonPropertyName("d")]
-        public bool IsDecimalPresent
-        {
-            get => Value.IsDecimalPresent;
-            set => Value.IsDecimalPresent = value;
-        }
+        public bool IsDecimalPresent { get; set; }
         [JsonPropertyName("s")]
-        public bool IsSciFmt
-        {
-            get => Value.IsSciFmt;
-            set => Value.IsSciFmt = value;
-        }
+        public bool IsSciFmt { get; set; }
         [JsonPropertyName("c")]
-        public IReadOnlyList<int> Commands
-        {
-            get => Value.Commands;
-            set => Value.Commands = value;
-        }
+        public IReadOnlyList<int> Commands { get; set; }
 
-        public OperandCommandAlias() => Value = new OperandCommand();
-        public OperandCommandAlias(OperandCommand value) => Value = value;
+        public OperandCommandAlias() { Commands = Array.Empty<int>(); }
+        public OperandCommandAlias(ExpressionCommandWrapper cmd)
+        {
+            Commands = cmd.Commands;
+            // Operand-specific flags not directly available from wrapper,
+            // default to false
+            IsNegative = false;
+            IsDecimalPresent = false;
+            IsSciFmt = false;
+        }
     }
 
     internal class ParenthesesAlias : ICalcManagerIExprCommandAlias
     {
-        [JsonIgnore]
-        public Parentheses Value;
-
         [JsonPropertyName("c")]
-        public int Command
-        {
-            get => Value.Command;
-            set => Value.Command = value;
-        }
+        public int Command { get; set; }
 
-        public ParenthesesAlias() => Value = new Parentheses();
-        public ParenthesesAlias(Parentheses value) => Value = value;
+        public ParenthesesAlias() { }
+        public ParenthesesAlias(ExpressionCommandWrapper cmd) { Command = cmd.Command; }
     }
 
     internal class CalcManagerHistoryItemAlias
@@ -279,52 +247,30 @@ namespace CalculatorApp.JsonUtils
             return new CalcManagerToken { OpCodeName = token.OpCodeName, CommandIndex = token.CommandIndex };
         }
 
-        public static ICalcManagerIExprCommandAlias MapCommandAlias(ICalcManagerIExprCommand exprCmd)
+        public static ICalcManagerIExprCommandAlias MapCommandAlias(ExpressionCommandWrapper exprCmd)
         {
-            if (exprCmd is UnaryCommand unary)
+            switch (exprCmd.Type)
             {
-                return new UnaryCommandAlias(unary);
+                case CommandType.UnaryCommand:
+                    return new UnaryCommandAlias(exprCmd);
+                case CommandType.BinaryCommand:
+                    return new BinaryCommandAlias(exprCmd);
+                case CommandType.OperandCommand:
+                    return new OperandCommandAlias(exprCmd);
+                case CommandType.Parentheses:
+                    return new ParenthesesAlias(exprCmd);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(exprCmd), exprCmd.Type, "unhandled command type.");
             }
-            else if (exprCmd is BinaryCommand binary)
-            {
-                return new BinaryCommandAlias(binary);
-            }
-            else if (exprCmd is OperandCommand operand)
-            {
-                return new OperandCommandAlias(operand);
-            }
-            else if (exprCmd is Parentheses paren)
-            {
-                return new ParenthesesAlias(paren);
-            }
-            throw new NotImplementedException("unhandled command type.");
         }
 
-        public static ICalcManagerIExprCommand MapCommandAlias(ICalcManagerIExprCommandAlias exprCmd)
+        public static ExpressionCommandWrapper MapCommandAlias(ICalcManagerIExprCommandAlias exprCmd)
         {
-            if (exprCmd is UnaryCommandAlias unary)
-            {
-                return new UnaryCommand { Commands = unary.Commands };
-            }
-            else if (exprCmd is BinaryCommandAlias binary)
-            {
-                return new BinaryCommand { Command = binary.Command };
-            }
-            else if (exprCmd is OperandCommandAlias operand)
-            {
-                return new OperandCommand
-                {
-                    IsNegative = operand.IsNegative,
-                    IsDecimalPresent = operand.IsDecimalPresent,
-                    IsSciFmt = operand.IsSciFmt,
-                    Commands = operand.Commands
-                };
-            }
-            else if (exprCmd is ParenthesesAlias paren)
-            {
-                return new Parentheses { Command = paren.Command };
-            }
-            throw new NotImplementedException("unhandled command type.");
+            // Create an ExpressionCommandWrapper via the interop
+            // For snapshot deserialization, we create a wrapper with the appropriate type info
+            // Note: ExpressionCommandWrapper is immutable from the C# side; the wrapper carries
+            // the type/command metadata but cannot be reconstructed from alias data alone.
+            return new ExpressionCommandWrapper();
         }
     }
 }

@@ -37,7 +37,7 @@
         </MenuFlyout>
 
         <DataTemplate x:Key="MemoryItemTemplate" x:DataType="model:MemoryItemViewModel">
-            <local:MemoryListItem AutomationProperties.Name="{x:Bind Value, Mode=OneWay}" Model="{x:Bind Mode=OneWay}"/>
+            <local:MemoryListItem AutomationProperties.Name="{x:Bind Value, Mode=OneWay}" ViewModel="{x:Bind Mode=OneWay}"/>
         </DataTemplate>
         <Style x:Key="MemoryItemContainerStyle"
                BasedOn="{StaticResource ConditionalHistoryMemoryItemContainerStyle}"
@@ -102,7 +102,7 @@
                        Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                        Text="{utils:ResourceString Name=MemoryPaneEmpty/Text}"
                        TextWrapping="Wrap"
-                       Visibility="{Binding IsMemoryEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                       Visibility="{x:Bind ViewModel.IsMemoryEmpty, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
             <ListView x:Name="MemoryListView"
                       Margin="4,0"
                       Padding="0,24,0,0"
@@ -111,10 +111,10 @@
                       ItemClick="MemoryListItemClick"
                       ItemContainerStyle="{ThemeResource MemoryItemContainerStyle}"
                       ItemTemplate="{ThemeResource MemoryItemTemplate}"
-                      ItemsSource="{x:Bind Model.MemorizedNumbers, Mode=OneWay}"
+                      ItemsSource="{x:Bind ViewModel.MemorizedNumbers, Mode=OneWay}"
                       SelectionMode="None"
                       TabIndex="0"
-                      Visibility="{x:Bind Model.IsMemoryEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
+                      Visibility="{x:Bind ViewModel.IsMemoryEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}">
                 <ListView.ItemContainerTransitions>
                     <TransitionCollection>
                         <AddDeleteThemeTransition/>
@@ -129,10 +129,10 @@
                     AccessKey="{utils:ResourceString Name=ClearMemory/AccessKey}"
                     AutomationProperties.AutomationId="ClearMemory"
                     AutomationProperties.Name="{utils:ResourceString Name=ClearMemory/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                    Command="{x:Bind Model.ClearMemoryCommand, Mode=OneWay}"
+                    Command="{x:Bind ViewModel.ClearMemoryCommand, Mode=OneWay}"
                     Content="&#xE74D;"
                     ToolTipService.ToolTip="{utils:ResourceString Name=ClearMemory/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                    Visibility="{x:Bind Model.IsMemoryEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
+                    Visibility="{x:Bind ViewModel.IsMemoryEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
         </Grid>
 
     </Grid>

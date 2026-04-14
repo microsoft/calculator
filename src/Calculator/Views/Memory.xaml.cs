@@ -14,10 +14,10 @@ namespace CalculatorApp
         {
             InitializeComponent();
 
-            MemoryPaneEmpty.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
+            MemoryPaneEmpty.FlowDirection = LocalizationSettings.GetInstance().GetFlowDirection();
         }
 
-        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model => (CalculatorApp.ViewModel.StandardCalculatorViewModel)this.DataContext;
+        public CalculatorApp.ViewModel.StandardCalculatorViewModel ViewModel => this.DataContext as CalculatorApp.ViewModel.StandardCalculatorViewModel;
 
         public GridLength RowHeight
         {
@@ -53,7 +53,7 @@ namespace CalculatorApp
             // On Item clicked event gets fired and e->ClickedItem is Null.
             if (memorySlot != null)
             {
-                Model.OnMemoryItemPressed(memorySlot.Position);
+                ViewModel.OnMemoryItemPressed(memorySlot.Position);
             }
         }
 

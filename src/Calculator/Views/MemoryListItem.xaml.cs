@@ -13,15 +13,15 @@ namespace CalculatorApp
             InitializeComponent();
         }
 
-        public CalculatorApp.ViewModel.MemoryItemViewModel Model
+        public CalculatorApp.ViewModel.MemoryItemViewModel ViewModel
         {
-            get => (CalculatorApp.ViewModel.MemoryItemViewModel)GetValue(ModelProperty);
-            set => SetValue(ModelProperty, value);
+            get => (CalculatorApp.ViewModel.MemoryItemViewModel)GetValue(ViewModelProperty);
+            set => SetValue(ViewModelProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for Model.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ModelProperty =
-            DependencyProperty.Register(nameof(Model), typeof(CalculatorApp.ViewModel.MemoryItemViewModel), typeof(MemoryListItem), new PropertyMetadata(default(CalculatorApp.ViewModel.MemoryItemViewModel)));
+        // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ViewModelProperty =
+            DependencyProperty.Register(nameof(ViewModel), typeof(CalculatorApp.ViewModel.MemoryItemViewModel), typeof(MemoryListItem), new PropertyMetadata(default(CalculatorApp.ViewModel.MemoryItemViewModel)));
 
         protected override void OnPointerEntered(Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
@@ -44,31 +44,31 @@ namespace CalculatorApp
 
         private void OnMemoryAddButtonClicked(object sender, RoutedEventArgs e)
         {
-            Model.MemoryAdd();
+            ViewModel.MemoryAdd();
         }
 
         private void OnClearButtonClicked(object sender, RoutedEventArgs e)
         {
-            Model.Clear();
+            ViewModel.Clear();
         }
         private void OnMemorySubtractButtonClicked(object sender, RoutedEventArgs e)
         {
-            Model.MemorySubtract();
+            ViewModel.MemorySubtract();
         }
 
         private void OnClearSwipeInvoked(Microsoft.UI.Xaml.Controls.SwipeItem sender, Microsoft.UI.Xaml.Controls.SwipeItemInvokedEventArgs e)
         {
-            Model.Clear();
+            ViewModel.Clear();
         }
 
         private void OnMemoryAddSwipeInvoked(Microsoft.UI.Xaml.Controls.SwipeItem sender, Microsoft.UI.Xaml.Controls.SwipeItemInvokedEventArgs e)
         {
-            Model.MemoryAdd();
+            ViewModel.MemoryAdd();
         }
 
         private void OnMemorySubtractSwipeInvoked(Microsoft.UI.Xaml.Controls.SwipeItem sender, Microsoft.UI.Xaml.Controls.SwipeItemInvokedEventArgs e)
         {
-            Model.MemorySubtract();
+            ViewModel.MemorySubtract();
         }
     }
 }

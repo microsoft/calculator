@@ -783,21 +783,21 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Calculator.ManagedViewModels\Calculator.ManagedViewModels.csproj">
-      <Project>{2179cfde-cded-4df0-8c24-a0ef6b425771}</Project>
-      <Name>Calculator.ManagedViewModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
-      <Project>{812d1a7b-b8ac-49e4-8e6d-af5d59500d56}</Project>
-      <Name>CalcViewModel</Name>
+    <ProjectReference Include="..\Calculator.ViewModels\Calculator.ViewModels.csproj">
+      <Project>{E1E2E3E4-1234-5678-ABCD-555555555555}</Project>
+      <Name>Calculator.ViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
       <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
       <Name>GraphControl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TraceLogging\TraceLogging.vcxproj">
-      <Project>{fc81ff41-02cd-4cd9-9bc5-45a1e39ac6ed}</Project>
-      <Name>TraceLogging</Name>
+    <ProjectReference Include="..\TraceLogging.Managed\TraceLogging.Managed.csproj">
+      <Project>{3E4B3AB2-A1E0-4B28-B191-7B423E00B5A1}</Project>
+      <Name>TraceLogging.Managed</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CalcManager.Interop\CalcManager.Interop.vcxproj">
+      <Project>{A2D3E6B4-88C1-4D6F-9A7E-2B4C5D6E7F80}</Project>
+      <Name>CalcManager.Interop</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

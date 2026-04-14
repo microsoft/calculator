@@ -453,7 +453,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=sinButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Sin"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="sin"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -466,7 +466,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=cosButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Cos"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="cos"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -479,7 +479,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=tanButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Tan"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="tan"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -492,7 +492,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=secButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Sec"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="sec"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -506,7 +506,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=cscButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Csc"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="csc"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -520,7 +520,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=cotButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Cot"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="cot"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
                             </Grid>
@@ -548,7 +548,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=invsinButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="InvSin"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="sin⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -561,7 +561,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=invcosButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="InvCos"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="cos⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -574,7 +574,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=invtanButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="InvTan"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="tan⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -587,7 +587,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=invsecButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="InvSec"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="sec⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -601,7 +601,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=invcscButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="InvCsc"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="csc⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -615,7 +615,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=invcotButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="InvCot"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="cot⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
                             </Grid>
@@ -643,7 +643,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=sinhButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Sinh"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="sinh"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -656,7 +656,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=coshButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Cosh"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="cosh"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -669,7 +669,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=tanhButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Tanh"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="tanh"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -682,7 +682,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=sechButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Sech"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="sech"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -696,7 +696,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=cschButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Csch"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="csch"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -710,7 +710,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=cothButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="Coth"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="coth"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
                             </Grid>
@@ -737,7 +737,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=invsinhButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="InvSinh"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="sinh⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -750,7 +750,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=invcoshButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="InvCosh"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="cosh⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -763,7 +763,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=invtanhButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="InvTanh"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="tanh⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -776,7 +776,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=invsechButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="InvSech"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="sech⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -790,7 +790,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=invcschButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="InvCsch"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="csch⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
 
@@ -804,7 +804,7 @@
                                                            AutomationProperties.Name="{utils:ResourceString Name=invcothButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                            ButtonId="InvCoth"
                                                            Click="FlyoutButton_Clicked"
-                                                           Command="{x:Bind Model.ButtonPressed}"
+                                                           Command="{x:Bind ViewModel.ButtonPressed}"
                                                            Content="coth⁻¹"
                                                            IsEnabled="{x:Bind TrigButton.IsEnabled, Mode=OneWay}"/>
                             </Grid>
@@ -847,7 +847,7 @@
                                                        AutomationProperties.Name="{utils:ResourceString Name=absButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                        ButtonId="Abs"
                                                        Click="FlyoutButton_Clicked"
-                                                       Command="{x:Bind Model.ButtonPressed}"
+                                                       Command="{x:Bind ViewModel.ButtonPressed}"
                                                        Content="&#xF884;"
                                                        IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
 
@@ -859,7 +859,7 @@
                                                        AutomationProperties.Name="{utils:ResourceString Name=floorButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                        ButtonId="Floor"
                                                        Click="FlyoutButton_Clicked"
-                                                       Command="{x:Bind Model.ButtonPressed}"
+                                                       Command="{x:Bind ViewModel.ButtonPressed}"
                                                        Content="&#xF885;"
                                                        IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
 
@@ -871,7 +871,7 @@
                                                        AutomationProperties.Name="{utils:ResourceString Name=ceilButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                        ButtonId="Ceil"
                                                        Click="FlyoutButton_Clicked"
-                                                       Command="{x:Bind Model.ButtonPressed}"
+                                                       Command="{x:Bind ViewModel.ButtonPressed}"
                                                        Content="&#xF886;"
                                                        IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
 
@@ -884,7 +884,7 @@
                                                        AutomationProperties.Name="{utils:ResourceString Name=randButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                        ButtonId="Rand"
                                                        Click="FlyoutButton_Clicked"
-                                                       Command="{x:Bind Model.ButtonPressed}"
+                                                       Command="{x:Bind ViewModel.ButtonPressed}"
                                                        Content="rand"
                                                        IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
 
@@ -897,7 +897,7 @@
                                                        AutomationProperties.Name="{utils:ResourceString Name=dmsButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                        ButtonId="DMS"
                                                        Click="FlyoutButton_Clicked"
-                                                       Command="{x:Bind Model.ButtonPressed}"
+                                                       Command="{x:Bind ViewModel.ButtonPressed}"
                                                        Content="&#xF890;"
                                                        IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
 
@@ -909,7 +909,7 @@
                                                        AutomationProperties.Name="{utils:ResourceString Name=degreesButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                                        ButtonId="Degrees"
                                                        Click="FlyoutButton_Clicked"
-                                                       Command="{x:Bind Model.ButtonPressed}"
+                                                       Command="{x:Bind ViewModel.ButtonPressed}"
                                                        Content="&#xF891;"
                                                        IsEnabled="{x:Bind FuncButton.IsEnabled, Mode=OneWay}"/>
                         </Grid>
@@ -973,7 +973,7 @@
                                        ButtonId="ClearEntry"
                                        Content="CE"
                                        LostFocus="ClearEntryButton_LostFocus"
-                                       Visibility="{x:Bind Model.IsInputEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
+                                       Visibility="{x:Bind ViewModel.IsInputEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityNegationConverter}}"/>
 
             <controls:CalculatorButton x:Name="ClearButton"
                                        Grid.Column="1"
@@ -985,7 +985,7 @@
                                        ButtonId="Clear"
                                        Content="C"
                                        LostFocus="ClearButton_LostFocus"
-                                       Visibility="{x:Bind Model.IsInputEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                       Visibility="{x:Bind ViewModel.IsInputEmpty, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <controls:CalculatorButton x:Name="BackSpaceButton"
                                        Grid.Column="2"
@@ -1201,7 +1201,7 @@
                                    ButtonId="OpenParenthesis"
                                    Content="("
                                    GotFocus="OpenParenthesisButton_GotFocus"
-                                   Tag="{x:Bind ParenthesisCountToString(Model.OpenParenthesisCount), Mode=OneWay}"/>
+                                   Tag="{x:Bind ParenthesisCountToString(ViewModel.OpenParenthesisCount), Mode=OneWay}"/>
 
         <controls:CalculatorButton x:Name="CloseParenthesisButton"
                                    Grid.Row="3"
@@ -1300,7 +1300,7 @@
                                    AutomationProperties.Name="{utils:ResourceString Name=negateButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                    ButtonId="Negate"
                                    Content="&#xF898;"
-                                   IsEnabled="{x:Bind Model.IsNegateEnabled, Mode=OneWay}"/>
+                                   IsEnabled="{x:Bind ViewModel.IsNegateEnabled, Mode=OneWay}"/>
 
         <local:NumberPad x:Name="NumberPad"
                          Grid.Row="4"

@@ -48,7 +48,7 @@ namespace CalculatorApp
             {
                 if (Debugger.IsAttached)
                 {
-                    string errorMessage = args.Message;
+                    _ = args.Message; // Inspect in debugger
                     Debugger.Break();
                 }
             };
@@ -127,7 +127,7 @@ namespace CalculatorApp
             {
                 rootFrame = new Frame
                 {
-                    FlowDirection = LocalizationService.GetInstance().GetFlowDirection()
+                    FlowDirection = LocalizationSettings.GetInstance().GetFlowDirection()
                 };
             }
 

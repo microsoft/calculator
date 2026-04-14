@@ -39,7 +39,7 @@
             </ResourceDictionary.ThemeDictionaries>
             <converters:ItemSizeToVisibilityNegationConverter x:Key="ItemSizeToVisibilityNegationConverter"/>
             <converters:ItemSizeToVisibilityConverter x:Key="ItemSizeToVisibilityConverter"/>
-            <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind Model.HistoryAnnouncement, Mode=OneWay}"/>
+            <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind ViewModel.HistoryAnnouncement, Mode=OneWay}"/>
 
             <muxc:SymbolIconSource x:Key="DeleteSymbol" Symbol="Delete"/>
 
@@ -142,7 +142,7 @@
                        Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                        Text="{utils:ResourceString Name=HistoryEmpty/Text}"
                        TextWrapping="Wrap"
-                       Visibility="{x:Bind Model.ItemsCount, Converter={StaticResource ItemSizeToVisibilityConverter}, Mode=OneWay}"/>
+                       Visibility="{x:Bind ViewModel.ItemsCount, Converter={StaticResource ItemSizeToVisibilityConverter}, Mode=OneWay}"/>
             <ListView x:Name="HistoryListView"
                       MinHeight="60"
                       Margin="4,0"
@@ -153,10 +153,10 @@
                       ItemClick="ListView_ItemClick"
                       ItemContainerStyle="{StaticResource HistoryItemContainerStyle}"
                       ItemTemplate="{StaticResource HistoryItemTemplate}"
-                      ItemsSource="{x:Bind Model.Items, Mode=OneWay}"
+                      ItemsSource="{x:Bind ViewModel.Items, Mode=OneWay}"
                       SelectionMode="None"
                       TabIndex="0"
-                      Visibility="{x:Bind Model.ItemsCount, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}">
+                      Visibility="{x:Bind ViewModel.ItemsCount, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}">
                 <ListView.ItemContainerTransitions>
                     <TransitionCollection>
                         <AddDeleteThemeTransition/>
@@ -172,10 +172,10 @@
                     AccessKey="{utils:ResourceString Name=ClearHistory/AccessKey}"
                     AutomationProperties.AutomationId="ClearHistory"
                     AutomationProperties.Name="{utils:ResourceString Name=ClearHistory/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                    Command="{x:Bind Model.ClearCommand, Mode=OneWay}"
+                    Command="{x:Bind ViewModel.ClearCommand, Mode=OneWay}"
                     Content=""
                     ToolTipService.ToolTip="{utils:ResourceString Name=ClearHistory/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                    Visibility="{x:Bind Model.ItemsCount, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}"/>
+                    Visibility="{x:Bind ViewModel.ItemsCount, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}"/>
         </Grid>
     </Grid>
 </UserControl>

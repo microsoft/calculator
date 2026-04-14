@@ -39,7 +39,7 @@
         <DataTemplate x:Name="DelighterValueTemplate" x:DataType="vm:SupplementaryResult">
             <StackPanel Margin="0" Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Bottom"
-                           Style="{Binding Unit, Converter={StaticResource DelighterUnitStyleConverter}, Mode=OneTime}"
+                           Style="{x:Bind Unit, Converter={StaticResource DelighterUnitStyleConverter}, Mode=OneTime}"
                            AutomationProperties.AutomationId="DelighterResultGlyph"/>
                 <TextBlock Margin="-2,0,4,0"
                            Padding="0"

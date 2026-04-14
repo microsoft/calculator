@@ -25,6 +25,17 @@ namespace CalculatorApp
     [Windows.Foundation.Metadata.WebHostHidden]
     public sealed partial class DateCalculator
     {
+        public DateCalculatorViewModel ViewModel
+        {
+            get => (DateCalculatorViewModel)GetValue(ViewModelProperty);
+            set => SetValue(ViewModelProperty, value);
+        }
+
+        public static readonly DependencyProperty ViewModelProperty =
+            DependencyProperty.Register(nameof(ViewModel), typeof(DateCalculatorViewModel), typeof(DateCalculator), new PropertyMetadata(null));
+
+        public static string OrEmpty(string value) => value ?? string.Empty;
+
         public DateCalculator()
         {
             InitializeComponent();
@@ -64,7 +75,7 @@ namespace CalculatorApp
             DateDiff_ToDate.MaxDate = maxYear;
 
             // Set the PlaceHolderText for CalendarDatePicker
-            DateTimeFormatter dateTimeFormatter = LocalizationService.GetInstance().GetRegionalSettingsAwareDateTimeFormatter(
+            DateTimeFormatter dateTimeFormatter = LocalizationSettings.GetInstance().GetRegionalSettingsAwareDateTimeFormatter(
                 "day month year",
                 localizationSettings.GetCalendarIdentifier(),
                 ClockIdentifiers.TwentyFourHour); // Clock Identifier is not used
