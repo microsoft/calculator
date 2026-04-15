@@ -73,29 +73,29 @@ namespace CalcManager.Interop
     unsealed runtimeclass UnitConverterVMCallbackBase
     {
         UnitConverterVMCallbackBase();
-        void DisplayCallback(String fromValue, String toValue);
-        void SuggestedValueCallback(SuggestedValueWrapper[] suggestedValues);
-        void MaxDigitsReached();
+        overridable void DisplayCallback(String fromValue, String toValue);
+        overridable void SuggestedValueCallback(SuggestedValueWrapper[] suggestedValues);
+        overridable void MaxDigitsReached();
     };
 
     unsealed runtimeclass ViewModelCurrencyCallbackBase
     {
         ViewModelCurrencyCallbackBase();
-        void CurrencyDataLoadFinished(Boolean didLoad);
-        void CurrencySymbolsCallback(String fromSymbol, String toSymbol);
-        void CurrencyRatiosCallback(String ratioEquality, String accRatioEquality);
-        void CurrencyTimestampCallback(String timestamp, Boolean isWeekOldData);
-        void NetworkBehaviorChanged(Int32 newBehavior);
+        overridable void CurrencyDataLoadFinished(Boolean didLoad);
+        overridable void CurrencySymbolsCallback(String fromSymbol, String toSymbol);
+        overridable void CurrencyRatiosCallback(String ratioEquality, String accRatioEquality);
+        overridable void CurrencyTimestampCallback(String timestamp, Boolean isWeekOldData);
+        overridable void NetworkBehaviorChanged(Int32 newBehavior);
     };
 
     unsealed runtimeclass ConverterDataLoaderBase
     {
         ConverterDataLoaderBase();
-        void LoadData();
-        CategoryWrapper[] GetOrderedCategories();
-        UnitWrapper[] GetOrderedUnits(CategoryWrapper category);
-        UnitConversionEntry[] LoadOrderedRatios(UnitWrapper unit);
-        Boolean SupportsCategory(CategoryWrapper target);
+        overridable void LoadData();
+        overridable CategoryWrapper[] GetOrderedCategories();
+        overridable UnitWrapper[] GetOrderedUnits(CategoryWrapper category);
+        overridable UnitConversionEntry[] LoadOrderedRatios(UnitWrapper unit);
+        overridable Boolean SupportsCategory(CategoryWrapper target);
     };
 
     runtimeclass UnitConverterWrapper

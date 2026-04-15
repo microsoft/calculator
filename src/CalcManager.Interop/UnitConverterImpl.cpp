@@ -16,12 +16,12 @@ namespace winrt::CalcManager::Interop::implementation
 
     void ConverterDataLoaderBridge::LoadData()
     {
-        m_receiver.LoadData();
+        m_receiver.as<CalcManager::Interop::IConverterDataLoaderBaseOverrides>().LoadData();
     }
 
     std::vector<UnitConversionManager::Category> ConverterDataLoaderBridge::GetOrderedCategories()
     {
-        auto categories = m_receiver.GetOrderedCategories();
+        auto categories = m_receiver.as<CalcManager::Interop::IConverterDataLoaderBaseOverrides>().GetOrderedCategories();
         std::vector<UnitConversionManager::Category> result;
         result.reserve(categories.size());
         for (auto const& cat : categories)
@@ -33,7 +33,7 @@ namespace winrt::CalcManager::Interop::implementation
 
     std::vector<UnitConversionManager::Unit> ConverterDataLoaderBridge::GetOrderedUnits(const UnitConversionManager::Category& c)
     {
-        auto units = m_receiver.GetOrderedUnits(ToWinRTCategory(c));
+        auto units = m_receiver.as<CalcManager::Interop::IConverterDataLoaderBaseOverrides>().GetOrderedUnits(ToWinRTCategory(c));
         std::vector<UnitConversionManager::Unit> result;
         result.reserve(units.size());
         for (auto const& u : units)
@@ -46,7 +46,7 @@ namespace winrt::CalcManager::Interop::implementation
     std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>
     ConverterDataLoaderBridge::LoadOrderedRatios(const UnitConversionManager::Unit& u)
     {
-        auto entries = m_receiver.LoadOrderedRatios(ToWinRTUnit(u));
+        auto entries = m_receiver.as<CalcManager::Interop::IConverterDataLoaderBaseOverrides>().LoadOrderedRatios(ToWinRTUnit(u));
         std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash> result;
         for (auto const& entry : entries)
         {
@@ -59,7 +59,7 @@ namespace winrt::CalcManager::Interop::implementation
 
     bool ConverterDataLoaderBridge::SupportsCategory(const UnitConversionManager::Category& target)
     {
-        return m_receiver.SupportsCategory(ToWinRTCategory(target));
+        return m_receiver.as<CalcManager::Interop::IConverterDataLoaderBaseOverrides>().SupportsCategory(ToWinRTCategory(target));
     }
 
     // ---- UnitConverterVMCallbackBridge ----
@@ -72,7 +72,7 @@ namespace winrt::CalcManager::Interop::implementation
 
     void UnitConverterVMCallbackBridge::DisplayCallback(const std::wstring& from, const std::wstring& to)
     {
-        m_receiver.DisplayCallback(hstring(from), hstring(to));
+        m_receiver.as<CalcManager::Interop::IUnitConverterVMCallbackBaseOverrides>().DisplayCallback(hstring(from), hstring(to));
     }
 
     void UnitConverterVMCallbackBridge::SuggestedValueCallback(
@@ -87,12 +87,12 @@ namespace winrt::CalcManager::Interop::implementation
             sv.Unit = ToWinRTUnit(unit);
             winrtValues.push_back(std::move(sv));
         }
-        m_receiver.SuggestedValueCallback(com_array<CalcManager::Interop::SuggestedValueWrapper>(std::move(winrtValues)));
+        m_receiver.as<CalcManager::Interop::IUnitConverterVMCallbackBaseOverrides>().SuggestedValueCallback(com_array<CalcManager::Interop::SuggestedValueWrapper>(std::move(winrtValues)));
     }
 
     void UnitConverterVMCallbackBridge::MaxDigitsReached()
     {
-        m_receiver.MaxDigitsReached();
+        m_receiver.as<CalcManager::Interop::IUnitConverterVMCallbackBaseOverrides>().MaxDigitsReached();
     }
 
     // ---- ViewModelCurrencyCallbackBridge ----
@@ -105,27 +105,27 @@ namespace winrt::CalcManager::Interop::implementation
 
     void ViewModelCurrencyCallbackBridge::CurrencyDataLoadFinished(bool didLoad)
     {
-        m_receiver.CurrencyDataLoadFinished(didLoad);
+        m_receiver.as<CalcManager::Interop::IViewModelCurrencyCallbackBaseOverrides>().CurrencyDataLoadFinished(didLoad);
     }
 
     void ViewModelCurrencyCallbackBridge::CurrencySymbolsCallback(const std::wstring& fromSymbol, const std::wstring& toSymbol)
     {
-        m_receiver.CurrencySymbolsCallback(hstring(fromSymbol), hstring(toSymbol));
+        m_receiver.as<CalcManager::Interop::IViewModelCurrencyCallbackBaseOverrides>().CurrencySymbolsCallback(hstring(fromSymbol), hstring(toSymbol));
     }
 
     void ViewModelCurrencyCallbackBridge::CurrencyRatiosCallback(const std::wstring& ratioEquality, const std::wstring& accRatioEquality)
     {
-        m_receiver.CurrencyRatiosCallback(hstring(ratioEquality), hstring(accRatioEquality));
+        m_receiver.as<CalcManager::Interop::IViewModelCurrencyCallbackBaseOverrides>().CurrencyRatiosCallback(hstring(ratioEquality), hstring(accRatioEquality));
     }
 
     void ViewModelCurrencyCallbackBridge::CurrencyTimestampCallback(const std::wstring& timestamp, bool isWeekOldData)
     {
-        m_receiver.CurrencyTimestampCallback(hstring(timestamp), isWeekOldData);
+        m_receiver.as<CalcManager::Interop::IViewModelCurrencyCallbackBaseOverrides>().CurrencyTimestampCallback(hstring(timestamp), isWeekOldData);
     }
 
     void ViewModelCurrencyCallbackBridge::NetworkBehaviorChanged(int newBehavior)
     {
-        m_receiver.NetworkBehaviorChanged(newBehavior);
+        m_receiver.as<CalcManager::Interop::IViewModelCurrencyCallbackBaseOverrides>().NetworkBehaviorChanged(newBehavior);
     }
 
     // ---- UnitConverterWrapper ----
