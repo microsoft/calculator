@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using CalcManager.Interop;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace CalculatorApp.ViewModel
 {
@@ -22,7 +24,7 @@ namespace CalculatorApp.ViewModel
     }
 
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class StandardCalculatorViewModel : INotifyPropertyChanged, ICalcDisplayTarget
+    public sealed partial class StandardCalculatorViewModel : ObservableObject, ICalcDisplayTarget
     {
         public const string BinaryDigitsPropertyName = "BinaryDigits";
         public const string IsBitFlipCheckedPropertyName = "IsBitFlipChecked";
@@ -67,11 +69,11 @@ namespace CalculatorApp.ViewModel
         private bool _isProgrammer;
         private bool _isBitFlipChecked;
         private bool _isRtlLanguage;
-        private bool _operandUpdated;
+
         private bool _isLastOperationHistoryLoad;
         private BitLength _valueBitLength;
         private string _selectedExpressionLastData;
-        private DisplayExpressionToken _selectedExpressionToken;
+        private DisplayExpressionToken _selectedExpressionToken = null;
         private string _feedbackForButtonPress;
 
         // Expression data
@@ -79,9 +81,14 @@ namespace CalculatorApp.ViewModel
         private List<ExpressionCommandWrapper> _commands;
 
         // Backing fields for observable properties
+        [ObservableProperty]
         private string _displayValue;
+
         private HistoryViewModel _historyVM;
+
+        [ObservableProperty]
         private bool _isAlwaysOnTop;
+
         private bool _isBinaryBitFlippingEnabled;
         private bool _isInError;
         private bool _isOperatorCommand;
@@ -95,11 +102,22 @@ namespace CalculatorApp.ViewModel
         private string _decDisplayValue_AutomationName = string.Empty;
         private string _octDisplayValue_AutomationName = string.Empty;
         private string _binDisplayValue_AutomationName = string.Empty;
+
+        [ObservableProperty]
         private bool _isBinaryOperatorEnabled;
+
+        [ObservableProperty]
         private bool _isUnaryOperatorEnabled;
+
+        [ObservableProperty]
         private bool _isNegateEnabled;
+
+        [ObservableProperty]
         private bool _isDecimalEnabled;
+
         private ObservableCollection<MemoryItemViewModel> _memorizedNumbers;
+
+        [ObservableProperty]
         private bool _isMemoryEmpty;
         private bool _isFToEChecked;
         private bool _isFToEEnabled;
@@ -121,7 +139,6 @@ namespace CalculatorApp.ViewModel
         private bool _isOperandTextCompletelySelected;
         private bool _keyPressed;
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public event HideMemoryClickedHandler HideMemoryClicked;
 
         public StandardCalculatorViewModel()
@@ -214,459 +231,172 @@ namespace CalculatorApp.ViewModel
 
         #region Observable Properties
 
-        public string DisplayValue
-        {
-            get => _displayValue;
-            set
-            {
-                if (_displayValue != value)
-                {
-                    _displayValue = value;
-                    RaisePropertyChanged(nameof(DisplayValue));
-                }
-            }
-        }
-
         public HistoryViewModel HistoryVM
         {
             get => _historyVM;
-            private set
-            {
-                if (_historyVM != value)
-                {
-                    _historyVM = value;
-                    RaisePropertyChanged(nameof(HistoryVM));
-                }
-            }
-        }
-
-        public bool IsAlwaysOnTop
-        {
-            get => _isAlwaysOnTop;
-            set
-            {
-                if (_isAlwaysOnTop != value)
-                {
-                    _isAlwaysOnTop = value;
-                    RaisePropertyChanged(nameof(IsAlwaysOnTop));
-                }
-            }
+            private set => SetProperty(ref _historyVM, value);
         }
 
         public bool IsBinaryBitFlippingEnabled
         {
             get => _isBinaryBitFlippingEnabled;
-            private set
-            {
-                if (_isBinaryBitFlippingEnabled != value)
-                {
-                    _isBinaryBitFlippingEnabled = value;
-                    RaisePropertyChanged(nameof(IsBinaryBitFlippingEnabled));
-                }
-            }
+            private set => SetProperty(ref _isBinaryBitFlippingEnabled, value);
         }
 
         public bool IsInError
         {
             get => _isInError;
-            private set
-            {
-                if (_isInError != value)
-                {
-                    _isInError = value;
-                    RaisePropertyChanged(nameof(IsInError));
-                }
-            }
+            private set => SetProperty(ref _isInError, value);
         }
 
         public bool IsOperatorCommand
         {
             get => _isOperatorCommand;
-            private set
-            {
-                if (_isOperatorCommand != value)
-                {
-                    _isOperatorCommand = value;
-                    RaisePropertyChanged(nameof(IsOperatorCommand));
-                }
-            }
+            private set => SetProperty(ref _isOperatorCommand, value);
         }
 
         public ObservableCollection<DisplayExpressionToken> ExpressionTokens
         {
             get => _expressionTokens;
-            private set
-            {
-                if (_expressionTokens != value)
-                {
-                    _expressionTokens = value;
-                    RaisePropertyChanged(nameof(ExpressionTokens));
-                }
-            }
+            private set => SetProperty(ref _expressionTokens, value);
         }
 
         public string DecimalDisplayValue
         {
             get => _decimalDisplayValue;
-            private set
-            {
-                if (_decimalDisplayValue != value)
-                {
-                    _decimalDisplayValue = value;
-                    RaisePropertyChanged(nameof(DecimalDisplayValue));
-                }
-            }
+            private set => SetProperty(ref _decimalDisplayValue, value);
         }
 
         public string HexDisplayValue
         {
             get => _hexDisplayValue;
-            private set
-            {
-                if (_hexDisplayValue != value)
-                {
-                    _hexDisplayValue = value;
-                    RaisePropertyChanged(nameof(HexDisplayValue));
-                }
-            }
+            private set => SetProperty(ref _hexDisplayValue, value);
         }
 
         public string OctalDisplayValue
         {
             get => _octalDisplayValue;
-            private set
-            {
-                if (_octalDisplayValue != value)
-                {
-                    _octalDisplayValue = value;
-                    RaisePropertyChanged(nameof(OctalDisplayValue));
-                }
-            }
+            private set => SetProperty(ref _octalDisplayValue, value);
         }
 
         public string BinaryDisplayValue
         {
             get => _binaryDisplayValue;
-            private set
-            {
-                if (_binaryDisplayValue != value)
-                {
-                    _binaryDisplayValue = value;
-                    RaisePropertyChanged(nameof(BinaryDisplayValue));
-                }
-            }
+            private set => SetProperty(ref _binaryDisplayValue, value);
         }
 
         public IList<bool> BinaryDigits
         {
             get => _binaryDigits;
-            private set
-            {
-                if (_binaryDigits != value)
-                {
-                    _binaryDigits = value;
-                    RaisePropertyChanged(nameof(BinaryDigits));
-                }
-            }
+            private set => SetProperty(ref _binaryDigits, value);
         }
 
         public string HexDisplayValue_AutomationName
         {
             get => _hexDisplayValue_AutomationName;
-            private set
-            {
-                if (_hexDisplayValue_AutomationName != value)
-                {
-                    _hexDisplayValue_AutomationName = value;
-                    RaisePropertyChanged(nameof(HexDisplayValue_AutomationName));
-                }
-            }
+            private set => SetProperty(ref _hexDisplayValue_AutomationName, value);
         }
 
         public string DecDisplayValue_AutomationName
         {
             get => _decDisplayValue_AutomationName;
-            private set
-            {
-                if (_decDisplayValue_AutomationName != value)
-                {
-                    _decDisplayValue_AutomationName = value;
-                    RaisePropertyChanged(nameof(DecDisplayValue_AutomationName));
-                }
-            }
+            private set => SetProperty(ref _decDisplayValue_AutomationName, value);
         }
 
         public string OctDisplayValue_AutomationName
         {
             get => _octDisplayValue_AutomationName;
-            private set
-            {
-                if (_octDisplayValue_AutomationName != value)
-                {
-                    _octDisplayValue_AutomationName = value;
-                    RaisePropertyChanged(nameof(OctDisplayValue_AutomationName));
-                }
-            }
+            private set => SetProperty(ref _octDisplayValue_AutomationName, value);
         }
 
         public string BinDisplayValue_AutomationName
         {
             get => _binDisplayValue_AutomationName;
-            private set
-            {
-                if (_binDisplayValue_AutomationName != value)
-                {
-                    _binDisplayValue_AutomationName = value;
-                    RaisePropertyChanged(nameof(BinDisplayValue_AutomationName));
-                }
-            }
-        }
-
-        public bool IsBinaryOperatorEnabled
-        {
-            get => _isBinaryOperatorEnabled;
-            set
-            {
-                if (_isBinaryOperatorEnabled != value)
-                {
-                    _isBinaryOperatorEnabled = value;
-                    RaisePropertyChanged(nameof(IsBinaryOperatorEnabled));
-                }
-            }
-        }
-
-        public bool IsUnaryOperatorEnabled
-        {
-            get => _isUnaryOperatorEnabled;
-            set
-            {
-                if (_isUnaryOperatorEnabled != value)
-                {
-                    _isUnaryOperatorEnabled = value;
-                    RaisePropertyChanged(nameof(IsUnaryOperatorEnabled));
-                }
-            }
-        }
-
-        public bool IsNegateEnabled
-        {
-            get => _isNegateEnabled;
-            set
-            {
-                if (_isNegateEnabled != value)
-                {
-                    _isNegateEnabled = value;
-                    RaisePropertyChanged(nameof(IsNegateEnabled));
-                }
-            }
-        }
-
-        public bool IsDecimalEnabled
-        {
-            get => _isDecimalEnabled;
-            set
-            {
-                if (_isDecimalEnabled != value)
-                {
-                    _isDecimalEnabled = value;
-                    RaisePropertyChanged(nameof(IsDecimalEnabled));
-                }
-            }
+            private set => SetProperty(ref _binDisplayValue_AutomationName, value);
         }
 
         public ObservableCollection<MemoryItemViewModel> MemorizedNumbers
         {
             get => _memorizedNumbers;
-            private set
-            {
-                if (_memorizedNumbers != value)
-                {
-                    _memorizedNumbers = value;
-                    RaisePropertyChanged(nameof(MemorizedNumbers));
-                }
-            }
-        }
-
-        public bool IsMemoryEmpty
-        {
-            get => _isMemoryEmpty;
-            set
-            {
-                if (_isMemoryEmpty != value)
-                {
-                    _isMemoryEmpty = value;
-                    RaisePropertyChanged(nameof(IsMemoryEmpty));
-                }
-            }
+            private set => SetProperty(ref _memorizedNumbers, value);
         }
 
         public bool IsFToEChecked
         {
             get => _isFToEChecked;
-            private set
-            {
-                if (_isFToEChecked != value)
-                {
-                    _isFToEChecked = value;
-                    RaisePropertyChanged(nameof(IsFToEChecked));
-                }
-            }
+            private set => SetProperty(ref _isFToEChecked, value);
         }
 
         public bool IsFToEEnabled
         {
             get => _isFToEEnabled;
-            private set
-            {
-                if (_isFToEEnabled != value)
-                {
-                    _isFToEEnabled = value;
-                    RaisePropertyChanged(nameof(IsFToEEnabled));
-                }
-            }
+            private set => SetProperty(ref _isFToEEnabled, value);
         }
 
         public bool AreHEXButtonsEnabled
         {
             get => _areHEXButtonsEnabled;
-            private set
-            {
-                if (_areHEXButtonsEnabled != value)
-                {
-                    _areHEXButtonsEnabled = value;
-                    RaisePropertyChanged(nameof(AreHEXButtonsEnabled));
-                }
-            }
+            private set => SetProperty(ref _areHEXButtonsEnabled, value);
         }
 
         public string CalculationResultAutomationName
         {
             get => _calculationResultAutomationName;
-            private set
-            {
-                if (_calculationResultAutomationName != value)
-                {
-                    _calculationResultAutomationName = value;
-                    RaisePropertyChanged(nameof(CalculationResultAutomationName));
-                }
-            }
+            private set => SetProperty(ref _calculationResultAutomationName, value);
         }
 
         public string CalculationExpressionAutomationName
         {
             get => _calculationExpressionAutomationName;
-            private set
-            {
-                if (_calculationExpressionAutomationName != value)
-                {
-                    _calculationExpressionAutomationName = value;
-                    RaisePropertyChanged(nameof(CalculationExpressionAutomationName));
-                }
-            }
+            private set => SetProperty(ref _calculationExpressionAutomationName, value);
         }
 
         public bool IsShiftProgrammerChecked
         {
             get => _isShiftProgrammerChecked;
-            private set
-            {
-                if (_isShiftProgrammerChecked != value)
-                {
-                    _isShiftProgrammerChecked = value;
-                    RaisePropertyChanged(nameof(IsShiftProgrammerChecked));
-                }
-            }
+            private set => SetProperty(ref _isShiftProgrammerChecked, value);
         }
 
         public NumberBase CurrentRadixType
         {
             get => _currentRadixType;
-            private set
-            {
-                if (_currentRadixType != value)
-                {
-                    _currentRadixType = value;
-                    RaisePropertyChanged(nameof(CurrentRadixType));
-                }
-            }
+            private set => SetProperty(ref _currentRadixType, value);
         }
 
         public bool AreTokensUpdated
         {
             get => _areTokensUpdated;
-            private set
-            {
-                if (_areTokensUpdated != value)
-                {
-                    _areTokensUpdated = value;
-                    RaisePropertyChanged(nameof(AreTokensUpdated));
-                }
-            }
+            private set => SetProperty(ref _areTokensUpdated, value);
         }
 
         public bool AreAlwaysOnTopResultsUpdated
         {
             get => _areAlwaysOnTopResultsUpdated;
-            private set
-            {
-                if (_areAlwaysOnTopResultsUpdated != value)
-                {
-                    _areAlwaysOnTopResultsUpdated = value;
-                    RaisePropertyChanged(nameof(AreAlwaysOnTopResultsUpdated));
-                }
-            }
+            private set => SetProperty(ref _areAlwaysOnTopResultsUpdated, value);
         }
 
         public bool AreProgrammerRadixOperatorsVisible
         {
             get => _areProgrammerRadixOperatorsVisible;
-            private set
-            {
-                if (_areProgrammerRadixOperatorsVisible != value)
-                {
-                    _areProgrammerRadixOperatorsVisible = value;
-                    RaisePropertyChanged(nameof(AreProgrammerRadixOperatorsVisible));
-                }
-            }
+            private set => SetProperty(ref _areProgrammerRadixOperatorsVisible, value);
         }
 
         public bool IsInputEmpty
         {
             get => _isInputEmpty;
-            private set
-            {
-                if (_isInputEmpty != value)
-                {
-                    _isInputEmpty = value;
-                    RaisePropertyChanged(nameof(IsInputEmpty));
-                }
-            }
+            private set => SetProperty(ref _isInputEmpty, value);
         }
 
         public NarratorAnnouncement Announcement
         {
             get => _announcement;
-            private set
-            {
-                if (_announcement != value)
-                {
-                    _announcement = value;
-                    RaisePropertyChanged(nameof(Announcement));
-                }
-            }
+            private set => SetProperty(ref _announcement, value);
         }
 
         public uint OpenParenthesisCount
         {
             get => _openParenthesisCount;
-            private set
-            {
-                if (_openParenthesisCount != value)
-                {
-                    _openParenthesisCount = value;
-                    RaisePropertyChanged(nameof(OpenParenthesisCount));
-                }
-            }
+            private set => SetProperty(ref _openParenthesisCount, value);
         }
 
         #endregion
@@ -717,7 +447,7 @@ namespace CalculatorApp.ViewModel
                     _isBitFlipChecked = value;
                     IsBinaryBitFlippingEnabled = IsProgrammer && _isBitFlipChecked;
                     AreProgrammerRadixOperatorsVisible = IsProgrammer && !_isBitFlipChecked;
-                    RaisePropertyChanged(nameof(IsBitFlipChecked));
+                    OnPropertyChanged(nameof(IsBitFlipChecked));
                 }
             }
         }
@@ -730,7 +460,7 @@ namespace CalculatorApp.ViewModel
                 if (_valueBitLength != value)
                 {
                     _valueBitLength = value;
-                    RaisePropertyChanged(nameof(ValueBitLength));
+                    OnPropertyChanged(nameof(ValueBitLength));
 
                     switch (value)
                     {
@@ -766,7 +496,7 @@ namespace CalculatorApp.ViewModel
                         IsScientific = false;
                         IsProgrammer = false;
                     }
-                    RaisePropertyChanged(nameof(IsStandard));
+                    OnPropertyChanged(nameof(IsStandard));
                 }
             }
         }
@@ -784,7 +514,7 @@ namespace CalculatorApp.ViewModel
                         IsStandard = false;
                         IsProgrammer = false;
                     }
-                    RaisePropertyChanged(nameof(IsScientific));
+                    OnPropertyChanged(nameof(IsScientific));
                 }
             }
         }
@@ -808,7 +538,7 @@ namespace CalculatorApp.ViewModel
                         IsStandard = false;
                         IsScientific = false;
                     }
-                    RaisePropertyChanged(nameof(IsProgrammer));
+                    OnPropertyChanged(nameof(IsProgrammer));
                 }
             }
         }
@@ -827,7 +557,7 @@ namespace CalculatorApp.ViewModel
                     IsOperandEnabled = currentEditToggleValue;
                     IsNegateEnabled = currentEditToggleValue;
                     IsDecimalEnabled = currentEditToggleValue;
-                    RaisePropertyChanged(nameof(IsEditingEnabled));
+                    OnPropertyChanged(nameof(IsEditingEnabled));
                 }
             }
         }
@@ -845,7 +575,7 @@ namespace CalculatorApp.ViewModel
                     IsDecimalEnabled = value;
                     AreHEXButtonsEnabled = IsProgrammer;
                     IsFToEEnabled = value;
-                    RaisePropertyChanged(nameof(IsOperandEnabled));
+                    OnPropertyChanged(nameof(IsOperandEnabled));
                 }
             }
         }
@@ -861,7 +591,7 @@ namespace CalculatorApp.ViewModel
                 var result = new Snapshot.StandardCalculatorSnapshot();
                 // CalcManager snapshot not available via interop
                 result.CalcManager = new Snapshot.CalcManagerSnapshot();
-                result.PrimaryDisplay = new Snapshot.PrimaryDisplaySnapshot(_displayValue, _isInError);
+                result.PrimaryDisplay = new Snapshot.PrimaryDisplaySnapshot(DisplayValue, _isInError);
                 if (_tokens != null && _tokens.Count > 0 && _commands != null && _commands.Count > 0)
                 {
                     result.ExpressionDisplay = new Snapshot.ExpressionDisplaySnapshot();
@@ -944,26 +674,26 @@ namespace CalculatorApp.ViewModel
 
         #region Commands
 
-        private DelegateCommand _copyCommand;
-        private DelegateCommand _pasteCommand;
-        private DelegateCommand _buttonPressedCommand;
-        private DelegateCommand _clearMemoryCommand;
-        private DelegateCommand _memoryItemPressedCommand;
-        private DelegateCommand _memoryAddCommand;
-        private DelegateCommand _memorySubtractCommand;
+        private RelayCommand<object> _copyCommand;
+        private RelayCommand<object> _pasteCommand;
+        private RelayCommand<object> _buttonPressedCommand;
+        private RelayCommand<object> _clearMemoryCommand;
+        private RelayCommand<object> _memoryItemPressedCommand;
+        private RelayCommand<object> _memoryAddCommand;
+        private RelayCommand<object> _memorySubtractCommand;
 
-        public DelegateCommand CopyCommand => _copyCommand ?? (_copyCommand = new DelegateCommand(OnCopyCommand));
-        public DelegateCommand PasteCommand => _pasteCommand ?? (_pasteCommand = new DelegateCommand(OnPasteCommand));
-        public DelegateCommand ButtonPressedCommand => _buttonPressedCommand ?? (_buttonPressedCommand = new DelegateCommand(OnButtonPressed));
-        public DelegateCommand ClearMemoryCommand => _clearMemoryCommand ?? (_clearMemoryCommand = new DelegateCommand(OnClearMemoryCommand));
-        public DelegateCommand MemoryItemPressedCommand => _memoryItemPressedCommand ?? (_memoryItemPressedCommand = new DelegateCommand(OnMemoryItemPressed));
-        public DelegateCommand MemoryAddCommand => _memoryAddCommand ?? (_memoryAddCommand = new DelegateCommand(OnMemoryAdd));
-        public DelegateCommand MemorySubtractCommand => _memorySubtractCommand ?? (_memorySubtractCommand = new DelegateCommand(OnMemorySubtract));
+        public RelayCommand<object> CopyCommand => _copyCommand ?? (_copyCommand = new RelayCommand<object>(OnCopyCommand));
+        public RelayCommand<object> PasteCommand => _pasteCommand ?? (_pasteCommand = new RelayCommand<object>(OnPasteCommand));
+        public RelayCommand<object> ButtonPressedCommand => _buttonPressedCommand ?? (_buttonPressedCommand = new RelayCommand<object>(OnButtonPressed));
+        public RelayCommand<object> ClearMemoryCommand => _clearMemoryCommand ?? (_clearMemoryCommand = new RelayCommand<object>(OnClearMemoryCommand));
+        public RelayCommand<object> MemoryItemPressedCommand => _memoryItemPressedCommand ?? (_memoryItemPressedCommand = new RelayCommand<object>(OnMemoryItemPressed));
+        public RelayCommand<object> MemoryAddCommand => _memoryAddCommand ?? (_memoryAddCommand = new RelayCommand<object>(OnMemoryAdd));
+        public RelayCommand<object> MemorySubtractCommand => _memorySubtractCommand ?? (_memorySubtractCommand = new RelayCommand<object>(OnMemorySubtract));
 
-        public DelegateCommand ButtonPressed => ButtonPressedCommand;
-        public DelegateCommand MemoryItemPressed => MemoryItemPressedCommand;
-        public DelegateCommand MemoryAdd => MemoryAddCommand;
-        public DelegateCommand MemorySubtract => MemorySubtractCommand;
+        public RelayCommand<object> ButtonPressed => ButtonPressedCommand;
+        public RelayCommand<object> MemoryItemPressed => MemoryItemPressedCommand;
+        public RelayCommand<object> MemoryAdd => MemoryAddCommand;
+        public RelayCommand<object> MemorySubtract => MemorySubtractCommand;
 
         #endregion
 
@@ -1062,7 +792,7 @@ namespace CalculatorApp.ViewModel
             {
                 _localizedMemorySavedAutomationFormat = AppResourceProvider.GetInstance().GetResourceString("Format_MemorySave");
             }
-            string announcement = LocalizationStringUtil.GetLocalizedString(_localizedMemorySavedAutomationFormat, _displayValue);
+            string announcement = LocalizationStringUtil.GetLocalizedString(_localizedMemorySavedAutomationFormat, DisplayValue);
             Announcement = CalculatorAnnouncement.GetMemoryItemAddedAnnouncement(announcement);
         }
 
@@ -1780,7 +1510,7 @@ namespace CalculatorApp.ViewModel
             bool isFirstLegalChar = true;
             _standardCalculatorManager?.SendCommand(CalculatorCommand.CommandCENTR);
             bool sendNegate = false;
-            bool processedDigit = false;
+
             bool sentEquals = false;
             bool isPreviousOperator = false;
 
@@ -1845,7 +1575,6 @@ namespace CalculatorApp.ViewModel
                     case NumbersAndOperatorsEnum.Seven:
                     case NumbersAndOperatorsEnum.Eight:
                     case NumbersAndOperatorsEnum.Nine:
-                        processedDigit = true;
                         break;
                     case NumbersAndOperatorsEnum.Add:
                     case NumbersAndOperatorsEnum.Subtract:
@@ -2069,7 +1798,13 @@ namespace CalculatorApp.ViewModel
             }
         }
 
-        private void OnPropertyChanged(string propertyName)
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            HandlePropertySideEffects(e.PropertyName);
+        }
+
+        private void HandlePropertySideEffects(string propertyName)
         {
             if (propertyName == nameof(IsScientific))
             {
@@ -2085,7 +1820,7 @@ namespace CalculatorApp.ViewModel
             }
             else if (propertyName == nameof(DisplayValue))
             {
-                RaisePropertyChanged(nameof(CalculationResultAutomationName));
+                OnPropertyChanged(nameof(CalculationResultAutomationName));
                 Announcement = GetDisplayUpdatedNarratorAnnouncement();
             }
             else if (propertyName == nameof(IsBitFlipChecked))
@@ -2221,12 +1956,6 @@ namespace CalculatorApp.ViewModel
         }
 
         #endregion
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            OnPropertyChanged(propertyName);
-        }
     }
 
 }

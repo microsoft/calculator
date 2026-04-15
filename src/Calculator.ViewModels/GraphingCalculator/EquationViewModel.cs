@@ -4,60 +4,41 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CalculatorApp.ViewModel.Common;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Windows.UI;
 
 namespace CalculatorApp.ViewModel
 {
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class GridDisplayItems : INotifyPropertyChanged
+    public sealed partial class GridDisplayItems : ObservableObject
     {
+        [ObservableProperty]
         private string _expression;
-        private string _direction;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        [ObservableProperty]
+        private string _direction;
 
         public GridDisplayItems()
         {
             _expression = string.Empty;
             _direction = string.Empty;
         }
-
-        public string Expression
-        {
-            get => _expression;
-            set
-            {
-                if (_expression != value)
-                {
-                    _expression = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Expression)));
-                }
-            }
-        }
-
-        public string Direction
-        {
-            get => _direction;
-            set
-            {
-                if (_direction != value)
-                {
-                    _direction = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Direction)));
-                }
-            }
-        }
     }
 
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class KeyGraphFeaturesItem : INotifyPropertyChanged
+    public sealed partial class KeyGraphFeaturesItem : ObservableObject
     {
+        [ObservableProperty]
         private string _title;
-        private ObservableCollection<string> _displayItems;
-        private ObservableCollection<GridDisplayItems> _gridItems;
-        private bool _isText;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        [ObservableProperty]
+        private ObservableCollection<string> _displayItems;
+
+        [ObservableProperty]
+        private ObservableCollection<GridDisplayItems> _gridItems;
+
+        [ObservableProperty]
+        private bool _isText;
 
         public KeyGraphFeaturesItem()
         {
@@ -66,52 +47,33 @@ namespace CalculatorApp.ViewModel
             _gridItems = new ObservableCollection<GridDisplayItems>();
             _isText = false;
         }
-
-        public string Title
-        {
-            get => _title;
-            set { if (_title != value) { _title = value; RaisePropertyChanged(nameof(Title)); } }
-        }
-
-        public ObservableCollection<string> DisplayItems
-        {
-            get => _displayItems;
-            set { if (_displayItems != value) { _displayItems = value; RaisePropertyChanged(nameof(DisplayItems)); } }
-        }
-
-        public ObservableCollection<GridDisplayItems> GridItems
-        {
-            get => _gridItems;
-            set { if (_gridItems != value) { _gridItems = value; RaisePropertyChanged(nameof(GridItems)); } }
-        }
-
-        public bool IsText
-        {
-            get => _isText;
-            set { if (_isText != value) { _isText = value; RaisePropertyChanged(nameof(IsText)); } }
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class EquationViewModel : INotifyPropertyChanged
+    public sealed partial class EquationViewModel : ObservableObject
     {
         private readonly GraphControl.Equation _graphEquation;
+
+        [ObservableProperty]
         private int _functionLabelIndex;
+
+        [ObservableProperty]
         private bool _isLastItemInList;
+
         private int _lineColorIndex;
+
+        [ObservableProperty]
         private string _expression;
+
+        [ObservableProperty]
         private Color _lineColor;
+
+        [ObservableProperty]
         private bool _isLineEnabled;
+
         private string _analysisErrorString;
         private bool _analysisErrorVisible;
         private ObservableCollection<KeyGraphFeaturesItem> _keyGraphFeaturesItems;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public EquationViewModel(GraphControl.Equation graphEquation, int functionLabelIndex, Color color, int colorIndex)
         {
@@ -127,79 +89,28 @@ namespace CalculatorApp.ViewModel
 
         public GraphControl.Equation GraphEquation => _graphEquation;
 
-        public int FunctionLabelIndex
-        {
-            get => _functionLabelIndex;
-            set { if (_functionLabelIndex != value) { _functionLabelIndex = value; RaisePropertyChanged(nameof(FunctionLabelIndex)); } }
-        }
-
-        public bool IsLastItemInList
-        {
-            get => _isLastItemInList;
-            set { if (_isLastItemInList != value) { _isLastItemInList = value; RaisePropertyChanged(nameof(IsLastItemInList)); } }
-        }
-
         public int LineColorIndex
         {
             get => _lineColorIndex;
             set => _lineColorIndex = value;
         }
 
-        public string Expression
-        {
-            get => _expression;
-            set
-            {
-                if (_expression != value)
-                {
-                    _expression = value;
-                    RaisePropertyChanged(nameof(Expression));
-                }
-            }
-        }
-
-        public Color LineColor
-        {
-            get => _lineColor;
-            set
-            {
-                if (_lineColor != value)
-                {
-                    _lineColor = value;
-                    RaisePropertyChanged(nameof(LineColor));
-                }
-            }
-        }
-
-        public bool IsLineEnabled
-        {
-            get => _isLineEnabled;
-            set
-            {
-                if (_isLineEnabled != value)
-                {
-                    _isLineEnabled = value;
-                    RaisePropertyChanged(nameof(IsLineEnabled));
-                }
-            }
-        }
-
         public string AnalysisErrorString
         {
             get => _analysisErrorString;
-            private set { if (_analysisErrorString != value) { _analysisErrorString = value; RaisePropertyChanged(nameof(AnalysisErrorString)); } }
+            private set => SetProperty(ref _analysisErrorString, value);
         }
 
         public bool AnalysisErrorVisible
         {
             get => _analysisErrorVisible;
-            private set { if (_analysisErrorVisible != value) { _analysisErrorVisible = value; RaisePropertyChanged(nameof(AnalysisErrorVisible)); } }
+            private set => SetProperty(ref _analysisErrorVisible, value);
         }
 
         public ObservableCollection<KeyGraphFeaturesItem> KeyGraphFeaturesItems
         {
             get => _keyGraphFeaturesItems;
-            private set { if (_keyGraphFeaturesItems != value) { _keyGraphFeaturesItems = value; RaisePropertyChanged(nameof(KeyGraphFeaturesItems)); } }
+            private set => SetProperty(ref _keyGraphFeaturesItems, value);
         }
 
         public void PopulateKeyGraphFeatures(object keyGraphFeaturesInfo)
@@ -247,9 +158,5 @@ namespace CalculatorApp.ViewModel
             KeyGraphFeaturesItems.Add(item);
         }
 
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

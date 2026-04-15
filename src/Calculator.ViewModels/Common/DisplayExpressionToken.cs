@@ -3,22 +3,31 @@
 
 using System;
 using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Windows.UI.Xaml.Data;
 
 namespace CalculatorApp.ViewModel.Common
 {
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class DisplayExpressionToken : INotifyPropertyChanged
+    public sealed partial class DisplayExpressionToken : ObservableObject
     {
+        [ObservableProperty]
         private string _token;
+
+        [ObservableProperty]
         private int _tokenPosition;
+
+        [ObservableProperty]
         private bool _isTokenEditable;
+
+        [ObservableProperty]
         private int _commandIndex;
+
+        [ObservableProperty]
         private TokenType _type;
+
         private string _originalToken;
         private bool _inEditMode;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         internal DisplayExpressionToken(string token, int tokenPosition, bool isEditable, TokenType type)
         {
@@ -30,82 +39,10 @@ namespace CalculatorApp.ViewModel.Common
             _inEditMode = false;
         }
 
-        public string Token
-        {
-            get => _token;
-            set
-            {
-                if (_token != value)
-                {
-                    _token = value;
-                    RaisePropertyChanged(nameof(Token));
-                }
-            }
-        }
-
-        public int TokenPosition
-        {
-            get => _tokenPosition;
-            set
-            {
-                if (_tokenPosition != value)
-                {
-                    _tokenPosition = value;
-                    RaisePropertyChanged(nameof(TokenPosition));
-                }
-            }
-        }
-
-        public bool IsTokenEditable
-        {
-            get => _isTokenEditable;
-            set
-            {
-                if (_isTokenEditable != value)
-                {
-                    _isTokenEditable = value;
-                    RaisePropertyChanged(nameof(IsTokenEditable));
-                }
-            }
-        }
-
-        public int CommandIndex
-        {
-            get => _commandIndex;
-            set
-            {
-                if (_commandIndex != value)
-                {
-                    _commandIndex = value;
-                    RaisePropertyChanged(nameof(CommandIndex));
-                }
-            }
-        }
-
-        public TokenType Type
-        {
-            get => _type;
-            set
-            {
-                if (_type != value)
-                {
-                    _type = value;
-                    RaisePropertyChanged(nameof(Type));
-                }
-            }
-        }
-
         public string OriginalToken
         {
             get => _originalToken;
-            private set
-            {
-                if (_originalToken != value)
-                {
-                    _originalToken = value;
-                    RaisePropertyChanged(nameof(OriginalToken));
-                }
-            }
+            private set => SetProperty(ref _originalToken, value);
         }
 
         public bool IsTokenInEditMode
@@ -115,15 +52,10 @@ namespace CalculatorApp.ViewModel.Common
             {
                 if (!value)
                 {
-                    OriginalToken = _token;
+                    OriginalToken = Token;
                 }
                 _inEditMode = value;
             }
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

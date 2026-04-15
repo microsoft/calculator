@@ -3,18 +3,13 @@
 
 using System.ComponentModel;
 using CalculatorApp.ViewModel.Common;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CalculatorApp.ViewModel
 {
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class GraphingSettingsViewModel : INotifyPropertyChanged
+    public sealed partial class GraphingSettingsViewModel : ObservableObject
     {
-        private bool _yMinError;
-        private bool _xMinError;
-        private bool _xMaxError;
-        private bool _yMaxError;
-        private GraphControl.Grapher _graph;
-
         private string _xMin;
         private string _xMax;
         private string _yMin;
@@ -24,10 +19,25 @@ namespace CalculatorApp.ViewModel
         private double _yMinValue;
         private double _yMaxValue;
         private bool _dontUpdateDisplayRange;
+#pragma warning disable CS0414 // Field is assigned but its value is never used
         private bool _xIsMinLastChanged;
         private bool _yIsMinLastChanged;
+#pragma warning restore CS0414
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        [ObservableProperty]
+        private bool _yMinError;
+
+        [ObservableProperty]
+        private bool _xMinError;
+
+        [ObservableProperty]
+        private bool _xMaxError;
+
+        [ObservableProperty]
+        private bool _yMaxError;
+
+        [ObservableProperty]
+        private GraphControl.Grapher _graph;
 
         public GraphingSettingsViewModel()
         {
@@ -37,44 +47,10 @@ namespace CalculatorApp.ViewModel
             _yMax = string.Empty;
         }
 
-        #region Observable Properties
-
-        public bool YMinError
-        {
-            get => _yMinError;
-            private set { if (_yMinError != value) { _yMinError = value; RaisePropertyChanged(nameof(YMinError)); } }
-        }
-
-        public bool XMinError
-        {
-            get => _xMinError;
-            private set { if (_xMinError != value) { _xMinError = value; RaisePropertyChanged(nameof(XMinError)); } }
-        }
-
-        public bool XMaxError
-        {
-            get => _xMaxError;
-            private set { if (_xMaxError != value) { _xMaxError = value; RaisePropertyChanged(nameof(XMaxError)); } }
-        }
-
-        public bool YMaxError
-        {
-            get => _yMaxError;
-            private set { if (_yMaxError != value) { _yMaxError = value; RaisePropertyChanged(nameof(YMaxError)); } }
-        }
-
-        public GraphControl.Grapher Graph
-        {
-            get => _graph;
-            private set { if (_graph != value) { _graph = value; RaisePropertyChanged(nameof(Graph)); } }
-        }
-
-        #endregion
-
         #region Computed Properties
 
-        public bool XError => !_xMinError && !_xMaxError && _xMinValue >= _xMaxValue;
-        public bool YError => !_yMinError && !_yMaxError && _yMinValue >= _yMaxValue;
+        public bool XError => !XMinError && !XMaxError && _xMinValue >= _xMaxValue;
+        public bool YError => !YMinError && !YMaxError && _yMinValue >= _yMaxValue;
 
         #endregion
 
@@ -100,8 +76,8 @@ namespace CalculatorApp.ViewModel
                     XMinError = true;
                 }
 
-                RaisePropertyChanged(nameof(XError));
-                RaisePropertyChanged(nameof(XMin));
+                OnPropertyChanged(nameof(XError));
+                OnPropertyChanged(nameof(XMin));
                 UpdateDisplayRange();
             }
         }
@@ -125,8 +101,8 @@ namespace CalculatorApp.ViewModel
                     XMaxError = true;
                 }
 
-                RaisePropertyChanged(nameof(XError));
-                RaisePropertyChanged(nameof(XMax));
+                OnPropertyChanged(nameof(XError));
+                OnPropertyChanged(nameof(XMax));
                 UpdateDisplayRange();
             }
         }
@@ -150,8 +126,8 @@ namespace CalculatorApp.ViewModel
                     YMinError = true;
                 }
 
-                RaisePropertyChanged(nameof(YError));
-                RaisePropertyChanged(nameof(YMin));
+                OnPropertyChanged(nameof(YError));
+                OnPropertyChanged(nameof(YMin));
                 UpdateDisplayRange();
             }
         }
@@ -175,8 +151,8 @@ namespace CalculatorApp.ViewModel
                     YMaxError = true;
                 }
 
-                RaisePropertyChanged(nameof(YError));
-                RaisePropertyChanged(nameof(YMax));
+                OnPropertyChanged(nameof(YError));
+                OnPropertyChanged(nameof(YMax));
                 UpdateDisplayRange();
             }
         }
@@ -191,7 +167,7 @@ namespace CalculatorApp.ViewModel
             set
             {
                 // Would set _graph.TrigUnitMode = value
-                RaisePropertyChanged(nameof(TrigUnit));
+                OnPropertyChanged(nameof(TrigUnit));
             }
         }
 
@@ -202,9 +178,9 @@ namespace CalculatorApp.ViewModel
             {
                 if (value)
                 {
-                    RaisePropertyChanged(nameof(TrigModeRadians));
-                    RaisePropertyChanged(nameof(TrigModeDegrees));
-                    RaisePropertyChanged(nameof(TrigModeGradians));
+                    OnPropertyChanged(nameof(TrigModeRadians));
+                    OnPropertyChanged(nameof(TrigModeDegrees));
+                    OnPropertyChanged(nameof(TrigModeGradians));
                     TraceLogger.GetInstance().LogGraphSettingsChanged(Common.GraphSettingsType.TrigUnits, "Radians");
                 }
             }
@@ -217,9 +193,9 @@ namespace CalculatorApp.ViewModel
             {
                 if (value)
                 {
-                    RaisePropertyChanged(nameof(TrigModeDegrees));
-                    RaisePropertyChanged(nameof(TrigModeRadians));
-                    RaisePropertyChanged(nameof(TrigModeGradians));
+                    OnPropertyChanged(nameof(TrigModeDegrees));
+                    OnPropertyChanged(nameof(TrigModeRadians));
+                    OnPropertyChanged(nameof(TrigModeGradians));
                     TraceLogger.GetInstance().LogGraphSettingsChanged(Common.GraphSettingsType.TrigUnits, "Degrees");
                 }
             }
@@ -232,9 +208,9 @@ namespace CalculatorApp.ViewModel
             {
                 if (value)
                 {
-                    RaisePropertyChanged(nameof(TrigModeGradians));
-                    RaisePropertyChanged(nameof(TrigModeDegrees));
-                    RaisePropertyChanged(nameof(TrigModeRadians));
+                    OnPropertyChanged(nameof(TrigModeGradians));
+                    OnPropertyChanged(nameof(TrigModeDegrees));
+                    OnPropertyChanged(nameof(TrigModeRadians));
                     TraceLogger.GetInstance().LogGraphSettingsChanged(Common.GraphSettingsType.TrigUnits, "Gradians");
                 }
             }
@@ -252,8 +228,7 @@ namespace CalculatorApp.ViewModel
 
         public void SetGrapher(GraphControl.Grapher grapher)
         {
-            _graph = grapher;
-            RaisePropertyChanged(nameof(Graph));
+            Graph = grapher;
             InitRanges();
         }
 
@@ -280,9 +255,5 @@ namespace CalculatorApp.ViewModel
 
         #endregion
 
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

@@ -36,7 +36,9 @@ namespace CalculatorApp.ViewModel.DataLoaders
     {
         private readonly CurrencyHttpClient _client;
         private readonly string _responseLanguage;
+#pragma warning disable CS0414 // Field is assigned but its value is never used
         private readonly bool _isRtlLanguage;
+#pragma warning restore CS0414
         private readonly object _currencyUnitsMutex = new object();
 
         private List<CurrencyUnit> _currencyUnits;
@@ -47,7 +49,9 @@ namespace CalculatorApp.ViewModel.DataLoaders
 
         private CurrencyLoadStatus _loadStatus;
         private NetworkAccessBehavior _networkAccessBehavior;
+#pragma warning disable CS0414 // Field is assigned but its value is never used
         private bool _meteredOverrideSet;
+#pragma warning restore CS0414
         private DateTimeOffset _cacheTimestamp;
 
         public CurrencyDataLoader(string overrideLanguage = null)

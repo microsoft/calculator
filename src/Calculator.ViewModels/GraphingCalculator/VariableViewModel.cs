@@ -3,16 +3,19 @@
 
 using System.ComponentModel;
 using CalculatorApp.ViewModel.Common;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CalculatorApp.ViewModel
 {
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class VariableViewModel : INotifyPropertyChanged
+    public sealed partial class VariableViewModel : ObservableObject
     {
         private const int DefaultMinMaxRange = 10;
 
         private readonly string _name;
         private readonly GraphControl.Variable _variable;
+
+        [ObservableProperty]
         private bool _sliderSettingsVisible;
 
         // Internal state for variable values (used when _variable is an opaque interop object)
@@ -21,7 +24,6 @@ namespace CalculatorApp.ViewModel
         private double _step;
         private double _value;
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public event System.EventHandler<VariableChangedEventArgs> VariableUpdated;
 
         public VariableViewModel(string name, GraphControl.Variable variable)
@@ -42,19 +44,6 @@ namespace CalculatorApp.ViewModel
             get => _name;
         }
 
-        public bool SliderSettingsVisible
-        {
-            get => _sliderSettingsVisible;
-            set
-            {
-                if (_sliderSettingsVisible != value)
-                {
-                    _sliderSettingsVisible = value;
-                    RaisePropertyChanged(nameof(SliderSettingsVisible));
-                }
-            }
-        }
-
         public double Min
         {
             get => _min;
@@ -65,10 +54,10 @@ namespace CalculatorApp.ViewModel
                     if (value >= _max)
                     {
                         _max = value + DefaultMinMaxRange;
-                        RaisePropertyChanged(nameof(Max));
+                        OnPropertyChanged(nameof(Max));
                     }
                     _min = value;
-                    RaisePropertyChanged(nameof(Min));
+                    OnPropertyChanged(nameof(Min));
                 }
             }
         }
@@ -76,14 +65,7 @@ namespace CalculatorApp.ViewModel
         public double Step
         {
             get => _step;
-            set
-            {
-                if (_step != value)
-                {
-                    _step = value;
-                    RaisePropertyChanged(nameof(Step));
-                }
-            }
+            set => SetProperty(ref _step, value);
         }
 
         public double Max
@@ -96,10 +78,10 @@ namespace CalculatorApp.ViewModel
                     if (value <= _min)
                     {
                         _min = value - DefaultMinMaxRange;
-                        RaisePropertyChanged(nameof(Min));
+                        OnPropertyChanged(nameof(Min));
                     }
                     _max = value;
-                    RaisePropertyChanged(nameof(Max));
+                    OnPropertyChanged(nameof(Max));
                 }
             }
         }
@@ -112,19 +94,19 @@ namespace CalculatorApp.ViewModel
                 if (value < _min)
                 {
                     _min = value;
-                    RaisePropertyChanged(nameof(Min));
+                    OnPropertyChanged(nameof(Min));
                 }
                 else if (value > _max)
                 {
                     _max = value;
-                    RaisePropertyChanged(nameof(Max));
+                    OnPropertyChanged(nameof(Max));
                 }
 
                 if (_value != value)
                 {
                     _value = value;
                     VariableUpdated?.Invoke(this, new VariableChangedEventArgs { VariableName = Name, NewValue = value });
-                    RaisePropertyChanged(nameof(Value));
+                    OnPropertyChanged(nameof(Value));
                 }
             }
         }
@@ -138,9 +120,5 @@ namespace CalculatorApp.ViewModel
             }
         }
 
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

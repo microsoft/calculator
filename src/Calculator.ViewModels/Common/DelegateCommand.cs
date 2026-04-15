@@ -15,7 +15,9 @@ namespace CalculatorApp.ViewModel.Common
             _handler = handler ?? throw new ArgumentNullException(nameof(handler));
         }
 
+#pragma warning disable CS0067 // Event is never used
         public event EventHandler CanExecuteChanged;
+#pragma warning restore CS0067
 
         public bool CanExecute(object parameter) => true;
 

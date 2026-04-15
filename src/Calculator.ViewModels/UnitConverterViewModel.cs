@@ -5,20 +5,19 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace CalculatorApp.ViewModel
 {
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class Category : INotifyPropertyChanged
+    public sealed partial class Category : ObservableObject
     {
         private readonly int _id;
         private readonly string _name;
         private readonly bool _supportsNegative;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         internal Category(int id, string name, bool supportsNegative)
         {
@@ -36,15 +35,13 @@ namespace CalculatorApp.ViewModel
     }
 
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class Unit : INotifyPropertyChanged
+    public sealed partial class Unit : ObservableObject
     {
         private readonly int _id;
         private readonly string _name;
         private readonly string _accessibleName;
         private readonly string _abbreviation;
         private readonly bool _isWhimsical;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         internal Unit(int id, string name, string abbreviation, string accessibleName, bool isWhimsical = false)
         {
@@ -66,10 +63,8 @@ namespace CalculatorApp.ViewModel
     }
 
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class SupplementaryResult : INotifyPropertyChanged
+    public sealed class SupplementaryResult : ObservableObject
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private string _value;
         private Unit _unit;
 
@@ -89,27 +84,13 @@ namespace CalculatorApp.ViewModel
         public string Value
         {
             get => _value;
-            private set
-            {
-                if (_value != value)
-                {
-                    _value = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
-                }
-            }
+            private set => SetProperty(ref _value, value);
         }
 
         public Unit Unit
         {
             get => _unit;
-            private set
-            {
-                if (_unit != value)
-                {
-                    _unit = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Unit)));
-                }
-            }
+            private set => SetProperty(ref _unit, value);
         }
     }
 
@@ -119,7 +100,7 @@ namespace CalculatorApp.ViewModel
     }
 
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class UnitConverterViewModel : INotifyPropertyChanged
+    public sealed partial class UnitConverterViewModel : ObservableObject
     {
         public const string NetworkBehaviorPropertyName = "NetworkBehavior";
         public const string CurrencyDataLoadFailedPropertyName = "CurrencyDataLoadFailed";
@@ -133,63 +114,102 @@ namespace CalculatorApp.ViewModel
 
         // Observable properties backing fields
         private ObservableCollection<Category> _categories;
+
+        [ObservableProperty]
         private ViewMode _mode;
+
         private ObservableCollection<Unit> _units;
+
+        [ObservableProperty]
         private string _currencySymbol1;
+
+        [ObservableProperty]
         private Unit _unit1;
+
+        [ObservableProperty]
         private string _value1;
+
+        [ObservableProperty]
         private string _currencySymbol2;
+
+        [ObservableProperty]
         private Unit _unit2;
+
+        [ObservableProperty]
         private string _value2;
+
         private ObservableCollection<SupplementaryResult> _supplementaryResults;
+
+        [ObservableProperty]
         private bool _value1Active;
+
+        [ObservableProperty]
         private bool _value2Active;
+
+        [ObservableProperty]
         private string _value1AutomationName = string.Empty;
+
+        [ObservableProperty]
         private string _value2AutomationName = string.Empty;
+
+        [ObservableProperty]
         private string _unit1AutomationName = string.Empty;
+
+        [ObservableProperty]
         private string _unit2AutomationName = string.Empty;
+
+        [ObservableProperty]
         private NarratorAnnouncement _announcement;
+
+        [ObservableProperty]
         private bool _isDecimalEnabled;
+
+        [ObservableProperty]
         private bool _isDropDownOpen;
+
+        [ObservableProperty]
         private bool _isDropDownEnabled;
+
+        [ObservableProperty]
         private bool _isCurrencyLoadingVisible;
+
         private bool _isCurrencyCurrentCategory;
+
+        [ObservableProperty]
         private string _currencyRatioEquality;
+
+        [ObservableProperty]
         private string _currencyRatioEqualityAutomationName;
+
+        [ObservableProperty]
         private string _currencyTimestamp;
+
+        [ObservableProperty]
         private NetworkAccessBehavior _networkBehavior;
+
+        [ObservableProperty]
         private bool _currencyDataLoadFailed;
+
+        [ObservableProperty]
         private bool _currencyDataIsWeekOld;
+
         private Category _currentCategory;
 
         // Internal state
-        private bool _isInputBlocked;
-        private Timer _supplementaryResultsTimer;
-        private bool _resettingTimer;
         private List<(string Value, int UnitId)> _cachedSuggestedValues;
         private readonly object _cacheMutex = new object();
         private string _valueFromUnlocalized;
         private string _valueToUnlocalized;
-        private bool _relocalizeStringOnSwitch;
-        private bool _isValue1Updating;
-        private bool _isValue2Updating;
-        private string _lastAnnouncedFrom;
-        private string _lastAnnouncedTo;
         private string _lastAnnouncedConversionResult;
         private bool _isCurrencyDataLoaded;
 
         // Localized format strings
         private string _localizedValueFromFormat;
-        private string _localizedValueFromDecimalFormat;
         private string _localizedValueToFormat;
         private string _localizedConversionResultFormat;
-        private string _localizedInputUnitName;
-        private string _localizedOutputUnitName;
 
         private enum ConversionParameter { Source, Target }
         private ConversionParameter _value1cp;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public UnitConverterViewModel()
             : this(null)
@@ -222,169 +242,25 @@ namespace CalculatorApp.ViewModel
         public ObservableCollection<Category> Categories
         {
             get => _categories;
-            private set { if (_categories != value) { _categories = value; RaisePropertyChanged(nameof(Categories)); } }
-        }
-
-        public ViewMode Mode
-        {
-            get => _mode;
-            set { if (_mode != value) { _mode = value; RaisePropertyChanged(nameof(Mode)); } }
+            private set => SetProperty(ref _categories, value);
         }
 
         public ObservableCollection<Unit> Units
         {
             get => _units;
-            private set { if (_units != value) { _units = value; RaisePropertyChanged(nameof(Units)); } }
-        }
-
-        public string CurrencySymbol1
-        {
-            get => _currencySymbol1;
-            set { if (_currencySymbol1 != value) { _currencySymbol1 = value; RaisePropertyChanged(nameof(CurrencySymbol1)); } }
-        }
-
-        public Unit Unit1
-        {
-            get => _unit1;
-            set { if (_unit1 != value) { _unit1 = value; RaisePropertyChanged(nameof(Unit1)); } }
-        }
-
-        public string Value1
-        {
-            get => _value1;
-            set { if (_value1 != value) { _value1 = value; RaisePropertyChanged(nameof(Value1)); } }
-        }
-
-        public string CurrencySymbol2
-        {
-            get => _currencySymbol2;
-            set { if (_currencySymbol2 != value) { _currencySymbol2 = value; RaisePropertyChanged(nameof(CurrencySymbol2)); } }
-        }
-
-        public Unit Unit2
-        {
-            get => _unit2;
-            set { if (_unit2 != value) { _unit2 = value; RaisePropertyChanged(nameof(Unit2)); } }
-        }
-
-        public string Value2
-        {
-            get => _value2;
-            set { if (_value2 != value) { _value2 = value; RaisePropertyChanged(nameof(Value2)); } }
+            private set => SetProperty(ref _units, value);
         }
 
         public ObservableCollection<SupplementaryResult> SupplementaryResults
         {
             get => _supplementaryResults;
-            private set { if (_supplementaryResults != value) { _supplementaryResults = value; RaisePropertyChanged(nameof(SupplementaryResults)); } }
-        }
-
-        public bool Value1Active
-        {
-            get => _value1Active;
-            set { if (_value1Active != value) { _value1Active = value; RaisePropertyChanged(nameof(Value1Active)); } }
-        }
-
-        public bool Value2Active
-        {
-            get => _value2Active;
-            set { if (_value2Active != value) { _value2Active = value; RaisePropertyChanged(nameof(Value2Active)); } }
-        }
-
-        public string Value1AutomationName
-        {
-            get => _value1AutomationName;
-            set { if (_value1AutomationName != value) { _value1AutomationName = value; RaisePropertyChanged(nameof(Value1AutomationName)); } }
-        }
-
-        public string Value2AutomationName
-        {
-            get => _value2AutomationName;
-            set { if (_value2AutomationName != value) { _value2AutomationName = value; RaisePropertyChanged(nameof(Value2AutomationName)); } }
-        }
-
-        public string Unit1AutomationName
-        {
-            get => _unit1AutomationName;
-            set { if (_unit1AutomationName != value) { _unit1AutomationName = value; RaisePropertyChanged(nameof(Unit1AutomationName)); } }
-        }
-
-        public string Unit2AutomationName
-        {
-            get => _unit2AutomationName;
-            set { if (_unit2AutomationName != value) { _unit2AutomationName = value; RaisePropertyChanged(nameof(Unit2AutomationName)); } }
-        }
-
-        public NarratorAnnouncement Announcement
-        {
-            get => _announcement;
-            set { if (_announcement != value) { _announcement = value; RaisePropertyChanged(nameof(Announcement)); } }
-        }
-
-        public bool IsDecimalEnabled
-        {
-            get => _isDecimalEnabled;
-            set { if (_isDecimalEnabled != value) { _isDecimalEnabled = value; RaisePropertyChanged(nameof(IsDecimalEnabled)); } }
-        }
-
-        public bool IsDropDownOpen
-        {
-            get => _isDropDownOpen;
-            set { if (_isDropDownOpen != value) { _isDropDownOpen = value; RaisePropertyChanged(nameof(IsDropDownOpen)); } }
-        }
-
-        public bool IsDropDownEnabled
-        {
-            get => _isDropDownEnabled;
-            set { if (_isDropDownEnabled != value) { _isDropDownEnabled = value; RaisePropertyChanged(nameof(IsDropDownEnabled)); } }
-        }
-
-        public bool IsCurrencyLoadingVisible
-        {
-            get => _isCurrencyLoadingVisible;
-            set { if (_isCurrencyLoadingVisible != value) { _isCurrencyLoadingVisible = value; RaisePropertyChanged(nameof(IsCurrencyLoadingVisible)); } }
+            private set => SetProperty(ref _supplementaryResults, value);
         }
 
         public bool IsCurrencyCurrentCategory
         {
             get => _isCurrencyCurrentCategory;
-            private set { if (_isCurrencyCurrentCategory != value) { _isCurrencyCurrentCategory = value; RaisePropertyChanged(nameof(IsCurrencyCurrentCategory)); } }
-        }
-
-        public string CurrencyRatioEquality
-        {
-            get => _currencyRatioEquality;
-            set { if (_currencyRatioEquality != value) { _currencyRatioEquality = value; RaisePropertyChanged(nameof(CurrencyRatioEquality)); } }
-        }
-
-        public string CurrencyRatioEqualityAutomationName
-        {
-            get => _currencyRatioEqualityAutomationName;
-            set { if (_currencyRatioEqualityAutomationName != value) { _currencyRatioEqualityAutomationName = value; RaisePropertyChanged(nameof(CurrencyRatioEqualityAutomationName)); } }
-        }
-
-        public string CurrencyTimestamp
-        {
-            get => _currencyTimestamp;
-            set { if (_currencyTimestamp != value) { _currencyTimestamp = value; RaisePropertyChanged(nameof(CurrencyTimestamp)); } }
-        }
-
-        public NetworkAccessBehavior NetworkBehavior
-        {
-            get => _networkBehavior;
-            set { if (_networkBehavior != value) { _networkBehavior = value; RaisePropertyChanged(nameof(NetworkBehavior)); } }
-        }
-
-        public bool CurrencyDataLoadFailed
-        {
-            get => _currencyDataLoadFailed;
-            set { if (_currencyDataLoadFailed != value) { _currencyDataLoadFailed = value; RaisePropertyChanged(nameof(CurrencyDataLoadFailed)); } }
-        }
-
-        public bool CurrencyDataIsWeekOld
-        {
-            get => _currencyDataIsWeekOld;
-            set { if (_currencyDataIsWeekOld != value) { _currencyDataIsWeekOld = value; RaisePropertyChanged(nameof(CurrencyDataIsWeekOld)); } }
+            private set => SetProperty(ref _isCurrencyCurrentCategory, value);
         }
 
         public Category CurrentCategory
@@ -400,7 +276,7 @@ namespace CalculatorApp.ViewModel
                         IsCurrencyCurrentCategory = value.GetModelCategoryId() ==
                             NavCategoryStates.Serialize(ViewMode.Currency);
                     }
-                    RaisePropertyChanged(nameof(CurrentCategory));
+                    OnPropertyChanged(nameof(CurrentCategory));
                 }
             }
         }
@@ -417,12 +293,12 @@ namespace CalculatorApp.ViewModel
 
         #region Commands
 
-        public DelegateCommand CategoryChangedCommand => new DelegateCommand(OnCategoryChanged);
-        public DelegateCommand UnitChangedCommand => new DelegateCommand(OnUnitChanged);
-        public DelegateCommand SwitchActiveCommand => new DelegateCommand(OnSwitchActive);
-        public DelegateCommand ButtonPressedCommand => new DelegateCommand(OnButtonPressed);
-        public DelegateCommand CopyCommand => new DelegateCommand(OnCopyCommand);
-        public DelegateCommand PasteCommand => new DelegateCommand(OnPasteCommand);
+        public RelayCommand<object> CategoryChangedCommand => new RelayCommand<object>(OnCategoryChanged);
+        public RelayCommand<object> UnitChangedCommand => new RelayCommand<object>(OnUnitChanged);
+        public RelayCommand<object> SwitchActiveCommand => new RelayCommand<object>(OnSwitchActive);
+        public RelayCommand<object> ButtonPressedCommand => new RelayCommand<object>(OnButtonPressed);
+        public RelayCommand<object> CopyCommand => new RelayCommand<object>(OnCopyCommand);
+        public RelayCommand<object> PasteCommand => new RelayCommand<object>(OnPasteCommand);
 
         #endregion
 
@@ -569,7 +445,7 @@ namespace CalculatorApp.ViewModel
             CurrencyDataIsWeekOld = isWeekOld;
         }
 
-        internal void OnNetworkBehaviorChanged(NetworkAccessBehavior newBehavior)
+        internal void HandleNetworkBehaviorChanged(NetworkAccessBehavior newBehavior)
         {
             NetworkBehavior = newBehavior;
         }
@@ -587,9 +463,15 @@ namespace CalculatorApp.ViewModel
             RestoreUserPreferences();
         }
 
-        private void OnPropertyChanged(string prop)
+        protected override void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (prop == nameof(Mode))
+            base.OnPropertyChanged(e);
+            HandlePropertySideEffects(e.PropertyName);
+        }
+
+        private void HandlePropertySideEffects(string propertyName)
+        {
+            if (propertyName == nameof(Mode))
             {
                 InitializeView();
             }
@@ -707,11 +589,7 @@ namespace CalculatorApp.ViewModel
 
         #endregion
 
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            OnPropertyChanged(propertyName);
-        }
+
     }
 
     /// <summary>

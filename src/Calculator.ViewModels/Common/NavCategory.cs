@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Windows.UI.Xaml.Data;
 
 namespace CalculatorApp.ViewModel.Common
@@ -67,7 +68,7 @@ namespace CalculatorApp.ViewModel.Common
     }
 
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class NavCategory : INotifyPropertyChanged
+    public sealed partial class NavCategory : ObservableObject
     {
         private string _name;
         private string _automationName;
@@ -75,10 +76,11 @@ namespace CalculatorApp.ViewModel.Common
         private ViewMode _viewMode;
         private string _accessKey;
         private bool _supportsNegative;
-        private bool _isEnabled;
-        private string _modeString;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        [ObservableProperty]
+        private bool _isEnabled;
+
+        private string _modeString;
 
         internal NavCategory(
             string name,
@@ -109,19 +111,6 @@ namespace CalculatorApp.ViewModel.Common
 
         public string AutomationId => _viewMode.ToString();
 
-        public bool IsEnabled
-        {
-            get => _isEnabled;
-            set
-            {
-                if (_isEnabled != value)
-                {
-                    _isEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsEnabled)));
-                }
-            }
-        }
-
         public static bool IsCalculatorViewMode(ViewMode mode)
         {
             // Historically, Calculator modes are Standard, Scientific, and Programmer.
@@ -150,14 +139,12 @@ namespace CalculatorApp.ViewModel.Common
     }
 
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class NavCategoryGroup : INotifyPropertyChanged
+    public sealed class NavCategoryGroup : ObservableObject
     {
         private string _name;
         private string _automationName;
         private CategoryGroupType _groupType;
         private ObservableCollection<NavCategory> _categories;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         internal NavCategoryGroup(NavCategoryGroupInitializer groupInitializer)
         {
@@ -201,53 +188,25 @@ namespace CalculatorApp.ViewModel.Common
         public string Name
         {
             get => _name;
-            private set
-            {
-                if (_name != value)
-                {
-                    _name = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
-                }
-            }
+            private set => SetProperty(ref _name, value);
         }
 
         public string AutomationName
         {
             get => _automationName;
-            private set
-            {
-                if (_automationName != value)
-                {
-                    _automationName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AutomationName)));
-                }
-            }
+            private set => SetProperty(ref _automationName, value);
         }
 
         public CategoryGroupType GroupType
         {
             get => _groupType;
-            private set
-            {
-                if (_groupType != value)
-                {
-                    _groupType = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GroupType)));
-                }
-            }
+            private set => SetProperty(ref _groupType, value);
         }
 
         public ObservableCollection<NavCategory> Categories
         {
             get => _categories;
-            private set
-            {
-                if (_categories != value)
-                {
-                    _categories = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Categories)));
-                }
-            }
+            private set => SetProperty(ref _categories, value);
         }
     }
 

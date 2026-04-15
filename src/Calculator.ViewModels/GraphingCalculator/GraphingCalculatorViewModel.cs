@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CalculatorApp.ViewModel.Common;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace CalculatorApp.ViewModel
 {
@@ -15,14 +17,13 @@ namespace CalculatorApp.ViewModel
     }
 
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class GraphingCalculatorViewModel : INotifyPropertyChanged
+    public sealed class GraphingCalculatorViewModel : ObservableObject
     {
         private bool _isDecimalEnabled;
         private ObservableCollection<EquationViewModel> _equations;
         private ObservableCollection<VariableViewModel> _variables;
         private EquationViewModel _selectedEquation;
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public event System.EventHandler<VariableChangedEventArgs> VariableUpdated;
 
         public GraphingCalculatorViewModel()
@@ -35,58 +36,30 @@ namespace CalculatorApp.ViewModel
         public bool IsDecimalEnabled
         {
             get => _isDecimalEnabled;
-            private set
-            {
-                if (_isDecimalEnabled != value)
-                {
-                    _isDecimalEnabled = value;
-                    RaisePropertyChanged(nameof(IsDecimalEnabled));
-                }
-            }
+            private set => SetProperty(ref _isDecimalEnabled, value);
         }
 
         public ObservableCollection<EquationViewModel> Equations
         {
             get => _equations;
-            private set
-            {
-                if (_equations != value)
-                {
-                    _equations = value ?? new ObservableCollection<EquationViewModel>();
-                    RaisePropertyChanged(nameof(Equations));
-                }
-            }
+            private set => SetProperty(ref _equations, value ?? new ObservableCollection<EquationViewModel>());
         }
 
         public ObservableCollection<VariableViewModel> Variables
         {
             get => _variables;
-            private set
-            {
-                if (_variables != value)
-                {
-                    _variables = value ?? new ObservableCollection<VariableViewModel>();
-                    RaisePropertyChanged(nameof(Variables));
-                }
-            }
+            private set => SetProperty(ref _variables, value ?? new ObservableCollection<VariableViewModel>());
         }
 
         public EquationViewModel SelectedEquation
         {
             get => _selectedEquation;
-            private set
-            {
-                if (_selectedEquation != value)
-                {
-                    _selectedEquation = value;
-                    RaisePropertyChanged(nameof(SelectedEquation));
-                }
-            }
+            private set => SetProperty(ref _selectedEquation, value);
         }
 
-        private DelegateCommand _buttonPressedCommand;
-        public DelegateCommand ButtonPressedCommand => _buttonPressedCommand ?? (_buttonPressedCommand = new DelegateCommand(OnButtonPressed));
-        public DelegateCommand ButtonPressed => ButtonPressedCommand;
+        private RelayCommand<object> _buttonPressedCommand;
+        public RelayCommand<object> ButtonPressedCommand => _buttonPressedCommand ?? (_buttonPressedCommand = new RelayCommand<object>(OnButtonPressed));
+        public RelayCommand<object> ButtonPressed => ButtonPressedCommand;
 
         public void UpdateVariables(IEnumerable<KeyValuePair<string, GraphControl.Variable>> variables)
         {
@@ -117,9 +90,5 @@ namespace CalculatorApp.ViewModel
             }
         }
 
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

@@ -4,28 +4,46 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.DateCalculation;
 
 namespace CalculatorApp.ViewModel
 {
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class DateCalculatorViewModel : INotifyPropertyChanged
+    public sealed partial class DateCalculatorViewModel : ObservableObject
     {
         private const int MaxOffsetValue = 999;
 
         // Input property backing fields
+        [ObservableProperty]
         private bool _isDateDiffMode;
+
+        [ObservableProperty]
         private bool _isAddMode;
+
         private bool _isDiffInDays;
+
+        [ObservableProperty]
         private int _daysOffset;
+
+        [ObservableProperty]
         private int _monthsOffset;
+
+        [ObservableProperty]
         private int _yearsOffset;
 
         // Date fields
+        [ObservableProperty]
         private DateTimeOffset _fromDate;
+
+        [ObservableProperty]
         private DateTimeOffset _toDate;
+
+        [ObservableProperty]
         private DateTimeOffset _startDate;
+
         private DateTimeOffset _dateResult;
 
         // Output property backing fields
@@ -45,8 +63,6 @@ namespace CalculatorApp.ViewModel
         private DateUnit _allDateUnitsOutputFormat;
         private Windows.Globalization.DateTimeFormatting.DateTimeFormatter _dateTimeFormatter;
         private string _listSeparator;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public DateCalculatorViewModel()
         {
@@ -94,195 +110,49 @@ namespace CalculatorApp.ViewModel
 
         #region Properties
 
-        public bool IsDateDiffMode
-        {
-            get => _isDateDiffMode;
-            set
-            {
-                if (_isDateDiffMode != value)
-                {
-                    _isDateDiffMode = value;
-                    RaisePropertyChanged(nameof(IsDateDiffMode));
-                }
-            }
-        }
-
-        public bool IsAddMode
-        {
-            get => _isAddMode;
-            set
-            {
-                if (_isAddMode != value)
-                {
-                    _isAddMode = value;
-                    RaisePropertyChanged(nameof(IsAddMode));
-                }
-            }
-        }
-
         public bool IsDiffInDays
         {
             get => _isDiffInDays;
-            private set
-            {
-                if (_isDiffInDays != value)
-                {
-                    _isDiffInDays = value;
-                    RaisePropertyChanged(nameof(IsDiffInDays));
-                }
-            }
-        }
-
-        public int DaysOffset
-        {
-            get => _daysOffset;
-            set
-            {
-                if (_daysOffset != value)
-                {
-                    _daysOffset = value;
-                    RaisePropertyChanged(nameof(DaysOffset));
-                }
-            }
-        }
-
-        public int MonthsOffset
-        {
-            get => _monthsOffset;
-            set
-            {
-                if (_monthsOffset != value)
-                {
-                    _monthsOffset = value;
-                    RaisePropertyChanged(nameof(MonthsOffset));
-                }
-            }
-        }
-
-        public int YearsOffset
-        {
-            get => _yearsOffset;
-            set
-            {
-                if (_yearsOffset != value)
-                {
-                    _yearsOffset = value;
-                    RaisePropertyChanged(nameof(YearsOffset));
-                }
-            }
+            private set { SetProperty(ref _isDiffInDays, value); }
         }
 
         public IList<string> OffsetValues => _offsetValues;
 
-        public DateTimeOffset FromDate
-        {
-            get => _fromDate;
-            set
-            {
-                if (_fromDate != value)
-                {
-                    _fromDate = value;
-                    RaisePropertyChanged(nameof(FromDate));
-                }
-            }
-        }
-
-        public DateTimeOffset ToDate
-        {
-            get => _toDate;
-            set
-            {
-                if (_toDate != value)
-                {
-                    _toDate = value;
-                    RaisePropertyChanged(nameof(ToDate));
-                }
-            }
-        }
-
-        public DateTimeOffset StartDate
-        {
-            get => _startDate;
-            set
-            {
-                if (_startDate != value)
-                {
-                    _startDate = value;
-                    RaisePropertyChanged(nameof(StartDate));
-                }
-            }
-        }
-
         public string StrDateDiffResult
         {
             get => _strDateDiffResult;
-            private set
-            {
-                if (_strDateDiffResult != value)
-                {
-                    _strDateDiffResult = value;
-                    RaisePropertyChanged(nameof(StrDateDiffResult));
-                }
-            }
+            private set { SetProperty(ref _strDateDiffResult, value); }
         }
 
         public string StrDateDiffResultAutomationName
         {
             get => _strDateDiffResultAutomationName;
-            private set
-            {
-                if (_strDateDiffResultAutomationName != value)
-                {
-                    _strDateDiffResultAutomationName = value;
-                    RaisePropertyChanged(nameof(StrDateDiffResultAutomationName));
-                }
-            }
+            private set { SetProperty(ref _strDateDiffResultAutomationName, value); }
         }
 
         public string StrDateDiffResultInDays
         {
             get => _strDateDiffResultInDays;
-            private set
-            {
-                if (_strDateDiffResultInDays != value)
-                {
-                    _strDateDiffResultInDays = value;
-                    RaisePropertyChanged(nameof(StrDateDiffResultInDays));
-                }
-            }
+            private set { SetProperty(ref _strDateDiffResultInDays, value); }
         }
 
         public string StrDateResult
         {
             get => _strDateResult;
-            private set
-            {
-                if (_strDateResult != value)
-                {
-                    _strDateResult = value;
-                    RaisePropertyChanged(nameof(StrDateResult));
-                }
-            }
+            private set { SetProperty(ref _strDateResult, value); }
         }
 
         public string StrDateResultAutomationName
         {
             get => _strDateResultAutomationName;
-            private set
-            {
-                if (_strDateResultAutomationName != value)
-                {
-                    _strDateResultAutomationName = value;
-                    RaisePropertyChanged(nameof(StrDateResultAutomationName));
-                }
-            }
+            private set { SetProperty(ref _strDateResultAutomationName, value); }
         }
 
         #endregion
 
         #region Commands
 
-        public DelegateCommand CopyCommand => new DelegateCommand(OnCopyCommand);
+        public RelayCommand<object> CopyCommand => new RelayCommand<object>(OnCopyCommand);
 
         #endregion
 
@@ -304,7 +174,13 @@ namespace CalculatorApp.ViewModel
 
         #region Private Methods
 
-        private void OnPropertyChanged(string prop)
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            HandlePropertySideEffects(e.PropertyName);
+        }
+
+        private void HandlePropertySideEffects(string prop)
         {
             if (prop == nameof(IsDateDiffMode) || prop == nameof(IsAddMode)
                 || prop == nameof(DaysOffset) || prop == nameof(MonthsOffset) || prop == nameof(YearsOffset))
@@ -441,11 +317,5 @@ namespace CalculatorApp.ViewModel
         }
 
         #endregion
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            OnPropertyChanged(propertyName);
-        }
     }
 }

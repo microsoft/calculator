@@ -8,6 +8,8 @@ using System.ComponentModel;
 using CalcManager.Interop;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace CalculatorApp.ViewModel
 {
@@ -15,7 +17,7 @@ namespace CalculatorApp.ViewModel
     public delegate void HistoryItemClickedHandler(HistoryItemViewModel e);
 
     [Windows.UI.Xaml.Data.Bindable]
-    public sealed class HistoryViewModel : INotifyPropertyChanged, IHistoryDisplayTarget
+    public sealed partial class HistoryViewModel : ObservableObject, IHistoryDisplayTarget
     {
         private readonly CalculatorManagerWrapper _calculatorManager;
         private int _currentMode; // CalculatorMode enum value
@@ -23,10 +25,12 @@ namespace CalculatorApp.ViewModel
         private string _localizedHistorySlotCleared;
 
         private ObservableCollection<HistoryItemViewModel> _items;
+
+        [ObservableProperty]
         private bool _areHistoryShortcutsEnabled;
+
         private NarratorAnnouncement _historyAnnouncement;
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public event HideHistoryClickedHandler HideHistoryClicked;
         public event HistoryItemClickedHandler HistoryItemClicked;
 
@@ -40,40 +44,13 @@ namespace CalculatorApp.ViewModel
         public ObservableCollection<HistoryItemViewModel> Items
         {
             get => _items;
-            private set
-            {
-                if (_items != value)
-                {
-                    _items = value;
-                    RaisePropertyChanged(nameof(Items));
-                }
-            }
-        }
-
-        public bool AreHistoryShortcutsEnabled
-        {
-            get => _areHistoryShortcutsEnabled;
-            set
-            {
-                if (_areHistoryShortcutsEnabled != value)
-                {
-                    _areHistoryShortcutsEnabled = value;
-                    RaisePropertyChanged(nameof(AreHistoryShortcutsEnabled));
-                }
-            }
+            private set => SetProperty(ref _items, value);
         }
 
         public NarratorAnnouncement HistoryAnnouncement
         {
             get => _historyAnnouncement;
-            private set
-            {
-                if (_historyAnnouncement != value)
-                {
-                    _historyAnnouncement = value;
-                    RaisePropertyChanged(nameof(HistoryAnnouncement));
-                }
-            }
+            private set => SetProperty(ref _historyAnnouncement, value);
         }
 
         public int ItemsCount => Items?.Count ?? 0;
@@ -101,11 +78,11 @@ namespace CalculatorApp.ViewModel
             }
 
             Items.Insert(0, item);
-            RaisePropertyChanged(nameof(ItemsCount));
+            OnPropertyChanged(nameof(ItemsCount));
         }
 
-        public DelegateCommand ClearCommand => new DelegateCommand(OnClearCommand);
-        public DelegateCommand HideCommand => new DelegateCommand(OnHideCommand);
+        public RelayCommand<object> ClearCommand => new RelayCommand<object>(OnClearCommand);
+        public RelayCommand<object> HideCommand => new RelayCommand<object>(OnHideCommand);
 
         public void OnHideCommand(object e)
         {
@@ -121,7 +98,7 @@ namespace CalculatorApp.ViewModel
                 if (Items.Count > 0)
                 {
                     Items.Clear();
-                    RaisePropertyChanged(nameof(ItemsCount));
+                    OnPropertyChanged(nameof(ItemsCount));
                 }
 
                 if (_localizedHistoryCleared == null)
@@ -150,7 +127,7 @@ namespace CalculatorApp.ViewModel
                 if ((_calculatorManager?.RemoveHistoryItem((uint)itemIndex) ?? false))
                 {
                     Items.RemoveAt(itemIndex);
-                    RaisePropertyChanged(nameof(ItemsCount));
+                    OnPropertyChanged(nameof(ItemsCount));
                 }
             }
 
@@ -198,7 +175,7 @@ namespace CalculatorApp.ViewModel
             }
 
             Items = historyListVM;
-            RaisePropertyChanged(nameof(ItemsCount));
+            OnPropertyChanged(nameof(ItemsCount));
         }
 
         internal void SetCalculatorDisplay(CalculatorDisplay calculatorDisplay)
@@ -211,9 +188,5 @@ namespace CalculatorApp.ViewModel
             return (ulong)(_calculatorManager?.MaxHistorySize ?? 0);
         }
 
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

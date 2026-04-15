@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 using Windows.Foundation;
 using Windows.Storage;
@@ -20,23 +22,36 @@ using CalculatorApp.ViewModel.Snapshot;
 
 namespace CalculatorApp.ViewModel
 {
-    public class ApplicationViewModel : INotifyPropertyChanged
+    public partial class ApplicationViewModel : ObservableObject
     {
-        private StandardCalculatorViewModel _calcVm;
-        private DateCalculatorViewModel _dateVm;
-        private GraphingCalculatorViewModel _graphVm;
-        private UnitConverterViewModel _unitVm;
+        [ObservableProperty]
+        private StandardCalculatorViewModel _calculatorViewModel;
+
+        [ObservableProperty]
+        private DateCalculatorViewModel _dateCalcViewModel;
+
+        [ObservableProperty]
+        private GraphingCalculatorViewModel _graphingCalcViewModel;
+
+        [ObservableProperty]
+        private UnitConverterViewModel _converterViewModel;
+
         private ViewMode _mode = ViewMode.None;
+
+        [ObservableProperty]
         private ViewMode _previousMode = ViewMode.None;
+
         private bool _isAlwaysOnTop = false;
         private bool _displayNormalAlwaysOnTopOption;
+
+        [ObservableProperty]
         private string _categoryName;
+
+        [ObservableProperty]
         private IList<NavCategoryGroup> _categories = NavCategoryStates.CreateMenuOptions();
 
         public const string WidthLocalSettingsKey = "calculatorAlwaysOnTopLastWidth";
         public const string HeightLocalSettingsKey = "calculatorAlwaysOnTopLastHeight";
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public ViewMode Mode
         {
@@ -49,14 +64,14 @@ namespace CalculatorApp.ViewModel
                     _mode = value;
                     SetDisplayNormalAlwaysOnTopOption();
                     OnModeChanged();
-                    RaisePropertyChanged();
+                    OnPropertyChanged(nameof(Mode));
                 }
             }
         }
 
-        public ICommand CopyCommand => new RelayCommand(OnCopyCommand);
+        public ICommand CopyCommand => new RelayCommand<object>(OnCopyCommand);
 
-        public ICommand PasteCommand => new RelayCommand(OnPasteCommand);
+        public ICommand PasteCommand => new RelayCommand<object>(OnPasteCommand);
 
         public Visibility ClearMemoryVisibility
         {
@@ -70,130 +85,25 @@ namespace CalculatorApp.ViewModel
             {
                 var snapshot = new ApplicationSnapshot();
                 snapshot.Mode = (int)_mode;
-                if (_calcVm != null)
+                if (CalculatorViewModel != null)
                 {
-                    snapshot.StandardCalculator = _calcVm.Snapshot;
+                    snapshot.StandardCalculator = CalculatorViewModel.Snapshot;
                 }
                 return snapshot;
-            }
-        }
-
-        public StandardCalculatorViewModel CalculatorViewModel
-        {
-            get => _calcVm;
-            set
-            {
-                if (_calcVm != value)
-                {
-                    _calcVm = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        public DateCalculatorViewModel DateCalcViewModel
-        {
-            get => _dateVm;
-            set
-            {
-                if (_dateVm != value)
-                {
-                    _dateVm = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        public GraphingCalculatorViewModel GraphingCalcViewModel
-        {
-            get => _graphVm;
-            set
-            {
-                if (_graphVm != value)
-                {
-                    _graphVm = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        public UnitConverterViewModel ConverterViewModel
-        {
-            get => _unitVm;
-            set
-            {
-                if (_unitVm != value)
-                {
-                    _unitVm = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        public ViewMode PreviousMode
-        {
-            get => _previousMode;
-            set
-            {
-                if (_previousMode != value)
-                {
-                    _previousMode = value;
-                    RaisePropertyChanged();
-                }
             }
         }
 
         public bool IsAlwaysOnTop
         {
             get => _isAlwaysOnTop;
-            private set
-            {
-                if (_isAlwaysOnTop != value)
-                {
-                    _isAlwaysOnTop = value;
-                    RaisePropertyChanged();
-                }
-            }
+            private set => SetProperty(ref _isAlwaysOnTop, value);
         }
 
         // Indicates whether calculator is currently in standard mode _and_ supports CompactOverlay _and_ is not in Always-on-Top mode
         public bool DisplayNormalAlwaysOnTopOption
         {
             get => _displayNormalAlwaysOnTopOption;
-            private set
-            {
-                if (_displayNormalAlwaysOnTopOption != value)
-                {
-                    _displayNormalAlwaysOnTopOption = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        public string CategoryName
-        {
-            get => _categoryName;
-            set
-            {
-                if (_categoryName != value)
-                {
-                    _categoryName = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        public IList<NavCategoryGroup> Categories
-        {
-            get => _categories;
-            set
-            {
-                if (_categories != value)
-                {
-                    _categories = value;
-                    RaisePropertyChanged();
-                }
-            }
+            private set => SetProperty(ref _displayNormalAlwaysOnTopOption, value);
         }
 
         public async Task ToggleAlwaysOnTop(double width, double height)
@@ -206,8 +116,8 @@ namespace CalculatorApp.ViewModel
                 settings.Values[WidthLocalSettingsKey] = width;
                 settings.Values[HeightLocalSettingsKey] = height;
                 bool success = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.Default);
-                _calcVm.HistoryVM.AreHistoryShortcutsEnabled = success;
-                _calcVm.IsAlwaysOnTop = !success;
+                CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = success;
+                CalculatorViewModel.IsAlwaysOnTop = !success;
                 IsAlwaysOnTop = !success;
             }
             else
@@ -238,8 +148,8 @@ namespace CalculatorApp.ViewModel
                     }
                 }
                 bool success = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, compactOptions);
-                _calcVm.HistoryVM.AreHistoryShortcutsEnabled = !success;
-                _calcVm.IsAlwaysOnTop = success;
+                CalculatorViewModel.HistoryVM.AreHistoryShortcutsEnabled = !success;
+                CalculatorViewModel.IsAlwaysOnTop = success;
                 IsAlwaysOnTop = success;
             }
             SetDisplayNormalAlwaysOnTopOption();
@@ -272,7 +182,7 @@ namespace CalculatorApp.ViewModel
             Mode = (ViewMode)snapshot.Mode;
             if (snapshot.StandardCalculator != null)
             {
-                _calcVm.Snapshot = snapshot.StandardCalculator;
+                CalculatorViewModel.Snapshot = snapshot.StandardCalculator;
             }
         }
 
@@ -281,33 +191,33 @@ namespace CalculatorApp.ViewModel
             Debug.Assert(NavCategoryStates.IsValidViewMode(_mode));
             if (NavCategory.IsCalculatorViewMode(_mode))
             {
-                if (_calcVm == null)
+                if (CalculatorViewModel == null)
                 {
-                    _calcVm = new StandardCalculatorViewModel();
+                    CalculatorViewModel = new StandardCalculatorViewModel();
                 }
-                _calcVm.SetCalculatorType(_mode);
+                CalculatorViewModel.SetCalculatorType(_mode);
             }
             else if (NavCategory.IsGraphingCalculatorViewMode(_mode))
             {
-                if (_graphVm == null)
+                if (GraphingCalcViewModel == null)
                 {
-                    _graphVm = new GraphingCalculatorViewModel();
+                    GraphingCalcViewModel = new GraphingCalculatorViewModel();
                 }
             }
             else if (NavCategory.IsDateCalculatorViewMode(_mode))
             {
-                if (_dateVm == null)
+                if (DateCalcViewModel == null)
                 {
-                    _dateVm = new DateCalculatorViewModel();
+                    DateCalcViewModel = new DateCalculatorViewModel();
                 }
             }
             else if (NavCategory.IsConverterViewMode(_mode))
             {
-                if (_unitVm == null)
+                if (ConverterViewModel == null)
                 {
-                    _unitVm = new UnitConverterViewModel();
+                    ConverterViewModel = new UnitConverterViewModel();
                 }
-                _unitVm.Mode = _mode;
+                ConverterViewModel.Mode = _mode;
             }
 
             var resProvider = AppResourceProvider.GetInstance();
@@ -319,7 +229,7 @@ namespace CalculatorApp.ViewModel
             ApplicationData.Current.LocalSettings.Values[nameof(Mode)] = NavCategoryStates.Serialize(_mode);
 
             // Log ModeChange event when not first launch, log WindowCreated on first launch
-            if (NavCategoryStates.IsValidViewMode(_previousMode))
+            if (NavCategoryStates.IsValidViewMode(PreviousMode))
             {
                 TraceLogger.GetInstance().LogModeChange(_mode);
             }
@@ -329,22 +239,22 @@ namespace CalculatorApp.ViewModel
                     _mode,
                     ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread()));
             }
-            RaisePropertyChanged(nameof(ClearMemoryVisibility));
+            OnPropertyChanged(nameof(ClearMemoryVisibility));
         }
 
         private void OnCopyCommand(object param)
         {
             if (NavCategory.IsConverterViewMode(_mode))
             {
-                _unitVm.OnCopyCommand(param);
+                ConverterViewModel.OnCopyCommand(param);
             }
             else if (NavCategory.IsDateCalculatorViewMode(_mode))
             {
-                _dateVm.OnCopyCommand(param);
+                DateCalcViewModel.OnCopyCommand(param);
             }
             else if (NavCategory.IsCalculatorViewMode(_mode))
             {
-                _calcVm.OnCopyCommand(param);
+                CalculatorViewModel.OnCopyCommand(param);
             }
         }
 
@@ -352,11 +262,11 @@ namespace CalculatorApp.ViewModel
         {
             if (NavCategory.IsConverterViewMode(_mode))
             {
-                _unitVm.OnPasteCommand(param);
+                ConverterViewModel.OnPasteCommand(param);
             }
             else if (NavCategory.IsCalculatorViewMode(_mode))
             {
-                _calcVm.OnPasteCommand(param);
+                CalculatorViewModel.OnPasteCommand(param);
             }
         }
 
@@ -381,11 +291,6 @@ namespace CalculatorApp.ViewModel
             {
                 return false;
             }
-        }
-
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
