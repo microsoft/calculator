@@ -104,6 +104,8 @@ void sinanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t 
     scalerat(pa, angletype, radix, precision);
     switch (angletype)
     {
+    case AngleType::Radians:
+        break;
     case AngleType::Degrees:
         if (rat_gt(*pa, rat_180, precision))
         {
@@ -199,6 +201,8 @@ void cosanglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t 
     scalerat(pa, angletype, radix, precision);
     switch (angletype)
     {
+    case AngleType::Radians:
+        break;
     case AngleType::Degrees:
         if (rat_gt(*pa, rat_180, precision))
         {
@@ -269,6 +273,8 @@ void tananglerat(_Inout_ PRAT* pa, AngleType angletype, uint32_t radix, int32_t 
     scalerat(pa, angletype, radix, precision);
     switch (angletype)
     {
+    case AngleType::Radians:
+        break;
     case AngleType::Degrees:
         if (rat_gt(*pa, rat_180, precision))
         {

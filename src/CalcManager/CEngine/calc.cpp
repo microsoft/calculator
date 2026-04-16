@@ -146,7 +146,7 @@ std::wstring CCalcEngine::GetMaxDecimalValueString() const
 // of CCalcEngine. Otherwise it will get destructed with the CalcEngine
 unique_ptr<Rational> CCalcEngine::PersistedMemObject()
 {
-    return move(m_memoryValue);
+    return std::move(m_memoryValue);
 }
 
 void CCalcEngine::PersistedMemObject(Rational const& memObject)
