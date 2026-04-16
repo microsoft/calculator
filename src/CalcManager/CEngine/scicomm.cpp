@@ -196,6 +196,9 @@ void CCalcEngine::ProcessCommandWorker(OpCode wParam)
         // Check if the last command was a closing parenthesis
         if (m_nLastCom == IDC_CLOSEP)
         {
+            if{
+                ResolveHighestPrecedenceOperation();
+            } 
             // Treat this as an implicit multiplication
             m_nOpCode = IDC_MUL;
             m_lastVal = m_currentVal;
