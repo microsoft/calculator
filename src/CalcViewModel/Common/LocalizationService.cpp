@@ -74,8 +74,27 @@ void LocalizationService::OverrideWithLanguage(_In_ const wchar_t* const languag
 /// <param name="overridedLanguage">RFC-5646 identifier of the language to use, if null, will use the current language of the system</param>
 LocalizationService::LocalizationService(_In_ const wchar_t * const overridedLanguage)
 {
+    using namespace Windows::System::UserProfile;
+
     m_isLanguageOverrided = overridedLanguage != nullptr;
-    m_language = m_isLanguageOverrided ? ref new Platform::String(overridedLanguage) : ApplicationLanguages::Languages->GetAt(0);
+    if (m_isLanguageOverrided)
+    {
+        m_language = ref new Platform::String(overridedLanguage);
+    }
+    else
+    {
+        // Prefer the system Display Language over Regional Settings
+        auto displayLanguages = GlobalizationPreferences::Languages;
+        if (displayLanguages != nullptr && displayLanguages->Size > 0)
+        {
+            m_language = ref new Platform::String(displayLanguages->GetAt(0)->Data());
+        }
+        else
+        {
+            // Fallback to the default application language list
+            m_language = ApplicationLanguages::Languages->GetAt(0);
+        }
+    }
     m_flowDirection = ResourceContext::GetForViewIndependentUse()->QualifierValues->Lookup(L"LayoutDirection")
         != L"LTR" ? FlowDirection::RightToLeft : FlowDirection::LeftToRight;
     wstring localeName = wstring(m_language->Data());
