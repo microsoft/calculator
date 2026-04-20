@@ -5,6 +5,7 @@
 #include <CppUnitTest.h>
 
 #include "CalcViewModel/Common/EngineResourceProvider.h"
+#include "ratpak.h"
 
 using namespace std;
 using namespace CalculatorApp;
@@ -233,6 +234,34 @@ namespace CalculatorEngineTests
                 result,
                 m_calcEngine->GroupDigits(L",", { 5, 3, 2, 0, 0 }, L"1234567890123456", false),
                 L"Verify expanded form multigroup non-repeating grouping.");
+        }
+
+        TEST_METHOD(TestFortranDNotationParsing)
+        {
+            // Parse a Fortran-style D exponent and verify numeric value
+            PNUMBER pnum = StringToNumber(L"1.073092093321713D-002", 10, 17);
+            VERIFY_IS_NOT_NULL(pnum);
+            std::wstring s = NumberToString(pnum, NumberFormat::Float, 10, 17);
+            double actual = std::stod(s);
+            double expected = 1.073092093321713e-2;
+            Assert::AreEqual(expected, actual, 1e-15, L"D-notation should parse to correct numeric value");
+            destroynum(pnum);
+
+            // Verify equivalence with E-notation
+            PNUMBER pnumE = StringToNumber(L"1.073092093321713E-002", 10, 17);
+            VERIFY_IS_NOT_NULL(pnumE);
+            std::wstring sE = NumberToString(pnumE, NumberFormat::Float, 10, 17);
+            double actualE = std::stod(sE);
+            Assert::AreEqual(expected, actualE, 1e-15, L"E-notation should parse to same numeric value");
+            destroynum(pnumE);
+
+            // Also test compact form like 5D5
+            PNUMBER pnum2 = StringToNumber(L"5D5", 10, 17);
+            VERIFY_IS_NOT_NULL(pnum2);
+            std::wstring s2 = NumberToString(pnum2, NumberFormat::Float, 10, 17);
+            double actual2 = std::stod(s2);
+            Assert::AreEqual(5e5, actual2, 1e-9, L"5D5 should parse as 5e5");
+            destroynum(pnum2);
         }
 
     private:
