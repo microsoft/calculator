@@ -158,7 +158,7 @@ void ChangeConstants(uint32_t radix, int32_t precision)
         INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_neg_one, -1L);
         INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_ten, 10L);
         INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_word, 0xffff);
-        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_word, 0xff);
+        INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_byte, 0xff);
         INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_400, 400);
         INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_360, 360);
         INIT_AND_DUMP_RAW_RAT_IF_NULL(rat_200, 200);
