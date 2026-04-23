@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4198,5 +4198,23 @@
   <data name="SnapshotRestoreError" xml:space="preserve">
     <value>இந்த நொடிப்புச்சேமிப்பை மீட்டெடுக்க முடியவில்லை.</value>
     <comment>The error message to notify user that restoring from snapshot has failed.</comment>
+  </data>
+  <data name="UnitAbbreviation_AstronomicalUnit" xml:space="preserve">
+    <value> வி.அ</value>
+  </data>
+  <data name="UnitAbbreviation_Parsec" xml:space="preserve">
+    <value>பா.</value>
+  </data>
+  <data name="UnitName_AstronomicalUnit" xml:space="preserve">
+    <value>விண்மீனியல் அலகு</value>
+  </data>
+  <data name="UnitName_LightYear" xml:space="preserve">
+    <value>ஒளியாண்டு (oḷiyāṇṭu)</value>
+  </data>
+  <data name="UnitName_Parsec" xml:space="preserve">
+    <value>பர்செக்</value>
+  </data>
+  <data name="UnitAbbreviation_LightYear" xml:space="preserve">
+    <value>ஒ.ஆ</value>
   </data>
 </root>
