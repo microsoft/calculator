@@ -78,6 +78,8 @@ namespace CalculatorApp
             m_uiSettings = new UISettings();
             m_uiSettings.ColorValuesChanged += OnColorValuesChanged;
 
+            this.Unloaded += OnUnloaded;
+
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
             if (localSettings != null && localSettings.Values.ContainsKey(sc_IsGraphThemeMatchApp))
@@ -886,6 +888,27 @@ namespace CalculatorApp
 
             // The control needs to be loaded, else the control will override GridLinesColor and ignore the value passed
             UpdateGraphTheme();
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded -= OnUnloaded;
+
+            var dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager.DataRequested -= OnDataRequested;
+
+            GraphingControl.TracingChangedEvent -= OnShowTracePopupChanged;
+            GraphingControl.TracingValueChangedEvent -= OnTracePointChanged;
+            GraphingControl.PointerValueChangedEvent -= OnPointerPointChanged;
+            GraphingControl.Loaded -= OnGraphingCalculatorLoaded;
+
+            m_accessibilitySettings.HighContrastChanged -= OnHighContrastChanged;
+            m_uiSettings.ColorValuesChanged -= OnColorValuesChanged;
+
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.ThemeShadow"))
+            {
+                SharedShadow?.Receivers?.Remove(GraphingControl);
+            }
         }
     }
 }
