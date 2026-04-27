@@ -167,7 +167,8 @@ namespace CalculatorApp
             Energy_Kilowatthour = UnitStart + 166,
             Data_Nibble = UnitStart + 167,
             Length_Angstrom = UnitStart + 168,
-            UnitEnd = Length_Angstrom
+            Pressure_Torr = UnitStart + 169,
+            UnitEnd = Pressure_Torr
         };
     }
 }
