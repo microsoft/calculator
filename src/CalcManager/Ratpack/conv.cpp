@@ -1354,13 +1354,16 @@ PNUMBER gcd(_In_ PNUMBER a, _In_ PNUMBER b)
     PNUMBER larger = nullptr;
     PNUMBER smaller = nullptr;
 
+    // Always return a fresh copy so callers can safely free the result.
     if (zernum(a))
     {
-        return b;
+        DUPNUM(r, b);
+        return r;
     }
     else if (zernum(b))
     {
-        return a;
+        DUPNUM(r, a);
+        return r;
     }
 
     if (lessnum(a, b))
