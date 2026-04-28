@@ -214,6 +214,8 @@ namespace CalculatorApp
             AddSubtract_FromDate.MinDate = DateDiff_FromDate.MinDate;
             AddSubtract_FromDate.MaxDate = DateDiff_FromDate.MaxDate;
             AddSubtract_FromDate.DateFormat = "day month year";
+
+            RaiseLiveRegionChangedAutomationEvent(false);
         }
 
         private void AddSubtractOption_Checked(object sender, RoutedEventArgs e)
@@ -244,8 +246,13 @@ namespace CalculatorApp
         private void RaiseLiveRegionChangedAutomationEvent(bool isDateDiffMode)
         {
             TextBlock resultTextBlock = isDateDiffMode ? DateDiffAllUnitsResultLabel : DateResultLabel;
+            if (resultTextBlock == null)
+            {
+                return;
+            }
+
             string automationName = AutomationProperties.GetName(resultTextBlock);
-            TextBlockAutomationPeer.FromElement(resultTextBlock).RaiseAutomationEvent(AutomationEvents.LiveRegionChanged);
+            TextBlockAutomationPeer.FromElement(resultTextBlock)?.RaiseAutomationEvent(AutomationEvents.LiveRegionChanged);
         }
 
         private void OnVisualStateChanged(object sender, VisualStateChangedEventArgs e)

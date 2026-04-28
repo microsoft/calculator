@@ -215,11 +215,26 @@ namespace CalculatorApp.ViewModel
                 {
                     var duration = new DateDifference
                     {
-                        Year = IsAddMode ? YearsOffset : -YearsOffset,
-                        Month = IsAddMode ? MonthsOffset : -MonthsOffset,
-                        Day = IsAddMode ? DaysOffset : -DaysOffset
+                        Year = YearsOffset,
+                        Month = MonthsOffset,
+                        Day = DaysOffset
                     };
-                    _dateResult = _dateCalcEngine.AddDuration(StartDate, duration) ?? StartDate;
+
+                    DateTimeOffset? dateTimeResult;
+                    if (IsAddMode)
+                    {
+                        dateTimeResult = _dateCalcEngine.AddDuration(StartDate, duration);
+                    }
+                    else
+                    {
+                        dateTimeResult = _dateCalcEngine.SubtractDuration(StartDate, duration);
+                    }
+
+                    _isOutOfBound = dateTimeResult == null;
+                    if (!_isOutOfBound)
+                    {
+                        _dateResult = dateTimeResult.Value;
+                    }
                 }
                 catch
                 {
