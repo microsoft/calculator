@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -224,14 +225,154 @@ namespace CalculatorApp.ViewModel.Common
             }
         }
 
+        private static Dictionary<string, string> s_tokenToReadableNameMap;
+        private static string s_openParen;
+
+        private static Dictionary<string, string> GetTokenToReadableNameMap()
+        {
+            // Resources for the engine use numbers as keys. Map engine resource key
+            // to automation name from the standard project resources.
+            // Paren entries: token displayed as "func(" gets mapped to readable name
+            var parenEngineKeyResourceMap = new (string EngineKey, string ResourceName)[]
+            {
+                // Sine permutations
+                ("67", "SineDegrees"),
+                ("73", "SineRadians"),
+                ("79", "SineGradians"),
+                ("70", "InverseSineDegrees"),
+                ("76", "InverseSineRadians"),
+                ("82", "InverseSineGradians"),
+                ("25", "HyperbolicSine"),
+                ("85", "InverseHyperbolicSine"),
+                // Cosine permutations
+                ("68", "CosineDegrees"),
+                ("74", "CosineRadians"),
+                ("80", "CosineGradians"),
+                ("71", "InverseCosineDegrees"),
+                ("77", "InverseCosineRadians"),
+                ("83", "InverseCosineGradians"),
+                ("26", "HyperbolicCosine"),
+                ("86", "InverseHyperbolicCosine"),
+                // Tangent permutations
+                ("69", "TangentDegrees"),
+                ("75", "TangentRadians"),
+                ("81", "TangentGradians"),
+                ("72", "InverseTangentDegrees"),
+                ("78", "InverseTangentRadians"),
+                ("84", "InverseTangentGradians"),
+                ("27", "HyperbolicTangent"),
+                ("87", "InverseHyperbolicTangent"),
+                // Secant permutations
+                ("SecDeg", "SecantDegrees"),
+                ("SecRad", "SecantRadians"),
+                ("SecGrad", "SecantGradians"),
+                ("InverseSecDeg", "InverseSecantDegrees"),
+                ("InverseSecRad", "InverseSecantRadians"),
+                ("InverseSecGrad", "InverseSecantGradians"),
+                ("Sech", "HyperbolicSecant"),
+                ("InverseSech", "InverseHyperbolicSecant"),
+                // Cosecant permutations
+                ("CscDeg", "CosecantDegrees"),
+                ("CscRad", "CosecantRadians"),
+                ("CscGrad", "CosecantGradians"),
+                ("InverseCscDeg", "InverseCosecantDegrees"),
+                ("InverseCscRad", "InverseCosecantRadians"),
+                ("InverseCscGrad", "InverseCosecantGradians"),
+                ("Csch", "HyperbolicCosecant"),
+                ("InverseCsch", "InverseHyperbolicCosecant"),
+                // Cotangent permutations
+                ("CotDeg", "CotangentDegrees"),
+                ("CotRad", "CotangentRadians"),
+                ("CotGrad", "CotangentGradians"),
+                ("InverseCotDeg", "InverseCotangentDegrees"),
+                ("InverseCotRad", "InverseCotangentRadians"),
+                ("InverseCotGrad", "InverseCotangentGradians"),
+                ("Coth", "HyperbolicCotangent"),
+                ("InverseCoth", "InverseHyperbolicCotangent"),
+                // Miscellaneous Scientific functions
+                ("94", "Factorial"),
+                ("35", "DegreeMinuteSecond"),
+                ("28", "NaturalLog"),
+                ("91", "Square"),
+                ("92", "Cube"),
+                ("23", "TenPowerX"),
+                ("97", "LogBase2"),
+                ("98", "AbsoluteValue"),
+                ("24", "PowerOfE"),
+                ("29", "CommonLog"),
+                ("93", "CubeRoot"),
+            };
+
+            // No-paren entries: token displayed as-is (no opening paren in token)
+            var noParenEngineKeyResourceMap = new (string EngineKey, string ResourceName)[]
+            {
+                // Programmer mode functions
+                ("9", "LeftShift"),
+                ("10", "RightShift"),
+                ("LogBaseY", "Logy"),
+                // Y Root scientific function
+                ("16", "YRoot"),
+            };
+
+            var resProvider = AppResourceProvider.GetInstance();
+            string openParen = resProvider.GetCEngineString("48"); // "("
+
+            var map = new Dictionary<string, string>();
+
+            foreach (var (engineKey, resourceName) in parenEngineKeyResourceMap)
+            {
+                string engineStr = resProvider.GetCEngineString(engineKey);
+                string automationName = resProvider.GetResourceString(resourceName);
+                if (!string.IsNullOrEmpty(engineStr) && !string.IsNullOrEmpty(automationName))
+                {
+                    map[engineStr + openParen] = automationName;
+                }
+            }
+
+            foreach (var (engineKey, resourceName) in noParenEngineKeyResourceMap)
+            {
+                string engineStr = resProvider.GetCEngineString(engineKey);
+                string automationName = resProvider.GetResourceString(resourceName);
+                if (!string.IsNullOrEmpty(engineStr) && !string.IsNullOrEmpty(automationName))
+                {
+                    map[engineStr] = automationName;
+                }
+            }
+
+            // Replace hyphens with "minus"
+            string minusText = resProvider.GetResourceString("minus");
+            if (!string.IsNullOrEmpty(minusText))
+            {
+                map["-"] = minusText;
+            }
+
+            return map;
+        }
+
         public static string GetNarratorReadableToken(string token)
         {
+            if (s_tokenToReadableNameMap == null)
+            {
+                s_tokenToReadableNameMap = GetTokenToReadableNameMap();
+                s_openParen = AppResourceProvider.GetInstance().GetCEngineString("48");
+            }
+
+            if (s_tokenToReadableNameMap.TryGetValue(token, out string readableName))
+            {
+                return readableName + " " + s_openParen;
+            }
+
             return token;
         }
 
         public static string GetNarratorReadableString(string value)
         {
-            return value;
+            var sb = new StringBuilder();
+            foreach (char c in value)
+            {
+                sb.Append(GetNarratorReadableToken(c.ToString()));
+            }
+            return sb.ToString();
         }
 
         public void LocalizeDisplayValue(ref string stringToLocalize)
