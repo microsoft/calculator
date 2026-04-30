@@ -131,7 +131,6 @@
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(GeneratedFilesDir);$(WindowsSdkDir)Include\$(WindowsTargetPlatformVersion)\winrt;$(WindowsSdkDir)Include\$(WindowsTargetPlatformVersion)\um;$(WindowsSdkDir)Include\$(WindowsTargetPlatformVersion)\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <MetadataDirectories>$(WindowsSdkDir)UnionMetadata\$(WindowsTargetPlatformVersion);%(MetadataDirectories)</MetadataDirectories>
     </Midl>
     <Lib />
   </ItemDefinitionGroup>
