@@ -9,7 +9,7 @@ on:
 jobs:
   defineBuilds:
     name: Define builds
-    runs-on: windows-latest 
+    runs-on: windows-2025-vs2026
     env:
       isPR: ${{ github.event_name == 'pull_request' }}
     outputs:
@@ -51,7 +51,7 @@ jobs:
   build:
     needs: defineBuilds
     name: Build
-    runs-on: windows-latest
+    runs-on: windows-2025-vs2026
     strategy:
       matrix:
         platform: ${{ fromJSON(needs.defineBuilds.outputs.platformList) }}
@@ -98,7 +98,7 @@ jobs:
 
   unitTests:
     needs: [defineBuilds, build]
-    runs-on: windows-latest
+    runs-on: windows-2025-vs2026
     name: Run unit tests
     strategy:
       matrix:
@@ -127,7 +127,7 @@ jobs:
         
   uiTests:
     needs: build
-    runs-on: windows-latest
+    runs-on: windows-2025-vs2026
     name: Run UI tests (x64)
     env:
       appDir: ${{ github.workspace }}/download/Calculator/AppPackages/Calculator*_Test
