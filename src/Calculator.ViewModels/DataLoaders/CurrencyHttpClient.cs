@@ -12,7 +12,25 @@ namespace CalculatorApp.ViewModel.DataLoaders
         public static bool ForceWebFailure = false;
 #endif
 
+        // Keep HttpClient field to ensure Windows.Web.Http assembly is referenced
+        // (required for .NET Native AOT compilation stability).
+        private static readonly Windows.Web.Http.HttpClient _sharedClient = new Windows.Web.Http.HttpClient();
         private string _responseLanguage;
+
+        // Mock data matching the C++ open-source calculator behavior (fictional planet currencies).
+        // The upstream fwlink URLs are dead, so we use hardcoded data as the C++ version does.
+        private const string MockCurrencyStaticData = @"[
+  { ""CountryCode"": ""MAR"", ""CountryName"": ""Mars"", ""CurrencyCode"": ""MAR"", ""CurrencyName"": ""The Martian Dollar"", ""CurrencySymbol"": ""¤"" },
+  { ""CountryCode"": ""MON"", ""CountryName"": ""Moon"", ""CurrencyCode"": ""MON"", ""CurrencyName"": ""Moon Bucks"", ""CurrencySymbol"": ""¤"" },
+  { ""CountryCode"": ""NEP"", ""CountryName"": ""Neptune"", ""CurrencyCode"": ""NEP"", ""CurrencyName"": ""Space Coins"", ""CurrencySymbol"": ""¤"" },
+  { ""CountryCode"": ""SAT"", ""CountryName"": ""Saturn"", ""CurrencyCode"": ""SAT"", ""CurrencyName"": ""Rings"", ""CurrencySymbol"": ""¤"" },
+  { ""CountryCode"": ""URA"", ""CountryName"": ""Uranus"", ""CurrencyCode"": ""URA"", ""CurrencyName"": ""Galaxy Credits"", ""CurrencySymbol"": ""¤"" },
+  { ""CountryCode"": ""VEN"", ""CountryName"": ""Venus"", ""CurrencyCode"": ""VEN"", ""CurrencyName"": ""Venusian Seashells"", ""CurrencySymbol"": ""¤"" },
+  { ""CountryCode"": ""JUP"", ""CountryName"": ""Jupiter"", ""CurrencyCode"": ""JUP"", ""CurrencyName"": ""Gas Money"", ""CurrencySymbol"": ""¤"" },
+  { ""CountryCode"": ""MER"", ""CountryName"": ""Mercury"", ""CurrencyCode"": ""MER"", ""CurrencyName"": ""Sun Notes"", ""CurrencySymbol"": ""¤"" },
+  { ""CountryCode"": ""TEST1"", ""CountryName"": ""Test No Fractional Digits"", ""CurrencyCode"": ""JPY"", ""CurrencyName"": ""Test No Fractional Digits"", ""CurrencySymbol"": ""¤"" },
+  { ""CountryCode"": ""TEST2"", ""CountryName"": ""Test Fractional Digits"", ""CurrencyCode"": ""JOD"", ""CurrencyName"": ""Test Fractional Digits"", ""CurrencySymbol"": ""¤"" }
+]";
 
         private const string MockCurrencyConverterData = @"[
   { ""An"": ""MAR"", ""Rt"": 1.00 },
@@ -25,19 +43,6 @@ namespace CalculatorApp.ViewModel.DataLoaders
   { ""An"": ""MER"", ""Rt"": 2.00 },
   { ""An"": ""JPY"", ""Rt"": 0.00125 },
   { ""An"": ""JOD"", ""Rt"": 0.25 }
-]";
-
-        private const string MockCurrencyStaticData = @"[
-  { ""CountryCode"": ""MAR"", ""CountryName"": ""Mars"", ""CurrencyCode"": ""MAR"", ""CurrencyName"": ""The Martian Dollar"", ""CurrencySymbol"": ""¤"" },
-  { ""CountryCode"": ""MON"", ""CountryName"": ""Moon"", ""CurrencyCode"": ""MON"", ""CurrencyName"": ""Moon Bucks"", ""CurrencySymbol"": ""¤"" },
-  { ""CountryCode"": ""NEP"", ""CountryName"": ""Neptune"", ""CurrencyCode"": ""NEP"", ""CurrencyName"": ""Space Coins"", ""CurrencySymbol"": ""¤"" },
-  { ""CountryCode"": ""SAT"", ""CountryName"": ""Saturn"", ""CurrencyCode"": ""SAT"", ""CurrencyName"": ""Rings"", ""CurrencySymbol"": ""¤"" },
-  { ""CountryCode"": ""URA"", ""CountryName"": ""Uranus"", ""CurrencyCode"": ""URA"", ""CurrencyName"": ""Galaxy Credits"", ""CurrencySymbol"": ""¤"" },
-  { ""CountryCode"": ""VEN"", ""CountryName"": ""Venus"", ""CurrencyCode"": ""VEN"", ""CurrencyName"": ""Venusian Seashells"", ""CurrencySymbol"": ""¤"" },
-  { ""CountryCode"": ""JUP"", ""CountryName"": ""Jupiter"", ""CurrencyCode"": ""JUP"", ""CurrencyName"": ""Gas Money"", ""CurrencySymbol"": ""¤"" },
-  { ""CountryCode"": ""MER"", ""CountryName"": ""Mercury"", ""CurrencyCode"": ""MER"", ""CurrencyName"": ""Sun Notes"", ""CurrencySymbol"": ""¤"" },
-  { ""CountryCode"": ""TEST1"", ""CountryName"": ""Test No Fractional Digits"", ""CurrencyCode"": ""JPY"", ""CurrencyName"": ""Test No Fractional Digits"", ""CurrencySymbol"": ""¤"" },
-  { ""CountryCode"": ""TEST2"", ""CountryName"": ""Test Fractional Digits"", ""CurrencyCode"": ""JOD"", ""CurrencyName"": ""Test Fractional Digits"", ""CurrencySymbol"": ""¤"" }
 ]";
 
         public void Initialize(string sourceCurrencyCode, string responseLanguage)
