@@ -832,6 +832,28 @@ namespace CalculatorApp.ViewModel
             _currencyFormatter2.ApplyRoundingForCurrency(Windows.Globalization.NumberFormatting.RoundingAlgorithm.RoundHalfDown);
 
             UpdateIsDecimalEnabled();
+
+            // Truncate current value to new currency's fraction digits and re-paste (matching C++)
+            OnPaste(TruncateFractionDigits(_valueFromUnlocalized, CurrencyFormatterFrom.FractionDigits));
+        }
+
+        private static string TruncateFractionDigits(string n, int digitCount)
+        {
+            if (string.IsNullOrEmpty(n))
+                return n;
+
+            var i = n.IndexOf('.');
+            if (i < 0)
+                return n;
+
+            if (digitCount == 0)
+                return n.Substring(0, i);
+
+            int actualDigitCount = n.Length - i - 1;
+            if (actualDigitCount <= digitCount)
+                return n;
+
+            return n.Substring(0, n.Length - (actualDigitCount - digitCount));
         }
 
         private void UpdateIsDecimalEnabled()
@@ -891,7 +913,13 @@ namespace CalculatorApp.ViewModel
             Unit toUnit = null;
             foreach (var cu in currencyUnits)
             {
-                var unit = new Unit(cu.Id, cu.Name, cu.Abbreviation, cu.Name, false);
+                // Match C++ Unit constructor: name = "countryName - currencyName", accessibleName = "countryName currencyName"
+                var nameValue1 = cu.IsRtlLanguage ? cu.Name : cu.CountryName;
+                var nameValue2 = cu.IsRtlLanguage ? cu.CountryName : cu.Name;
+                var displayName = nameValue1 + " - " + nameValue2;
+                var accessibleName = nameValue1 + " " + nameValue2;
+
+                var unit = new Unit(cu.Id, displayName, cu.Abbreviation, accessibleName, false);
                 Units.Add(unit);
 
                 if (cu.IsConversionSource) fromUnit = unit;
