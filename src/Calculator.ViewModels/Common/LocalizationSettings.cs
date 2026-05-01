@@ -227,117 +227,82 @@ namespace CalculatorApp.ViewModel.Common
 
         private static Dictionary<string, string> s_tokenToReadableNameMap;
         private static string s_openParen;
+        private static readonly object s_tokenMapLock = new object();
 
         private static Dictionary<string, string> GetTokenToReadableNameMap()
         {
-            // Resources for the engine use numbers as keys. Map engine resource key
-            // to automation name from the standard project resources.
-            // Paren entries: token displayed as "func(" gets mapped to readable name
-            var parenEngineKeyResourceMap = new (string EngineKey, string ResourceName)[]
-            {
-                // Sine permutations
-                ("67", "SineDegrees"),
-                ("73", "SineRadians"),
-                ("79", "SineGradians"),
-                ("70", "InverseSineDegrees"),
-                ("76", "InverseSineRadians"),
-                ("82", "InverseSineGradians"),
-                ("25", "HyperbolicSine"),
-                ("85", "InverseHyperbolicSine"),
-                // Cosine permutations
-                ("68", "CosineDegrees"),
-                ("74", "CosineRadians"),
-                ("80", "CosineGradians"),
-                ("71", "InverseCosineDegrees"),
-                ("77", "InverseCosineRadians"),
-                ("83", "InverseCosineGradians"),
-                ("26", "HyperbolicCosine"),
-                ("86", "InverseHyperbolicCosine"),
-                // Tangent permutations
-                ("69", "TangentDegrees"),
-                ("75", "TangentRadians"),
-                ("81", "TangentGradians"),
-                ("72", "InverseTangentDegrees"),
-                ("78", "InverseTangentRadians"),
-                ("84", "InverseTangentGradians"),
-                ("27", "HyperbolicTangent"),
-                ("87", "InverseHyperbolicTangent"),
-                // Secant permutations
-                ("SecDeg", "SecantDegrees"),
-                ("SecRad", "SecantRadians"),
-                ("SecGrad", "SecantGradians"),
-                ("InverseSecDeg", "InverseSecantDegrees"),
-                ("InverseSecRad", "InverseSecantRadians"),
-                ("InverseSecGrad", "InverseSecantGradians"),
-                ("Sech", "HyperbolicSecant"),
-                ("InverseSech", "InverseHyperbolicSecant"),
-                // Cosecant permutations
-                ("CscDeg", "CosecantDegrees"),
-                ("CscRad", "CosecantRadians"),
-                ("CscGrad", "CosecantGradians"),
-                ("InverseCscDeg", "InverseCosecantDegrees"),
-                ("InverseCscRad", "InverseCosecantRadians"),
-                ("InverseCscGrad", "InverseCosecantGradians"),
-                ("Csch", "HyperbolicCosecant"),
-                ("InverseCsch", "InverseHyperbolicCosecant"),
-                // Cotangent permutations
-                ("CotDeg", "CotangentDegrees"),
-                ("CotRad", "CotangentRadians"),
-                ("CotGrad", "CotangentGradians"),
-                ("InverseCotDeg", "InverseCotangentDegrees"),
-                ("InverseCotRad", "InverseCotangentRadians"),
-                ("InverseCotGrad", "InverseCotangentGradians"),
-                ("Coth", "HyperbolicCotangent"),
-                ("InverseCoth", "InverseHyperbolicCotangent"),
-                // Miscellaneous Scientific functions
-                ("94", "Factorial"),
-                ("35", "DegreeMinuteSecond"),
-                ("28", "NaturalLog"),
-                ("91", "Square"),
-                ("92", "Cube"),
-                ("23", "TenPowerX"),
-                ("97", "LogBase2"),
-                ("98", "AbsoluteValue"),
-                ("24", "PowerOfE"),
-                ("29", "CommonLog"),
-                ("93", "CubeRoot"),
-            };
-
-            // No-paren entries: token displayed as-is (no opening paren in token)
-            var noParenEngineKeyResourceMap = new (string EngineKey, string ResourceName)[]
-            {
-                // Programmer mode functions
-                ("9", "LeftShift"),
-                ("10", "RightShift"),
-                ("LogBaseY", "Logy"),
-                // Y Root scientific function
-                ("16", "YRoot"),
-            };
-
             var resProvider = AppResourceProvider.GetInstance();
             string openParen = resProvider.GetCEngineString("48"); // "("
 
             var map = new Dictionary<string, string>();
 
-            foreach (var (engineKey, resourceName) in parenEngineKeyResourceMap)
-            {
-                string engineStr = resProvider.GetCEngineString(engineKey);
-                string automationName = resProvider.GetResourceString(resourceName);
-                if (!string.IsNullOrEmpty(engineStr) && !string.IsNullOrEmpty(automationName))
-                {
-                    map[engineStr + openParen] = automationName;
-                }
-            }
+            // Paren entries: engine key → resource name
+            // Token displayed as "func(" gets mapped to readable name
+            AddParenEntry(map, resProvider, openParen, "67", "SineDegrees");
+            AddParenEntry(map, resProvider, openParen, "73", "SineRadians");
+            AddParenEntry(map, resProvider, openParen, "79", "SineGradians");
+            AddParenEntry(map, resProvider, openParen, "70", "InverseSineDegrees");
+            AddParenEntry(map, resProvider, openParen, "76", "InverseSineRadians");
+            AddParenEntry(map, resProvider, openParen, "82", "InverseSineGradians");
+            AddParenEntry(map, resProvider, openParen, "25", "HyperbolicSine");
+            AddParenEntry(map, resProvider, openParen, "85", "InverseHyperbolicSine");
+            AddParenEntry(map, resProvider, openParen, "68", "CosineDegrees");
+            AddParenEntry(map, resProvider, openParen, "74", "CosineRadians");
+            AddParenEntry(map, resProvider, openParen, "80", "CosineGradians");
+            AddParenEntry(map, resProvider, openParen, "71", "InverseCosineDegrees");
+            AddParenEntry(map, resProvider, openParen, "77", "InverseCosineRadians");
+            AddParenEntry(map, resProvider, openParen, "83", "InverseCosineGradians");
+            AddParenEntry(map, resProvider, openParen, "26", "HyperbolicCosine");
+            AddParenEntry(map, resProvider, openParen, "86", "InverseHyperbolicCosine");
+            AddParenEntry(map, resProvider, openParen, "69", "TangentDegrees");
+            AddParenEntry(map, resProvider, openParen, "75", "TangentRadians");
+            AddParenEntry(map, resProvider, openParen, "81", "TangentGradians");
+            AddParenEntry(map, resProvider, openParen, "72", "InverseTangentDegrees");
+            AddParenEntry(map, resProvider, openParen, "78", "InverseTangentRadians");
+            AddParenEntry(map, resProvider, openParen, "84", "InverseTangentGradians");
+            AddParenEntry(map, resProvider, openParen, "27", "HyperbolicTangent");
+            AddParenEntry(map, resProvider, openParen, "87", "InverseHyperbolicTangent");
+            AddParenEntry(map, resProvider, openParen, "SecDeg", "SecantDegrees");
+            AddParenEntry(map, resProvider, openParen, "SecRad", "SecantRadians");
+            AddParenEntry(map, resProvider, openParen, "SecGrad", "SecantGradians");
+            AddParenEntry(map, resProvider, openParen, "InverseSecDeg", "InverseSecantDegrees");
+            AddParenEntry(map, resProvider, openParen, "InverseSecRad", "InverseSecantRadians");
+            AddParenEntry(map, resProvider, openParen, "InverseSecGrad", "InverseSecantGradians");
+            AddParenEntry(map, resProvider, openParen, "Sech", "HyperbolicSecant");
+            AddParenEntry(map, resProvider, openParen, "InverseSech", "InverseHyperbolicSecant");
+            AddParenEntry(map, resProvider, openParen, "CscDeg", "CosecantDegrees");
+            AddParenEntry(map, resProvider, openParen, "CscRad", "CosecantRadians");
+            AddParenEntry(map, resProvider, openParen, "CscGrad", "CosecantGradians");
+            AddParenEntry(map, resProvider, openParen, "InverseCscDeg", "InverseCosecantDegrees");
+            AddParenEntry(map, resProvider, openParen, "InverseCscRad", "InverseCosecantRadians");
+            AddParenEntry(map, resProvider, openParen, "InverseCscGrad", "InverseCosecantGradians");
+            AddParenEntry(map, resProvider, openParen, "Csch", "HyperbolicCosecant");
+            AddParenEntry(map, resProvider, openParen, "InverseCsch", "InverseHyperbolicCosecant");
+            AddParenEntry(map, resProvider, openParen, "CotDeg", "CotangentDegrees");
+            AddParenEntry(map, resProvider, openParen, "CotRad", "CotangentRadians");
+            AddParenEntry(map, resProvider, openParen, "CotGrad", "CotangentGradians");
+            AddParenEntry(map, resProvider, openParen, "InverseCotDeg", "InverseCotangentDegrees");
+            AddParenEntry(map, resProvider, openParen, "InverseCotRad", "InverseCotangentRadians");
+            AddParenEntry(map, resProvider, openParen, "InverseCotGrad", "InverseCotangentGradians");
+            AddParenEntry(map, resProvider, openParen, "Coth", "HyperbolicCotangent");
+            AddParenEntry(map, resProvider, openParen, "InverseCoth", "InverseHyperbolicCotangent");
+            AddParenEntry(map, resProvider, openParen, "94", "Factorial");
+            AddParenEntry(map, resProvider, openParen, "35", "DegreeMinuteSecond");
+            AddParenEntry(map, resProvider, openParen, "28", "NaturalLog");
+            AddParenEntry(map, resProvider, openParen, "91", "Square");
+            AddParenEntry(map, resProvider, openParen, "92", "Cube");
+            AddParenEntry(map, resProvider, openParen, "23", "TenPowerX");
+            AddParenEntry(map, resProvider, openParen, "97", "LogBase2");
+            AddParenEntry(map, resProvider, openParen, "98", "AbsoluteValue");
+            AddParenEntry(map, resProvider, openParen, "24", "PowerOfE");
+            AddParenEntry(map, resProvider, openParen, "29", "CommonLog");
+            AddParenEntry(map, resProvider, openParen, "93", "CubeRoot");
 
-            foreach (var (engineKey, resourceName) in noParenEngineKeyResourceMap)
-            {
-                string engineStr = resProvider.GetCEngineString(engineKey);
-                string automationName = resProvider.GetResourceString(resourceName);
-                if (!string.IsNullOrEmpty(engineStr) && !string.IsNullOrEmpty(automationName))
-                {
-                    map[engineStr] = automationName;
-                }
-            }
+            // No-paren entries: token displayed as-is
+            AddNoParenEntry(map, resProvider, "9", "LeftShift");
+            AddNoParenEntry(map, resProvider, "10", "RightShift");
+            AddNoParenEntry(map, resProvider, "LogBaseY", "Logy");
+            AddNoParenEntry(map, resProvider, "16", "YRoot");
 
             // Replace hyphens with "minus"
             string minusText = resProvider.GetResourceString("minus");
@@ -349,12 +314,47 @@ namespace CalculatorApp.ViewModel.Common
             return map;
         }
 
+        private static void AddParenEntry(Dictionary<string, string> map, AppResourceProvider resProvider, string openParen, string engineKey, string resourceName)
+        {
+            string engineStr = resProvider.GetCEngineString(engineKey);
+            string automationName = resProvider.GetResourceString(resourceName);
+            if (!string.IsNullOrEmpty(engineStr) && !string.IsNullOrEmpty(automationName))
+            {
+                map[engineStr + openParen] = automationName;
+            }
+        }
+
+        private static void AddNoParenEntry(Dictionary<string, string> map, AppResourceProvider resProvider, string engineKey, string resourceName)
+        {
+            string engineStr = resProvider.GetCEngineString(engineKey);
+            string automationName = resProvider.GetResourceString(resourceName);
+            if (!string.IsNullOrEmpty(engineStr) && !string.IsNullOrEmpty(automationName))
+            {
+                map[engineStr] = automationName;
+            }
+        }
+
         public static string GetNarratorReadableToken(string token)
         {
             if (s_tokenToReadableNameMap == null)
             {
-                s_tokenToReadableNameMap = GetTokenToReadableNameMap();
-                s_openParen = AppResourceProvider.GetInstance().GetCEngineString("48");
+                lock (s_tokenMapLock)
+                {
+                    if (s_tokenToReadableNameMap == null)
+                    {
+                        try
+                        {
+                            var map = GetTokenToReadableNameMap();
+                            s_openParen = AppResourceProvider.GetInstance().GetCEngineString("48");
+                            s_tokenToReadableNameMap = map;
+                        }
+                        catch
+                        {
+                            s_openParen = "(";
+                            s_tokenToReadableNameMap = new Dictionary<string, string>();
+                        }
+                    }
+                }
             }
 
             if (s_tokenToReadableNameMap.TryGetValue(token, out string readableName))
