@@ -81,10 +81,10 @@ namespace CalculatorUITestFramework
         /// <param name="value">Value in ComboBox Units1</param>
         public void SelectUnits1(string value)
         {
-            CalculatorApp.ClickOnWindow();
-            UnitConverterOperators.Units1.SendKeys(value);
-            UnitConverterOperators.Units1.SendKeys(OpenQA.Selenium.Keys.Enter);
-            CalculatorApp.ClickOnWindow();
+            UnitConverterOperators.Units1.Click();
+            var accessibleName = value.Replace(" - ", " ");
+            var item = session.FindElementByXPath($"//ListItem[@Name='{accessibleName}']");
+            item.Click();
         }
 
         /// <summary>
@@ -93,10 +93,10 @@ namespace CalculatorUITestFramework
         /// <param name="value">Value in ComboBox Units2</param>
         public void SelectUnits2(string value)
         {
-            CalculatorApp.ClickOnWindow();
-            UnitConverterOperators.Units2.SendKeys(value);
-            UnitConverterOperators.Units2.SendKeys(OpenQA.Selenium.Keys.Enter);
-            CalculatorApp.ClickOnWindow();
+            UnitConverterOperators.Units2.Click();
+            var accessibleName = value.Replace(" - ", " ");
+            var item = session.FindElementByXPath($"//ListItem[@Name='{accessibleName}']");
+            item.Click();
         }
     }
 }
