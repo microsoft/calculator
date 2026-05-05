@@ -61,11 +61,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: microsoft/setup-msbuild@v2
       name: Setup msbuild
-    - uses: nuget/setup-nuget@v2
-      name: Use nuget 6.x
-      with:
-        nuget-version: '6.x'
-    - run: nuget restore ./src/Calculator.sln
+    - run: msbuild ./src/Calculator.sln -t:Restore -p:Platform=${{ matrix.platform }} -p:RestorePackagesConfig=true
       name: Restore nuget dependencies
     - run: |
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
