@@ -99,6 +99,7 @@
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <NoWarn>NU1201</NoWarn>
+    <AssetTargetFallback>native;$(AssetTargetFallback)</AssetTargetFallback>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <LangVersion>13.0</LangVersion>
@@ -119,15 +120,16 @@
     <ProjectReference Include="..\CalcManager.Interop\CalcManager.Interop.vcxproj">
       <Project>{A2D3E6B4-88C1-4D6F-9A7E-2B4C5D6E7F80}</Project>
       <Name>CalcManager.Interop</Name>
+      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
     </ProjectReference>
     <ProjectReference Include="..\TraceLogging.Managed\TraceLogging.Managed.csproj">
       <Project>{3E4B3AB2-A1E0-4B28-B191-7B423E00B5A1}</Project>
       <Name>TraceLogging.Managed</Name>
     </ProjectReference>
-    <!-- Build-order dependency on GraphControl (C++/CX) — also provides the WinMD -->
     <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
       <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
       <Name>GraphControl</Name>
+      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
