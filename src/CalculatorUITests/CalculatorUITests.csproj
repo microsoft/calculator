@@ -5,11 +5,13 @@
     <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.7.3" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.7.3" />
-    <PackageReference Include="Appium.WebDriver" Version="4.4.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.5.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="4.2.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.2.2" />
+    <PackageReference Include="Appium.WebDriver" Version="4.4.5" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.4" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="10.0.7" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalculatorUITestFramework\CalculatorUITestFramework.csproj" />
