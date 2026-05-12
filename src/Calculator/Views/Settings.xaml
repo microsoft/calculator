@@ -13,6 +13,13 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="TextFillColorPrimaryBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
+                    <SolidColorBrush x:Key="TextFillColorSecondaryBrush" Color="{ThemeResource SystemColorWindowTextColor}"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
             <Style x:Key="SettingsContentScrollViewStyle" TargetType="ScrollViewer">
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 <Setter Property="VerticalAlignment" Value="Stretch"/>
@@ -27,7 +34,7 @@
 
             <Style x:Key="SettingsRichTextBlockStyle" TargetType="RichTextBlock">
                 <Setter Property="HorizontalAlignment" Value="Left"/>
-                <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimary}"/>
+                <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}"/>
                 <Setter Property="FontSize" Value="{ThemeResource BodyFontSize}"/>
                 <Setter Property="TextWrapping" Value="Wrap"/>
             </Style>
