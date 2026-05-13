@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <array>
 #include <cassert>
-#include <intsafe.h>
 #include <list>
 #include <future>
 #include <regex>
@@ -19,8 +18,19 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <winerror.h>
 #include <iostream>
 #include <cmath>
 #include <random>
 #include <iomanip>
+
+// Platform-specific includes
+#if defined(_WIN32) && defined(_MSC_VER)
+    #include <intsafe.h>
+    #include <winerror.h>
+#else
+    // On non-Windows platforms, winerror_cross_platform.h provides
+    // Windows error codes and HRESULT macros
+    #include "winerror_cross_platform.h"
+    // Note: intsafe.h functionality is implemented in conv.cpp
+    // as custom Calc_ULong* functions
+#endif
