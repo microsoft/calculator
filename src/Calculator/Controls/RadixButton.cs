@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using CalculatorApp.ViewModel.Common;
+using Windows.UI.Xaml;
 
 namespace CalculatorApp
 {
@@ -17,6 +18,15 @@ namespace CalculatorApp
                 string radixContent = Content?.ToString();
                 return LocalizationSettings.GetInstance().RemoveGroupSeparators(radixContent);
             }
+
+            public string Label
+            {
+                get => (string)GetValue(LabelProperty);
+                set => SetValue(LabelProperty, value);
+            }
+
+            public static readonly DependencyProperty LabelProperty =
+                DependencyProperty.Register(nameof(Label), typeof(string), typeof(RadixButton), new PropertyMetadata(default(string)));
         }
     }
 }
