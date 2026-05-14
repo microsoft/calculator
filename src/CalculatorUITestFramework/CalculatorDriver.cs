@@ -47,7 +47,7 @@ namespace CalculatorUITestFramework
                 // Note: Multiple calculator windows (instances) share the same process Id
                 var options = new AppiumOptions();
 
-                if (context.Properties.Contains("AppId"))
+                if (context.Properties.ContainsKey("AppId"))
                 {
                     options.AddAdditionalCapability("app", (string)context.Properties["AppId"]);
                 }
