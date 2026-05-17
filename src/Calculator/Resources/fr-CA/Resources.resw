@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4197,5 +4197,23 @@
   <data name="SnapshotRestoreError" xml:space="preserve">
     <value>Désolé, nous ne pouvons pas restaurer cette capture instantanée.</value>
     <comment>The error message to notify user that restoring from snapshot has failed.</comment>
+  </data>
+  <data name="UnitAbbreviation_AstronomicalUnit" xml:space="preserve">
+    <value>UA</value>
+  </data>
+  <data name="UnitAbbreviation_Parsec" xml:space="preserve">
+    <value>pc</value>
+  </data>
+  <data name="UnitName_AstronomicalUnit" xml:space="preserve">
+    <value>unité astronomique</value>
+  </data>
+  <data name="UnitName_LightYear" xml:space="preserve">
+    <value>année‑lumière</value>
+  </data>
+  <data name="UnitName_Parsec" xml:space="preserve">
+    <value>parsec</value>
+  </data>
+  <data name="UnitAbbreviation_LightYear" xml:space="preserve">
+    <value>a.l.</value>
   </data>
 </root>
