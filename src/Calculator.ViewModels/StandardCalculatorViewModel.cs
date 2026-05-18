@@ -1146,7 +1146,11 @@ namespace CalculatorApp.ViewModel
 
         private void DisplayPasteError()
         {
-            _standardCalculatorManager?.SendCommand(CalculatorCommand.CommandCLEAR);
+            // Displays the localized "Invalid input" string and sets error state.
+            const int IDS_ERRORS_FIRST = 99;
+            const int IDS_DOMAIN = IDS_ERRORS_FIRST + 1;
+            string errorString = _resourceProvider.GetCEngineString(IDS_DOMAIN.ToString());
+            SetPrimaryDisplay(errorString, true);
         }
 
         private void SetNoParenAddedNarratorAnnouncement()
