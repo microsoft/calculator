@@ -805,11 +805,16 @@ namespace CalculatorApp.ViewModel.DataLoaders
                 if (currencyRatios.Count > 0)
                 {
                     var currencyUnits = CurrencyDataLoader.GetOrderedUnits(0);
-                    var entries = new List<UnitConversionEntry>();
+                    var unitById = new Dictionary<int, CurrencyUnit>(currencyUnits.Count);
+                    foreach (var u in currencyUnits)
+                    {
+                        unitById[u.Id] = u;
+                    }
+
+                    var entries = new List<UnitConversionEntry>(currencyRatios.Count);
                     foreach (var kvp in currencyRatios)
                     {
-                        var targetUnit = currencyUnits.Find(u => u.Id == kvp.Key);
-                        if (targetUnit != null)
+                        if (unitById.TryGetValue(kvp.Key, out var targetUnit))
                         {
                             entries.Add(new UnitConversionEntry
                             {

@@ -50,28 +50,26 @@ namespace CalculatorApp.ViewModel.DataLoaders
             _responseLanguage = responseLanguage;
         }
 
-        public async Task<string> GetCurrencyMetadataAsync()
+        public Task<string> GetCurrencyMetadataAsync()
         {
 #if VIEWMODEL_FOR_UT
             if (ForceWebFailure)
             {
-                throw new Exception("Forced web failure for unit testing");
+                return Task.FromException<string>(new Exception("Forced web failure for unit testing"));
             }
 #endif
-            await Task.CompletedTask;
-            return MockCurrencyStaticData;
+            return Task.FromResult(MockCurrencyStaticData);
         }
 
-        public async Task<string> GetCurrencyRatiosAsync()
+        public Task<string> GetCurrencyRatiosAsync()
         {
 #if VIEWMODEL_FOR_UT
             if (ForceWebFailure)
             {
-                throw new Exception("Forced web failure for unit testing");
+                return Task.FromException<string>(new Exception("Forced web failure for unit testing"));
             }
 #endif
-            await Task.CompletedTask;
-            return MockCurrencyConverterData;
+            return Task.FromResult(MockCurrencyConverterData);
         }
     }
 }

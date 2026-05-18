@@ -988,67 +988,74 @@ namespace CalculatorApp.ViewModel
             }
 
             int lastCurrencyFractionDigits = currencyFormatter.FractionDigits;
+            bool lastIsDecimalPointAlwaysDisplayed = currencyFormatter.IsDecimalPointAlwaysDisplayed;
 
             currencyFormatter.IsDecimalPointAlwaysDisplayed = false;
             currencyFormatter.FractionDigits = 0;
 
             string result;
 
-            // Handle scientific notation
-            int posOfE = stringToLocalize.IndexOf('e');
-            if (posOfE >= 0)
+            try
             {
-                int posOfSign = posOfE + 1;
-                char signOfE = stringToLocalize[posOfSign];
-                string significandStr = stringToLocalize.Substring(0, posOfE);
-                string exponentStr = stringToLocalize.Substring(posOfSign + 1);
-
-                result = ConvertToLocalizedString(significandStr, allowPartialStrings, currencyFormatter)
-                    + "e" + signOfE
-                    + ConvertToLocalizedString(exponentStr, allowPartialStrings, currencyFormatter);
-            }
-            else
-            {
-                int posOfDecimal = stringToLocalize.IndexOf('.');
-                bool hasDecimal = posOfDecimal >= 0;
-
-                if (hasDecimal)
+                // Handle scientific notation
+                int posOfE = stringToLocalize.IndexOf('e');
+                if (posOfE >= 0)
                 {
-                    if (allowPartialStrings && lastCurrencyFractionDigits > 0)
-                    {
-                        currencyFormatter.IsDecimalPointAlwaysDisplayed = true;
-                    }
+                    int posOfSign = posOfE + 1;
+                    char signOfE = stringToLocalize[posOfSign];
+                    string significandStr = stringToLocalize.Substring(0, posOfE);
+                    string exponentStr = stringToLocalize.Substring(posOfSign + 1);
 
-                    // Force post-decimal digits so trailing zeroes aren't cut off
-                    currencyFormatter.FractionDigits = lastCurrencyFractionDigits;
-                }
-
-                if (IsCurrencyCurrentCategory)
-                {
-                    string currencyResult = currencyFormatter.Format(double.Parse(stringToLocalize, System.Globalization.CultureInfo.InvariantCulture));
-                    string currencyCode = currencyFormatter.Currency;
-
-                    // CurrencyFormatter always includes LangCode or Symbol. Remove the currency code.
-                    int pos = currencyResult.IndexOf(currencyCode);
-                    if (pos >= 0)
-                    {
-                        currencyResult = currencyResult.Remove(pos, currencyCode.Length);
-                        // Trim any leading/trailing spaces (including non-breaking spaces)
-                        currencyResult = currencyResult.Trim(' ', '\u00A0', '\u202F');
-                    }
-
-                    result = currencyResult;
+                    result = ConvertToLocalizedString(significandStr, allowPartialStrings, currencyFormatter)
+                        + "e" + signOfE
+                        + ConvertToLocalizedString(exponentStr, allowPartialStrings, currencyFormatter);
                 }
                 else
                 {
-                    // Non-currency: just localize characters
-                    LocalizationSettings.GetInstance().LocalizeDisplayValue(ref stringToLocalize);
-                    result = stringToLocalize;
+                    int posOfDecimal = stringToLocalize.IndexOf('.');
+                    bool hasDecimal = posOfDecimal >= 0;
+
+                    if (hasDecimal)
+                    {
+                        if (allowPartialStrings && lastCurrencyFractionDigits > 0)
+                        {
+                            currencyFormatter.IsDecimalPointAlwaysDisplayed = true;
+                        }
+
+                        // Force post-decimal digits so trailing zeroes aren't cut off
+                        currencyFormatter.FractionDigits = lastCurrencyFractionDigits;
+                    }
+
+                    if (IsCurrencyCurrentCategory)
+                    {
+                        string currencyResult = currencyFormatter.Format(double.Parse(stringToLocalize, System.Globalization.CultureInfo.InvariantCulture));
+                        string currencyCode = currencyFormatter.Currency;
+
+                        // CurrencyFormatter always includes LangCode or Symbol. Remove the currency code.
+                        int pos = currencyResult.IndexOf(currencyCode);
+                        if (pos >= 0)
+                        {
+                            currencyResult = currencyResult.Remove(pos, currencyCode.Length);
+                            // Trim any leading/trailing spaces (including non-breaking spaces)
+                            currencyResult = currencyResult.Trim(' ', '\u00A0', '\u202F');
+                        }
+
+                        result = currencyResult;
+                    }
+                    else
+                    {
+                        // Non-currency: just localize characters
+                        LocalizationSettings.GetInstance().LocalizeDisplayValue(ref stringToLocalize);
+                        result = stringToLocalize;
+                    }
                 }
             }
-
-            // Restore formatter state
-            currencyFormatter.FractionDigits = lastCurrencyFractionDigits;
+            finally
+            {
+                // Restore formatter state
+                currencyFormatter.FractionDigits = lastCurrencyFractionDigits;
+                currencyFormatter.IsDecimalPointAlwaysDisplayed = lastIsDecimalPointAlwaysDisplayed;
+            }
 
             return result;
         }

@@ -226,7 +226,6 @@ namespace CalculatorApp.ViewModel.Common
         }
 
         private static Dictionary<string, string> s_tokenToReadableNameMap;
-        private static string s_openParen;
         private static readonly object s_tokenMapLock = new object();
 
         private static Dictionary<string, string> GetTokenToReadableNameMap()
@@ -320,7 +319,7 @@ namespace CalculatorApp.ViewModel.Common
             string automationName = resProvider.GetResourceString(resourceName);
             if (!string.IsNullOrEmpty(engineStr) && !string.IsNullOrEmpty(automationName))
             {
-                map[engineStr + openParen] = automationName;
+                map[engineStr + openParen] = automationName + " " + openParen;
             }
         }
 
@@ -344,13 +343,10 @@ namespace CalculatorApp.ViewModel.Common
                     {
                         try
                         {
-                            var map = GetTokenToReadableNameMap();
-                            s_openParen = AppResourceProvider.GetInstance().GetCEngineString("48");
-                            s_tokenToReadableNameMap = map;
+                            s_tokenToReadableNameMap = GetTokenToReadableNameMap();
                         }
                         catch
                         {
-                            s_openParen = "(";
                             s_tokenToReadableNameMap = new Dictionary<string, string>();
                         }
                     }
@@ -359,7 +355,7 @@ namespace CalculatorApp.ViewModel.Common
 
             if (s_tokenToReadableNameMap.TryGetValue(token, out string readableName))
             {
-                return readableName + " " + s_openParen;
+                return readableName;
             }
 
             return token;
