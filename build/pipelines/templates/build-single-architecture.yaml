@@ -10,37 +10,39 @@ jobs:
 - job: Build${{ parameters.platform }}
   displayName: Build ${{ parameters.platform }}
   condition: ${{ parameters.condition }}
+  pool:
+    type: windows
   variables:
     BuildConfiguration: Release
     BuildPlatform: ${{ parameters.platform }}
+    StageOutputFolder: $(Build.BinariesDirectory)\$(BuildConfiguration)\${{ parameters.platform }}
     ${{ if eq(parameters.isReleaseBuild, true) }}:
       ${{ if eq(parameters.useReleaseAppxManifest, true) }}:
-        ExtraMSBuildArgs: '/p:IsStoreBuild=true /p:UseReleaseAppxManifest=true'
+        ExtraMSBuildArgs: '/p:IsStoreBuild=true /p:UseReleaseAppxManifest=true /p:FeatureStagingBranchName=$(Build.SourceBranchName)'
       ${{ if eq(parameters.useReleaseAppxManifest, false) }}:
-        ExtraMSBuildArgs: '/p:IsStoreBuild=true'
+        ExtraMSBuildArgs: '/p:IsStoreBuild=true /p:FeatureStagingBranchName=$(Build.SourceBranchName)'
     ${{ if eq(parameters.isReleaseBuild, false) }}:
       ${{ if eq(parameters.useReleaseAppxManifest, true) }}:
-        ExtraMSBuildArgs: '/p:UseReleaseAppxManifest=true'
+        ExtraMSBuildArgs: '/p:UseReleaseAppxManifest=true /p:FeatureStagingBranchName=$(Build.SourceBranchName)'
       ${{ if eq(parameters.useReleaseAppxManifest, false) }}:
-        ExtraMSBuildArgs: ''
+        ExtraMSBuildArgs: '/p:FeatureStagingBranchName=$(Build.SourceBranchName)'
     ${{ if eq(parameters.useReleaseAppxManifest, false) }}:
       ManifestFileName: 'Package.appxmanifest'
     ${{ if eq(parameters.useReleaseAppxManifest, true) }}:
       ManifestFileName: 'Package.Release.appxmanifest'
-  templateContext:
-    sdl:
-      binskim:
-        analyzeTargetGlob: +:f|$(Agent.BuildDirectory)\binskim\**\*
-    outputs:
-    - output: pipelineArtifact
-      displayName: Publish drop artifact
-      targetPath: $(Build.BinariesDirectory)\$(BuildConfiguration)\${{ parameters.platform }}
-      artifactName: drop-${{ parameters.platform }}
+
+    # binaries scanning tools are run on this directory and
+    # this directory is uploaded to pipeline artifacts. More info at https://aka.ms/obpipelines/artifacts
+    ob_outputDirectory: $(StageOutputFolder)
+    ob_artifactBaseName: 'drop-${{ parameters.platform }}'
+    # Setting up SDL Tools
+    ob_sdl_prefast_enabled: true
+    ob_sdl_prefast_runDuring: 'Build'
+    ob_sdl_checkCompliantCompilerWarnings: true
+    # Scope BinSkim analysis to our built binaries, excluding third-party DLLs we don't produce PDBs for.
+    ob_sdl_binskim_target: '+:f|$(StageOutputFolder)\Calculator\**\*.dll;+:f|$(StageOutputFolder)\Calculator\**\*.exe;-:f|$(StageOutputFolder)\Calculator\**\clrcompression.dll;-:f|$(StageOutputFolder)\Calculator\**\WebView2Loader.dll;-:f|$(StageOutputFolder)\Calculator\**\Microsoft.Web.WebView2.Core.dll'
 
   steps:
-  - checkout: self
-    fetchDepth: 1
-
   - ${{ if eq(parameters.isReleaseBuild, true) }}:
     - task: UniversalPackages@0
       displayName: Download internals package
@@ -49,7 +51,10 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        vstsPackageVersion: 0.0.122
+        vstsPackageVersion: 0.0.124
+
+  - task: NuGetAuthenticate@1
+    displayName: NuGet Authenticate
 
   - task: NuGetToolInstaller@1
     displayName: Use NuGet 6.x
@@ -57,10 +62,13 @@ jobs:
       versionSpec: 6.x
 
   - task: NuGetCommand@2
-    displayName: NuGet restore src/Calculator.sln
+    displayName: Restore packages.config NuGet packages
     inputs:
-      command: custom
-      arguments: restore src/Calculator.sln -Verbosity Detailed
+      command: restore
+      restoreSolution: 'src/**/*.vcxproj'
+      feedsToUse: config
+      nugetConfigPath: nuget.config
+      restoreDirectory: $(Build.SourcesDirectory)\src\packages
 
   - task: PowerShell@2
     displayName: Set version number in AppxManifest
@@ -69,47 +77,23 @@ jobs:
       arguments: '-AppxManifest $(Build.SourcesDirectory)\src\Calculator\$(ManifestFileName) -Version $(Build.BuildNumber)'
 
   - task: VSBuild@1
-    displayName: 'Build solution src/Calculator.sln'
+    displayName: 'Build solution src/Calculator.slnx'
     inputs:
-      solution: src/Calculator.sln
-      vsVersion: 17.0
-      msbuildArgs: /bl:$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator.binlog /p:OutDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\ /p:GenerateProjectSpecificOutputFolder=true /p:Version=$(Build.BuildNumber) /t:Publish /p:PublishDir=$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\publish\ $(ExtraMSBuildArgs)
+      solution: src/Calculator.slnx
+      vsVersion: 18.0
+      msbuildArgs: /restore /bl:$(StageOutputFolder)\Calculator.binlog /p:OutDir=$(StageOutputFolder)\ /p:GenerateProjectSpecificOutputFolder=true /p:Version=$(Build.BuildNumber) /t:Publish /p:PublishDir=$(StageOutputFolder)\publish\ $(ExtraMSBuildArgs)
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
       maximumCpuCount: true
 
   - ${{ if eq(parameters.isReleaseBuild, true) }}:
-    - task: CopyFiles@2
-      displayName: Copy Files for BinSkim analysis
-      inputs:
-        SourceFolder: '$(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)\Calculator\'
-        # Setting up a folder to store all the binary files that we need BinSkim to scan.
-        # If we put more things than we produce pdbs for and can index (such as nuget packages that ship without pdbs), binskim will fail.
-        # Below are ignored files
-        #   - clrcompression.dll
-        #   - WebView2Loader.dll
-        #   - Microsoft.Web.WebView2.Core.dll
-        Contents: |
-          **\*.dll
-          **\*.exe
-          !**\clrcompression.dll
-          !**\WebView2Loader.dll
-          !**\Microsoft.Web.WebView2.Core.dll
-        TargetFolder: '$(Agent.BuildDirectory)\binskim'
-        CleanTargetFolder: true
-        OverWrite: true
-        flattenFolders: false
-        analyzeTarget: '$(Agent.BuildDirectory)\binskim\*'
-
     - task: PublishSymbols@2
       displayName: Publish symbols
       inputs:
-        symbolsFolder: $(Build.BinariesDirectory)\$(BuildConfiguration)\$(BuildPlatform)
-        searchPattern: '**/*.pdb'
+        symbolsFolder: $(StageOutputFolder)
+        searchPattern: | # index executables to avoid degraded debugging experience - Package ES
+          **/*.pdb
+          **/*.exe
+          **/*.dll
         symbolServerType: teamServices
         treatNotIndexedAsWarning: true
-
-    - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@1
-      displayName: Run PoliCheck
-      inputs:
-        targetType: F

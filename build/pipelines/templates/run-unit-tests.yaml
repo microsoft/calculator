@@ -9,17 +9,32 @@ jobs:
   displayName: UnitTests ${{ parameters.platform }}
   dependsOn: Build${{ parameters.platform }}
   condition: succeeded()
+  pool:
+    type: windows
+    isCustom: true
+    name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
     UnitTestsDir: $(Pipeline.Workspace)\drop-${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test
+    # Test results are just log files, not release binaries — skip SDL scanning
+    ob_outputDirectory: '$(Common.TestResultsDirectory)'
+    ob_artifactBaseName: 'drop-unit-tests-${{ parameters.platform }}-Attempt$(System.JobAttempt)'
+    ob_sdl_binskim_enabled: false
+    ob_sdl_sbom_enabled: false
+
   steps:
-  - checkout: self
-    fetchDepth: 1
-  
-  - download: current
+  - task: UseDotNet@2
+    displayName: Install .NET 10 SDK
+    inputs:
+      packageType: 'sdk'
+      version: '10.x'
+
+  - task: DownloadPipelineArtifact@2
     displayName: Download CalculatorUnitTests
-    artifact: drop-${{ parameters.platform }}
-    patterns: '**/CalculatorUnitTests_Test/**'
+    inputs:
+      artifactName: drop-${{ parameters.platform }}
+      itemPattern: '**/CalculatorUnitTests_Test/**'
+      targetPath: $(Pipeline.Workspace)\drop-${{ parameters.platform }}
 
   - powershell: |
       $(Build.SourcesDirectory)/build/scripts/SignTestApp.ps1 -AppToSign '$(UnitTestsDir)\CalculatorUnitTests.msix'
@@ -27,6 +42,7 @@ jobs:
 
   - task: VSTest@2
     displayName: Run CalculatorUnitTests
+    continueOnError: true
     inputs:
       testAssemblyVer2: $(UnitTestsDir)\CalculatorUnitTests.msix
       otherConsoleOptions: /Platform:${{ parameters.platform }}

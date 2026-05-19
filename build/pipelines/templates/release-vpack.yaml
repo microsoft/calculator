@@ -4,22 +4,25 @@
 jobs:
 - job: ReleaseVPack
   dependsOn: Package
+  pool:
+    type: windows
+    isCustom: true
+    name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
-  templateContext:
-    outputs:
-    - output: pipelineArtifact
-      displayName: Publish vpack\app artifact with vpack manifest
-      targetPath: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
-      artifactName: vpackManifest
-      sbomEnabled: false
+
+    ob_git_checkout: false
+    ob_sdl_binskim_enabled: false
+    ob_sdl_sbom_enabled: false
 
   steps:
   - checkout: none
 
-  - download: current
-    displayName: Download msixBundleSigned artifact
-    artifact: msixBundleSigned
+  - task: DownloadPipelineArtifact@2
+    displayName: Download signed msixBundle
+    inputs:
+      artifactName: msixBundleSigned
+      targetPath: $(Pipeline.Workspace)\msixBundleSigned
 
   - task: CopyFiles@2
     displayName: Copy signed MsixBundle to vpack staging folder

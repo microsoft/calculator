@@ -1,0 +1,37 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path="../.clang-format" />
+    <File Path="nuget.config" />
+  </Folder>
+  <Project Path="CalcManager/CalcManager.vcxproj" Id="311e866d-8b93-4609-a691-265941fee101" />
+  <Project Path="Calculator.ManagedViewModels/Calculator.ManagedViewModels.csproj" Id="2179cfde-cded-4df0-8c24-a0ef6b425771">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="Calculator/Calculator.csproj" Id="3b773403-b0d6-4f9a-948e-512a7a5fb315">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+    <Deploy />
+  </Project>
+  <Project Path="CalculatorUITestFramework/CalculatorUITestFramework.csproj" />
+  <Project Path="CalculatorUITests/CalculatorUITests.csproj" />
+  <Project Path="CalculatorUnitTests/CalculatorUnitTests.vcxproj" Id="d3baed2c-4b07-4e1d-8807-9d6499450349">
+    <Build Solution="*|ARM64" Project="false" />
+    <Deploy Solution="*|x64" />
+    <Deploy Solution="*|x86" />
+  </Project>
+  <Project Path="CalcViewModel/CalcViewModel.vcxproj" Id="812d1a7b-b8ac-49e4-8e6d-af5d59500d56" />
+  <Project Path="CalcViewModelCopyForUT/CalcViewModelCopyForUT.vcxproj" Id="cc9b4fa7-d746-4f52-9401-0ad1b4d6b16d">
+    <Build Solution="*|ARM64" Project="false" />
+  </Project>
+  <Project Path="GraphControl/GraphControl.vcxproj" Id="e727a92b-f149-492c-8117-c039a298719b" />
+  <Project Path="GraphingImpl/GraphingImpl.vcxproj" Id="52e03a58-b378-4f50-8bfb-f659fb85e790" />
+  <Project Path="TraceLogging/TraceLogging.vcxproj" Id="fc81ff41-02cd-4cd9-9bc5-45a1e39ac6ed" />
+</Solution>

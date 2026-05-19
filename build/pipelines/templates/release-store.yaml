@@ -3,18 +3,27 @@
 jobs:
 - job: ReleaseStore
   dependsOn: Package
-  templateContext:
-    type: releaseJob
-    isProduction: true
-    inputs:
-    - input: pipelineArtifact
-      artifactName: storeBrokerPayload
+  pool:
+    type: windows
+    isCustom: true
+    name: EssentialExperiences-windows-2022
   variables:
     FlightId: 161f0975-cb5f-475b-8ef6-26383c37621f
     AppId: 9WZDNCRFHVN5
     ProductId: 00009007199266248474
+
+    ob_git_checkout: false
+    ob_sdl_binskim_enabled: false
+    ob_sdl_sbom_enabled: false
+
   steps:
   - checkout: none
+
+  - task: DownloadPipelineArtifact@2
+    displayName: Download StoreBroker Payload
+    inputs:
+      artifactName: storeBrokerPayload
+      targetPath: $(Pipeline.Workspace)
 
   - task: MS-RDX-MRO.windows-store-publish.flight-task.store-flight@3
     displayName: Flight StoreBroker Payload to team ring

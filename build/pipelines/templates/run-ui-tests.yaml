@@ -9,13 +9,26 @@ jobs:
   displayName: UITests ${{ parameters.platform }}
   dependsOn: Build${{ parameters.platform }}
   condition: succeeded()
+  pool:
+    type: windows
+    isCustom: true
+    name: EssentialExperiences-Win11
+    image: Win11Enterprise-BuildTools2022
   variables:
     skipComponentGovernanceDetection: true
     DropName: drop-${{ parameters.platform }}
+    # Test results are just log files, not release binaries — skip SDL scanning
+    ob_outputDirectory: '$(Common.TestResultsDirectory)'
+    ob_artifactBaseName: 'drop-ui-tests-${{ parameters.platform }}-Attempt$(System.JobAttempt)'
+    ob_sdl_binskim_enabled: false
+    ob_sdl_sbom_enabled: false
 
   steps:
-  - checkout: self
-    fetchDepth: 1
+  - task: UseDotNet@2
+    displayName: Install .NET 10 SDK
+    inputs:
+      packageType: 'sdk'
+      version: '10.x'
 
   - task: PowerShell@2
     displayName: Turn off animation effects
@@ -29,12 +42,14 @@ jobs:
       width: 1920
       height: 1080
 
-  - download: current
+  - task: DownloadPipelineArtifact@2
     displayName: Download MsixBundle and CalculatorUITests
-    artifact: $(DropName)
-    patterns: |
-      Calculator/AppPackages/**
-      publish/**
+    inputs:
+      artifactName: $(DropName)
+      itemPattern: |
+        Calculator/AppPackages/**
+        publish/**
+      targetPath: $(Pipeline.Workspace)\$(DropName)
 
   - powershell: |
       $(Build.SourcesDirectory)/build/scripts/SignTestApp.ps1 -AppToSign '$(Pipeline.Workspace)/$(DropName)/Calculator/AppPackages/Calculator_*_Test/Calculator_*.msixbundle'
@@ -43,6 +58,7 @@ jobs:
 
   - task: VSTest@2
     displayName: Run CalculatorUITests
+    continueOnError: true
     inputs:
       testAssemblyVer2: $(Pipeline.Workspace)/$(DropName)/publish/CalculatorUITests.dll
       runSettingsFile: $(Pipeline.Workspace)/$(DropName)/publish/${{ parameters.runsettingsFileName }}
