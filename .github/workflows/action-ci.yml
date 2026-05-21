@@ -65,8 +65,6 @@ jobs:
       name: Use nuget 6.x
       with:
         nuget-version: '6.x'
-    - run: nuget restore ./src/Calculator.slnx
-      name: Restore nuget dependencies
     - run: |
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
           -AppxManifest ./src/Calculator/Package.appxmanifest `
@@ -75,6 +73,8 @@ jobs:
       name: Set version number in AppxManifest
     - run: |
         msbuild ./src/Calculator.slnx `
+          -restore `
+          -p:RestorePackagesConfig=true `
           -bl:${{ github.workspace }}/output/Calculator.binlog `
           -p:OutDir=${{ github.workspace }}\output\ `
           -p:Platform=${{ matrix.platform }} `
