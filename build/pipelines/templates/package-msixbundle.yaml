@@ -42,6 +42,15 @@ jobs:
     ob_sdl_binskim_enabled: false
     ob_sdl_sbom_enabled: false
 
+  ${{ if and(eq(parameters.signBundle, true), eq(parameters.createStoreBrokerPackages, true)) }}:
+    templateContext:
+      outputs:
+      - output: pipelineArtifact
+        displayName: Publish StoreBroker Payload artifact
+        targetPath: $(StoreBrokerPackagePath)
+        artifactName: storeBrokerPayload
+        sbomEnabled: false
+
   steps:
   - task: DownloadPipelineArtifact@2
     displayName: Download all .msix artifacts (x64)
@@ -187,9 +196,3 @@ jobs:
           pdpMediaPath: $(StoreBrokerMediaRootPath)
           outSBPackagePath: $(StoreBrokerPackagePath)
           outSBName: SBCalculator
-
-      - task: PublishPipelineArtifact@1
-        displayName: Publish StoreBroker Payload artifact
-        inputs:
-          targetPath: $(StoreBrokerPackagePath)
-          artifactName: storeBrokerPayload
