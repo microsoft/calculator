@@ -72,6 +72,7 @@ jobs:
       shell: pwsh
       name: Set version number in AppxManifest
     - run: |
+        $env:CL = '/D_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS /wd9047'
         msbuild ./src/Calculator.slnx `
           -restore `
           -p:RestorePackagesConfig=true `
