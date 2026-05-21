@@ -23,6 +23,11 @@ namespace CalculatorApp.ViewModel.DataLoaders
         // Region-dependent flags (default to US)
         private readonly string _regionCode;
 
+        /// <summary>
+        /// Set after construction to enable the native engine to load currency units and ratios.
+        /// </summary>
+        public CurrencyDataLoader CurrencyDataLoader { get; set; }
+
         public UnitConverterDataLoader()
             : this("US")
         {
@@ -765,10 +770,24 @@ namespace CalculatorApp.ViewModel.DataLoaders
 
         protected override UnitWrapper[] GetOrderedUnits(CategoryWrapper category)
         {
-            if (_unitsByCategory != null && _unitsByCategory.TryGetValue(category.Id, out var units))
+            if (_unitsByCategory != null && _unitsByCategory.TryGetValue(category.Id, out var units) && units.Length > 0)
             {
                 return units;
             }
+
+            // Delegate to CurrencyDataLoader for the currency category
+            if (CurrencyDataLoader != null && category.Id == NavCategoryStates.Serialize(ViewMode.Currency))
+            {
+                var currencyUnits = CurrencyDataLoader.GetOrderedUnits(0);
+                var result = new UnitWrapper[currencyUnits.Count];
+                for (int i = 0; i < currencyUnits.Count; i++)
+                {
+                    var cu = currencyUnits[i];
+                    result[i] = new UnitWrapper { Id = cu.Id, Name = cu.Name, Abbreviation = cu.Abbreviation, AccessibleName = cu.CountryName };
+                }
+                return result;
+            }
+
             return Array.Empty<UnitWrapper>();
         }
 
@@ -778,6 +797,38 @@ namespace CalculatorApp.ViewModel.DataLoaders
             {
                 return ratios;
             }
+
+            // Delegate to CurrencyDataLoader for currency units
+            if (CurrencyDataLoader != null)
+            {
+                var currencyRatios = CurrencyDataLoader.LoadOrderedRatios(unit.Id);
+                if (currencyRatios.Count > 0)
+                {
+                    var currencyUnits = CurrencyDataLoader.GetOrderedUnits(0);
+                    var unitById = new Dictionary<int, CurrencyUnit>(currencyUnits.Count);
+                    foreach (var u in currencyUnits)
+                    {
+                        unitById[u.Id] = u;
+                    }
+
+                    var entries = new List<UnitConversionEntry>(currencyRatios.Count);
+                    foreach (var kvp in currencyRatios)
+                    {
+                        if (unitById.TryGetValue(kvp.Key, out var targetUnit))
+                        {
+                            entries.Add(new UnitConversionEntry
+                            {
+                                Unit = new UnitWrapper { Id = targetUnit.Id, Name = targetUnit.Name, Abbreviation = targetUnit.Abbreviation, AccessibleName = targetUnit.CountryName },
+                                Ratio = kvp.Value.Ratio,
+                                Offset = kvp.Value.Offset,
+                                OffsetFirst = kvp.Value.OffsetFirst,
+                            });
+                        }
+                    }
+                    return entries.ToArray();
+                }
+            }
+
             return Array.Empty<UnitConversionEntry>();
         }
 

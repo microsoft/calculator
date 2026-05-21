@@ -211,6 +211,11 @@ namespace CalculatorApp.ViewModel
         private string _lastAnnouncedFrom;
         private string _lastAnnouncedTo;
 
+        // Currency formatters
+        private Windows.Globalization.NumberFormatting.CurrencyFormatter _currencyFormatter;
+        private Windows.Globalization.NumberFormatting.CurrencyFormatter _currencyFormatter1;
+        private Windows.Globalization.NumberFormatting.CurrencyFormatter _currencyFormatter2;
+
         // Localized format strings
         private string _localizedValueFromFormat;
         private string _localizedValueToFormat;
@@ -221,6 +226,12 @@ namespace CalculatorApp.ViewModel
         private ConversionParameter _value1cp;
 #pragma warning restore CS0414
 
+        private Windows.Globalization.NumberFormatting.CurrencyFormatter CurrencyFormatterFrom =>
+            _value1cp == ConversionParameter.Source ? _currencyFormatter1 : _currencyFormatter2;
+
+        private Windows.Globalization.NumberFormatting.CurrencyFormatter CurrencyFormatterTo =>
+            _value1cp == ConversionParameter.Target ? _currencyFormatter1 : _currencyFormatter2;
+
         public UnitConverterViewModel()
         {
             // Create the real native engine via interop
@@ -230,6 +241,10 @@ namespace CalculatorApp.ViewModel
             // Create currency data loader
             _currencyDataLoader = new DataLoaders.CurrencyDataLoader();
             _currencyDataLoader.SetViewModelCallback(new CurrencyVMCallback(this));
+
+            // Wire currency data into the unit converter data loader so the native engine
+            // can load currency units and ratios via GetOrderedUnits/LoadOrderedRatios
+            dataLoader.CurrencyDataLoader = _currencyDataLoader;
 
             _categories = new ObservableCollection<Category>();
             _units = new ObservableCollection<Unit>();
@@ -255,6 +270,15 @@ namespace CalculatorApp.ViewModel
             _model.SetViewModelCallback(vmCallback);
 
             _decimalSeparator = LocalizationSettings.GetInstance().GetDecimalSeparator();
+
+            // Initialize default currency formatter (uses user's currency or USD fallback)
+            string userCurrency = Windows.System.UserProfile.GlobalizationPreferences.Currencies.Count > 0
+                ? Windows.System.UserProfile.GlobalizationPreferences.Currencies[0]
+                : "USD";
+            _currencyFormatter = new Windows.Globalization.NumberFormatting.CurrencyFormatter(userCurrency);
+            _currencyFormatter.IsGrouped = true;
+            _currencyFormatter.Mode = Windows.Globalization.NumberFormatting.CurrencyFormatterMode.UseCurrencyCode;
+            _currencyFormatter.ApplyRoundingForCurrency(Windows.Globalization.NumberFormatting.RoundingAlgorithm.RoundHalfDown);
 
             // Initialize the native engine and populate data
             _model.Initialize();
@@ -501,8 +525,9 @@ namespace CalculatorApp.ViewModel
             _valueFromUnlocalized = from;
             _valueToUnlocalized = to;
 
-            Value1 = ConvertToLocalizedString(from);
-            Value2 = ConvertToLocalizedString(to);
+            Value1 = ConvertToLocalizedString(from, true, CurrencyFormatterFrom);
+            UpdateInputBlocked(from);
+            Value2 = ConvertToLocalizedString(to, true, CurrencyFormatterTo);
 
             UpdateValue1AutomationName();
             UpdateValue2AutomationName();
@@ -640,6 +665,8 @@ namespace CalculatorApp.ViewModel
             if (Unit1 == null || Unit2 == null)
                 return;
 
+            UpdateCurrencyFormatter();
+
             if (IsCurrencyCurrentCategory)
             {
                 // Update currency symbols
@@ -652,12 +679,11 @@ namespace CalculatorApp.ViewModel
                 CurrencyRatioEquality = ratios.Ratio1;
                 CurrencyRatioEqualityAutomationName = ratios.Ratio2;
             }
-            else
-            {
-                _model.SetCurrentUnitTypes(
-                    new CalcManager.Interop.UnitWrapper { Id = Unit1.ModelUnitID(), Name = Unit1.Name, Abbreviation = Unit1.Abbreviation, AccessibleName = Unit1.AccessibleName },
-                    new CalcManager.Interop.UnitWrapper { Id = Unit2.ModelUnitID(), Name = Unit2.Name, Abbreviation = Unit2.Abbreviation, AccessibleName = Unit2.AccessibleName });
-            }
+
+            // Always tell the native engine the current unit types (matches C++ behavior)
+            _model.SetCurrentUnitTypes(
+                new CalcManager.Interop.UnitWrapper { Id = Unit1.ModelUnitID(), Name = Unit1.Name, Abbreviation = Unit1.Abbreviation, AccessibleName = Unit1.AccessibleName },
+                new CalcManager.Interop.UnitWrapper { Id = Unit2.ModelUnitID(), Name = Unit2.Name, Abbreviation = Unit2.Abbreviation, AccessibleName = Unit2.AccessibleName });
 
             SaveUserPreferences();
         }
@@ -666,6 +692,9 @@ namespace CalculatorApp.ViewModel
         {
             Value1Active = !Value1Active;
             Value2Active = !Value2Active;
+
+            // Switch conversion parameter mapping
+            _value1cp = _value1cp == ConversionParameter.Source ? ConversionParameter.Target : ConversionParameter.Source;
 
             // Swap the unlocalized values
             var temp = _valueFromUnlocalized;
@@ -679,6 +708,8 @@ namespace CalculatorApp.ViewModel
 
             _isInputBlocked = false;
             _model.SwitchActive(_valueFromUnlocalized ?? "0");
+
+            UpdateIsDecimalEnabled();
         }
 
         private void OnButtonPressed(object parameter)
@@ -701,6 +732,13 @@ namespace CalculatorApp.ViewModel
 
             if (command == CalcManager.Interop.UnitConverterCommand.Clear && IsDropDownOpen)
                 return;
+
+            // Block input if max decimal digits reached (except for clear/backspace)
+            if (_isInputBlocked && command != CalcManager.Interop.UnitConverterCommand.Clear
+                && command != CalcManager.Interop.UnitConverterCommand.Backspace)
+            {
+                return;
+            }
 
             _model.SendCommand(command);
         }
@@ -764,24 +802,68 @@ namespace CalculatorApp.ViewModel
 
         private void UpdateInputBlocked(string currencyInput)
         {
-            // Currency input blocking — limit decimal places for currency
+            // currencyInput is in en-US and has the default decimal separator
             _isInputBlocked = false;
+            var posOfDecimal = currencyInput.IndexOf('.');
+            if (posOfDecimal >= 0 && IsCurrencyCurrentCategory)
+            {
+                var formatter = CurrencyFormatterFrom;
+                if (formatter != null)
+                {
+                    _isInputBlocked = (posOfDecimal + formatter.FractionDigits + 1 == currencyInput.Length);
+                }
+            }
         }
 
         private void UpdateCurrencyFormatter()
         {
-            // Currency formatters only apply when in Currency mode
-            if (!IsCurrencyCurrentCategory)
+            if (!IsCurrencyCurrentCategory || Unit1 == null || Unit2 == null
+                || string.IsNullOrEmpty(Unit1.Abbreviation) || string.IsNullOrEmpty(Unit2.Abbreviation))
                 return;
+
+            _currencyFormatter1 = new Windows.Globalization.NumberFormatting.CurrencyFormatter(Unit1.Abbreviation);
+            _currencyFormatter1.IsGrouped = true;
+            _currencyFormatter1.Mode = Windows.Globalization.NumberFormatting.CurrencyFormatterMode.UseCurrencyCode;
+            _currencyFormatter1.ApplyRoundingForCurrency(Windows.Globalization.NumberFormatting.RoundingAlgorithm.RoundHalfDown);
+
+            _currencyFormatter2 = new Windows.Globalization.NumberFormatting.CurrencyFormatter(Unit2.Abbreviation);
+            _currencyFormatter2.IsGrouped = true;
+            _currencyFormatter2.Mode = Windows.Globalization.NumberFormatting.CurrencyFormatterMode.UseCurrencyCode;
+            _currencyFormatter2.ApplyRoundingForCurrency(Windows.Globalization.NumberFormatting.RoundingAlgorithm.RoundHalfDown);
+
             UpdateIsDecimalEnabled();
+
+            // Truncate current value to new currency's fraction digits and re-paste (matching C++)
+            OnPaste(TruncateFractionDigits(_valueFromUnlocalized, CurrencyFormatterFrom.FractionDigits));
+        }
+
+        private static string TruncateFractionDigits(string n, int digitCount)
+        {
+            if (string.IsNullOrEmpty(n))
+                return n;
+
+            var i = n.IndexOf('.');
+            if (i < 0)
+                return n;
+
+            if (digitCount == 0)
+                return n.Substring(0, i);
+
+            int actualDigitCount = n.Length - i - 1;
+            if (actualDigitCount <= digitCount)
+                return n;
+
+            return n.Substring(0, n.Length - (actualDigitCount - digitCount));
         }
 
         private void UpdateIsDecimalEnabled()
         {
-            // Decimal is always enabled for non-currency categories
             if (!IsCurrencyCurrentCategory)
                 return;
-            IsDecimalEnabled = true;
+            var formatter = CurrencyFormatterFrom;
+            if (formatter == null)
+                return;
+            IsDecimalEnabled = formatter.FractionDigits > 0;
         }
 
         private bool UnitsAreValid()
@@ -831,7 +913,13 @@ namespace CalculatorApp.ViewModel
             Unit toUnit = null;
             foreach (var cu in currencyUnits)
             {
-                var unit = new Unit(cu.Id, cu.Name, cu.Abbreviation, cu.Name, false);
+                // Match C++ Unit constructor: name = "countryName - currencyName", accessibleName = "countryName currencyName"
+                var nameValue1 = cu.IsRtlLanguage ? cu.Name : cu.CountryName;
+                var nameValue2 = cu.IsRtlLanguage ? cu.CountryName : cu.Name;
+                var displayName = nameValue1 + " - " + nameValue2;
+                var accessibleName = nameValue1 + " " + nameValue2;
+
+                var unit = new Unit(cu.Id, displayName, cu.Abbreviation, accessibleName, false);
                 Units.Add(unit);
 
                 if (cu.IsConversionSource) fromUnit = unit;
@@ -876,12 +964,100 @@ namespace CalculatorApp.ViewModel
 
         private string ConvertToLocalizedString(string stringToLocalize)
         {
+            return ConvertToLocalizedString(stringToLocalize, false, _currencyFormatter);
+        }
+
+        private string ConvertToLocalizedString(string stringToLocalize, bool allowPartialStrings, Windows.Globalization.NumberFormatting.CurrencyFormatter currencyFormatter)
+        {
             if (string.IsNullOrEmpty(stringToLocalize))
             {
                 return "0";
             }
-            LocalizationSettings.GetInstance().LocalizeDisplayValue(ref stringToLocalize);
-            return stringToLocalize;
+
+            // If unit hasn't been set, formatter1/2 is null. Fallback to default.
+            if (currencyFormatter == null)
+            {
+                currencyFormatter = _currencyFormatter;
+            }
+
+            if (currencyFormatter == null)
+            {
+                // No formatter available at all — just localize characters
+                LocalizationSettings.GetInstance().LocalizeDisplayValue(ref stringToLocalize);
+                return stringToLocalize;
+            }
+
+            int lastCurrencyFractionDigits = currencyFormatter.FractionDigits;
+            bool lastIsDecimalPointAlwaysDisplayed = currencyFormatter.IsDecimalPointAlwaysDisplayed;
+
+            currencyFormatter.IsDecimalPointAlwaysDisplayed = false;
+            currencyFormatter.FractionDigits = 0;
+
+            string result;
+
+            try
+            {
+                // Handle scientific notation
+                int posOfE = stringToLocalize.IndexOf('e');
+                if (posOfE >= 0)
+                {
+                    int posOfSign = posOfE + 1;
+                    char signOfE = stringToLocalize[posOfSign];
+                    string significandStr = stringToLocalize.Substring(0, posOfE);
+                    string exponentStr = stringToLocalize.Substring(posOfSign + 1);
+
+                    result = ConvertToLocalizedString(significandStr, allowPartialStrings, currencyFormatter)
+                        + "e" + signOfE
+                        + ConvertToLocalizedString(exponentStr, allowPartialStrings, currencyFormatter);
+                }
+                else
+                {
+                    int posOfDecimal = stringToLocalize.IndexOf('.');
+                    bool hasDecimal = posOfDecimal >= 0;
+
+                    if (hasDecimal)
+                    {
+                        if (allowPartialStrings && lastCurrencyFractionDigits > 0)
+                        {
+                            currencyFormatter.IsDecimalPointAlwaysDisplayed = true;
+                        }
+
+                        // Force post-decimal digits so trailing zeroes aren't cut off
+                        currencyFormatter.FractionDigits = lastCurrencyFractionDigits;
+                    }
+
+                    if (IsCurrencyCurrentCategory)
+                    {
+                        string currencyResult = currencyFormatter.Format(double.Parse(stringToLocalize, System.Globalization.CultureInfo.InvariantCulture));
+                        string currencyCode = currencyFormatter.Currency;
+
+                        // CurrencyFormatter always includes LangCode or Symbol. Remove the currency code.
+                        int pos = currencyResult.IndexOf(currencyCode);
+                        if (pos >= 0)
+                        {
+                            currencyResult = currencyResult.Remove(pos, currencyCode.Length);
+                            // Trim any leading/trailing spaces (including non-breaking spaces)
+                            currencyResult = currencyResult.Trim(' ', '\u00A0', '\u202F');
+                        }
+
+                        result = currencyResult;
+                    }
+                    else
+                    {
+                        // Non-currency: just localize characters
+                        LocalizationSettings.GetInstance().LocalizeDisplayValue(ref stringToLocalize);
+                        result = stringToLocalize;
+                    }
+                }
+            }
+            finally
+            {
+                // Restore formatter state
+                currencyFormatter.FractionDigits = lastCurrencyFractionDigits;
+                currencyFormatter.IsDecimalPointAlwaysDisplayed = lastIsDecimalPointAlwaysDisplayed;
+            }
+
+            return result;
         }
 
         internal string GetLocalizedAutomationName(string displayValue, string unitName, string format)
@@ -996,6 +1172,8 @@ namespace CalculatorApp.ViewModel
 
             if (didLoad && IsCurrencyCurrentCategory)
             {
+                _model.ResetCategoriesAndRatios();
+                _model.Calculate();
                 ResetCategory();
             }
 
