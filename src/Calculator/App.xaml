@@ -1,4 +1,5 @@
-<Application x:Class="CalculatorApp.App"
+<!-- Follow the user's system theme by requesting the Default theme -->
+<Application x:Class="CalculatorApp.App" RequestedTheme="Default"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="using:CalculatorApp.Controls"
