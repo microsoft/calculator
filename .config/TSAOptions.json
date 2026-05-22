@@ -1,7 +1,7 @@
 {
-  "codebaseName": "CalculatorApp",
+  "codebaseName": "calculator.app",
   "notificationAliases": [
-    "eeappdevredfte@microsoft.com"
+      "eeappdevredfte@microsoft.com"
   ],
   "instanceUrl": "https://microsoft.visualstudio.com/DefaultCollection",
   "projectName": "OS",

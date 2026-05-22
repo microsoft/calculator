@@ -16,7 +16,6 @@ variables:
     value: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
   - name: versionPatch
     value: 0
-  - group: CalculatorTSAConfig
   # Docker image which is used to build the project https://aka.ms/obpipelines/containers
   - name: WindowsContainerImage
     value: 'onebranch.azurecr.io/windows/ltsc2025/vse2026:latest'
@@ -61,14 +60,7 @@ extends:
 
       tsa:
         enabled: true
-        config:
-          codebaseName: $(TSA.CodebaseName)
-          notificationAliases: $(TSA.NotificationAliases)
-          instanceUrl: $(TSA.InstanceUrl)
-          projectName: $(TSA.ProjectName)
-          areaPath: $(TSA.AreaPath)
-          serviceTreeID: $(TSA.ServiceTreeID)
-          allTools: true
+        configFile: '$(Build.SourcesDirectory)\.config\TSAOptions.json'
 
       policheck:
         enabled: true

@@ -25,7 +25,7 @@ jobs:
     type: windows
   variables:
     skipComponentGovernanceDetection: true
-    StoreBrokerMediaRootPath: $(TEMP)\SBMedia
+    StoreBrokerMediaRootPath: $(Pipeline.Workspace)\SBMedia
     StoreBrokerPackagePath: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
     PackageX64: $[in(dependencies.Buildx64.result, 'Succeeded', 'SucceededWithIssues')]
     PackageARM64: $[in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues')]
