@@ -5,8 +5,6 @@ jobs:
   dependsOn: Package
   pool:
     type: windows
-    isCustom: true
-    name: EssentialExperiences-windows-2022
   variables:
     FlightId: 161f0975-cb5f-475b-8ef6-26383c37621f
     AppId: 9WZDNCRFHVN5

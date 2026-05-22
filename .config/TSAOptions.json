@@ -1,0 +1,10 @@
+{
+  "codebaseName": "CalculatorApp",
+  "notificationAliases": [
+    "eeappdevredfte@microsoft.com"
+  ],
+  "instanceUrl": "https://microsoft.visualstudio.com/DefaultCollection",
+  "projectName": "OS",
+  "areaPath": "OS\\Apps\\PAX\\Essential Experiences\\Apps\\Calculator",
+  "allTools": true
+}

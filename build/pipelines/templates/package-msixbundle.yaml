@@ -23,8 +23,6 @@ jobs:
     )
   pool:
     type: windows
-    isCustom: true
-    name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
     StoreBrokerMediaRootPath: $(TEMP)\SBMedia
@@ -85,7 +83,7 @@ jobs:
         downloadDirectory: $(Build.SourcesDirectory)
         vstsFeed: WindowsInboxApps
         vstsFeedPackage: calculator-internals
-        vstsPackageVersion: 0.0.122
+        vstsPackageVersion: 0.0.124
 
   - task: PowerShell@2
     displayName: Generate MsixBundle mapping
