@@ -7,6 +7,5 @@
     <PackageReference Include="Appium.WebDriver" Version="4.4.5" />
     <PackageReference Include="MSTest.TestFramework" Version="4.2.2" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.4" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="10.0.7" />
   </ItemGroup>
 </Project>
