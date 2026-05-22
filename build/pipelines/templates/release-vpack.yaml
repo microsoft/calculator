@@ -19,8 +19,6 @@ jobs:
     ob_sdl_sbom_enabled: false
 
   steps:
-  - checkout: none
-
   - task: DownloadPipelineArtifact@2
     displayName: Download signed msixBundle
     inputs:
