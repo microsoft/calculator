@@ -17,6 +17,13 @@ jobs:
     ob_sdl_antimalwareScan_enabled: false
     ob_sdl_credscan_enabled: false
     ob_sdl_sbom_enabled: false
+  templateContext:
+    outputs:
+    - output: pipelineArtifact
+      displayName: Publish vpack\app artifact with vpack manifest
+      targetPath: $(XES_VPACKMANIFESTDIRECTORY)\$(XES_VPACKMANIFESTNAME)
+      artifactName: vpackManifest
+      sbomEnabled: false
 
   steps:
   - task: DownloadPipelineArtifact@2
