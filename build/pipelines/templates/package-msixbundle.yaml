@@ -1,10 +1,10 @@
 # This template contains a job which takes .msix packages which were built separately for each
 # architecture (arm64, x64, etc.) and combines them into a single .msixbundle. In release builds,
-# this job also signs the bundle and creates StoreBroker packages.
+# this job also signs the bundle. StoreBroker payload creation and submission live in
+# release-store.yaml so the payload never needs to cross a job boundary.
 
 parameters:
   signBundle: false
-  createStoreBrokerPackages: false
   includeX86: false
   makeAppx: C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64\MakeAppx.exe
 
@@ -25,8 +25,6 @@ jobs:
     type: windows
   variables:
     skipComponentGovernanceDetection: true
-    StoreBrokerMediaRootPath: $(Pipeline.Workspace)\SBMedia
-    StoreBrokerPackagePath: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
     PackageX64: $[in(dependencies.Buildx64.result, 'Succeeded', 'SucceededWithIssues')]
     PackageARM64: $[in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues')]
     ${{ if eq(parameters.includeX86, true) }}:
@@ -39,15 +37,6 @@ jobs:
       ob_artifactBaseName: msixBundle
     ob_sdl_binskim_enabled: false
     ob_sdl_sbom_enabled: false
-
-  ${{ if and(eq(parameters.signBundle, true), eq(parameters.createStoreBrokerPackages, true)) }}:
-    templateContext:
-      outputs:
-      - output: pipelineArtifact
-        displayName: Publish StoreBroker Payload artifact
-        targetPath: $(StoreBrokerPackagePath)
-        artifactName: storeBrokerPayload
-        sbomEnabled: false
 
   steps:
   - task: DownloadPipelineArtifact@2
@@ -75,7 +64,7 @@ jobs:
       itemPattern: '**/*.msix'
       targetPath: $(Build.ArtifactStagingDirectory)\drop\ARM64
 
-  - ${{ if or(eq(parameters.createStoreBrokerPackages, true), eq(parameters.signBundle, true)) }}:
+  - ${{ if eq(parameters.signBundle, true) }}:
     - task: UniversalPackages@0
       displayName: Download internals package
       inputs:
@@ -162,35 +151,3 @@ jobs:
             }
           ]
 
-    - ${{ if eq(parameters.createStoreBrokerPackages, true) }}:
-      - powershell: |
-          # Just modify this line to indicate where your en-us PDP file is. Leave the other lines alone.
-          $enUSPdpFilePath = "$(Build.SourcesDirectory)\PDP\en-US\PDP.xml"
-
-          # This is going to save the release value from the PDP file to $(SBMediaReleaseVersion)
-          # which you can then refer to in the UniversalPackages task.
-          $release = ([xml](Get-Content $enUSPdpFilePath)).ProductDescription.Release.Trim()
-          Write-Host "##vso[task.setvariable variable=SBMediaReleaseVersion;]$release"
-        displayName: Determine the PDP Media release version from the en-us PDP file
-
-      - task: UniversalPackages@0
-        displayName: Download PDP media (screenshots, trailers) universal package
-        inputs:
-          command: download
-          downloadDirectory: $(StoreBrokerMediaRootPath)/$(SBMediaReleaseVersion)
-          vstsFeed: WindowsInboxApps
-          vstsFeedPackage: calculator-pdp-media
-          vstsPackageVersion: $(SBMediaReleaseVersion)
-
-      - task: MS-RDX-MRO.windows-store-publish.package-task.store-package@3
-        displayName: Create StoreBroker Payload
-        inputs:
-          serviceEndpoint: Calculator StoreBroker FC
-          sbConfigPath: Tools/Build/StoreBroker/SBCalculatorConfig.json
-          sourceFolder: $(Build.ArtifactStagingDirectory)/msixBundle
-          contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
-          pdpPath: $(Build.SourcesDirectory)\PDP
-          pdpInclude: PDP.xml
-          pdpMediaPath: $(StoreBrokerMediaRootPath)
-          outSBPackagePath: $(StoreBrokerPackagePath)
-          outSBName: SBCalculator

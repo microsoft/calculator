@@ -109,7 +109,6 @@ extends:
       - template: /build/pipelines/templates/package-msixbundle.yaml@self
         parameters:
           signBundle: true
-          createStoreBrokerPackages: true
           includeX86: true
 
       - ${{ if eq(parameters.publishStore, true) }}:
