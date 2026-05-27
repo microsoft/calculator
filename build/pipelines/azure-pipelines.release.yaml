@@ -111,7 +111,8 @@ extends:
           signBundle: true
           includeX86: true
 
-      - ${{ if eq(parameters.publishStore, true) }}:
-        - template: /build/pipelines/templates/release-store.yaml@self
+      - template: /build/pipelines/templates/release-store.yaml@self
+        parameters:
+          publishToStore: ${{ parameters.publishStore }}
       - ${{ if eq(parameters.publishVPack, true) }}:
         - template: /build/pipelines/templates/release-vpack.yaml@self

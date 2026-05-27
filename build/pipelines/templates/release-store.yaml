@@ -1,7 +1,12 @@
 # This template contains jobs to release the app to the Store.
-# The signed msixbundle from the Package job is downloaded here, then the
-# StoreBroker payload is created and immediately flighted to the Store, all
-# within the same job so the payload never needs to cross a job boundary.
+# The signed msixbundle from the Package job is downloaded here, the StoreBroker
+# payload is created (and published as an artifact for inspection), and then
+# optionally flighted to the Store. Flight + Aero are gated by publishToStore so
+# the pipeline can be queued with the "Publish and flight" checkbox unchecked
+# to validate payload creation without actually shipping to the Store.
+
+parameters:
+  publishToStore: true
 
 jobs:
 - job: ReleaseStore
@@ -16,7 +21,8 @@ jobs:
     StoreBrokerPackagePath: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
 
     ob_git_checkout: false
-    ob_outputDirectory: $(Build.ArtifactStagingDirectory)\releaseStore
+    ob_outputDirectory: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
+    ob_artifactBaseName: storeBrokerPayload
     ob_sdl_binskim_enabled: false
     ob_sdl_policheck_enabled: false
     ob_sdl_eslint_enabled: false
@@ -72,29 +78,30 @@ jobs:
       outSBPackagePath: $(StoreBrokerPackagePath)
       outSBName: SBCalculator
 
-  - task: MS-RDX-MRO.windows-store-publish.flight-task.store-flight@3
-    displayName: Flight StoreBroker Payload to team ring
-    name: StoreBrokerFlight
-    inputs:
-      serviceEndpoint: Calculator StoreBroker FC
-      appId: $(AppId)
-      flightId: $(FlightId)
-      inputMethod: JsonAndZip
-      jsonPath: $(StoreBrokerPackagePath)\SBCalculator.json
-      zipPath: $(StoreBrokerPackagePath)\SBCalculator.zip
-      force: true
-      skipPolling: true
-      targetPublishMode: Immediate
-      logPath: $(StoreBrokerPackagePath)\StoreBroker.log
-      deletePackages: true
-      numberOfPackagesToKeep: 0
+  - ${{ if eq(parameters.publishToStore, true) }}:
+    - task: MS-RDX-MRO.windows-store-publish.flight-task.store-flight@3
+      displayName: Flight StoreBroker Payload to team ring
+      name: StoreBrokerFlight
+      inputs:
+        serviceEndpoint: Calculator StoreBroker FC
+        appId: $(AppId)
+        flightId: $(FlightId)
+        inputMethod: JsonAndZip
+        jsonPath: $(StoreBrokerPackagePath)\SBCalculator.json
+        zipPath: $(StoreBrokerPackagePath)\SBCalculator.zip
+        force: true
+        skipPolling: true
+        targetPublishMode: Immediate
+        logPath: $(StoreBrokerPackagePath)\StoreBroker.log
+        deletePackages: true
+        numberOfPackagesToKeep: 0
 
-  - task: APS-Aero-Package.aero-upload-task.AeroUploadTask.AeroUpload@2
-    displayName: Aero Upload (FC)
-    inputs:
-      productId: $(ProductId)
-      flightId: $(FlightId)
-      submissionId: $(StoreBrokerFlight.WS_SubmissionId)
-      submissionDataPath: $(StoreBrokerPackagePath)\SBCalculator.json
-      packagePath: $(StoreBrokerPackagePath)\SBCalculator.zip
-      serviceEndpoint: AeroUpload-Calculator-FC
+    - task: APS-Aero-Package.aero-upload-task.AeroUploadTask.AeroUpload@2
+      displayName: Aero Upload (FC)
+      inputs:
+        productId: $(ProductId)
+        flightId: $(FlightId)
+        submissionId: $(StoreBrokerFlight.WS_SubmissionId)
+        submissionDataPath: $(StoreBrokerPackagePath)\SBCalculator.json
+        packagePath: $(StoreBrokerPackagePath)\SBCalculator.zip
+        serviceEndpoint: AeroUpload-Calculator-FC
