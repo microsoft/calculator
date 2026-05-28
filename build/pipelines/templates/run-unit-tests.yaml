@@ -42,7 +42,6 @@ jobs:
 
   - task: VSTest@2
     displayName: Run CalculatorUnitTests
-    continueOnError: true
     inputs:
       testAssemblyVer2: $(UnitTestsDir)\CalculatorUnitTests.msix
       otherConsoleOptions: /Platform:${{ parameters.platform }}

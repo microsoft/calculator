@@ -15,12 +15,21 @@ jobs:
     - BuildARM64
     - ${{ if eq(parameters.includeX86, true) }}:
       - Buildx86
-  condition: |
-    and
-    (
-      in(dependencies.Buildx64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
-      in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
-    )
+  ${{ if eq(parameters.includeX86, true) }}:
+    condition: |
+      and
+      (
+        in(dependencies.Buildx64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+        in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+        in(dependencies.Buildx86.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+      )
+  ${{ else }}:
+    condition: |
+      and
+      (
+        in(dependencies.Buildx64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
+        in(dependencies.BuildARM64.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+      )
   pool:
     type: windows
   variables:

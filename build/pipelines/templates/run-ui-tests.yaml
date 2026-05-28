@@ -58,7 +58,6 @@ jobs:
 
   - task: VSTest@2
     displayName: Run CalculatorUITests
-    continueOnError: true
     inputs:
       testAssemblyVer2: $(Pipeline.Workspace)/$(DropName)/publish/CalculatorUITests.dll
       runSettingsFile: $(Pipeline.Workspace)/$(DropName)/publish/${{ parameters.runsettingsFileName }}
