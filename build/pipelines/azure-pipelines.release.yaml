@@ -66,6 +66,9 @@ extends:
         enabled: true
         exclusionsFile: '$(Build.SourcesDirectory)\build\config\PoliCheckExclusions.xml'
 
+      evidence:
+        enabled: false
+
     stages:
     - stage: Calculator
       jobs:
