@@ -9,7 +9,7 @@ jobs:
   variables:
     skipComponentGovernanceDetection: true
 
-    ob_git_checkout: false
+    ob_git_checkout: true
     ob_outputDirectory: $(Build.ArtifactStagingDirectory)\releaseVPack
     ob_sdl_binskim_enabled: false
     ob_sdl_policheck_enabled: false
@@ -17,7 +17,6 @@ jobs:
     ob_sdl_antimalwareScan_enabled: false
     ob_sdl_credscan_enabled: false
     ob_sdl_sbom_enabled: false
-    ob_sdl_tsa_enabled: false
   templateContext:
     outputs:
     - output: pipelineArtifact

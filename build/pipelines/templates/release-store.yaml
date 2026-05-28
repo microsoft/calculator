@@ -20,7 +20,7 @@ jobs:
     StoreBrokerMediaRootPath: $(Pipeline.Workspace)\SBMedia
     StoreBrokerPackagePath: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
 
-    ob_git_checkout: false
+    ob_git_checkout: true
     ob_outputDirectory: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
     ob_artifactBaseName: storeBrokerPayload
     ob_sdl_binskim_enabled: false
@@ -29,7 +29,6 @@ jobs:
     ob_sdl_antimalwareScan_enabled: false
     ob_sdl_credscan_enabled: false
     ob_sdl_sbom_enabled: false
-    ob_sdl_tsa_enabled: false
 
   steps:
   - task: DownloadPipelineArtifact@2
