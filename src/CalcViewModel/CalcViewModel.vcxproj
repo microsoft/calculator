@@ -123,7 +123,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await:strict /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <WarningLevel>Level4</WarningLevel>
@@ -142,7 +142,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await:strict /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ControlFlowGuard>Guard</ControlFlowGuard>
@@ -162,7 +162,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await:strict /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <WarningLevel>Level4</WarningLevel>
@@ -181,7 +181,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await:strict /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ControlFlowGuard>Guard</ControlFlowGuard>
@@ -201,7 +201,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await:strict /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <WarningLevel>Level4</WarningLevel>
@@ -220,7 +220,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await /w44242 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await:strict /w44242 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204;4453</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ControlFlowGuard>Guard</ControlFlowGuard>

@@ -77,9 +77,9 @@ namespace CalculatorApp
             std::wstring GetCurrencyTimestamp() override;
             static double RoundCurrencyRatio(double ratio);
 
-            std::future<bool> TryLoadDataFromCacheAsync() override;
-            std::future<bool> TryLoadDataFromWebAsync() override;
-            std::future<bool> TryLoadDataFromWebOverrideAsync() override;
+            concurrency::task<bool> TryLoadDataFromCacheAsync() override;
+            concurrency::task<bool> TryLoadDataFromWebAsync() override;
+            concurrency::task<bool> TryLoadDataFromWebOverrideAsync() override;
             // ICurrencyConverterDataLoader
 
             void OnNetworkBehaviorChanged(CalculatorApp::ViewModel::Common::NetworkAccessBehavior newBehavior);
@@ -88,7 +88,7 @@ namespace CalculatorApp
             void ResetLoadStatus();
             void NotifyDataLoadFinished(bool didLoad);
 
-            std::future<bool> TryFinishLoadFromCacheAsync();
+            concurrency::task<bool> TryFinishLoadFromCacheAsync();
 
             bool TryParseWebResponses(
                 _In_ Platform::String ^ staticDataJson,
