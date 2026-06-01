@@ -15,7 +15,6 @@
 #include <ppltasks.h>
 #include <pplawait.h>
 #include <concrt.h>
-#include <ppltasks.h>
 #include <memory>
 #include <cassert>
 #include <functional>
