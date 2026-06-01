@@ -1,44 +1,107 @@
 # This template contains jobs to release the app to the Store.
+# The signed msixbundle from the Package job is downloaded here, the StoreBroker
+# payload is created (and published as an artifact for inspection), and then
+# optionally flighted to the Store. Flight + Aero are gated by publishToStore so
+# the pipeline can be queued with the "Publish and flight" checkbox unchecked
+# to validate payload creation without actually shipping to the Store.
+
+parameters:
+  publishToStore: true
 
 jobs:
 - job: ReleaseStore
   dependsOn: Package
-  templateContext:
-    type: releaseJob
-    isProduction: true
-    inputs:
-    - input: pipelineArtifact
-      artifactName: storeBrokerPayload
+  pool:
+    type: windows
   variables:
     FlightId: 161f0975-cb5f-475b-8ef6-26383c37621f
     AppId: 9WZDNCRFHVN5
     ProductId: 00009007199266248474
-  steps:
-  - checkout: none
+    StoreBrokerMediaRootPath: $(Pipeline.Workspace)\SBMedia
+    StoreBrokerPackagePath: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
 
-  - task: MS-RDX-MRO.windows-store-publish.flight-task.store-flight@3
-    displayName: Flight StoreBroker Payload to team ring
-    name: StoreBrokerFlight
+    ob_git_checkout: true
+    ob_outputDirectory: $(Build.ArtifactStagingDirectory)\storeBrokerPayload
+    ob_artifactBaseName: storeBrokerPayload
+    ob_sdl_binskim_enabled: false
+    ob_sdl_policheck_enabled: false
+    ob_sdl_eslint_enabled: false
+    ob_sdl_antimalwareScan_enabled: false
+    ob_sdl_credscan_enabled: false
+    ob_sdl_sbom_enabled: false
+
+  steps:
+  - task: DownloadPipelineArtifact@2
+    displayName: Download signed msixbundle
+    inputs:
+      artifactName: msixBundleSigned
+      targetPath: $(Build.ArtifactStagingDirectory)\msixBundle
+
+  - task: UniversalPackages@0
+    displayName: Download internals package
+    inputs:
+      command: download
+      downloadDirectory: $(Build.SourcesDirectory)
+      vstsFeed: WindowsInboxApps
+      vstsFeedPackage: calculator-internals
+      vstsPackageVersion: 0.0.124
+
+  - powershell: |
+      # Just modify this line to indicate where your en-us PDP file is. Leave the other lines alone.
+      $enUSPdpFilePath = "$(Build.SourcesDirectory)\PDP\en-US\PDP.xml"
+
+      # This is going to save the release value from the PDP file to $(SBMediaReleaseVersion)
+      # which you can then refer to in the UniversalPackages task.
+      $release = ([xml](Get-Content $enUSPdpFilePath)).ProductDescription.Release.Trim()
+      Write-Host "##vso[task.setvariable variable=SBMediaReleaseVersion;]$release"
+    displayName: Determine the PDP Media release version from the en-us PDP file
+
+  - task: UniversalPackages@0
+    displayName: Download PDP media (screenshots, trailers) universal package
+    inputs:
+      command: download
+      downloadDirectory: $(StoreBrokerMediaRootPath)/$(SBMediaReleaseVersion)
+      vstsFeed: WindowsInboxApps
+      vstsFeedPackage: calculator-pdp-media
+      vstsPackageVersion: $(SBMediaReleaseVersion)
+
+  - task: MS-RDX-MRO.windows-store-publish.package-task.store-package@3
+    displayName: Create StoreBroker Payload
     inputs:
       serviceEndpoint: Calculator StoreBroker FC
-      appId: $(AppId)
-      flightId: $(FlightId)
-      inputMethod: JsonAndZip
-      jsonPath: $(Pipeline.Workspace)\SBCalculator.json
-      zipPath: $(Pipeline.Workspace)\SBCalculator.zip
-      force: true
-      skipPolling: true
-      targetPublishMode: Immediate
-      logPath: $(Pipeline.Workspace)\StoreBroker.log
-      deletePackages: true
-      numberOfPackagesToKeep: 0
+      sbConfigPath: Tools/Build/StoreBroker/SBCalculatorConfig.json
+      sourceFolder: $(Build.ArtifactStagingDirectory)\msixBundle
+      contents: Microsoft.WindowsCalculator_8wekyb3d8bbwe.msixbundle
+      pdpPath: $(Build.SourcesDirectory)\PDP
+      pdpInclude: PDP.xml
+      pdpMediaPath: $(StoreBrokerMediaRootPath)
+      outSBPackagePath: $(StoreBrokerPackagePath)
+      outSBName: SBCalculator
 
-  - task: APS-Aero-Package.aero-upload-task.AeroUploadTask.AeroUpload@2
-    displayName: Aero Upload (FC)
-    inputs:
-      productId: $(ProductId)
-      flightId: $(FlightId)
-      submissionId: $(StoreBrokerFlight.WS_SubmissionId)
-      submissionDataPath: $(Pipeline.Workspace)\SBCalculator.json
-      packagePath: $(Pipeline.Workspace)\SBCalculator.zip
-      serviceEndpoint: AeroUpload-Calculator-FC
+  - ${{ if eq(parameters.publishToStore, true) }}:
+    - task: MS-RDX-MRO.windows-store-publish.flight-task.store-flight@3
+      displayName: Flight StoreBroker Payload to team ring
+      name: StoreBrokerFlight
+      inputs:
+        serviceEndpoint: Calculator StoreBroker FC
+        appId: $(AppId)
+        flightId: $(FlightId)
+        inputMethod: JsonAndZip
+        jsonPath: $(StoreBrokerPackagePath)\SBCalculator.json
+        zipPath: $(StoreBrokerPackagePath)\SBCalculator.zip
+        force: true
+        skipPolling: true
+        targetPublishMode: Immediate
+        logPath: $(StoreBrokerPackagePath)\StoreBroker.log
+        deletePackages: true
+        numberOfPackagesToKeep: 0
+
+    - task: APS-Aero-Package.aero-upload-task.AeroUploadTask.AeroUpload@2
+      displayName: Aero Upload (FC)
+      inputs:
+        productId: $(ProductId)
+        flightId: $(FlightId)
+        submissionId: $(StoreBrokerFlight.WS_SubmissionId)
+        submissionDataPath: $(StoreBrokerPackagePath)\SBCalculator.json
+        packagePath: $(StoreBrokerPackagePath)\SBCalculator.zip
+        serviceEndpoint: AeroUpload-Calculator-FC

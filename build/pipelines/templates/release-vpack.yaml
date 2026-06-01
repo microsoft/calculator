@@ -4,8 +4,19 @@
 jobs:
 - job: ReleaseVPack
   dependsOn: Package
+  pool:
+    type: windows
   variables:
     skipComponentGovernanceDetection: true
+
+    ob_git_checkout: true
+    ob_outputDirectory: $(Build.ArtifactStagingDirectory)\releaseVPack
+    ob_sdl_binskim_enabled: false
+    ob_sdl_policheck_enabled: false
+    ob_sdl_eslint_enabled: false
+    ob_sdl_antimalwareScan_enabled: false
+    ob_sdl_credscan_enabled: false
+    ob_sdl_sbom_enabled: false
   templateContext:
     outputs:
     - output: pipelineArtifact
@@ -15,11 +26,11 @@ jobs:
       sbomEnabled: false
 
   steps:
-  - checkout: none
-
-  - download: current
-    displayName: Download msixBundleSigned artifact
-    artifact: msixBundleSigned
+  - task: DownloadPipelineArtifact@2
+    displayName: Download signed msixBundle
+    inputs:
+      artifactName: msixBundleSigned
+      targetPath: $(Pipeline.Workspace)\msixBundleSigned
 
   - task: CopyFiles@2
     displayName: Copy signed MsixBundle to vpack staging folder
@@ -44,7 +55,7 @@ jobs:
       downloadDirectory: $(Build.SourcesDirectory)
       vstsFeed: WindowsInboxApps
       vstsFeedPackage: calculator-internals
-      vstsPackageVersion: 0.0.122
+      vstsPackageVersion: 0.0.124
 
   - pwsh: |
       $configPath = "$(Build.SourcesDirectory)\Tools\Build\Signing\ESRP-auth.json"

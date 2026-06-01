@@ -36,7 +36,7 @@ Prerequisites:
     git clone https://github.com/Microsoft/calculator.git
     ```
 
-- Open [src\Calculator.sln](/src/Calculator.sln) in Visual Studio to build and run the Calculator app.
+- Open [src\Calculator.slnx](/src/Calculator.slnx) in Visual Studio to build and run the Calculator app.
 - For a general description of the Calculator project architecture see [ApplicationArchitecture.md](docs/ApplicationArchitecture.md).
 - To run the UI Tests, you need to make sure that
   [Windows Application Driver (WinAppDriver)](https://github.com/microsoft/WinAppDriver/releases/latest)
