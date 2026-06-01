@@ -85,7 +85,7 @@ jobs:
           -t:Publish `
           -p:PublishDir=${{ github.workspace }}\output\publish\
       shell: pwsh
-      name: Build calculator.sln
+      name: Build calculator.slnx
     - uses: actions/upload-artifact@v4
       name: Upload build outputs
       with:
