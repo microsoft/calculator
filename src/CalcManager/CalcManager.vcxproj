@@ -114,7 +114,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/Zm250 /await /std:c++17 /permissive- /Zc:twoPhase- /utf-8 /w44242 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm250 /std:c++20 /permissive- /Zc:twoPhase- /utf-8 /w44242 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -131,7 +131,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/Zm250 /await /std:c++17 /permissive- /Zc:twoPhase- /utf-8 /w44242 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm250 /std:c++20 /permissive- /Zc:twoPhase- /utf-8 /w44242 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -149,7 +149,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/Zm250 /await /std:c++17 /permissive- /Zc:twoPhase- /utf-8 /w44242 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm250 /std:c++20 /permissive- /Zc:twoPhase- /utf-8 /w44242 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
@@ -167,7 +167,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/Zm250 /await /std:c++17 /permissive- /Zc:twoPhase- /utf-8 /w44242 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm250 /std:c++20 /permissive- /Zc:twoPhase- /utf-8 /w44242 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -185,7 +185,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/Zm250 /await /std:c++17 /permissive- /Zc:twoPhase- /utf-8 /w44242 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm250 /std:c++20 /permissive- /Zc:twoPhase- /utf-8 /w44242 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -202,7 +202,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/Zm250 /await /std:c++17 /permissive- /Zc:twoPhase- /utf-8 /w44242 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm250 /std:c++20 /permissive- /Zc:twoPhase- /utf-8 /w44242 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>

@@ -3,7 +3,7 @@
 
 #pragma once
 #include <cassert>
-#include <future>
+#include <ppltasks.h>
 
 namespace CalculatorApp::ViewModel::DataLoaders
 {
@@ -15,8 +15,8 @@ namespace CalculatorApp::ViewModel::DataLoaders
 #endif
         void Initialize(Platform::String ^ sourceCurrencyCode, Platform::String ^ responseLanguage);
 
-        std::future<Platform::String ^> GetCurrencyMetadataAsync() const;
-        std::future<Platform::String ^> GetCurrencyRatiosAsync() const;
+        concurrency::task<Platform::String ^> GetCurrencyMetadataAsync() const;
+        concurrency::task<Platform::String ^> GetCurrencyRatiosAsync() const;
 
     private:
         Platform::String ^ m_sourceCurrencyCode;

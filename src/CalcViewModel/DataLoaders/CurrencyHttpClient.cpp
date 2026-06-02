@@ -133,19 +133,15 @@ namespace CalculatorApp::ViewModel::DataLoaders
         m_responseLanguage = responseLanguage;
     }
 
-    std::future<Platform::String ^> CurrencyHttpClient::GetCurrencyMetadataAsync() const
+    concurrency::task<Platform::String ^> CurrencyHttpClient::GetCurrencyMetadataAsync() const
     {
         (void)m_responseLanguage; // to be used in production.
-        std::promise<Platform::String ^> mockedTask;
-        mockedTask.set_value(ref new Platform::String(MockCurrencyStaticData));
-        return mockedTask.get_future();
+        return concurrency::task_from_result<Platform::String ^>(ref new Platform::String(MockCurrencyStaticData));
     }
 
-    std::future<Platform::String ^> CurrencyHttpClient::GetCurrencyRatiosAsync() const
+    concurrency::task<Platform::String ^> CurrencyHttpClient::GetCurrencyRatiosAsync() const
     {
         (void)m_sourceCurrencyCode; // to be used in production.
-        std::promise<Platform::String ^> mockedTask;
-        mockedTask.set_value(ref new Platform::String(MockCurrencyConverterData));
-        return mockedTask.get_future();
+        return concurrency::task_from_result<Platform::String ^>(ref new Platform::String(MockCurrencyConverterData));
     }
 } // namespace CalculatorApp::ViewModel::DataLoaders
