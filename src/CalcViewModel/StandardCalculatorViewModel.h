@@ -267,6 +267,7 @@ namespace CalculatorApp
             void SetOpenParenthesisCountNarratorAnnouncement();
             void SwitchAngleType(CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum num);
             void FtoEButtonToggled();
+            void EngButton();
 
             void OnCopyCommand(Platform::Object ^ parameter);
             void OnPasteCommand(Platform::Object ^ parameter);

@@ -499,6 +499,12 @@ void StandardCalculatorViewModel::FtoEButtonToggled()
     OnButtonPressed(NumbersAndOperatorsEnum::FToE);
 }
 
+void StandardCalculatorViewModel::EngButton()
+{
+    OnButtonPressed(NumbersAndOperatorsEnum::Engineering);
+}
+
+
 void StandardCalculatorViewModel::HandleUpdatedOperandData(Command cmdenum)
 {
     DisplayExpressionToken ^ displayExpressionToken = ExpressionTokens->GetAt(m_TokenPosition);

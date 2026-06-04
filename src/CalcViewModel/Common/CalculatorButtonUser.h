@@ -38,6 +38,7 @@ namespace CalculatorApp::ViewModel::Common
         Radians = (int)CM::Command::CommandRAD,
         Grads = (int)CM::Command::CommandGRAD,
         Degrees = (int)CM::Command::CommandDegrees,
+        Engineering = (int)CM::Command::CommandENG,
         OpenParenthesis = (int)CM::Command::CommandOPENP,
         CloseParenthesis = (int)CM::Command::CommandCLOSEP,
         Pi = (int)CM::Command::CommandPI,
