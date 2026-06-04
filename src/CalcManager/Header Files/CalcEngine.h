@@ -97,7 +97,8 @@ public:
     // returns the ptr to string representing the operator. Mostly same as the button, but few special cases for x^y etc.
     static std::wstring_view GetString(int ids)
     {
-        return s_engineStrings[std::to_wstring(ids)];
+        std::wstring key = std::to_wstring(ids);
+        return s_engineStrings.at(key);
     }
     static std::wstring_view GetString(std::wstring_view ids)
     {
