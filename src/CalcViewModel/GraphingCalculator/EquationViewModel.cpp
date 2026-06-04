@@ -442,7 +442,7 @@ namespace CalculatorApp::ViewModel
                 return resLoader->GetString(L"CannotUseIndexVarInOpLimits");
                 break;
             case (SyntaxErrorCode::CannotUseIndexVarInLimPoint):
-                return resLoader->GetString(L"Overflow");
+                return resLoader->GetString(L"CannotUseIndexVarInLimPoint");
                 break;
             case (SyntaxErrorCode::CannotUseComplexInfinityInReal):
                 return resLoader->GetString(L"CannotUseComplexInfinityInReal");
