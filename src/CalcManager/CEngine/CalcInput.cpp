@@ -56,7 +56,7 @@ bool CalcInput::TryToggleSign(bool isIntegerMode, wstring_view maxNumStr)
     return true;
 }
 
-bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, wstring_view maxNumStr, int32_t wordBitWidth, int maxDigits)
+bool CalcInput::TryAddDigit(unsigned int value, uint32_t radix, bool isIntegerMode, wstring_view maxNumStr, uint32_t wordBitWidth, int maxDigits)
 {
     // Convert from an integer into a character
     // This includes both normal digits and alpha 'digits' for radixes > 10

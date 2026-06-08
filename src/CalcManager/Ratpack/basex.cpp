@@ -290,13 +290,12 @@ void _divnumx(PNUMBER* pa, PNUMBER b, int32_t precision)
     c->sign = a->sign * b->sign;
 
     ptrc = c->mant + thismax;
-    cdigits = 0;
 
     DUPNUM(rem, a);
     rem->sign = b->sign;
     rem->exp = b->cdigit + b->exp - rem->cdigit;
 
-    while (cdigits++ < thismax && !zernum(rem))
+    for (cdigits = 0; cdigits < thismax && !zernum(rem); cdigits++)
     {
         int32_t digit = 0;
         *ptrc = 0;
@@ -331,10 +330,10 @@ void _divnumx(PNUMBER* pa, PNUMBER b, int32_t precision)
         rem->exp++;
         ptrc--;
     }
-    cdigits--;
+
     if (c->mant != ++ptrc)
     {
-        memmove(c->mant, ptrc, (int)(cdigits * sizeof(MANTTYPE)));
+        memmove(c->mant, ptrc, cdigits * sizeof(MANTTYPE));
     }
 
     if (!cdigits)
