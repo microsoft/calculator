@@ -26,7 +26,7 @@ namespace CalculatorApp
 
         // Raised when the last history item is deleted via the context menu, so the
         // hosting page can move focus back to a sensible target (the History button).
-        public event Action HistoryEmptied;
+        public event EventHandler HistoryEmptied;
 
         public void ScrollToBottom()
         {
@@ -89,7 +89,7 @@ namespace CalculatorApp
                 {
                     // Move focus to the fallback target before removing the item, so focus does
                     // not briefly escape (e.g. to the hamburger menu) while the list empties.
-                    HistoryEmptied?.Invoke();
+                    HistoryEmptied?.Invoke(this, EventArgs.Empty);
                     Model.DeleteItem(itemViewModel);
                 }
             }

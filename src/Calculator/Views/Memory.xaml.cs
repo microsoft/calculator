@@ -23,7 +23,7 @@ namespace CalculatorApp
 
         // Raised when the last memory item is cleared via the context menu, so the
         // hosting page can move focus back to the main keypad (M+).
-        public event Action MemoryEmptied;
+        public event EventHandler MemoryEmptied;
 
         public GridLength RowHeight
         {
@@ -87,7 +87,7 @@ namespace CalculatorApp
             {
                 // Move focus to the fallback target before removing the item, so focus does not
                 // briefly escape (e.g. to the hamburger menu) while the list empties.
-                MemoryEmptied?.Invoke();
+                MemoryEmptied?.Invoke(this, EventArgs.Empty);
                 memoryItem.Clear();
             }
         }

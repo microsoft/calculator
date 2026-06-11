@@ -186,7 +186,7 @@ namespace CalculatorApp
                 };
                 historyVM.HideHistoryClicked += OnHideHistoryClicked;
                 historyVM.HistoryItemClicked += OnHistoryItemClicked;
-                m_historyList.HistoryEmptied += () =>
+                m_historyList.HistoryEmptied += (s, e) =>
                 {
                     // Raised before the last item is removed, so focusing here keeps focus from
                     // briefly escaping (e.g. to the hamburger) while the list empties.
@@ -821,7 +821,7 @@ namespace CalculatorApp
             if (m_memory == null)
             {
                 m_memory = new Memory();
-                m_memory.MemoryEmptied += () =>
+                m_memory.MemoryEmptied += (s, e) =>
                 {
                     // Raised before the last item is removed. Focus M+ up front so focus never
                     // escapes to the hamburger while the list empties.
