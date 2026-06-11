@@ -170,6 +170,69 @@ namespace CalculatorUITests
             Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
         }
 
+        /// <summary>
+        /// Bug 20774908 (mentor-approved scope expansion): verifies focus lands on the
+        /// docked history/memory pivot (not the "Clear all history" button) after
+        /// deleting the only history item from the docked History panel via the
+        /// context menu.
+        /// </summary>
+        [TestMethod]
+        [Priority(2)]
+        public void StandardHistory_Panel_FocusMovesToPivotAfterDeletingOnlyItem()
+        {
+            page.HistoryPanel.OpenHistoryPanel();
+
+            // Create a single history entry.
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.PlusButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
+
+            // Open the item's context menu and activate "Delete". The menu opens with
+            // "Copy" pre-highlighted, so ArrowDown then Enter reaches "Delete".
+            var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
+            Actions openContextMenu = new Actions(CalculatorDriver.Instance.CalculatorSession);
+            openContextMenu.MoveToElement(historyItems[0].Item);
+            openContextMenu.ContextClick(historyItems[0].Item);
+            openContextMenu.Perform();
+            CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.Enter);
+            System.Threading.Thread.Sleep(1500);
+
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
+            // Focusing the docked pivot delegates focus to the selected pivot header
+            // (the History tab), whose AutomationId is "HistoryLabel".
+            Assert.AreEqual("HistoryLabel", CalculatorApp.GetFocusedElementAutomationId());
+        }
+
+        /// <summary>
+        /// Bug 20774908 (mentor-approved scope expansion): verifies focus moves to the
+        /// History toggle button after deleting the only history item from the narrow
+        /// History flyout via the context menu.
+        /// </summary>
+        [TestMethod]
+        [Priority(2)]
+        public void StandardHistory_Flyout_FocusMovesToHistoryButtonAfterDeletingOnlyItem()
+        {
+            // Create a single history entry.
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.PlusButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
+
+            var historyItems = page.HistoryPanel.GetAllHistoryFlyoutListViewItems();
+            Actions openContextMenu = new Actions(CalculatorDriver.Instance.CalculatorSession);
+            openContextMenu.MoveToElement(historyItems[0].Item);
+            openContextMenu.ContextClick(historyItems[0].Item);
+            openContextMenu.Perform();
+            CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.Enter);
+            System.Threading.Thread.Sleep(1500);
+
+            Assert.AreEqual("HistoryButton", CalculatorApp.GetFocusedElementAutomationId());
+
+            // Restore a window size suitable for subsequent tests.
+            page.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
+        }
+
         #endregion
     }
 }

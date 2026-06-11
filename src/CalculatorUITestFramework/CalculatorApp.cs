@@ -37,6 +37,22 @@ namespace CalculatorUITestFramework
         }
 
         /// <summary>
+        /// Gets the AutomationId of the element that currently has keyboard focus.
+        /// </summary>
+        public static string GetFocusedElementAutomationId()
+        {
+            return session.SwitchTo().ActiveElement().GetAttribute("AutomationId");
+        }
+
+        /// <summary>
+        /// Gets the UIA ClassName of the element that currently has keyboard focus.
+        /// </summary>
+        public static string GetFocusedElementClassName()
+        {
+            return session.SwitchTo().ActiveElement().GetAttribute("ClassName");
+        }
+
+        /// <summary>
         /// Click the window (to lose focus on components)
         /// </summary>
         public static void ClickOnWindow()

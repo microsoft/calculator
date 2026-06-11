@@ -186,6 +186,23 @@ namespace CalculatorApp
                 };
                 historyVM.HideHistoryClicked += OnHideHistoryClicked;
                 historyVM.HistoryItemClicked += OnHistoryItemClicked;
+                m_historyList.HistoryEmptied += () =>
+                {
+                    // Raised before the last item is removed, so focusing here keeps focus from
+                    // briefly escaping (e.g. to the hamburger) while the list empties.
+                    if (HistoryButton.IsEnabled && HistoryButton.Visibility == Visibility.Visible)
+                    {
+                        // Narrow (flyout) layout: focus the History toggle button, mirroring
+                        // the focus target used when the history flyout closes.
+                        HistoryButton.Focus(FocusState.Programmatic);
+                    }
+                    else
+                    {
+                        // Docked layout: no History toggle button exists, so keep focus
+                        // within the docked History/Memory pivot instead of escaping.
+                        DockPivot.Focus(FocusState.Programmatic);
+                    }
+                };
             }
         }
 
@@ -742,6 +759,7 @@ namespace CalculatorApp
         private CalculatorApp.HistoryList m_historyList;
         private bool m_fIsHistoryFlyoutOpen;
         private bool m_fIsMemoryFlyoutOpen;
+        private bool m_focusMemoryPlusOnFlyoutClose;
 
         private void OnMemoryFlyoutOpened(object sender, object args)
         {
@@ -762,7 +780,14 @@ namespace CalculatorApp
         {
             m_fIsMemoryFlyoutOpen = false;
             EnableControls(true);
-            if (MemoryButton.IsEnabled)
+            if (m_focusMemoryPlusOnFlyoutClose)
+            {
+                // The flyout was closed because its last memory item was cleared; move focus
+                // to M+ on the now-visible keypad rather than the (disabled) memory button.
+                m_focusMemoryPlusOnFlyoutClose = false;
+                MemPlus?.Focus(FocusState.Programmatic);
+            }
+            else if (MemoryButton.IsEnabled)
             {
                 MemoryButton.Focus(FocusState.Programmatic);
             }
@@ -796,6 +821,21 @@ namespace CalculatorApp
             if (m_memory == null)
             {
                 m_memory = new Memory();
+                m_memory.MemoryEmptied += () =>
+                {
+                    // Raised before the last item is removed. Focus M+ up front so focus never
+                    // escapes to the hamburger while the list empties.
+                    MemPlus?.Focus(FocusState.Programmatic);
+
+                    if (m_fIsMemoryFlyoutOpen)
+                    {
+                        // Narrow (flyout) layout: the keypad sits behind the open flyout. Close
+                        // it and re-assert M+ focus once it has fully closed (OnMemoryFlyoutClosed),
+                        // so focus isn't handed to the now-disabled memory button.
+                        m_focusMemoryPlusOnFlyoutClose = true;
+                        MemoryFlyout.Hide();
+                    }
+                };
                 VisualStateManager.GoToState(m_memory, GetCurrentLayoutState(), true);
             }
 

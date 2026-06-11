@@ -1,3 +1,5 @@
+using System;
+
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 
@@ -18,6 +20,10 @@ namespace CalculatorApp
         }
 
         public CalculatorApp.ViewModel.StandardCalculatorViewModel Model => (CalculatorApp.ViewModel.StandardCalculatorViewModel)this.DataContext;
+
+        // Raised when the last memory item is cleared via the context menu, so the
+        // hosting page can move focus back to the main keypad (M+).
+        public event Action MemoryEmptied;
 
         public GridLength RowHeight
         {
@@ -60,8 +66,28 @@ namespace CalculatorApp
         private void OnClearMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var memoryItem = GetMemoryItemForCurrentFlyout();
-            if (memoryItem != null)
+            if (memoryItem == null)
             {
+                return;
+            }
+
+            // Capture the position before clearing; the container is torn down on removal.
+            var clearedIndex = MemoryListView.IndexFromContainer(MemoryContextMenu.Target);
+            var itemsRemainingAfterClear = MemoryListView.Items.Count - 1;
+
+            if (itemsRemainingAfterClear > 0)
+            {
+                memoryItem.Clear();
+
+                var newFocusIndex = Math.Min(clearedIndex, itemsRemainingAfterClear - 1);
+                var newContainer = MemoryListView.ContainerFromIndex(newFocusIndex) as Control;
+                newContainer?.Focus(FocusState.Programmatic);
+            }
+            else
+            {
+                // Move focus to the fallback target before removing the item, so focus does not
+                // briefly escape (e.g. to the hamburger menu) while the list empties.
+                MemoryEmptied?.Invoke();
                 memoryItem.Clear();
             }
         }
