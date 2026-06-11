@@ -171,7 +171,7 @@ namespace CalculatorUITests
         }
 
         /// <summary>
-        /// Bug 20774908: verifies focus does NOT fall back to the "Clear all history"
+        /// Issue #312: verifies focus does NOT fall back to the "Clear all history"
         /// button (the regression in this bug) after deleting the only history item
         /// from the docked History panel via the context menu. The fix focuses the
         /// docked pivot, which keeps focus inside the pane; the exact element that
@@ -207,7 +207,7 @@ namespace CalculatorUITests
         }
 
         /// <summary>
-        /// Bug 20774908: verifies focus moves to the History toggle button after
+        /// Issue #312: verifies focus moves to the History toggle button after
         /// deleting the only history item from the narrow History flyout via the
         /// context menu.
         /// </summary>

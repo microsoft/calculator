@@ -137,7 +137,7 @@ namespace CalculatorUITests
         }
 
         /// <summary>
-        /// Bug 20774908: verifies focus lands on the M+ keypad button (not "Clear all
+        /// Issue #312: verifies focus lands on the M+ keypad button (not "Clear all
         /// memory" or the hamburger) after clearing the only memory item from the
         /// docked Memory panel via the context menu.
         /// </summary>
@@ -165,7 +165,7 @@ namespace CalculatorUITests
         }
 
         /// <summary>
-        /// Bug 20774908: verifies focus stays within the Memory list (on the next
+        /// Issue #312: verifies focus stays within the Memory list (on the next
         /// item) after clearing the first of multiple items via the context menu.
         /// </summary>
         [TestMethod]
@@ -196,7 +196,7 @@ namespace CalculatorUITests
         }
 
         /// <summary>
-        /// Bug 20774908: verifies that clearing the only memory item from the narrow
+        /// Issue #312: verifies that clearing the only memory item from the narrow
         /// Memory flyout closes the flyout and moves focus to the M+ keypad button.
         /// </summary>
         [TestMethod]

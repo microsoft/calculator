@@ -186,23 +186,7 @@ namespace CalculatorApp
                 };
                 historyVM.HideHistoryClicked += OnHideHistoryClicked;
                 historyVM.HistoryItemClicked += OnHistoryItemClicked;
-                m_historyList.HistoryEmptied += (s, e) =>
-                {
-                    // Raised before the last item is removed, so focusing here keeps focus from
-                    // briefly escaping (e.g. to the hamburger) while the list empties.
-                    if (HistoryButton.IsEnabled && HistoryButton.Visibility == Visibility.Visible)
-                    {
-                        // Narrow (flyout) layout: focus the History toggle button, mirroring
-                        // the focus target used when the history flyout closes.
-                        HistoryButton.Focus(FocusState.Programmatic);
-                    }
-                    else
-                    {
-                        // Docked layout: no History toggle button exists, so keep focus
-                        // within the docked History/Memory pivot instead of escaping.
-                        DockPivot.Focus(FocusState.Programmatic);
-                    }
-                };
+                m_historyList.HistoryEmptied += OnHistoryEmptied;
             }
         }
 
@@ -716,6 +700,24 @@ namespace CalculatorApp
 
             CloseHistoryFlyout();
             this.Focus(FocusState.Programmatic);
+        }
+
+        private void OnHistoryEmptied(object sender, EventArgs e)
+        {
+            // Raised before the last item is removed, so focusing here keeps focus from
+            // briefly escaping (e.g. to the hamburger) while the list empties.
+            if (HistoryButton.IsEnabled && HistoryButton.Visibility == Visibility.Visible)
+            {
+                // Narrow (flyout) layout: focus the History toggle button, mirroring
+                // the focus target used when the history flyout closes.
+                HistoryButton.Focus(FocusState.Programmatic);
+            }
+            else
+            {
+                // Docked layout: no History toggle button exists, so keep focus
+                // within the docked History/Memory pivot instead of escaping.
+                DockPivot.Focus(FocusState.Programmatic);
+            }
         }
 
         private void ToggleHistoryFlyout(object parameter)

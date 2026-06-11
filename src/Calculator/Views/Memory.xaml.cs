@@ -71,12 +71,12 @@ namespace CalculatorApp
                 return;
             }
 
-            // Capture the position before clearing; the container is torn down on removal.
-            var clearedIndex = MemoryListView.IndexFromContainer(MemoryContextMenu.Target);
             var itemsRemainingAfterClear = MemoryListView.Items.Count - 1;
 
             if (itemsRemainingAfterClear > 0)
             {
+                // Capture the position before clearing; the container is torn down on removal.
+                var clearedIndex = MemoryListView.IndexFromContainer(MemoryContextMenu.Target);
                 memoryItem.Clear();
 
                 var newFocusIndex = Math.Min(clearedIndex, itemsRemainingAfterClear - 1);

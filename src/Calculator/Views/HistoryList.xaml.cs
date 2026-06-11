@@ -73,12 +73,12 @@ namespace CalculatorApp
             var listViewItem = HistoryContextMenu.Target;
             if (HistoryListView.ItemFromContainer(listViewItem) is HistoryItemViewModel itemViewModel)
             {
-                // Capture the position before deleting; the container is torn down on removal.
-                var deletedIndex = HistoryListView.IndexFromContainer(listViewItem);
                 var itemsRemainingAfterDelete = HistoryListView.Items.Count - 1;
 
                 if (itemsRemainingAfterDelete > 0)
                 {
+                    // Capture the position before deleting; the container is torn down on removal.
+                    var deletedIndex = HistoryListView.IndexFromContainer(listViewItem);
                     Model.DeleteItem(itemViewModel);
 
                     var newFocusIndex = Math.Min(deletedIndex, itemsRemainingAfterDelete - 1);
