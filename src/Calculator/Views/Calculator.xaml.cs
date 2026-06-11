@@ -720,6 +720,22 @@ namespace CalculatorApp
             }
         }
 
+        private void OnMemoryEmptied(object sender, EventArgs e)
+        {
+            // Raised before the last item is removed. Focus M+ up front so focus never
+            // escapes to the hamburger while the list empties.
+            MemPlus?.Focus(FocusState.Programmatic);
+
+            if (m_fIsMemoryFlyoutOpen)
+            {
+                // Narrow (flyout) layout: the keypad sits behind the open flyout. Close
+                // it and re-assert M+ focus once it has fully closed (OnMemoryFlyoutClosed),
+                // so focus isn't handed to the now-disabled memory button.
+                m_focusMemoryPlusOnFlyoutClose = true;
+                MemoryFlyout.Hide();
+            }
+        }
+
         private void ToggleHistoryFlyout(object parameter)
         {
             if (Model.IsProgrammer || DockPanel.Visibility == Visibility.Visible)
@@ -823,21 +839,7 @@ namespace CalculatorApp
             if (m_memory == null)
             {
                 m_memory = new Memory();
-                m_memory.MemoryEmptied += (s, e) =>
-                {
-                    // Raised before the last item is removed. Focus M+ up front so focus never
-                    // escapes to the hamburger while the list empties.
-                    MemPlus?.Focus(FocusState.Programmatic);
-
-                    if (m_fIsMemoryFlyoutOpen)
-                    {
-                        // Narrow (flyout) layout: the keypad sits behind the open flyout. Close
-                        // it and re-assert M+ focus once it has fully closed (OnMemoryFlyoutClosed),
-                        // so focus isn't handed to the now-disabled memory button.
-                        m_focusMemoryPlusOnFlyoutClose = true;
-                        MemoryFlyout.Hide();
-                    }
-                };
+                m_memory.MemoryEmptied += OnMemoryEmptied;
                 VisualStateManager.GoToState(m_memory, GetCurrentLayoutState(), true);
             }
 
