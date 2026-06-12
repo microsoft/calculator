@@ -13,6 +13,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Automation.Provider;
 using Windows.UI.Xaml.Controls;
+using System.Collections.Generic;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -21,6 +22,7 @@ namespace CalculatorApp
     public sealed partial class Settings : UserControl
     {
         private const string BUILD_YEAR = "2025";
+        private bool _isSettingLanguageProgrammatically = false;
 
         public event Windows.UI.Xaml.RoutedEventHandler BackButtonClick;
 
@@ -48,6 +50,8 @@ namespace CalculatorApp
             AboutExpander.Description = copyrightText;
 
             InitializeContributeTextBlock();
+
+            InitializeLanguageSettings();
         }
 
         private void OnThemeSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -72,6 +76,27 @@ namespace CalculatorApp
 
             var currentTheme = ThemeHelper.RootTheme.ToString();
             (ThemeRadioButtons.Items.Cast<RadioButton>().FirstOrDefault(c => c?.Tag?.ToString() == currentTheme)).IsChecked = true;
+
+            // Initialize language selection to current preference
+            try
+            {
+                var items = LanguageComboBox.ItemsSource as List<CalculatorApp.Utils.LanguageInfo>;
+                var selected = CalculatorApp.Utils.LanguageHelper.SelectedLanguage;
+                if (items != null)
+                {
+                    foreach (var it in items)
+                    {
+                        if (it.Code == selected)
+                        {
+                            _isSettingLanguageProgrammatically = true;
+                            LanguageComboBox.SelectedItem = it;
+                            _isSettingLanguageProgrammatically = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch { _isSettingLanguageProgrammatically = false; }
 
             SetDefaultFocus();
         }
@@ -137,6 +162,48 @@ namespace CalculatorApp
             ContributeRunBeforeLink.Text = contributeTextBeforeHyperlink;
             ContributeRunLink.Text = contributeTextLink;
             ContributeRunAfterLink.Text = contributeTextAfterHyperlink;
+        }
+
+        private void InitializeLanguageSettings()
+        {
+            try
+            {
+                var list = CalculatorApp.Utils.LanguageHelper.GetAvailableLanguages();
+                LanguageComboBox.ItemsSource = list;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Language init error: {ex.Message}");
+            }
+        }
+
+        private void OnLanguageSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_isSettingLanguageProgrammatically)
+            {
+                return;
+            }
+
+            if (e.AddedItems.Count == 0)
+                return;
+
+            if (e.AddedItems[0] is CalculatorApp.Utils.LanguageInfo lang)
+            {
+                var current = CalculatorApp.Utils.LanguageHelper.SelectedLanguage;
+                if (string.Equals(current, lang.Code, StringComparison.OrdinalIgnoreCase))
+                {
+                    return; // no actual change
+                }
+
+                CalculatorApp.Utils.LanguageHelper.ApplyUserLanguageSelection(lang.Code);
+
+                // Inform user that full app restart may be required to update all resources
+                var title = AppResourceProvider.GetInstance().GetResourceString("LanguageChangeDialog/Title");
+                var message = AppResourceProvider.GetInstance().GetResourceString("LanguageChangeDialog/Message");
+                if (string.IsNullOrEmpty(title)) title = "Language Changed";
+                if (string.IsNullOrEmpty(message)) message = "Some UI may update after restart.";
+                _ = new ContentDialog { Title = title, Content = message, PrimaryButtonText = "OK" }.ShowAsync();
+            }
         }
 
         private void System_BackRequested(object sender, BackRequestedEventArgs e)
