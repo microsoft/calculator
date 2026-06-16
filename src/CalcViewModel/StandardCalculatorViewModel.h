@@ -71,7 +71,7 @@ namespace CalculatorApp
             OBSERVABLE_PROPERTY_RW(bool, IsDecimalEnabled);
             OBSERVABLE_PROPERTY_R(Windows::Foundation::Collections::IVector<MemoryItemViewModel ^> ^, MemorizedNumbers);
             OBSERVABLE_NAMED_PROPERTY_RW(bool, IsMemoryEmpty);
-            OBSERVABLE_PROPERTY_R(bool, IsFToEChecked);
+            OBSERVABLE_PROPERTY_RW(bool, IsFToEChecked);
             OBSERVABLE_PROPERTY_R(bool, IsFToEEnabled);
             OBSERVABLE_PROPERTY_R(bool, AreHEXButtonsEnabled);
             OBSERVABLE_PROPERTY_R(Platform::String ^, CalculationResultAutomationName);
