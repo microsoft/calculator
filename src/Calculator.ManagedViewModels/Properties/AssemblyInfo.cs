@@ -4,5 +4,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Calculator.ManagedViewModels")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("Microsoft Windows Calculator")]
-[assembly: AssemblyCopyright("Copyright ©  2025")]
+[assembly: AssemblyCopyright("Copyright ©  2026")]
 [assembly: ComVisible(false)]
