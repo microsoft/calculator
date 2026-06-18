@@ -377,8 +377,8 @@ void _snaprat(_Inout_ PRAT* pr, _In_ PRAT a, _In_opt_ PRAT b, int32_t precision)
     DUPRAT(absR, *pr);
     ABSRAT(absR);
 
-    // if absResult < threshold => snap to zero
-    if (rat_lt(absR, threshold, precision))
+    // if absResult < threshold && absResult < rat_smallest => snap to zero
+    if (rat_lt(absR, threshold, precision) && rat_lt(absR, rat_smallest, precision))
     {
         DUPRAT(*pr, rat_zero);
     }
