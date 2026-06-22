@@ -66,7 +66,8 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
     PRAT sum = nullptr;
     PRAT err = nullptr;
     PRAT mpy = nullptr;
-
+    PRAT ratRadix = nullptr;
+    
     // Set up constants and initial conditions
     PRAT ratprec = i32torat(precision);
 
@@ -97,7 +98,7 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
     exprat(&tmp, radix, precision);
     mulrat(&term, tmp, precision);
     _lograt(&term, precision);
-    const auto ratRadix = i32torat(radix);
+    ratRadix = i32torat(radix);
     DUPRAT(tmp, ratRadix);
     _lograt(&tmp, precision);
     _subrat(&term, tmp, precision);
@@ -182,6 +183,8 @@ void _gamma(PRAT* pn, uint32_t radix, int32_t precision)
     destroyrat(*pn);
     DUPRAT(*pn, sum);
     destroyrat(sum);
+    destroyrat(ratRadix);
+    destroyrat(mpy);
 }
 
 void factrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
@@ -208,6 +211,9 @@ void factrat(_Inout_ PRAT* px, uint32_t radix, int32_t precision)
     // Check for negative integers and throw an error.
     if ((zerrat(frac) || (LOGRATRADIX(frac) <= -precision)) && (SIGN(*px) == -1))
     {
+        destroyrat(neg_rat_one);
+        destroyrat(frac);
+        destroyrat(fact);
         throw CALC_E_DOMAIN;
     }
     while (rat_gt(*px, rat_zero, precision) && (LOGRATRADIX(*px) > -precision))
