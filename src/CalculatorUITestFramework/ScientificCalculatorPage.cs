@@ -16,14 +16,14 @@ namespace CalculatorUITestFramework
         public MemoryPanel MemoryPanel = new MemoryPanel();
         public HistoryPanel HistoryPanel = new HistoryPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
-        public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
+        public WindowsElement Header => session.TryFindElementByAccessibilityId("Header");
 
         public CalculatorResults CalculatorResults = new CalculatorResults();
 
         public void NavigateToScientificCalculator()
         {
             // Ensure that calculator is in scientific mode
-            this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.ScientificCalculator);
+            NavigationMenu.ChangeCalculatorMode(CalculatorMode.ScientificCalculator);
         }
 
         /// <summary>
@@ -31,16 +31,16 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ClearAll()
         {
-            string source = this.session.PageSource;
+            string source = session.PageSource;
 
             if (source.Contains("clearEntryButton"))
             {
-                this.StandardOperators.ClearEntryButton.Click();
-                source = this.session.PageSource;
+                StandardOperators.ClearEntryButton.Click();
+                source = session.PageSource;
             }
             if (source.Contains("clearButton"))
             {
-                this.StandardOperators.ClearButton.Click();
+                StandardOperators.ClearButton.Click();
             }
             MemoryPanel.ResizeWindowToDisplayMemoryLabel();
             HistoryPanel.ClearHistory();

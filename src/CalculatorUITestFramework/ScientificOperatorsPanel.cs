@@ -27,66 +27,66 @@ namespace CalculatorUITestFramework
     public class ScientificOperatorsPanel
     {
         private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
-        public WindowsElement XPower3Button => this.session.TryFindElementByAccessibilityId("xpower3Button");
-        public WindowsElement XPowerYButton => this.session.TryFindElementByAccessibilityId("powerButton");
-        public WindowsElement PowerOf10Button => this.session.TryFindElementByAccessibilityId("powerOf10Button");
-        public WindowsElement LogButton => this.session.TryFindElementByAccessibilityId("logBase10Button");
-        public WindowsElement LnButton => this.session.TryFindElementByAccessibilityId("logBaseEButton");
-        public WindowsElement PiButton => this.session.TryFindElementByAccessibilityId("piButton");
-        public WindowsElement EulerButton => this.session.TryFindElementByAccessibilityId("eulerButton");
-        public WindowsElement AbsButton => this.session.TryFindElementByAccessibilityId("absButton");
-        public WindowsElement ExpButton => this.session.TryFindElementByAccessibilityId("expButton");
-        public WindowsElement ModButton => this.session.TryFindElementByAccessibilityId("modButton");
-        public WindowsElement ParenthesisLeftButton => this.session.TryFindElementByAccessibilityId("openParenthesisButton");
-        public WindowsElement ParenthesisRightButton => this.session.TryFindElementByAccessibilityId("closeParenthesisButton");
-        public WindowsElement FactorialButton => this.session.TryFindElementByAccessibilityId("factorialButton");
-        public WindowsElement BackSpaceButton => this.session.TryFindElementByAccessibilityId("backSpaceButton");
-        public WindowsElement DegButton => this.session.TryFindElementByAccessibilityId("degButton");
-        public WindowsElement RadButton => this.session.TryFindElementByAccessibilityId("radButton");
-        public WindowsElement GradButton => this.session.TryFindElementByAccessibilityId("gradButton");
-        public WindowsElement AngleOperator => this.session.TryFindElementByAccessibilityId("ScientificAngleOperators");
-        public WindowsElement TrigButton => this.session.TryFindElementByAccessibilityId("trigButton");
-        public WindowsElement FuncButton => this.session.TryFindElementByAccessibilityId("funcButton");
-        public WindowsElement SinButton => this.session.TryFindElementByAccessibilityId("sinButton");
-        public WindowsElement CosButton => this.session.TryFindElementByAccessibilityId("cosButton");
-        public WindowsElement TanButton => this.session.TryFindElementByAccessibilityId("tanButton");
-        public WindowsElement CscButton => this.session.TryFindElementByAccessibilityId("cscButton");
-        public WindowsElement SecButton => this.session.TryFindElementByAccessibilityId("secButton");
-        public WindowsElement CotButton => this.session.TryFindElementByAccessibilityId("cotButton");
-        public WindowsElement TrigShiftButton => this.session.TryFindElementByAccessibilityId("trigShiftButton");
-        public WindowsElement HypShiftButton => this.session.TryFindElementByAccessibilityId("hypShiftButton");
-        public WindowsElement InvSinButton => this.session.TryFindElementByAccessibilityId("invsinButton");
-        public WindowsElement InvCosButton => this.session.TryFindElementByAccessibilityId("invcosButton");
-        public WindowsElement InvTanButton => this.session.TryFindElementByAccessibilityId("invtanButton");
-        public WindowsElement InvCscButton => this.session.TryFindElementByAccessibilityId("invcscButton");
-        public WindowsElement InvSecButton => this.session.TryFindElementByAccessibilityId("invsecButton");
-        public WindowsElement InvCotButton => this.session.TryFindElementByAccessibilityId("invcotButton");
-        public WindowsElement SinhButton => this.session.TryFindElementByAccessibilityId("sinhButton");
-        public WindowsElement CoshButton => this.session.TryFindElementByAccessibilityId("coshButton");
-        public WindowsElement TanhButton => this.session.TryFindElementByAccessibilityId("tanhButton");
-        public WindowsElement CschButton => this.session.TryFindElementByAccessibilityId("cschButton");
-        public WindowsElement SechButton => this.session.TryFindElementByAccessibilityId("sechButton");
-        public WindowsElement CothButton => this.session.TryFindElementByAccessibilityId("cothButton");
-        public WindowsElement InvSinhButton => this.session.TryFindElementByAccessibilityId("invsinhButton");
-        public WindowsElement InvCoshButton => this.session.TryFindElementByAccessibilityId("invcoshButton");
-        public WindowsElement InvTanhButton => this.session.TryFindElementByAccessibilityId("invtanhButton");
-        public WindowsElement InvCschButton => this.session.TryFindElementByAccessibilityId("invcschButton");
-        public WindowsElement InvSechButton => this.session.TryFindElementByAccessibilityId("invsechButton");
-        public WindowsElement InvCothButton => this.session.TryFindElementByAccessibilityId("invcothButton");
-        public WindowsElement FloorButton => this.session.TryFindElementByAccessibilityId("floorButton");
-        public WindowsElement CeilButton => this.session.TryFindElementByAccessibilityId("ceilButton");
-        public WindowsElement RandButton => this.session.TryFindElementByAccessibilityId("randButton");
-        public WindowsElement DmsButton => this.session.TryFindElementByAccessibilityId("dmsButton");
-        public WindowsElement DegreesButton => this.session.TryFindElementByAccessibilityId("degreesButton");
-        public WindowsElement FixedToExponentialButton => this.session.TryFindElementByAccessibilityId("ftoeButton");
-        public WindowsElement NegateButton => this.session.TryFindElementByAccessibilityId("negateButton");
-        public WindowsElement ShiftButton => this.session.TryFindElementByAccessibilityId("shiftButton");
-        public WindowsElement TrigFlyout => this.session.TryFindElementByAccessibilityId("Trigflyout");
-        public WindowsElement LightDismiss => this.session.TryFindElementByAccessibilityId("Light Dismiss");
+        public WindowsElement XPower3Button => session.TryFindElementByAccessibilityId("xpower3Button");
+        public WindowsElement XPowerYButton => session.TryFindElementByAccessibilityId("powerButton");
+        public WindowsElement PowerOf10Button => session.TryFindElementByAccessibilityId("powerOf10Button");
+        public WindowsElement LogButton => session.TryFindElementByAccessibilityId("logBase10Button");
+        public WindowsElement LnButton => session.TryFindElementByAccessibilityId("logBaseEButton");
+        public WindowsElement PiButton => session.TryFindElementByAccessibilityId("piButton");
+        public WindowsElement EulerButton => session.TryFindElementByAccessibilityId("eulerButton");
+        public WindowsElement AbsButton => session.TryFindElementByAccessibilityId("absButton");
+        public WindowsElement ExpButton => session.TryFindElementByAccessibilityId("expButton");
+        public WindowsElement ModButton => session.TryFindElementByAccessibilityId("modButton");
+        public WindowsElement ParenthesisLeftButton => session.TryFindElementByAccessibilityId("openParenthesisButton");
+        public WindowsElement ParenthesisRightButton => session.TryFindElementByAccessibilityId("closeParenthesisButton");
+        public WindowsElement FactorialButton => session.TryFindElementByAccessibilityId("factorialButton");
+        public WindowsElement BackSpaceButton => session.TryFindElementByAccessibilityId("backSpaceButton");
+        public WindowsElement DegButton => session.TryFindElementByAccessibilityId("degButton");
+        public WindowsElement RadButton => session.TryFindElementByAccessibilityId("radButton");
+        public WindowsElement GradButton => session.TryFindElementByAccessibilityId("gradButton");
+        public WindowsElement AngleOperator => session.TryFindElementByAccessibilityId("ScientificAngleOperators");
+        public WindowsElement TrigButton => session.TryFindElementByAccessibilityId("trigButton");
+        public WindowsElement FuncButton => session.TryFindElementByAccessibilityId("funcButton");
+        public WindowsElement SinButton => session.TryFindElementByAccessibilityId("sinButton");
+        public WindowsElement CosButton => session.TryFindElementByAccessibilityId("cosButton");
+        public WindowsElement TanButton => session.TryFindElementByAccessibilityId("tanButton");
+        public WindowsElement CscButton => session.TryFindElementByAccessibilityId("cscButton");
+        public WindowsElement SecButton => session.TryFindElementByAccessibilityId("secButton");
+        public WindowsElement CotButton => session.TryFindElementByAccessibilityId("cotButton");
+        public WindowsElement TrigShiftButton => session.TryFindElementByAccessibilityId("trigShiftButton");
+        public WindowsElement HypShiftButton => session.TryFindElementByAccessibilityId("hypShiftButton");
+        public WindowsElement InvSinButton => session.TryFindElementByAccessibilityId("invsinButton");
+        public WindowsElement InvCosButton => session.TryFindElementByAccessibilityId("invcosButton");
+        public WindowsElement InvTanButton => session.TryFindElementByAccessibilityId("invtanButton");
+        public WindowsElement InvCscButton => session.TryFindElementByAccessibilityId("invcscButton");
+        public WindowsElement InvSecButton => session.TryFindElementByAccessibilityId("invsecButton");
+        public WindowsElement InvCotButton => session.TryFindElementByAccessibilityId("invcotButton");
+        public WindowsElement SinhButton => session.TryFindElementByAccessibilityId("sinhButton");
+        public WindowsElement CoshButton => session.TryFindElementByAccessibilityId("coshButton");
+        public WindowsElement TanhButton => session.TryFindElementByAccessibilityId("tanhButton");
+        public WindowsElement CschButton => session.TryFindElementByAccessibilityId("cschButton");
+        public WindowsElement SechButton => session.TryFindElementByAccessibilityId("sechButton");
+        public WindowsElement CothButton => session.TryFindElementByAccessibilityId("cothButton");
+        public WindowsElement InvSinhButton => session.TryFindElementByAccessibilityId("invsinhButton");
+        public WindowsElement InvCoshButton => session.TryFindElementByAccessibilityId("invcoshButton");
+        public WindowsElement InvTanhButton => session.TryFindElementByAccessibilityId("invtanhButton");
+        public WindowsElement InvCschButton => session.TryFindElementByAccessibilityId("invcschButton");
+        public WindowsElement InvSechButton => session.TryFindElementByAccessibilityId("invsechButton");
+        public WindowsElement InvCothButton => session.TryFindElementByAccessibilityId("invcothButton");
+        public WindowsElement FloorButton => session.TryFindElementByAccessibilityId("floorButton");
+        public WindowsElement CeilButton => session.TryFindElementByAccessibilityId("ceilButton");
+        public WindowsElement RandButton => session.TryFindElementByAccessibilityId("randButton");
+        public WindowsElement DmsButton => session.TryFindElementByAccessibilityId("dmsButton");
+        public WindowsElement DegreesButton => session.TryFindElementByAccessibilityId("degreesButton");
+        public WindowsElement FixedToExponentialButton => session.TryFindElementByAccessibilityId("ftoeButton");
+        public WindowsElement NegateButton => session.TryFindElementByAccessibilityId("negateButton");
+        public WindowsElement ShiftButton => session.TryFindElementByAccessibilityId("shiftButton");
+        public WindowsElement TrigFlyout => session.TryFindElementByAccessibilityId("Trigflyout");
+        public WindowsElement LightDismiss => session.TryFindElementByAccessibilityId("Light Dismiss");
         private WindowsElement DegRadGradButton => GetAngleOperatorButton();
         private WindowsElement GetAngleOperatorButton()
         {
-            string source = this.session.PageSource;
+            string source = session.PageSource;
             if (source.Contains("degButton"))
             {
                 return DegButton;
@@ -116,15 +116,15 @@ namespace CalculatorUITestFramework
                 AngleOperatorState.Radians => "radButton",
                 _ => throw new NotImplementedException()
             };
-            while (this.DegRadGradButton.GetAttribute("AutomationId") != desiredId)
+            while (DegRadGradButton.GetAttribute("AutomationId") != desiredId)
             {
-                this.DegRadGradButton.Click();
+                DegRadGradButton.Click();
             }
         }
 
         public void ResetFEButton(FEButtonState value)
         {
-            if (this.FixedToExponentialButton.GetAttribute("Toggle.ToggleState") != "0")
+            if (FixedToExponentialButton.GetAttribute("Toggle.ToggleState") != "0")
             {
                 FixedToExponentialButton.Click();
             }
@@ -133,7 +133,7 @@ namespace CalculatorUITestFramework
         public WindowsElement ResetTrigDropdownToggles()
         {
             TrigButton.Click();
-            string source = this.session.PageSource;
+            string source = session.PageSource;
             if (source.Contains("sinButton"))
             {
                 LightDismiss.Click();
