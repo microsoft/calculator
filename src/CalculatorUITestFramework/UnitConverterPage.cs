@@ -17,7 +17,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ClearAll()
         {
-            this.UnitConverterOperators.ClearButton.Click();
+            UnitConverterOperators.ClearButton.Click();
         }
 
         ///// <summary>
@@ -25,9 +25,9 @@ namespace CalculatorUITestFramework
         ///// </summary>
         public void EnsureCalculatorResultTextIsZero()
         {
-            if ("0" != this.UnitConverterResults.GetCalculationResult1Text())
+            if ("0" != UnitConverterResults.GetCalculationResult1Text())
             {
-                this.ClearAll();
+                ClearAll();
             }
         }
 
@@ -37,8 +37,8 @@ namespace CalculatorUITestFramework
         public void NavigateToUnitConverter()
         {
             // Ensure that calculator is in Currency Mode
-            this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Currency);
-            this.UnitConverterResults.IsResultsDisplayPresent();
+            NavigationMenu.ChangeCalculatorMode(CalculatorMode.Currency);
+            UnitConverterResults.IsResultsDisplayPresent();
         }
 
         ///// <summary>
@@ -56,7 +56,7 @@ namespace CalculatorUITestFramework
                 }
                 else
                 {
-                    this.NavigateToUnitConverter();
+                    NavigateToUnitConverter();
                 }
             }
         }

@@ -30,8 +30,8 @@ namespace CalculatorUITestFramework
 
     public class NavigationMenu
     {
-        public WindowsElement NavigationMenuButton => this.session.TryFindElementByAccessibilityId("TogglePaneButton");
-        public WindowsElement NavigationMenuPane => this.session.TryFindElementByClassName("SplitViewPane");
+        public WindowsElement NavigationMenuButton => session.TryFindElementByAccessibilityId("TogglePaneButton");
+        public WindowsElement NavigationMenuPane => session.TryFindElementByClassName("SplitViewPane");
 
         private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
 
@@ -63,9 +63,9 @@ namespace CalculatorUITestFramework
                 _ => throw (new ArgumentException("The mode is not valid"))
             };
 
-            this.NavigationMenuButton.Click();
-            this.NavigationMenuPane.WaitForDisplayed();
-            this.session.TryFindElementByAccessibilityId(modeAccessibilityId).Click();
+            NavigationMenuButton.Click();
+            NavigationMenuPane.WaitForDisplayed();
+            session.TryFindElementByAccessibilityId(modeAccessibilityId).Click();
         }
     }
 }

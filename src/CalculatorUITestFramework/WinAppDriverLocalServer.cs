@@ -39,23 +39,23 @@ namespace CalculatorUITestFramework
                 throw new Exception("Could not find winappdriver.exe in program files. Make sure WinAppDriver is installed: https://aka.ms/winappdriver");
             }
 
-            this.winAppDriverProcess = new Process();
-            this.winAppDriverProcess.StartInfo.CreateNoWindow = true;
-            this.winAppDriverProcess.StartInfo.FileName = path;
-            this.winAppDriverProcess.StartInfo.UseShellExecute = false;
-            this.winAppDriverProcess.StartInfo.RedirectStandardInput = true;
-            this.winAppDriverProcess.StartInfo.RedirectStandardOutput = true;
-            this.winAppDriverProcess.StartInfo.RedirectStandardError = true;
-            this.winAppDriverProcess.OutputDataReceived += this.OnProcessOutputDataReceived;
-            this.winAppDriverProcess.ErrorDataReceived += this.OnProcessErrorDataReceived;
-            if (!this.winAppDriverProcess.Start())
+            winAppDriverProcess = new Process();
+            winAppDriverProcess.StartInfo.CreateNoWindow = true;
+            winAppDriverProcess.StartInfo.FileName = path;
+            winAppDriverProcess.StartInfo.UseShellExecute = false;
+            winAppDriverProcess.StartInfo.RedirectStandardInput = true;
+            winAppDriverProcess.StartInfo.RedirectStandardOutput = true;
+            winAppDriverProcess.StartInfo.RedirectStandardError = true;
+            winAppDriverProcess.OutputDataReceived += OnProcessOutputDataReceived;
+            winAppDriverProcess.ErrorDataReceived += OnProcessErrorDataReceived;
+            if (!winAppDriverProcess.Start())
             {
                 throw new Exception("WinAppDriver process failed to start.");
             }
-            this.winAppDriverProcess.BeginOutputReadLine();
-            this.winAppDriverProcess.BeginErrorReadLine();
+            winAppDriverProcess.BeginOutputReadLine();
+            winAppDriverProcess.BeginErrorReadLine();
 
-            var pingUri = new Uri(this.ServiceUrl, "/status");
+            var pingUri = new Uri(ServiceUrl, "/status");
             var status = new HttpClient().GetAsync(pingUri);
             var timeout = TimeSpan.FromSeconds(10);
             if (!status.Wait(timeout))
@@ -71,7 +71,7 @@ namespace CalculatorUITestFramework
             var data = e.Data?.Replace("\0", string.Empty);
             if (!string.IsNullOrEmpty(data))
             {
-                Console.WriteLine(this.PrependWinAppDriverToEachLine(data));
+                Console.WriteLine(PrependWinAppDriverToEachLine(data));
             }
         }
 
@@ -80,7 +80,7 @@ namespace CalculatorUITestFramework
             var data = e.Data?.Replace("\0", string.Empty);
             if (!string.IsNullOrEmpty(data))
             {
-                Console.Error.WriteLine(this.PrependWinAppDriverToEachLine(data));
+                Console.Error.WriteLine(PrependWinAppDriverToEachLine(data));
             }
         }
 
@@ -94,18 +94,18 @@ namespace CalculatorUITestFramework
 
         ~WinAppDriverLocalServer()
         {
-            if (!this.processExited)
+            if (!processExited)
             {
-                this.winAppDriverProcess.Kill();
-                this.winAppDriverProcess.WaitForExit();
+                winAppDriverProcess.Kill();
+                winAppDriverProcess.WaitForExit();
             }
         }
 
         public void Dispose()
         {
-            this.winAppDriverProcess.Kill();
-            this.winAppDriverProcess.WaitForExit();
-            this.processExited = true;
+            winAppDriverProcess.Kill();
+            winAppDriverProcess.WaitForExit();
+            processExited = true;
             GC.SuppressFinalize(this);
         }
     }

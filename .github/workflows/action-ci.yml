@@ -7,6 +7,19 @@ on:
     branches: [main, release/**, feature/**]
   workflow_dispatch:
 jobs:
+  verifyCodeStyle:
+    name: Verify code style (IDE0003)
+    runs-on: windows-2025-vs2026
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-dotnet@v4
+      name: Setup .NET SDK
+      with:
+        dotnet-version: '10.0.x'
+    - run: ./build/scripts/VerifyCodeStyle.ps1
+      shell: pwsh
+      name: Verify no unnecessary this. (IDE0003)
+
   defineBuilds:
     name: Define builds
     runs-on: windows-2025-vs2026
