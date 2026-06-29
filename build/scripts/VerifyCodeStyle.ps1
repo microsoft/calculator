@@ -18,9 +18,11 @@
     rules. The allowlist is a positive list, so new projects are
     safe-by-default until explicitly added.
 
-    Restore is intentionally NOT skipped: the allowlisted projects carry
-    PackageReference dependencies and must be restored to load in the
-    workspace.
+    Restore is performed explicitly per project (and its exit code checked)
+    before formatting: the allowlisted projects carry PackageReference
+    dependencies that must be restored to load in the workspace, and a restore
+    failure should fail the gate loudly rather than letting 'dotnet format'
+    proceed against a partially loaded workspace.
 
 .PARAMETER Diagnostics
     Comma-separated diagnostic IDs to enforce. Defaults to 'IDE0003'.
@@ -75,7 +77,20 @@ foreach ($relPath in $sdkProjects)
 
     Write-Host "Checking: $relPath"
 
+    # Restore explicitly first so a restore/feed failure fails the gate loudly,
+    # rather than letting 'dotnet format' run against a partially loaded
+    # workspace and report success without analyzing anything.
+    & dotnet restore $projPath
+
+    if ($LASTEXITCODE -ne 0)
+    {
+        Write-Host "##[error]Restore failed for: $relPath"
+        $failed = $true
+        continue
+    }
+
     & dotnet format style $projPath `
+        --no-restore `
         --verify-no-changes `
         --severity warn `
         --diagnostics $Diagnostics
