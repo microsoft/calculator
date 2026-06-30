@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4197,5 +4197,26 @@
   <data name="SnapshotRestoreError" xml:space="preserve">
     <value>无法还原此快照。</value>
     <comment>The error message to notify user that restoring from snapshot has failed.</comment>
+  </data>
+  <data name="UnitAbbreviation_AstronomicalUnit" xml:space="preserve">
+    <value>AU</value>
+  </data>
+  <data name="UnitAbbreviation_Parsec" xml:space="preserve">
+    <value>秒差距</value>
+  </data>
+  <data name="UnitName_AstronomicalUnit" xml:space="preserve">
+    <value>天文单位</value>
+    <comment>长度单位，近似等于地球与太阳的平均距离。</comment>
+  </data>
+  <data name="UnitName_LightYear" xml:space="preserve">
+    <value>光年</value>
+    <comment>长度单位，等于光在真空中传播一儒略年的距离。</comment>
+  </data>
+  <data name="UnitName_Parsec" xml:space="preserve">
+    <value>秒差距</value>
+    <comment>长度单位，用于测量太阳系外天文物体的大距离。</comment>
+  </data>
+  <data name="UnitAbbreviation_LightYear" xml:space="preserve">
+    <value>光年</value>
   </data>
 </root>
