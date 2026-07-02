@@ -899,8 +899,42 @@ namespace CalculatorApp.ViewModel
                 });
 
             BuildUnitList(result.Units);
-            Unit1 = FindUnitInList(result.FromUnit);
-            Unit2 = FindUnitInList(result.ToUnit);
+            AssignSelectedUnit(u => Unit1 = u, FindUnitInList(result.FromUnit));
+            AssignSelectedUnit(u => Unit2 = u, FindUnitInList(result.ToUnit));
+        }
+
+        // Assigns a Unit1/Unit2 selection, containing the transient exception the bound
+        // ComboBox can raise during a category change.
+        //
+        // Root cause: setting Unit1/Unit2 pushes the value to ComboBox.SelectedItem via the
+        // compiled x:Bind. When the category changes we rebuild the bound Units collection in
+        // place, and WinUI's ComboBox validates the new selection against its own item
+        // collection, which it refreshes from the ItemsSource change on a later (deferred)
+        // pass. If the selection is applied before that refresh completes,
+        // Selector.put_SelectedItem throws ArgumentException (0x80070057, "Value does not fall
+        // within the expected range"). Because this runs synchronously inside the XAML
+        // NavigationView selection handler, an escaping exception fail-fasts the whole process.
+        //
+        // This is a UI-realization timing race inside the control, not a data error: the
+        // assignment sets the Unit1/Unit2 backing field before the throw, and the ComboBox
+        // reconciles its selection on its next layout pass, so the displayed selection ends up
+        // correct. The C++/CX original avoided the throw because classic {Binding} routed the
+        // selection through the AlwaysSelectedCollectionView (ICollectionView) currency, which
+        // defers gracefully; that currency integration does not reproduce in the C# projection
+        // (reverting to {Binding} instead corrupts the selection via a TwoWay write-back), and
+        // no collection-side change closes the race because the lag lives inside the ComboBox.
+        // So we contain this one specific transient here.
+        private static void AssignSelectedUnit(Action<Unit> setter, Unit value)
+        {
+            try
+            {
+                setter(value);
+            }
+            catch (ArgumentException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"UnitConverterViewModel: ignored transient ComboBox SelectedItem race: {ex.Message}");
+            }
         }
 
         private void SetSelectedCurrencyUnits()
@@ -931,8 +965,8 @@ namespace CalculatorApp.ViewModel
                 Units.Add(new Unit(-1, "", "", "", false));
             }
 
-            Unit1 = fromUnit ?? (Units.Count > 0 ? Units[0] : null);
-            Unit2 = toUnit ?? (Units.Count > 1 ? Units[1] : Units.Count > 0 ? Units[0] : null);
+            AssignSelectedUnit(u => Unit1 = u, fromUnit ?? (Units.Count > 0 ? Units[0] : null));
+            AssignSelectedUnit(u => Unit2 = u, toUnit ?? (Units.Count > 1 ? Units[1] : Units.Count > 0 ? Units[0] : null));
         }
 
         private void BuildUnitList(CalcManager.Interop.UnitWrapper[] modelUnits)
