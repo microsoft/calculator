@@ -127,6 +127,7 @@
     <Compile Include="Controls\CalculationResultAutomationPeer.cs" />
     <Compile Include="Controls\CalculatorButton.cs" />
     <Compile Include="Controls\OperatorPanelButton.cs" />
+    <Compile Include="Controls\OperatorPanelButtonAutomationPeer.cs" />
     <Compile Include="Controls\OperatorPanelListView.cs" />
     <Compile Include="Controls\OverflowTextBlock.cs" />
     <Compile Include="Controls\OverflowTextBlockAutomationPeer.cs" />
