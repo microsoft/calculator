@@ -72,27 +72,27 @@ namespace CalculatorApp
             ByteButton.Visibility = Visibility.Collapsed;
             if (buttonId == "0")
             {
+                Model.ValueBitLength = BitLength.BitLengthQWord;
+                QwordButton.Visibility = Visibility.Visible;
+                QwordButton.Focus(FocusState.Programmatic);
+            }
+            else if (buttonId == "1")
+            {
                 Model.ValueBitLength = BitLength.BitLengthDWord;
                 DwordButton.Visibility = Visibility.Visible;
                 DwordButton.Focus(FocusState.Programmatic);
             }
-            else if (buttonId == "1")
+            else if (buttonId == "2")
             {
                 Model.ValueBitLength = BitLength.BitLengthWord;
                 WordButton.Visibility = Visibility.Visible;
                 WordButton.Focus(FocusState.Programmatic);
             }
-            else if (buttonId == "2")
+            else if (buttonId == "3")
             {
                 Model.ValueBitLength = BitLength.BitLengthByte;
                 ByteButton.Visibility = Visibility.Visible;
                 ByteButton.Focus(FocusState.Programmatic);
-            }
-            else if (buttonId == "3")
-            {
-                Model.ValueBitLength = BitLength.BitLengthQWord;
-                QwordButton.Visibility = Visibility.Visible;
-                QwordButton.Focus(FocusState.Programmatic);
             }
         }
 
