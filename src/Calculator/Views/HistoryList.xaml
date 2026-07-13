@@ -176,6 +176,14 @@
                     Content=""
                     ToolTipService.ToolTip="{utils:ResourceString Name=ClearHistory/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                     Visibility="{x:Bind Model.ItemsCount, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}"/>
+
+            <Button x:Name="ExportButton"
+                    Grid.Row="0"
+                    Style="{ThemeResource HistoryButtonStyle}"
+                    AutomationProperties.Name="Export History"
+                    Click="ExportButton_Click">
+                <SymbolIcon Symbol="Download"/>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>
