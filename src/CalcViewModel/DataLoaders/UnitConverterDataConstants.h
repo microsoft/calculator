@@ -167,7 +167,10 @@ namespace CalculatorApp
             Energy_Kilowatthour = UnitStart + 166,
             Data_Nibble = UnitStart + 167,
             Length_Angstrom = UnitStart + 168,
-            UnitEnd = Length_Angstrom
+            Length_AstronomicalUnit = UnitStart + 169,
+            Length_LightYear = UnitStart + 170,
+            Length_Parsec = UnitStart + 171,
+            UnitEnd = Length_Parsec
         };
     }
 }

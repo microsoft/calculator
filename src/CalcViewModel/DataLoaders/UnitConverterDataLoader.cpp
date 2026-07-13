@@ -401,6 +401,12 @@ void UnitConverterDataLoader::GetUnits(_In_ unordered_map<ViewMode, vector<Order
 
     vector<OrderedUnit> lengthUnits;
     lengthUnits.push_back(OrderedUnit{
+        UnitConverterUnits::Length_AstronomicalUnit, GetLocalizedStringName(L"UnitName_AstronomicalUnit"), GetLocalizedStringName(L"UnitAbbreviation_AstronomicalUnit"), 16 });
+    lengthUnits.push_back(OrderedUnit{
+        UnitConverterUnits::Length_LightYear, GetLocalizedStringName(L"UnitName_LightYear"), GetLocalizedStringName(L"UnitAbbreviation_LightYear"), 17 });
+    lengthUnits.push_back(OrderedUnit{
+        UnitConverterUnits::Length_Parsec, GetLocalizedStringName(L"UnitName_Parsec"), GetLocalizedStringName(L"UnitAbbreviation_Parsec"), 18 });
+    lengthUnits.push_back(OrderedUnit{
         UnitConverterUnits::Length_Angstrom, GetLocalizedStringName(L"UnitName_Angstrom"), GetLocalizedStringName(L"UnitAbbreviation_Angstrom"), 1 });
     lengthUnits.push_back(OrderedUnit{ UnitConverterUnits::Length_Centimeter,
                                        GetLocalizedStringName(L"UnitName_Centimeter"),
@@ -858,6 +864,9 @@ void UnitConverterDataLoader::GetConversionData(_In_ unordered_map<ViewMode, uno
                                                    { ViewMode::Length, UnitConverterUnits::Length_Millimeter, 0.001 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Nanometer, 0.000000001 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Angstrom, 0.0000000001 },
+                                                   { ViewMode::Length, UnitConverterUnits::Length_AstronomicalUnit, 149597870700 },
+                                                   { ViewMode::Length, UnitConverterUnits::Length_LightYear, 9460730472580800 },
+                                                   { ViewMode::Length, UnitConverterUnits::Length_Parsec, 30856775814913672.789139379577965 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Centimeter, 0.01 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Meter, 1 },
                                                    { ViewMode::Length, UnitConverterUnits::Length_Kilometer, 1000 },

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4197,5 +4197,23 @@
   <data name="SnapshotRestoreError" xml:space="preserve">
     <value>Δεν ήταν δυνατή η επαναφορά του παρόντος στιγμιότυπου.</value>
     <comment>The error message to notify user that restoring from snapshot has failed.</comment>
+  </data>
+  <data name="UnitAbbreviation_AstronomicalUnit" xml:space="preserve">
+    <value>ΑΜ</value>
+  </data>
+  <data name="UnitAbbreviation_Parsec" xml:space="preserve">
+    <value>παρσ</value>
+  </data>
+  <data name="UnitName_AstronomicalUnit" xml:space="preserve">
+    <value>αστρονομική μονάδα</value>
+  </data>
+  <data name="UnitName_LightYear" xml:space="preserve">
+    <value>έτος φωτός</value>
+  </data>
+  <data name="UnitName_Parsec" xml:space="preserve">
+    <value>παράσεκ</value>
+  </data>
+  <data name="UnitAbbreviation_LightYear" xml:space="preserve">
+    <value>έφ</value>
   </data>
 </root>

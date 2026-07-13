@@ -4770,4 +4770,28 @@
     <value>Couldn't restore this snapshot.</value>
     <comment>The error message to notify user that restoring from snapshot has failed.</comment>
   </data>
+  <data name="UnitAbbreviation_AstronomicalUnit" xml:space="preserve">
+    <value>AU</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitAbbreviation_Parsec" xml:space="preserve">
+    <value>pc</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
+  <data name="UnitName_AstronomicalUnit" xml:space="preserve">
+    <value>	Astronomical unit</value>
+    <comment>A unit of length, Approximately equals the average Earth-Sun distance.</comment>
+  </data>
+  <data name="UnitName_LightYear" xml:space="preserve">
+    <value>light-year</value>
+    <comment>A unit of length, equals the distance that light travels in vacuum in one Julian year.</comment>
+  </data>
+  <data name="UnitName_Parsec" xml:space="preserve">
+    <value>parsec</value>
+    <comment>A unit of length used to measure the large distances to astronomical objects outside the Solar System.</comment>
+  </data>
+  <data name="UnitAbbreviation_LightYear" xml:space="preserve">
+    <value>ly</value>
+    <comment>An abbreviation for a measurement unit of length</comment>
+  </data>
 </root>
