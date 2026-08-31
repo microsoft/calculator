@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -816,6 +817,39 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
+        public async Task RefreshCurrencyRatiosSurvivesTimestampFailure()
+        {
+            var viewModel = new UnitConverterViewModel();
+            await WaitForCurrencyCatalogAsync(viewModel);
+            viewModel.OnCurrencyTimestampUpdated("stale timestamp", isWeekOld: true);
+
+            PropertyChangedEventHandler failTimestamp = (sender, args) =>
+            {
+                if (args.PropertyName == nameof(UnitConverterViewModel.CurrencyTimestamp))
+                {
+                    throw new InvalidOperationException("timestamp display failed");
+                }
+            };
+
+            viewModel.PropertyChanged += failTimestamp;
+            try
+            {
+                await viewModel.RefreshCurrencyRatiosAsync();
+            }
+            finally
+            {
+                viewModel.PropertyChanged -= failTimestamp;
+            }
+
+            Assert.IsFalse(
+                viewModel.IsCurrencyLoadingVisible,
+                "A timestamp failure left the loading spinner up, which disables the refresh button.");
+            Assert.IsTrue(
+                viewModel.IsCurrencyDataLoaded,
+                "A timestamp failure left the converter without ratios and with no way to reload.");
+        }
+
+        [TestMethod]
         public async Task RefreshCurrencyRatiosPreservesSelectedCurrencies()
         {
             var viewModel = new UnitConverterViewModel();
@@ -839,6 +873,205 @@ namespace Calculator.Tests
 
             Assert.AreEqual(newFrom.Abbreviation, viewModel.Unit1.Abbreviation);
             Assert.AreEqual(newTo.Abbreviation, viewModel.Unit2.Abbreviation);
+        }
+
+        [TestMethod]
+        public void ConverterCommandsKeepTheirIdentityAcrossReads()
+        {
+            var viewModel = new UnitConverterViewModel();
+
+            Assert.AreSame(viewModel.CategoryChangedCommand, viewModel.CategoryChangedCommand);
+            Assert.AreSame(viewModel.UnitChangedCommand, viewModel.UnitChangedCommand);
+            Assert.AreSame(viewModel.SwitchActiveCommand, viewModel.SwitchActiveCommand);
+            Assert.AreSame(viewModel.SwapUnitsCommand, viewModel.SwapUnitsCommand);
+            Assert.AreSame(viewModel.ButtonPressedCommand, viewModel.ButtonPressedCommand);
+            Assert.AreSame(viewModel.CopyCommand, viewModel.CopyCommand);
+            Assert.AreSame(viewModel.PasteCommand, viewModel.PasteCommand);
+            Assert.AreSame(
+                viewModel.ButtonPressedCommand,
+                viewModel.ButtonPressed,
+                "The ButtonPressed alias must be the same command object it aliases.");
+        }
+
+        [TestMethod]
+        public void OtherViewModelCommandsKeepTheirIdentityAcrossReads()
+        {
+            var standard = new StandardCalculatorViewModel();
+            HistoryViewModel history = standard.HistoryVM;
+            Assert.AreSame(history.ClearCommand, history.ClearCommand);
+            Assert.AreSame(history.HideCommand, history.HideCommand);
+
+            var dateCalculator = new DateCalculatorViewModel();
+            Assert.AreSame(dateCalculator.CopyCommand, dateCalculator.CopyCommand);
+
+            var application = new ApplicationViewModel();
+            Assert.AreSame(application.CopyCommand, application.CopyCommand);
+            Assert.AreSame(application.PasteCommand, application.PasteCommand);
+        }
+
+        [TestMethod]
+        public async Task RefreshLeavesTheSpinnerClearWhenTheTailOfLoadFinishedThrows()
+        {
+            var viewModel = new UnitConverterViewModel();
+            await WaitForCurrencyCatalogAsync(viewModel);
+
+            PropertyChangedEventHandler failAnnouncement = (sender, args) =>
+            {
+                if (args.PropertyName == nameof(UnitConverterViewModel.Announcement))
+                {
+                    throw new InvalidOperationException("announcement failed");
+                }
+            };
+
+            viewModel.PropertyChanged += failAnnouncement;
+            try
+            {
+                await viewModel.RefreshCurrencyRatiosAsync();
+            }
+            catch (InvalidOperationException)
+            {
+                // The throw is the point; what matters is the state it leaves behind.
+            }
+            finally
+            {
+                viewModel.PropertyChanged -= failAnnouncement;
+            }
+
+            Assert.IsFalse(
+                viewModel.IsCurrencyLoadingVisible,
+                "The spinner must be cleared before anything that can throw, or the refresh button stays disabled.");
+        }
+
+        [TestMethod]
+        public async Task RefreshNotificationsCannotStrandLoadingState()
+        {
+            var viewModel = new UnitConverterViewModel();
+            await WaitForCurrencyCatalogAsync(viewModel);
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            UnitPickerViewModel picker = viewModel.CreateUnitPicker();
+            picker.SelectedCategory = picker.Categories.Single(
+                category => category.CategoryId == currencyId);
+
+            PropertyChangedEventHandler failNotifications = (sender, args) =>
+            {
+                if ((args.PropertyName == nameof(UnitConverterViewModel.IsCurrencyLoadingVisible)
+                        && viewModel.IsCurrencyLoadingVisible)
+                    || args.PropertyName == nameof(UnitConverterViewModel.CurrencyDataLoadFailed))
+                {
+                    throw new InvalidOperationException("notification failed");
+                }
+            };
+
+            viewModel.PropertyChanged += failNotifications;
+            InvalidOperationException failure = null;
+            try
+            {
+                await viewModel.RefreshCurrencyRatiosAsync();
+            }
+            catch (InvalidOperationException exception)
+            {
+                failure = exception;
+            }
+            finally
+            {
+                viewModel.PropertyChanged -= failNotifications;
+            }
+
+            Assert.IsNotNull(failure);
+            Assert.IsFalse(viewModel.IsCurrencyLoadingVisible);
+            Assert.IsTrue(viewModel.IsCurrencyDataLoaded);
+            Assert.IsTrue(viewModel.CurrencyDataLoadFailed);
+            Assert.IsFalse(picker.IsSelectedCategoryLoading);
+            Assert.IsTrue(picker.HasSelectedCategoryLoadFailed);
+        }
+
+        [TestMethod]
+        public async Task RefreshUpdatesOpenPickerBeforeNativeCallbackFailure()
+        {
+            var viewModel = new UnitConverterViewModel();
+            await WaitForCurrencyCatalogAsync(viewModel);
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            viewModel.CurrentCategory = viewModel.Categories.Single(
+                category => category.GetModelCategoryId() == currencyId);
+            UnitPickerViewModel picker = viewModel.CreateUnitPicker();
+            picker.SelectedCategory = picker.Categories.Single(
+                category => category.CategoryId == currencyId);
+
+            PropertyChangedEventHandler failUnitUpdate = (sender, args) =>
+            {
+                if (args.PropertyName == nameof(UnitConverterViewModel.Unit1))
+                {
+                    throw new InvalidOperationException("unit update failed");
+                }
+            };
+
+            viewModel.PropertyChanged += failUnitUpdate;
+            InvalidOperationException failure = null;
+            try
+            {
+                await viewModel.RefreshCurrencyRatiosAsync();
+            }
+            catch (InvalidOperationException exception)
+            {
+                failure = exception;
+            }
+            finally
+            {
+                viewModel.PropertyChanged -= failUnitUpdate;
+            }
+
+            Assert.IsNotNull(failure);
+            Assert.IsFalse(picker.IsSelectedCategoryLoading);
+        }
+
+        [TestMethod]
+        public async Task PickerNotificationFailureDoesNotSkipCurrencyReset()
+        {
+            var viewModel = new UnitConverterViewModel();
+            await WaitForCurrencyCatalogAsync(viewModel);
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            viewModel.CurrentCategory = viewModel.Categories.Single(
+                category => category.GetModelCategoryId() == currencyId);
+            UnitPickerViewModel picker = viewModel.CreateUnitPicker();
+            picker.SelectedCategory = picker.Categories.Single(
+                category => category.CategoryId == currencyId);
+            bool unitUpdated = false;
+
+            PropertyChangedEventHandler recordUnitUpdate = (sender, args) =>
+            {
+                if (args.PropertyName == nameof(UnitConverterViewModel.Unit1))
+                {
+                    unitUpdated = true;
+                }
+            };
+            PropertyChangedEventHandler failPickerCompletion = (sender, args) =>
+            {
+                if (args.PropertyName == nameof(UnitPickerViewModel.IsSelectedCategoryLoading)
+                    && !picker.IsSelectedCategoryLoading)
+                {
+                    throw new InvalidOperationException("picker update failed");
+                }
+            };
+
+            viewModel.PropertyChanged += recordUnitUpdate;
+            picker.PropertyChanged += failPickerCompletion;
+            InvalidOperationException failure = null;
+            try
+            {
+                await viewModel.RefreshCurrencyRatiosAsync();
+            }
+            catch (InvalidOperationException exception)
+            {
+                failure = exception;
+            }
+            finally
+            {
+                picker.PropertyChanged -= failPickerCompletion;
+                viewModel.PropertyChanged -= recordUnitUpdate;
+            }
+
+            Assert.IsNotNull(failure);
+            Assert.IsTrue(unitUpdated);
         }
 
         private static async Task WaitForCurrencyCatalogAsync(UnitConverterViewModel viewModel)

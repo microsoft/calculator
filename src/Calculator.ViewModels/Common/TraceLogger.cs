@@ -128,7 +128,6 @@ namespace CalculatorApp.ViewModel.Common
         private readonly List<int> _windowIdLog = new List<int>();
         private readonly object _lock = new object();
         private readonly IConverterTelemetrySink _converterTelemetrySink;
-        private ulong _currentWindowCount;
 
         private TraceLogger()
             : this(new TraceLoggingConverterTelemetrySink())

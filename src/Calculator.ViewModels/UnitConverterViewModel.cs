@@ -112,7 +112,10 @@ namespace CalculatorApp.ViewModel
 
         // Model
         private readonly CalcManager.Interop.UnitConverterWrapper _model;
+
+        // Tests can receive callbacks without a dispatcher, so serialize native access explicitly.
         private readonly object _modelLock = new object();
+
         private readonly DataLoaders.UnitConverterDataLoader _dataLoader;
         private readonly DataLoaders.CurrencyDataLoader _currencyDataLoader;
         private readonly Windows.UI.Core.CoreDispatcher _dispatcher;
@@ -455,13 +458,20 @@ namespace CalculatorApp.ViewModel
         /// </summary>
         public UnitPickerViewModel CreateUnitPicker(bool isFromUnit = true)
         {
-            var categories = new List<Category>(Categories);
-            var unitsByCategory = new List<IReadOnlyList<Unit>>(categories.Count);
-            var glyphs = new List<string>(categories.Count);
-            foreach (var category in categories)
+            // Snapshot categories and units together while currency data can rebuild them.
+            List<Category> categories;
+            List<IReadOnlyList<Unit>> unitsByCategory;
+            List<string> glyphs;
+            lock (_modelLock)
             {
-                unitsByCategory.Add(GetPickerUnitsForCategory(category));
-                glyphs.Add(GetPickerGlyphForCategory(category));
+                categories = new List<Category>(Categories);
+                unitsByCategory = new List<IReadOnlyList<Unit>>(categories.Count);
+                glyphs = new List<string>(categories.Count);
+                foreach (var category in categories)
+                {
+                    unitsByCategory.Add(GetPickerUnitsForCategory(category));
+                    glyphs.Add(GetPickerGlyphForCategory(category));
+                }
             }
 
             var catalog = UnitPickerCatalog.Build(categories, unitsByCategory, glyphs);
@@ -702,6 +712,7 @@ namespace CalculatorApp.ViewModel
             bool sendNegate = false;
             var accumulation = new StringBuilder();
 
+            // Keep a pasted edit contiguous in the native engine.
             lock (_modelLock)
             {
                 foreach (char ch in stringToPaste)
@@ -729,6 +740,7 @@ namespace CalculatorApp.ViewModel
                         }
                     }
 
+                    // Negate is only legal as the first character, which the block above has handled.
                     if (buttonId != NumbersAndOperatorsEnum.Negate)
                     {
                         _model.SendCommand(CommandFromButtonId(buttonId));
@@ -1359,10 +1371,13 @@ namespace CalculatorApp.ViewModel
 
         private void SetSelectedUnits()
         {
+            // Currency completion can rebuild the bound unit list from a callback thread.
             lock (_modelLock)
             {
                 if (IsCurrencyCurrentCategory)
                 {
+                    // Push the loaded currency ratios into the engine; without them a conversion in
+                    // Currency runs against an empty ratio map. This is the only place that does it.
                     if (_isCurrencyDataLoaded && !CurrencyDataLoadFailed)
                     {
                         _model.ResetCategoriesAndRatios();
@@ -1664,6 +1679,7 @@ namespace CalculatorApp.ViewModel
             }
             else
             {
+                // Test callbacks run inline without a dispatcher; this lock is reentrant.
                 lock (_modelLock)
                 {
                     action();
@@ -1781,15 +1797,20 @@ namespace CalculatorApp.ViewModel
             {
                 try
                 {
-                    IsCurrencyLoadingVisible = false;
+                    UpdateCurrencyPickers();
                 }
                 finally
                 {
-                    CurrencyDataLoadFailed = !didLoad;
+                    try
+                    {
+                        IsCurrencyLoadingVisible = false;
+                    }
+                    finally
+                    {
+                        CurrencyDataLoadFailed = !didLoad;
+                    }
                 }
             }
-
-            UpdateCurrencyPickers();
 
             string key = didLoad ? "CurrencyRatesUpdated" : "CurrencyRatesUpdateFailed";
             string announcement = AppResourceProvider.GetInstance().GetResourceString(key);

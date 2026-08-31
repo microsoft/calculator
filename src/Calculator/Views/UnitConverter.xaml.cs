@@ -338,6 +338,7 @@ namespace CalculatorApp
         {
             try
             {
+                // Ignore duplicate refresh requests while one is active.
                 if (!ViewModel.IsCurrencyLoadingVisible)
                 {
                     if (ViewModel.NetworkBehavior == NetworkAccessBehavior.OptIn)
@@ -351,8 +352,8 @@ namespace CalculatorApp
             catch (Exception ex)
             {
                 TraceLogger.GetInstance().LogError(
-                    ViewModel.Mode, nameof(CurrencyRefreshButton_Click), ex.Message);
-                Debug.WriteLine($"UnitConverter.CurrencyRefreshButton_Click failed: {ex}");
+                    ViewModel.Mode, nameof(RefreshCurrencyAsync), ex.Message);
+                Debug.WriteLine($"UnitConverter.RefreshCurrencyAsync failed: {ex}");
             }
         }
 
