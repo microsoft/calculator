@@ -2,11 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 using CalculatorApp.ViewModel;
 
+using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace CalculatorApp
 {
@@ -19,9 +24,13 @@ namespace CalculatorApp
 
         public event EventHandler<UnitPickerItem> UnitPicked;
         public event EventHandler CurrencyRefreshRequested;
+        public event EventHandler DismissRequested;
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
-            nameof(ViewModel), typeof(UnitPickerViewModel), typeof(UnitPickerControl), new PropertyMetadata(null));
+            nameof(ViewModel),
+            typeof(UnitPickerViewModel),
+            typeof(UnitPickerControl),
+            new PropertyMetadata(null, OnViewModelChanged));
 
         public UnitPickerViewModel ViewModel
         {
@@ -45,6 +54,56 @@ namespace CalculatorApp
         public Windows.UI.Xaml.Visibility StateVisibility(bool isVisible) =>
             isVisible ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
 
+        private static void OnViewModelChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+        {
+            var control = (UnitPickerControl)sender;
+            control.UpdateViewModelSubscription(
+                args.OldValue as UnitPickerViewModel,
+                args.NewValue as UnitPickerViewModel);
+        }
+
+        private void UpdateViewModelSubscription(UnitPickerViewModel oldViewModel, UnitPickerViewModel newViewModel)
+        {
+            if (oldViewModel != null)
+            {
+                oldViewModel.PropertyChanged -= OnViewModelPropertyChanged;
+            }
+
+            _hadResults = newViewModel?.HasResults == true;
+            if (newViewModel != null)
+            {
+                newViewModel.PropertyChanged += OnViewModelPropertyChanged;
+            }
+        }
+
+        private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(UnitPickerViewModel.HasResults))
+            {
+                return;
+            }
+
+            bool hasResults = ViewModel?.HasResults == true;
+            if (_hadResults && !hasResults)
+            {
+                _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RaiseNoResultsAutomationEvent);
+            }
+            _hadResults = hasResults;
+        }
+
+        private void RaiseNoResultsAutomationEvent()
+        {
+            if (ViewModel?.HasResults != false || NoResultsText.Visibility != Visibility.Visible)
+            {
+                return;
+            }
+
+            AutomationPeer peer =
+                FrameworkElementAutomationPeer.FromElement(NoResultsText)
+                ?? FrameworkElementAutomationPeer.CreatePeerForElement(NoResultsText);
+            peer?.RaiseAutomationEvent(AutomationEvents.LiveRegionChanged);
+        }
+
         /// <summary>
         /// Clears any query left from a previous open and focuses the search box for keyboard users.
         /// </summary>
@@ -61,6 +120,38 @@ namespace CalculatorApp
             {
                 ViewModel.SearchText = sender.Text ?? string.Empty;
             }
+        }
+
+        private void OnSearchBoxPreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Down)
+            {
+                e.Handled = TryFocusFirstUnit();
+            }
+        }
+
+        private void OnPickerPreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Escape)
+            {
+                e.Handled = true;
+                DismissRequested?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private bool TryFocusFirstUnit()
+        {
+            // Null-conditional lifting makes "ViewModel?.FilteredUnits.Count <= 0" false when
+            // ViewModel is null, so guard the null case explicitly before indexing below.
+            if (ViewModel?.FilteredUnits == null || ViewModel.FilteredUnits.Count == 0)
+            {
+                return false;
+            }
+
+            UnitPickerItem firstUnit = ViewModel.FilteredUnits[0];
+            UnitList.ScrollIntoView(firstUnit);
+            UnitList.UpdateLayout();
+            return (UnitList.ContainerFromItem(firstUnit) as Control)?.Focus(FocusState.Keyboard) == true;
         }
 
         private void OnCategorySelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -83,5 +174,7 @@ namespace CalculatorApp
         {
             CurrencyRefreshRequested?.Invoke(this, EventArgs.Empty);
         }
+
+        private bool _hadResults;
     }
 }

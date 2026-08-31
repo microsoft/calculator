@@ -45,6 +45,14 @@ namespace CalculatorApp.ViewModel
         [ObservableProperty]
         private string _categoryName;
 
+        /// <summary>
+        /// The accessible name for the current mode. Converters keep the "Converter: {category}"
+        /// context here even though the visible header shows only "Converters", so screen readers
+        /// still announce which converter is active.
+        /// </summary>
+        [ObservableProperty]
+        private string _categoryAutomationName;
+
         [ObservableProperty]
         private IList<NavCategoryGroup> _categories = NavCategoryStates.CreateMenuOptions();
 
@@ -246,12 +254,24 @@ namespace CalculatorApp.ViewModel
                 if (ConverterViewModel == null)
                 {
                     ConverterViewModel = new UnitConverterViewModel();
+                    ConverterViewModel.PropertyChanged += OnConverterViewModelPropertyChanged;
                 }
                 ConverterViewModel.Mode = _mode;
             }
 
             var resProvider = AppResourceProvider.GetInstance();
-            CategoryName = resProvider.GetResourceString(NavCategoryStates.GetNameResourceKey(_mode));
+            string categoryName = resProvider.GetResourceString(NavCategoryStates.GetNameResourceKey(_mode));
+
+            // Set the accessible name first: the CategoryName change below notifies the view, which
+            // reads CategoryAutomationName to refresh the header's automation name and announcement.
+            CategoryAutomationName = NavCategoryStates.FormatCategoryName(
+                _mode,
+                categoryName,
+                resProvider.GetResourceString("ConverterCategoryNameFormat"));
+            CategoryName = NavCategoryStates.FormatCategoryDisplayName(
+                _mode,
+                categoryName,
+                resProvider.GetResourceString("ConverterModePluralText"));
 
             // Cast mode to an int in order to save it to app data.
             // Save the changed mode, so that the new window launches in this mode.
@@ -276,6 +296,17 @@ namespace CalculatorApp.ViewModel
                     ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread()));
             }
             OnPropertyChanged(nameof(ClearMemoryVisibility));
+        }
+
+        private void OnConverterViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(UnitConverterViewModel.Mode)
+                && sender is UnitConverterViewModel converterViewModel
+                && NavCategory.IsConverterViewMode(converterViewModel.Mode)
+                && _mode != converterViewModel.Mode)
+            {
+                Mode = converterViewModel.Mode;
+            }
         }
 
         public ViewMode ResolveLastUsedConverterMode()

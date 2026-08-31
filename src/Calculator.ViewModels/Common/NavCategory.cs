@@ -167,8 +167,7 @@ namespace CalculatorApp.ViewModel.Common
                     c => c.ViewMode == NavCategoryStates.DefaultConverterMode);
 
                 string convertersLabel = automationName;
-                string converterAccessKey = defaultConverter.AccessKey
-                    ?? resProvider.GetResourceString(defaultConverter.NameResourceKey + "AccessKey");
+                string converterAccessKey = resProvider.GetResourceString("ConverterModeAccessKey");
 
                 _categories.Add(new NavCategory(
                     convertersLabel,
@@ -394,6 +393,24 @@ namespace CalculatorApp.ViewModel.Common
         {
             var match = CategoryManifest.FirstOrDefault(init => init.ViewMode == mode);
             return match.FriendlyName != null ? match.GroupType : CategoryGroupType.None;
+        }
+
+        internal static string FormatCategoryName(ViewMode mode, string categoryName, string converterFormat)
+        {
+            return NavCategory.IsConverterViewMode(mode)
+                ? LocalizationStringUtil.GetLocalizedString(converterFormat, categoryName)
+                : categoryName;
+        }
+
+        /// <summary>
+        /// The name shown in the visible header. Every converter shares the single "Converters"
+        /// label because the active converter is already named on the unit chips; calculator modes
+        /// keep their own name. Screen readers still get the per-category context from
+        /// <see cref="FormatCategoryName"/>.
+        /// </summary>
+        internal static string FormatCategoryDisplayName(ViewMode mode, string categoryName, string convertersLabel)
+        {
+            return NavCategory.IsConverterViewMode(mode) ? convertersLabel : categoryName;
         }
 
         // GetIndex is 0-based, GetPosition is 1-based

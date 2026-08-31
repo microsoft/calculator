@@ -138,16 +138,16 @@ namespace CalculatorApp
             {
                 name = resProvider.GetResourceString("HeaderAutomationName_Date");
             }
+            else if (NavCategory.IsConverterViewMode(mode))
+            {
+                name = ViewModel.CategoryAutomationName;
+            }
             else
             {
                 string full = string.Empty;
                 if (NavCategory.IsCalculatorViewMode(mode) || NavCategory.IsGraphingCalculatorViewMode(mode))
                 {
                     full = resProvider.GetResourceString("HeaderAutomationName_Calculator");
-                }
-                else if (NavCategory.IsConverterViewMode(mode))
-                {
-                    full = resProvider.GetResourceString("HeaderAutomationName_Converter");
                 }
                 name = LocalizationStringUtil.GetLocalizedString(full, ViewModel.CategoryName);
             }

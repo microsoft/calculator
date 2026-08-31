@@ -298,6 +298,39 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
+        public void FormatCategoryName_AddsContextOnlyForConverters()
+        {
+            const string converterFormat = "Converter: %1";
+
+            Assert.AreEqual(
+                "Converter: Length",
+                NavCategoryStates.FormatCategoryName(ViewMode.Length, "Length", converterFormat));
+            Assert.AreEqual(
+                "Standard",
+                NavCategoryStates.FormatCategoryName(ViewMode.Standard, "Standard", converterFormat));
+        }
+
+        [TestMethod]
+        public void FormatCategoryDisplayName_ShowsConvertersLabelOnlyForConverters()
+        {
+            const string convertersLabel = "Converters";
+
+            // The visible header reads "Converters" for every converter, so the mode name stays in
+            // the picker chips instead of being repeated in the header.
+            Assert.AreEqual(
+                convertersLabel,
+                NavCategoryStates.FormatCategoryDisplayName(ViewMode.Length, "Length", convertersLabel));
+            Assert.AreEqual(
+                convertersLabel,
+                NavCategoryStates.FormatCategoryDisplayName(ViewMode.Currency, "Currency", convertersLabel));
+
+            // Calculator modes keep their own name.
+            Assert.AreEqual(
+                "Standard",
+                NavCategoryStates.FormatCategoryDisplayName(ViewMode.Standard, "Standard", convertersLabel));
+        }
+
+        [TestMethod]
         public void GetIndex()
         {
             // Index is the 0-based ordering of modes

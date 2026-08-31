@@ -641,6 +641,7 @@
                     <local:UnitPickerControl x:Name="Unit1Picker"
                                              AutomationProperties.Name="{utils:ResourceString Name=UnitPickerPlaceholder}"
                                              CurrencyRefreshRequested="OnPickerCurrencyRefreshRequested"
+                                             DismissRequested="OnPickerDismissRequested"
                                              IsTabStop="False"
                                              UnitPicked="OnPickerUnitPicked"/>
                 </Flyout>
@@ -731,6 +732,7 @@
                     <local:UnitPickerControl x:Name="Unit2Picker"
                                              AutomationProperties.Name="{utils:ResourceString Name=UnitPickerPlaceholder}"
                                              CurrencyRefreshRequested="OnPickerCurrencyRefreshRequested"
+                                             DismissRequested="OnPickerDismissRequested"
                                              IsTabStop="False"
                                              UnitPicked="OnPickerUnitPicked"/>
                 </Flyout>

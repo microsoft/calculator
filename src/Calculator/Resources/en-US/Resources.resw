@@ -909,6 +909,14 @@
     <value>Converter</value>
     <comment>The text that shows in the dropdown navigation control for the converter group. The previous key for this was "ConverterMode.Text".</comment>
   </data>
+  <data name="ConverterModeAccessKey" xml:space="preserve">
+    <value>6</value>
+    <comment>Access key for the collapsed Converter navigation item. Calculator modes use 1 through 5. {StringCategory="Accelerator"}</comment>
+  </data>
+  <data name="ConverterCategoryNameFormat" xml:space="preserve">
+    <value>Converter: %1</value>
+    <comment>{Locked="%1"}. Header for an active converter. %1 is the localized converter category name, for example Length.</comment>
+  </data>
   <data name="CalculatorModeText" xml:space="preserve">
     <value>Calculator</value>
     <comment>The text that shows in the dropdown navigation control for the calculator group.</comment>

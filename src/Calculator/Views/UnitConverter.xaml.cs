@@ -266,6 +266,11 @@ namespace CalculatorApp
             (m_activeUnitChip as Button)?.Flyout?.Hide();
         }
 
+        private void OnPickerDismissRequested(object sender, EventArgs e)
+        {
+            (m_activeUnitChip as Button)?.Flyout?.Hide();
+        }
+
         private void OnUnitFlyoutClosed(object sender, object e)
         {
             if (sender is Flyout flyout

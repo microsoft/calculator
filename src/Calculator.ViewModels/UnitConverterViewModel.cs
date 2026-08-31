@@ -531,6 +531,12 @@ namespace CalculatorApp.ViewModel
                 AssignSelectedUnit(u => Unit2 = u, unit);
             }
 
+            ViewMode selectedMode = NavCategoryStates.Deserialize(item.CategoryId);
+            if (NavCategory.IsConverterViewMode(selectedMode))
+            {
+                Mode = selectedMode;
+            }
+
             _pickerPreviewState.SynchronizeCategory(item.CategoryId);
             TraceLogger.GetInstance().LogConverterUnitSelected(
                 NavCategoryStates.Deserialize(item.CategoryId),
@@ -1113,6 +1119,11 @@ namespace CalculatorApp.ViewModel
 
         private void OnButtonPressed(object parameter)
         {
+            if (IsDropDownOpen)
+            {
+                return;
+            }
+
             NumbersAndOperatorsEnum numOp;
             if (parameter is CalculatorButtonPressedEventArgs eventArgs)
             {
