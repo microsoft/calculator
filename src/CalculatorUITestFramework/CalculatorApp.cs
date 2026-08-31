@@ -28,6 +28,17 @@ namespace CalculatorUITestFramework
             return Header.Text;
         }
 
+        /// <summary>
+        /// Gets the Header's accessible (UI Automation Name) value. The converter header displays
+        /// "Converters" for every converter, so only the accessible name identifies which converter
+        /// is active, for example "Converter: Currency".
+        /// </summary>
+        /// <returns>The Header's UI Automation Name.</returns>
+        public static string GetCalculatorHeaderAccessibleName()
+        {
+            return Header.GetAttribute("Name");
+        }
+
         ///// <summary>
         ///// Clicks the AppName element on Windows Calculator to ensure that the app has focus
         ///// </summary>

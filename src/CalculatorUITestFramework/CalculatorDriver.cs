@@ -14,6 +14,12 @@ namespace CalculatorUITestFramework
     {
         private const string defaultAppId = "Microsoft.WindowsCalculator.Dev_8wekyb3d8bbwe!App";
 
+        /// <summary>
+        /// The implicit wait applied to every session. Exposed so helpers that need to poll for an
+        /// element's absence can drop the wait to zero and then restore it.
+        /// </summary>
+        public static readonly TimeSpan ImplicitWait = TimeSpan.FromSeconds(10);
+
         private static CalculatorDriver instance = null;
         public static CalculatorDriver Instance
         {
@@ -57,9 +63,9 @@ namespace CalculatorUITestFramework
                 }
 
                 options.AddAdditionalCapability("deviceName", "WindowsPC");
-                CalculatorSession = new WindowsDriver<WindowsElement>(server.ServiceUrl, options);
-                CalculatorSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-                Assert.IsNotNull(CalculatorSession);
+                this.CalculatorSession = new WindowsDriver<WindowsElement>(this.server.ServiceUrl, options);
+                this.CalculatorSession.Manage().Timeouts().ImplicitWait = ImplicitWait;
+                Assert.IsNotNull(this.CalculatorSession);
             }
         }
 

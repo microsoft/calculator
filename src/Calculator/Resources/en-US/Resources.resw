@@ -3189,7 +3189,7 @@
   </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
     <value>Offline. Please check your%HL%Network Settings%HL%</value>
-    <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
+    <comment>Status text displayed when currency converter is disconnected from the internet. The text "Network Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
   </data>
   <data name="UpdatingCurrencyRates" xml:space="preserve">
     <value>Updating currency rates</value>

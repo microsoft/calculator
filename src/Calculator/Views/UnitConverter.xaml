@@ -740,11 +740,11 @@
         </Button>
 
         <!-- Swap control: exchanges the from (Unit1) and to (Unit2) units and keeps the typed value
-             on the top row (ViewModel.SwapUnitsCommand). Spans the from/to rows on the side opposite
-             the start-aligned values and chips, so the chip layout is untouched. -->
+             on the top row (ViewModel.SwapUnitsCommand). Spans the first chip through the second
+             value so it centres in the gap between the conversion rows, opposite the chips. -->
         <Button x:Name="SwapUnitsButton"
-                Grid.Row="1"
-                Grid.RowSpan="4"
+                Grid.Row="2"
+                Grid.RowSpan="2"
                 Grid.Column="1"
                 Width="48"
                 Height="48"
@@ -764,7 +764,7 @@
                       FontFamily="{ThemeResource SymbolThemeFontFamily}"
                       FontSize="16"
                       AutomationProperties.AccessibilityView="Raw"
-                      Glyph="&#xE8AB;"/>
+                      Glyph="&#xE8CB;"/>
         </Button>
 
         <StackPanel x:Name="SupplementaryResultsPanelInGrid"

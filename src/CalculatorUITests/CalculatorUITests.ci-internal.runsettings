@@ -10,5 +10,9 @@
         <Parameter Name="AppId" Value="Microsoft.WindowsCalculator.Dev_8wekyb3d8bbwe!App" />
         <Parameter Name="CurrencyWith3FractionalDigits" Value="Jordan - Dinar" />
         <Parameter Name="CurrencyWithoutFractionalDigits" Value="Japan - Yen" />
+        <!-- Two distinct currencies that both use the default two fraction digits. The converter
+             prevents both chips from showing the same unit, so tests use a known pair instead. -->
+        <Parameter Name="BaselineCurrencyFrom" Value="United States - Dollar" />
+        <Parameter Name="BaselineCurrencyTo" Value="Europe - Euro" />
     </TestRunParameters>
 </RunSettings>

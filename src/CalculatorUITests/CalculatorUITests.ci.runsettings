@@ -10,5 +10,9 @@
         <Parameter Name="AppId" Value="Microsoft.WindowsCalculator.Dev_8wekyb3d8bbwe!App" />
         <Parameter Name="CurrencyWith3FractionalDigits" Value="Test Fractional Digits - Test Fractional Digits" />
         <Parameter Name="CurrencyWithoutFractionalDigits" Value="Test No Fractional Digits - Test No Fractional Digits" />
+        <!-- Two distinct currencies that both use the default two fraction digits. The converter
+             prevents both chips from showing the same unit, so tests use a known pair instead. -->
+        <Parameter Name="BaselineCurrencyFrom" Value="Mars - The Martian Dollar" />
+        <Parameter Name="BaselineCurrencyTo" Value="Moon - Moon Bucks" />
     </TestRunParameters>
 </RunSettings>

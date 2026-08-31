@@ -522,13 +522,34 @@ namespace CalculatorApp.ViewModel
                 return;
             }
 
+            // The two chips must never show the same unit, because converting a unit into itself is
+            // not a useful conversion. Hand the other chip the picked side's previous unit, which
+            // reads as a swap, and fall back to any other unit in the category.
+            Unit displacedUnit = isFromUnit ? Unit1 : Unit2;
+            Unit otherUnit = isFromUnit ? Unit2 : Unit1;
+            Unit replacementUnit = null;
+            if (otherUnit != null && otherUnit.ModelUnitID() == unit.ModelUnitID())
+            {
+                replacementUnit = displacedUnit != null && displacedUnit.ModelUnitID() != unit.ModelUnitID()
+                    ? displacedUnit
+                    : FindFirstUnitOtherThan(unit);
+            }
+
             if (isFromUnit)
             {
                 AssignSelectedUnit(u => Unit1 = u, unit);
+                if (replacementUnit != null)
+                {
+                    AssignSelectedUnit(u => Unit2 = u, replacementUnit);
+                }
             }
             else
             {
                 AssignSelectedUnit(u => Unit2 = u, unit);
+                if (replacementUnit != null)
+                {
+                    AssignSelectedUnit(u => Unit1 = u, replacementUnit);
+                }
             }
 
             ViewMode selectedMode = NavCategoryStates.Deserialize(item.CategoryId);
@@ -542,6 +563,23 @@ namespace CalculatorApp.ViewModel
                 NavCategoryStates.Deserialize(item.CategoryId),
                 unit.ModelUnitID(),
                 isFromUnit);
+        }
+
+        /// <summary>
+        /// Finds any unit in the current category other than the supplied one, used as a fallback
+        /// when the two chips would otherwise land on the same unit.
+        /// </summary>
+        private Unit FindFirstUnitOtherThan(Unit unit)
+        {
+            foreach (var candidate in Units)
+            {
+                if (candidate.ModelUnitID() != unit.ModelUnitID())
+                {
+                    return candidate;
+                }
+            }
+
+            return null;
         }
 
         private void OnPickerCategorySelected(UnitPickerCategory category, bool isFromUnit)
@@ -604,6 +642,9 @@ namespace CalculatorApp.ViewModel
 
             return null;
         }
+
+        // True once the background currency load has reported back, successfully or not.
+        internal bool IsCurrencyDataLoaded => _isCurrencyDataLoaded;
 
         private UnitPickerCategoryLoadState GetCurrencyPickerLoadState()
         {
@@ -1027,6 +1068,7 @@ namespace CalculatorApp.ViewModel
             }
             else
             {
+                // Symbols and ratio are currency-only; clear them when leaving Currency.
                 CurrencySymbol1 = string.Empty;
                 CurrencySymbol2 = string.Empty;
                 CurrencyRatioEquality = string.Empty;

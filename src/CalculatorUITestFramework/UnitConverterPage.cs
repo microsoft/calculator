@@ -9,8 +9,22 @@ namespace CalculatorUITestFramework
         public UnitConverterOperatorsPanel UnitConverterOperators = new UnitConverterOperatorsPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
         public UnitConverterResults UnitConverterResults = new UnitConverterResults();
+        public UnitPickerFlyout UnitPicker = new UnitPickerFlyout();
 
         private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
+
+        // The redesigned converter collapses the 13 converter modes into a single "Converter"
+        // navigation entry whose automation id is the default converter mode (Length). Selecting it
+        // opens the last-used converter; the Currency category is then chosen through the unit picker.
+        private const string ConverterNavEntryAutomationId = "Length";
+
+        // The Currency category name shown in the picker's category list.
+        private const string CurrencyCategoryName = "Currency";
+
+        // The header displays "Converters" for every converter, so its visible text no longer
+        // identifies the active converter. The accessible name keeps the per-category context, and
+        // that is what distinguishes Currency.
+        private const string CurrencyHeaderAccessibleName = "Converter: Currency";
 
         /// <summary>
         /// Clear the Calculator display
@@ -32,13 +46,24 @@ namespace CalculatorUITestFramework
         }
 
         /// <summary>
-        /// Navigates the calculator is in currency mode
+        /// Opens the collapsed Converter navigation entry.
+        /// </summary>
+        public void OpenConverter()
+        {
+            this.NavigationMenu.NavigationMenuButton.Click();
+            this.NavigationMenu.NavigationMenuPane.WaitForDisplayed();
+            this.session.TryFindElementByAccessibilityId(ConverterNavEntryAutomationId).Click();
+        }
+
+        /// <summary>
+        /// Opens the collapsed Converter entry and selects the Currency category through the
+        /// from-unit picker, leaving the calculator in the Currency converter.
         /// </summary>
         public void NavigateToUnitConverter()
         {
-            // Ensure that calculator is in Currency Mode
-            NavigationMenu.ChangeCalculatorMode(CalculatorMode.Currency);
-            UnitConverterResults.IsResultsDisplayPresent();
+            this.OpenConverter();
+            this.UnitPicker.SelectCategoryAndFirstUnit(this.UnitConverterOperators.Units1, CurrencyCategoryName);
+            this.UnitConverterResults.IsResultsDisplayPresent();
         }
 
         ///// <summary>
@@ -47,56 +72,49 @@ namespace CalculatorUITestFramework
         public void EnsureCalculatorIsCurrencyMode()
         {
             string source = CalculatorDriver.Instance.CalculatorSession.PageSource;
-            if (source.Contains("Header"))
+            if (source.Contains("Header")
+                && CalculatorApp.GetCalculatorHeaderAccessibleName() == CurrencyHeaderAccessibleName)
             {
-                string header = CalculatorApp.Header.Text;
-                if (header == "Currency")
-                {
-                    return;
-                }
-                else
-                {
-                    NavigateToUnitConverter();
-                }
+                return;
             }
+
+            this.NavigateToUnitConverter();
         }
 
         /// <summary>
-        /// Ensure Units1 and Units2 are the same 
+        /// Puts the two chips on a known pair of distinct currencies, giving the currency tests a
+        /// deterministic baseline.
+        /// <para>
+        /// This replaces the pre-redesign "send Home to both combo boxes" setup, which left both
+        /// sides on the same unit so every conversion was 1:1. The converter now deliberately
+        /// prevents both chips from showing the same unit, because converting a unit into itself is
+        /// not a useful conversion, so tests can no longer rely on that 1:1 baseline.
+        /// </para>
         /// </summary>
-        public void EnsureSameUnitsAreSelected()
+        /// <param name="fromCurrency">From-unit value in "Region - Unit" form.</param>
+        /// <param name="toCurrency">To-unit value in "Region - Unit" form.</param>
+        public void SelectCurrencyPair(string fromCurrency, string toCurrency)
         {
-            CalculatorApp.ClickOnWindow();
-            UnitConverterOperators.Units1.SendKeys(OpenQA.Selenium.Keys.Home);
-
-            CalculatorApp.ClickOnWindow();
-            UnitConverterOperators.Units2.SendKeys(OpenQA.Selenium.Keys.Home);
-
-            CalculatorApp.ClickOnWindow();
+            this.UnitPicker.SelectUnit(this.UnitConverterOperators.Units1, fromCurrency);
+            this.UnitPicker.SelectUnit(this.UnitConverterOperators.Units2, toCurrency);
         }
 
         /// <summary>
-        /// Select value in Units1 ComboBox
+        /// Select a unit for the "from" (Units1) chip through the picker flyout.
         /// </summary>
-        /// <param name="value">Value in ComboBox Units1</param>
+        /// <param name="value">Unit value in "Region - Unit" form.</param>
         public void SelectUnits1(string value)
         {
-            UnitConverterOperators.Units1.Click();
-            var accessibleName = value.Replace(" - ", " ");
-            var item = session.FindElementByXPath($"//ListItem[@Name='{accessibleName}']");
-            item.Click();
+            this.UnitPicker.SelectUnit(this.UnitConverterOperators.Units1, value);
         }
 
         /// <summary>
-        /// Select value in Units2 ComboBox
+        /// Select a unit for the "to" (Units2) chip through the picker flyout.
         /// </summary>
-        /// <param name="value">Value in ComboBox Units2</param>
+        /// <param name="value">Unit value in "Region - Unit" form.</param>
         public void SelectUnits2(string value)
         {
-            UnitConverterOperators.Units2.Click();
-            var accessibleName = value.Replace(" - ", " ");
-            var item = session.FindElementByXPath($"//ListItem[@Name='{accessibleName}']");
-            item.Click();
+            this.UnitPicker.SelectUnit(this.UnitConverterOperators.Units2, value);
         }
     }
 }

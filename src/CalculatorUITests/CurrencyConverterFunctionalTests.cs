@@ -43,7 +43,9 @@ namespace CalculatorUITests
             CalculatorApp.EnsureCalculatorHasFocus();
             page.EnsureCalculatorIsCurrencyMode();
             page.EnsureCalculatorResultTextIsZero();
-            page.EnsureSameUnitsAreSelected();
+            page.SelectCurrencyPair(
+                (string)TestContext.Properties["BaselineCurrencyFrom"],
+                (string)TestContext.Properties["BaselineCurrencyTo"]);
         }
 
         [TestCleanup]
@@ -74,6 +76,12 @@ namespace CalculatorUITests
         /// These automated tests verify clicking each of the buttons in the Calculator UI and getting an expected result
         /// Via mouse input, all basic UI functionality is checked 
         /// </summary>
+        /// <remarks>
+        /// Asserts the input display only. The converted display is no longer a mirror of the input,
+        /// because the two chips can never hold the same unit, so the exact converted value depends
+        /// on the live rate. Conversion arithmetic is covered deterministically by the
+        /// Calculator.Tests view model suite.
+        /// </remarks>
         [TestMethod]
         [Priority(0)]
         public void MouseInput_EnterInputAndCheckTheResult()
@@ -81,7 +89,6 @@ namespace CalculatorUITests
             //Verifies the 2 is entered and clear is functional
             page.UnitConverterOperators.NumberPad.Num2Button.Click();
             Assert.AreEqual("2", page.UnitConverterResults.GetCalculationResult1Text()); //verifies 2 button
-            Assert.AreEqual("2", page.UnitConverterResults.GetCalculationResult2Text()); //verifies 2 button
         }
 
         /// <summary>
@@ -95,19 +102,14 @@ namespace CalculatorUITests
             //Verifies the 20.42 is entered and clear is functional
             page.UnitConverterOperators.NumberPad.Num2Button.Click();
             Assert.AreEqual("2", page.UnitConverterResults.GetCalculationResult1Text()); //verifies 2 button
-            Assert.AreEqual("2", page.UnitConverterResults.GetCalculationResult2Text()); //verifies 2 button
             page.UnitConverterOperators.NumberPad.Num0Button.Click();
-            Assert.AreEqual("20", page.UnitConverterResults.GetCalculationResult1Text()); //verifies 2 button
-            Assert.AreEqual("20", page.UnitConverterResults.GetCalculationResult2Text()); //verifies 2 button
+            Assert.AreEqual("20", page.UnitConverterResults.GetCalculationResult1Text()); //verifies 0 button
             page.UnitConverterOperators.NumberPad.DecimalButton.Click();
             Assert.AreEqual("20.00", page.UnitConverterResults.GetCalculationResult1Text()); //verifies decimal button
-            Assert.AreEqual("20", page.UnitConverterResults.GetCalculationResult2Text()); //verifies decimal button
             page.UnitConverterOperators.NumberPad.Num4Button.Click();
             Assert.AreEqual("20.40", page.UnitConverterResults.GetCalculationResult1Text()); //verifies 4 button
-            Assert.AreEqual("20.40", page.UnitConverterResults.GetCalculationResult2Text()); //verifies 4 button
             page.UnitConverterOperators.NumberPad.Num3Button.Click();
             Assert.AreEqual("20.43", page.UnitConverterResults.GetCalculationResult1Text()); //verifies 3 button
-            Assert.AreEqual("20.43", page.UnitConverterResults.GetCalculationResult2Text()); //verifies 3 button
             page.UnitConverterOperators.NumberPad.Num3Button.Click();
             page.UnitConverterOperators.ClearButton.Click();
             Assert.AreEqual("0", page.UnitConverterResults.GetCalculationResult1Text()); //verifies Clear button
@@ -125,19 +127,14 @@ namespace CalculatorUITests
             //Verifies the 20.42 is entered and clear is functional
             page.UnitConverterOperators.NumberPad.Num2Button.Click();
             Assert.AreEqual("2", page.UnitConverterResults.GetCalculationResult1Text()); //verifies 2 button
-            Assert.AreEqual("2", page.UnitConverterResults.GetCalculationResult2Text()); //verifies 2 button
             page.UnitConverterOperators.NumberPad.Num0Button.Click();
-            Assert.AreEqual("20", page.UnitConverterResults.GetCalculationResult1Text()); //verifies 2 button
-            Assert.AreEqual("20", page.UnitConverterResults.GetCalculationResult2Text()); //verifies 2 button
+            Assert.AreEqual("20", page.UnitConverterResults.GetCalculationResult1Text()); //verifies 0 button
             page.UnitConverterOperators.NumberPad.DecimalButton.Click();
             Assert.AreEqual("20.00", page.UnitConverterResults.GetCalculationResult1Text()); //verifies decimal button
-            Assert.AreEqual("20", page.UnitConverterResults.GetCalculationResult2Text()); //verifies decimal button
             page.UnitConverterOperators.NumberPad.Num4Button.Click();
             Assert.AreEqual("20.40", page.UnitConverterResults.GetCalculationResult1Text()); //verifies 4 button
-            Assert.AreEqual("20.40", page.UnitConverterResults.GetCalculationResult2Text()); //verifies 4 button
             page.UnitConverterOperators.NumberPad.Num3Button.Click();
             Assert.AreEqual("20.43", page.UnitConverterResults.GetCalculationResult1Text()); //verifies 3 button
-            Assert.AreEqual("20.43", page.UnitConverterResults.GetCalculationResult2Text()); //verifies 3 button
             page.UnitConverterOperators.NumberPad.Num3Button.Click();
             page.UnitConverterOperators.BackSpaceButton.Click();
             page.UnitConverterOperators.BackSpaceButton.Click();
@@ -267,8 +264,9 @@ namespace CalculatorUITests
             var currencyWith3FractionalDigits = (string)TestContext.Properties["CurrencyWith3FractionalDigits"];
             var currencyWithoutFractionalDigits = (string)TestContext.Properties["CurrencyWithoutFractionalDigits"];
 
+            // Only the from-unit matters here. The to-unit stays on the baseline currency, because
+            // the converter no longer allows both chips to hold the same unit.
             page.SelectUnits1(currencyWith3FractionalDigits);
-            page.SelectUnits2(currencyWith3FractionalDigits);
 
             page.UnitConverterOperators.NumberPad.Num2Button.Click();
             page.UnitConverterOperators.NumberPad.Num0Button.Click();
@@ -279,7 +277,6 @@ namespace CalculatorUITests
             page.UnitConverterOperators.NumberPad.Num9Button.Click();
 
             Assert.AreEqual("200.999", page.UnitConverterResults.GetCalculationResult1Text());
-            Assert.AreEqual("200.999", page.UnitConverterResults.GetCalculationResult2Text());
 
             page.SelectUnits1(currencyWithoutFractionalDigits);
             Assert.AreEqual("200", page.UnitConverterResults.GetCalculationResult1Text());

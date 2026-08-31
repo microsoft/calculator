@@ -360,8 +360,229 @@ namespace Calculator.Tests
             Assert.AreEqual("7", viewModel.Value1);
         }
 
+        [TestMethod]
+        public void PickingFromUnitThatMatchesNewCategoryDefaultKeepsUnitsDistinct()
+        {
+            // Switching category resets both sides to the new category's defaults, then only the
+            // picked side is overwritten. Picking the unit that the other side just defaulted to
+            // must not leave both chips on the same unit.
+            int lengthId = NavCategoryStates.Serialize(ViewMode.Length);
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+
+            var probe = new UnitConverterViewModel();
+            Category target = probe.Categories.First(
+                category => category.GetModelCategoryId() != lengthId
+                    && category.GetModelCategoryId() != currencyId);
+            probe.CurrentCategory = target;
+            int defaultToUnitId = probe.Unit2.ModelUnitID();
+            Unit collidingUnit = probe.Units.Single(unit => unit.ModelUnitID() == defaultToUnitId);
+
+            // Start from Length so selecting the probed unit genuinely switches category. The view
+            // model restores the last category from LocalSettings, so pin it explicitly.
+            var viewModel = CreateLengthViewModel();
+            viewModel.SelectPickerUnit(
+                new UnitPickerItem(collidingUnit, target.Name, target.GetModelCategoryId()),
+                isFromUnit: true);
+
+            Assert.AreEqual(defaultToUnitId, viewModel.Unit1.ModelUnitID());
+            Assert.AreNotEqual(
+                viewModel.Unit1.ModelUnitID(),
+                viewModel.Unit2.ModelUnitID(),
+                "Both chips landed on the same unit after picking the new category's default to-unit.");
+        }
+
+        [TestMethod]
+        public async Task ChangingCurrencyUnitPreservesBottomActiveValue()
+        {
+            // The redesign routes unit changes through the picker, so guard the bottom-active
+            // mapping: a value typed into the bottom row stays there across a unit change.
+            var viewModel = new UnitConverterViewModel();
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            viewModel.CurrentCategory = viewModel.Categories.Single(
+                category => category.GetModelCategoryId() == currencyId);
+            await WaitForCurrencyUnitsAsync(viewModel);
+
+            viewModel.SwitchActiveCommand.Execute(null);
+            // Clear first so the assertion cannot inherit a display value from earlier activity.
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Clear);
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Eight);
+            Assert.AreEqual("8", viewModel.Value2, "Precondition: the bottom row holds the typed value.");
+
+            Unit replacement = viewModel.Units.First(
+                unit => unit.ModelUnitID() != viewModel.Unit2.ModelUnitID());
+            SelectUnit(viewModel, replacement, isFromUnit: false);
+
+            Assert.AreEqual("8", viewModel.Value2);
+            Assert.AreEqual(replacement.ModelUnitID(), viewModel.Unit2.ModelUnitID());
+        }
+
+        [TestMethod]
+        public void PickerLifecycleForBothChipsKeepsSelectionAndCategoryIndependent()
+        {
+            // Merged lifecycle net for the two chips: each picker opens on its own current unit,
+            // initialization does not commit a category, and a commit on one chip leaves the other
+            // chip's unit untouched.
+            var viewModel = CreateLengthViewModel();
+            int startingCategoryId = viewModel.CurrentCategory.GetModelCategoryId();
+
+            UnitPickerViewModel fromPicker = viewModel.CreateUnitPicker(isFromUnit: true);
+            UnitPickerViewModel toPicker = viewModel.CreateUnitPicker(isFromUnit: false);
+
+            Assert.AreEqual(viewModel.Unit1.ModelUnitID(), fromPicker.SelectedUnit?.Unit.ModelUnitID());
+            Assert.AreEqual(viewModel.Unit2.ModelUnitID(), toPicker.SelectedUnit?.Unit.ModelUnitID());
+            Assert.AreEqual(
+                startingCategoryId,
+                viewModel.CurrentCategory.GetModelCategoryId(),
+                "Creating pickers must not change the converter's category.");
+
+            int untouchedUnit2Id = viewModel.Unit2.ModelUnitID();
+            UnitPickerItem replacement = fromPicker.FilteredUnits.First(
+                item => item.Unit.ModelUnitID() != viewModel.Unit1.ModelUnitID()
+                    && item.Unit.ModelUnitID() != untouchedUnit2Id);
+
+            viewModel.SelectPickerUnit(replacement, isFromUnit: true);
+
+            Assert.AreEqual(replacement.Unit.ModelUnitID(), viewModel.Unit1.ModelUnitID());
+            Assert.AreEqual(untouchedUnit2Id, viewModel.Unit2.ModelUnitID());
+        }
+
+        [TestMethod]
+        public void PickingTheSameUnitAsTheOtherChipSwapsInsteadOfDuplicating()
+        {
+            // Converting a unit into itself is not useful, so the two chips must never show the
+            // same unit. Picking the unit the other chip already holds hands that chip the picked
+            // side's previous unit, which reads as a swap.
+            var viewModel = CreateLengthViewModel();
+            Unit unitA = viewModel.Units[0];
+            Unit unitB = viewModel.Units[1];
+
+            // Establish a known starting pair; saved user preferences make the initial units
+            // unpredictable.
+            SelectUnit(viewModel, unitA, isFromUnit: true);
+            SelectUnit(viewModel, unitB, isFromUnit: false);
+            Assert.AreEqual(unitA.ModelUnitID(), viewModel.Unit1.ModelUnitID());
+            Assert.AreEqual(unitB.ModelUnitID(), viewModel.Unit2.ModelUnitID());
+
+            // Pick the to-unit on the from chip.
+            SelectUnit(viewModel, unitB, isFromUnit: true);
+
+            Assert.AreEqual(unitB.ModelUnitID(), viewModel.Unit1.ModelUnitID());
+            Assert.AreEqual(unitA.ModelUnitID(), viewModel.Unit2.ModelUnitID());
+            Assert.AreNotEqual(viewModel.Unit1.ModelUnitID(), viewModel.Unit2.ModelUnitID());
+        }
+
+        [TestMethod]
+        public async Task EnteringCurrencyAfterBackgroundLoadUsesLoadedRatios()
+        {
+            // The native engine only received currency ratios when the background load finished while
+            // Currency was already active. If the load completed under another category, entering
+            // Currency afterward converted with no currency ratios loaded.
+            var viewModel = new UnitConverterViewModel();
+            Assert.IsFalse(
+                viewModel.IsCurrencyCurrentCategory,
+                "Precondition: the view model starts outside Currency.");
+
+            // Let the background currency load finish while a non-Currency category is active.
+            await WaitForCurrencyLoadAsync(viewModel);
+
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            viewModel.CurrentCategory = viewModel.Categories.Single(
+                category => category.GetModelCategoryId() == currencyId);
+            await WaitForCurrencyUnitsAsync(viewModel);
+
+            Unit mars = viewModel.Units.First(unit => unit.Abbreviation == "MAR");
+            Unit moon = viewModel.Units.First(unit => unit.Abbreviation == "MON");
+            SelectUnit(viewModel, mars, isFromUnit: true);
+            SelectUnit(viewModel, moon, isFromUnit: false);
+
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.One);
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Zero);
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Zero);
+
+            // The mock currency data rates MAR at 1.00 and MON at 0.50.
+            Assert.AreEqual("100", viewModel.Value1);
+            Assert.AreEqual("50", viewModel.Value2);
+        }
+
+        [TestMethod]
+        public async Task CurrencyLoadFinishingInsideCurrencyUsesLoadedRatios()
+        {
+            // The mirror of the test above: the load completes while Currency is already active.
+            // Pushing the loaded ratios into the engine is owned by a single place, so this path
+            // and the one above have to stay covered independently.
+            var viewModel = new UnitConverterViewModel();
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            viewModel.CurrentCategory = viewModel.Categories.Single(
+                category => category.GetModelCategoryId() == currencyId);
+            Assert.IsFalse(
+                viewModel.IsCurrencyDataLoaded,
+                "Precondition: Currency is entered before the background load reports back.");
+
+            await WaitForCurrencyUnitsAsync(viewModel);
+
+            Unit mars = viewModel.Units.First(unit => unit.Abbreviation == "MAR");
+            Unit moon = viewModel.Units.First(unit => unit.Abbreviation == "MON");
+            SelectUnit(viewModel, mars, isFromUnit: true);
+            SelectUnit(viewModel, moon, isFromUnit: false);
+
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.One);
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Zero);
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Zero);
+
+            // The mock currency data rates MAR at 1.00 and MON at 0.50.
+            Assert.AreEqual("100", viewModel.Value1);
+            Assert.AreEqual("50", viewModel.Value2);
+        }
+
+        [TestMethod]
+        public async Task LeavingCurrencyClearsTheCurrencySymbolsAndRatio()
+        {
+            // Regression: the currency symbol used to follow the user out of Currency, so Length
+            // rendered a stale "$" next to its values.
+            var viewModel = new UnitConverterViewModel();
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            viewModel.CurrentCategory = viewModel.Categories.Single(
+                category => category.GetModelCategoryId() == currencyId);
+            await WaitForCurrencyUnitsAsync(viewModel);
+
+            Assert.IsFalse(
+                string.IsNullOrEmpty(viewModel.CurrencySymbol1),
+                "Precondition: Currency shows a symbol.");
+
+            int lengthId = NavCategoryStates.Serialize(ViewMode.Length);
+            viewModel.CurrentCategory = viewModel.Categories.Single(
+                category => category.GetModelCategoryId() == lengthId);
+
+            Assert.AreEqual(string.Empty, viewModel.CurrencySymbol1, "Currency symbol leaked into Length.");
+            Assert.AreEqual(string.Empty, viewModel.CurrencySymbol2, "Currency symbol leaked into Length.");
+            Assert.AreEqual(
+                Windows.UI.Xaml.Visibility.Collapsed,
+                viewModel.CurrencySymbolVisibility,
+                "The currency symbol block must be collapsed outside Currency.");
+            Assert.AreEqual(string.Empty, viewModel.CurrencyRatioEquality, "Currency ratio leaked into Length.");
+        }
+
+        private static async Task WaitForCurrencyLoadAsync(UnitConverterViewModel viewModel)
+        {
+            for (int attempt = 0; attempt < 250; attempt++)
+            {
+                if (viewModel.IsCurrencyDataLoaded)
+                {
+                    return;
+                }
+
+                await Task.Delay(20);
+            }
+
+            Assert.Fail("The background currency load did not finish.");
+        }
+
         private static async Task WaitForCurrencyUnitsAsync(UnitConverterViewModel viewModel)
         {
+            // Units appear as soon as the loader hands them over, but the load's completion path
+            // also resets the converter, so waiting on the units alone can return mid-load.
+            await WaitForCurrencyLoadAsync(viewModel);
+
             for (int attempt = 0; attempt < 100; attempt++)
             {
                 if (viewModel.Units.Count > 1 && viewModel.Units[0].ModelUnitID() != -1)
