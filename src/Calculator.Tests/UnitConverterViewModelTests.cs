@@ -163,6 +163,23 @@ namespace Calculator.Tests
     public class UnitConverterViewModelTests
     {
         [TestMethod]
+        public void ChangingCategoryPreservesEditedFromValue()
+        {
+            var viewModel = new UnitConverterViewModel();
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Five);
+
+            int lengthId = NavCategoryStates.Serialize(ViewMode.Length);
+            int volumeId = NavCategoryStates.Serialize(ViewMode.Volume);
+            int targetCategoryId = viewModel.CurrentCategory.GetModelCategoryId() == lengthId ? volumeId : lengthId;
+            Category targetCategory = viewModel.Categories.Single(
+                category => category.GetModelCategoryId() == targetCategoryId);
+
+            viewModel.CurrentCategory = targetCategory;
+
+            Assert.AreEqual("5", viewModel.Value1);
+        }
+
+        [TestMethod]
         public void EnteringValueAfterSwitchingActiveUpdatesSecondValue()
         {
             var viewModel = new UnitConverterViewModel();
@@ -172,6 +189,327 @@ namespace Calculator.Tests
 
             Assert.AreEqual("7", viewModel.Value2);
         }
+
+        [TestMethod]
+        public void ChangingCategoryPreservesEditedToValue()
+        {
+            var viewModel = new UnitConverterViewModel();
+            viewModel.SwitchActiveCommand.Execute(null);
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Seven);
+
+            int lengthId = NavCategoryStates.Serialize(ViewMode.Length);
+            int volumeId = NavCategoryStates.Serialize(ViewMode.Volume);
+            int targetCategoryId = viewModel.CurrentCategory.GetModelCategoryId() == lengthId ? volumeId : lengthId;
+            Category targetCategory = viewModel.Categories.Single(
+                category => category.GetModelCategoryId() == targetCategoryId);
+
+            viewModel.CurrentCategory = targetCategory;
+
+            Assert.AreEqual("7", viewModel.Value2);
+        }
+
+        [TestMethod]
+        public void ChangingFromUnitPreservesEditedValue()
+        {
+            var viewModel = new UnitConverterViewModel();
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Five);
+            Unit replacement = viewModel.Units.First(unit => unit.ModelUnitID() != viewModel.Unit1.ModelUnitID());
+            var item = new UnitPickerItem(
+                replacement,
+                viewModel.CurrentCategory.Name,
+                viewModel.CurrentCategory.GetModelCategoryId());
+
+            viewModel.SelectPickerUnit(item, isFromUnit: true);
+
+            Assert.AreEqual("5", viewModel.Value1);
+        }
+
+        [TestMethod]
+        public void ChangingActiveToUnitKeepsItAsConversionSource()
+        {
+            var viewModel = CreateLengthViewModel();
+            Unit topUnit = viewModel.Units[0];
+            Unit replacementBottomUnit = viewModel.Units[2];
+            SelectUnit(viewModel, topUnit, isFromUnit: true);
+            SelectUnit(viewModel, viewModel.Units[1], isFromUnit: false);
+            viewModel.SwitchActiveCommand.Execute(null);
+            SelectUnit(viewModel, replacementBottomUnit, isFromUnit: false);
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Clear);
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Seven);
+
+            var expectedViewModel = CreateLengthViewModel();
+            SelectUnit(expectedViewModel, replacementBottomUnit, isFromUnit: true);
+            SelectUnit(expectedViewModel, topUnit, isFromUnit: false);
+            expectedViewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Clear);
+            expectedViewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Seven);
+
+            Assert.AreEqual(expectedViewModel.Value2, viewModel.Value1);
+        }
+
+        [TestMethod]
+        public void SwappingUnitsPreservesTopValue()
+        {
+            var viewModel = new UnitConverterViewModel();
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Five);
+            int originalUnit1Id = viewModel.Unit1.ModelUnitID();
+            int originalUnit2Id = viewModel.Unit2.ModelUnitID();
+
+            viewModel.SwapUnitsCommand.Execute(null);
+
+            Assert.AreEqual("5", viewModel.Value1);
+            Assert.AreEqual(originalUnit2Id, viewModel.Unit1.ModelUnitID());
+            Assert.AreEqual(originalUnit1Id, viewModel.Unit2.ModelUnitID());
+        }
+
+        [TestMethod]
+        public void SelectingCrossCategoryFromUnitPreservesEditedValue()
+        {
+            var viewModel = new UnitConverterViewModel();
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Five);
+            UnitPickerViewModel picker = viewModel.CreateUnitPicker();
+            int currentCategoryId = viewModel.CurrentCategory.GetModelCategoryId();
+            int currencyCategoryId = NavCategoryStates.Serialize(ViewMode.Currency);
+            picker.SelectedCategory = picker.Categories.First(
+                category => category.CategoryId != currentCategoryId
+                    && category.CategoryId != currencyCategoryId
+                    && category.Units.Count > 0);
+            UnitPickerItem item = picker.FilteredUnits[0];
+
+            viewModel.SelectPickerUnit(item, isFromUnit: true);
+
+            Assert.AreEqual("5", viewModel.Value1);
+            Assert.AreEqual(item.CategoryId, viewModel.CurrentCategory.GetModelCategoryId());
+            Assert.AreEqual(item.Unit.ModelUnitID(), viewModel.Unit1.ModelUnitID());
+        }
+
+        [TestMethod]
+        public void SelectingCrossCategoryToUnitPreservesEditedValue()
+        {
+            var viewModel = new UnitConverterViewModel();
+            viewModel.SwitchActiveCommand.Execute(null);
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Seven);
+            UnitPickerViewModel picker = viewModel.CreateUnitPicker();
+            int currentCategoryId = viewModel.CurrentCategory.GetModelCategoryId();
+            int currencyCategoryId = NavCategoryStates.Serialize(ViewMode.Currency);
+            picker.SelectedCategory = picker.Categories.First(
+                category => category.CategoryId != currentCategoryId
+                    && category.CategoryId != currencyCategoryId
+                    && category.Units.Count > 0);
+            UnitPickerItem item = picker.FilteredUnits[0];
+
+            viewModel.SelectPickerUnit(item, isFromUnit: false);
+
+            Assert.AreEqual("7", viewModel.Value2);
+            Assert.AreEqual(item.CategoryId, viewModel.CurrentCategory.GetModelCategoryId());
+            Assert.AreEqual(item.Unit.ModelUnitID(), viewModel.Unit2.ModelUnitID());
+        }
+
+        [TestMethod]
+        public void ScientificCurrencyValueIsNotRepasted()
+        {
+            bool shouldRepaste = UnitConverterViewModel.TryPrepareCurrencyInputForPaste(
+                "1.000000e+16",
+                fractionDigits: 2,
+                out string preparedValue);
+
+            Assert.IsFalse(shouldRepaste);
+            Assert.AreEqual("1.000000e+16", preparedValue);
+        }
+
+        [TestMethod]
+        public void DecimalCurrencyValueIsTruncatedBeforeRepaste()
+        {
+            bool shouldRepaste = UnitConverterViewModel.TryPrepareCurrencyInputForPaste(
+                "1.2345",
+                fractionDigits: 2,
+                out string preparedValue);
+
+            Assert.IsTrue(shouldRepaste);
+            Assert.AreEqual("1.23", preparedValue);
+        }
+
+        [TestMethod]
+        public void DecimalCurrencyValueUsesLocalizedSeparatorForRepaste()
+        {
+            bool shouldRepaste = UnitConverterViewModel.TryPrepareCurrencyInputForPaste(
+                "1.2345",
+                fractionDigits: 2,
+                decimalSeparator: ',',
+                out string preparedValue);
+
+            Assert.IsTrue(shouldRepaste);
+            Assert.AreEqual("1,23", preparedValue);
+        }
+
+        [TestMethod]
+        public async Task EnteringDigitAfterCurrencyUnitChangeReplacesValue()
+        {
+            var viewModel = new UnitConverterViewModel();
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            viewModel.CurrentCategory = viewModel.Categories.Single(
+                category => category.GetModelCategoryId() == currencyId);
+            await WaitForCurrencyUnitsAsync(viewModel);
+
+            viewModel.OnPaste("1.23");
+            Unit replacement = viewModel.Units.First(
+                unit => unit.ModelUnitID() != viewModel.Unit1.ModelUnitID());
+            SelectUnit(viewModel, replacement, isFromUnit: true);
+
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Seven);
+
+            Assert.AreEqual("7", viewModel.Value1);
+        }
+
+        private static async Task WaitForCurrencyUnitsAsync(UnitConverterViewModel viewModel)
+        {
+            for (int attempt = 0; attempt < 100; attempt++)
+            {
+                if (viewModel.Units.Count > 1 && viewModel.Units[0].ModelUnitID() != -1)
+                {
+                    return;
+                }
+
+                await Task.Delay(20);
+            }
+
+            Assert.Fail("Currency units did not load.");
+        }
+
+        private static UnitConverterViewModel CreateLengthViewModel()
+        {
+            var viewModel = new UnitConverterViewModel();
+            int lengthId = NavCategoryStates.Serialize(ViewMode.Length);
+            viewModel.CurrentCategory = viewModel.Categories.Single(
+                category => category.GetModelCategoryId() == lengthId);
+            return viewModel;
+        }
+
+        private static void SelectUnit(UnitConverterViewModel viewModel, Unit unit, bool isFromUnit)
+        {
+            viewModel.SelectPickerUnit(
+                new UnitPickerItem(
+                    unit,
+                    viewModel.CurrentCategory.Name,
+                    viewModel.CurrentCategory.GetModelCategoryId()),
+                isFromUnit);
+        }
+
+        [TestMethod]
+        public void CreateUnitPickerPreselectsOpeningChipUnit()
+        {
+            var viewModel = new UnitConverterViewModel();
+            int unit1Id = viewModel.Unit1.ModelUnitID();
+            int unit2Id = viewModel.Unit2.ModelUnitID();
+            int categoryId = viewModel.CurrentCategory.GetModelCategoryId();
+
+            UnitPickerViewModel fromPicker = viewModel.CreateUnitPicker(isFromUnit: true);
+            UnitPickerViewModel toPicker = viewModel.CreateUnitPicker(isFromUnit: false);
+
+            Assert.AreEqual(unit1Id, fromPicker.SelectedUnit.Unit.ModelUnitID());
+            Assert.AreEqual(unit2Id, toPicker.SelectedUnit.Unit.ModelUnitID());
+            Assert.AreEqual(categoryId, viewModel.CurrentCategory.GetModelCategoryId());
+            Assert.AreEqual(unit1Id, viewModel.Unit1.ModelUnitID());
+            Assert.AreEqual(unit2Id, viewModel.Unit2.ModelUnitID());
+        }
+
+        [TestMethod]
+        public async Task RefreshCurrencyRatiosCompletesAfterInitialLoad()
+        {
+            var viewModel = new UnitConverterViewModel();
+            await WaitForCurrencyCatalogAsync(viewModel);
+            viewModel.OnCurrencyTimestampUpdated("stale timestamp", isWeekOld: true);
+
+            await viewModel.RefreshCurrencyRatiosAsync();
+
+            Assert.IsFalse(viewModel.IsCurrencyLoadingVisible);
+            Assert.AreNotEqual("stale timestamp", viewModel.CurrencyTimestamp);
+            Assert.IsFalse(viewModel.CurrencyDataIsWeekOld);
+        }
+
+        [TestMethod]
+        public async Task CurrencyLoadFailureUpdatesExistingPicker()
+        {
+            var viewModel = new UnitConverterViewModel();
+            await WaitForCurrencyCatalogAsync(viewModel);
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            UnitPickerViewModel picker = viewModel.CreateUnitPicker();
+            picker.SelectedCategory = picker.Categories.Single(
+                category => category.CategoryId == currencyId);
+
+            viewModel.OnCurrencyDataLoadFinished(didLoad: false);
+
+            Assert.IsTrue(picker.HasSelectedCategoryLoadFailed);
+            Assert.IsFalse(picker.AreUnitsVisible);
+            Assert.IsFalse(picker.HasNoSearchResults);
+        }
+
+        [TestMethod]
+        public async Task CurrencyFailureRemainsFailedAfterNetworkChange()
+        {
+            var viewModel = new UnitConverterViewModel();
+            await WaitForCurrencyCatalogAsync(viewModel);
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            UnitPickerViewModel openPicker = viewModel.CreateUnitPicker();
+            openPicker.SelectedCategory = openPicker.Categories.Single(
+                category => category.CategoryId == currencyId);
+            viewModel.OnCurrencyDataLoadFinished(didLoad: false);
+
+            viewModel.HandleNetworkBehaviorChanged(NetworkAccessBehavior.Normal);
+            UnitPickerViewModel newPicker = viewModel.CreateUnitPicker();
+            newPicker.SelectedCategory = newPicker.Categories.Single(
+                category => category.CategoryId == currencyId);
+
+            Assert.IsTrue(openPicker.HasSelectedCategoryLoadFailed);
+            Assert.IsTrue(newPicker.HasSelectedCategoryLoadFailed);
+        }
+
+        [TestMethod]
+        public async Task RefreshCurrencyRatiosPreservesSelectedCurrencies()
+        {
+            var viewModel = new UnitConverterViewModel();
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            await WaitForCurrencyCatalogAsync(viewModel);
+            viewModel.CurrentCategory = viewModel.Categories.Single(
+                category => category.GetModelCategoryId() == currencyId);
+
+            Unit[] replacements = viewModel.Units.Where(
+                unit => unit.Abbreviation != viewModel.Unit1.Abbreviation
+                    && unit.Abbreviation != viewModel.Unit2.Abbreviation)
+                .Take(2)
+                .ToArray();
+            Assert.AreEqual(2, replacements.Length);
+            Unit newFrom = replacements[0];
+            Unit newTo = replacements[1];
+            SelectUnit(viewModel, newFrom, isFromUnit: true);
+            SelectUnit(viewModel, newTo, isFromUnit: false);
+
+            await viewModel.RefreshCurrencyRatiosAsync();
+
+            Assert.AreEqual(newFrom.Abbreviation, viewModel.Unit1.Abbreviation);
+            Assert.AreEqual(newTo.Abbreviation, viewModel.Unit2.Abbreviation);
+        }
+
+        private static async Task WaitForCurrencyCatalogAsync(UnitConverterViewModel viewModel)
+        {
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            for (int attempt = 0; attempt < 100; attempt++)
+            {
+                UnitPickerCategory currency = viewModel.CreateUnitPicker()
+                    .Categories.Single(category => category.CategoryId == currencyId);
+                if (currency.Units.Count > 0)
+                {
+                    return;
+                }
+
+                await Task.Delay(20);
+            }
+
+            Assert.Fail("Currency units did not load.");
+        }
+
+        [TestMethod]
+        [Ignore("Requires native UnitConverterMock not available in C# tests")]
+        public void TestUnitConverterCtorSetsUpCorrectActiveValue() { }
 
         [TestMethod]
         public void MaxDigitsAnnouncementIncludesTheConversionResult()

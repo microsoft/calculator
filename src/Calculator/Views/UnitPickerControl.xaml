@@ -3,21 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:utils="using:CalculatorApp.Utils"
              xmlns:vm="using:CalculatorApp.ViewModel"
              d:DesignHeight="300"
              d:DesignWidth="360"
              mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <Style x:Key="UnitPickerItemContainerStyle"
+               TargetType="ListViewItem"
+               BasedOn="{StaticResource DefaultListViewItemStyle}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+    </UserControl.Resources>
+
     <Grid MinWidth="480"
-          MinHeight="360"
           Padding="12"
           HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch"
           RowSpacing="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <AutoSuggestBox x:Name="SearchBox"
@@ -27,19 +35,56 @@
                         QueryIcon="Find"
                         TextChanged="OnSearchTextChanged"/>
 
-        <Grid Grid.Row="1" ColumnSpacing="8">
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*" MinWidth="195"/>
+                <ColumnDefinition Width="1"/>
                 <ColumnDefinition Width="7*"/>
             </Grid.ColumnDefinitions>
 
-            <ListView Grid.Column="0"
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       Margin="12,0,12,6"
+                       AutomationProperties.AccessibilityView="Raw"
+                       FontWeight="SemiBold"
+                       Style="{ThemeResource CaptionTextBlockStyle}"
+                       Text="{utils:ResourceString Name=UnitPickerCategoriesLabel}"/>
+
+            <TextBlock Grid.Row="0"
+                       Grid.Column="2"
+                       Margin="12,0,12,6"
+                       AutomationProperties.AccessibilityView="Raw"
+                       FontWeight="SemiBold"
+                       Style="{ThemeResource CaptionTextBlockStyle}"
+                       Text="{utils:ResourceString Name=UnitPickerResultsLabel}"/>
+
+            <Line Grid.Row="0"
+                  Grid.RowSpan="2"
+                  Grid.Column="1"
+                  Y2="1"
+                  Stretch="Fill"
+                  Stroke="{ThemeResource DividerStrokeColorDefaultBrush}"
+                  StrokeThickness="1"/>
+
+            <ListView x:Name="CategoryList"
+                      Grid.Row="1"
+                      Grid.Column="0"
+                      Height="320"
+                      Margin="0,0,8,0"
                       AutomationProperties.Name="{utils:ResourceString Name=UnitPickerCategoriesLabel}"
                       IsEnabled="{x:Bind ViewModel.CategoryListEnabled, Mode=OneWay}"
-                      ItemsSource="{x:Bind ViewModel.Categories, Mode=OneTime}"
+                      ItemContainerStyle="{StaticResource UnitPickerItemContainerStyle}"
+                      ItemsSource="{x:Bind ViewModel.Categories, Mode=OneWay}"
                       Opacity="{x:Bind CategoryOpacity(ViewModel.CategoryListEnabled), Mode=OneWay}"
+                      Padding="0,0,12,0"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ScrollViewer.HorizontalScrollMode="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ScrollViewer.VerticalScrollMode="Enabled"
                       SelectedItem="{x:Bind ViewModel.SelectedCategory, Mode=TwoWay}"
                       SelectionMode="Single">
                 <ListView.ItemTemplate>
@@ -60,42 +105,43 @@
                                        VerticalAlignment="Center"
                                        Style="{ThemeResource BodyTextBlockStyle}"
                                        Text="{x:Bind Name}"
-                                       TextTrimming="CharacterEllipsis"
-                                       TextWrapping="NoWrap"/>
+                                       TextWrapping="Wrap"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Grid Grid.Column="1">
-                <ListView AutomationProperties.Name="{utils:ResourceString Name=UnitPickerResultsLabel}"
-                          Background="{ThemeResource LayerFillColorDefaultBrush}"
-                          CornerRadius="4"
+            <Grid Grid.Row="1"
+                  Grid.Column="2"
+                  Height="320"
+                  Margin="8,0,0,0">
+                <ListView x:Name="UnitList"
+                          AutomationProperties.Name="{utils:ResourceString Name=UnitPickerResultsLabel}"
                           IsItemClickEnabled="True"
                           ItemClick="OnUnitClick"
+                          ItemContainerStyle="{StaticResource UnitPickerItemContainerStyle}"
                           ItemsSource="{x:Bind ViewModel.FilteredUnits, Mode=OneWay}"
-                          Padding="0,0,4,0"
+                          Padding="0,0,12,0"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.HorizontalScrollMode="Disabled"
-                          SelectionMode="None">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ScrollViewer.VerticalScrollMode="Enabled"
+                          SelectedItem="{x:Bind ViewModel.SelectedUnit, Mode=OneWay}"
+                          SelectionMode="Single"
+                          Visibility="{x:Bind StateVisibility(ViewModel.AreUnitsVisible), Mode=OneWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="vm:UnitPickerItem">
                             <Grid Padding="0,4,0,4">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="12"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0"
                                            VerticalAlignment="Center"
                                            Style="{ThemeResource BodyTextBlockStyle}"
                                            Text="{x:Bind Unit.Name}"
-                                           TextTrimming="CharacterEllipsis"
-                                           TextWrapping="NoWrap"/>
+                                           TextWrapping="Wrap"/>
                                 <TextBlock Grid.Column="1"
                                            Margin="12,0,0,0"
                                            VerticalAlignment="Center"
@@ -106,13 +152,40 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Spacing="8"
+                            Visibility="{x:Bind StateVisibility(ViewModel.IsSelectedCategoryLoading), Mode=OneWay}">
+                    <muxc:ProgressRing Width="32"
+                                       Height="32"
+                                       AutomationProperties.Name="{utils:ResourceString Name=UpdatingCurrencyRates}"
+                                       IsActive="{x:Bind ViewModel.IsSelectedCategoryLoading, Mode=OneWay}"/>
+                    <TextBlock HorizontalAlignment="Center"
+                               AutomationProperties.AccessibilityView="Raw"
+                               Style="{ThemeResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="{utils:ResourceString Name=UpdatingCurrencyRates}"
+                               TextWrapping="WrapWholeWords"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Spacing="4"
+                            Visibility="{x:Bind StateVisibility(ViewModel.HasSelectedCategoryLoadFailed), Mode=OneWay}">
+                    <TextBlock HorizontalAlignment="Center"
+                               Style="{ThemeResource BodyTextBlockStyle}"
+                               Text="{utils:ResourceString Name=CurrencyRatesUpdateFailed}"
+                               TextWrapping="WrapWholeWords"/>
+                    <HyperlinkButton HorizontalAlignment="Center"
+                                     Click="OnCurrencyRefreshClick"
+                                     Content="{utils:ResourceString Name=RefreshButtonText/Content}"/>
+                </StackPanel>
                 <TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            IsHitTestVisible="False"
                            Style="{ThemeResource BodyTextBlockStyle}"
                            Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                            Text="{utils:ResourceString Name=UnitPickerNoResults}"
-                           Visibility="{x:Bind NoResultsVisibility(ViewModel.HasResults), Mode=OneWay}"/>
+                           Visibility="{x:Bind NoSearchResultsVisibility(ViewModel.HasNoSearchResults), Mode=OneWay}"/>
             </Grid>
         </Grid>
     </Grid>

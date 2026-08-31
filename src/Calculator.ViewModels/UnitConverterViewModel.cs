@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -120,6 +121,9 @@ namespace CalculatorApp.ViewModel
         private bool _isCategoryChanging;
         private bool _isSwappingUnits;
         private bool _isCurrencyDataLoaded;
+        private UnitPickerCategoryLoadState _currencyPickerLoadState = UnitPickerCategoryLoadState.Loading;
+        private UnitPickerViewModel _fromUnitPicker;
+        private UnitPickerViewModel _toUnitPicker;
 
         // Observable properties backing fields
         private ObservableCollection<Category> _categories;
@@ -451,7 +455,7 @@ namespace CalculatorApp.ViewModel
         /// category is preselected so the picker opens on the units the user is already using. A
         /// fresh picker is returned per call so each flyout keeps its own search text.
         /// </summary>
-        public UnitPickerViewModel CreateUnitPicker()
+        public UnitPickerViewModel CreateUnitPicker(bool isFromUnit = true)
         {
             var categories = new List<Category>(Categories);
             var unitsByCategory = new List<IReadOnlyList<Unit>>(categories.Count);
@@ -464,7 +468,28 @@ namespace CalculatorApp.ViewModel
 
             var catalog = UnitPickerCatalog.Build(categories, unitsByCategory, glyphs);
             int selectedCategoryId = CurrentCategory?.GetModelCategoryId() ?? -1;
-            return new UnitPickerViewModel(catalog, matcher: null, selectedCategoryId: selectedCategoryId);
+            Unit selectedUnit = isFromUnit ? Unit1 : Unit2;
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            var categoryLoadStates = new Dictionary<int, UnitPickerCategoryLoadState>
+            {
+                [currencyId] = GetCurrencyPickerLoadState(),
+            };
+            var picker = new UnitPickerViewModel(
+                catalog,
+                matcher: null,
+                selectedCategoryId: selectedCategoryId,
+                selectedUnitId: selectedUnit?.ModelUnitID() ?? -1,
+                categoryLoadStates: categoryLoadStates);
+            if (isFromUnit)
+            {
+                _fromUnitPicker = picker;
+            }
+            else
+            {
+                _toUnitPicker = picker;
+            }
+
+            return picker;
         }
 
         /// <summary>
@@ -555,6 +580,24 @@ namespace CalculatorApp.ViewModel
             }
 
             return null;
+        }
+
+        private UnitPickerCategoryLoadState GetCurrencyPickerLoadState()
+        {
+            return _currencyPickerLoadState;
+        }
+
+        private void UpdateCurrencyPickers()
+        {
+            int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
+            Category currency = FindCategoryById(currencyId);
+            IReadOnlyList<Unit> units = currency == null
+                ? Array.Empty<Unit>()
+                : GetPickerUnitsForCategory(currency);
+            UnitPickerCategoryLoadState state = GetCurrencyPickerLoadState();
+
+            _fromUnitPicker?.UpdateCategory(currencyId, units, state);
+            _toUnitPicker?.UpdateCategory(currencyId, units, state);
         }
 
         private Unit FindUnitInCurrentList(int unitId)
@@ -667,8 +710,10 @@ namespace CalculatorApp.ViewModel
             try
             {
                 _isCurrencyDataLoaded = false;
+                _currencyPickerLoadState = UnitPickerCategoryLoadState.Loading;
                 CurrencyDataLoadFailed = false;
                 IsCurrencyLoadingVisible = true;
+                UpdateCurrencyPickers();
 
                 string announcement = AppResourceProvider.GetInstance().GetResourceString("UpdatingCurrencyRates");
                 Announcement = CalculatorAnnouncement.GetUpdateCurrencyRatesAnnouncement(announcement);
@@ -1276,8 +1321,21 @@ namespace CalculatorApp.ViewModel
                     });
 
                 BuildUnitList(result.Units);
-                UnitFrom = FindUnitInList(result.FromUnit);
-                UnitTo = FindUnitInList(result.ToUnit);
+                AssignSelectedUnit(u => UnitFrom = u, FindUnitInList(result.FromUnit));
+                AssignSelectedUnit(u => UnitTo = u, FindUnitInList(result.ToUnit));
+            }
+        }
+
+        private static void AssignSelectedUnit(Action<Unit> setter, Unit value)
+        {
+            try
+            {
+                setter(value);
+            }
+            catch (ArgumentException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"UnitConverterViewModel: ignored transient ComboBox SelectedItem race: {ex.Message}");
             }
         }
 
@@ -1309,11 +1367,11 @@ namespace CalculatorApp.ViewModel
                 units.Add(new Unit(-1, "", "", "", false));
             }
 
-            // Publish a complete source before selected units so ComboBox never resolves them
+            // Publish a complete source before selected units so bindings never resolve them
             // against the previous category's items.
             Units = units;
-            UnitFrom = fromUnit ?? (Units.Count > 0 ? Units[0] : null);
-            UnitTo = toUnit ?? (Units.Count > 1 ? Units[1] : Units.Count > 0 ? Units[0] : null);
+            AssignSelectedUnit(u => UnitFrom = u, fromUnit ?? (Units.Count > 0 ? Units[0] : null));
+            AssignSelectedUnit(u => UnitTo = u, toUnit ?? (Units.Count > 1 ? Units[1] : Units.Count > 0 ? Units[0] : null));
         }
 
         private void BuildUnitList(CalcManager.Interop.UnitWrapper[] modelUnits)
@@ -1647,6 +1705,9 @@ namespace CalculatorApp.ViewModel
         internal void OnCurrencyDataLoadFinished(bool didLoad)
         {
             _isCurrencyDataLoaded = true;
+            _currencyPickerLoadState = didLoad
+                ? UnitPickerCategoryLoadState.Loaded
+                : UnitPickerCategoryLoadState.Failed;
             try
             {
                 if (didLoad && IsCurrencyCurrentCategory)
@@ -1669,6 +1730,8 @@ namespace CalculatorApp.ViewModel
                     CurrencyDataLoadFailed = !didLoad;
                 }
             }
+
+            UpdateCurrencyPickers();
 
             string key = didLoad ? "CurrencyRatesUpdated" : "CurrencyRatesUpdateFailed";
             string announcement = AppResourceProvider.GetInstance().GetResourceString(key);

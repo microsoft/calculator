@@ -59,6 +59,34 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
+        public void PreselectsCurrentUnitById()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Length", U(10, "Meter", "m"), U(11, "Kilometer", "km")),
+            }, matcher: null, selectedCategoryId: 1, selectedUnitId: 11);
+
+            Assert.IsNotNull(vm.SelectedUnit);
+            Assert.AreEqual(11, vm.SelectedUnit.Unit.ModelUnitID());
+        }
+
+        [TestMethod]
+        public void CategoryPreviewHidesAndRestoresCurrentUnitSelection()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Length", U(10, "Meter", "m"), U(11, "Kilometer", "km")),
+                Cat(2, "Weight", U(20, "Gram", "g")),
+            }, matcher: null, selectedCategoryId: 1, selectedUnitId: 11);
+
+            vm.SelectedCategory = vm.Categories[1];
+            Assert.IsNull(vm.SelectedUnit);
+
+            vm.SelectedCategory = vm.Categories[0];
+            Assert.AreEqual(11, vm.SelectedUnit.Unit.ModelUnitID());
+        }
+
+        [TestMethod]
         public void SelectCategory_RebuildsUnits()
         {
             var vm = new UnitPickerViewModel(new[]
@@ -156,9 +184,111 @@ namespace Calculator.Tests
             vm.SearchText = "zzz";
             Assert.AreEqual(0, vm.FilteredUnits.Count);
             Assert.IsFalse(vm.HasResults);
+            Assert.IsTrue(vm.HasNoSearchResults);
 
             vm.SearchText = string.Empty;
             Assert.AreEqual(2, vm.FilteredUnits.Count);
+            Assert.IsFalse(vm.HasNoSearchResults);
+        }
+
+        [TestMethod]
+        public void EmptyCategoryWithoutSearchIsNotNoResults()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Currency"),
+            });
+
+            Assert.IsFalse(vm.HasResults);
+            Assert.IsFalse(vm.HasNoSearchResults);
+        }
+
+        [TestMethod]
+        public void LoadingCategory_ShowsLoadingInsteadOfNoResults()
+        {
+            var vm = new UnitPickerViewModel(
+                new[] { Cat(1, "Currency") },
+                matcher: null,
+                selectedCategoryId: 1,
+                selectedUnitId: -1,
+                categoryLoadStates: new Dictionary<int, UnitPickerCategoryLoadState>
+                {
+                    [1] = UnitPickerCategoryLoadState.Loading,
+                });
+
+            Assert.IsTrue(vm.IsSelectedCategoryLoading);
+            Assert.IsFalse(vm.HasSelectedCategoryLoadFailed);
+            Assert.IsFalse(vm.AreUnitsVisible);
+            Assert.IsFalse(vm.HasNoSearchResults);
+        }
+
+        [TestMethod]
+        public void LoadingCategory_RefreshesUnitsWhenLoadCompletes()
+        {
+            var vm = new UnitPickerViewModel(
+                new[] { Cat(1, "Currency") },
+                matcher: null,
+                selectedCategoryId: 1,
+                selectedUnitId: 11,
+                categoryLoadStates: new Dictionary<int, UnitPickerCategoryLoadState>
+                {
+                    [1] = UnitPickerCategoryLoadState.Loading,
+                });
+
+            vm.UpdateCategory(
+                1,
+                new[] { U(10, "Euro", "EUR"), U(11, "Dollar", "USD") },
+                UnitPickerCategoryLoadState.Loaded);
+
+            Assert.IsFalse(vm.IsSelectedCategoryLoading);
+            Assert.IsTrue(vm.AreUnitsVisible);
+            Assert.AreEqual(2, vm.FilteredUnits.Count);
+            Assert.AreEqual("Euro", vm.FilteredUnits[0].Unit.Name);
+            Assert.AreEqual(11, vm.SelectedUnit.Unit.ModelUnitID());
+        }
+
+        [TestMethod]
+        public void FailedCategory_ShowsFailureInsteadOfNoResults()
+        {
+            var vm = new UnitPickerViewModel(
+                new[] { Cat(1, "Currency") },
+                matcher: null,
+                selectedCategoryId: 1,
+                selectedUnitId: -1,
+                categoryLoadStates: new Dictionary<int, UnitPickerCategoryLoadState>
+                {
+                    [1] = UnitPickerCategoryLoadState.Failed,
+                });
+
+            Assert.IsFalse(vm.IsSelectedCategoryLoading);
+            Assert.IsTrue(vm.HasSelectedCategoryLoadFailed);
+            Assert.IsFalse(vm.AreUnitsVisible);
+            Assert.IsFalse(vm.HasNoSearchResults);
+        }
+
+        [TestMethod]
+        public void FailedCategory_SearchStillShowsCrossCategoryResults()
+        {
+            var vm = new UnitPickerViewModel(
+                new[]
+                {
+                    Cat(1, "Currency"),
+                    Cat(2, "Length", U(10, "Meter", "m")),
+                },
+                matcher: null,
+                selectedCategoryId: 1,
+                selectedUnitId: -1,
+                categoryLoadStates: new Dictionary<int, UnitPickerCategoryLoadState>
+                {
+                    [1] = UnitPickerCategoryLoadState.Failed,
+                });
+
+            vm.SearchText = "meter";
+
+            Assert.IsFalse(vm.HasSelectedCategoryLoadFailed);
+            Assert.IsTrue(vm.AreUnitsVisible);
+            Assert.AreEqual(1, vm.FilteredUnits.Count);
+            Assert.AreEqual("Meter", vm.FilteredUnits[0].Unit.Name);
         }
 
         [TestMethod]

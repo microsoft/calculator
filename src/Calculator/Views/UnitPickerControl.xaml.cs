@@ -18,6 +18,7 @@ namespace CalculatorApp
         }
 
         public event EventHandler<UnitPickerItem> UnitPicked;
+        public event EventHandler CurrencyRefreshRequested;
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
             nameof(ViewModel), typeof(UnitPickerViewModel), typeof(UnitPickerControl), new PropertyMetadata(null));
@@ -35,11 +36,14 @@ namespace CalculatorApp
         public double CategoryOpacity(bool enabled) => enabled ? 1.0 : 0.4;
 
         /// <summary>
-        /// Maps the picker's HasResults state to the no-results message visibility, keeping the
+        /// Maps the picker's no-search-results state to message visibility, keeping the
         /// view model free of Visibility display values (bound the same way as CategoryOpacity).
         /// </summary>
-        public Windows.UI.Xaml.Visibility NoResultsVisibility(bool hasResults) =>
-            hasResults ? Windows.UI.Xaml.Visibility.Collapsed : Windows.UI.Xaml.Visibility.Visible;
+        public Windows.UI.Xaml.Visibility NoSearchResultsVisibility(bool hasNoSearchResults) =>
+            hasNoSearchResults ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
+
+        public Windows.UI.Xaml.Visibility StateVisibility(bool isVisible) =>
+            isVisible ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
 
         /// <summary>
         /// Clears any query left from a previous open and focuses the search box for keyboard users.
@@ -64,6 +68,11 @@ namespace CalculatorApp
             {
                 UnitPicked?.Invoke(this, item);
             }
+        }
+
+        private void OnCurrencyRefreshClick(object sender, RoutedEventArgs e)
+        {
+            CurrencyRefreshRequested?.Invoke(this, EventArgs.Empty);
         }
     }
 }

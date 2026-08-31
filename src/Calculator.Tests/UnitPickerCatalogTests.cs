@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CalculatorApp.ViewModel;
+using CalculatorApp.ViewModel.DataLoaders;
 
 namespace Calculator.Tests
 {
@@ -70,6 +71,43 @@ namespace Calculator.Tests
             Assert.AreEqual(1, catalog[0].Units.Count);
             Assert.AreEqual(0, catalog[1].Units.Count);
             Assert.AreEqual(0, catalog[2].Units.Count);
+        }
+
+        [TestMethod]
+        public void CurrencyUnitWrapper_UsesDisambiguatedDisplayName()
+        {
+            var currency = new CurrencyUnit
+            {
+                Id = 1,
+                Name = "Euro",
+                CountryName = "France",
+                Abbreviation = "EUR",
+                IsRtlLanguage = false,
+            };
+
+            var unit = UnitConverterDataLoader.CreateCurrencyUnitWrapper(currency);
+
+            Assert.AreEqual("France - Euro", unit.Name);
+            Assert.AreEqual("France Euro", unit.AccessibleName);
+            Assert.AreEqual("EUR", unit.Abbreviation);
+        }
+
+        [TestMethod]
+        public void CurrencyUnitWrapper_ReversesDisplayNameForRtl()
+        {
+            var currency = new CurrencyUnit
+            {
+                Id = 1,
+                Name = "Currency",
+                CountryName = "Country",
+                Abbreviation = "CUR",
+                IsRtlLanguage = true,
+            };
+
+            var unit = UnitConverterDataLoader.CreateCurrencyUnitWrapper(currency);
+
+            Assert.AreEqual("Currency - Country", unit.Name);
+            Assert.AreEqual("Currency Country", unit.AccessibleName);
         }
     }
 }

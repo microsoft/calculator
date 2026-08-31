@@ -186,20 +186,19 @@ namespace CalculatorApp
             {
                 picker.FlowDirection = LayoutDirection;
                 SizeAndPlacePicker(flyout, picker);
-                picker.ViewModel = ViewModel?.CreateUnitPicker();
+                picker.ViewModel = ViewModel?.CreateUnitPicker(ReferenceEquals(flyout, Units1.Flyout));
             }
         }
 
         // Sizes and left-aligns the picker under the chip. The flyout is unconstrained
         // (ShouldConstrainToRootBounds=False) so it may extend past the calculator frame like the old
         // unit dropdown; WinUI keeps it within the monitor. Width spans from the chip's left edge to
-        // the window's right edge; height scales with the window so it opens comfortably downward
-        // (and past the bottom of the frame when the window is short).
+        // the window's right edge; height is left to the content so the picker is exactly as tall as
+        // its search box, headers, and the fixed eight-row lists, with no dead space at large sizes.
         private void SizeAndPlacePicker(Flyout flyout, FrameworkElement host)
         {
             Control chip = ReferenceEquals(flyout, Units2.Flyout) ? Units2 : Units1;
             double controlWidth = ActualWidth > 0 ? ActualWidth : 460;
-            double controlHeight = ActualHeight > 0 ? ActualHeight : 520;
 
             double chipLeft = 16;
             try
@@ -212,8 +211,7 @@ namespace CalculatorApp
             }
 
             const double margin = 24;
-            host.Width = Clamp(controlWidth - chipLeft - margin, 480, 560);
-            host.Height = Clamp(controlHeight * 0.6, 360, 420);
+            host.Width = Clamp(controlWidth - chipLeft - margin, 480, 600);
 
             flyout.Placement = Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.BottomEdgeAlignedLeft;
 
@@ -240,7 +238,7 @@ namespace CalculatorApp
                 {
                     picker.FlowDirection = LayoutDirection;
                     SizeAndPlacePicker(flyout, picker);
-                    picker.ViewModel = ViewModel?.CreateUnitPicker();
+                    picker.ViewModel = ViewModel?.CreateUnitPicker(ReferenceEquals(flyout, Units1.Flyout));
                 }
 
                 // The control is realized by now; clear any stale query and focus the search box.
@@ -304,6 +302,16 @@ namespace CalculatorApp
         }
 
         private async void CurrencyRefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            await RefreshCurrencyAsync();
+        }
+
+        private async void OnPickerCurrencyRefreshRequested(object sender, EventArgs e)
+        {
+            await RefreshCurrencyAsync();
+        }
+
+        private async Task RefreshCurrencyAsync()
         {
             try
             {

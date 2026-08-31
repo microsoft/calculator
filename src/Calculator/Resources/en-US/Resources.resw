@@ -3172,12 +3172,12 @@
     <comment>Message shown in the converter unit picker flyout when the search text matches no units.</comment>
   </data>
   <data name="UnitPickerCategoriesLabel" xml:space="preserve">
-    <value>Categories</value>
-    <comment>Accessible name for the list of converter categories in the unit picker flyout. Selecting one switches the active converter.</comment>
+    <value>Conversion type</value>
+    <comment>Visible heading and accessible name for the list of converter types in the unit picker flyout. Selecting one previews its units.</comment>
   </data>
   <data name="UnitPickerResultsLabel" xml:space="preserve">
     <value>Units</value>
-    <comment>Accessible name for the list of matching units in the converter unit picker flyout. Selecting one sets the chosen unit.</comment>
+    <comment>Visible heading and accessible name for the list of matching units in the converter unit picker flyout. Selecting one sets the chosen unit.</comment>
   </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
     <value>Offline. Please check your%HL%Network Settings%HL%</value>
