@@ -43,8 +43,8 @@
         </DataTemplate>
 
         <Style x:Key="UnitPickerFlyoutPresenterStyle"
-               TargetType="FlyoutPresenter"
-               BasedOn="{StaticResource DefaultFlyoutPresenterStyle}">
+               BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
+               TargetType="FlyoutPresenter">
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Margin" Value="12,0,0,0"/>
             <Setter Property="MaxWidth" Value="640"/>
@@ -215,6 +215,7 @@
             <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
             <Setter Property="Padding" Value="12,0,12,0"/>
             <Setter Property="MinHeight" Value="32"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="IsTextScaleFactorEnabled" Value="True"/>
@@ -368,6 +369,8 @@
                         <Setter Target="ConverterNumPad.(Grid.RowSpan)" Value="5"/>
                         <Setter Target="ConverterNumPad.(Grid.Column)" Value="2"/>
                         <Setter Target="ConverterNumPad.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="SwapUnitsButton.(Grid.Row)" Value="1"/>
+                        <Setter Target="SwapUnitsButton.(Grid.RowSpan)" Value="5"/>
                         <Setter Target="SupplementaryResults.VerticalAlignment" Value="Top"/>
                         <Setter Target="RowNumPad.MinHeight" Value="0"/>
                         <Setter Target="RowNumPad.Height" Value="0"/>
@@ -598,10 +601,10 @@
                 AutomationProperties.Name="{x:Bind ViewModel.Unit1.AccessibleName, Mode=OneWay}"
                 Click="OnUnitChipClick"
                 FlowDirection="{x:Bind LayoutDirection}"
-                IsEnabled="{x:Bind ViewModel.IsDropDownEnabled, Mode=OneWay}"
                 IsEnabledChanged="Units1_IsEnabledChanged"
                 TabIndex="2"
-                ToolTipService.ToolTip="{utils:ResourceString Name=UnitChipToolTip}">
+                ToolTipService.ToolTip="{utils:ResourceString Name=UnitChipToolTip}"
+                IsEnabled="{x:Bind ViewModel.IsDropDownEnabled, Mode=OneWay}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -626,18 +629,18 @@
                 <TextBlock Grid.Column="2"
                            Margin="8,0,0,0"
                            VerticalAlignment="Center"
-                           AutomationProperties.AccessibilityView="Raw"
                            FontFamily="{StaticResource CalculatorFontFamily}"
                            FontSize="12"
+                           AutomationProperties.AccessibilityView="Raw"
                            IsHitTestVisible="False"
                            Text="&#xE70D;"/>
             </Grid>
             <Button.Flyout>
-                <Flyout Placement="BottomEdgeAlignedLeft"
-                        Closed="OnUnitFlyoutClosed"
+                <Flyout Closed="OnUnitFlyoutClosed"
                         FlyoutPresenterStyle="{StaticResource UnitPickerFlyoutPresenterStyle}"
                         Opened="OnUnitFlyoutOpened"
-                        Opening="OnUnitFlyoutOpening">
+                        Opening="OnUnitFlyoutOpening"
+                        Placement="BottomEdgeAlignedLeft">
                     <local:UnitPickerControl x:Name="Unit1Picker"
                                              AutomationProperties.Name="{utils:ResourceString Name=UnitPickerPlaceholder}"
                                              CurrencyRefreshRequested="OnPickerCurrencyRefreshRequested"
@@ -691,9 +694,9 @@
                 AutomationProperties.Name="{x:Bind ViewModel.Unit2.AccessibleName, Mode=OneWay}"
                 Click="OnUnitChipClick"
                 FlowDirection="{x:Bind LayoutDirection}"
-                IsEnabled="{x:Bind ViewModel.IsDropDownEnabled, Mode=OneWay}"
                 TabIndex="4"
-                ToolTipService.ToolTip="{utils:ResourceString Name=UnitChipToolTip}">
+                ToolTipService.ToolTip="{utils:ResourceString Name=UnitChipToolTip}"
+                IsEnabled="{x:Bind ViewModel.IsDropDownEnabled, Mode=OneWay}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -718,18 +721,18 @@
                 <TextBlock Grid.Column="2"
                            Margin="8,0,0,0"
                            VerticalAlignment="Center"
-                           AutomationProperties.AccessibilityView="Raw"
                            FontFamily="{StaticResource CalculatorFontFamily}"
                            FontSize="12"
+                           AutomationProperties.AccessibilityView="Raw"
                            IsHitTestVisible="False"
                            Text="&#xE70D;"/>
             </Grid>
             <Button.Flyout>
-                <Flyout Placement="BottomEdgeAlignedLeft"
-                        Closed="OnUnitFlyoutClosed"
+                <Flyout Closed="OnUnitFlyoutClosed"
                         FlyoutPresenterStyle="{StaticResource UnitPickerFlyoutPresenterStyle}"
                         Opened="OnUnitFlyoutOpened"
-                        Opening="OnUnitFlyoutOpening">
+                        Opening="OnUnitFlyoutOpening"
+                        Placement="BottomEdgeAlignedLeft">
                     <local:UnitPickerControl x:Name="Unit2Picker"
                                              AutomationProperties.Name="{utils:ResourceString Name=UnitPickerPlaceholder}"
                                              CurrencyRefreshRequested="OnPickerCurrencyRefreshRequested"
@@ -740,12 +743,16 @@
             </Button.Flyout>
         </Button>
 
-        <!-- Swap control: exchanges the from (Unit1) and to (Unit2) units and keeps the typed value
-             on the top row (ViewModel.SwapUnitsCommand). Spans the first chip through the second
-             value so it centres in the gap between the conversion rows, opposite the chips. -->
+        <!--
+            Swap control: exchanges the from (Unit1) and to (Unit2) units and keeps the typed value
+            on the top row (ViewModel.SwapUnitsCommand). In portrait (number pad below) it spans the
+            four conversion rows (Value1..Unit2) and centres on that block; in landscape (number pad on
+            the right) the LandscapeLayout state widens the span to the five rows the pad occupies so the
+            swap lines up with the pad's middle row (the "4" key) at any window size.
+        -->
         <Button x:Name="SwapUnitsButton"
-                Grid.Row="2"
-                Grid.RowSpan="2"
+                Grid.Row="1"
+                Grid.RowSpan="4"
                 Grid.Column="1"
                 Width="48"
                 Height="48"
@@ -758,9 +765,9 @@
                 AutomationProperties.Name="{utils:ResourceString Name=ConverterSwapUnits}"
                 Click="OnSwapUnitsClick"
                 FlowDirection="{x:Bind LayoutDirection}"
-                IsEnabled="{x:Bind ViewModel.IsDropDownEnabled, Mode=OneWay}"
                 TabIndex="5"
-                ToolTipService.ToolTip="{utils:ResourceString Name=ConverterSwapUnits}">
+                ToolTipService.ToolTip="{utils:ResourceString Name=ConverterSwapUnits}"
+                IsEnabled="{x:Bind ViewModel.IsDropDownEnabled, Mode=OneWay}">
             <FontIcon x:Name="SwapUnitsIcon"
                       FontFamily="{ThemeResource SymbolThemeFontFamily}"
                       FontSize="16"

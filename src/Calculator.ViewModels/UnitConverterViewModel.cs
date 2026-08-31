@@ -387,7 +387,13 @@ namespace CalculatorApp.ViewModel
         public bool IsCurrencyCurrentCategory
         {
             get => _isCurrencyCurrentCategory;
-            private set => SetProperty(ref _isCurrencyCurrentCategory, value);
+            private set
+            {
+                if (SetProperty(ref _isCurrencyCurrentCategory, value))
+                {
+                    OnPropertyChanged(nameof(SupplementaryVisibility));
+                }
+            }
         }
 
         internal bool IsCurrencyDataLoaded => _isCurrencyDataLoaded;
@@ -412,7 +418,9 @@ namespace CalculatorApp.ViewModel
         }
 
         public Windows.UI.Xaml.Visibility SupplementaryVisibility =>
-            SupplementaryResults?.Count > 0 ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
+            !IsCurrencyCurrentCategory && SupplementaryResults?.Count > 0
+                ? Windows.UI.Xaml.Visibility.Visible
+                : Windows.UI.Xaml.Visibility.Collapsed;
 
         public Windows.UI.Xaml.Visibility CurrencySymbolVisibility =>
             string.IsNullOrEmpty(CurrencySymbol1) || string.IsNullOrEmpty(CurrencySymbol2)
