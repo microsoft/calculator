@@ -409,6 +409,28 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
+        public void LengthSuggestionsPreserveWhimsicalUnitMetadata()
+        {
+            var viewModel = CreateLengthViewModel();
+            var resources = AppResourceProvider.GetInstance();
+            Unit centimeters = viewModel.Units.Single(
+                unit => unit.Name == resources.GetResourceString("UnitName_Centimeter"));
+            Unit inches = viewModel.Units.Single(
+                unit => unit.Name == resources.GetResourceString("UnitName_Inch"));
+            SelectUnit(viewModel, centimeters, isFromUnit: true);
+            SelectUnit(viewModel, inches, isFromUnit: false);
+
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Clear);
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Four);
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Seven);
+
+            SupplementaryResult result = viewModel.SupplementaryResults.Last();
+            Assert.AreEqual(resources.GetResourceString("UnitName_Hand"), result.Unit.Name);
+            Assert.AreEqual(resources.GetResourceString("UnitAbbreviation_Hand"), result.Unit.Abbreviation);
+            Assert.IsTrue(result.IsWhimsical());
+        }
+
+        [TestMethod]
         public void SelectingCrossCategoryFromUnitPreservesEditedValue()
         {
             var viewModel = new UnitConverterViewModel();

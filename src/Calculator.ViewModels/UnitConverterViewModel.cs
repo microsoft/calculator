@@ -629,7 +629,7 @@ namespace CalculatorApp.ViewModel
             {
                 if (!w.IsWhimsical)
                 {
-                    units.Add(new Unit(w.Id, w.Name, w.Abbreviation, w.AccessibleName, w.IsWhimsical));
+                    units.Add(CreateUnit(w));
                 }
             }
 
