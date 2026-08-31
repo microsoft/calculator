@@ -419,8 +419,6 @@ namespace CalculatorApp.ViewModel
                 ? Windows.UI.Xaml.Visibility.Collapsed
                 : Windows.UI.Xaml.Visibility.Visible;
 
-        #endregion
-
         #region Commands
 
         private RelayCommand<object> _categoryChangedCommand;
@@ -1668,6 +1666,8 @@ namespace CalculatorApp.ViewModel
                 _localizedValueToFormat = resourceProvider.GetResourceString("Format_ValueTo");
             }
         }
+
+        #endregion
 
         #region Callback
 
