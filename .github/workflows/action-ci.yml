@@ -167,6 +167,35 @@ jobs:
     - run: vstest.console.exe ${{ env.testDir }}/Calculator.Tests.msix /Platform:${{ matrix.platform }} -- RunConfiguration.TreatNoTestsAsError=true
       name: Run managed unit tests
         
+  managedUnitTests:
+    needs: [defineBuilds, build]
+    runs-on: windows-2025-vs2026
+    name: Run managed unit tests
+    strategy:
+      matrix:
+        platform: ${{ fromJSON(needs.defineBuilds.outputs.unitTestPlatformList) }}
+    env:
+      testDir: ${{ github.workspace }}/download/Calculator.Tests/AppPackages/Calculator.Tests_Test
+    steps:
+    - uses: actions/download-artifact@v4
+      name: Download build outputs
+      with:
+        name: Build-${{ matrix.platform }}
+        path: ${{ github.workspace }}/download
+    - uses: actions/download-artifact@v4
+      name: Download tools
+      with:
+        name: Tools-${{ matrix.platform }}
+        path: ${{ github.workspace }}/download/tools
+    - run: |
+        ${{ github.workspace }}/download/tools/SignTestApp.ps1 -AppToSign ${{ env.testDir }}/Calculator.Tests.msix
+      shell: pwsh
+      name: Install test certificate
+    - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
+      name: Setup dev tools
+    - run: vstest.console.exe ${{ env.testDir }}/Calculator.Tests.msix /Platform:${{ matrix.platform }} -- RunConfiguration.TreatNoTestsAsError=true
+      name: Run managed unit tests
+
   uiTests:
     needs: build
     runs-on: windows-2025-vs2026
