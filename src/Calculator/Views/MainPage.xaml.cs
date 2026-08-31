@@ -237,7 +237,11 @@ namespace CalculatorApp
             var result = new List<object>();
             foreach (var group in groups)
             {
-                result.Add(group);
+                // Skip the converter header; the collapsed Converters entry stands on its own.
+                if (group.GroupType != CategoryGroupType.Converter)
+                {
+                    result.Add(group);
+                }
                 foreach (var category in group.Categories)
                 {
                     result.Add(category);
@@ -436,7 +440,15 @@ namespace CalculatorApp
 
             if (e.SelectedItemContainer is NavigationViewItem item)
             {
-                ViewModel.Mode = (ViewMode)item.Tag;
+                var selectedMode = (ViewMode)item.Tag;
+
+                if (NavCategory.IsConverterViewMode(selectedMode)
+                    && NavCategory.IsConverterViewMode(ViewModel.Mode))
+                {
+                    return;
+                }
+
+                ViewModel.Mode = selectedMode;
             }
         }
 

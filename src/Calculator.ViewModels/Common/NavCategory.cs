@@ -161,26 +161,48 @@ namespace CalculatorApp.ViewModel.Common
 
             string navCategoryItemAutomationNameFormat = resProvider.GetResourceString("NavCategoryItem_AutomationNameFormat");
 
-            foreach (var categoryInitializer in NavCategoryStates.CategoryManifest)
+            if (groupInitializer.Type == CategoryGroupType.Converter)
             {
-                if (categoryInitializer.GroupType == groupInitializer.Type)
+                var defaultConverter = NavCategoryStates.CategoryManifest.First(
+                    c => c.ViewMode == NavCategoryStates.DefaultConverterMode);
+
+                string convertersLabel = automationName;
+                string converterAccessKey = defaultConverter.AccessKey
+                    ?? resProvider.GetResourceString(defaultConverter.NameResourceKey + "AccessKey");
+
+                _categories.Add(new NavCategory(
+                    convertersLabel,
+                    convertersLabel,
+                    defaultConverter.Glyph,
+                    converterAccessKey,
+                    convertersLabel,
+                    defaultConverter.ViewMode,
+                    defaultConverter.SupportsNegative,
+                    true));
+            }
+            else
+            {
+                foreach (var categoryInitializer in NavCategoryStates.CategoryManifest)
                 {
-                    string nameResourceKey = categoryInitializer.NameResourceKey;
-                    string categoryName = resProvider.GetResourceString(nameResourceKey + "Text");
-                    string categoryAutomationName = LocalizationStringUtil.GetLocalizedString(
-                        navCategoryItemAutomationNameFormat, categoryName, _name);
+                    if (categoryInitializer.GroupType == groupInitializer.Type)
+                    {
+                        string nameResourceKey = categoryInitializer.NameResourceKey;
+                        string categoryName = resProvider.GetResourceString(nameResourceKey + "Text");
+                        string categoryAutomationName = LocalizationStringUtil.GetLocalizedString(
+                            navCategoryItemAutomationNameFormat, categoryName, _name);
 
-                    string accessKey = categoryInitializer.AccessKey ?? resProvider.GetResourceString(nameResourceKey + "AccessKey");
+                        string accessKey = categoryInitializer.AccessKey ?? resProvider.GetResourceString(nameResourceKey + "AccessKey");
 
-                    _categories.Add(new NavCategory(
-                        categoryName,
-                        categoryAutomationName,
-                        categoryInitializer.Glyph,
-                        accessKey,
-                        groupMode,
-                        categoryInitializer.ViewMode,
-                        categoryInitializer.SupportsNegative,
-                        categoryInitializer.ViewMode != ViewMode.Graphing));
+                        _categories.Add(new NavCategory(
+                            categoryName,
+                            categoryAutomationName,
+                            categoryInitializer.Glyph,
+                            accessKey,
+                            groupMode,
+                            categoryInitializer.ViewMode,
+                            categoryInitializer.SupportsNegative,
+                            categoryInitializer.ViewMode != ViewMode.Graphing));
+                    }
                 }
             }
         }
@@ -241,6 +263,8 @@ namespace CalculatorApp.ViewModel.Common
         // ^^^ THESE CONSTANTS SHOULD NEVER CHANGE ^^^
 
         private static string _currentUserId;
+
+        internal const ViewMode DefaultConverterMode = ViewMode.Length;
 
         internal static readonly NavCategoryInitializer[] CategoryManifest = new[]
         {
@@ -373,12 +397,32 @@ namespace CalculatorApp.ViewModel.Common
 
             foreach (var init in CategoryManifest)
             {
-                ++index;
-                if (init.GroupType != type)
+                bool newGroup = init.GroupType != type;
+                if (newGroup)
                 {
                     type = init.GroupType;
-                    ++index;
+                    // The converter group renders no header, so it takes no header slot.
+                    if (type != CategoryGroupType.Converter)
+                    {
+                        ++index;
+                    }
                 }
+
+                if (type == CategoryGroupType.Converter)
+                {
+                    // All converter modes collapse into a single entry, counted once.
+                    if (newGroup)
+                    {
+                        ++index;
+                    }
+                    if (GetGroupType(mode) == CategoryGroupType.Converter)
+                    {
+                        return index;
+                    }
+                    continue;
+                }
+
+                ++index;
                 if (init.ViewMode == mode)
                 {
                     return index;

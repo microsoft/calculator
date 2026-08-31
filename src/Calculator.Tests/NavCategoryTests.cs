@@ -109,21 +109,11 @@ namespace Calculator.Tests
             var converterGroup = (NavCategoryGroup)menuOptions[1];
             Assert.AreEqual(CategoryGroupType.Converter, converterGroup.GroupType);
 
+            // The converter modes collapse into a single entry that opens the default
+            // converter (Length); each converter remains its own ViewMode in the manifest.
             var converterCategories = converterGroup.Categories;
-            Assert.AreEqual(13, converterCategories.Count);
-            ValidateNavCategory(converterCategories, 0, ViewMode.Currency);
-            ValidateNavCategory(converterCategories, 1, ViewMode.Volume);
-            ValidateNavCategory(converterCategories, 2, ViewMode.Length);
-            ValidateNavCategory(converterCategories, 3, ViewMode.Weight);
-            ValidateNavCategory(converterCategories, 4, ViewMode.Temperature);
-            ValidateNavCategory(converterCategories, 5, ViewMode.Energy);
-            ValidateNavCategory(converterCategories, 6, ViewMode.Area);
-            ValidateNavCategory(converterCategories, 7, ViewMode.Speed);
-            ValidateNavCategory(converterCategories, 8, ViewMode.Time);
-            ValidateNavCategory(converterCategories, 9, ViewMode.Power);
-            ValidateNavCategory(converterCategories, 10, ViewMode.Data);
-            ValidateNavCategory(converterCategories, 11, ViewMode.Pressure);
-            ValidateNavCategory(converterCategories, 12, ViewMode.Angle);
+            Assert.AreEqual(1, converterCategories.Count);
+            ValidateNavCategory(converterCategories, 0, ViewMode.Length);
         }
 
         private void ValidateNavCategory(IList<NavCategory> categories, int index, ViewMode expectedMode)
@@ -348,6 +338,45 @@ namespace Calculator.Tests
 
             Assert.AreEqual(-1, NavCategoryStates.GetIndexInGroup(ViewMode.None, CategoryGroupType.Calculator));
             Assert.AreEqual(-1, NavCategoryStates.GetIndexInGroup(ViewMode.None, CategoryGroupType.Converter));
+        }
+
+        [TestMethod]
+        public void ConverterModesMapToSingleSidebarEntry()
+        {
+            ViewMode[] converterModes =
+            {
+                ViewMode.Currency, ViewMode.Volume, ViewMode.Length, ViewMode.Weight,
+                ViewMode.Temperature, ViewMode.Energy, ViewMode.Area, ViewMode.Speed,
+                ViewMode.Time, ViewMode.Power, ViewMode.Data, ViewMode.Pressure, ViewMode.Angle
+            };
+
+            int converterEntryIndex = NavCategoryStates.GetFlatIndex(ViewMode.Currency);
+            foreach (var mode in converterModes)
+            {
+                Assert.AreEqual(
+                    converterEntryIndex,
+                    NavCategoryStates.GetFlatIndex(mode),
+                    $"Converter mode {mode} should map to the single Converters sidebar entry.");
+            }
+        }
+
+        [TestMethod]
+        public void GetFlatIndex_CollapsesConvertersAndKeepsCalculators()
+        {
+            // Calculator modes each keep their own sidebar entry (group header at 0).
+            Assert.AreEqual(1, NavCategoryStates.GetFlatIndex(ViewMode.Standard));
+            Assert.AreEqual(2, NavCategoryStates.GetFlatIndex(ViewMode.Scientific));
+            Assert.AreEqual(3, NavCategoryStates.GetFlatIndex(ViewMode.Graphing));
+            Assert.AreEqual(4, NavCategoryStates.GetFlatIndex(ViewMode.Programmer));
+            Assert.AreEqual(5, NavCategoryStates.GetFlatIndex(ViewMode.Date));
+
+            // The converter group renders no header, so the single collapsed Converters entry
+            // sits at 6 (right after Date at 5); first and last converter modes resolve to it.
+            Assert.AreEqual(6, NavCategoryStates.GetFlatIndex(ViewMode.Currency));
+            Assert.AreEqual(6, NavCategoryStates.GetFlatIndex(ViewMode.Angle));
+
+            // An unknown mode has no sidebar entry.
+            Assert.AreEqual(-1, NavCategoryStates.GetFlatIndex(ViewMode.None));
         }
 
         [TestMethod]
