@@ -85,7 +85,8 @@
                       ScrollViewer.HorizontalScrollMode="Disabled"
                       ScrollViewer.VerticalScrollBarVisibility="Auto"
                       ScrollViewer.VerticalScrollMode="Enabled"
-                      SelectedItem="{x:Bind ViewModel.SelectedCategory, Mode=TwoWay}"
+                      SelectedItem="{x:Bind ViewModel.SelectedCategory, Mode=OneWay}"
+                      SelectionChanged="OnCategorySelectionChanged"
                       SelectionMode="Single">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="vm:UnitPickerCategory">

@@ -244,6 +244,13 @@ namespace CalculatorApp
                 // The control is realized by now; clear any stale query and focus the search box.
                 picker.UpdateLayout();
                 picker.PrepareForOpen();
+
+                if (picker.ViewModel?.SelectedCategory != null)
+                {
+                    TraceLogger.GetInstance().LogConverterPickerOpened(
+                        NavCategoryStates.Deserialize(picker.ViewModel.SelectedCategory.CategoryId),
+                        ReferenceEquals(flyout, Units1.Flyout));
+                }
             }
 
             SetDropDownState(true);
@@ -261,6 +268,17 @@ namespace CalculatorApp
 
         private void OnUnitFlyoutClosed(object sender, object e)
         {
+            if (sender is Flyout flyout
+                && flyout.Content is UnitPickerControl picker
+                && picker.ViewModel?.SelectedCategory != null
+                && picker.ViewModel.TryTakeSearchUsage(out int queryLength, out int resultCount))
+            {
+                TraceLogger.GetInstance().LogConverterSearchUsed(
+                    NavCategoryStates.Deserialize(picker.ViewModel.SelectedCategory.CategoryId),
+                    queryLength,
+                    resultCount);
+            }
+
             SetDropDownState(false);
             m_activeUnitChip?.Focus(FocusState.Programmatic);
         }

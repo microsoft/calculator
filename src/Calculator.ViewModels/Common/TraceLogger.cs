@@ -59,6 +59,38 @@ namespace CalculatorApp.ViewModel.Common
         }
     }
 
+    internal interface IConverterTelemetrySink
+    {
+        void Log(string eventName, IReadOnlyDictionary<string, object> fields);
+    }
+
+    internal sealed class TraceLoggingConverterTelemetrySink : IConverterTelemetrySink
+    {
+        public void Log(string eventName, IReadOnlyDictionary<string, object> fields)
+        {
+            var loggingFields = new LoggingFields();
+            foreach (var field in fields)
+            {
+                switch (field.Value)
+                {
+                    case string stringValue:
+                        loggingFields.AddString(field.Key, stringValue);
+                        break;
+                    case int intValue:
+                        loggingFields.AddInt32(field.Key, intValue);
+                        break;
+                    case bool boolValue:
+                        loggingFields.AddBoolean(field.Key, boolValue);
+                        break;
+                    default:
+                        throw new InvalidOperationException($"Unsupported converter telemetry field type: {field.Value?.GetType()}");
+                }
+            }
+
+            TraceLogging.TraceLoggingCommon.GetInstance().LogLevel2Event(eventName, loggingFields);
+        }
+    }
+
     public sealed class TraceLogger
     {
         private static readonly Lazy<TraceLogger> s_instance = new Lazy<TraceLogger>(() => new TraceLogger());
@@ -75,6 +107,11 @@ namespace CalculatorApp.ViewModel.Common
         private const string EventNameMemoryItemLoad = "MemoryItemLoad";
         private const string EventNameVisualStateChanged = "VisualStateChanged";
         private const string EventNameConverterInputReceived = "ConverterInputReceived";
+        private const string EventNameConverterPickerOpened = "ConverterPickerOpened";
+        private const string EventNameConverterSearchUsed = "ConverterSearchUsed";
+        private const string EventNameConverterCategorySelected = "ConverterCategorySelected";
+        private const string EventNameConverterUnitSelected = "ConverterUnitSelected";
+        private const string EventNameConverterUnitsSwapped = "ConverterUnitsSwapped";
         private const string EventNameInputPasted = "InputPasted";
         private const string EventNameShowHideButtonClicked = "ShowHideButtonClicked";
         private const string EventNameGraphButtonClicked = "GraphButtonClicked";
@@ -90,9 +127,17 @@ namespace CalculatorApp.ViewModel.Common
         private readonly List<ButtonLog> _buttonLog = new List<ButtonLog>();
         private readonly List<int> _windowIdLog = new List<int>();
         private readonly object _lock = new object();
+        private readonly IConverterTelemetrySink _converterTelemetrySink;
+        private ulong _currentWindowCount;
 
         private TraceLogger()
+            : this(new TraceLoggingConverterTelemetrySink())
         {
+        }
+
+        internal TraceLogger(IConverterTelemetrySink converterTelemetrySink)
+        {
+            _converterTelemetrySink = converterTelemetrySink ?? throw new ArgumentNullException(nameof(converterTelemetrySink));
         }
 
         public static TraceLogger GetInstance() => s_instance.Value;
@@ -265,9 +310,43 @@ namespace CalculatorApp.ViewModel.Common
 
         public void LogConverterInputReceived(ViewMode mode)
         {
-            var fields = new LoggingFields();
-            fields.AddString(CalcMode, NavCategoryStates.GetFriendlyName(mode));
-            LogLevel2Event(EventNameConverterInputReceived, fields);
+            LogConverterEvent(EventNameConverterInputReceived, mode);
+        }
+
+        public void LogConverterPickerOpened(ViewMode mode, bool isFromUnit)
+        {
+            LogConverterEvent(
+                EventNameConverterPickerOpened,
+                mode,
+                new KeyValuePair<string, object>("IsFromUnit", isFromUnit));
+        }
+
+        public void LogConverterSearchUsed(ViewMode mode, int queryLength, int resultCount)
+        {
+            LogConverterEvent(
+                EventNameConverterSearchUsed,
+                mode,
+                new KeyValuePair<string, object>("QueryLength", queryLength),
+                new KeyValuePair<string, object>("ResultCount", resultCount));
+        }
+
+        public void LogConverterCategorySelected(ViewMode mode)
+        {
+            LogConverterEvent(EventNameConverterCategorySelected, mode);
+        }
+
+        public void LogConverterUnitSelected(ViewMode mode, int unitId, bool isFromUnit)
+        {
+            LogConverterEvent(
+                EventNameConverterUnitSelected,
+                mode,
+                new KeyValuePair<string, object>("UnitId", unitId),
+                new KeyValuePair<string, object>("IsFromUnit", isFromUnit));
+        }
+
+        public void LogConverterUnitsSwapped(ViewMode mode)
+        {
+            LogConverterEvent(EventNameConverterUnitsSwapped, mode);
         }
 
         public void LogNavBarOpened()
@@ -367,6 +446,24 @@ namespace CalculatorApp.ViewModel.Common
         private void LogLevel2Event(string eventName, LoggingFields fields)
         {
             TraceLogging.TraceLoggingCommon.GetInstance().LogLevel2Event(eventName, fields);
+        }
+
+        private void LogConverterEvent(
+            string eventName,
+            ViewMode mode,
+            params KeyValuePair<string, object>[] additionalFields)
+        {
+            var fields = new Dictionary<string, object>
+            {
+                [CalcMode] = NavCategoryStates.GetFriendlyName(mode)
+            };
+
+            foreach (var field in additionalFields)
+            {
+                fields.Add(field.Key, field.Value);
+            }
+
+            _converterTelemetrySink.Log(eventName, fields);
         }
     }
 }

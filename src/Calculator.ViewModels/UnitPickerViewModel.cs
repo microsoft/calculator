@@ -23,6 +23,8 @@ namespace CalculatorApp.ViewModel
         private readonly int _selectedUnitId;
         private readonly Dictionary<int, UnitPickerCategoryLoadState> _categoryLoadStates;
         private UnitPickerItem _selectedUnit;
+        private bool _isCategorySelectionTrackingEnabled;
+        private bool _searchUsed;
 
         public UnitPickerViewModel(
             IEnumerable<UnitPickerCategory> catalog,
@@ -67,6 +69,8 @@ namespace CalculatorApp.ViewModel
             private set => SetProperty(ref _selectedUnit, value);
         }
 
+        public event EventHandler<UnitPickerCategory> CategorySelected;
+
         [ObservableProperty]
         private UnitPickerCategory _selectedCategory;
 
@@ -78,6 +82,11 @@ namespace CalculatorApp.ViewModel
             }
 
             NotifyDisplayStateChanged();
+
+            if (value != null && _isCategorySelectionTrackingEnabled)
+            {
+                CategorySelected?.Invoke(this, value);
+            }
         }
 
         [ObservableProperty]
@@ -86,6 +95,11 @@ namespace CalculatorApp.ViewModel
 
         partial void OnSearchTextChanged(string value)
         {
+            if (!string.IsNullOrEmpty(value))
+            {
+                _searchUsed = true;
+            }
+
             RebuildFilteredUnits();
             NotifyDisplayStateChanged();
         }
@@ -107,6 +121,34 @@ namespace CalculatorApp.ViewModel
             && GetSelectedCategoryLoadState() == UnitPickerCategoryLoadState.Failed;
 
         public bool AreUnitsVisible => !IsSelectedCategoryLoading && !HasSelectedCategoryLoadFailed;
+
+        public void StartTrackingCategorySelections()
+        {
+            _isCategorySelectionTrackingEnabled = true;
+        }
+
+        public void SelectCategory(UnitPickerCategory category)
+        {
+            if (_isCategorySelectionTrackingEnabled && category != null)
+            {
+                SelectedCategory = category;
+            }
+        }
+
+        public bool TryTakeSearchUsage(out int queryLength, out int resultCount)
+        {
+            queryLength = 0;
+            resultCount = 0;
+            if (!_searchUsed)
+            {
+                return false;
+            }
+
+            queryLength = SearchText?.Length ?? 0;
+            resultCount = FilteredUnits.Count;
+            _searchUsed = false;
+            return true;
+        }
 
         internal void UpdateCategory(
             int categoryId,

@@ -87,6 +87,34 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
+        public void CategorySelected_IsRaisedOnlyAfterTrackingStarts()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Length", U(10, "Meter", "m")),
+                Cat(2, "Weight", U(20, "Gram", "g")),
+            }, matcher: null, selectedCategoryId: 2);
+            UnitPickerCategory selected = null;
+            int selectionCount = 0;
+            vm.CategorySelected += (_, category) =>
+            {
+                selected = category;
+                selectionCount++;
+            };
+
+            vm.SelectCategory(vm.Categories[0]);
+
+            Assert.AreEqual(0, selectionCount);
+            Assert.AreSame(vm.Categories[1], vm.SelectedCategory);
+
+            vm.StartTrackingCategorySelections();
+            vm.SelectCategory(vm.Categories[0]);
+
+            Assert.AreEqual(1, selectionCount);
+            Assert.AreSame(vm.Categories[0], selected);
+        }
+
+        [TestMethod]
         public void SelectCategory_RebuildsUnits()
         {
             var vm = new UnitPickerViewModel(new[]
@@ -138,6 +166,43 @@ namespace Calculator.Tests
             Assert.AreEqual(1, vm.FilteredUnits.Count);
             Assert.AreEqual("Gram", vm.FilteredUnits[0].Unit.Name);
             Assert.AreEqual("Weight", vm.FilteredUnits[0].CategoryName);
+        }
+
+        [TestMethod]
+        public void SearchUsage_ReportsFinalMetricsOnlyOnce()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Length", U(10, "Meter", "m"), U(11, "Kilometer", "km")),
+                Cat(2, "Weight", U(20, "Gram", "g")),
+            });
+
+            vm.SearchText = "g";
+            vm.SearchText = "gr";
+            vm.SearchText = "gram";
+
+            Assert.IsTrue(vm.TryTakeSearchUsage(out int queryLength, out int resultCount));
+            Assert.AreEqual(4, queryLength);
+            Assert.AreEqual(1, resultCount);
+            Assert.IsFalse(vm.TryTakeSearchUsage(out _, out _));
+        }
+
+        [TestMethod]
+        public void SearchUsage_RequiresSearchAndReportsClearedFinalState()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Length", U(10, "Meter", "m"), U(11, "Kilometer", "km")),
+            });
+
+            Assert.IsFalse(vm.TryTakeSearchUsage(out _, out _));
+
+            vm.SearchText = "zzz";
+            vm.SearchText = string.Empty;
+
+            Assert.IsTrue(vm.TryTakeSearchUsage(out int queryLength, out int resultCount));
+            Assert.AreEqual(0, queryLength);
+            Assert.AreEqual(2, resultCount);
         }
 
         [TestMethod]

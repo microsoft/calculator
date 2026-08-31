@@ -116,6 +116,7 @@ namespace CalculatorApp.ViewModel
         private readonly DataLoaders.UnitConverterDataLoader _dataLoader;
         private readonly DataLoaders.CurrencyDataLoader _currencyDataLoader;
         private readonly Windows.UI.Core.CoreDispatcher _dispatcher;
+        private readonly UnitPickerPreviewState _pickerPreviewState = new UnitPickerPreviewState();
         private char _decimalSeparator;
         private bool _isInputBlocked;
         private bool _isCategoryChanging;
@@ -400,8 +401,9 @@ namespace CalculatorApp.ViewModel
                     _currentCategory = value;
                     if (value != null)
                     {
-                        IsCurrencyCurrentCategory = value.GetModelCategoryId() ==
-                            NavCategoryStates.Serialize(ViewMode.Currency);
+                        int categoryId = value.GetModelCategoryId();
+                        IsCurrencyCurrentCategory = categoryId == NavCategoryStates.Serialize(ViewMode.Currency);
+                        _pickerPreviewState.SynchronizeCategory(categoryId);
                     }
                     OnPropertyChanged(nameof(CurrentCategory));
                 }
@@ -451,9 +453,9 @@ namespace CalculatorApp.ViewModel
         /// <summary>
         /// Builds a picker over every converter category and its units for cross-category unit
         /// search. Units come from the data loader without changing the current selection, so
-        /// opening the picker never disturbs the active conversion. The active converter's
-        /// category is preselected so the picker opens on the units the user is already using. A
-        /// fresh picker is returned per call so each flyout keeps its own search text.
+        /// opening the picker never disturbs the active conversion. Each chip's last previewed
+        /// category is preselected, falling back to the active converter category. A fresh picker
+        /// is returned per call so each flyout keeps its own search text.
         /// </summary>
         public UnitPickerViewModel CreateUnitPicker(bool isFromUnit = true)
         {
@@ -467,7 +469,8 @@ namespace CalculatorApp.ViewModel
             }
 
             var catalog = UnitPickerCatalog.Build(categories, unitsByCategory, glyphs);
-            int selectedCategoryId = CurrentCategory?.GetModelCategoryId() ?? -1;
+            int currentCategoryId = CurrentCategory?.GetModelCategoryId() ?? -1;
+            int selectedCategoryId = _pickerPreviewState.GetCategoryId(isFromUnit, currentCategoryId);
             Unit selectedUnit = isFromUnit ? Unit1 : Unit2;
             int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
             var categoryLoadStates = new Dictionary<int, UnitPickerCategoryLoadState>
@@ -480,6 +483,7 @@ namespace CalculatorApp.ViewModel
                 selectedCategoryId: selectedCategoryId,
                 selectedUnitId: selectedUnit?.ModelUnitID() ?? -1,
                 categoryLoadStates: categoryLoadStates);
+            picker.CategorySelected += (sender, category) => OnPickerCategorySelected(category, isFromUnit);
             if (isFromUnit)
             {
                 _fromUnitPicker = picker;
@@ -526,6 +530,19 @@ namespace CalculatorApp.ViewModel
             {
                 AssignSelectedUnit(u => Unit2 = u, unit);
             }
+
+            _pickerPreviewState.SynchronizeCategory(item.CategoryId);
+            TraceLogger.GetInstance().LogConverterUnitSelected(
+                NavCategoryStates.Deserialize(item.CategoryId),
+                unit.ModelUnitID(),
+                isFromUnit);
+        }
+
+        private void OnPickerCategorySelected(UnitPickerCategory category, bool isFromUnit)
+        {
+            _pickerPreviewState.PreviewCategory(isFromUnit, category.CategoryId);
+            TraceLogger.GetInstance().LogConverterCategorySelected(
+                NavCategoryStates.Deserialize(category.CategoryId));
         }
 
         /// <summary>
@@ -1045,6 +1062,8 @@ namespace CalculatorApp.ViewModel
             }
 
             OnUnitChanged(null);
+            TraceLogger.GetInstance().LogConverterUnitsSwapped(
+                NavCategoryStates.Deserialize(CurrentCategory.GetModelCategoryId()));
         }
 
         private void OnSwitchActive(object unused)
@@ -1124,6 +1143,7 @@ namespace CalculatorApp.ViewModel
                 }
 
                 _model.SendCommand(command);
+                TraceLogger.GetInstance().LogConverterInputReceived(Mode);
             }
         }
 

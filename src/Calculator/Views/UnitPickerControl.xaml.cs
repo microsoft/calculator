@@ -52,6 +52,7 @@ namespace CalculatorApp
         {
             SearchBox.Text = string.Empty;
             SearchBox.Focus(FocusState.Programmatic);
+            ViewModel?.StartTrackingCategorySelections();
         }
 
         private void OnSearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -59,6 +60,14 @@ namespace CalculatorApp
             if (ViewModel != null)
             {
                 ViewModel.SearchText = sender.Text ?? string.Empty;
+            }
+        }
+
+        private void OnCategorySelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0 && e.AddedItems[0] is UnitPickerCategory category)
+            {
+                ViewModel?.SelectCategory(category);
             }
         }
 
