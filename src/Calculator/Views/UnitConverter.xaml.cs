@@ -48,6 +48,10 @@ namespace CalculatorApp
             LayoutDirection = LocalizationSettings.GetInstance().GetFlowDirection();
             FlowDirectionHorizontalAlignment = LayoutDirection == FlowDirection.RightToLeft ? HorizontalAlignment.Right : HorizontalAlignment.Left;
             SwapButtonHorizontalAlignment = LayoutDirection == FlowDirection.RightToLeft ? HorizontalAlignment.Left : HorizontalAlignment.Right;
+            const double swapButtonClearance = 64;
+            SwapButtonClearanceMargin = LayoutDirection == FlowDirection.RightToLeft
+                ? new Thickness(swapButtonClearance, 0, 0, 0)
+                : new Thickness(0, 0, swapButtonClearance, 0);
 
             InitializeComponent();
 
@@ -76,6 +80,8 @@ namespace CalculatorApp
         public Windows.UI.Xaml.HorizontalAlignment FlowDirectionHorizontalAlignment { get; } = default;
 
         public Windows.UI.Xaml.HorizontalAlignment SwapButtonHorizontalAlignment { get; } = default;
+
+        public Windows.UI.Xaml.Thickness SwapButtonClearanceMargin { get; } = default;
 
         public void AnimateConverter()
         {

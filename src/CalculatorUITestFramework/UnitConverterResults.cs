@@ -13,7 +13,7 @@ namespace CalculatorUITestFramework
         private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         private WindowsElement CalculationResult1 => session.TryFindElementByAccessibilityId("Value1");
 
-        private WindowsElement CalculationResult2 => session.TryFindElementByAccessibilityId("Value2");
+        public WindowsElement CalculationResult2 => session.TryFindElementByAccessibilityId("Value2");
 
         /// <summary>
         /// Gets the text from the Value1 control and removes the narrator text that is not displayed in the UI.

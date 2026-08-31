@@ -651,6 +651,7 @@
         <Grid x:Name="Value2Container"
               Grid.Row="3"
               Grid.Column="1"
+              Margin="{x:Bind SwapButtonClearanceMargin}"
               HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
               Style="{ThemeResource ValueContainerStyle}">
             <Grid.ColumnDefinitions>

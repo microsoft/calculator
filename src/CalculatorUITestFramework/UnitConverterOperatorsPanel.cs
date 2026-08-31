@@ -12,5 +12,6 @@ namespace CalculatorUITestFramework
         public WindowsElement BackSpaceButton => session.TryFindElementByAccessibilityId("BackSpaceButtonSmall");
         public WindowsElement Units1 => session.TryFindElementByAccessibilityId("Units1");
         public WindowsElement Units2 => session.TryFindElementByAccessibilityId("Units2");
+        public WindowsElement SwapUnitsButton => session.TryFindElementByAccessibilityId("SwapUnitsButton");
     }
 }
