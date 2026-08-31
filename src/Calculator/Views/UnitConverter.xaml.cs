@@ -304,28 +304,6 @@ namespace CalculatorApp
             KeyboardShortcutManager.UpdateDropDownState(isOpen);
         }
 
-        private void OnUnitSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // Selection is one-way in XAML so replacing ItemsSource cannot write a transient
-            // null or stale item back to the ViewModel.
-            if (e.AddedItems.Count == 0
-                || !(e.AddedItems[0] is Unit unit)
-                || ViewModel?.Units == null
-                || !ViewModel.Units.Contains(unit))
-            {
-                return;
-            }
-
-            if (ReferenceEquals(sender, Units1))
-            {
-                ViewModel.Unit1 = unit;
-            }
-            else if (ReferenceEquals(sender, Units2))
-            {
-                ViewModel.Unit2 = unit;
-            }
-        }
-
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
         }
