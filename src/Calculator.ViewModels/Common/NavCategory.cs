@@ -359,6 +359,13 @@ namespace CalculatorApp.ViewModel.Common
             return ViewMode.None;
         }
 
+        // Falls back to the default converter so a cold start never opens Currency (network fetch).
+        public static ViewMode DeserializeLastUsedConverterMode(object obj)
+        {
+            ViewMode mode = Deserialize(obj);
+            return NavCategory.IsConverterViewMode(mode) ? mode : DefaultConverterMode;
+        }
+
         public static ViewMode GetViewModeForFriendlyName(string name)
         {
             var match = CategoryManifest.FirstOrDefault(init => init.FriendlyName == name);

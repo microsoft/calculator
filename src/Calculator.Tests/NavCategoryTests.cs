@@ -197,6 +197,23 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
+        public void DeserializeLastUsedConverterMode_ReturnsSavedConverter()
+        {
+            Assert.AreEqual(ViewMode.Currency, NavCategoryStates.DeserializeLastUsedConverterMode(16));
+            Assert.AreEqual(ViewMode.Length, NavCategoryStates.DeserializeLastUsedConverterMode(5));
+            Assert.AreEqual(ViewMode.Angle, NavCategoryStates.DeserializeLastUsedConverterMode(15));
+        }
+
+        [TestMethod]
+        public void DeserializeLastUsedConverterMode_FallsBackToDefault()
+        {
+            Assert.AreEqual(ViewMode.Length, NavCategoryStates.DeserializeLastUsedConverterMode(null));
+            Assert.AreEqual(ViewMode.Length, NavCategoryStates.DeserializeLastUsedConverterMode("fail"));
+            Assert.AreEqual(ViewMode.Length, NavCategoryStates.DeserializeLastUsedConverterMode(9999));
+            Assert.AreEqual(ViewMode.Length, NavCategoryStates.DeserializeLastUsedConverterMode(0));
+        }
+
+        [TestMethod]
         public void IsValidViewMode_AllValid()
         {
             Assert.IsTrue(NavCategoryStates.IsValidViewMode(ViewMode.Standard));

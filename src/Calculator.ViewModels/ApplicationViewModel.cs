@@ -50,6 +50,7 @@ namespace CalculatorApp.ViewModel
 
         public const string WidthLocalSettingsKey = "calculatorAlwaysOnTopLastWidth";
         public const string HeightLocalSettingsKey = "calculatorAlwaysOnTopLastHeight";
+        public const string LastUsedConverterModeLocalSettingsKey = "LastUsedConverterMode";
 
         public ViewMode Mode
         {
@@ -255,7 +256,13 @@ namespace CalculatorApp.ViewModel
             // Cast mode to an int in order to save it to app data.
             // Save the changed mode, so that the new window launches in this mode.
             // Don't save until after we have adjusted to the new mode, so we don't save a mode that fails to load.
-            ApplicationData.Current.LocalSettings.Values[nameof(Mode)] = NavCategoryStates.Serialize(_mode);
+            int serializedMode = NavCategoryStates.Serialize(_mode);
+            ApplicationData.Current.LocalSettings.Values[nameof(Mode)] = serializedMode;
+
+            if (NavCategory.IsConverterViewMode(_mode))
+            {
+                ApplicationData.Current.LocalSettings.Values[LastUsedConverterModeLocalSettingsKey] = serializedMode;
+            }
 
             // Log ModeChange event when not first launch, log WindowCreated on first launch
             if (NavCategoryStates.IsValidViewMode(PreviousMode))
@@ -269,6 +276,13 @@ namespace CalculatorApp.ViewModel
                     ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread()));
             }
             OnPropertyChanged(nameof(ClearMemoryVisibility));
+        }
+
+        public ViewMode ResolveLastUsedConverterMode()
+        {
+            var settings = ApplicationData.Current.LocalSettings;
+            object saved = settings.Values.TryGetValue(LastUsedConverterModeLocalSettingsKey, out var value) ? value : null;
+            return NavCategoryStates.DeserializeLastUsedConverterMode(saved);
         }
 
         [RelayCommand]

@@ -442,10 +442,14 @@ namespace CalculatorApp
             {
                 var selectedMode = (ViewMode)item.Tag;
 
-                if (NavCategory.IsConverterViewMode(selectedMode)
-                    && NavCategory.IsConverterViewMode(ViewModel.Mode))
+                if (NavCategory.IsConverterViewMode(selectedMode))
                 {
-                    return;
+                    if (NavCategory.IsConverterViewMode(ViewModel.Mode))
+                    {
+                        return;
+                    }
+
+                    selectedMode = ViewModel.ResolveLastUsedConverterMode();
                 }
 
                 ViewModel.Mode = selectedMode;
