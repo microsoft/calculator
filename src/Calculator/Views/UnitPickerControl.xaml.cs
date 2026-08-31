@@ -141,6 +141,21 @@ namespace CalculatorApp
                 e.Handled = true;
                 DismissRequested?.Invoke(this, EventArgs.Empty);
             }
+            else if (e.Key == VirtualKey.Up
+                && ReferenceEquals(FocusManager.GetFocusedElement(), UnitList.ContainerFromIndex(0)))
+            {
+                e.Handled = SearchBox.Focus(FocusState.Keyboard);
+            }
+            else if (e.Key == (FlowDirection == Windows.UI.Xaml.FlowDirection.RightToLeft ? VirtualKey.Left : VirtualKey.Right)
+                && IsFocusInList(CategoryList))
+            {
+                e.Handled = TryFocusSelectedUnit();
+            }
+            else if (e.Key == (FlowDirection == Windows.UI.Xaml.FlowDirection.RightToLeft ? VirtualKey.Right : VirtualKey.Left)
+                && IsFocusInList(UnitList))
+            {
+                e.Handled = TryFocusSelectedCategory();
+            }
         }
 
         private bool TryFocusFirstUnit()
@@ -152,10 +167,49 @@ namespace CalculatorApp
                 return false;
             }
 
-            UnitPickerItem firstUnit = ViewModel.FilteredUnits[0];
-            UnitList.ScrollIntoView(firstUnit);
+            return TryFocusUnit(ViewModel.FilteredUnits[0]);
+        }
+
+        private bool TryFocusSelectedUnit()
+        {
+            UnitPickerItem unit = ViewModel?.SelectedUnit;
+            if (unit == null && ViewModel?.FilteredUnits?.Count > 0)
+            {
+                unit = ViewModel.FilteredUnits[0];
+            }
+
+            return TryFocusUnit(unit);
+        }
+
+        private bool TryFocusUnit(UnitPickerItem unit)
+        {
+            if (unit == null)
+            {
+                return false;
+            }
+
+            UnitList.ScrollIntoView(unit);
             UnitList.UpdateLayout();
-            return (UnitList.ContainerFromItem(firstUnit) as Control)?.Focus(FocusState.Keyboard) == true;
+            return (UnitList.ContainerFromItem(unit) as Control)?.Focus(FocusState.Keyboard) == true;
+        }
+
+        private bool TryFocusSelectedCategory()
+        {
+            UnitPickerCategory category = ViewModel?.SelectedCategory;
+            if (category == null || !CategoryList.IsEnabled)
+            {
+                return false;
+            }
+
+            CategoryList.ScrollIntoView(category);
+            CategoryList.UpdateLayout();
+            return (CategoryList.ContainerFromItem(category) as Control)?.Focus(FocusState.Keyboard) == true;
+        }
+
+        private static bool IsFocusInList(ListView list)
+        {
+            return FocusManager.GetFocusedElement() is DependencyObject focused
+                && list.IndexFromContainer(focused) >= 0;
         }
 
         private bool TryPickFirstSearchResult()

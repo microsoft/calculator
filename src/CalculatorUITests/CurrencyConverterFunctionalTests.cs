@@ -4,6 +4,8 @@ using CalculatorUITestFramework;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using OpenQA.Selenium;
+
 namespace CalculatorUITests
 {
     [TestClass]
@@ -293,5 +295,48 @@ namespace CalculatorUITests
         }
 
         #endregion
+
+        [TestMethod]
+        [Priority(0)]
+        public void KeyboardInput_UpArrowFromFirstUnitReturnsToSearch()
+        {
+            try
+            {
+                page.UnitPicker.Open(page.UnitConverterOperators.Units1);
+                page.UnitPicker.SearchBox.SendKeys(Keys.ArrowDown);
+                Assert.AreEqual("True", page.UnitPicker.FirstUnit.GetAttribute("HasKeyboardFocus"));
+
+                page.UnitPicker.FirstUnit.SendKeys(Keys.ArrowUp);
+                CalculatorApp.Window.SendKeys("zzq");
+
+                Assert.AreEqual("zzq", page.UnitPicker.SearchBox.GetAttribute("Value.Value"));
+            }
+            finally
+            {
+                page.UnitPicker.Dismiss();
+            }
+        }
+
+        [TestMethod]
+        [Priority(0)]
+        public void KeyboardInput_LeftAndRightArrowsMoveBetweenPickerColumns()
+        {
+            try
+            {
+                page.UnitPicker.Open(page.UnitConverterOperators.Units1);
+                page.UnitPicker.SearchBox.SendKeys(Keys.Tab);
+                var category = page.UnitPicker.FocusedCategory;
+
+                category.SendKeys(Keys.ArrowRight);
+                var unit = page.UnitPicker.FocusedUnit;
+
+                unit.SendKeys(Keys.ArrowLeft);
+                Assert.AreEqual("True", category.GetAttribute("HasKeyboardFocus"));
+            }
+            finally
+            {
+                page.UnitPicker.Dismiss();
+            }
+        }
     }
 }

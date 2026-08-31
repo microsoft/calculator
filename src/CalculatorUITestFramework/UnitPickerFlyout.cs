@@ -31,6 +31,32 @@ namespace CalculatorUITestFramework
 
         private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
 
+        public WindowsElement SearchBox =>
+            this.session.TryFindElementByAccessibilityId("UnitPickerSearchBox");
+
+        public WindowsElement FirstUnit =>
+            this.session.FindElementByXPath($"(//*[@AutomationId='{UnitListAutomationId}']//ListItem)[1]");
+
+        public WindowsElement FocusedCategory =>
+            this.session.FindElementByXPath(
+                $"//*[@AutomationId='{CategoryListAutomationId}']//ListItem[@HasKeyboardFocus='True']");
+
+        public WindowsElement FocusedUnit =>
+            this.session.FindElementByXPath(
+                $"//*[@AutomationId='{UnitListAutomationId}']//ListItem[@HasKeyboardFocus='True']");
+
+        public void Open(WindowsElement chip)
+        {
+            chip.SendKeys(Keys.Enter);
+            this.SearchBox.WaitForDisplayed();
+        }
+
+        public void Dismiss()
+        {
+            CalculatorApp.Window.SendKeys(Keys.Escape);
+            this.WaitForPickerToClose();
+        }
+
         /// <summary>
         /// Opens the picker for the given chip and commits the unit whose accessible name matches
         /// the supplied "Region - Unit" value (the " - " separator is dropped to match the
