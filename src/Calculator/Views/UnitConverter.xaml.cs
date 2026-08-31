@@ -47,6 +47,7 @@ namespace CalculatorApp
             m_meteredConnectionOverride = false;
             LayoutDirection = LocalizationSettings.GetInstance().GetFlowDirection();
             FlowDirectionHorizontalAlignment = LayoutDirection == FlowDirection.RightToLeft ? HorizontalAlignment.Right : HorizontalAlignment.Left;
+            SwapButtonHorizontalAlignment = LayoutDirection == FlowDirection.RightToLeft ? HorizontalAlignment.Left : HorizontalAlignment.Right;
 
             InitializeComponent();
 
@@ -73,6 +74,8 @@ namespace CalculatorApp
         }
 
         public Windows.UI.Xaml.HorizontalAlignment FlowDirectionHorizontalAlignment { get; } = default;
+
+        public Windows.UI.Xaml.HorizontalAlignment SwapButtonHorizontalAlignment { get; } = default;
 
         public void AnimateConverter()
         {
@@ -166,6 +169,15 @@ namespace CalculatorApp
         private void OnUnitChipClick(object sender, RoutedEventArgs e)
         {
             m_activeUnitChip = sender as Control;
+        }
+
+        /// <summary>
+        /// Handles the swap button click by running the view model's SwapUnitsCommand, which
+        /// exchanges the from and to units and keeps the typed value on the top row.
+        /// </summary>
+        private void OnSwapUnitsClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.SwapUnitsCommand.Execute(null);
         }
 
         private void OnUnitFlyoutOpening(object sender, object e)

@@ -118,6 +118,7 @@ namespace CalculatorApp.ViewModel
         private char _decimalSeparator;
         private bool _isInputBlocked;
         private bool _isCategoryChanging;
+        private bool _isSwappingUnits;
         private bool _isCurrencyDataLoaded;
 
         // Observable properties backing fields
@@ -418,6 +419,7 @@ namespace CalculatorApp.ViewModel
         private RelayCommand<object> _categoryChangedCommand;
         private RelayCommand<object> _unitChangedCommand;
         private RelayCommand<object> _switchActiveCommand;
+        private RelayCommand<object> _swapUnitsCommand;
         private RelayCommand<object> _buttonPressedCommand;
         private RelayCommand<object> _copyCommand;
         private RelayCommand<object> _pasteCommand;
@@ -428,6 +430,8 @@ namespace CalculatorApp.ViewModel
             _unitChangedCommand ?? (_unitChangedCommand = new RelayCommand<object>(OnUnitChanged));
         public RelayCommand<object> SwitchActiveCommand =>
             _switchActiveCommand ?? (_switchActiveCommand = new RelayCommand<object>(OnSwitchActive));
+        public RelayCommand<object> SwapUnitsCommand =>
+            _swapUnitsCommand ?? (_swapUnitsCommand = new RelayCommand<object>(OnSwapUnits));
         public RelayCommand<object> ButtonPressedCommand =>
             _buttonPressedCommand ?? (_buttonPressedCommand = new RelayCommand<object>(OnButtonPressed));
         public RelayCommand<object> ButtonPressed => ButtonPressedCommand;
@@ -887,7 +891,7 @@ namespace CalculatorApp.ViewModel
             }
             else if (propertyName == nameof(Unit1) || propertyName == nameof(Unit2))
             {
-                if (!_isCategoryChanging)
+                if (!_isCategoryChanging && !_isSwappingUnits)
                 {
                     OnUnitChanged(null);
                 }
@@ -970,6 +974,32 @@ namespace CalculatorApp.ViewModel
             }
 
             SaveUserPreferences();
+        }
+
+        /// <summary>
+        /// Swaps the from (Unit1) and to (Unit2) units in place, keeping the typed value on the top
+        /// row. Distinct from OnSwitchActive, which flips the active input field.
+        /// </summary>
+        private void OnSwapUnits(object unused)
+        {
+            if (Unit1 == null || Unit2 == null)
+            {
+                return;
+            }
+
+            var temp = Unit1;
+            _isSwappingUnits = true;
+            try
+            {
+                Unit1 = Unit2;
+                Unit2 = temp;
+            }
+            finally
+            {
+                _isSwappingUnits = false;
+            }
+
+            OnUnitChanged(null);
         }
 
         private void OnSwitchActive(object unused)

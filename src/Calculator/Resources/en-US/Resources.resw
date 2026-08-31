@@ -3155,6 +3155,10 @@
     <value>Change unit</value>
     <comment>Tooltip and accessible description for the converter's from/to unit chip buttons. Selecting a chip opens a picker to choose a different unit.</comment>
   </data>
+  <data name="ConverterSwapUnits" xml:space="preserve">
+    <value>Swap units</value>
+    <comment>Tooltip and accessible name for the converter's swap button. Activating it exchanges the from and to units and keeps the typed value on the top row.</comment>
+  </data>
   <data name="UnitPickerPlaceholder" xml:space="preserve">
     <value>Choose a unit</value>
     <comment>Placeholder text shown inside the converter unit picker flyout before the search box and unit list are available.</comment>
