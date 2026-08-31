@@ -169,6 +169,64 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
+        public void Search_EqualRanksPrioritizeSelectedCategory()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Length", U(10, "Centimeters", "cm")),
+                Cat(2, "Volume", U(20, "Cubic meters", "m\u00b3")),
+            }, matcher: null, selectedCategoryId: 2);
+
+            vm.SearchText = "c";
+
+            Assert.AreEqual("Cubic meters", vm.FilteredUnits[0].Unit.Name);
+            Assert.AreEqual("Centimeters", vm.FilteredUnits[1].Unit.Name);
+        }
+
+        [TestMethod]
+        public void Search_EqualRanksOrderRemainingCategoriesAlphabetically()
+        {
+            var previousCulture = System.Globalization.CultureInfo.CurrentCulture;
+            try
+            {
+                System.Globalization.CultureInfo.CurrentCulture =
+                    new System.Globalization.CultureInfo("en-US");
+                var vm = new UnitPickerViewModel(new[]
+                {
+                    Cat(1, "Volume", U(10, "Cubic meters", "m\u00b3")),
+                    Cat(2, "Length", U(20, "Centimeters", "cm")),
+                    Cat(3, "Temperature", U(30, "Kelvin", "K")),
+                }, matcher: null, selectedCategoryId: 3);
+
+                vm.SearchText = "c";
+
+                Assert.AreEqual("Centimeters", vm.FilteredUnits[0].Unit.Name);
+                Assert.AreEqual("Cubic meters", vm.FilteredUnits[1].Unit.Name);
+            }
+            finally
+            {
+                System.Globalization.CultureInfo.CurrentCulture = previousCulture;
+            }
+        }
+
+        [TestMethod]
+        public void Search_CategoryChangeReordersEqualRanksWithoutChangingResults()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Length", U(10, "Centimeters", "cm")),
+                Cat(2, "Volume", U(20, "Cubic meters", "m\u00b3")),
+            }, matcher: null, selectedCategoryId: 1);
+            vm.SearchText = "c";
+
+            vm.SelectedCategory = vm.Categories[1];
+
+            Assert.AreEqual(2, vm.FilteredUnits.Count);
+            Assert.AreEqual("Cubic meters", vm.FilteredUnits[0].Unit.Name);
+            Assert.AreEqual("Centimeters", vm.FilteredUnits[1].Unit.Name);
+        }
+
+        [TestMethod]
         public void SearchUsage_ReportsFinalMetricsOnlyOnce()
         {
             var vm = new UnitPickerViewModel(new[]

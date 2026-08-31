@@ -21,6 +21,7 @@ namespace CalculatorApp.ViewModel
 
         // Category matches rank below equivalent unit-field matches.
         private const int CategoryPenalty = 250;
+        private const int NonExactAbbreviationPenalty = 1;
 
         // Short queries skip loose matching to avoid noisy results.
         private const int MinSubsequenceQueryLength = 3;
@@ -56,9 +57,14 @@ namespace CalculatorApp.ViewModel
                 return ExactScore;
             }
 
-            int best = Math.Max(
-                ScoreField(query, item.Unit.Name),
-                ScoreField(query, item.Unit.Abbreviation));
+            int nameScore = ScoreField(query, item.Unit.Name, allowPrefixTypo: true);
+            int abbreviationScore = ScoreField(query, item.Unit.Abbreviation);
+            if (abbreviationScore > 0 && abbreviationScore < ExactScore)
+            {
+                abbreviationScore -= NonExactAbbreviationPenalty;
+            }
+
+            int best = Math.Max(nameScore, abbreviationScore);
 
             int categoryScore = ScoreField(query, item.CategoryName);
             if (categoryScore > 0)
@@ -69,7 +75,7 @@ namespace CalculatorApp.ViewModel
             return best;
         }
 
-        private static int ScoreField(string query, string value)
+        private static int ScoreField(string query, string value, bool allowPrefixTypo = false)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -109,7 +115,11 @@ namespace CalculatorApp.ViewModel
             if (queryScalars.Length >= MinTypoQueryLength)
             {
                 valueScalars = valueScalars ?? SplitScalars(value);
-                int distance = BestEditDistance(queryScalars, valueScalars, value);
+                int distance = BestEditDistance(
+                    queryScalars,
+                    valueScalars,
+                    value,
+                    allowPrefixTypo);
                 if (distance >= 0)
                 {
                     return TypoScore - (distance * 10);
@@ -138,10 +148,23 @@ namespace CalculatorApp.ViewModel
             return queryIndex == query.Length;
         }
 
-        private static int BestEditDistance(string[] query, string[] value, string rawValue)
+        private static int BestEditDistance(
+            string[] query,
+            string[] value,
+            string rawValue,
+            bool allowPrefixTypo)
         {
             int allowed = query.Length >= TwoEditQueryLength ? 2 : 1;
             int best = BoundedEditDistance(query, value, allowed);
+
+            if (allowPrefixTypo && query.Length < value.Length)
+            {
+                int distance = BoundedEditDistance(query, value, allowed, query.Length);
+                if (distance >= 0 && (best < 0 || distance < best))
+                {
+                    best = distance;
+                }
+            }
 
             // A misspelling in one word should still match a multi-word value.
             foreach (var word in rawValue.Split(WordSeparators, StringSplitOptions.RemoveEmptyEntries))
@@ -156,16 +179,21 @@ namespace CalculatorApp.ViewModel
             return best;
         }
 
-        private static int BoundedEditDistance(string[] query, string[] value, int allowed)
+        private static int BoundedEditDistance(
+            string[] query,
+            string[] value,
+            int allowed,
+            int valueLength = -1)
         {
-            if (Math.Abs(query.Length - value.Length) > allowed)
+            int comparedValueLength = valueLength < 0 ? value.Length : valueLength;
+            if (Math.Abs(query.Length - comparedValueLength) > allowed)
             {
                 return -1;
             }
 
-            var previous = new int[value.Length + 1];
-            var current = new int[value.Length + 1];
-            for (int j = 0; j <= value.Length; j++)
+            var previous = new int[comparedValueLength + 1];
+            var current = new int[comparedValueLength + 1];
+            for (int j = 0; j <= comparedValueLength; j++)
             {
                 previous[j] = j;
             }
@@ -175,7 +203,7 @@ namespace CalculatorApp.ViewModel
                 current[0] = i;
                 int rowBest = current[0];
 
-                for (int j = 1; j <= value.Length; j++)
+                for (int j = 1; j <= comparedValueLength; j++)
                 {
                     int substitution =
                         ScalarsEqualOrdinalIgnoreCase(query[i - 1], value[j - 1]) ? 0 : 1;
@@ -200,7 +228,7 @@ namespace CalculatorApp.ViewModel
                 current = swap;
             }
 
-            int result = previous[value.Length];
+            int result = previous[comparedValueLength];
             return result <= allowed ? result : -1;
         }
 

@@ -50,6 +50,39 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
+        public void MisspelledUnitPrefixIsFoundBelowTruePrefix()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(
+                    1,
+                    "Length",
+                    U(10, "Centima units", "cu"),
+                    U(11, "Centimeters", "cm")),
+            });
+
+            vm.SearchText = "centima";
+
+            CollectionAssert.AreEqual(
+                new[] { "Centima units", "Centimeters" },
+                Names(vm));
+        }
+
+        [TestMethod]
+        public void MisspelledUnitPrefixDoesNotBroadenOtherFields()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Unrelated", U(10, "Meters", "centimeters")),
+                Cat(2, "Centimeters", U(20, "Feet", "ft")),
+            });
+
+            vm.SearchText = "centima";
+
+            Assert.AreEqual(0, vm.FilteredUnits.Count);
+        }
+
+        [TestMethod]
         public void InitialsOfAMultiWordUnitAreFound()
         {
             var vm = Picker();
@@ -144,6 +177,23 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
+        public void NamePrefixOutranksSelectedCategoryAbbreviationPrefix()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Area", U(10, "Square centimeters", "cm\u00b2")),
+                Cat(2, "Length", U(20, "Centimeters", "cm")),
+                Cat(3, "Volume", U(30, "Cubic centimeters", "cm\u00b3")),
+            }, matcher: null, selectedCategoryId: 1);
+
+            vm.SearchText = "c";
+
+            CollectionAssert.AreEqual(
+                new[] { "Centimeters", "Cubic centimeters", "Square centimeters" },
+                Names(vm));
+        }
+
+        [TestMethod]
         public void NonsenseStillMatchesNothing()
         {
             var vm = Picker();
@@ -196,6 +246,7 @@ namespace Calculator.Tests
             AssertTopResultContains(picker, "celcius", "Celsius");
             AssertTopResultContains(picker, "farenheit", "Fahrenheit");
             AssertTopResultContains(picker, "centimet", "Centimet");
+            AssertTopResultContains(picker, "centima", "Centimet");
 
             picker.SearchText = "zzzqqq";
             Assert.AreEqual(0, picker.FilteredUnits.Count, "Nonsense matched something in the real catalogue.");

@@ -77,7 +77,7 @@ namespace CalculatorApp.ViewModel
 
         partial void OnSelectedCategoryChanged(UnitPickerCategory value)
         {
-            if (value != null && string.IsNullOrEmpty(SearchText))
+            if (value != null)
             {
                 RebuildFilteredUnits();
             }
@@ -195,8 +195,7 @@ namespace CalculatorApp.ViewModel
             else
             {
                 // Ranked, so the closest match leads: a fuzzy search that returned hits in catalog
-                // order would bury the obvious answer among the loose ones. OrderByDescending is
-                // stable, so equally good matches keep their catalog order.
+                // order would bury the obvious answer among the loose ones.
                 var ranked = new List<KeyValuePair<UnitPickerItem, int>>();
                 foreach (var item in _allItems)
                 {
@@ -207,7 +206,12 @@ namespace CalculatorApp.ViewModel
                     }
                 }
 
-                foreach (var entry in ranked.OrderByDescending(entry => entry.Value))
+                int selectedCategoryId = SelectedCategory?.CategoryId ?? -1;
+                foreach (var entry in ranked
+                    .OrderByDescending(entry => entry.Value)
+                    .ThenBy(entry => entry.Key.CategoryId == selectedCategoryId ? 0 : 1)
+                    .ThenBy(entry => entry.Key.CategoryName, StringComparer.CurrentCultureIgnoreCase)
+                    .ThenBy(entry => entry.Key.CategoryId))
                 {
                     FilteredUnits.Add(entry.Key);
                 }
