@@ -3155,6 +3155,26 @@
     <value>Change unit</value>
     <comment>Tooltip and accessible description for the converter's from/to unit chip buttons. Selecting a chip opens a picker to choose a different unit.</comment>
   </data>
+  <data name="UnitPickerPlaceholder" xml:space="preserve">
+    <value>Choose a unit</value>
+    <comment>Placeholder text shown inside the converter unit picker flyout before the search box and unit list are available.</comment>
+  </data>
+  <data name="UnitPickerSearchPlaceholder" xml:space="preserve">
+    <value>Search units</value>
+    <comment>Placeholder and accessible name for the search box in the converter unit picker flyout. Typing filters the unit list.</comment>
+  </data>
+  <data name="UnitPickerNoResults" xml:space="preserve">
+    <value>No units found</value>
+    <comment>Message shown in the converter unit picker flyout when the search text matches no units.</comment>
+  </data>
+  <data name="UnitPickerCategoriesLabel" xml:space="preserve">
+    <value>Categories</value>
+    <comment>Accessible name for the list of converter categories in the unit picker flyout. Selecting one switches the active converter.</comment>
+  </data>
+  <data name="UnitPickerResultsLabel" xml:space="preserve">
+    <value>Units</value>
+    <comment>Accessible name for the list of matching units in the converter unit picker flyout. Selecting one sets the chosen unit.</comment>
+  </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
     <value>Offline. Please check your%HL%Network Settings%HL%</value>
     <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>

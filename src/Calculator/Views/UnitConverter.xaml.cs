@@ -168,15 +168,85 @@ namespace CalculatorApp
             m_activeUnitChip = sender as Control;
         }
 
+        private void OnUnitFlyoutOpening(object sender, object e)
+        {
+            if (sender is Flyout flyout && flyout.Content is UnitPickerControl picker)
+            {
+                picker.FlowDirection = LayoutDirection;
+                SizeAndPlacePicker(flyout, picker);
+                picker.ViewModel = ViewModel?.CreateUnitPicker();
+            }
+        }
+
+        // Sizes and left-aligns the picker under the chip. The flyout is unconstrained
+        // (ShouldConstrainToRootBounds=False) so it may extend past the calculator frame like the old
+        // unit dropdown; WinUI keeps it within the monitor. Width spans from the chip's left edge to
+        // the window's right edge; height scales with the window so it opens comfortably downward
+        // (and past the bottom of the frame when the window is short).
+        private void SizeAndPlacePicker(Flyout flyout, FrameworkElement host)
+        {
+            Control chip = ReferenceEquals(flyout, Units2.Flyout) ? Units2 : Units1;
+            double controlWidth = ActualWidth > 0 ? ActualWidth : 460;
+            double controlHeight = ActualHeight > 0 ? ActualHeight : 520;
+
+            double chipLeft = 16;
+            try
+            {
+                chipLeft = chip.TransformToVisual(this).TransformPoint(new Windows.Foundation.Point(0, 0)).X;
+            }
+            catch (ArgumentException)
+            {
+                // TransformToVisual can throw transiently during layout; fall back to a small inset.
+            }
+
+            const double margin = 24;
+            host.Width = Clamp(controlWidth - chipLeft - margin, 480, 560);
+            host.Height = Clamp(controlHeight * 0.6, 360, 420);
+
+            flyout.Placement = Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.BottomEdgeAlignedLeft;
+
+            // ShouldConstrainToRootBounds needs UniversalApiContract 8 (Windows 10 1903); the app's
+            // min target is 1809, so set it here guarded by ApiInformation rather than in XAML (which
+            // raised WMC0151 and would XamlParseException on 1809). On 1809 the flyout keeps the
+            // default constrained behavior; on 1903+ it may extend past the frame as designed.
+            if (Windows.Foundation.Metadata.ApiInformation.IsPropertyPresent(
+                    "Windows.UI.Xaml.Controls.Primitives.FlyoutBase", "ShouldConstrainToRootBounds"))
+            {
+                flyout.ShouldConstrainToRootBounds = false;
+            }
+        }
+
+        private static double Clamp(double value, double min, double max) =>
+            value < min ? min : (value > max ? max : value);
+
         private void OnUnitFlyoutOpened(object sender, object e)
         {
-            if (sender is Flyout flyout && flyout.Content is Control content)
+            if (sender is Flyout flyout && flyout.Content is UnitPickerControl picker)
             {
-                content.FlowDirection = LayoutDirection;
-                content.Focus(FocusState.Programmatic);
+                // Fallback in case Opening did not run; normally the picker is already set.
+                if (picker.ViewModel == null)
+                {
+                    picker.FlowDirection = LayoutDirection;
+                    SizeAndPlacePicker(flyout, picker);
+                    picker.ViewModel = ViewModel?.CreateUnitPicker();
+                }
+
+                // The control is realized by now; clear any stale query and focus the search box.
+                picker.UpdateLayout();
+                picker.PrepareForOpen();
             }
 
             SetDropDownState(true);
+        }
+
+        private void OnPickerUnitPicked(object sender, UnitPickerItem item)
+        {
+            if (item != null)
+            {
+                ViewModel?.SelectPickerUnit(item, ReferenceEquals(m_activeUnitChip, Units1));
+            }
+
+            (m_activeUnitChip as Button)?.Flyout?.Hide();
         }
 
         private void OnUnitFlyoutClosed(object sender, object e)

@@ -378,6 +378,12 @@ namespace CalculatorApp.ViewModel.Common
             return match.FriendlyName ?? "None";
         }
 
+        public static string GetGlyph(ViewMode mode)
+        {
+            var match = CategoryManifest.FirstOrDefault(init => init.ViewMode == mode);
+            return match.FriendlyName != null ? match.Glyph : null;
+        }
+
         public static string GetNameResourceKey(ViewMode mode)
         {
             var match = CategoryManifest.FirstOrDefault(init => init.ViewMode == mode);

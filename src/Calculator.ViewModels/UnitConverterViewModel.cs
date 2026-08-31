@@ -112,6 +112,7 @@ namespace CalculatorApp.ViewModel
         // Model
         private readonly CalcManager.Interop.UnitConverterWrapper _model;
         private readonly object _modelLock = new object();
+        private readonly DataLoaders.UnitConverterDataLoader _dataLoader;
         private readonly DataLoaders.CurrencyDataLoader _currencyDataLoader;
         private readonly Windows.UI.Core.CoreDispatcher _dispatcher;
         private char _decimalSeparator;
@@ -299,6 +300,7 @@ namespace CalculatorApp.ViewModel
         {
             // Create the real native engine via interop
             var dataLoader = new DataLoaders.UnitConverterDataLoader(new Windows.Globalization.GeographicRegion());
+            _dataLoader = dataLoader;
             _model = new CalcManager.Interop.UnitConverterWrapper(dataLoader);
 
             // Create currency data loader
@@ -433,6 +435,136 @@ namespace CalculatorApp.ViewModel
             _copyCommand ?? (_copyCommand = new RelayCommand<object>(OnCopyCommand));
         public RelayCommand<object> PasteCommand =>
             _pasteCommand ?? (_pasteCommand = new RelayCommand<object>(OnPasteCommand));
+
+        #endregion
+
+        #region Unit Picker
+
+        /// <summary>
+        /// Builds a picker over every converter category and its units for cross-category unit
+        /// search. Units come from the data loader without changing the current selection, so
+        /// opening the picker never disturbs the active conversion. The active converter's
+        /// category is preselected so the picker opens on the units the user is already using. A
+        /// fresh picker is returned per call so each flyout keeps its own search text.
+        /// </summary>
+        public UnitPickerViewModel CreateUnitPicker()
+        {
+            var categories = new List<Category>(Categories);
+            var unitsByCategory = new List<IReadOnlyList<Unit>>(categories.Count);
+            var glyphs = new List<string>(categories.Count);
+            foreach (var category in categories)
+            {
+                unitsByCategory.Add(GetPickerUnitsForCategory(category));
+                glyphs.Add(GetPickerGlyphForCategory(category));
+            }
+
+            var catalog = UnitPickerCatalog.Build(categories, unitsByCategory, glyphs);
+            int selectedCategoryId = CurrentCategory?.GetModelCategoryId() ?? -1;
+            return new UnitPickerViewModel(catalog, matcher: null, selectedCategoryId: selectedCategoryId);
+        }
+
+        /// <summary>
+        /// Applies a picked unit to the from (Unit1) or to (Unit2) side, switching category first
+        /// when the unit belongs to a different converter. Reuses the existing unit-change path.
+        /// </summary>
+        public void SelectPickerUnit(UnitPickerItem item, bool isFromUnit)
+        {
+            if (item?.Unit == null)
+            {
+                return;
+            }
+
+            if (CurrentCategory == null || CurrentCategory.GetModelCategoryId() != item.CategoryId)
+            {
+                var target = FindCategoryById(item.CategoryId);
+                if (target != null)
+                {
+                    CurrentCategory = target;
+                }
+            }
+
+            var unit = FindUnitInCurrentList(item.Unit.ModelUnitID());
+            if (unit == null)
+            {
+                return;
+            }
+
+            if (isFromUnit)
+            {
+                AssignSelectedUnit(u => Unit1 = u, unit);
+            }
+            else
+            {
+                AssignSelectedUnit(u => Unit2 = u, unit);
+            }
+        }
+
+        /// <summary>
+        /// The picker's category glyph reuses the sidebar glyph for the matching converter mode,
+        /// so the icons match the nav. The model category id is the NavCategory serialization id.
+        /// </summary>
+        private static string GetPickerGlyphForCategory(Category category)
+        {
+            if (category == null)
+            {
+                return null;
+            }
+
+            var mode = NavCategoryStates.Deserialize(category.GetModelCategoryId());
+            return NavCategoryStates.GetGlyph(mode);
+        }
+
+        private IReadOnlyList<Unit> GetPickerUnitsForCategory(Category category)
+        {
+            if (category == null)
+            {
+                return Array.Empty<Unit>();
+            }
+
+            var wrappers = _dataLoader.GetUnitsForCategory(new CalcManager.Interop.CategoryWrapper
+            {
+                Id = category.GetModelCategoryId(),
+                Name = category.Name,
+                SupportsNegative = category.NegateVisibility == Windows.UI.Xaml.Visibility.Visible
+            });
+
+            var units = new List<Unit>(wrappers.Length);
+            foreach (var w in wrappers)
+            {
+                if (!w.IsWhimsical)
+                {
+                    units.Add(new Unit(w.Id, w.Name, w.Abbreviation, w.AccessibleName, w.IsWhimsical));
+                }
+            }
+
+            return units;
+        }
+
+        private Category FindCategoryById(int categoryId)
+        {
+            foreach (var category in Categories)
+            {
+                if (category.GetModelCategoryId() == categoryId)
+                {
+                    return category;
+                }
+            }
+
+            return null;
+        }
+
+        private Unit FindUnitInCurrentList(int unitId)
+        {
+            foreach (var unit in Units)
+            {
+                if (unit.ModelUnitID() == unitId)
+                {
+                    return unit;
+                }
+            }
+
+            return null;
+        }
 
         #endregion
 

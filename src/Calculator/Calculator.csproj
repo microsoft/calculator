@@ -228,6 +228,9 @@
     <Compile Include="Views\UnitConverter.xaml.cs">
       <DependentUpon>UnitConverter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UnitPickerControl.xaml.cs">
+      <DependentUpon>UnitPickerControl.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup Condition="'$(UseReleaseAppxManifest)' == 'True'">
     <AppxManifest Include="Package.Release.appxmanifest">
@@ -770,6 +773,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UnitConverter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UnitPickerControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
