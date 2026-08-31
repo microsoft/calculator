@@ -191,6 +191,152 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
+        public void MaxDigitsAnnouncementIncludesTheConversionResult()
+        {
+            var viewModel = new UnitConverterViewModel();
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Five);
+            viewModel.OnMaxDigitsReached();
+
+            var announcement = viewModel.Announcement?.Announcement;
+
+            Assert.IsFalse(
+                string.IsNullOrEmpty(announcement),
+                "Expected a max-digits announcement.");
+            Assert.IsFalse(
+                announcement.Contains("%1"),
+                $"The format placeholder was never substituted: '{announcement}'.");
+        }
+
+        [TestMethod]
+        public void SwitchingActiveValueSwapsTheFromAndToAutomationFormats()
+        {
+            var viewModel = new UnitConverterViewModel();
+            viewModel.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Five);
+
+            var value1NameBefore = viewModel.Value1AutomationName;
+            var value2NameBefore = viewModel.Value2AutomationName;
+
+            viewModel.SwitchActiveCommand.Execute(null);
+            viewModel.UpdateValue1AutomationName();
+            viewModel.UpdateValue2AutomationName();
+
+            // Value1 is the conversion target after the switch, so its automation name has to stop
+            // describing itself as the source.
+            Assert.AreNotEqual(
+                StripDigits(value1NameBefore),
+                StripDigits(viewModel.Value1AutomationName),
+                "Value1's automation name still uses the 'from' format after switching.");
+            Assert.AreNotEqual(
+                StripDigits(value2NameBefore),
+                StripDigits(viewModel.Value2AutomationName),
+                "Value2's automation name still uses the 'to' format after switching.");
+        }
+
+        private static string StripDigits(string value)
+        {
+            return value == null ? null : new string(value.Where(c => !char.IsDigit(c)).ToArray());
+        }
+
+        [TestMethod]
+        public void PastingAMinusAfterDigitsDoesNotNegateTheValue()
+        {
+            var viewModel = new UnitConverterViewModel();
+            SelectNegatableCategory(viewModel);
+
+            // A minus is only a sign when it leads the value. Anywhere else it is not a legal
+            // character and the digits around it are simply concatenated.
+            viewModel.OnPaste("5-3");
+
+            Assert.AreEqual("53", viewModel.Value1);
+        }
+
+        [TestMethod]
+        public void PastingALeadingMinusNegatesTheValue()
+        {
+            var viewModel = new UnitConverterViewModel();
+            SelectNegatableCategory(viewModel);
+
+            viewModel.OnPaste("-53");
+
+            Assert.AreEqual("-53", viewModel.Value1);
+        }
+
+        private static void SelectNegatableCategory(UnitConverterViewModel viewModel)
+        {
+            var negatable = viewModel.Categories.First(
+                category => category.NegateVisibility == Visibility.Visible);
+            viewModel.CurrentCategory = negatable;
+        }
+
+        [TestMethod]
+        public void TextWithNoUsableNumberIsRejectedBeforeItReachesTheConverter()
+        {
+            foreach (string candidate in new[] { "-", "-abc", ".", "abc" })
+            {
+                Assert.AreEqual(
+                    "NoOp",
+                    CopyPasteManager.ValidatePasteExpression(
+                        candidate,
+                        ViewMode.Length,
+                        CategoryGroupType.Converter,
+                        NumberBase.Unknown,
+                        BitLength.BitLengthUnknown),
+                    $"'{candidate}' should be rejected as a paste for a converter.");
+            }
+        }
+
+        [TestMethod]
+        public void PartialDisplayValuesDoNotThrowDuringFormatting()
+        {
+            var viewModel = new UnitConverterViewModel();
+
+            viewModel.UpdateDisplay("-", ".");
+
+            Assert.AreEqual("-", viewModel.Value1);
+            Assert.AreEqual(".", viewModel.Value2);
+        }
+
+        [TestMethod]
+        public void RejectedPasteSaysWhyInsteadOfBlankingTheDisplay()
+        {
+            var viewModel = new UnitConverterViewModel();
+            SelectNegatableCategory(viewModel);
+            viewModel.OnPaste("53");
+            Assert.AreEqual("53", viewModel.Value1);
+
+            viewModel.OnPaste("NoOp");
+
+            Assert.IsFalse(string.IsNullOrEmpty(viewModel.Value1), "A rejected paste must report something.");
+            Assert.AreEqual(viewModel.Value1, viewModel.Value2);
+            Assert.AreNotEqual("53", viewModel.Value1);
+        }
+
+        [TestMethod]
+        public void LargeValuesAreDisplayedWithGroupSeparators()
+        {
+            var viewModel = new UnitConverterViewModel();
+            foreach (var digit in new[]
+            {
+                NumbersAndOperatorsEnum.One,
+                NumbersAndOperatorsEnum.Two,
+                NumbersAndOperatorsEnum.Three,
+                NumbersAndOperatorsEnum.Four,
+                NumbersAndOperatorsEnum.Five,
+                NumbersAndOperatorsEnum.Six,
+                NumbersAndOperatorsEnum.Seven
+            })
+            {
+                viewModel.ButtonPressedCommand.Execute(digit);
+            }
+
+            var separator = LocalizationSettings.GetInstance().GetNumberGroupingSeparatorStr();
+
+            Assert.IsTrue(
+                viewModel.Value1.Contains(separator),
+                $"Expected a group separator '{separator}' in the entered value but got '{viewModel.Value1}'.");
+        }
+
+        [TestMethod]
         public void ChangingCategoryPreservesEditedToValue()
         {
             var viewModel = new UnitConverterViewModel();
@@ -394,8 +540,6 @@ namespace Calculator.Tests
         [TestMethod]
         public async Task ChangingCurrencyUnitPreservesBottomActiveValue()
         {
-            // The redesign routes unit changes through the picker, so guard the bottom-active
-            // mapping: a value typed into the bottom row stays there across a unit change.
             var viewModel = new UnitConverterViewModel();
             int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
             viewModel.CurrentCategory = viewModel.Categories.Single(
@@ -419,9 +563,6 @@ namespace Calculator.Tests
         [TestMethod]
         public void PickerLifecycleForBothChipsKeepsSelectionAndCategoryIndependent()
         {
-            // Merged lifecycle net for the two chips: each picker opens on its own current unit,
-            // initialization does not commit a category, and a commit on one chip leaves the other
-            // chip's unit untouched.
             var viewModel = CreateLengthViewModel();
             int startingCategoryId = viewModel.CurrentCategory.GetModelCategoryId();
 
@@ -463,7 +604,6 @@ namespace Calculator.Tests
             Assert.AreEqual(unitA.ModelUnitID(), viewModel.Unit1.ModelUnitID());
             Assert.AreEqual(unitB.ModelUnitID(), viewModel.Unit2.ModelUnitID());
 
-            // Pick the to-unit on the from chip.
             SelectUnit(viewModel, unitB, isFromUnit: true);
 
             Assert.AreEqual(unitB.ModelUnitID(), viewModel.Unit1.ModelUnitID());
@@ -474,15 +614,11 @@ namespace Calculator.Tests
         [TestMethod]
         public async Task EnteringCurrencyAfterBackgroundLoadUsesLoadedRatios()
         {
-            // The native engine only received currency ratios when the background load finished while
-            // Currency was already active. If the load completed under another category, entering
-            // Currency afterward converted with no currency ratios loaded.
             var viewModel = new UnitConverterViewModel();
             Assert.IsFalse(
                 viewModel.IsCurrencyCurrentCategory,
                 "Precondition: the view model starts outside Currency.");
 
-            // Let the background currency load finish while a non-Currency category is active.
             await WaitForCurrencyLoadAsync(viewModel);
 
             int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
@@ -507,9 +643,6 @@ namespace Calculator.Tests
         [TestMethod]
         public async Task CurrencyLoadFinishingInsideCurrencyUsesLoadedRatios()
         {
-            // The mirror of the test above: the load completes while Currency is already active.
-            // Pushing the loaded ratios into the engine is owned by a single place, so this path
-            // and the one above have to stay covered independently.
             var viewModel = new UnitConverterViewModel();
             int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
             viewModel.CurrentCategory = viewModel.Categories.Single(
@@ -537,8 +670,6 @@ namespace Calculator.Tests
         [TestMethod]
         public async Task LeavingCurrencyClearsTheCurrencySymbolsAndRatio()
         {
-            // Regression: the currency symbol used to follow the user out of Currency, so Length
-            // rendered a stale "$" next to its values.
             var viewModel = new UnitConverterViewModel();
             int currencyId = NavCategoryStates.Serialize(ViewMode.Currency);
             viewModel.CurrentCategory = viewModel.Categories.Single(
@@ -728,9 +859,6 @@ namespace Calculator.Tests
             Assert.Fail("Currency units did not load.");
         }
 
-        [TestMethod]
-        [Ignore("Requires native UnitConverterMock not available in C# tests")]
-        public void TestUnitConverterCtorSetsUpCorrectActiveValue() { }
 
         [TestMethod]
         public void MaxDigitsAnnouncementIncludesTheConversionResult()

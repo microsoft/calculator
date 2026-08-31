@@ -307,6 +307,7 @@ namespace Calculator.Tests
             Assert.IsFalse(loader.LoadedFromWeb());
         }
 
+
         [TestMethod]
         public async Task Load_Success_LoadedFromWeb()
         {

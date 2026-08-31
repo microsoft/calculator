@@ -333,10 +333,8 @@ namespace CalculatorApp.ViewModel
             _currencyTimestamp = string.Empty;
             _value1cp = ConversionParameter.Source;
 
-            // Capture the UI dispatcher for marshaling callbacks from background threads
             _dispatcher = Windows.UI.Core.CoreWindow.GetForCurrentThread()?.Dispatcher;
 
-            // Set up VM callback
             var vmCallback = new UnitConverterVMCallback(this);
             _model.SetViewModelCallback(vmCallback);
 
@@ -355,15 +353,15 @@ namespace CalculatorApp.ViewModel
             _currencyFormatter.Mode = Windows.Globalization.NumberFormatting.CurrencyFormatterMode.UseCurrencyCode;
             _currencyFormatter.ApplyRoundingForCurrency(Windows.Globalization.NumberFormatting.RoundingAlgorithm.RoundHalfDown);
 
-            // Initialize the native engine and populate data
+            var resourceProvider = AppResourceProvider.GetInstance();
+            _localizedValueFromFormat = resourceProvider.GetResourceString("Format_ValueFrom");
+            _localizedValueToFormat = resourceProvider.GetResourceString("Format_ValueTo");
+
             _model.Initialize();
             PopulateData();
 
-            // Start loading currency data asynchronously
             _currencyDataLoader.LoadData();
         }
-
-        #region Observable Properties
 
         public ObservableCollection<Category> Categories
         {
@@ -445,8 +443,6 @@ namespace CalculatorApp.ViewModel
             _copyCommand ?? (_copyCommand = new RelayCommand<object>(OnCopyCommand));
         public RelayCommand<object> PasteCommand =>
             _pasteCommand ?? (_pasteCommand = new RelayCommand<object>(OnPasteCommand));
-
-        #endregion
 
         #region Unit Picker
 
@@ -643,9 +639,6 @@ namespace CalculatorApp.ViewModel
             return null;
         }
 
-        // True once the background currency load has reported back, successfully or not.
-        internal bool IsCurrencyDataLoaded => _isCurrencyDataLoaded;
-
         private UnitPickerCategoryLoadState GetCurrencyPickerLoadState()
         {
             return _currencyPickerLoadState;
@@ -678,8 +671,6 @@ namespace CalculatorApp.ViewModel
         }
 
         #endregion
-
-        #region Public Methods
 
         public void AnnounceConversionResult()
         {
@@ -823,10 +814,6 @@ namespace CalculatorApp.ViewModel
             string pastedString = await CopyPasteManager.GetStringToPaste(Mode, NavCategoryStates.GetGroupType(Mode), NumberBase.Unknown, BitLength.BitLengthUnknown);
             OnPaste(pastedString);
         }
-
-        #endregion
-
-        #region Internal Methods
 
         internal void ResetView()
         {
@@ -1666,8 +1653,6 @@ namespace CalculatorApp.ViewModel
                 _localizedValueToFormat = resourceProvider.GetResourceString("Format_ValueTo");
             }
         }
-
-        #endregion
 
         #region Callback
 
