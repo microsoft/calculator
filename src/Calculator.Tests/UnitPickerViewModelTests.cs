@@ -24,8 +24,8 @@ namespace Calculator.Tests
 
         private sealed class ExactNameMatcher : IUnitSearchMatcher
         {
-            public bool IsMatch(string query, Unit unit) =>
-                string.Equals(unit?.Name, query, StringComparison.OrdinalIgnoreCase);
+            public int Rank(string query, UnitPickerItem item) =>
+                string.Equals(item?.Unit?.Name, query, StringComparison.OrdinalIgnoreCase) ? 1 : 0;
         }
 
         [TestMethod]
@@ -254,6 +254,47 @@ namespace Calculator.Tests
             vm.SearchText = string.Empty;
             Assert.AreEqual(2, vm.FilteredUnits.Count);
             Assert.IsFalse(vm.HasNoSearchResults);
+        }
+
+        [TestMethod]
+        public void FirstSearchResult_IsTopMatchWhileSearching()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Length", U(10, "Meter", "m"), U(11, "Kilometer", "km")),
+            });
+
+            vm.SearchText = "kilo";
+
+            Assert.AreEqual(1, vm.FilteredUnits.Count);
+            Assert.IsNotNull(vm.FirstSearchResult);
+            Assert.AreEqual(11, vm.FirstSearchResult.Unit.ModelUnitID());
+        }
+
+        [TestMethod]
+        public void FirstSearchResult_IsNullWithoutAQuery()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Length", U(10, "Meter", "m"), U(11, "Kilometer", "km")),
+            });
+
+            Assert.IsTrue(vm.HasResults);
+            Assert.IsNull(vm.FirstSearchResult);
+        }
+
+        [TestMethod]
+        public void FirstSearchResult_IsNullWhenSearchHasNoMatches()
+        {
+            var vm = new UnitPickerViewModel(new[]
+            {
+                Cat(1, "Length", U(10, "Meter", "m")),
+            });
+
+            vm.SearchText = "zzz";
+
+            Assert.IsTrue(vm.HasNoSearchResults);
+            Assert.IsNull(vm.FirstSearchResult);
         }
 
         [TestMethod]

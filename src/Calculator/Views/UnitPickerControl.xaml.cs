@@ -128,6 +128,10 @@ namespace CalculatorApp
             {
                 e.Handled = TryFocusFirstUnit();
             }
+            else if (e.Key == VirtualKey.Enter)
+            {
+                e.Handled = TryPickFirstSearchResult();
+            }
         }
 
         private void OnPickerPreviewKeyDown(object sender, KeyRoutedEventArgs e)
@@ -152,6 +156,18 @@ namespace CalculatorApp
             UnitList.ScrollIntoView(firstUnit);
             UnitList.UpdateLayout();
             return (UnitList.ContainerFromItem(firstUnit) as Control)?.Focus(FocusState.Keyboard) == true;
+        }
+
+        private bool TryPickFirstSearchResult()
+        {
+            UnitPickerItem firstResult = ViewModel?.FirstSearchResult;
+            if (firstResult == null)
+            {
+                return false;
+            }
+
+            UnitPicked?.Invoke(this, firstResult);
+            return true;
         }
 
         private void OnCategorySelectionChanged(object sender, SelectionChangedEventArgs e)

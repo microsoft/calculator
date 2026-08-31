@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CalculatorApp.ViewModel
@@ -33,7 +34,7 @@ namespace CalculatorApp.ViewModel
             int selectedUnitId = -1,
             IReadOnlyDictionary<int, UnitPickerCategoryLoadState> categoryLoadStates = null)
         {
-            _matcher = matcher ?? new SubstringUnitSearchMatcher();
+            _matcher = matcher ?? new FuzzyUnitSearchMatcher();
             _selectedUnitId = selectedUnitId;
             _categoryLoadStates = categoryLoadStates == null
                 ? new Dictionary<int, UnitPickerCategoryLoadState>()
@@ -112,6 +113,11 @@ namespace CalculatorApp.ViewModel
 
         public bool HasNoSearchResults => !string.IsNullOrEmpty(SearchText) && !HasResults;
 
+        // The unit that Enter commits from the search box. Only while a query is active, so an
+        // empty box cannot commit whichever unit happens to sit at the top of the browse list.
+        public UnitPickerItem FirstSearchResult =>
+            string.IsNullOrEmpty(SearchText) || !HasResults ? null : FilteredUnits[0];
+
         public bool IsSelectedCategoryLoading =>
             string.IsNullOrEmpty(SearchText)
             && GetSelectedCategoryLoadState() == UnitPickerCategoryLoadState.Loading;
@@ -188,12 +194,22 @@ namespace CalculatorApp.ViewModel
             }
             else
             {
+                // Ranked, so the closest match leads: a fuzzy search that returned hits in catalog
+                // order would bury the obvious answer among the loose ones. OrderByDescending is
+                // stable, so equally good matches keep their catalog order.
+                var ranked = new List<KeyValuePair<UnitPickerItem, int>>();
                 foreach (var item in _allItems)
                 {
-                    if (_matcher.IsMatch(SearchText, item.Unit))
+                    int score = _matcher.Rank(SearchText, item);
+                    if (score > 0)
                     {
-                        FilteredUnits.Add(item);
+                        ranked.Add(new KeyValuePair<UnitPickerItem, int>(item, score));
                     }
+                }
+
+                foreach (var entry in ranked.OrderByDescending(entry => entry.Value))
+                {
+                    FilteredUnits.Add(entry.Key);
                 }
             }
 

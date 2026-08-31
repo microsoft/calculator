@@ -120,6 +120,14 @@
       <Link>Resources\en-US\CEngineStrings.resw</Link>
     </PRIResource>
   </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="..\Calculator\Resources\en-US\Resources.resw">
+      <Link>Resources\en-US\Resources.resw</Link>
+    </PRIResource>
+    <PRIResource Include="..\Calculator\Resources\en-US\CEngineStrings.resw">
+      <Link>Resources\en-US\CEngineStrings.resw</Link>
+    </PRIResource>
+  </ItemGroup>
   <PropertyGroup>
     <UnitTestPlatformVersion Condition="'$(UnitTestPlatformVersion)' == ''">18.0</UnitTestPlatformVersion>
   </PropertyGroup>
