@@ -196,6 +196,21 @@
             <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
         </contract7Present:Style>
 
+        <Style x:Key="UnitChipButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundTransparentBrush}"/>
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"/>
+            <Setter Property="BorderThickness" Value="{ThemeResource ControlBorderThemeThickness}"/>
+            <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
+            <Setter Property="Padding" Value="12,0,12,0"/>
+            <Setter Property="MinHeight" Value="32"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="IsTextScaleFactorEnabled" Value="True"/>
+            <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="FocusVisualMargin" Value="-3"/>
+        </Style>
+
         <Style x:Key="ValueBaseStyle"
                BasedOn="{StaticResource ConditionalCalculationResultStyle}"
                TargetType="controls:CalculationResult">
@@ -557,23 +572,65 @@
                                         TabIndex="1"/>
         </Grid>
 
-        <ComboBox x:Name="Units1"
-                  Grid.Row="2"
-                  Grid.Column="1"
-                  HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
-                  Style="{ThemeResource ConditionalComboStyle}"
-                  AutomationProperties.AutomationId="Units1"
-                  AutomationProperties.Name="{x:Bind local:UnitConverter.OrEmpty(ViewModel.Unit1AutomationName), Mode=OneWay}"
-                  DropDownClosed="UpdateDropDownState"
-                  DropDownOpened="UpdateDropDownState"
-                  FlowDirection="{x:Bind LayoutDirection}"
-                  IsEnabledChanged="Units1_IsEnabledChanged"
-                  ItemTemplate="{StaticResource UnitTemplate}"
-                  ItemsSource="{x:Bind ViewModel.Units, Mode=OneWay}"
-                  SelectedItem="{x:Bind ViewModel.Unit1, Mode=OneWay}"
-                  SelectionChanged="OnUnitSelectionChanged"
-                  TabIndex="2"
-                  IsEnabled="{x:Bind ViewModel.IsDropDownEnabled, Mode=OneWay}"/>
+        <Button x:Name="Units1"
+                Grid.Row="2"
+                Grid.Column="1"
+                HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
+                Style="{StaticResource UnitChipButtonStyle}"
+                AutomationProperties.AutomationId="Units1"
+                AutomationProperties.Name="{x:Bind ViewModel.Unit1.AccessibleName, Mode=OneWay}"
+                Click="OnUnitChipClick"
+                FlowDirection="{x:Bind LayoutDirection}"
+                IsEnabled="{x:Bind ViewModel.IsDropDownEnabled, Mode=OneWay}"
+                IsEnabledChanged="Units1_IsEnabledChanged"
+                TabIndex="2"
+                ToolTipService.ToolTip="{utils:ResourceString Name=UnitChipToolTip}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Margin="0,0,6,0"
+                           VerticalAlignment="Center"
+                           Style="{ThemeResource BodyTextBlockStyle}"
+                           AutomationProperties.AccessibilityView="Raw"
+                           Text="{x:Bind ViewModel.CurrencySymbol1, Mode=OneWay}"
+                           Visibility="{x:Bind ViewModel.CurrencySymbolVisibility, Mode=OneWay}"/>
+                <TextBlock Grid.Column="1"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Style="{ThemeResource BodyTextBlockStyle}"
+                           FontWeight="Normal"
+                           Text="{x:Bind ViewModel.Unit1.Name, Mode=OneWay}"
+                           TextTrimming="CharacterEllipsis"
+                           TextWrapping="NoWrap"/>
+                <TextBlock Grid.Column="2"
+                           Margin="8,0,0,0"
+                           VerticalAlignment="Center"
+                           AutomationProperties.AccessibilityView="Raw"
+                           FontFamily="{StaticResource CalculatorFontFamily}"
+                           FontSize="12"
+                           IsHitTestVisible="False"
+                           Text="&#xE70D;"/>
+            </Grid>
+            <Button.Flyout>
+                <Flyout Placement="Bottom"
+                        Closed="OnUnitFlyoutClosed"
+                        Opened="OnUnitFlyoutOpened">
+                    <ContentControl IsTabStop="True"
+                                    MinWidth="280"
+                                    MaxWidth="360"
+                                    HorizontalContentAlignment="Stretch"
+                                    AutomationProperties.Name="Choose a unit">
+                        <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
+                                   Text="Choose a unit"
+                                   TextWrapping="Wrap"/>
+                    </ContentControl>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
 
         <Grid x:Name="Value2Container"
               Grid.Row="3"
@@ -608,22 +665,64 @@
                                         TabIndex="3"/>
         </Grid>
 
-        <ComboBox x:Name="Units2"
-                  Grid.Row="4"
-                  Grid.Column="1"
-                  HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
-                  Style="{ThemeResource ConditionalComboStyle}"
-                  AutomationProperties.AutomationId="Units2"
-                  AutomationProperties.Name="{x:Bind local:UnitConverter.OrEmpty(ViewModel.Unit2AutomationName), Mode=OneWay}"
-                  DropDownClosed="UpdateDropDownState"
-                  DropDownOpened="UpdateDropDownState"
-                  FlowDirection="{x:Bind LayoutDirection}"
-                  ItemTemplate="{StaticResource UnitTemplate}"
-                  ItemsSource="{x:Bind ViewModel.Units, Mode=OneWay}"
-                  SelectedItem="{x:Bind ViewModel.Unit2, Mode=OneWay}"
-                  SelectionChanged="OnUnitSelectionChanged"
-                  TabIndex="4"
-                  IsEnabled="{x:Bind ViewModel.IsDropDownEnabled, Mode=OneWay}"/>
+        <Button x:Name="Units2"
+                Grid.Row="4"
+                Grid.Column="1"
+                HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
+                Style="{StaticResource UnitChipButtonStyle}"
+                AutomationProperties.AutomationId="Units2"
+                AutomationProperties.Name="{x:Bind ViewModel.Unit2.AccessibleName, Mode=OneWay}"
+                Click="OnUnitChipClick"
+                FlowDirection="{x:Bind LayoutDirection}"
+                IsEnabled="{x:Bind ViewModel.IsDropDownEnabled, Mode=OneWay}"
+                TabIndex="4"
+                ToolTipService.ToolTip="{utils:ResourceString Name=UnitChipToolTip}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Margin="0,0,6,0"
+                           VerticalAlignment="Center"
+                           Style="{ThemeResource BodyTextBlockStyle}"
+                           AutomationProperties.AccessibilityView="Raw"
+                           Text="{x:Bind ViewModel.CurrencySymbol2, Mode=OneWay}"
+                           Visibility="{x:Bind ViewModel.CurrencySymbolVisibility, Mode=OneWay}"/>
+                <TextBlock Grid.Column="1"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Style="{ThemeResource BodyTextBlockStyle}"
+                           FontWeight="Normal"
+                           Text="{x:Bind ViewModel.Unit2.Name, Mode=OneWay}"
+                           TextTrimming="CharacterEllipsis"
+                           TextWrapping="NoWrap"/>
+                <TextBlock Grid.Column="2"
+                           Margin="8,0,0,0"
+                           VerticalAlignment="Center"
+                           AutomationProperties.AccessibilityView="Raw"
+                           FontFamily="{StaticResource CalculatorFontFamily}"
+                           FontSize="12"
+                           IsHitTestVisible="False"
+                           Text="&#xE70D;"/>
+            </Grid>
+            <Button.Flyout>
+                <Flyout Placement="Bottom"
+                        Closed="OnUnitFlyoutClosed"
+                        Opened="OnUnitFlyoutOpened">
+                    <ContentControl IsTabStop="True"
+                                    MinWidth="280"
+                                    MaxWidth="360"
+                                    HorizontalContentAlignment="Stretch"
+                                    AutomationProperties.Name="Choose a unit">
+                        <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
+                                   Text="Choose a unit"
+                                   TextWrapping="Wrap"/>
+                    </ContentControl>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
 
         <StackPanel x:Name="SupplementaryResultsPanelInGrid"
                     Grid.Row="5"

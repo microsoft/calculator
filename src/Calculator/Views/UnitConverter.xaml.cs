@@ -163,10 +163,36 @@ namespace CalculatorApp
             ((UnitConverterViewModel)this.DataContext).OnValueActivated(new Activatable(() => value.IsActive, flag => value.IsActive = flag));
         }
 
-        private void UpdateDropDownState(object sender, object e)
+        private void OnUnitChipClick(object sender, RoutedEventArgs e)
         {
-            ((UnitConverterViewModel)this.DataContext).IsDropDownOpen = (Units1.IsDropDownOpen) || (Units2.IsDropDownOpen);
-            KeyboardShortcutManager.UpdateDropDownState((Units1.IsDropDownOpen) || (Units2.IsDropDownOpen));
+            m_activeUnitChip = sender as Control;
+        }
+
+        private void OnUnitFlyoutOpened(object sender, object e)
+        {
+            if (sender is Flyout flyout && flyout.Content is Control content)
+            {
+                content.FlowDirection = LayoutDirection;
+                content.Focus(FocusState.Programmatic);
+            }
+
+            SetDropDownState(true);
+        }
+
+        private void OnUnitFlyoutClosed(object sender, object e)
+        {
+            SetDropDownState(false);
+            m_activeUnitChip?.Focus(FocusState.Programmatic);
+        }
+
+        private void SetDropDownState(bool isOpen)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.IsDropDownOpen = isOpen;
+            }
+
+            KeyboardShortcutManager.UpdateDropDownState(isOpen);
         }
 
         private void OnUnitSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -431,6 +457,8 @@ namespace CalculatorApp
         private readonly string m_failedToRefreshText;
 
         private bool m_meteredConnectionOverride;
+
+        private Control m_activeUnitChip;
 
         private Windows.UI.Xaml.DispatcherTimer m_delayTimer;
     }

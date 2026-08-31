@@ -3151,6 +3151,10 @@
     <value>Couldn’t get new rates. Try again later.</value>
     <comment>The text displayed when currency ratio data fails to load.</comment>
   </data>
+  <data name="UnitChipToolTip" xml:space="preserve">
+    <value>Change unit</value>
+    <comment>Tooltip and accessible description for the converter's from/to unit chip buttons. Selecting a chip opens a picker to choose a different unit.</comment>
+  </data>
   <data name="OfflineStatusHyperlinkText" xml:space="preserve">
     <value>Offline. Please check your%HL%Network Settings%HL%</value>
     <comment>Status text displayed when currency converter is disconnected from the internet. The text "Notification Settings" should be surrounded by %HL% since they are used to indicate that that text should be the hyperlink text. {Locked="%HL%"}</comment>
