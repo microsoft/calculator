@@ -54,20 +54,27 @@ namespace winrt::CalcManager::Interop::implementation
     {
     }
 
-    std::shared_ptr<CalculationManager::HISTORYITEM> HistoryItemWrapper::ToUnderlying() const
+    std::shared_ptr<CalculationManager::HISTORYITEM> HistoryItemWrapper::ToUnderlying(bool includeCommands) const
     {
         CalculationManager::HISTORYITEMVECTOR nativeItem;
 
         nativeItem.spTokens = std::make_shared<std::vector<std::pair<std::wstring, int>>>();
         for (auto const& token : m_tokens)
         {
-            nativeItem.spTokens->push_back(std::make_pair(std::wstring(token.Value()), token.CommandIndex()));
+            if (!token)
+            {
+                throw hresult_invalid_argument(L"History cannot contain null display tokens.");
+            }
+            nativeItem.spTokens->push_back(std::make_pair(std::wstring(token.Value()), includeCommands ? token.CommandIndex() : -1));
         }
 
         auto nativeCommands = std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>();
-        for (auto const& command : m_commands)
+        if (includeCommands)
         {
-            nativeCommands->push_back(get_self<ExpressionCommandWrapper>(command)->ToUnderlying());
+            for (auto const& command : m_commands)
+            {
+                nativeCommands->push_back(get_self<ExpressionCommandWrapper>(command)->ToUnderlying());
+            }
         }
         nativeItem.spCommands = std::move(nativeCommands);
 

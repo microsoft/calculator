@@ -10,6 +10,14 @@ namespace winrt::CalcManager::Interop::implementation
 {
     namespace
     {
+        void RequireCapability(bool supported)
+        {
+            if (!supported)
+            {
+                throw hresult_not_implemented(L"This operation is not supported in Scientific mode.");
+            }
+        }
+
         com_array<CalcManager::Interop::HistoryItemWrapper> WrapHistoryItems(
             std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> const& items)
         {
@@ -204,36 +212,58 @@ namespace winrt::CalcManager::Interop::implementation
 
     void CalculatorManagerWrapper::SendCommand(CalcManager::Interop::CalculatorCommand command)
     {
+        RequireCapability(IsCommandSupported(command));
         m_manager->SendCommand(static_cast<CalculationManager::Command>(static_cast<int>(command)));
+    }
+
+    bool CalculatorManagerWrapper::IsCommandSupported(CalcManager::Interop::CalculatorCommand command)
+    {
+        return m_manager->IsCommandSupported(static_cast<CalculationManager::Command>(static_cast<int>(command)));
+    }
+
+    bool CalculatorManagerWrapper::IsMemorySupported()
+    {
+        return m_manager->IsMemorySupported();
+    }
+
+    bool CalculatorManagerWrapper::IsHistoryReadOnly()
+    {
+        return m_manager->IsHistoryReadOnly();
     }
 
     void CalculatorManagerWrapper::MemorizeNumber()
     {
+        RequireCapability(IsMemorySupported());
         m_manager->MemorizeNumber();
     }
 
     void CalculatorManagerWrapper::MemorizedNumberLoad(uint32_t index)
     {
+        RequireCapability(IsMemorySupported());
         m_manager->MemorizedNumberLoad(index);
     }
 
     void CalculatorManagerWrapper::MemorizedNumberAdd(uint32_t index)
     {
+        RequireCapability(IsMemorySupported());
         m_manager->MemorizedNumberAdd(index);
     }
 
     void CalculatorManagerWrapper::MemorizedNumberSubtract(uint32_t index)
     {
+        RequireCapability(IsMemorySupported());
         m_manager->MemorizedNumberSubtract(index);
     }
 
     void CalculatorManagerWrapper::MemorizedNumberClear(uint32_t index)
     {
+        RequireCapability(IsMemorySupported());
         m_manager->MemorizedNumberClear(index);
     }
 
     void CalculatorManagerWrapper::MemorizedNumberClearAll()
     {
+        RequireCapability(IsMemorySupported());
         m_manager->MemorizedNumberClearAll();
     }
 
@@ -249,16 +279,19 @@ namespace winrt::CalcManager::Interop::implementation
 
     void CalculatorManagerWrapper::SetRadix(int32_t radixType)
     {
+        RequireCapability(IsMemorySupported() || static_cast<RadixType>(radixType) == RadixType::Decimal);
         m_manager->SetRadix(static_cast<RadixType>(radixType));
     }
 
     void CalculatorManagerWrapper::SetMemorizedNumbersString()
     {
+        RequireCapability(IsMemorySupported());
         m_manager->SetMemorizedNumbersString();
     }
 
     hstring CalculatorManagerWrapper::GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix)
     {
+        RequireCapability(IsMemorySupported() || radix == 10);
         std::wstring result = m_manager->GetResultForRadix(radix, precision, groupDigitsPerRadix);
         return hstring(result);
     }
@@ -294,7 +327,11 @@ namespace winrt::CalcManager::Interop::implementation
         nativeItems.reserve(historyItems.size());
         for (auto const& item : historyItems)
         {
-            nativeItems.push_back(get_self<HistoryItemWrapper>(item)->ToUnderlying());
+            if (!item)
+            {
+                throw hresult_invalid_argument(L"History cannot contain null items.");
+            }
+            nativeItems.push_back(get_self<HistoryItemWrapper>(item)->ToUnderlying(!IsHistoryReadOnly()));
         }
 
         m_manager->SetHistoryItems(nativeItems);
@@ -308,11 +345,13 @@ namespace winrt::CalcManager::Interop::implementation
 
     bool CalculatorManagerWrapper::RemoveHistoryItem(uint32_t index)
     {
+        RequireCapability(!IsHistoryReadOnly());
         return m_manager->RemoveHistoryItem(index);
     }
 
     void CalculatorManagerWrapper::ClearHistory()
     {
+        RequireCapability(!IsHistoryReadOnly());
         m_manager->ClearHistory();
     }
 
@@ -329,6 +368,7 @@ namespace winrt::CalcManager::Interop::implementation
 
     void CalculatorManagerWrapper::SetInHistoryItemLoadMode(bool isHistoryItemLoadMode)
     {
+        RequireCapability(!isHistoryItemLoadMode || !IsHistoryReadOnly());
         m_manager->SetInHistoryItemLoadMode(isHistoryItemLoadMode);
     }
 

@@ -39,6 +39,7 @@
             </ResourceDictionary.ThemeDictionaries>
             <converters:ItemSizeToVisibilityNegationConverter x:Key="ItemSizeToVisibilityNegationConverter"/>
             <converters:ItemSizeToVisibilityConverter x:Key="ItemSizeToVisibilityConverter"/>
+            <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
             <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind ViewModel.HistoryAnnouncement, Mode=OneWay}"/>
 
             <muxc:SymbolIconSource x:Key="DeleteSymbol" Symbol="Delete"/>
@@ -50,18 +51,21 @@
                                 Text="{utils:ResourceString Name=DeleteHistorySwipeItem/Text}"/>
             </muxc:SwipeItems>
 
-            <MenuFlyout x:Name="HistoryContextMenu">
+            <MenuFlyout x:Name="HistoryContextMenu" Opening="HistoryContextMenu_Opening">
                 <MenuFlyoutItem Click="OnCopyMenuItemClicked"
                                 Icon="Copy"
                                 Text="{utils:ResourceString Name=CopyHistoryMenuItem/Text}"/>
-                <MenuFlyoutItem AutomationProperties.Name="{utils:ResourceString Name=DeleteHistoryMenuItem/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                <MenuFlyoutItem x:Name="DeleteHistoryMenuItem"
+                                AutomationProperties.Name="{utils:ResourceString Name=DeleteHistoryMenuItem/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                 Click="OnDeleteMenuItemClicked"
                                 Icon="Delete"
                                 Text="{utils:ResourceString Name=DeleteHistoryMenuItem/Text}"/>
             </MenuFlyout>
 
             <DataTemplate x:Key="HistoryItemTemplate" x:DataType="model:HistoryItemViewModel">
-                <muxc:SwipeControl AutomationProperties.Name="{x:Bind local:HistoryList.GetHistoryItemAutomationName(AccExpression, AccResult)}" RightItems="{StaticResource HistorySwipeItems}">
+                <muxc:SwipeControl AutomationProperties.Name="{x:Bind local:HistoryList.GetHistoryItemAutomationName(AccExpression, AccResult)}"
+                                   Loaded="HistorySwipeControl_Loaded"
+                                   RightItems="{StaticResource HistorySwipeItems}">
                     <StackPanel Margin="0,6,16,6" Background="Transparent">
                         <TextBlock x:Name="ExprTextBlock"
                                    Margin="0,0,0,4"
@@ -149,7 +153,7 @@
                       Padding="0,24,0,0"
                       HorizontalAlignment="Stretch"
                       AutomationProperties.AutomationId="HistoryListView"
-                      IsItemClickEnabled="True"
+                      IsItemClickEnabled="{x:Bind ViewModel.IsReadOnly, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                       ItemClick="ListView_ItemClick"
                       ItemContainerStyle="{StaticResource HistoryItemContainerStyle}"
                       ItemTemplate="{StaticResource HistoryItemTemplate}"
@@ -174,6 +178,7 @@
                     AutomationProperties.Name="{utils:ResourceString Name=ClearHistory/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                     Command="{x:Bind ViewModel.ClearCommand, Mode=OneWay}"
                     Content=""
+                    IsEnabled="{x:Bind ViewModel.IsReadOnly, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                     ToolTipService.ToolTip="{utils:ResourceString Name=ClearHistory/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                     Visibility="{x:Bind ViewModel.ItemsCount, Mode=OneWay, Converter={StaticResource ItemSizeToVisibilityNegationConverter}}"/>
         </Grid>

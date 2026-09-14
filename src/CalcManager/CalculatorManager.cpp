@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 #include <climits> // for UCHAR_MAX
+#include <stdexcept>
 #include "Header Files/CalcEngine.h"
 #include "CalculatorManager.h"
 #include "CalculatorResource.h"
+#include "EpsilonEngine/EpsilonEngine.h"
 
 using namespace std;
 using namespace CalcEngine;
@@ -17,13 +19,33 @@ static constexpr size_t MAX_HISTORY_ITEMS = 20;
 
 namespace CalculationManager
 {
+    namespace
+    {
+        class EngineConstruction
+        {
+        public:
+            explicit EngineConstruction(bool& constructing) : m_constructing(constructing)
+            {
+                m_constructing = true;
+            }
+            ~EngineConstruction()
+            {
+                m_constructing = false;
+            }
+
+        private:
+            bool& m_constructing;
+        };
+    }
+
     CalculatorManager::CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider)
         : m_displayCallback(displayCallback)
         , m_currentCalculatorEngine(nullptr)
         , m_resourceProvider(resourceProvider)
         , m_inHistoryItemLoadMode(false)
+        , m_isScientificMode(false)
+        , m_isConstructingEngine(false)
         , m_persistedPrimaryValue()
-        , m_isExponentialFormat(false)
         , m_currentDegreeMode(Command::CommandNULL)
         , m_pStdHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
         , m_pSciHistory(new CalculatorHistory(MAX_HISTORY_ITEMS))
@@ -32,6 +54,8 @@ namespace CalculationManager
         CCalcEngine::InitialOneTimeOnlySetup(*m_resourceProvider);
     }
 
+    CalculatorManager::~CalculatorManager() = default;
+
     /// <summary>
     /// Call the callback function using passed in IDisplayHelper.
     /// Used to set the primary display value on ViewModel
@@ -39,7 +63,7 @@ namespace CalculationManager
     /// <param name="text">wstring representing text to be displayed</param>
     void CalculatorManager::SetPrimaryDisplay(_In_ const wstring& displayString, _In_ bool isError)
     {
-        if (!m_inHistoryItemLoadMode)
+        if (!m_inHistoryItemLoadMode && !m_isConstructingEngine)
         {
             m_displayCallback->SetPrimaryDisplay(displayString, isError);
         }
@@ -47,12 +71,22 @@ namespace CalculationManager
 
     void CalculatorManager::SetIsInError(bool isError)
     {
-        m_displayCallback->SetIsInError(isError);
+        if (!m_isConstructingEngine)
+        {
+            m_displayCallback->SetIsInError(isError);
+        }
     }
 
     void CalculatorManager::DisplayPasteError()
     {
-        m_currentCalculatorEngine->DisplayError(CALC_E_DOMAIN /*code for "Invalid input" error*/);
+        if (m_isScientificMode)
+        {
+            m_scientificCalculatorEngine->DisplayError(CALC_E_DOMAIN);
+        }
+        else
+        {
+            m_currentCalculatorEngine->DisplayError(CALC_E_DOMAIN /*code for "Invalid input" error*/);
+        }
     }
 
     void CalculatorManager::MaxDigitsReached()
@@ -130,14 +164,7 @@ namespace CalculationManager
 
         if (m_scientificCalculatorEngine)
         {
-            m_scientificCalculatorEngine->ProcessCommand(IDC_CLEAR);
-            m_scientificCalculatorEngine->ProcessCommand(IDC_DEG);
-
-            if (m_isExponentialFormat)
-            {
-                m_isExponentialFormat = false;
-                m_scientificCalculatorEngine->ProcessCommand(IDC_FE);
-            }
+            m_scientificCalculatorEngine->Reset();
         }
         m_currentDegreeMode = Command::CommandDEG;
 
@@ -160,16 +187,20 @@ namespace CalculationManager
     {
         if (!m_standardCalculatorEngine)
         {
+            // Legacy constructors display zero before the new engine can be selected.
+            EngineConstruction constructing(m_isConstructingEngine);
             m_standardCalculatorEngine =
                 make_unique<CCalcEngine>(false /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider, this, m_pStdHistory);
         }
 
+        m_isScientificMode = false;
         m_currentCalculatorEngine = m_standardCalculatorEngine.get();
+        m_pHistory = m_pStdHistory.get();
         m_currentCalculatorEngine->ProcessCommand(IDC_DEC);
         m_currentCalculatorEngine->ProcessCommand(IDC_CLEAR);
         m_currentCalculatorEngine->ChangePrecision(static_cast<int>(CalculatorPrecision::StandardModePrecision));
         UpdateMaxIntDigits();
-        m_pHistory = m_pStdHistory.get();
+        SetPrimaryDisplay(m_currentCalculatorEngine->GetCurrentResultForRadix(10, static_cast<int>(CalculatorPrecision::StandardModePrecision), true), false);
     }
 
     /// <summary>
@@ -179,15 +210,15 @@ namespace CalculationManager
     {
         if (!m_scientificCalculatorEngine)
         {
-            m_scientificCalculatorEngine =
-                make_unique<CCalcEngine>(true /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider, this, m_pSciHistory);
+            m_scientificCalculatorEngine = make_unique<EpsilonEngine>(m_resourceProvider, this, m_pSciHistory);
         }
 
-        m_currentCalculatorEngine = m_scientificCalculatorEngine.get();
-        m_currentCalculatorEngine->ProcessCommand(IDC_DEC);
-        m_currentCalculatorEngine->ProcessCommand(IDC_CLEAR);
-        m_currentCalculatorEngine->ChangePrecision(static_cast<int>(CalculatorPrecision::ScientificModePrecision));
+        m_isScientificMode = true;
+        m_inHistoryItemLoadMode = false;
+        m_currentCalculatorEngine = nullptr;
         m_pHistory = m_pSciHistory.get();
+        m_scientificCalculatorEngine->ProcessCommand(Command::CommandCLEAR);
+        m_scientificCalculatorEngine->SetPrecision(static_cast<int>(CalculatorPrecision::ScientificModePrecision));
     }
 
     /// <summary>
@@ -197,14 +228,19 @@ namespace CalculationManager
     {
         if (!m_programmerCalculatorEngine)
         {
+            EngineConstruction constructing(m_isConstructingEngine);
             m_programmerCalculatorEngine =
                 make_unique<CCalcEngine>(true /* Respect Order of Operations */, true /* Set to Integer Mode */, m_resourceProvider, this, nullptr);
         }
 
+        m_isScientificMode = false;
         m_currentCalculatorEngine = m_programmerCalculatorEngine.get();
+        // Programmer does not record history. Do not expose Scientific history as mutable on exit.
+        m_pHistory = m_pStdHistory.get();
         m_currentCalculatorEngine->ProcessCommand(IDC_DEC);
         m_currentCalculatorEngine->ProcessCommand(IDC_CLEAR);
         m_currentCalculatorEngine->ChangePrecision(static_cast<int>(CalculatorPrecision::ProgrammerModePrecision));
+        SetPrimaryDisplay(m_currentCalculatorEngine->GetCurrentResultForRadix(10, static_cast<int>(CalculatorPrecision::ProgrammerModePrecision), true), false);
     }
 
     /// <summary>
@@ -215,6 +251,17 @@ namespace CalculationManager
     /// <param name="command">Enum Command</command>
     void CalculatorManager::SendCommand(_In_ Command command)
     {
+        if (m_isScientificMode && command != Command::ModeBasic && command != Command::ModeScientific && command != Command::ModeProgrammer)
+        {
+            m_scientificCalculatorEngine->ProcessCommand(command);
+            if (command == Command::CommandDEG || command == Command::CommandRAD || command == Command::CommandGRAD)
+            {
+                m_currentDegreeMode = command;
+            }
+            InputChanged();
+            return;
+        }
+
         // When the expression line is cleared, we save the current state, which includes,
         // primary display, memory, and degree mode
         if (command == Command::CommandCLEAR || command == Command::CommandEQU || command == Command::ModeBasic || command == Command::ModeScientific
@@ -298,15 +345,44 @@ namespace CalculationManager
             m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandINV));
             m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(Command::CommandCOTH));
             break;
-        case Command::CommandFE:
-            m_isExponentialFormat = !m_isExponentialFormat;
-            [[fallthrough]];
         default:
             m_currentCalculatorEngine->ProcessCommand(static_cast<OpCode>(command));
             break;
         }
 
         InputChanged();
+    }
+
+    bool CalculatorManager::IsCommandSupported(Command command) const
+    {
+        return !m_isScientificMode || command == Command::ModeBasic || command == Command::ModeScientific || command == Command::ModeProgrammer
+            || EpsilonEngine::IsCommandSupported(command);
+    }
+
+    bool CalculatorManager::IsMemorySupported() const
+    {
+        return !m_isScientificMode;
+    }
+
+    bool CalculatorManager::IsHistoryReadOnly() const
+    {
+        return m_isScientificMode;
+    }
+
+    void CalculatorManager::RequireMemorySupport() const
+    {
+        if (!IsMemorySupported())
+        {
+            throw invalid_argument("Memory operations are not supported in Scientific mode.");
+        }
+    }
+
+    void CalculatorManager::RequireEditableHistory() const
+    {
+        if (IsHistoryReadOnly())
+        {
+            throw invalid_argument("Scientific history is append/display only.");
+        }
     }
 
     /// <summary>
@@ -325,6 +401,7 @@ namespace CalculationManager
     /// </summary>
     void CalculatorManager::MemorizeNumber()
     {
+        RequireMemorySupport();
         if (m_currentCalculatorEngine->FInErrorState())
         {
             return;
@@ -352,6 +429,7 @@ namespace CalculationManager
     /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberLoad(_In_ unsigned int indexOfMemory)
     {
+        RequireMemorySupport();
         if (m_currentCalculatorEngine->FInErrorState())
         {
             return;
@@ -370,6 +448,7 @@ namespace CalculationManager
     /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberAdd(_In_ unsigned int indexOfMemory)
     {
+        RequireMemorySupport();
         if (m_currentCalculatorEngine->FInErrorState())
         {
             return;
@@ -394,6 +473,7 @@ namespace CalculationManager
 
     void CalculatorManager::MemorizedNumberClear(_In_ unsigned int indexOfMemory)
     {
+        RequireMemorySupport();
         if (indexOfMemory < m_memorizedNumbers.size())
         {
             m_memorizedNumbers.erase(m_memorizedNumbers.begin() + indexOfMemory);
@@ -408,6 +488,7 @@ namespace CalculationManager
     /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberSubtract(_In_ unsigned int indexOfMemory)
     {
+        RequireMemorySupport();
         if (m_currentCalculatorEngine->FInErrorState())
         {
             return;
@@ -439,6 +520,7 @@ namespace CalculationManager
     /// </summary>
     void CalculatorManager::MemorizedNumberClearAll()
     {
+        RequireMemorySupport();
         m_memorizedNumbers.clear();
 
         m_currentCalculatorEngine->ProcessCommand(IDC_MCLEAR);
@@ -494,7 +576,22 @@ namespace CalculationManager
     {
         for (auto const& historyItem : historyItems)
         {
-            auto index = m_pHistory->AddItem(historyItem);
+            auto item = historyItem;
+            if (IsHistoryReadOnly())
+            {
+                item = make_shared<HISTORYITEM>(*historyItem);
+                auto& data = item->historyItemVector;
+                data.spTokens = make_shared<vector<pair<wstring, int>>>();
+                if (historyItem->historyItemVector.spTokens)
+                {
+                    for (auto const& token : *historyItem->historyItemVector.spTokens)
+                    {
+                        data.spTokens->emplace_back(token.first, -1);
+                    }
+                }
+                data.spCommands = make_shared<vector<shared_ptr<IExpressionCommand>>>();
+            }
+            auto index = m_pHistory->AddItem(item);
             OnHistoryItemAdded(index);
         }
     }
@@ -511,16 +608,27 @@ namespace CalculationManager
 
     bool CalculatorManager::RemoveHistoryItem(_In_ unsigned int uIdx)
     {
+        RequireEditableHistory();
         return m_pHistory->RemoveItem(uIdx);
     }
 
     void CalculatorManager::ClearHistory()
     {
+        RequireEditableHistory();
         m_pHistory->ClearHistory();
     }
 
     void CalculatorManager::SetRadix(RadixType iRadixType)
     {
+        if (m_isScientificMode)
+        {
+            if (iRadixType != RadixType::Decimal)
+            {
+                throw invalid_argument("Scientific mode supports decimal input only.");
+            }
+            return;
+        }
+
         switch (iRadixType)
         {
         case RadixType::Hex:
@@ -543,6 +651,7 @@ namespace CalculationManager
 
     void CalculatorManager::SetMemorizedNumbersString()
     {
+        RequireMemorySupport();
         vector<wstring> resultVector;
         for (auto const& memoryItem : m_memorizedNumbers)
         {
@@ -568,41 +677,73 @@ namespace CalculationManager
 
     wstring CalculatorManager::GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix)
     {
+        if (m_isScientificMode)
+        {
+            if (radix != 10)
+            {
+                throw invalid_argument("Scientific results are available in decimal only.");
+            }
+            return m_scientificCalculatorEngine->GetResult();
+        }
         return m_currentCalculatorEngine ? m_currentCalculatorEngine->GetCurrentResultForRadix(radix, precision, groupDigitsPerRadix) : L"";
     }
 
     void CalculatorManager::SetPrecision(int32_t precision)
     {
-        m_currentCalculatorEngine->ChangePrecision(precision);
+        if (m_isScientificMode)
+        {
+            m_scientificCalculatorEngine->SetPrecision(precision);
+        }
+        else
+        {
+            m_currentCalculatorEngine->ChangePrecision(precision);
+        }
     }
 
     void CalculatorManager::UpdateMaxIntDigits()
     {
-        m_currentCalculatorEngine->UpdateMaxIntDigits();
+        // Epsilon enforces its own bounded decimal input, independent of the legacy radix.
+        if (!m_isScientificMode)
+        {
+            m_currentCalculatorEngine->UpdateMaxIntDigits();
+        }
     }
 
     wchar_t CalculatorManager::DecimalSeparator()
     {
+        if (m_isScientificMode)
+        {
+            return m_scientificCalculatorEngine->DecimalSeparator();
+        }
         return m_currentCalculatorEngine ? m_currentCalculatorEngine->DecimalSeparator() : m_resourceProvider->GetCEngineString(L"sDecimal")[0];
     }
 
     bool CalculatorManager::IsEngineRecording()
     {
-        return m_currentCalculatorEngine->FInRecordingState();
+        return m_isScientificMode ? m_scientificCalculatorEngine->IsEngineRecording()
+                                  : m_currentCalculatorEngine && m_currentCalculatorEngine->FInRecordingState();
     }
 
     bool CalculatorManager::IsInputEmpty()
     {
-        return m_currentCalculatorEngine->IsInputEmpty();
+        return m_isScientificMode ? m_scientificCalculatorEngine->IsInputEmpty() : !m_currentCalculatorEngine || m_currentCalculatorEngine->IsInputEmpty();
     }
 
     void CalculatorManager::SetInHistoryItemLoadMode(_In_ bool isHistoryItemLoadMode)
     {
+        if (isHistoryItemLoadMode)
+        {
+            RequireEditableHistory();
+        }
         m_inHistoryItemLoadMode = isHistoryItemLoadMode;
     }
 
     std::vector<std::shared_ptr<IExpressionCommand>> CalculatorManager::GetDisplayCommandsSnapshot() const
     {
+        if (m_isScientificMode)
+        {
+            return {};
+        }
         return m_currentCalculatorEngine->GetHistoryCollectorCommandsSnapshot();
     }
 }

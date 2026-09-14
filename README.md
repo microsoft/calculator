@@ -38,6 +38,7 @@ Prerequisites:
 
 - Open [src\Calculator.slnx](/src/Calculator.slnx) in Visual Studio to build and run the Calculator app.
 - For a general description of the Calculator project architecture see [ApplicationArchitecture.md](docs/ApplicationArchitecture.md).
+- For this branch's experimental Scientific engine, see [EpsilonIntegration.md](docs/EpsilonIntegration.md).
 - To run the UI Tests, you need to make sure that
   [Windows Application Driver (WinAppDriver)](https://github.com/microsoft/WinAppDriver/releases/latest)
   is installed.

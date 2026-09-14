@@ -132,6 +132,10 @@ namespace CalculatorApp.ViewModel
         private bool _isInputEmpty;
         private NarratorAnnouncement _announcement;
         private uint _openParenthesisCount;
+        private bool _isCalculatorManagerInitialized;
+        private string _calculatorManagerInitializationError;
+        private bool _isMemorySupported;
+        private bool _isHistoryReadOnly;
 
         // Non-observable properties
         private bool _isOperandUpdatedUsingViewModel;
@@ -185,12 +189,13 @@ namespace CalculatorApp.ViewModel
                     (id) => _resourceProvider.GetCEngineString(id)
                 );
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 // CalcManager native engine failed to initialize.
-                // Continue with null manager — UI will render but calculations won't work.
                 _standardCalculatorManager = null;
+                _calculatorManagerInitializationError = exception.Message;
             }
+            _isCalculatorManagerInitialized = _standardCalculatorManager != null;
 
             _calculatorDisplay.SetCallback(this);
 
@@ -227,6 +232,14 @@ namespace CalculatorApp.ViewModel
             IsNegateEnabled = true;
             IsDecimalEnabled = true;
             AreProgrammerRadixOperatorsVisible = false;
+            RefreshCapabilities();
+
+            if (!IsCalculatorManagerInitialized)
+            {
+                string initializationFailure = appResourceProvider.GetResourceString("CalculationFailed");
+                SetPrimaryDisplay(initializationFailure, true);
+                Announcement = CalculatorAnnouncement.GetDisplayUpdatedAnnouncement(initializationFailure);
+            }
         }
 
         public HistoryViewModel HistoryVM
@@ -397,6 +410,78 @@ namespace CalculatorApp.ViewModel
             private set => SetProperty(ref _openParenthesisCount, value);
         }
 
+        public bool IsCalculatorManagerInitialized => _isCalculatorManagerInitialized;
+
+        public string CalculatorManagerInitializationError => _calculatorManagerInitializationError;
+
+        public bool IsMemorySupported
+        {
+            get => _isMemorySupported;
+            private set => SetProperty(ref _isMemorySupported, value);
+        }
+
+        public bool IsHistoryReadOnly
+        {
+            get => _isHistoryReadOnly;
+            private set => SetProperty(ref _isHistoryReadOnly, value);
+        }
+
+        public bool IsSquareSupported => IsCommandSupported(NumbersAndOperatorsEnum.XPower2);
+        public bool IsSquareRootSupported => IsCommandSupported(NumbersAndOperatorsEnum.Sqrt);
+        public bool IsPowerSupported => IsCommandSupported(NumbersAndOperatorsEnum.XPowerY);
+        public bool IsTenPowerSupported => IsCommandSupported(NumbersAndOperatorsEnum.TenPowerX);
+        public bool IsLogBase10Supported => IsCommandSupported(NumbersAndOperatorsEnum.LogBase10);
+        public bool IsLogBaseESupported => IsCommandSupported(NumbersAndOperatorsEnum.LogBaseE);
+        public bool IsCubeSupported => IsCommandSupported(NumbersAndOperatorsEnum.Cube);
+        public bool IsCubeRootSupported => IsCommandSupported(NumbersAndOperatorsEnum.CubeRoot);
+        public bool IsYRootXSupported => IsCommandSupported(NumbersAndOperatorsEnum.YRootX);
+        public bool IsTwoPowerSupported => IsCommandSupported(NumbersAndOperatorsEnum.TwoPowerX);
+        public bool IsLogBaseYSupported => IsCommandSupported(NumbersAndOperatorsEnum.LogBaseY);
+        public bool IsPowerOfESupported => IsCommandSupported(NumbersAndOperatorsEnum.EPowerX);
+        public bool IsReciprocalSupported => IsCommandSupported(NumbersAndOperatorsEnum.Invert);
+        public bool IsAbsoluteValueSupported => IsCommandSupported(NumbersAndOperatorsEnum.Abs);
+        public bool IsExponentInputSupported => IsCommandSupported(NumbersAndOperatorsEnum.Exp);
+        public bool IsModulusSupported => IsCommandSupported(NumbersAndOperatorsEnum.Mod);
+        public bool IsFactorialSupported => IsCommandSupported(NumbersAndOperatorsEnum.Factorial);
+        public bool IsPiSupported => IsCommandSupported(NumbersAndOperatorsEnum.Pi);
+        public bool IsEulerSupported => IsCommandSupported(NumbersAndOperatorsEnum.Euler);
+        public bool IsTrigSupported => IsCommandSupported(NumbersAndOperatorsEnum.Sin)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Cos)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Tan);
+        public bool IsExtendedTrigSupported => IsCommandSupported(NumbersAndOperatorsEnum.Sec)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Csc)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Cot);
+        public bool IsInverseTrigSupported => IsCommandSupported(NumbersAndOperatorsEnum.InvSin)
+            || IsCommandSupported(NumbersAndOperatorsEnum.InvCos)
+            || IsCommandSupported(NumbersAndOperatorsEnum.InvTan)
+            || IsCommandSupported(NumbersAndOperatorsEnum.InvSec)
+            || IsCommandSupported(NumbersAndOperatorsEnum.InvCsc)
+            || IsCommandSupported(NumbersAndOperatorsEnum.InvCot);
+        public bool IsHyperbolicTrigSupported => IsCommandSupported(NumbersAndOperatorsEnum.Sinh)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Cosh)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Tanh)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Sech)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Csch)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Coth);
+        public bool IsInverseHyperbolicTrigSupported => IsCommandSupported(NumbersAndOperatorsEnum.InvSinh)
+            || IsCommandSupported(NumbersAndOperatorsEnum.InvCosh)
+            || IsCommandSupported(NumbersAndOperatorsEnum.InvTanh)
+            || IsCommandSupported(NumbersAndOperatorsEnum.InvSech)
+            || IsCommandSupported(NumbersAndOperatorsEnum.InvCsch)
+            || IsCommandSupported(NumbersAndOperatorsEnum.InvCoth);
+        public bool IsFunctionFlyoutSupported => IsCommandSupported(NumbersAndOperatorsEnum.Abs)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Floor)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Ceil)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Rand)
+            || IsCommandSupported(NumbersAndOperatorsEnum.DMS)
+            || IsCommandSupported(NumbersAndOperatorsEnum.Degrees);
+        public bool IsSecondFunctionSupported => IsCubeSupported
+            || IsCubeRootSupported
+            || IsYRootXSupported
+            || IsTwoPowerSupported
+            || IsLogBaseYSupported
+            || IsPowerOfESupported;
+
         public bool IsOperandUpdatedUsingViewModel
         {
             get => _isOperandUpdatedUsingViewModel;
@@ -449,6 +534,12 @@ namespace CalculatorApp.ViewModel
             get => _valueBitLength;
             set
             {
+                if (!IsCommandSupported(NumbersAndOperatorsEnum.Qword))
+                {
+                    AnnounceUnsupportedAction();
+                    return;
+                }
+
                 if (_valueBitLength != value)
                 {
                     _valueBitLength = value;
@@ -540,6 +631,12 @@ namespace CalculatorApp.ViewModel
             get => _isEditingEnabled;
             set
             {
+                if (value && IsHistoryReadOnly)
+                {
+                    AnnounceUnsupportedAction();
+                    return;
+                }
+
                 if (_isEditingEnabled != value)
                 {
                     _isEditingEnabled = value;
@@ -566,10 +663,63 @@ namespace CalculatorApp.ViewModel
                     _isOperandEnabled = value;
                     IsDecimalEnabled = value;
                     AreHEXButtonsEnabled = IsProgrammer;
-                    IsFToEEnabled = value;
+                    IsFToEEnabled = value && IsCommandSupported(NumbersAndOperatorsEnum.FToE);
                     OnPropertyChanged(nameof(IsOperandEnabled));
                 }
             }
+        }
+
+        public bool IsCommandSupported(NumbersAndOperatorsEnum command)
+        {
+            return _standardCalculatorManager?.IsCommandSupported((CalculatorCommand)(int)command) ?? false;
+        }
+
+        private void RefreshCapabilities()
+        {
+            IsMemorySupported = _standardCalculatorManager?.IsMemorySupported ?? false;
+            IsHistoryReadOnly = _standardCalculatorManager?.IsHistoryReadOnly ?? true;
+            HistoryVM.IsReadOnly = IsHistoryReadOnly;
+            IsFToEEnabled = IsOperandEnabled && IsCommandSupported(NumbersAndOperatorsEnum.FToE);
+
+            OnPropertyChanged(nameof(IsSquareSupported));
+            OnPropertyChanged(nameof(IsSquareRootSupported));
+            OnPropertyChanged(nameof(IsPowerSupported));
+            OnPropertyChanged(nameof(IsTenPowerSupported));
+            OnPropertyChanged(nameof(IsLogBase10Supported));
+            OnPropertyChanged(nameof(IsLogBaseESupported));
+            OnPropertyChanged(nameof(IsCubeSupported));
+            OnPropertyChanged(nameof(IsCubeRootSupported));
+            OnPropertyChanged(nameof(IsYRootXSupported));
+            OnPropertyChanged(nameof(IsTwoPowerSupported));
+            OnPropertyChanged(nameof(IsLogBaseYSupported));
+            OnPropertyChanged(nameof(IsPowerOfESupported));
+            OnPropertyChanged(nameof(IsReciprocalSupported));
+            OnPropertyChanged(nameof(IsAbsoluteValueSupported));
+            OnPropertyChanged(nameof(IsExponentInputSupported));
+            OnPropertyChanged(nameof(IsModulusSupported));
+            OnPropertyChanged(nameof(IsFactorialSupported));
+            OnPropertyChanged(nameof(IsPiSupported));
+            OnPropertyChanged(nameof(IsEulerSupported));
+            OnPropertyChanged(nameof(IsTrigSupported));
+            OnPropertyChanged(nameof(IsExtendedTrigSupported));
+            OnPropertyChanged(nameof(IsInverseTrigSupported));
+            OnPropertyChanged(nameof(IsHyperbolicTrigSupported));
+            OnPropertyChanged(nameof(IsInverseHyperbolicTrigSupported));
+            OnPropertyChanged(nameof(IsFunctionFlyoutSupported));
+            OnPropertyChanged(nameof(IsSecondFunctionSupported));
+        }
+
+        private void AnnounceUnsupportedAction()
+        {
+            const int IDS_ERRORS_FIRST = 99;
+            const int IDS_DOMAIN = IDS_ERRORS_FIRST + 1;
+            string announcement = _resourceProvider.GetCEngineString(IDS_DOMAIN.ToString());
+            if (string.IsNullOrEmpty(announcement))
+            {
+                announcement = AppResourceProvider.GetInstance().GetResourceString("CalculationFailed");
+            }
+            _feedbackForButtonPress = null;
+            Announcement = CalculatorAnnouncement.GetDisplayUpdatedAnnouncement(announcement);
         }
 
         #endregion
@@ -596,12 +746,12 @@ namespace CalculatorApp.ViewModel
                     Result = item.Result
                 };
 
-                foreach (HistoryToken token in item.Tokens)
+                foreach (HistoryToken token in item.Tokens ?? Array.Empty<HistoryToken>())
                 {
                     historyItem.Tokens.Add(new Snapshot.CalcManagerToken(token.Value, token.CommandIndex));
                 }
 
-                foreach (ExpressionCommandWrapper command in item.Commands)
+                foreach (ExpressionCommandWrapper command in item.Commands ?? Array.Empty<ExpressionCommandWrapper>())
                 {
                     historyItem.Commands.Add(command);
                 }
@@ -624,7 +774,8 @@ namespace CalculatorApp.ViewModel
             var restored = new HistoryItemWrapper[items.Count];
             for (int i = 0; i < items.Count; i++)
             {
-                Snapshot.CalcManagerHistoryItem item = items[i];
+                Snapshot.CalcManagerHistoryItem item = items[i]
+                    ?? throw new ArgumentException("Snapshot history cannot contain null items.", nameof(calcManagerSnapshot));
 
                 var tokens = new HistoryToken[item.Tokens.Count];
                 for (int t = 0; t < item.Tokens.Count; t++)
@@ -636,8 +787,12 @@ namespace CalculatorApp.ViewModel
                     };
                 }
 
-                var commands = new ExpressionCommandWrapper[item.Commands.Count];
-                item.Commands.CopyTo(commands, 0);
+                var commands = Array.Empty<ExpressionCommandWrapper>();
+                if (!IsHistoryReadOnly)
+                {
+                    commands = new ExpressionCommandWrapper[item.Commands.Count];
+                    item.Commands.CopyTo(commands, 0);
+                }
 
                 restored[i] = new HistoryItemWrapper(tokens, commands, item.Expression, item.Result);
             }
@@ -675,12 +830,19 @@ namespace CalculatorApp.ViewModel
             {
                 var snapshot = value ?? throw new ArgumentNullException(nameof(value));
 
-                // Recall starts a separate session, including empty memory.
                 ViewMode mode = GetCalculatorMode();
-                _standardCalculatorManager?.Reset(true);
+                bool restoreDisplayOnlyHistory = IsHistoryReadOnly;
+                _standardCalculatorManager?.Reset(!restoreDisplayOnlyHistory);
                 ResetManagedCalculatorSubmodes();
                 SetNativeCalculatorMode(mode);
                 RestoreHistoryItems(snapshot.CalcManager);
+
+                if (restoreDisplayOnlyHistory)
+                {
+                    // Snapshots have no retained Epsilon value. Keep the native zero authoritative,
+                    // rather than presenting rounded snapshot text as a live operand.
+                    return;
+                }
 
                 if (snapshot.ExpressionDisplay != null)
                 {
@@ -761,6 +923,12 @@ namespace CalculatorApp.ViewModel
 
         public void UpdateOperand(int pos, string text)
         {
+            if (IsHistoryReadOnly)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             if (_tokens == null || pos < 0 || pos >= _tokens.Count)
             {
                 return;
@@ -845,6 +1013,12 @@ namespace CalculatorApp.ViewModel
 
         public void OnMemoryButtonPressed()
         {
+            if (!IsMemorySupported)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             _standardCalculatorManager?.MemorizeNumber();
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.Memory, GetCalculatorMode());
 
@@ -858,6 +1032,12 @@ namespace CalculatorApp.ViewModel
 
         public void OnMemoryItemPressed(object memoryItemPosition)
         {
+            if (!IsMemorySupported)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             if (MemorizedNumbers != null && MemorizedNumbers.Count > 0)
             {
                 int position = (int)memoryItemPosition;
@@ -871,6 +1051,12 @@ namespace CalculatorApp.ViewModel
 
         public void OnMemoryAdd(object memoryItemPosition)
         {
+            if (!IsMemorySupported)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             if (MemorizedNumbers != null)
             {
                 int position = (int)memoryItemPosition;
@@ -881,6 +1067,12 @@ namespace CalculatorApp.ViewModel
 
         public void OnMemorySubtract(object memoryItemPosition)
         {
+            if (!IsMemorySupported)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             if (MemorizedNumbers != null)
             {
                 int position = (int)memoryItemPosition;
@@ -891,6 +1083,12 @@ namespace CalculatorApp.ViewModel
 
         public void OnMemoryClear(object memoryItemPosition)
         {
+            if (!IsMemorySupported)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             if (MemorizedNumbers != null && MemorizedNumbers.Count > 0)
             {
                 int position = (int)memoryItemPosition;
@@ -927,6 +1125,12 @@ namespace CalculatorApp.ViewModel
 
         public void SelectHistoryItem(HistoryItemViewModel item)
         {
+            if (IsHistoryReadOnly)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             SetHistoryExpressionDisplay(item.GetTokens(), item.GetCommands());
             SetExpressionDisplay(item.GetTokens(), item.GetCommands());
             SetPrimaryDisplay(item.Result, false);
@@ -935,6 +1139,12 @@ namespace CalculatorApp.ViewModel
 
         public void SwitchProgrammerModeBase(NumberBase numberBase)
         {
+            if (!IsProgrammer || !IsMemorySupported)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             if (IsInError)
             {
                 _standardCalculatorManager?.SendCommand(CalculatorCommand.CommandCLEAR);
@@ -977,27 +1187,41 @@ namespace CalculatorApp.ViewModel
 
         public void ResetCalcManager(bool clearMemory)
         {
+            if (clearMemory && !IsMemorySupported)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
             _standardCalculatorManager?.Reset(clearMemory);
         }
 
         internal void ResetAfterFailedSnapshot(ViewMode mode)
         {
-            _standardCalculatorManager?.Reset(true);
+            bool preserveMemory = mode == ViewMode.Scientific;
+            _standardCalculatorManager?.Reset(!preserveMemory);
             ResetManagedCalculatorSubmodes();
-            if (_standardCalculatorManager != null)
+            if (_standardCalculatorManager != null && !preserveMemory)
             {
                 _standardCalculatorManager.SetStandardMode();
                 _standardCalculatorManager.ClearHistory();
-                _standardCalculatorManager.SetScientificMode();
-                _standardCalculatorManager.ClearHistory();
             }
             SetNativeCalculatorMode(mode);
-            HistoryVM.ClearItems();
+            if (preserveMemory)
+            {
+                HistoryVM.ReloadHistory(mode);
+            }
+            else
+            {
+                HistoryVM.ClearItems();
+            }
             SetExpressionDisplay(
                 new List<(string Token, int CommandIndex)>(),
                 new List<ExpressionCommandWrapper>());
             SetPrimaryDisplay("0", false);
-            SetMemorizedNumbers(Array.Empty<string>());
+            if (!preserveMemory)
+            {
+                SetMemorizedNumbers(Array.Empty<string>());
+            }
             SetCalculatorType(mode);
         }
 
@@ -1030,11 +1254,35 @@ namespace CalculatorApp.ViewModel
                     _standardCalculatorManager?.SetProgrammerMode();
                     break;
             }
+            RefreshCapabilities();
         }
 
         public void SendCommandToCalcManager(int command)
         {
-            _standardCalculatorManager?.SendCommand((CalculatorCommand)command);
+            var calculatorCommand = (CalculatorCommand)command;
+            switch (calculatorCommand)
+            {
+                case CalculatorCommand.ModeBasic:
+                    if (IsStandard) OnButtonPressed(NumbersAndOperatorsEnum.IsStandardMode);
+                    else IsStandard = true;
+                    return;
+                case CalculatorCommand.ModeScientific:
+                    if (IsScientific) OnButtonPressed(NumbersAndOperatorsEnum.IsScientificMode);
+                    else IsScientific = true;
+                    return;
+                case CalculatorCommand.ModeProgrammer:
+                    if (IsProgrammer) OnButtonPressed(NumbersAndOperatorsEnum.IsProgrammerMode);
+                    else IsProgrammer = true;
+                    return;
+            }
+
+            if (!(_standardCalculatorManager?.IsCommandSupported(calculatorCommand) ?? false))
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
+            _standardCalculatorManager.SendCommand(calculatorCommand);
         }
 
         #region Internal callback methods (called by CalculatorDisplay)
@@ -1303,6 +1551,12 @@ namespace CalculatorApp.ViewModel
             List<(string Token, int CommandIndex)> tokens,
             List<ExpressionCommandWrapper> commands)
         {
+            if (IsHistoryReadOnly)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             _tokens = new List<(string, int)>(tokens);
             _commands = new List<ExpressionCommandWrapper>(commands);
             IsEditingEnabled = false;
@@ -1333,7 +1587,8 @@ namespace CalculatorApp.ViewModel
                 var currentToken = tokens[i];
 
                 TokenType type;
-                bool isEditable = currentToken.CommandIndex != -1;
+                bool isEditable = currentToken.CommandIndex >= 0
+                    && currentToken.CommandIndex < _commands.Count;
                 localizer.LocalizeDisplayValue(ref currentToken.Token);
 
                 if (!isEditable)
@@ -1411,7 +1666,24 @@ namespace CalculatorApp.ViewModel
         {
             int cmdenum = (int)numOpEnum;
 
-            if (IsInError)
+            if (numOpEnum == NumbersAndOperatorsEnum.Memory)
+            {
+                if (!IsMemorySupported)
+                {
+                    AnnounceUnsupportedAction();
+                    return;
+                }
+            }
+            else if (!IsCommandSupported(numOpEnum))
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
+            if (IsInError
+                && numOpEnum != NumbersAndOperatorsEnum.IsStandardMode
+                && numOpEnum != NumbersAndOperatorsEnum.IsScientificMode
+                && numOpEnum != NumbersAndOperatorsEnum.IsProgrammerMode)
             {
                 _standardCalculatorManager?.SendCommand(CalculatorCommand.CommandCLEAR);
 
@@ -1482,12 +1754,18 @@ namespace CalculatorApp.ViewModel
                         && numOpEnum != NumbersAndOperatorsEnum.Radians
                         && numOpEnum != NumbersAndOperatorsEnum.Grads)
                     {
-                        IsFToEEnabled = true;
+                        IsFToEEnabled = IsCommandSupported(NumbersAndOperatorsEnum.FToE);
                         _isLastOperationHistoryLoad = false;
                     }
 
                     TraceLogger.GetInstance().UpdateButtonUsage(numOpEnum, GetCalculatorMode());
                     _standardCalculatorManager?.SendCommand((CalculatorCommand)cmdenum);
+                    if (numOpEnum == NumbersAndOperatorsEnum.IsStandardMode
+                        || numOpEnum == NumbersAndOperatorsEnum.IsScientificMode
+                        || numOpEnum == NumbersAndOperatorsEnum.IsProgrammerMode)
+                    {
+                        RefreshCapabilities();
+                    }
                 }
             }
         }
@@ -1502,6 +1780,12 @@ namespace CalculatorApp.ViewModel
 
         private void OnClearMemoryCommand(object parameter)
         {
+            if (!IsMemorySupported)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             _standardCalculatorManager?.MemorizedNumberClearAll();
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.MemoryClear, GetCalculatorMode());
 
@@ -1606,6 +1890,44 @@ namespace CalculatorApp.ViewModel
                 return;
             }
 
+            if (IsScientific)
+            {
+                if (pastedString.Length > CopyPasteManager.MaxPasteableLength)
+                {
+                    AnnounceUnsupportedAction();
+                    return;
+                }
+                pastedString = LocalizationSettings.GetInstance().RemoveGroupSeparators(pastedString);
+            }
+
+            bool hasCommand = false;
+            foreach (char character in pastedString)
+            {
+                NumbersAndOperatorsEnum command = MapCharacterToButtonId(character).ButtonId;
+                if (command == NumbersAndOperatorsEnum.None)
+                {
+                    if (IsScientific && !char.IsWhiteSpace(character))
+                    {
+                        AnnounceUnsupportedAction();
+                        return;
+                    }
+                }
+                else if (!IsCommandSupported(command))
+                {
+                    AnnounceUnsupportedAction();
+                    return;
+                }
+                else
+                {
+                    hasCommand = true;
+                }
+            }
+            if (IsScientific && !hasCommand)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             TraceLogger.GetInstance().LogInputPasted(GetCalculatorMode());
             bool isFirstLegalChar = true;
             _standardCalculatorManager?.SendCommand(CalculatorCommand.CommandCENTR);
@@ -1688,6 +2010,10 @@ namespace CalculatorApp.ViewModel
                 {
                     sentEquals = (mappedNumOp == NumbersAndOperatorsEnum.Equals);
                     _standardCalculatorManager?.SendCommand((CalculatorCommand)(int)mappedNumOp);
+                    if (IsScientific && IsInError)
+                    {
+                        break;
+                    }
 
                     if (sendNegate)
                     {
@@ -1737,7 +2063,7 @@ namespace CalculatorApp.ViewModel
                 CurrentRadixType = NumberBase.DecBase;
                 _standardCalculatorManager?.SetRadix((int)RadixType.Decimal);
             }
-            else
+            else if (IsMemorySupported)
             {
                 _standardCalculatorManager?.SetMemorizedNumbersString();
             }
@@ -1760,7 +2086,10 @@ namespace CalculatorApp.ViewModel
 
         private void SetMemorizedNumbersString()
         {
-            _standardCalculatorManager?.SetMemorizedNumbersString();
+            if (IsMemorySupported)
+            {
+                _standardCalculatorManager?.SetMemorizedNumbersString();
+            }
         }
 
         private void Recalculate(bool fromHistory = false)
@@ -2000,6 +2329,12 @@ namespace CalculatorApp.ViewModel
                 return true;
             if (command == (int)CalculatorCommand.CommandPNT)
                 return true;
+            if (command == (int)CalculatorCommand.ModeBasic
+                || command == (int)CalculatorCommand.ModeScientific
+                || command == (int)CalculatorCommand.ModeProgrammer)
+            {
+                return true;
+            }
             if (command >= (int)CalculatorCommand.CommandBINEDITSTART && command <= (int)CalculatorCommand.CommandBINEDITEND)
                 return true;
 

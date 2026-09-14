@@ -93,7 +93,7 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
-        public void TestHistoryItemClicked()
+        public void TestScientificHistoryItemCannotBeLoaded()
         {
             Initialize();
             m_standardViewModel.SendCommandToCalcManager(ModeScientific);
@@ -104,16 +104,10 @@ namespace Calculator.Tests
             m_standardViewModel.SendCommandToCalcManager(Command3);
             m_standardViewModel.SendCommandToCalcManager(CommandEQU);
             var historyItem = (HistoryItemViewModel)m_historyViewModel.Items[m_historyViewModel.ItemsCount - 1];
+            m_standardViewModel.SendCommandToCalcManager(CommandCLEAR);
             m_standardViewModel.SelectHistoryItem(historyItem);
-            Assert.AreEqual("9", m_standardViewModel.DisplayValue);
-            Assert.AreEqual("1", m_standardViewModel.ExpressionTokens[0].Token);
-            Assert.AreEqual(" ", m_standardViewModel.ExpressionTokens[1].Token);
-            Assert.AreEqual("+", m_standardViewModel.ExpressionTokens[2].Token);
-            Assert.AreEqual(" ", m_standardViewModel.ExpressionTokens[3].Token);
-            Assert.AreEqual("5", m_standardViewModel.ExpressionTokens[4].Token);
-            Assert.AreEqual(" ", m_standardViewModel.ExpressionTokens[5].Token);
-            Assert.AreEqual("+", m_standardViewModel.ExpressionTokens[6].Token);
-            Assert.AreEqual(" ", m_standardViewModel.ExpressionTokens[7].Token);
+            Assert.AreEqual("0", m_standardViewModel.DisplayValue);
+            Assert.AreEqual(1, m_historyViewModel.ItemsCount);
             Cleanup();
         }
 
@@ -233,7 +227,7 @@ namespace Calculator.Tests
             Assert.AreEqual(scientificItems, m_historyViewModel.ItemsCount);
             for (int i = 0; i < scientificItems; i++)
             {
-                string expr = "1   +   " + i.ToString() + " =";
+                string expr = "1 + " + i.ToString() + "=";
                 int output = 1 + i;
                 string result = output.ToString();
                 var historyItem = (HistoryItemViewModel)m_historyViewModel.Items[m_historyViewModel.ItemsCount - 1 - i];
@@ -295,12 +289,8 @@ namespace Calculator.Tests
             m_standardViewModel.SendCommandToCalcManager(CommandEQU);
 
             var historyItem = (HistoryItemViewModel)m_historyViewModel.Items[m_historyViewModel.ItemsCount - 1];
-            var resources = AppResourceProvider.GetInstance();
-            string expected = resources.GetCEngineString("67") + "( 1 )   +   "
-                + resources.GetCEngineString("73") + "( 1 )   +   "
-                + resources.GetCEngineString("79") + "( 1 ) =";
-
-            Assert.AreEqual(expected, historyItem.Expression);
+            Assert.AreEqual("sin\u2080(1) + sin\u1D63(1) + sin\u1D4D(1)=", historyItem.Expression);
+            Assert.AreEqual(0.874630708557001, double.Parse(historyItem.Result), 1e-14);
             Cleanup();
         }
 

@@ -23,7 +23,7 @@ namespace winrt::CalcManager::Interop::implementation
         hstring Expression();
         hstring Result();
 
-        std::shared_ptr<CalculationManager::HISTORYITEM> ToUnderlying() const;
+        std::shared_ptr<CalculationManager::HISTORYITEM> ToUnderlying(bool includeCommands = true) const;
 
     private:
         std::vector<CalcManager::Interop::HistoryToken> m_tokens;

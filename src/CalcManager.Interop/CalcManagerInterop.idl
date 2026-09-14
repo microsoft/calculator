@@ -91,6 +91,9 @@ namespace CalcManager.Interop
         CommandDword = 318,
         CommandWord = 319,
         CommandByte = 320,
+        CommandDEG = 321,
+        CommandRAD = 322,
+        CommandGRAD = 323,
         CommandSEC = 400,
         CommandASEC = 401,
         CommandCSC = 402,
@@ -273,6 +276,9 @@ namespace CalcManager.Interop
         void SetScientificMode();
         void SetProgrammerMode();
         void SendCommand(CalculatorCommand command);
+        Boolean IsCommandSupported(CalculatorCommand command);
+        Boolean IsMemorySupported{ get; };
+        Boolean IsHistoryReadOnly{ get; };
         void MemorizeNumber();
         void MemorizedNumberLoad(UInt32 index);
         void MemorizedNumberAdd(UInt32 index);

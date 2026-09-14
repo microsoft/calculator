@@ -243,6 +243,10 @@
     <Content Include="..\Calculator.ViewModels\DataLoaders\DefaultFromToCurrency.json">
       <Link>DataLoaders\DefaultFromToCurrency.json</Link>
     </Content>
+    <Content Include="..\..\NOTICE.txt">
+      <Link>NOTICE.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup Condition="'$(IsStoreBuild)' == 'True'">
     <Content Include="Assets\CalculatorAppList.scale-100.png" />
