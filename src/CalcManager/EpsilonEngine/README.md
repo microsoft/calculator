@@ -57,7 +57,9 @@ parallel integer/rational evaluator.
 
 Primary results use the configured count as significant decimal digits,
 preserve the locale decimal separator, and apply `sThousand`/`sGrouping` to
-fixed-format output. Terminal-zero grouping patterns such as `3;0` and
+fixed-format output, including the editable primary display. Grouping changes
+only presentation; the editable lexeme and retained Epsilon value are separate.
+Terminal-zero grouping patterns such as `3;0` and
 `3;2;0` repeat their preceding group. Scientific-format mantissas remain
 ungrouped. Large values are normalized before decimal materialization so
 significant-digit rounding occurs once. Scientific output preserves the

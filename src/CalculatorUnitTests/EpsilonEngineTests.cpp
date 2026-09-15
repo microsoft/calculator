@@ -857,6 +857,24 @@ namespace EpsilonEngineTests
             VerifyResult(L"-1.e+3");
         }
 
+        TEST_METHOD(LiveGroupingNeverChangesEditableOrRetainedNumbers)
+        {
+            Send({Command::Command1, Command::Command2, Command::Command3, Command::Command4,
+                  Command::Command5, Command::Command6, Command::Command7});
+            VerifyResult(L"1,234,567");
+            Send({Command::CommandBACK, Command::CommandPNT, Command::Command9});
+            VerifyResult(L"123,456.9");
+            Send({Command::CommandADD, Command::Command1, Command::CommandEQU});
+            VerifyResult(L"123,457.9");
+
+            m_engine->Reset();
+            Send({Command::Command1, Command::Command0, Command::Command0, Command::Command0, Command::CommandEQU,
+                  Command::CommandEXP, Command::Command2});
+            VerifyResult(L"1000.e+2");
+            Send({Command::CommandEQU});
+            VerifyResult(L"100,000");
+        }
+
         TEST_METHOD(LocaleGroupingAndRetainedExactValue)
         {
             ResourceProvider indianLocale(L",", L".", L"3;2;0");
@@ -873,7 +891,9 @@ namespace EpsilonEngineTests
 
             sendLocalized(
                 {Command::Command1, Command::Command2, Command::Command3, Command::Command4, Command::Command5, Command::Command6,
-                 Command::Command7, Command::CommandPNT, Command::Command8, Command::Command9, Command::CommandEQU});
+                 Command::Command7, Command::CommandPNT, Command::Command8, Command::Command9});
+            VERIFY_ARE_EQUAL(wstring(L"12.34.567,89"), localizedEngine.GetResult());
+            sendLocalized({Command::CommandEQU});
             VERIFY_ARE_EQUAL(wstring(L"12.34.567,89"), localizedEngine.GetResult());
             VERIFY_ARE_EQUAL(L',', localizedEngine.DecimalSeparator());
 

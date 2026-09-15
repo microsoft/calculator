@@ -287,6 +287,18 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
+        public void ScientificLiveGroupingDoesNotBecomeCalculationInput()
+        {
+            Press(NumbersAndOperatorsEnum.One, NumbersAndOperatorsEnum.Two, NumbersAndOperatorsEnum.Three,
+                NumbersAndOperatorsEnum.Four, NumbersAndOperatorsEnum.Five, NumbersAndOperatorsEnum.Six,
+                NumbersAndOperatorsEnum.Seven);
+            Assert.AreEqual("1,234,567", _viewModel.DisplayValue);
+            Press(NumbersAndOperatorsEnum.Backspace, NumbersAndOperatorsEnum.Add, NumbersAndOperatorsEnum.One,
+                NumbersAndOperatorsEnum.Equals);
+            Assert.AreEqual("123,457", _viewModel.DisplayValue);
+        }
+
+        [TestMethod]
         public void RawModeCommandsKeepManagedAndNativeModesAligned()
         {
             _viewModel.SendCommandToCalcManager((int)NumbersAndOperatorsEnum.IsProgrammerMode);

@@ -1341,6 +1341,16 @@ namespace CalculationManager
             }
             wstring input = base;
             wchar_t separator = DecimalSeparator();
+            const wstring groupingSeparator = m_resourceProvider->GetCEngineString(L"sThousand");
+            if (!groupingSeparator.empty() && groupingSeparator != wstring(1, separator))
+            {
+                size_t position = input.find(groupingSeparator);
+                while (position != wstring::npos)
+                {
+                    input.erase(position, groupingSeparator.size());
+                    position = input.find(groupingSeparator, position);
+                }
+            }
             if (input.find(separator) == wstring::npos && input.find(L'.') == wstring::npos)
             {
                 input.push_back(separator);
@@ -2673,7 +2683,9 @@ namespace CalculationManager
 
         void PublishInput()
         {
-            m_resultText = m_input.empty() ? L"0" : m_input;
+            m_resultText = m_input.empty() ? L"0"
+                : m_exponentBase          ? m_input
+                                          : LocalizeAndGroup(narrowNumber(m_input, DecimalSeparator()));
             PublishPrimary();
             PublishExpression();
             if (m_display)
