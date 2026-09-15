@@ -26,8 +26,8 @@ namespace CalculatorApp.ViewModel
 
         private ObservableCollection<HistoryItemViewModel> _items;
 
-        [ObservableProperty]
-        private bool _areHistoryShortcutsEnabled;
+        private bool _areHistoryShortcutsRequested;
+        private bool _isReadOnly;
 
         private NarratorAnnouncement _historyAnnouncement;
 
@@ -37,8 +37,29 @@ namespace CalculatorApp.ViewModel
         internal HistoryViewModel(CalculatorManagerWrapper calculatorManager)
         {
             _calculatorManager = calculatorManager; // may be null if engine failed to init
-            AreHistoryShortcutsEnabled = true;
+            _areHistoryShortcutsRequested = true;
             Items = new ObservableCollection<HistoryItemViewModel>();
+        }
+
+        public bool AreHistoryShortcutsEnabled
+        {
+            get => _areHistoryShortcutsRequested && !IsReadOnly;
+            set
+            {
+                SetProperty(ref _areHistoryShortcutsRequested, value);
+            }
+        }
+
+        public bool IsReadOnly
+        {
+            get => _isReadOnly;
+            internal set
+            {
+                if (SetProperty(ref _isReadOnly, value))
+                {
+                    OnPropertyChanged(nameof(AreHistoryShortcutsEnabled));
+                }
+            }
         }
 
         public ObservableCollection<HistoryItemViewModel> Items
@@ -57,7 +78,7 @@ namespace CalculatorApp.ViewModel
 
         public void OnHistoryItemAdded(uint addedItemIndex)
         {
-            var newItem = _calculatorManager.GetHistoryItem(addedItemIndex);
+            var newItem = _calculatorManager?.GetHistoryItem(addedItemIndex);
             if (newItem == null)
             {
                 return;
@@ -90,6 +111,12 @@ namespace CalculatorApp.ViewModel
         [RelayCommand]
         private void OnClear()
         {
+            if (IsReadOnly)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             if (AreHistoryShortcutsEnabled)
             {
                 _calculatorManager?.ClearHistory();
@@ -114,6 +141,12 @@ namespace CalculatorApp.ViewModel
 
         public void ShowItem(HistoryItemViewModel e)
         {
+            if (IsReadOnly)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             int index = Items.IndexOf(e);
             if (index >= 0)
             {
@@ -124,6 +157,12 @@ namespace CalculatorApp.ViewModel
 
         public void DeleteItem(HistoryItemViewModel e)
         {
+            if (IsReadOnly)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
+
             int itemIndex = Items.IndexOf(e);
             if (itemIndex >= 0)
             {
@@ -189,6 +228,12 @@ namespace CalculatorApp.ViewModel
         internal ulong GetMaxItemSize()
         {
             return (ulong)(_calculatorManager?.MaxHistorySize ?? 0);
+        }
+
+        private void AnnounceUnsupportedAction()
+        {
+            string announcement = AppResourceProvider.GetInstance().GetResourceString("CalculationFailed");
+            HistoryAnnouncement = CalculatorAnnouncement.GetDisplayUpdatedAnnouncement(announcement);
         }
 
     }

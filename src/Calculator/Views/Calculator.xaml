@@ -716,107 +716,112 @@
                                                     x:Load="False"/>
 
             <!-- Memory panel controls -->
-            <Grid x:Name="MemoryPanel"
-                  Grid.Row="4"
-                  Margin="3,0,3,0"
-                  AutomationProperties.HeadingLevel="Level1"
-                  AutomationProperties.Name="{utils:ResourceString Name=MemoryPanel/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                  Visibility="{x:Bind ViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" MaxWidth="80"/>
-                    <ColumnDefinition Width="1*" MaxWidth="80"/>
-                    <ColumnDefinition Width="1*" MaxWidth="80"/>
-                    <ColumnDefinition Width="1*" MaxWidth="80"/>
-                    <ColumnDefinition x:Name="M4"
-                                      Width="1*"
-                                      MaxWidth="80"/>
-                    <ColumnDefinition x:Name="M5" Width="0.01*"/>
-                    <ColumnDefinition x:Name="M6"
-                                      Width="1*"
-                                      MaxWidth="80"/>
-                </Grid.ColumnDefinitions>
+            <UserControl x:Name="MemoryPanel"
+                         Grid.Row="4"
+                         Margin="3,0,3,0"
+                         HorizontalContentAlignment="Stretch"
+                         VerticalContentAlignment="Stretch"
+                         IsEnabled="{x:Bind ViewModel.IsMemorySupported, Mode=OneWay}"
+                         AutomationProperties.HeadingLevel="Level1"
+                         AutomationProperties.Name="{utils:ResourceString Name=MemoryPanel/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                         Visibility="{x:Bind ViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" MaxWidth="80"/>
+                        <ColumnDefinition Width="1*" MaxWidth="80"/>
+                        <ColumnDefinition Width="1*" MaxWidth="80"/>
+                        <ColumnDefinition Width="1*" MaxWidth="80"/>
+                        <ColumnDefinition x:Name="M4"
+                                          Width="1*"
+                                          MaxWidth="80"/>
+                        <ColumnDefinition x:Name="M5" Width="0.01*"/>
+                        <ColumnDefinition x:Name="M6"
+                                          Width="1*"
+                                          MaxWidth="80"/>
+                    </Grid.ColumnDefinitions>
 
-                <controls:CalculatorButton x:Name="ClearMemoryButton"
-                                           Style="{StaticResource CaptionButtonStyle}"
-                                           common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=ClearMemoryButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
-                                           AutomationProperties.AutomationId="ClearMemoryButton"
-                                           AutomationProperties.Name="{utils:ResourceString Name=ClearMemoryButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                           Command="{x:Bind ViewModel.ClearMemoryCommand}"
-                                           Content="&#xF754;"
-                                           TabIndex="10"
-                                           ToolTipService.ToolTip="{utils:ResourceString Name=ClearMemoryButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                                           Visibility="{x:Bind ViewModel.IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
-                <controls:CalculatorButton x:Name="MemRecall"
-                                           Grid.Column="1"
-                                           Style="{StaticResource CaptionButtonStyle}"
-                                           common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=MemRecall/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
-                                           AutomationProperties.AutomationId="MemRecall"
-                                           AutomationProperties.Name="{utils:ResourceString Name=MemRecall/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                           Command="{x:Bind ViewModel.MemoryItemPressed}"
-                                           CommandParameter="{StaticResource Zero}"
-                                           Content="&#xF755;"
-                                           TabIndex="11"
-                                           ToolTipService.ToolTip="{utils:ResourceString Name=MemRecall/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                                           Visibility="{x:Bind ViewModel.IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
-                <controls:CalculatorButton x:Name="MemPlus"
-                                           Grid.Column="2"
-                                           Style="{StaticResource CaptionButtonStyle}"
-                                           common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=MemPlus/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
-                                           AutomationProperties.AutomationId="MemPlus"
-                                           AutomationProperties.Name="{utils:ResourceString Name=MemPlus/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                           Command="{x:Bind ViewModel.MemoryAdd}"
-                                           CommandParameter="{StaticResource Zero}"
-                                           Content="&#xF757;"
-                                           TabIndex="12"
-                                           ToolTipService.ToolTip="{utils:ResourceString Name=MemPlus/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                                           Visibility="{x:Bind ViewModel.IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
-                <controls:CalculatorButton x:Name="MemMinus"
-                                           Grid.Column="3"
-                                           Style="{StaticResource CaptionButtonStyle}"
-                                           common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=MemMinus/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
-                                           AutomationProperties.AutomationId="MemMinus"
-                                           AutomationProperties.Name="{utils:ResourceString Name=MemMinus/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                           Command="{x:Bind ViewModel.MemorySubtract}"
-                                           CommandParameter="{StaticResource Zero}"
-                                           Content="&#xF758;"
-                                           TabIndex="13"
-                                           ToolTipService.ToolTip="{utils:ResourceString Name=MemMinus/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                                           Visibility="{x:Bind ViewModel.IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
-                <controls:CalculatorButton x:Name="MemButton"
-                                           Grid.Column="4"
-                                           Style="{StaticResource CaptionButtonStyle}"
-                                           common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=memButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
-                                           AutomationProperties.AutomationId="memButton"
-                                           AutomationProperties.Name="{utils:ResourceString Name=memButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                           ButtonId="Memory"
-                                           Content="&#xF756;"
-                                           TabIndex="14"
-                                           ToolTipService.ToolTip="{utils:ResourceString Name=memButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"/>
-                <Button x:Name="MemoryButton"
-                        Grid.Column="6"
-                        MinWidth="15.5"
-                        MinHeight="8.402"
-                        Style="{StaticResource CaptionButtonStyle}"
-                        AccessKey="{utils:ResourceString Name=MemoryButton/AccessKey}"
-                        AutomationProperties.AutomationId="MemoryButton"
-                        Click="ToggleMemoryFlyout"
-                        Content="&#xE61D;"
-                        ExitDisplayModeOnAccessKeyInvoked="False"
-                        TabIndex="15"
-                        ToolTipService.ToolTip="{utils:ResourceString Name=MemoryButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                        IsEnabled="{x:Bind ViewModel.IsMemoryEmpty, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
-                    <FlyoutBase.AttachedFlyout>
-                        <Flyout x:Name="MemoryFlyout"
-                                AutomationProperties.AutomationId="MemoryFlyout"
-                                AutomationProperties.Name="{utils:ResourceString Name=MemoryFlyout/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
-                                Closed="OnMemoryFlyoutClosed"
-                                Closing="OnMemoryFlyoutClosing"
-                                FlyoutPresenterStyle="{StaticResource MemoryFlyoutStyle}"
-                                Opened="OnMemoryFlyoutOpened"
-                                Placement="Full"/>
-                    </FlyoutBase.AttachedFlyout>
-                </Button>
-            </Grid>
+                    <controls:CalculatorButton x:Name="ClearMemoryButton"
+                                               Style="{StaticResource CaptionButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=ClearMemoryButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
+                                               AutomationProperties.AutomationId="ClearMemoryButton"
+                                               AutomationProperties.Name="{utils:ResourceString Name=ClearMemoryButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                                               Command="{x:Bind ViewModel.ClearMemoryCommand}"
+                                               Content="&#xF754;"
+                                               TabIndex="10"
+                                               ToolTipService.ToolTip="{utils:ResourceString Name=ClearMemoryButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
+                                               Visibility="{x:Bind ViewModel.IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                    <controls:CalculatorButton x:Name="MemRecall"
+                                               Grid.Column="1"
+                                               Style="{StaticResource CaptionButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=MemRecall/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
+                                               AutomationProperties.AutomationId="MemRecall"
+                                               AutomationProperties.Name="{utils:ResourceString Name=MemRecall/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                                               Command="{x:Bind ViewModel.MemoryItemPressed}"
+                                               CommandParameter="{StaticResource Zero}"
+                                               Content="&#xF755;"
+                                               TabIndex="11"
+                                               ToolTipService.ToolTip="{utils:ResourceString Name=MemRecall/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
+                                               Visibility="{x:Bind ViewModel.IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                    <controls:CalculatorButton x:Name="MemPlus"
+                                               Grid.Column="2"
+                                               Style="{StaticResource CaptionButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=MemPlus/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
+                                               AutomationProperties.AutomationId="MemPlus"
+                                               AutomationProperties.Name="{utils:ResourceString Name=MemPlus/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                                               Command="{x:Bind ViewModel.MemoryAdd}"
+                                               CommandParameter="{StaticResource Zero}"
+                                               Content="&#xF757;"
+                                               TabIndex="12"
+                                               ToolTipService.ToolTip="{utils:ResourceString Name=MemPlus/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
+                                               Visibility="{x:Bind ViewModel.IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                    <controls:CalculatorButton x:Name="MemMinus"
+                                               Grid.Column="3"
+                                               Style="{StaticResource CaptionButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=MemMinus/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
+                                               AutomationProperties.AutomationId="MemMinus"
+                                               AutomationProperties.Name="{utils:ResourceString Name=MemMinus/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                                               Command="{x:Bind ViewModel.MemorySubtract}"
+                                               CommandParameter="{StaticResource Zero}"
+                                               Content="&#xF758;"
+                                               TabIndex="13"
+                                               ToolTipService.ToolTip="{utils:ResourceString Name=MemMinus/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
+                                               Visibility="{x:Bind ViewModel.IsProgrammer, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                    <controls:CalculatorButton x:Name="MemButton"
+                                               Grid.Column="4"
+                                               Style="{StaticResource CaptionButtonStyle}"
+                                               common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=memButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
+                                               AutomationProperties.AutomationId="memButton"
+                                               AutomationProperties.Name="{utils:ResourceString Name=memButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                                               ButtonId="Memory"
+                                               Content="&#xF756;"
+                                               TabIndex="14"
+                                               ToolTipService.ToolTip="{utils:ResourceString Name=memButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"/>
+                    <Button x:Name="MemoryButton"
+                            Grid.Column="6"
+                            MinWidth="15.5"
+                            MinHeight="8.402"
+                            Style="{StaticResource CaptionButtonStyle}"
+                            AccessKey="{utils:ResourceString Name=MemoryButton/AccessKey}"
+                            AutomationProperties.AutomationId="MemoryButton"
+                            Click="ToggleMemoryFlyout"
+                            Content="&#xE61D;"
+                            ExitDisplayModeOnAccessKeyInvoked="False"
+                            TabIndex="15"
+                            ToolTipService.ToolTip="{utils:ResourceString Name=MemoryButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
+                            IsEnabled="{x:Bind ViewModel.IsMemoryEmpty, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}">
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout x:Name="MemoryFlyout"
+                                    AutomationProperties.AutomationId="MemoryFlyout"
+                                    AutomationProperties.Name="{utils:ResourceString Name=MemoryFlyout/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                                    Closed="OnMemoryFlyoutClosed"
+                                    Closing="OnMemoryFlyoutClosing"
+                                    FlyoutPresenterStyle="{StaticResource MemoryFlyoutStyle}"
+                                    Opened="OnMemoryFlyoutOpened"
+                                    Placement="Full"/>
+                        </FlyoutBase.AttachedFlyout>
+                    </Button>
+                </Grid>
+            </UserControl>
 
             <Grid x:Name="NumpadPanel"
                   Grid.Row="5"

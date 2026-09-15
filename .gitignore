@@ -290,6 +290,7 @@ __pycache__/
 *.xsd.cs
 
 # Calculator specific
+/output/
 Generated Files/
 src/GraphControl/GraphingImplOverrides.props
 !src/x64

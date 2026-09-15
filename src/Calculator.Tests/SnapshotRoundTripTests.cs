@@ -240,32 +240,41 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
-        public void FailedCrossModeRestoreClearsSnapshotModeHistory()
+        public void ScientificRestoreDoesNotReplayLegacyDisplayCommands()
         {
-            StandardCalculatorViewModel calculator = CreateCalculatorViewModel(ViewMode.Standard);
+            StandardCalculatorViewModel calculator = CreateCalculatorViewModel(ViewMode.Scientific);
             var viewModel = CreateApplicationViewModel(ViewMode.Standard, calculator);
             StandardCalculatorViewModel source = CreateCalculatorViewModel(ViewMode.Scientific);
             Evaluate(source, Command1, CommandADD, Command2);
             var standardSnapshot = source.Snapshot;
             standardSnapshot.DisplayCommands = new List<ExpressionCommandWrapper> { null };
+            standardSnapshot.CalcManager.HistoryItems[0].Commands.Add(null);
             var snapshot = new ApplicationSnapshot
             {
                 Mode = (int)ViewMode.Scientific,
                 StandardCalculator = standardSnapshot
             };
 
-            Assert.ThrowsException<NullReferenceException>(
-                () => viewModel.RestoreFromSnapshot(snapshot));
+            viewModel.RestoreFromSnapshot(snapshot);
 
-            calculator.SendCommandToCalcManager(ModeScientific);
             calculator.HistoryVM.ReloadHistory(ViewMode.Scientific);
-            Assert.AreEqual(0, calculator.HistoryVM.Items.Count);
+            Assert.AreEqual(ViewMode.Scientific, viewModel.Mode);
+            Assert.AreEqual("0", calculator.DisplayValue);
+            Assert.AreEqual(1, calculator.HistoryVM.Items.Count);
+            Assert.AreEqual("3", calculator.HistoryVM.Items[0].Result);
+            Evaluate(calculator, CommandADD, Command1);
+            Assert.AreEqual("1", calculator.DisplayValue);
         }
 
         [TestMethod]
         public void FailedScientificRestoreKeepsTheScientificEngine()
         {
             StandardCalculatorViewModel calculator = CreateCalculatorViewModel(ViewMode.Scientific);
+            calculator.SetCalculatorType(ViewMode.Standard);
+            calculator.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Four);
+            calculator.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Two);
+            calculator.OnMemoryButtonPressed();
+            calculator.SetCalculatorType(ViewMode.Scientific);
             AssertScientificOrderOfOperations(calculator);
             calculator.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Radians);
             Assert.AreEqual(NumbersAndOperatorsEnum.Radians, calculator.GetCurrentAngleType());
@@ -274,8 +283,13 @@ namespace Calculator.Tests
             Assert.ThrowsException<ArgumentException>(
                 () => viewModel.RestoreFromSnapshot(CreateMalformedSnapshot(ViewMode.Scientific)));
 
+            Assert.AreEqual(NumbersAndOperatorsEnum.Radians, calculator.GetCurrentAngleType());
+            calculator.ResetAfterFailedSnapshot(ViewMode.Scientific);
             Assert.AreEqual(NumbersAndOperatorsEnum.Degree, calculator.GetCurrentAngleType());
             AssertScientificOrderOfOperations(calculator);
+            calculator.SetCalculatorType(ViewMode.Standard);
+            calculator.OnMemoryItemPressed(0);
+            Assert.AreEqual("42", calculator.DisplayValue);
         }
 
         [TestMethod]
@@ -290,6 +304,9 @@ namespace Calculator.Tests
             Assert.ThrowsException<ArgumentException>(
                 () => viewModel.RestoreFromSnapshot(CreateMalformedSnapshot(ViewMode.Scientific)));
 
+            Assert.IsTrue(calculator.IsInError);
+            Assert.AreEqual(NumbersAndOperatorsEnum.Radians, calculator.GetCurrentAngleType());
+            calculator.ResetAfterFailedSnapshot(ViewMode.Scientific);
             Evaluate(calculator, Command9, Command0, CommandSIN);
             Assert.AreEqual("1", calculator.DisplayValue);
         }
@@ -398,10 +415,17 @@ namespace Calculator.Tests
             StandardCalculatorViewModel source = CreateStandardViewModel();
             Evaluate(source, Command1, CommandADD, Command2);
             var snapshot = source.Snapshot;
-            var malformed = new CalculatorApp.ViewModel.Snapshot.CalcManagerHistoryItem();
-            malformed.Commands.Add(new ExpressionCommandWrapper(
-                CommandType.UnaryCommand, 0, System.Array.Empty<int>(), false, false, false));
-            snapshot.CalcManager.HistoryItems.Add(malformed);
+            if (mode == ViewMode.Scientific)
+            {
+                snapshot.CalcManager.HistoryItems.Add(null);
+            }
+            else
+            {
+                var malformed = new CalculatorApp.ViewModel.Snapshot.CalcManagerHistoryItem();
+                malformed.Commands.Add(new ExpressionCommandWrapper(
+                    CommandType.UnaryCommand, 0, System.Array.Empty<int>(), false, false, false));
+                snapshot.CalcManager.HistoryItems.Add(malformed);
+            }
             return new ApplicationSnapshot
             {
                 Mode = (int)mode,

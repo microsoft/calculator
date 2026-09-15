@@ -12,6 +12,7 @@ namespace CalculationManager
 {
     enum class Command;
     struct HISTORYITEM;
+    class EpsilonEngine;
 
     enum class CalculatorMode
     {
@@ -47,21 +48,24 @@ namespace CalculationManager
         static const unsigned int m_maximumMemorySize = 100;
         ICalcDisplay* const m_displayCallback;
         CCalcEngine* m_currentCalculatorEngine;
-        std::unique_ptr<CCalcEngine> m_scientificCalculatorEngine;
+        std::unique_ptr<EpsilonEngine> m_scientificCalculatorEngine;
         std::unique_ptr<CCalcEngine> m_standardCalculatorEngine;
         std::unique_ptr<CCalcEngine> m_programmerCalculatorEngine;
         IResourceProvider* const m_resourceProvider;
         bool m_inHistoryItemLoadMode;
+        bool m_isScientificMode;
+        bool m_isConstructingEngine;
 
         std::vector<CalcEngine::Rational> m_memorizedNumbers;
         CalcEngine::Rational m_persistedPrimaryValue;
-        bool m_isExponentialFormat;
         Command m_currentDegreeMode;
 
         void MemorizedNumberSelect(_In_ unsigned int);
         void MemorizedNumberChanged(_In_ unsigned int);
 
         void LoadPersistedPrimaryValue();
+        void RequireMemorySupport() const;
+        void RequireEditableHistory() const;
 
         std::shared_ptr<CalculatorHistory> m_pStdHistory;
         std::shared_ptr<CalculatorHistory> m_pSciHistory;
@@ -84,12 +88,16 @@ namespace CalculationManager
         void MemoryItemChanged(unsigned int indexOfMemory) override;
         void InputChanged() override;
         CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider);
+        ~CalculatorManager();
 
         void Reset(bool clearMemory = true);
         void SetStandardMode();
         void SetScientificMode();
         void SetProgrammerMode();
         void SendCommand(_In_ Command command);
+        bool IsCommandSupported(Command command) const;
+        bool IsMemorySupported() const;
+        bool IsHistoryReadOnly() const;
 
         void MemorizeNumber();
         void MemorizedNumberLoad(_In_ unsigned int);

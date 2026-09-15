@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Epsilon">
+      <UniqueIdentifier>{18a5c0d8-fefc-460d-89c2-c3e6819eb206}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EpsilonEngine">
+      <UniqueIdentifier>{9b228053-e4dc-4c3e-bd3d-73a555b0cfb0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="CEngine">
       <UniqueIdentifier>{957a8e3c-00c7-48bc-b63c-83b2140a8251}</UniqueIdentifier>
     </Filter>
@@ -12,6 +18,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EpsilonEngine\EpsilonEngine.cpp">
+      <Filter>EpsilonEngine</Filter>
+    </ClCompile>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="ExpressionCommand.cpp" />
     <ClCompile Include="CEngine\calc.cpp">
@@ -92,6 +101,30 @@
     <ClCompile Include="NumberFormattingUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Epsilon\chars.hpp">
+      <Filter>Epsilon</Filter>
+    </ClInclude>
+    <ClInclude Include="Epsilon\coro.hpp">
+      <Filter>Epsilon</Filter>
+    </ClInclude>
+    <ClInclude Include="Epsilon\ops.hpp">
+      <Filter>Epsilon</Filter>
+    </ClInclude>
+    <ClInclude Include="Epsilon\r.hpp">
+      <Filter>Epsilon</Filter>
+    </ClInclude>
+    <ClInclude Include="Epsilon\t.hpp">
+      <Filter>Epsilon</Filter>
+    </ClInclude>
+    <ClInclude Include="Epsilon\tmp.hpp">
+      <Filter>Epsilon</Filter>
+    </ClInclude>
+    <ClInclude Include="Epsilon\z.hpp">
+      <Filter>Epsilon</Filter>
+    </ClInclude>
+    <ClInclude Include="EpsilonEngine\EpsilonEngine.h">
+      <Filter>EpsilonEngine</Filter>
+    </ClInclude>
     <ClInclude Include="Command.h" />
     <ClInclude Include="ExpressionCommand.h" />
     <ClInclude Include="ExpressionCommandInterface.h" />
@@ -166,5 +199,19 @@
     <Natvis Include="ratpak.natvis">
       <Filter>RatPack</Filter>
     </Natvis>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Epsilon\CMakeLists.txt">
+      <Filter>Epsilon</Filter>
+    </None>
+    <None Include="Epsilon\LICENSE">
+      <Filter>Epsilon</Filter>
+    </None>
+    <None Include="Epsilon\VENDOR.md">
+      <Filter>Epsilon</Filter>
+    </None>
+    <None Include="EpsilonEngine\README.md">
+      <Filter>EpsilonEngine</Filter>
+    </None>
   </ItemGroup>
 </Project>

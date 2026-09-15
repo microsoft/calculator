@@ -86,6 +86,9 @@ namespace winrt::CalcManager::Interop::implementation
         void SetScientificMode();
         void SetProgrammerMode();
         void SendCommand(CalcManager::Interop::CalculatorCommand command);
+        bool IsCommandSupported(CalcManager::Interop::CalculatorCommand command);
+        bool IsMemorySupported();
+        bool IsHistoryReadOnly();
 
         void MemorizeNumber();
         void MemorizedNumberLoad(uint32_t index);

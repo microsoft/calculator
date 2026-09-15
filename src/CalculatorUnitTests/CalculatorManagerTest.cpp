@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <CppUnitTest.h>
+#include <stdexcept>
 
 #include "CalcManager/CalculatorHistory.h"
 #include "EngineResourceProvider.h"
@@ -32,6 +33,7 @@ namespace CalculatorManagerTest
             m_isError = false;
             m_maxDigitsCalledCount = 0;
             m_binaryOperatorReceivedCallCount = 0;
+            m_parenDisplay = 0;
         }
 
         void SetPrimaryDisplay(const wstring& text, bool isError) override
@@ -84,6 +86,10 @@ namespace CalculatorManagerTest
         bool GetIsError() const
         {
             return m_isError;
+        }
+        unsigned int GetParenthesisCount() const
+        {
+            return m_parenDisplay;
         }
 
         void OnHistoryItemAdded(_In_ unsigned int /*addedItemIndex */) override
@@ -159,10 +165,15 @@ namespace CalculatorManagerTest
                 m_calculatorManager->SendCommand(*currentCommand++);
             }
 
-            VERIFY_ARE_EQUAL(expectedPrimary, m_displayTester->GetPrimaryDisplay());
+            wstring context = L"Commands:";
+            for (auto command = testCommands; *command != Command::CommandNULL; ++command)
+            {
+                context += L" " + to_wstring(static_cast<int>(*command));
+            }
+            Assert::AreEqual(expectedPrimary, m_displayTester->GetPrimaryDisplay(), context.c_str());
             if (expectedExpression != L"N/A")
             {
-                VERIFY_ARE_EQUAL(expectedExpression, m_displayTester->GetExpression());
+                Assert::AreEqual(expectedExpression, m_displayTester->GetExpression(), context.c_str());
             }
         }
     };
@@ -180,6 +191,13 @@ namespace CalculatorManagerTest
         TEST_METHOD(CalculatorManagerTestScientificParenthesis);
         TEST_METHOD(CalculatorManagerTestScientificError);
         TEST_METHOD(CalculatorManagerTestScientificModeChange);
+        TEST_METHOD(ScientificRoutingDoesNotChangeLegacyModes);
+        TEST_METHOD(ScientificUnsupportedCommandsPreserveInput);
+        TEST_METHOD(ScientificMemoryIsIsolated);
+        TEST_METHOD(ScientificHistoryIsReadOnly);
+        TEST_METHOD(ScientificInputAndErrorQueries);
+        TEST_METHOD(ScientificResetPreservesLegacyMemory);
+        TEST_METHOD(ScientificIncompleteInputAutoCompletes);
 
         TEST_METHOD(CalculatorManagerTestProgrammer);
 
@@ -449,9 +467,12 @@ namespace CalculatorManagerTest
                                  Command::Command9, Command::CommandDIV, Command::Command1,    Command::Command0, Command::CommandEQU, Command::CommandNULL };
         TestDriver::Test(L"Overflow", L"1.e-9999 \x00F7 ", commands13, true, true);
 
-        Command commands14[] = { Command::Command5, Command::Command0,       Command::CommandADD, Command::Command2,
-                                 Command::Command0, Command::CommandPERCENT, Command::CommandEQU, Command::CommandNULL };
-        TestDriver::Test(L"60", L"50 + 10=", commands14, true, true);
+        Command commands14[] = { Command::Command5, Command::Command0, Command::CommandADD, Command::Command2, Command::Command0, Command::CommandNULL };
+        TestDriver::Test(L"20", L"50 + ", commands14, true, true);
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->SendCommand(Command::CommandPERCENT); });
+        VERIFY_ARE_EQUAL(wstring(L"20"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        m_calculatorManager->SendCommand(Command::CommandEQU);
+        VERIFY_ARE_EQUAL(wstring(L"70"), m_calculatorDisplayTester->GetPrimaryDisplay());
 
         Command commands15[] = { Command::Command0, Command::CommandDIV, Command::Command0, Command::CommandEQU, Command::CommandNULL };
         TestDriver::Test(L"Result is undefined", L"0 \x00F7 ", commands15, true, true);
@@ -503,134 +524,36 @@ namespace CalculatorManagerTest
         Command commands1[] = { Command::Command1, Command::Command2, Command::CommandSQR, Command::CommandNULL };
         TestDriver::Test(L"144", L"sqr(12)", commands1, true, true);
 
-        Command commands2[] = { Command::Command5, Command::CommandFAC, Command::CommandNULL };
-        TestDriver::Test(L"120", L"fact(5)", commands2, true, true);
+        Command commands2[] = { Command::Command1, Command::Command0, Command::Command0, Command::CommandLOG, Command::CommandNULL };
+        TestDriver::Test(L"2", L"log(100)", commands2, true, true);
 
-        Command commands3[] = { Command::Command5, Command::CommandPWR, Command::Command2, Command::CommandADD, Command::CommandNULL };
-        TestDriver::Test(L"25", L"5 ^ 2 + ", commands3, true, true);
+        Command commands3[] = { Command::Command1, Command::CommandLN, Command::CommandNULL };
+        TestDriver::Test(L"0", L"ln(1)", commands3, true, true);
 
-        Command commands4[] = { Command::Command8, Command::CommandROOT, Command::Command3, Command::CommandMUL, Command::CommandNULL };
-        TestDriver::Test(L"2", L"8 yroot 3 \x00D7 ", commands4, true, true);
+        Command commands4[] = { Command::Command1, Command::Command0, Command::CommandLN, Command::CommandNULL };
+        TestDriver::Test(L"2.3025850929940456840179914546844", L"ln(10)", commands4, true, true);
 
-        Command commands5[] = { Command::Command8, Command::CommandCUB, Command::CommandNULL };
-        TestDriver::Test(L"512", L"cube(8)", commands5, true, true);
+        // Independently verified 32-significant-digit Epsilon result.
+        Command commands5[] = { Command::Command1, Command::CommandSIN, Command::CommandNULL };
+        TestDriver::Test(L"0.017452406437283512819418978516316", L"sin\x2080(1)", commands5, true, true);
 
-        Command commands6[] = { Command::Command8, Command::CommandCUB, Command::CommandCUBEROOT, Command::CommandNULL };
-        TestDriver::Test(L"8", L"cuberoot(cube(8))", commands6, true, true);
+        Command commands6[] = { Command::Command1, Command::CommandCOS, Command::CommandNULL };
+        TestDriver::Test(L"0.99984769515639123915701155881391", L"cos\x2080(1)", commands6, true, true);
 
-        Command commands7[] = { Command::Command1, Command::Command0, Command::CommandLOG, Command::CommandNULL };
-        TestDriver::Test(L"1", L"log(10)", commands7, true, true);
+        Command commands7[] = { Command::Command1, Command::CommandTAN, Command::CommandNULL };
+        TestDriver::Test(L"0.017455064928217585765128895219728", L"tan\x2080(1)", commands7, true, true);
 
-        Command commands8[] = { Command::Command5, Command::CommandPOW10, Command::CommandNULL };
-        TestDriver::Test(L"100,000", L"10^(5)", commands8, true, true);
+        Command commands8[] = { Command::Command0, Command::CommandPOWE, Command::CommandNULL };
+        TestDriver::Test(L"1", L"e^(0)", commands8, true, true);
 
-        Command commands9[] = { Command::Command1, Command::Command0, Command::CommandLN, Command::CommandNULL };
-        TestDriver::Test(L"2.3025850929940456840179914546844", L"ln(10)", commands9, true, true);
+        Command commands9[] = { Command::Command2, Command::CommandPOWE, Command::CommandNULL };
+        TestDriver::Test(L"7.389056098930650227230427460575", L"e^(2)", commands9, true, true);
 
-        Command commands10[] = { Command::Command1, Command::CommandSIN, Command::CommandNULL };
-        TestDriver::Test(L"0.01745240643728351281941897851632", L"sin\x2080(1)", commands10, true, true);
+        Command commands10[] = { Command::Command3, Command::CommandSIGN, Command::CommandSQR, Command::CommandNULL };
+        TestDriver::Test(L"9", L"sqr(-3)", commands10, true, true);
 
-        Command commands11[] = { Command::Command1, Command::CommandCOS, Command::CommandNULL };
-        TestDriver::Test(L"0.99984769515639123915701155881391", L"cos\x2080(1)", commands11, true, true);
-
-        Command commands12[] = { Command::Command1, Command::CommandTAN, Command::CommandNULL };
-        TestDriver::Test(L"0.01745506492821758576512889521973", L"tan\x2080(1)", commands12, true, true);
-
-        Command commands13[] = { Command::Command1, Command::CommandASIN, Command::CommandNULL };
-        TestDriver::Test(L"90", L"sin\x2080\x207B\x00B9(1)", commands13, true, true);
-
-        Command commands14[] = { Command::Command1, Command::CommandACOS, Command::CommandNULL };
-        TestDriver::Test(L"0", L"cos\x2080\x207B\x00B9(1)", commands14, true, true);
-
-        Command commands15[] = { Command::Command1, Command::CommandATAN, Command::CommandNULL };
-        TestDriver::Test(L"45", L"tan\x2080\x207B\x00B9(1)", commands15, true, true);
-
-        Command commands16[] = { Command::Command2, Command::CommandPOWE, Command::CommandNULL };
-        TestDriver::Test(L"7.389056098930650227230427460575", L"e^(2)", commands16, true, true);
-
-        Command commands17[] = { Command::Command5, Command::CommandPWR, Command::Command0, Command::CommandADD, Command::CommandNULL };
-        TestDriver::Test(L"1", L"5 ^ 0 + ", commands17, true, true);
-
-        Command commands18[] = { Command::Command0, Command::CommandPWR, Command::Command0, Command::CommandADD, Command::CommandNULL };
-        TestDriver::Test(L"1", L"0 ^ 0 + ", commands18, true, true);
-
-        Command commands19[] = { Command::Command2, Command::Command7,   Command::CommandSIGN, Command::CommandROOT,
-                                 Command::Command3, Command::CommandADD, Command::CommandNULL };
-        TestDriver::Test(L"-3", L"-27 yroot 3 + ", commands19, true, true);
-
-        Command commands20[] = { Command::Command8,   Command::CommandPWR, Command::CommandOPENP,  Command::Command2,
-                                 Command::CommandDIV, Command::Command3,   Command::CommandCLOSEP, Command::CommandSUB,
-                                 Command::Command4,   Command::CommandADD, Command::CommandNULL };
-        TestDriver::Test(L"0", L"8 ^ (2 \x00F7 3) - 4 + ", commands20, true, true);
-
-        Command commands21[] = { Command::Command4,   Command::CommandPWR, Command::CommandOPENP,  Command::Command3,
-                                 Command::CommandDIV, Command::Command2,   Command::CommandCLOSEP, Command::CommandSUB,
-                                 Command::Command8,   Command::CommandADD, Command::CommandNULL };
-        TestDriver::Test(L"0", L"4 ^ (3 \x00F7 2) - 8 + ", commands21, true, true);
-
-        Command commands22[] = { Command::Command1, Command::Command0, Command::CommandPWR, Command::Command1, Command::CommandPNT, Command::Command2,
-                                 Command::Command3, Command::Command4, Command::Command5,   Command::Command6, Command::CommandADD, Command::CommandNULL };
-        TestDriver::Test(L"17.161687912241792074207286679393", L"10 ^ 1.23456 + ", commands22, true, true);
-
-        Command commands23[] = { Command::Command1, Command::CommandSEC, Command::CommandNULL };
-        TestDriver::Test(L"1.0001523280439076654284264342126", L"sec\x2080(1)", commands23, true, true);
-
-        Command commands24[] = { Command::Command1, Command::CommandCSC, Command::CommandNULL };
-        TestDriver::Test(L"57.298688498550183476612683735174", L"csc\x2080(1)", commands24, true, true);
-
-        Command commands25[] = { Command::Command1, Command::CommandCOT, Command::CommandNULL };
-        TestDriver::Test(L"57.289961630759424687278147537113", L"cot\x2080(1)", commands25, true, true);
-
-        Command commands26[] = { Command::Command1, Command::CommandASEC, Command::CommandNULL };
-        TestDriver::Test(L"0", L"sec\x2080\x207B\x00B9(1)", commands26, true, true);
-
-        Command commands27[] = { Command::Command1, Command::CommandACSC, Command::CommandNULL };
-        TestDriver::Test(L"90", L"csc\x2080\x207B\x00B9(1)", commands27, true, true);
-
-        Command commands28[] = { Command::Command1, Command::CommandACOT, Command::CommandNULL };
-        TestDriver::Test(L"45", L"cot\x2080\x207B\x00B9(1)", commands28, true, true);
-
-        Command commands29[] = { Command::Command1, Command::CommandSECH, Command::CommandNULL };
-        TestDriver::Test(L"0.64805427366388539957497735322615", L"sech(1)", commands29, true, true);
-
-        Command commands30[] = { Command::Command1, Command::CommandCSCH, Command::CommandNULL };
-        TestDriver::Test(L"0.85091812823932154513384276328718", L"csch(1)", commands30, true, true);
-
-        Command commands31[] = { Command::Command1, Command::CommandCOTH, Command::CommandNULL };
-        TestDriver::Test(L"1.3130352854993313036361612469308", L"coth(1)", commands31, true, true);
-
-        Command commands32[] = { Command::Command1, Command::CommandASECH, Command::CommandNULL };
-        TestDriver::Test(L"0", L"sech\x207B\x00B9(1)", commands32, true, true);
-
-        Command commands33[] = { Command::Command1, Command::CommandACSCH, Command::CommandNULL };
-        TestDriver::Test(L"0.88137358701954302523260932497979", L"csch\x207B\x00B9(1)", commands33, true, true);
-
-        Command commands34[] = { Command::Command2, Command::CommandACOTH, Command::CommandNULL };
-        TestDriver::Test(L"0.54930614433405484569762261846126", L"coth\x207B\x00B9(2)", commands34, true, true);
-
-        Command commands35[] = { Command::Command8, Command::CommandPOW2, Command::CommandNULL };
-        TestDriver::Test(L"256", L"2^(8)", commands35, true, true);
-
-        Command commands36[] = { Command::CommandRand, Command::CommandCeil, Command::CommandNULL };
-        TestDriver::Test(L"1", L"N/A", commands36, true, true);
-
-        Command commands37[] = { Command::CommandRand, Command::CommandFloor, Command::CommandNULL };
-        TestDriver::Test(L"0", L"N/A", commands37, true, true);
-
-        Command commands38[] = { Command::CommandRand, Command::CommandSIGN, Command::CommandCeil, Command::CommandNULL };
-        TestDriver::Test(L"0", L"N/A", commands38, true, true);
-
-        Command commands39[] = { Command::CommandRand, Command::CommandSIGN, Command::CommandFloor, Command::CommandNULL };
-        TestDriver::Test(L"-1", L"N/A", commands39, true, true);
-
-        Command commands40[] = { Command::Command3, Command::CommandPNT, Command::Command8, Command::CommandFloor, Command::CommandNULL };
-        TestDriver::Test(L"3", L"floor(3.8)", commands40, true, true);
-
-        Command commands41[] = { Command::Command3, Command::CommandPNT, Command::Command8, Command::CommandCeil, Command::CommandNULL };
-        TestDriver::Test(L"4", L"ceil(3.8)", commands41, true, true);
-
-        Command commands42[] = { Command::Command5, Command::CommandLogBaseY, Command::Command3, Command::CommandADD, Command::CommandNULL };
-        TestDriver::Test(L"1.4649735207179271671970404076786", L"5 log base 3 + ", commands42, true, true);
+        Command commands11[] = { Command::Command8, Command::CommandREC, Command::CommandNULL };
+        TestDriver::Test(L"0.125", L"1/(8)", commands11, true, true);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientificParenthesis()
@@ -748,6 +671,200 @@ namespace CalculatorManagerTest
 
         Command commands8[] = { Command::ModeBasic, Command::CommandNULL };
         TestDriver::Test(L"0", L"", commands8, true, false);
+    }
+
+    void CalculatorManagerTest::ScientificRoutingDoesNotChangeLegacyModes()
+    {
+        const vector<Command> expression = {
+            Command::Command2, Command::CommandADD, Command::Command3, Command::CommandMUL, Command::Command4, Command::CommandEQU
+        };
+
+        for (int iteration = 0; iteration < 4; ++iteration)
+        {
+            m_calculatorManager->SetScientificMode();
+            VERIFY_IS_FALSE(m_calculatorManager->IsMemorySupported());
+            VERIFY_IS_TRUE(m_calculatorManager->IsHistoryReadOnly());
+            ExecuteCommands(expression);
+            VERIFY_ARE_EQUAL(wstring(L"14"), m_calculatorDisplayTester->GetPrimaryDisplay());
+            VERIFY_IS_FALSE(m_calculatorDisplayTester->GetIsError());
+            VERIFY_IS_TRUE(m_calculatorManager->GetDisplayCommandsSnapshot().empty());
+
+            m_calculatorManager->SendCommand(Command::ModeBasic);
+            VERIFY_IS_TRUE(m_calculatorManager->IsMemorySupported());
+            VERIFY_IS_FALSE(m_calculatorManager->IsHistoryReadOnly());
+            ExecuteCommands(expression);
+            VERIFY_ARE_EQUAL(wstring(L"20"), m_calculatorDisplayTester->GetPrimaryDisplay());
+
+            m_calculatorManager->SendCommand(Command::ModeProgrammer);
+            m_calculatorManager->SetRadix(RadixType::Hex);
+            ExecuteCommands(vector<Command>{ Command::CommandF, Command::CommandAnd, Command::Command3, Command::CommandEQU });
+            VERIFY_ARE_EQUAL(wstring(L"3"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        }
+    }
+
+    void CalculatorManagerTest::ScientificUnsupportedCommandsPreserveInput()
+    {
+        m_calculatorManager->SetScientificMode();
+        ExecuteCommands(vector<Command>{ Command::Command4, Command::Command2 });
+
+        const vector<Command> unsupported = {
+            Command::CommandPWR,       Command::CommandROOT,  Command::CommandCUB,     Command::CommandCUBEROOT,
+            Command::CommandFAC,       Command::CommandMOD,   Command::CommandASIN,    Command::CommandACOS,
+            Command::CommandATAN,      Command::CommandSINH,  Command::CommandCOSH,    Command::CommandTANH,
+            Command::CommandASINH,     Command::CommandACOSH, Command::CommandATANH,   Command::CommandHYP,
+            Command::CommandINV,       Command::CommandSEC,   Command::CommandCSC,     Command::CommandCOT,
+            Command::CommandASEC,      Command::CommandACSC,  Command::CommandACOT,    Command::CommandSECH,
+            Command::CommandCSCH,      Command::CommandCOTH,  Command::CommandASECH,   Command::CommandACSCH,
+            Command::CommandACOTH,     Command::CommandDMS,   Command::CommandCHOP,    Command::CommandCOM,
+            Command::CommandLogBaseY,  Command::CommandPOW10, Command::CommandPOW2,    Command::CommandRand,
+            Command::CommandAbs,       Command::CommandFloor, Command::CommandCeil,    Command::CommandPERCENT,
+            Command::CommandSTORE,     Command::CommandRECALL, Command::CommandMCLEAR, Command::CommandMPLUS,
+            Command::CommandMMINUS,    Command::CommandAnd,   Command::CommandHex,     Command::CommandA
+        };
+        for (Command command : unsupported)
+        {
+            VERIFY_IS_FALSE(m_calculatorManager->IsCommandSupported(command));
+            Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->SendCommand(command); });
+            VERIFY_ARE_EQUAL(wstring(L"42"), m_calculatorDisplayTester->GetPrimaryDisplay());
+            VERIFY_IS_FALSE(m_calculatorDisplayTester->GetIsError());
+        }
+
+        VERIFY_IS_TRUE(m_calculatorManager->IsCommandSupported(Command::ModeBasic));
+        VERIFY_IS_TRUE(m_calculatorManager->IsCommandSupported(Command::ModeProgrammer));
+        ExecuteCommands(vector<Command>{ Command::CommandADD, Command::Command1, Command::CommandEQU });
+        VERIFY_ARE_EQUAL(wstring(L"43"), m_calculatorDisplayTester->GetPrimaryDisplay());
+    }
+
+    void CalculatorManagerTest::ScientificMemoryIsIsolated()
+    {
+        m_calculatorManager->SetStandardMode();
+        ExecuteCommands(vector<Command>{ Command::Command4, Command::Command2 });
+        m_calculatorManager->MemorizeNumber();
+        const auto memory = m_calculatorDisplayTester->GetMemorizedNumbers();
+        VERIFY_ARE_EQUAL(size_t(1), memory.size());
+
+        m_calculatorManager->SetScientificMode();
+        m_calculatorManager->SendCommand(Command::Command9);
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->MemorizeNumber(); });
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->MemorizedNumberLoad(0); });
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->MemorizedNumberAdd(0); });
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->MemorizedNumberSubtract(0); });
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->MemorizedNumberClear(0); });
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->MemorizedNumberClearAll(); });
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->SetMemorizedNumbersString(); });
+        VERIFY_ARE_EQUAL(wstring(L"9"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        VERIFY_IS_TRUE(memory == m_calculatorDisplayTester->GetMemorizedNumbers());
+
+        m_calculatorManager->SetStandardMode();
+        m_calculatorManager->MemorizedNumberLoad(0);
+        VERIFY_ARE_EQUAL(wstring(L"42"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        m_calculatorManager->MemorizedNumberAdd(0);
+        m_calculatorManager->MemorizedNumberLoad(0);
+        VERIFY_ARE_EQUAL(wstring(L"84"), m_calculatorDisplayTester->GetPrimaryDisplay());
+    }
+
+    void CalculatorManagerTest::ScientificHistoryIsReadOnly()
+    {
+        m_calculatorManager->SetStandardMode();
+        ExecuteCommands(vector<Command>{ Command::Command6, Command::CommandMUL, Command::Command7, Command::CommandEQU });
+        const auto legacyHistory = m_calculatorManager->GetHistoryItems();
+        VERIFY_IS_FALSE(legacyHistory.front()->historyItemVector.spCommands->empty());
+
+        m_calculatorManager->SetScientificMode();
+        ExecuteCommands(vector<Command>{ Command::Command2, Command::CommandADD, Command::Command3, Command::CommandEQU });
+        VERIFY_ARE_EQUAL(size_t(1), m_calculatorManager->GetHistoryItems().size());
+        VERIFY_IS_FALSE(m_calculatorManager->GetHistoryItem(0)->historyItemVector.expression.empty());
+        VERIFY_ARE_EQUAL(wstring(L"5"), m_calculatorManager->GetHistoryItem(0)->historyItemVector.result);
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->RemoveHistoryItem(0); });
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->ClearHistory(); });
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->SetInHistoryItemLoadMode(true); });
+        VERIFY_ARE_EQUAL(wstring(L"5"), m_calculatorDisplayTester->GetPrimaryDisplay());
+
+        m_calculatorManager->SetHistoryItems(legacyHistory);
+        VERIFY_ARE_EQUAL(size_t(2), m_calculatorManager->GetHistoryItems().size());
+        for (const auto& history : m_calculatorManager->GetHistoryItems())
+        {
+            VERIFY_IS_TRUE(history->historyItemVector.spCommands->empty());
+            for (const auto& token : *history->historyItemVector.spTokens)
+            {
+                VERIFY_ARE_EQUAL(-1, token.second);
+            }
+        }
+        VERIFY_IS_FALSE(legacyHistory.front()->historyItemVector.spCommands->empty());
+
+        m_calculatorManager->SetStandardMode();
+        m_calculatorManager->ClearHistory();
+        VERIFY_IS_TRUE(m_calculatorManager->GetHistoryItems().empty());
+        VERIFY_ARE_EQUAL(size_t(2), m_calculatorManager->GetHistoryItems(CalculatorMode::Scientific).size());
+
+        m_calculatorManager->SetScientificMode();
+        m_calculatorManager->SetProgrammerMode();
+        VERIFY_IS_FALSE(m_calculatorManager->IsHistoryReadOnly());
+        m_calculatorManager->ClearHistory();
+        VERIFY_ARE_EQUAL(size_t(2), m_calculatorManager->GetHistoryItems(CalculatorMode::Scientific).size());
+    }
+
+    void CalculatorManagerTest::ScientificInputAndErrorQueries()
+    {
+        m_calculatorManager->SetScientificMode();
+        VERIFY_IS_TRUE(m_calculatorManager->IsInputEmpty());
+        VERIFY_ARE_EQUAL(L'.', m_calculatorManager->DecimalSeparator());
+        m_calculatorManager->SetPrecision(32);
+        m_calculatorManager->SetRadix(RadixType::Decimal);
+        m_calculatorManager->UpdateMaxIntDigits();
+        ExecuteCommands(vector<Command>{ Command::Command1, Command::Command2, Command::Command3 });
+        VERIFY_IS_FALSE(m_calculatorManager->IsInputEmpty());
+        VERIFY_ARE_EQUAL(wstring(L"123"), m_calculatorManager->GetResultForRadix(10, 32, true));
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->SetRadix(RadixType::Hex); });
+        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->GetResultForRadix(16, 32, true); });
+        VERIFY_ARE_EQUAL(wstring(L"123"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        m_calculatorManager->DisplayPasteError();
+        VERIFY_IS_TRUE(m_calculatorDisplayTester->GetIsError());
+        m_calculatorManager->SendCommand(Command::CommandCLEAR);
+        VERIFY_IS_FALSE(m_calculatorDisplayTester->GetIsError());
+        VERIFY_IS_TRUE(m_calculatorManager->IsInputEmpty());
+    }
+
+    void CalculatorManagerTest::ScientificResetPreservesLegacyMemory()
+    {
+        m_calculatorManager->SetStandardMode();
+        ExecuteCommands(vector<Command>{ Command::Command4, Command::Command2 });
+        m_calculatorManager->MemorizeNumber();
+        m_calculatorManager->SetScientificMode();
+        ExecuteCommands(vector<Command>{ Command::CommandRAD, Command::CommandFE, Command::Command9 });
+        m_calculatorManager->Reset(false);
+        VERIFY_IS_TRUE(m_calculatorManager->IsMemorySupported());
+        VERIFY_ARE_EQUAL(static_cast<int>(Command::CommandDEG), static_cast<int>(m_calculatorManager->GetCurrentDegreeMode()));
+        m_calculatorManager->MemorizedNumberLoad(0);
+        VERIFY_ARE_EQUAL(wstring(L"42"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        m_calculatorManager->SetScientificMode();
+        ExecuteCommands(vector<Command>{ Command::Command9, Command::CommandSQRT });
+        VERIFY_ARE_EQUAL(wstring(L"3"), m_calculatorDisplayTester->GetPrimaryDisplay());
+    }
+
+    void CalculatorManagerTest::ScientificIncompleteInputAutoCompletes()
+    {
+        m_calculatorManager->SetScientificMode();
+        ExecuteCommands(vector<Command>{ Command::CommandOPENP, Command::Command2, Command::CommandADD, Command::Command3, Command::CommandEQU });
+        VERIFY_ARE_EQUAL(wstring(L"5"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        VERIFY_ARE_EQUAL(0u, m_calculatorDisplayTester->GetParenthesisCount());
+
+        ExecuteCommands(vector<Command>{ Command::CommandCLEAR, Command::Command4, Command::CommandADD, Command::CommandEQU });
+        VERIFY_ARE_EQUAL(wstring(L"8"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        const auto historyCount = m_calculatorManager->GetHistoryItems().size();
+        ExecuteCommands(vector<Command>{ Command::CommandEQU, Command::CommandEQU });
+        VERIFY_ARE_EQUAL(wstring(L"8"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        VERIFY_ARE_EQUAL(historyCount, m_calculatorManager->GetHistoryItems().size());
+
+        ExecuteCommands(vector<Command>{
+            Command::CommandCLEAR, Command::CommandOPENP, Command::CommandOPENP, Command::Command2, Command::CommandADD,
+            Command::Command3, Command::CommandMUL, Command::Command4, Command::CommandEQU
+        });
+        VERIFY_ARE_EQUAL(wstring(L"14"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        VERIFY_ARE_EQUAL(0u, m_calculatorDisplayTester->GetParenthesisCount());
+
+        ExecuteCommands(vector<Command>{ Command::CommandCLEAR, Command::Command8, Command::CommandDIV, Command::CommandEQU });
+        VERIFY_ARE_EQUAL(wstring(L"1"), m_calculatorDisplayTester->GetPrimaryDisplay());
     }
 
     void CalculatorManagerTest::CalculatorManagerTestProgrammer()

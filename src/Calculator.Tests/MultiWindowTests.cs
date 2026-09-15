@@ -283,7 +283,7 @@ namespace Calculator.Tests
             ValidateViewModelMode(scientificViewModel1, 1);
             ValidateViewModelMode(scientificViewModel2, 1);
 
-            // Scientific 1: Degrees with HYP checked
+            // Scientific 1: Degrees; unsupported HYP leaves the first instance unchanged.
             var initItems1 = new TestItem[]
             {
                 new(NumbersAndOperatorsEnum.Degree, "0", ""),
@@ -291,6 +291,7 @@ namespace Calculator.Tests
                 new(NumbersAndOperatorsEnum.None, "", "")
             };
             ValidateViewModelByCommands(scientificViewModel1, initItems1, true);
+            Assert.IsFalse(scientificViewModel1.IsCommandSupported(NumbersAndOperatorsEnum.Hyp));
 
             // Scientific 2: Radians with F-E checked
             var initItems2 = new TestItem[]
@@ -301,11 +302,11 @@ namespace Calculator.Tests
             };
             ValidateViewModelByCommands(scientificViewModel2, initItems2, true);
 
-            // Scientific 1: CosH(0 degrees)
+            // Scientific 1: Cos(0 degrees), independent of the second instance's F-E mode.
             var testItems1 = new TestItem[]
             {
                 new(NumbersAndOperatorsEnum.Zero, "0", ""),
-                new(NumbersAndOperatorsEnum.Cosh, "1", ""),
+                new(NumbersAndOperatorsEnum.Cos, "1", ""),
                 new(NumbersAndOperatorsEnum.None, "", "")
             };
             ValidateViewModelByCommands(scientificViewModel1, testItems1, true);
@@ -476,7 +477,7 @@ namespace Calculator.Tests
             // Assert history for Scientific instance
             Assert.AreEqual(1, viewModels[1].HistoryVM.ItemsCount);
             var item2 = (HistoryItemViewModel)viewModels[1].HistoryVM.Items[0];
-            Assert.AreEqual("1   +   2   \u00D7   3 =", item2.Expression);
+            Assert.AreEqual("1 + 2 \u00D7 3=", item2.Expression);
             Assert.AreEqual("7", item2.Result);
         }
 
@@ -581,7 +582,7 @@ namespace Calculator.Tests
             };
             ValidateViewModelByCommands(viewModels[1], items1, true);
 
-            string[] expectedExpressions = { "1   +   2 =", "1   +   2   \u00D7   3 =" };
+            string[] expectedExpressions = { "1 + 2=", "1 + 2 \u00D7 3=" };
             string[] expectedResults = { "3", "7" };
 
             for (int i = 0; i < 2; i++)
@@ -645,9 +646,12 @@ namespace Calculator.Tests
                 viewModels[i].ButtonPressed.Execute(NumbersAndOperatorsEnum.Memory);
             }
 
-            string[] expectedMemoryValues = { "3", "7", "F" };
+            Assert.IsFalse(viewModels[1].IsMemorySupported);
+            Assert.AreEqual(0, viewModels[1].MemorizedNumbers.Count);
+            Assert.AreEqual("7", viewModels[1].DisplayValue);
+            string[] expectedMemoryValues = { "3", null, "F" };
 
-            for (int i = 0; i < 3; i++)
+            foreach (int i in new[] { 0, 2 })
             {
                 Assert.AreEqual(1, viewModels[i].MemorizedNumbers.Count);
                 var memorySlot = viewModels[i].MemorizedNumbers[0];

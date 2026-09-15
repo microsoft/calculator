@@ -68,11 +68,33 @@ namespace CalculatorApp
                 CopyPasteManager.CopyToClipboard(itemViewModel.Result);
             }
         }
+
+        private void HistoryContextMenu_Opening(object sender, object e)
+        {
+            DeleteHistoryMenuItem.IsEnabled = ViewModel?.IsReadOnly != true;
+        }
+
+        private void HistorySwipeControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is MUXC.SwipeControl swipeControl)
+            {
+                swipeControl.RightItems = ViewModel?.IsReadOnly == true
+                    ? null
+                    : (MUXC.SwipeItems)Resources["HistorySwipeItems"];
+            }
+        }
+
         private void OnDeleteMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var listViewItem = HistoryContextMenu.Target;
             if (HistoryListView.ItemFromContainer(listViewItem) is HistoryItemViewModel itemViewModel)
             {
+                if (ViewModel.IsReadOnly)
+                {
+                    ViewModel.DeleteItem(itemViewModel);
+                    return;
+                }
+
                 var itemsRemainingAfterDelete = HistoryListView.Items.Count - 1;
 
                 if (itemsRemainingAfterDelete > 0)

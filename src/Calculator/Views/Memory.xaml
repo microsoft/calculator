@@ -11,6 +11,7 @@
              xmlns:utils="using:CalculatorApp.Utils"
              x:Name="MemoryList"
              FlowDirection="LeftToRight"
+             IsEnabled="{x:Bind ViewModel.IsMemorySupported, Mode=OneWay}"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -91,7 +92,8 @@
                 BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
                 BorderThickness="{ThemeResource HighContrastThicknessTop}"
                 CornerRadius="{ThemeResource OverlayCornerRadius}"/>
-        <Grid x:Name="MemoryPanel" Grid.Row="1">
+        <Grid x:Name="MemoryPanel"
+              Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>

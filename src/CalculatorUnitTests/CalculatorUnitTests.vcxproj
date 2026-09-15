@@ -196,6 +196,7 @@
     <ClCompile Include="CalcEngineTests.cpp" />
     <ClCompile Include="CalcInputTest.cpp" />
     <ClCompile Include="CalculatorManagerTest.cpp" />
+    <ClCompile Include="EpsilonEngineTests.cpp" />
     <ClCompile Include="EngineResourceProvider.cpp" />
     <ClCompile Include="RationalTest.cpp" />
     <ClCompile Include="UnitConverterTest.cpp" />

@@ -17,10 +17,15 @@ namespace CalculatorApp
     [Windows.Foundation.Metadata.WebHostHidden]
     public sealed partial class CalculatorScientificOperators
     {
+        private bool _isInitialized;
+
         public CalculatorScientificOperators()
         {
             InitializeComponent();
 
+            _isInitialized = true;
+            SetOperatorRowVisibility();
+            SetTrigRowVisibility();
             ExpButton.SetValue(KeyboardShortcutManager.VirtualKeyProperty, MyVirtualKey.E);
         }
 
@@ -92,10 +97,28 @@ namespace CalculatorApp
             SetOperatorRowVisibility();
         }
 
+        private void TrigShiftButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (TrigShiftButton != null && !TrigShiftButton.IsEnabled)
+            {
+                TrigShiftButton.IsChecked = false;
+            }
+            if (HypButton != null && !HypButton.IsEnabled)
+            {
+                HypButton.IsChecked = false;
+            }
+            SetTrigRowVisibility();
+        }
+
         private void SetOperatorRowVisibility()
         {
+            if (!_isInitialized)
+            {
+                return;
+            }
+
             Visibility rowVis, invRowVis;
-            if (ShiftButton.IsChecked.Value)
+            if (ShiftButton.IsChecked == true)
             {
                 rowVis = Visibility.Collapsed;
                 invRowVis = Visibility.Visible;
@@ -112,8 +135,13 @@ namespace CalculatorApp
 
         private void SetTrigRowVisibility()
         {
-            bool isShiftChecked = TrigShiftButton.IsChecked.Value;
-            bool isHypeChecked = HypButton.IsChecked.Value;
+            if (!_isInitialized)
+            {
+                return;
+            }
+
+            bool isShiftChecked = TrigShiftButton.IsChecked == true;
+            bool isHypeChecked = HypButton.IsChecked == true;
 
             InverseHyperbolicTrigFunctions.Visibility = Visibility.Collapsed;
             InverseTrigFunctions.Visibility = Visibility.Collapsed;
