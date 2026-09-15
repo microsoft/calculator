@@ -61,6 +61,17 @@ from the final build; only the test-package manifest version and signature
 changed. Signing used user-approved elevated execution of the existing signing
 script, with temporary exported signing-key files removed afterward.
 
+The signing script creates a new one-hour certificate and imports it into
+machine-level trust each time, which caused repeated UAC approvals during
+iteration. For future local testing, use the
+[recommended reusable-certificate workflow](EpsilonIntegration.md#recommended-reusable-certificate-for-local-testing):
+install public-certificate trust once with administrator approval, keep the
+private key in the current user's certificate store, and update validation
+scripts to reuse it. The normal build -> sign -> test cycle should then usually
+avoid repeated elevation without disabling UAC or running VS Code as
+administrator. This recommendation was not implemented or validated as part
+of the test runs reported above.
+
 ## Evidence locations
 
 Evidence is retained locally, not committed as binary or transient artifacts.

@@ -142,6 +142,33 @@ Studio VSTest runner, not `dotnet test`. Follow the CI signing/trust procedure
 in [SignTestApp.ps1](../build/scripts/SignTestApp.ps1). That script requires an
 already elevated shell; do not trigger unattended elevation.
 
+### Recommended reusable certificate for local testing
+
+For repeated local validation, configure a persistent local test code-signing
+certificate instead of creating a new temporary certificate for every build:
+
+1. Keep its private key securely in the current user's certificate store
+   (`CurrentUser\My`), with signing access limited to the intended user.
+   The certificate subject must match the test package's publisher.
+2. Use administrator approval once to import only the public certificate into
+   the host's `LocalMachine\TrustedPeople` store.
+3. Update the local validation scripts to reuse that certificate for signing,
+   keeping certificate provisioning separate from the normal test workflow.
+   Rebuilt packages still need signing, but the trusted certificate need not
+   be recreated or imported again for each package.
+
+After this setup, the normal build -> sign -> test cycle should usually run
+without repeated UAC approvals. Keep UAC enabled and run VS Code without
+administrator privileges. Renewing or replacing the certificate may require
+another administrator-approved trust update.
+
+This is a recommended future workflow, not a change already implemented here.
+The current `SignTestApp.ps1` still creates a new one-hour certificate and
+imports it into machine-level trust on every invocation, requiring elevation.
+No certificate or signing-script configuration is changed by this guidance.
+
+### Running packaged tests
+
 ```powershell
 vstest.console.exe $nativeTestPackage /Platform:x64 /Logger:trx
 vstest.console.exe $managedTestPackage /Platform:x64 /Logger:trx `
