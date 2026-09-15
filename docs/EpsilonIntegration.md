@@ -1,5 +1,8 @@
 # Epsilon Scientific prototype
 
+See [EpsilonValidation.md](EpsilonValidation.md) for the executed test totals,
+VM matrix, package provenance, evidence paths, and hosted-CI limitation.
+
 This branch replaces the Scientific calculation path with an experimental
 Epsilon adapter. It is not feature-equivalent to the original Scientific
 calculator. Unsupported controls are disabled rather than delegated to RatPack.
