@@ -2,9 +2,6 @@
 
 ## Final result
 
-Validated implementation commit:
-`e31e7808411b7e06a1d989211a787bc1e3f1b264`.
-
 Repository: `tilia_microsoft/calc`, branch `hackathon/epsilon_integration`.
 Draft PR: <https://github.com/tilia_microsoft/calc/pull/1>.
 
@@ -72,20 +69,14 @@ The root below is abbreviated as `OUT`:
 ```text
 OUT = C:\code\calc\output\epsilon-debug-x64
 
-Build:
-  OUT\Calculator-final-e31e780.log
-  OUT\Calculator-final-e31e780.binlog
+Build logs and MSBuild binary logs:
+  OUT\
 
-Final packaged tests:
+Final packaged-test TRX, console logs, and summary:
   OUT\validation-packages\1.0.8.0\TestResults\
-    final-e31e780-all-native.trx
-    final-e31e780-all-managed.trx
-    final-e31e780-all-native.console.log
-    final-e31e780-all-managed.console.log
-    final-e31e780-all-summary.json
 
-Final deployment and binary hashes:
-  OUT\hyperloop\deployment-final-e31e780\
+Deployment records and binary comparisons:
+  OUT\hyperloop\
 
 Final health, package identity, release confirmation, and screenshot:
   OUT\hyperloop\final-health\

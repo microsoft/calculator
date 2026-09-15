@@ -95,16 +95,16 @@ formatted result is not restored as an active operand.
 ## Source and compiler boundary
 
 Vendored source comes from
-[tian-lt-personal/epsilon](https://github.com/tian-lt-personal/epsilon), commit
-`bdf9b6f5dba853993334ffabd3eb01b78c5dc563`. Only its mathematical library is
+[tian-lt-personal/epsilon](https://github.com/tian-lt-personal/epsilon).
+Only its mathematical library is
 vendored, not its expression engine. The source repository is not modified.
 Upstream structure and notices are retained in
 [Epsilon](../src/CalcManager/Epsilon). The application's packaged
 [NOTICE.txt](../NOTICE.txt) includes Epsilon's MIT attribution and license.
 
 The Pratt approach is informed by the small token and parser patterns in
-[tian-lt-personal/luca](https://github.com/tian-lt-personal/luca), commit
-`5319b717ef21de7dbf9a5ade39b60330951da6d2`. It does not import Luca's integer
+[tian-lt-personal/luca](https://github.com/tian-lt-personal/luca).
+It does not import Luca's integer
 conversion, type system, optimizer, arena, modules, or lexer generator.
 
 Use Visual Studio 2026, v145, and Windows SDK 10.0.26100.0. Keep the existing

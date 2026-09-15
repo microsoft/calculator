@@ -1,8 +1,7 @@
 # Epsilon vendor record
 
 - Upstream: <https://github.com/tian-lt-personal/epsilon>
-- Commit: `bdf9b6f5dba853993334ffabd3eb01b78c5dc563`
-- Source: the complete `src/epsilon` directory at that commit
+- Source: the complete upstream `src/epsilon` directory
 - License: MIT; see `LICENSE`
 - Vendored: 2026-09-14
 

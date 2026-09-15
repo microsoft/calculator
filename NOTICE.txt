@@ -42,7 +42,6 @@ SOFTWARE.
 
 Epsilon
 https://github.com/tian-lt-personal/epsilon
-Source commit: bdf9b6f5dba853993334ffabd3eb01b78c5dc563
 
 MIT License
 
