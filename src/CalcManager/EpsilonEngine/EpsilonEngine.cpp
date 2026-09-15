@@ -2303,7 +2303,7 @@ namespace CalculationManager
                 m_resultLazyDepth = 0;
                 m_resultOperationCount = 0;
             }
-            if (!m_result && !m_input.empty())
+            if (!m_input.empty())
             {
                 CommitInput();
                 size_t begin = CurrentOperandStart();

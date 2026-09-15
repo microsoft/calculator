@@ -839,7 +839,7 @@ namespace EpsilonEngineTests
             VerifyResult(L"0.e+0");
             m_engine->ProcessCommand(Command::CommandFE);
             Send({Command::Command1, Command::Command0, Command::Command0, Command::Command0, Command::CommandFE});
-            VERIFY_ARE_EQUAL(wstring(L"1.e+3"), m_engine->GetResult());
+            VerifyResult(L"1.e+3");
             m_engine->SetPrecision(10000);
             m_engine->ProcessCommand(Command::CommandFE);
             VerifyResult(L"1,000");

@@ -130,6 +130,13 @@ namespace Calculator.Tests
         [TestMethod]
         public void ScientificExponentialAndLogCommandsUseDistinctSupportedPaths()
         {
+            Press(NumbersAndOperatorsEnum.FToE);
+            Assert.AreEqual("0.e+0", _viewModel.DisplayValue);
+            Press(NumbersAndOperatorsEnum.FToE, NumbersAndOperatorsEnum.One, NumbersAndOperatorsEnum.Zero,
+                NumbersAndOperatorsEnum.Zero, NumbersAndOperatorsEnum.Zero, NumbersAndOperatorsEnum.FToE);
+            Assert.AreEqual("1.e+3", _viewModel.DisplayValue);
+            Press(NumbersAndOperatorsEnum.FToE, NumbersAndOperatorsEnum.Clear);
+
             Press(NumbersAndOperatorsEnum.Zero, NumbersAndOperatorsEnum.EPowerX);
             Assert.AreEqual("1", _viewModel.DisplayValue);
 
