@@ -14,6 +14,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <charconv>
 #include <limits>
 #include <optional>
 #include <stdexcept>
@@ -76,12 +77,20 @@ namespace CalculationManager
             Unknown
         };
 
+        struct ExactMultiple
+        {
+            Integer numerator;
+            Integer denominator;
+            bool timesPi;
+        };
+
         struct ExactValueProof
         {
             ZeroProof zero = ZeroProof::Unknown;
             bool one = false;
             string identity;
             bool positive = false;
+            std::optional<ExactMultiple> multiple;
         };
 
         struct FactorCancellationProof
@@ -98,6 +107,7 @@ namespace CalculationManager
             bool positive = false;
             std::optional<FactorCancellationProof> multiplyCancellation;
             std::optional<ExactValueProof> squareResult;
+            std::optional<ExactMultiple> multiple;
         };
 
         struct NumberToken
@@ -178,12 +188,12 @@ namespace CalculationManager
 
         ExactValueProof exactValueProof(const ValueFacts& facts)
         {
-            return {facts.zero, facts.one, facts.identity, facts.positive};
+            return {facts.zero, facts.one, facts.identity, facts.positive, facts.multiple};
         }
 
         ValueFacts valueFacts(const ExactValueProof& proof)
         {
-            return {proof.zero, proof.one, proof.identity, proof.positive};
+            return {proof.zero, proof.one, proof.identity, proof.positive, {}, {}, proof.multiple};
         }
 
         std::optional<int> powerOfTenExponent(string_view identity)
@@ -504,7 +514,99 @@ namespace CalculationManager
             return {ZeroProof::ProvenNonZero, one, std::move(identity), !negative};
         }
 
-        ValueFacts binaryFacts(const Token& operation, const ValueFacts& left, const ValueFacts& right)
+        std::optional<ExactMultiple> boundedMultiple(Integer numerator, Integer denominator, bool timesPi)
+        {
+            if (epx::is_zero(denominator))
+                return std::nullopt;
+            if (epx::is_negative(denominator))
+            {
+                epx::negate(numerator);
+                epx::negate(denominator);
+            }
+            Integer divisor = numerator;
+            divisor.sgn = epx::sign::positive;
+            Integer remainder = denominator;
+            while (!epx::is_zero(remainder))
+            {
+                auto division = epx::div_n(divisor, remainder);
+                divisor = std::move(remainder);
+                remainder = std::move(division.r);
+            }
+            numerator = epx::floor_div(numerator, divisor).q;
+            denominator = epx::floor_div(denominator, divisor).q;
+            if (numerator.digits.size() > MaxIntegerLimbs || denominator.digits.size() > MaxIntegerLimbs)
+                return std::nullopt;
+            return ExactMultiple{std::move(numerator), std::move(denominator), timesPi};
+        }
+
+        std::optional<ExactMultiple> exactMultiple(const ValueFacts& facts)
+        {
+            if (facts.multiple)
+                return facts.multiple;
+            const auto one = epx::create<Container>(1);
+            if (facts.zero == ZeroProof::ProvenZero)
+                return ExactMultiple{Integer{}, one, false};
+            if (facts.identity == "pi" || facts.identity == "neg(pi)")
+                return ExactMultiple{epx::create<Container>(facts.identity == "pi" ? 1 : -1), one, true};
+
+            string_view identity = facts.identity;
+            if (identity.empty() || (identity.front() != '+' && identity.front() != '-'))
+                return std::nullopt;
+            size_t marker = identity.find('e');
+            if (marker == string_view::npos)
+                return std::nullopt;
+            auto coefficient = epx::try_from_chars<Container>(identity.substr(0, marker));
+            if (!coefficient || coefficient->digits.size() > MaxIntegerLimbs)
+                return std::nullopt;
+            int exponent = 0;
+            auto exponentText = identity.substr(marker + 1);
+            auto parsed = std::from_chars(exponentText.data(), exponentText.data() + exponentText.size(), exponent);
+            constexpr int maxScale = MaxInputExponent + static_cast<int>(MaxInputCharacters);
+            if (parsed.ec != std::errc{} || parsed.ptr != exponentText.data() + exponentText.size()
+                || exponent < -maxScale || exponent > maxScale)
+                return std::nullopt;
+            auto scale = epx::details::pow10<Container>(static_cast<unsigned>(std::abs(exponent)));
+            return exponent < 0
+                ? boundedMultiple(std::move(*coefficient), std::move(scale), false)
+                : boundedMultiple(epx::mul(*coefficient, scale), one, false);
+        }
+
+        std::optional<ExactMultiple> combineMultiples(
+            const Token& operation, const ValueFacts& left, const ValueFacts& right)
+        {
+            auto lhs = exactMultiple(left);
+            auto rhs = exactMultiple(right);
+            if (!lhs || !rhs)
+                return std::nullopt;
+            if (std::holds_alternative<PlusToken>(operation) || std::holds_alternative<MinusToken>(operation))
+            {
+                if (epx::is_zero(lhs->numerator))
+                    lhs->timesPi = rhs->timesPi;
+                if (epx::is_zero(rhs->numerator))
+                    rhs->timesPi = lhs->timesPi;
+                if (lhs->timesPi != rhs->timesPi)
+                    return std::nullopt;
+                auto numerator = epx::mul(lhs->numerator, rhs->denominator);
+                auto other = epx::mul(rhs->numerator, lhs->denominator);
+                numerator = std::holds_alternative<PlusToken>(operation)
+                    ? epx::add(numerator, other) : epx::sub(numerator, other);
+                return boundedMultiple(
+                    std::move(numerator), epx::mul(lhs->denominator, rhs->denominator), lhs->timesPi);
+            }
+            if (std::holds_alternative<MultiplyToken>(operation))
+            {
+                if (lhs->timesPi && rhs->timesPi)
+                    return std::nullopt;
+                return boundedMultiple(epx::mul(lhs->numerator, rhs->numerator),
+                    epx::mul(lhs->denominator, rhs->denominator), lhs->timesPi || rhs->timesPi);
+            }
+            if (!lhs->timesPi && rhs->timesPi)
+                return std::nullopt;
+            return boundedMultiple(epx::mul(lhs->numerator, rhs->denominator),
+                epx::mul(lhs->denominator, rhs->numerator), lhs->timesPi && !rhs->timesPi);
+        }
+
+        ValueFacts basicBinaryFacts(const Token& operation, const ValueFacts& left, const ValueFacts& right)
         {
             ValueFacts result;
             if (std::holds_alternative<PlusToken>(operation))
@@ -567,6 +669,14 @@ namespace CalculationManager
                     result.multiplyCancellation = FactorCancellationProof{right.identity, exactValueProof(left)};
                 }
             }
+            return result;
+        }
+
+        ValueFacts binaryFacts(const Token& operation, const ValueFacts& left, const ValueFacts& right)
+        {
+            ValueFacts result = basicBinaryFacts(operation, left, right);
+            if (auto multiple = combineMultiples(operation, left, right))
+                result.multiple = std::move(multiple);
             return result;
         }
 
@@ -645,10 +755,10 @@ namespace CalculationManager
             }
         }
 
-        void ensureSmallArgument(const Real& value, int limit)
+        void ensureExponentialArgument(const Real& value)
         {
             auto approximation = boundedApproximation(value, 8);
-            Integer bound = epx::mul_4exp(integer(limit), 8);
+            Integer bound = epx::mul_4exp(integer(1000), 8);
             Integer negativeBound = bound;
             epx::negate(negativeBound);
             if (compareSigned(approximation, negativeBound) < 0 || compareSigned(approximation, bound) > 0)
@@ -933,6 +1043,8 @@ namespace CalculationManager
                     }
                     result.facts.positive = false;
                     result.facts.identity = negateIdentity(std::move(result.facts.identity));
+                    if (result.facts.multiple)
+                        epx::negate(result.facts.multiple->numerator);
                     return result;
                 }
                 if (std::holds_alternative<LeftParenToken>(token))
@@ -1598,6 +1710,8 @@ namespace CalculationManager
                 Real value = epx::mul(m_exponentBase->value, std::move(factor));
                 ensureMagnitude(value);
                 ValueFacts facts = m_exponentBase->facts;
+                facts.multiple = combineMultiples(
+                    MultiplyToken{}, facts, exactDecimalFacts("+1e" + std::to_string(exponent)));
                 facts.one = facts.one && exponent == 0;
                 if (exponent != 0)
                 {
@@ -1977,7 +2091,10 @@ namespace CalculationManager
             case Command::CommandSIN:
             case Command::CommandCOS:
             case Command::CommandTAN:
-                ensureSmallArgument(value, 1000000);
+                if (auto exact = ExactTrigonometricValue(command, facts))
+                {
+                    return rational(integer(*exact));
+                }
                 value = ToRadians(std::move(value));
                 if (command == Command::CommandSIN)
                 {
@@ -1988,16 +2105,8 @@ namespace CalculationManager
                     return epx::cos(std::move(value));
                 }
                 {
-                    const auto quarterTurns = ExactQuarterTurns(facts);
-                    if (quarterTurns && (*quarterTurns % 2) != 0)
-                    {
-                        throw epx::divide_by_zero_error{};
-                    }
                     Real cosine = epx::cos(value);
-                    ValueFacts cosineFacts = facts.zero == ZeroProof::ProvenZero
-                        ? ValueFacts{ZeroProof::ProvenNonZero, true, "cos(0)", true}
-                        : ValueFacts{};
-                    requireNonZero(cosine, cosineFacts);
+                    requireNonZero(cosine, {});
                     return epx::mul(epx::sin(std::move(value)), epx::inv(std::move(cosine)));
                 }
             case Command::CommandLN:
@@ -2017,7 +2126,7 @@ namespace CalculationManager
                     throw ResourceLimitError("logarithm sign classification limit");
                 return epx::mul(epx::log(std::move(value)), epx::inv(epx::log(rational(integer(10)))));
             case Command::CommandPOWE:
-                ensureSmallArgument(value, 1000);
+                ensureExponentialArgument(value);
                 return epx::exp(std::move(value));
             default:
                 throw ParseError("invalid unary operation");
@@ -2030,38 +2139,40 @@ namespace CalculationManager
             {
                 return 0u;
             }
-            if (m_angle == Command::CommandRAD)
-            {
-                return input.identity == "pi" || input.identity == "neg(pi)" ? std::optional<unsigned>(2u) : std::nullopt;
-            }
-            auto atom = exactDecimalAtom(input.identity);
-            if (!atom)
-            {
+            auto multiple = exactMultiple(input);
+            if (!multiple)
                 return std::nullopt;
-            }
-            int64_t degrees = atom->coefficient;
-            if (atom->exponent < 0)
-            {
-                for (int place = 0; place < -atom->exponent; ++place)
-                {
-                    if (degrees % 10 != 0)
-                    {
-                        return std::nullopt;
-                    }
-                    degrees /= 10;
-                }
-            }
-            else if (!scaleExactDecimal(degrees, atom->exponent))
-            {
+            const bool radians = m_angle == Command::CommandRAD;
+            if (multiple->timesPi != radians)
                 return std::nullopt;
-            }
-            const int64_t quarter = m_angle == Command::CommandGRAD ? 100 : 90;
-            if (degrees % quarter != 0)
-            {
+            auto numerator = radians ? epx::mul(multiple->numerator, integer(2)) : multiple->numerator;
+            auto denominator = radians ? multiple->denominator
+                : epx::mul(multiple->denominator, integer(m_angle == Command::CommandGRAD ? 100 : 90));
+            auto turns = epx::floor_div(numerator, denominator);
+            if (!epx::is_zero(turns.r))
                 return std::nullopt;
+            auto quadrant = epx::floor_div(turns.q, integer(4)).r;
+            return epx::is_zero(quadrant) ? 0u : static_cast<unsigned>(quadrant.digits.front());
+        }
+
+        std::optional<int> ExactTrigonometricValue(Command command, const ValueFacts& input) const
+        {
+            auto quarterTurns = ExactQuarterTurns(input);
+            if (!quarterTurns)
+                return std::nullopt;
+            switch (command)
+            {
+            case Command::CommandSIN:
+                return *quarterTurns % 2 == 0 ? 0 : *quarterTurns == 1 ? 1 : -1;
+            case Command::CommandCOS:
+                return *quarterTurns % 2 != 0 ? 0 : *quarterTurns == 0 ? 1 : -1;
+            case Command::CommandTAN:
+                if (*quarterTurns % 2 != 0)
+                    throw epx::divide_by_zero_error{};
+                return 0;
+            default:
+                throw ParseError("invalid trigonometric operation");
             }
-            const int64_t turns = degrees / quarter;
-            return static_cast<unsigned>((turns % 4 + 4) % 4);
         }
 
         ValueFacts UnaryFacts(Command command, const ValueFacts& input)
@@ -2074,7 +2185,7 @@ namespace CalculationManager
                     return valueFacts(*input.squareResult);
                 }
                 return {input.zero, input.one, input.zero == ZeroProof::ProvenZero ? "0" : NextIdentity(),
-                        input.zero == ZeroProof::ProvenNonZero};
+                        input.zero == ZeroProof::ProvenNonZero, {}, {}, combineMultiples(MultiplyToken{}, input, input)};
             case Command::CommandSQRT:
             {
                 string identity;
@@ -2096,26 +2207,13 @@ namespace CalculationManager
                 return result;
             }
             case Command::CommandREC:
-                return {ZeroProof::ProvenNonZero, input.one, input.one ? "+1e0" : NextIdentity(), input.positive};
+                return {ZeroProof::ProvenNonZero, input.one, input.one ? "+1e0" : NextIdentity(), input.positive,
+                        {}, {}, combineMultiples(DivideToken{}, integerFacts(1), input)};
             case Command::CommandSIN:
-            case Command::CommandTAN:
-                if (auto quarterTurns = ExactQuarterTurns(input))
-                {
-                    if (*quarterTurns % 2 == 0)
-                    {
-                        return integerFacts(0);
-                    }
-                    if (command == Command::CommandSIN)
-                    {
-                        return integerFacts(*quarterTurns == 1 ? 1 : -1);
-                    }
-                }
-                return {ZeroProof::Unknown, false, NextIdentity(), false};
             case Command::CommandCOS:
-                if (auto quarterTurns = ExactQuarterTurns(input))
-                {
-                    return integerFacts(*quarterTurns % 2 != 0 ? 0 : *quarterTurns == 0 ? 1 : -1);
-                }
+            case Command::CommandTAN:
+                if (auto exact = ExactTrigonometricValue(command, input))
+                    return integerFacts(*exact);
                 return {ZeroProof::Unknown, false, NextIdentity(), false};
             case Command::CommandLN:
                 if (input.one)
@@ -2227,6 +2325,8 @@ namespace CalculationManager
             facts.one = false;
             facts.positive = false;
             facts.identity = negateIdentity(std::move(facts.identity));
+            if (facts.multiple)
+                epx::negate(facts.multiple->numerator);
             ReplaceCurrentOperand(
                 std::move(value),
                 L"-(" + OperandDisplay(begin) + L")",

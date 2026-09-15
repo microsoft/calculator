@@ -93,11 +93,10 @@ constexpr std::string to_string(z<C> num) {
 
 template <container C, int B = 10>
 constexpr std::string to_string(r<C> num, unsigned int k) {
+  constexpr double log_4_10 = 1.66096405;
   constexpr int extra_precision = 20;
   if constexpr (B == 10) {
-    // ceil(k * log_4(10)) with a conservative rational upper bound.
-    // Avoid native floating point in the real-number formatting path.
-    auto n = static_cast<int>((static_cast<uint64_t>(k) * 1661u + 999u) / 1000u) + extra_precision;
+    auto n = static_cast<int>(log_4_10 * k) + extra_precision;
     auto xn = num.approx(n).get();
     auto sgn = xn.sgn;  // use the absolute value of xn to round towards zero.
     xn.sgn = sign::positive;

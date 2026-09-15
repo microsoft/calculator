@@ -30,7 +30,6 @@ It consumes only the public PIMPL header and remains C++17.
 | Display precision | 1-100 significant decimal digits (clamped) |
 | Bounded zero/sign probe | 640 base-4 places |
 | Materialized integer magnitude | 54 32-bit limbs (~520 decimal digits) |
-| Trigonometric argument before angle conversion | absolute value <= 1,000,000 |
 | Exponential-function argument | absolute value <= 1,000 |
 | Formatted output | 1,024 characters |
 
@@ -46,14 +45,24 @@ displaying a false zero or a false domain error. Values whose first significant
 decimal digit is beyond the 370-place materialization budget likewise report
 overflow.
 
+Trigonometric arguments have no separate magnitude cap; they use the shared
+input, magnitude, and expression budgets. Epsilon reduces large arguments with
+precision scaled to their magnitude. Proven quarter turns are resolved before
+numerical evaluation, including tangent poles.
+
 Exact-relation metadata is deliberately small: canonical decimal input atoms,
 opaque identities for retained Epsilon values, bounded signed-64-bit decimal
 addition/subtraction certificates, and a bounded 64-bit perfect-square
 certificate. One-step certificates preserve `(x / y) * y`, `sqr(sqrt(x))`,
 base-10 logs of exact powers of ten, and exact quadrant zeros/poles for
-decimal DEG/GRAD inputs and pi in RAD mode. The metadata is
-not recursive, is not an AST, does not produce runtime results, and is not a
-parallel integer/rational evaluator.
+DEG/GRAD inputs and rational multiples of pi in RAD mode. Angle certificates
+retain a reduced rational coefficient and whether it multiplies pi, with each
+integer bounded to 54 limbs. They propagate through supported arithmetic,
+negation, and retained exponent entry; mixed rational/pi sums and powers of pi
+other than zero or one have no certificate. These nonrecursive certificates
+only establish exact angle identities, not a replacement expression evaluator.
+Numerical results remain Epsilon reals, including exact trigonometric zeros
+and units. A zero numerical approximation alone never establishes a quadrant.
 
 Primary results use the configured count as significant decimal digits,
 preserve the locale decimal separator, and apply `sThousand`/`sGrouping` to
