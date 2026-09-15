@@ -37,6 +37,14 @@ Prerequisites:
     ```
 
 - Open [src\Calculator.slnx](/src/Calculator.slnx) in Visual Studio to build and run the Calculator app.
+- Restore NuGet packages before building (right-click the solution and select **Restore NuGet Packages**).
+  `CalcManager.Interop` requires the `Microsoft.Windows.CppWinRT` package's build targets to configure MIDL and
+  generate `module.g.cpp` and the runtime classes' `.g.h` headers. If those files are missing or MIDL reports
+  an undefined `IUnknown`, explicitly restore the native project from a Visual Studio Developer PowerShell
+  at the repository root, then reload the project and build again:
+  ```powershell
+  msbuild src\CalcManager.Interop\CalcManager.Interop.vcxproj -t:Restore -p:Configuration=Debug -p:Platform=x64
+  ```
 - For a general description of the Calculator project architecture see [ApplicationArchitecture.md](docs/ApplicationArchitecture.md).
 - For this branch's experimental Scientific engine, see [EpsilonIntegration.md](docs/EpsilonIntegration.md).
 - To run the UI Tests, you need to make sure that

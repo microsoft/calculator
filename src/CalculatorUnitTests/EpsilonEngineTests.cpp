@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <CppUnitTest.h>
+#include <cmath>
 
 #include "CalcManager/CalculatorHistory.h"
 #include "CalcManager/EpsilonEngine/EpsilonEngine.h"
@@ -143,6 +144,14 @@ namespace EpsilonEngineTests
             Assert::IsFalse(m_display.isError, L"The engine unexpectedly entered an error state.");
         }
 
+        void EnterDigits(const char* digits)
+        {
+            for (; *digits; ++digits)
+            {
+                m_engine->ProcessCommand(static_cast<Command>(static_cast<int>(Command::Command0) + *digits - '0'));
+            }
+        }
+
         void VerifyExpression(const wchar_t* expected)
         {
             wstring actual;
@@ -226,7 +235,15 @@ namespace EpsilonEngineTests
         {
             wstring actual = m_engine->GetResult();
             wstring message = L"Actual: " + actual + L"\nExpected reference: " + expected;
-            Assert::IsTrue(IsWithinDecimalTolerance(actual, expected, 30), message.c_str());
+            wstring reference(expected);
+            const bool negative = !reference.empty() && reference.front() == L'-';
+            Assert::AreEqual(negative, !actual.empty() && actual.front() == L'-', message.c_str());
+            if (negative)
+            {
+                actual.erase(0, 1);
+                reference.erase(0, 1);
+            }
+            Assert::IsTrue(IsWithinDecimalTolerance(actual, reference.c_str(), 30), message.c_str());
             VERIFY_IS_FALSE(m_display.isError);
         }
 
@@ -630,6 +647,196 @@ namespace EpsilonEngineTests
             m_engine->Reset();
             Send({Command::Command4, Command::Command5, Command::CommandTAN});
             VERIFY_IS_TRUE(m_engine->GetResult().rfind(L"1", 0) == 0);
+        }
+
+        TEST_METHOD(LargePiMultiplesHaveExactTrigonometricResults)
+        {
+            for (const char* multiplier : {"2", "10000000000000000000000", "10000000000000000000001"})
+            {
+                for (Command function : {Command::CommandSIN, Command::CommandCOS, Command::CommandTAN})
+                {
+                    m_engine->Reset();
+                    EnterDigits(multiplier);
+                    Send({Command::CommandMUL, Command::CommandPI, Command::CommandEQU});
+                    const wstring product = m_engine->GetResult();
+                    Send({Command::CommandRAD});
+                    VerifyResult(product.c_str());
+                    Send({function});
+                    const bool odd = string(multiplier).back() == '1';
+                    VerifyResult(function == Command::CommandCOS ? (odd ? L"-1" : L"1") : L"0");
+                }
+            }
+        }
+
+        TEST_METHOD(LargeHalfPiMultiplesPreserveQuadrantsAndPoles)
+        {
+            for (bool negative : {false, true})
+            {
+                for (Command function : {Command::CommandSIN, Command::CommandCOS, Command::CommandTAN})
+                {
+                    m_engine->Reset();
+                    EnterDigits("10000000000000000000001");
+                    Send({Command::CommandMUL, Command::CommandPI, Command::CommandDIV, Command::Command2, Command::CommandEQU});
+                    if (negative)
+                        Send({Command::CommandSIGN});
+                    Send({Command::CommandRAD, function});
+                    if (function == Command::CommandTAN)
+                    {
+                        VERIFY_IS_TRUE(m_display.isError);
+                        VERIFY_ARE_EQUAL(wstring(L"divide by zero"), m_engine->GetResult());
+                    }
+                    else
+                    {
+                        VerifyResult(function == Command::CommandCOS ? L"0" : negative ? L"-1" : L"1");
+                    }
+                }
+            }
+        }
+
+        TEST_METHOD(ExactAngleCertificatesSurviveArithmeticAndExponentEntry)
+        {
+            Send({Command::Command2, Command::CommandMUL, Command::Command3, Command::CommandEQU,
+                  Command::CommandMUL, Command::CommandPI, Command::CommandEQU, Command::CommandRAD, Command::CommandSIN});
+            VerifyResult(L"0");
+
+            m_engine->Reset();
+            Send({Command::Command2, Command::CommandADD, Command::Command3, Command::CommandEQU,
+                  Command::CommandMUL, Command::CommandPI, Command::CommandDIV, Command::Command2,
+                  Command::CommandEQU, Command::CommandRAD, Command::CommandSIN});
+            VerifyResult(L"1");
+
+            m_engine->Reset();
+            Send({Command::CommandPI, Command::CommandADD, Command::CommandPI, Command::CommandEQU,
+                  Command::CommandRAD, Command::CommandSIN});
+            VerifyResult(L"0");
+
+            m_engine->Reset();
+            Send({Command::Command2, Command::CommandREC, Command::CommandMUL, Command::CommandPI,
+                  Command::CommandEQU, Command::CommandRAD, Command::CommandCOS});
+            VerifyResult(L"0");
+
+            m_engine->Reset();
+            Send({Command::CommandPI, Command::CommandEXP, Command::Command2, Command::Command2,
+                  Command::CommandEQU, Command::CommandRAD, Command::CommandSIN});
+            VerifyResult(L"0");
+        }
+
+        TEST_METHOD(LargeDegreeAndGradianQuadrantsRemainExact)
+        {
+            EnterDigits("900000000000000000000000");
+            Send({Command::CommandSIN});
+            VerifyResult(L"0");
+
+            m_engine->Reset();
+            EnterDigits("900000000000000000000090");
+            Send({Command::CommandSIN});
+            VerifyResult(L"1");
+
+            m_engine->Reset();
+            EnterDigits("1000000000000000000000100");
+            Send({Command::CommandGRAD, Command::CommandCOS});
+            VerifyResult(L"0");
+        }
+
+        TEST_METHOD(LargeNonQuadrantArgumentsAreNotRejected)
+        {
+            for (Command function : {Command::CommandSIN, Command::CommandCOS, Command::CommandTAN})
+            {
+                for (bool negative : {false, true})
+                {
+                    m_engine->Reset();
+                    EnterDigits("1000001");
+                    if (negative)
+                        Send({Command::CommandSIGN});
+                    Send({Command::CommandRAD, function});
+                    VERIFY_IS_FALSE(m_display.isError);
+                    const double argument = negative ? -1000001.0 : 1000001.0;
+                    const double expected = function == Command::CommandSIN ? std::sin(argument)
+                        : function == Command::CommandCOS ? std::cos(argument) : std::tan(argument);
+                    VERIFY_IS_TRUE(std::abs(std::stod(m_engine->GetResult()) - expected) < 1e-12);
+                }
+            }
+        }
+
+        TEST_METHOD(NearbyPiMultiplesAndTinyAnglesAreNotRoundedToZero)
+        {
+            EnterDigits("10000000000000000000000");
+            Send({Command::CommandMUL, Command::CommandPI, Command::CommandADD,
+                  Command::Command1, Command::CommandEXP, Command::CommandSIGN, Command::Command2, Command::Command0,
+                  Command::CommandEQU, Command::CommandRAD, Command::CommandSIN});
+            VERIFY_IS_FALSE(m_display.isError);
+            VERIFY_IS_TRUE(std::abs(std::stod(m_engine->GetResult()) / 1e-20 - 1) < 1e-12);
+
+            m_engine->Reset();
+            Send({Command::Command1, Command::CommandEXP, Command::CommandSIGN, Command::Command2, Command::Command0,
+                  Command::CommandRAD, Command::CommandSIN});
+            VERIFY_IS_FALSE(m_display.isError);
+            VERIFY_IS_TRUE(std::abs(std::stod(m_engine->GetResult()) / 1e-20 - 1) < 1e-12);
+        }
+
+        TEST_METHOD(VeryLargeAnglesMatchIndependentDecimalReferences)
+        {
+            // Decimal arithmetic at 350 digits, Machin's pi formula, and Taylor
+            // series after reduction modulo 2*pi; references are independent of Epsilon.
+            struct Reference
+            {
+                const char* exponent;
+                const wchar_t* sine;
+                const wchar_t* cosine;
+                const wchar_t* tangent;
+            };
+            for (const auto& reference : {
+                Reference{"22", L"-0.852200849767188801772705893753029368261762150",
+                    L"0.523214785395138945497594473384709492140919972",
+                    L"-1.628778225606898878549375936939548513545151168"},
+                Reference{"256", L"0.564062222598159253602928076382852673247697975",
+                    L"-0.825732286541845619413233527791646781657280101",
+                    L"-0.683105446876061183364961721424452529120886419"}})
+            {
+                for (Command function : {Command::CommandSIN, Command::CommandCOS, Command::CommandTAN})
+                {
+                    m_engine->Reset();
+                    Send({Command::Command1, Command::CommandEXP});
+                    const bool squareInput = string(reference.exponent) == "256";
+                    EnterDigits(squareInput ? "128" : reference.exponent);
+                    if (squareInput)
+                        Send({Command::CommandSQR});
+                    Send({Command::CommandRAD, function});
+                    VerifyIndependentReference(function == Command::CommandSIN ? reference.sine
+                        : function == Command::CommandCOS ? reference.cosine : reference.tangent);
+                }
+            }
+        }
+
+        TEST_METHOD(AngleCertificatesAreNotReusedForDifferentValuesOrUnits)
+        {
+            Send({Command::CommandPI, Command::CommandSIN});
+            VERIFY_IS_FALSE(m_display.isError);
+            VERIFY_IS_TRUE(std::abs(std::stod(m_engine->GetResult()) - std::sin(std::acos(-1.0) * std::acos(-1.0) / 180)) < 1e-12);
+
+            m_engine->Reset();
+            Send({Command::CommandPI, Command::CommandSQR, Command::CommandRAD, Command::CommandSIN});
+            VERIFY_IS_FALSE(m_display.isError);
+            VERIFY_IS_TRUE(std::abs(std::stod(m_engine->GetResult()) - std::sin(std::acos(-1.0) * std::acos(-1.0))) < 1e-12);
+
+            m_engine->Reset();
+            Send({Command::CommandPI, Command::CommandREC, Command::CommandRAD, Command::CommandSIN});
+            VERIFY_IS_FALSE(m_display.isError);
+            VERIFY_IS_TRUE(std::abs(std::stod(m_engine->GetResult()) - std::sin(1 / std::acos(-1.0))) < 1e-12);
+
+            m_engine->Reset();
+            Send({Command::CommandPI, Command::CommandADD, Command::Command1, Command::CommandEQU,
+                  Command::CommandRAD, Command::CommandSIN});
+            VERIFY_IS_FALSE(m_display.isError);
+            VERIFY_IS_TRUE(std::abs(std::stod(m_engine->GetResult()) + std::sin(1.0)) < 1e-12);
+        }
+
+        TEST_METHOD(ExponentialArgumentStillHasAResourceLimit)
+        {
+            EnterDigits("1001");
+            Send({Command::CommandPOWE});
+            VERIFY_IS_TRUE(m_display.isError);
+            VERIFY_ARE_EQUAL(wstring(L"overflow"), m_engine->GetResult());
         }
 
         TEST_METHOD(ErrorsAndRecovery)

@@ -866,22 +866,33 @@ constexpr r<C> sin(r<C> x) {
   return r<C>{[x = std::move(x)](int n) -> coro::lazy<z<C>> {
     constexpr int c = 2;  // B = 4 >= 3
     constexpr int w = 2;  // B = 4 >= 3
+    if (n < 0) co_return z<C>{};
+    constexpr int max_precision = std::numeric_limits<int>::max() / 2 - 2 * details::atan_guard;
+    if (n > max_precision - w) [[unlikely]] {
+      throw precision_overflow_error{};
+    }
     const int k = std::max(c, n + w);
 
-    auto xk = co_await x.approx(k);
-
-    // Compute pi_full = floor(pi * 4^k), pi_k = floor((pi/2) * 4^k)
-    auto pi_full = details::compute_pi<C>(k);
-    if (is_zero(pi_full)) {
-      co_return z<C>{};
+    // |p| <= |x_0| + 2 since pi > 3. Choose g so (|p| + 1) / 4^g <= 1/4.
+    auto x0 = co_await x.approx(0);
+    auto period_bound = add_n(x0, create<C>(2));
+    const int bits = details::bit_length(period_bound.digits);
+    const int guard = bits / 2 + bits % 2 + 1;
+    if (guard > max_precision - k) [[unlikely]] {
+      throw precision_overflow_error{};
     }
-    auto two = create<C>(2);
-    auto [pi_k, _s1] = floor_div(pi_full, two);
+    const int reduction_precision = k + guard;
+    auto xr = co_await x.approx(reduction_precision);
+    auto pi_reduction = details::compute_pi<C>(reduction_precision);
+    auto [p_val, remainder] = floor_div(xr, pi_reduction);
 
-    // Argument reduction: p = floor(x_k / pi_full), zk = x_k - p * pi_full
-    // sin(x) = (-1)^p * sin(zk / 4^k)   where zk is in [0, pi*4^k)
-    auto [p_val, _s2] = floor_div(xk, pi_full);
-    auto zk = sub(xk, mul(p_val, pi_full));
+    // Round the reduced argument to nearest at k: reduction error < 1/4,
+    // rounding error <= 1/2, so the VMM approximation error remains < 1.
+    const auto two = create<C>(2);
+    auto half = mul_4exp(two, guard - 1);
+    auto zk = mul_4exp(add_n(remainder, half), -guard);
+    auto pi_full = mul_4exp(pi_reduction, -guard);
+    auto [pi_k, _s1] = floor_div(pi_full, two);
 
     // Determine (-1)^p sign
     bool p_odd = false;
