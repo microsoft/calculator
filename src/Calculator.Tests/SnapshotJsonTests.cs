@@ -19,6 +19,16 @@ namespace Calculator.Tests
     [TestClass]
     public class SnapshotJsonTests
     {
+        [TestMethod]
+        public void ScientificStateDoesNotBypassStandardCommandValidation()
+        {
+            var snapshot = CreateApplicationSnapshot();
+            snapshot.Mode = (int)ViewMode.Standard;
+            snapshot.StandardCalculator.ScientificState = "Scientific/1 invalid";
+            snapshot.StandardCalculator.DisplayCommands.Add(new ExpressionCommandWrapper(
+                CommandType.BinaryCommand,int.MaxValue,System.Array.Empty<int>(),false,false,false));
+            Assert.IsTrue(ParseSnapshot(snapshot).HasError);
+        }
         [DataTestMethod]
         [DataRow(-1)]
         [DataRow(int.MaxValue)]

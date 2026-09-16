@@ -35,11 +35,11 @@ namespace Calculator.Tests
             Assert.IsTrue(_viewModel.IsCommandSupported(NumbersAndOperatorsEnum.XPower2));
             Assert.IsTrue(_viewModel.IsCommandSupported(NumbersAndOperatorsEnum.EPowerX));
             Assert.IsTrue(_viewModel.IsCommandSupported(NumbersAndOperatorsEnum.Exp));
-            Assert.IsFalse(_viewModel.IsCommandSupported(NumbersAndOperatorsEnum.XPowerY));
-            Assert.IsFalse(_viewModel.IsCommandSupported(NumbersAndOperatorsEnum.Factorial));
-            Assert.IsFalse(_viewModel.IsMemorySupported);
-            Assert.IsTrue(_viewModel.IsHistoryReadOnly);
-            Assert.IsFalse(_viewModel.HistoryVM.AreHistoryShortcutsEnabled);
+            Assert.IsTrue(_viewModel.IsCommandSupported(NumbersAndOperatorsEnum.XPowerY));
+            Assert.IsTrue(_viewModel.IsCommandSupported(NumbersAndOperatorsEnum.Factorial));
+            Assert.IsTrue(_viewModel.IsMemorySupported);
+            Assert.IsFalse(_viewModel.IsHistoryReadOnly);
+            Assert.IsTrue(_viewModel.HistoryVM.AreHistoryShortcutsEnabled);
         }
 
         [TestMethod]
@@ -79,7 +79,7 @@ namespace Calculator.Tests
             Assert.AreEqual("5", _viewModel.DisplayValue);
 
             Press(NumbersAndOperatorsEnum.Equals);
-            Assert.AreEqual("5", _viewModel.DisplayValue);
+            Assert.AreEqual("8", _viewModel.DisplayValue);
 
             Press(
                 NumbersAndOperatorsEnum.Clear,
@@ -98,7 +98,7 @@ namespace Calculator.Tests
             Press(NumbersAndOperatorsEnum.Equals);
             Assert.AreEqual("8", _viewModel.DisplayValue);
             Press(NumbersAndOperatorsEnum.Equals);
-            Assert.AreEqual("8", _viewModel.DisplayValue);
+            Assert.AreEqual("12", _viewModel.DisplayValue);
         }
 
         [TestMethod]
@@ -164,11 +164,11 @@ namespace Calculator.Tests
             Press(NumbersAndOperatorsEnum.One, NumbersAndOperatorsEnum.Two);
             string inputBeforeRejection = _viewModel.DisplayValue;
 
-            Press(NumbersAndOperatorsEnum.XPowerY);
+            Press(NumbersAndOperatorsEnum.And);
             Assert.AreEqual(inputBeforeRejection, _viewModel.DisplayValue);
             Assert.IsTrue(NarratorAnnouncement.IsValid(_viewModel.Announcement));
 
-            _viewModel.OnPaste("2^3");
+            _viewModel.OnPaste("2&3");
             Assert.AreEqual(inputBeforeRejection, _viewModel.DisplayValue);
             Assert.IsTrue(NarratorAnnouncement.IsValid(_viewModel.Announcement));
 
@@ -179,12 +179,12 @@ namespace Calculator.Tests
                 Assert.IsTrue(NarratorAnnouncement.IsValid(_viewModel.Announcement));
             }
 
-            _viewModel.SendCommandToCalcManager((int)NumbersAndOperatorsEnum.Factorial);
+            _viewModel.SendCommandToCalcManager((int)NumbersAndOperatorsEnum.And);
             Assert.AreEqual(inputBeforeRejection, _viewModel.DisplayValue);
         }
 
         [TestMethod]
-        public void ScientificHistoryIsAppendOnlyAndUsesDisplayTokens()
+        public void ScientificHistoryUsesExactStateAndSupportsDeletion()
         {
             Press(
                 NumbersAndOperatorsEnum.Two,
@@ -199,9 +199,11 @@ namespace Calculator.Tests
             Assert.IsTrue(item.GetTokens().All(token => token.CommandIndex == -1));
 
             _viewModel.HistoryVM.ShowItem(item);
+            _viewModel.SelectHistoryItem(item);
+            Assert.IsTrue(item.ScientificState.StartsWith("Scientific/1 "));
             _viewModel.HistoryVM.DeleteItem(item);
             _viewModel.HistoryVM.ClearCommand.Execute(null);
-            Assert.AreEqual(1, _viewModel.HistoryVM.ItemsCount);
+            Assert.AreEqual(0, _viewModel.HistoryVM.ItemsCount);
             Assert.AreEqual("5", _viewModel.DisplayValue);
             Assert.IsTrue(NarratorAnnouncement.IsValid(_viewModel.HistoryVM.HistoryAnnouncement));
         }
@@ -217,7 +219,8 @@ namespace Calculator.Tests
 
             var snapshot = _viewModel.Snapshot;
             Assert.AreEqual(0, snapshot.DisplayCommands.Count);
-            Assert.IsNull(snapshot.ExpressionDisplay);
+            Assert.IsNotNull(snapshot.ExpressionDisplay);
+            Assert.IsTrue(snapshot.ScientificState.StartsWith("Scientific/1 "));
             Assert.AreEqual(0, snapshot.CalcManager.HistoryItems[0].Commands.Count);
             Assert.IsTrue(snapshot.CalcManager.HistoryItems[0].Tokens.All(token => token.CommandIndex == -1));
             snapshot.CalcManager.HistoryItems[0].Commands = null;
@@ -232,14 +235,14 @@ namespace Calculator.Tests
             restored.Snapshot = snapshot;
             restored.HistoryVM.ReloadHistory(ViewMode.Scientific);
 
-            Assert.AreEqual("0", restored.DisplayValue);
+            Assert.AreEqual("5", restored.DisplayValue);
             Assert.AreEqual(1, restored.HistoryVM.ItemsCount);
             Assert.AreEqual(0, restored.HistoryVM.Items[0].GetCommands().Count);
             Assert.AreEqual("5", restored.HistoryVM.Items[0].Result);
             restored.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Add);
             restored.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.One);
             restored.ButtonPressedCommand.Execute(NumbersAndOperatorsEnum.Equals);
-            Assert.AreEqual("1", restored.DisplayValue, "The live result must match the native retained value.");
+            Assert.AreEqual("6", restored.DisplayValue, "The live result must match the native exact expression.");
             restored.SetCalculatorType(ViewMode.Standard);
             restored.OnMemoryItemPressed(0);
             Assert.AreEqual("42", restored.DisplayValue, "Scientific snapshot restoration must not clear legacy memory.");
@@ -309,7 +312,7 @@ namespace Calculator.Tests
             _viewModel.SendCommandToCalcManager((int)NumbersAndOperatorsEnum.IsScientificMode);
             Assert.IsTrue(_viewModel.IsScientific);
             Assert.IsFalse(_viewModel.IsProgrammer);
-            Assert.IsFalse(_viewModel.IsMemorySupported);
+            Assert.IsTrue(_viewModel.IsMemorySupported);
             Press(
                 NumbersAndOperatorsEnum.Two,
                 NumbersAndOperatorsEnum.Add,
@@ -333,7 +336,7 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
-        public void ScientificMemoryIsSuppressedWithoutLosingLegacyMemory()
+        public void ScientificMemoryIsSeparateWithoutLosingLegacyMemory()
         {
             _viewModel.SetCalculatorType(ViewMode.Standard);
             Press(NumbersAndOperatorsEnum.Clear, NumbersAndOperatorsEnum.Four, NumbersAndOperatorsEnum.Two);
@@ -342,7 +345,8 @@ namespace Calculator.Tests
             string savedValue = _viewModel.MemorizedNumbers[0].Value;
 
             _viewModel.SetCalculatorType(ViewMode.Scientific);
-            Assert.IsFalse(_viewModel.IsMemorySupported);
+            Assert.IsTrue(_viewModel.IsMemorySupported);
+            Assert.AreEqual(0, _viewModel.MemorizedNumbers.Count);
             BitLength bitLengthBeforeRejection = _viewModel.ValueBitLength;
             _viewModel.ValueBitLength = BitLength.BitLengthDWord;
             Assert.AreEqual(bitLengthBeforeRejection, _viewModel.ValueBitLength);
@@ -352,8 +356,7 @@ namespace Calculator.Tests
             _viewModel.OnMemoryItemPressed(0);
             _viewModel.OnMemoryClear(0);
             _viewModel.ClearMemoryCommand.Execute(null);
-            Assert.AreEqual(1, _viewModel.MemorizedNumbers.Count);
-            Assert.AreEqual(savedValue, _viewModel.MemorizedNumbers[0].Value);
+            Assert.AreEqual(0, _viewModel.MemorizedNumbers.Count);
 
             _viewModel.SetCalculatorType(ViewMode.Standard);
             Assert.IsTrue(_viewModel.IsMemorySupported);
@@ -370,6 +373,30 @@ namespace Calculator.Tests
             {
                 _viewModel.ButtonPressedCommand.Execute(command);
             }
+        }
+
+        [TestMethod]
+        public void ScientificHistoryOperandsCanBeEditedWithMultipleDigits()
+        {
+            Press(NumbersAndOperatorsEnum.Two,NumbersAndOperatorsEnum.Add,NumbersAndOperatorsEnum.Three,NumbersAndOperatorsEnum.Equals);
+            _viewModel.SelectScientificExpressionToken(_viewModel.ExpressionTokens[2]);
+            Press(NumbersAndOperatorsEnum.Four,NumbersAndOperatorsEnum.Two,NumbersAndOperatorsEnum.Equals);
+            Assert.AreEqual("44",_viewModel.DisplayValue);
+            Assert.IsFalse(_viewModel.IsEditingEnabled);
+        }
+
+        [TestMethod]
+        public void ScientificSnapshotPreservesAngleFormatAndIncompleteInput()
+        {
+            Press(NumbersAndOperatorsEnum.Radians,NumbersAndOperatorsEnum.FToE,NumbersAndOperatorsEnum.OpenParenthesis,
+                NumbersAndOperatorsEnum.Two,NumbersAndOperatorsEnum.Add,NumbersAndOperatorsEnum.Three);
+            var snapshot = _viewModel.Snapshot;
+            Press(NumbersAndOperatorsEnum.Clear,NumbersAndOperatorsEnum.Degree);
+            _viewModel.Snapshot = snapshot;
+            Assert.AreEqual(NumbersAndOperatorsEnum.Radians,_viewModel.GetCurrentAngleType());
+            Assert.IsTrue(_viewModel.IsFToEChecked);
+            Press(NumbersAndOperatorsEnum.Equals);
+            Assert.AreEqual("5.e+0",_viewModel.DisplayValue);
         }
 
         private double ParseDisplay()

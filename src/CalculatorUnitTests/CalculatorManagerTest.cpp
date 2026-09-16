@@ -194,7 +194,7 @@ namespace CalculatorManagerTest
         TEST_METHOD(ScientificRoutingDoesNotChangeLegacyModes);
         TEST_METHOD(ScientificUnsupportedCommandsPreserveInput);
         TEST_METHOD(ScientificMemoryIsIsolated);
-        TEST_METHOD(ScientificHistoryIsReadOnly);
+        TEST_METHOD(ScientificHistoryIsEditable);
         TEST_METHOD(ScientificInputAndErrorQueries);
         TEST_METHOD(ScientificResetPreservesLegacyMemory);
         TEST_METHOD(ScientificIncompleteInputAutoCompletes);
@@ -469,10 +469,10 @@ namespace CalculatorManagerTest
 
         Command commands14[] = { Command::Command5, Command::Command0, Command::CommandADD, Command::Command2, Command::Command0, Command::CommandNULL };
         TestDriver::Test(L"20", L"50 + ", commands14, true, true);
-        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->SendCommand(Command::CommandPERCENT); });
-        VERIFY_ARE_EQUAL(wstring(L"20"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        m_calculatorManager->SendCommand(Command::CommandPERCENT);
+        VERIFY_ARE_EQUAL(wstring(L"10"), m_calculatorDisplayTester->GetPrimaryDisplay());
         m_calculatorManager->SendCommand(Command::CommandEQU);
-        VERIFY_ARE_EQUAL(wstring(L"70"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        VERIFY_ARE_EQUAL(wstring(L"60"), m_calculatorDisplayTester->GetPrimaryDisplay());
 
         Command commands15[] = { Command::Command0, Command::CommandDIV, Command::Command0, Command::CommandEQU, Command::CommandNULL };
         TestDriver::Test(L"Result is undefined", L"0 \x00F7 ", commands15, true, true);
@@ -512,9 +512,9 @@ namespace CalculatorManagerTest
                                  Command::Command1, Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
         TestDriver::Test(L"0", L"\x221A(2.25) - 1.5=", commands25, true, true);
 
-        Command commands26[] = { Command::CommandOPENP, Command::Command2,   Command::CommandPNT, Command::Command2,   Command::Command5,
-                                 Command::CommandSQRT,  Command::CommandDIV, Command::Command1,   Command::CommandPNT, Command::Command5,
-                                 Command::CommandCLOSEP, Command::CommandLOG,  Command::CommandNULL };
+        Command commands26[] = { Command::CommandOPENP,  Command::Command2,   Command::CommandPNT, Command::Command2,   Command::Command5,
+                                 Command::CommandSQRT,   Command::CommandDIV, Command::Command1,   Command::CommandPNT, Command::Command5,
+                                 Command::CommandCLOSEP, Command::CommandLOG, Command::CommandNULL };
         TestDriver::Test(L"0", L"log(\x221A(2.25) \x00F7 1.5)", commands26, true, true);
     }
 
@@ -580,24 +580,26 @@ namespace CalculatorManagerTest
                                 Command::CommandADD, Command::CommandEQU,   Command::CommandNULL };
         TestDriver::Test(L"8", L"2 \x00D7 (2) + 4=", commands5, true, true);
 
-        Command commands6[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL };
+        Command commands6[] = {
+            Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL
+        };
         TestDriver::Test(L"16", L"(8) \x00D7 2=", commands6, true, true);
 
         Command commands7[] = { Command::CommandOPENP,  Command::Command7, Command::CommandMUL, Command::Command2,
                                 Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL };
         TestDriver::Test(L"28", L"(7 \x00D7 2) \x00D7 2=", commands7, true, true);
 
-        Command commands8[] = { Command::CommandOPENP,  Command::Command7, Command::CommandMUL, Command::Command2,
-                                Command::CommandCLOSEP, Command::Command2, Command::CommandEQU,
-                                Command::CommandOPENP, Command::Command1, Command::Command4, Command::CommandCLOSEP, Command::Command2, Command::CommandEQU, Command::CommandNULL};
+        Command commands8[] = { Command::CommandOPENP,  Command::Command7,   Command::CommandMUL,   Command::Command2,   Command::CommandCLOSEP,
+                                Command::Command2,      Command::CommandEQU, Command::CommandOPENP, Command::Command1,   Command::Command4,
+                                Command::CommandCLOSEP, Command::Command2,   Command::CommandEQU,   Command::CommandNULL };
         TestDriver::Test(L"28", L"(14) \x00D7 2=", commands8, true, true);
 
-        Command commands9[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP,
-                                Command::Command0, Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        Command commands9[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP, Command::Command0,
+                                Command::CommandPNT,   Command::Command5, Command::CommandEQU,    Command::CommandNULL };
         TestDriver::Test(L"4", L"(8) \x00D7 0.5=", commands9, true, true);
 
-        Command commands10[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP,
-                                 Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        Command commands10[] = { Command::CommandOPENP, Command::Command8,   Command::CommandCLOSEP, Command::CommandPNT,
+                                 Command::Command5,     Command::CommandEQU, Command::CommandNULL };
         TestDriver::Test(L"4", L"(8) \x00D7 0.5=", commands10, true, true);
     }
 
@@ -675,15 +677,14 @@ namespace CalculatorManagerTest
 
     void CalculatorManagerTest::ScientificRoutingDoesNotChangeLegacyModes()
     {
-        const vector<Command> expression = {
-            Command::Command2, Command::CommandADD, Command::Command3, Command::CommandMUL, Command::Command4, Command::CommandEQU
-        };
+        const vector<Command> expression = { Command::Command2,   Command::CommandADD, Command::Command3,
+                                             Command::CommandMUL, Command::Command4,   Command::CommandEQU };
 
         for (int iteration = 0; iteration < 4; ++iteration)
         {
             m_calculatorManager->SetScientificMode();
-            VERIFY_IS_FALSE(m_calculatorManager->IsMemorySupported());
-            VERIFY_IS_TRUE(m_calculatorManager->IsHistoryReadOnly());
+            VERIFY_IS_TRUE(m_calculatorManager->IsMemorySupported());
+            VERIFY_IS_FALSE(m_calculatorManager->IsHistoryReadOnly());
             ExecuteCommands(expression);
             VERIFY_ARE_EQUAL(wstring(L"14"), m_calculatorDisplayTester->GetPrimaryDisplay());
             VERIFY_IS_FALSE(m_calculatorDisplayTester->GetIsError());
@@ -707,20 +708,7 @@ namespace CalculatorManagerTest
         m_calculatorManager->SetScientificMode();
         ExecuteCommands(vector<Command>{ Command::Command4, Command::Command2 });
 
-        const vector<Command> unsupported = {
-            Command::CommandPWR,       Command::CommandROOT,  Command::CommandCUB,     Command::CommandCUBEROOT,
-            Command::CommandFAC,       Command::CommandMOD,   Command::CommandASIN,    Command::CommandACOS,
-            Command::CommandATAN,      Command::CommandSINH,  Command::CommandCOSH,    Command::CommandTANH,
-            Command::CommandASINH,     Command::CommandACOSH, Command::CommandATANH,   Command::CommandHYP,
-            Command::CommandINV,       Command::CommandSEC,   Command::CommandCSC,     Command::CommandCOT,
-            Command::CommandASEC,      Command::CommandACSC,  Command::CommandACOT,    Command::CommandSECH,
-            Command::CommandCSCH,      Command::CommandCOTH,  Command::CommandASECH,   Command::CommandACSCH,
-            Command::CommandACOTH,     Command::CommandDMS,   Command::CommandCHOP,    Command::CommandCOM,
-            Command::CommandLogBaseY,  Command::CommandPOW10, Command::CommandPOW2,    Command::CommandRand,
-            Command::CommandAbs,       Command::CommandFloor, Command::CommandCeil,    Command::CommandPERCENT,
-            Command::CommandSTORE,     Command::CommandRECALL, Command::CommandMCLEAR, Command::CommandMPLUS,
-            Command::CommandMMINUS,    Command::CommandAnd,   Command::CommandHex,     Command::CommandA
-        };
+        const vector<Command> unsupported = { Command::CommandCOM, Command::CommandAnd, Command::CommandHex, Command::CommandA };
         for (Command command : unsupported)
         {
             VERIFY_IS_FALSE(m_calculatorManager->IsCommandSupported(command));
@@ -745,15 +733,16 @@ namespace CalculatorManagerTest
 
         m_calculatorManager->SetScientificMode();
         m_calculatorManager->SendCommand(Command::Command9);
-        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->MemorizeNumber(); });
-        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->MemorizedNumberLoad(0); });
-        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->MemorizedNumberAdd(0); });
-        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->MemorizedNumberSubtract(0); });
-        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->MemorizedNumberClear(0); });
-        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->MemorizedNumberClearAll(); });
-        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->SetMemorizedNumbersString(); });
+        VERIFY_IS_TRUE(m_calculatorDisplayTester->GetMemorizedNumbers().empty());
+        m_calculatorManager->MemorizeNumber();
+        m_calculatorManager->MemorizedNumberLoad(0);
+        m_calculatorManager->MemorizedNumberAdd(0);
+        m_calculatorManager->MemorizedNumberSubtract(0);
+        m_calculatorManager->MemorizedNumberClear(0);
+        m_calculatorManager->MemorizedNumberClearAll();
+        m_calculatorManager->SetMemorizedNumbersString();
         VERIFY_ARE_EQUAL(wstring(L"9"), m_calculatorDisplayTester->GetPrimaryDisplay());
-        VERIFY_IS_TRUE(memory == m_calculatorDisplayTester->GetMemorizedNumbers());
+        VERIFY_IS_TRUE(m_calculatorDisplayTester->GetMemorizedNumbers().empty());
 
         m_calculatorManager->SetStandardMode();
         m_calculatorManager->MemorizedNumberLoad(0);
@@ -763,7 +752,7 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(wstring(L"84"), m_calculatorDisplayTester->GetPrimaryDisplay());
     }
 
-    void CalculatorManagerTest::ScientificHistoryIsReadOnly()
+    void CalculatorManagerTest::ScientificHistoryIsEditable()
     {
         m_calculatorManager->SetStandardMode();
         ExecuteCommands(vector<Command>{ Command::Command6, Command::CommandMUL, Command::Command7, Command::CommandEQU });
@@ -775,21 +764,17 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(size_t(1), m_calculatorManager->GetHistoryItems().size());
         VERIFY_IS_FALSE(m_calculatorManager->GetHistoryItem(0)->historyItemVector.expression.empty());
         VERIFY_ARE_EQUAL(wstring(L"5"), m_calculatorManager->GetHistoryItem(0)->historyItemVector.result);
-        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->RemoveHistoryItem(0); });
-        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->ClearHistory(); });
-        Assert::ExpectException<invalid_argument>([&]() { m_calculatorManager->SetInHistoryItemLoadMode(true); });
+        auto state = m_calculatorManager->GetHistoryItem(0)->historyItemVector.scientificState;
+        m_calculatorManager->RestoreScientificState(state);
+        m_calculatorManager->SetInHistoryItemLoadMode(true);
+        m_calculatorManager->SetInHistoryItemLoadMode(false);
         VERIFY_ARE_EQUAL(wstring(L"5"), m_calculatorDisplayTester->GetPrimaryDisplay());
 
         m_calculatorManager->SetHistoryItems(legacyHistory);
         VERIFY_ARE_EQUAL(size_t(2), m_calculatorManager->GetHistoryItems().size());
-        for (const auto& history : m_calculatorManager->GetHistoryItems())
-        {
-            VERIFY_IS_TRUE(history->historyItemVector.spCommands->empty());
-            for (const auto& token : *history->historyItemVector.spTokens)
-            {
-                VERIFY_ARE_EQUAL(-1, token.second);
-            }
-        }
+        VERIFY_IS_TRUE(m_calculatorManager->GetHistoryItems().front()->historyItemVector.scientificState == state);
+        VERIFY_IS_TRUE(m_calculatorManager->RemoveHistoryItem(1));
+        m_calculatorManager->SetHistoryItems(legacyHistory);
         VERIFY_IS_FALSE(legacyHistory.front()->historyItemVector.spCommands->empty());
 
         m_calculatorManager->SetStandardMode();
@@ -853,13 +838,19 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(wstring(L"8"), m_calculatorDisplayTester->GetPrimaryDisplay());
         const auto historyCount = m_calculatorManager->GetHistoryItems().size();
         ExecuteCommands(vector<Command>{ Command::CommandEQU, Command::CommandEQU });
-        VERIFY_ARE_EQUAL(wstring(L"8"), m_calculatorDisplayTester->GetPrimaryDisplay());
-        VERIFY_ARE_EQUAL(historyCount, m_calculatorManager->GetHistoryItems().size());
+        VERIFY_ARE_EQUAL(wstring(L"16"), m_calculatorDisplayTester->GetPrimaryDisplay());
+        VERIFY_ARE_EQUAL(historyCount + 2, m_calculatorManager->GetHistoryItems().size());
 
-        ExecuteCommands(vector<Command>{
-            Command::CommandCLEAR, Command::CommandOPENP, Command::CommandOPENP, Command::Command2, Command::CommandADD,
-            Command::Command3, Command::CommandMUL, Command::Command4, Command::CommandEQU
-        });
+        ExecuteCommands(
+            vector<Command>{ Command::CommandCLEAR,
+                             Command::CommandOPENP,
+                             Command::CommandOPENP,
+                             Command::Command2,
+                             Command::CommandADD,
+                             Command::Command3,
+                             Command::CommandMUL,
+                             Command::Command4,
+                             Command::CommandEQU });
         VERIFY_ARE_EQUAL(wstring(L"14"), m_calculatorDisplayTester->GetPrimaryDisplay());
         VERIFY_ARE_EQUAL(0u, m_calculatorDisplayTester->GetParenthesisCount());
 
@@ -903,9 +894,11 @@ namespace CalculatorManagerTest
         Command commands10[] = { Command::ModeProgrammer, Command::Command1, Command::CommandRORC, Command::CommandRORC, Command::CommandNULL };
         TestDriver::Test(L"-9,223,372,036,854,775,808", L"RoR(RoR(1))", commands10, true, false);
 
-        Command commands11[] = { Command::ModeProgrammer, Command::CommandDec, Command::Command4, Command::Command2, Command::Command9,   Command::Command4,
-                                Command::Command9,       Command::Command6,   Command::Command7, Command::Command2, Command::Command9,   Command::Command6,
-                                Command::CommandDIV,     Command::Command2,   Command::Command5, Command::Command5, Command::CommandEQU, Command::CommandNULL };
+        Command commands11[] = {
+            Command::ModeProgrammer, Command::CommandDec, Command::Command4, Command::Command2, Command::Command9,   Command::Command4,
+            Command::Command9,       Command::Command6,   Command::Command7, Command::Command2, Command::Command9,   Command::Command6,
+            Command::CommandDIV,     Command::Command2,   Command::Command5, Command::Command5, Command::CommandEQU, Command::CommandNULL
+        };
         TestDriver::Test(L"16,843,009", L"4294967296 \x00F7 255=", commands11, true, false);
 
         Command commands12[] = {
@@ -915,11 +908,10 @@ namespace CalculatorManagerTest
         };
         TestDriver::Test(L"16,843,009", L"4294967303 \x00F7 255=", commands12, true, false);
 
-        Command commands13[] = {
-            Command::ModeProgrammer, Command::CommandDec, Command::Command1, Command::Command0, Command::Command0, Command::Command0,
-            Command::Command0, Command::Command0, Command::Command0, Command::Command0, Command::Command0, Command::Command0, Command::CommandDIV,
-            Command::Command6, Command::Command4, Command::Command4, Command::Command8, Command::Command7, Command::CommandEQU, Command::CommandNULL
-        };
+        Command commands13[] = { Command::ModeProgrammer, Command::CommandDec, Command::Command1,   Command::Command0,   Command::Command0,
+                                 Command::Command0,       Command::Command0,   Command::Command0,   Command::Command0,   Command::Command0,
+                                 Command::Command0,       Command::Command0,   Command::CommandDIV, Command::Command6,   Command::Command4,
+                                 Command::Command4,       Command::Command8,   Command::Command7,   Command::CommandEQU, Command::CommandNULL };
         TestDriver::Test(L"15,507", L"1000000000 \x00F7 64487=", commands13, true, false);
 
         Command commands14[] = { Command::ModeProgrammer, Command::CommandDec, Command::Command1,   Command::Command0,   Command::Command0,
@@ -1231,17 +1223,18 @@ namespace CalculatorManagerTest
         VERIFY_ARE_EQUAL(0, pCalculatorDisplay->GetBinaryOperatorReceivedCallCount());
 
         m_calculatorManager->SetStandardMode();
-        ExecuteCommands({ Command::Command1,
-                          Command::CommandADD,
-                          Command::Command2,
-                          Command::CommandMUL,
-                          Command::Command1,
-                          Command::Command0,
-                          Command::CommandSUB,
-                          Command::Command5,
-                          Command::CommandDIV,
-                          Command::Command5,
-                          Command::CommandEQU });
+        ExecuteCommands(
+            { Command::Command1,
+              Command::CommandADD,
+              Command::Command2,
+              Command::CommandMUL,
+              Command::Command1,
+              Command::Command0,
+              Command::CommandSUB,
+              Command::Command5,
+              Command::CommandDIV,
+              Command::Command5,
+              Command::CommandEQU });
 
         wstring display = pCalculatorDisplay->GetPrimaryDisplay();
         VERIFY_ARE_EQUAL(L"5", display);

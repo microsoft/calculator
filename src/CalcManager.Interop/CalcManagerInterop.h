@@ -118,6 +118,10 @@ namespace winrt::CalcManager::Interop::implementation
         CalcManager::Interop::CalculatorCommand GetCurrentDegreeMode();
         void SetInHistoryItemLoadMode(bool isHistoryItemLoadMode);
         com_array<CalcManager::Interop::ExpressionCommandWrapper> GetDisplayCommandsSnapshot();
+        hstring ScientificState();
+        bool IsScientificFormat();
+        void RestoreScientificState(hstring const& state);
+        void EditScientificToken(uint32_t index, CalcManager::Interop::CalculatorCommand command, bool append);
 
     private:
         std::unique_ptr<CalcDisplayBridge> m_displayBridge;
@@ -128,8 +132,7 @@ namespace winrt::CalcManager::Interop::implementation
 
 namespace winrt::CalcManager::Interop::factory_implementation
 {
-    struct CalculatorManagerWrapper
-        : CalculatorManagerWrapperT<CalculatorManagerWrapper, implementation::CalculatorManagerWrapper>
+    struct CalculatorManagerWrapper : CalculatorManagerWrapperT<CalculatorManagerWrapper, implementation::CalculatorManagerWrapper>
     {
     };
 }

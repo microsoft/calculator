@@ -18,6 +18,7 @@ namespace CalculatorApp
             {
                 if (item is DisplayExpressionToken token)
                 {
+                    if (token.IsScientificEditable) return EditableTemplate;
                     CalculatorApp.ViewModel.Common.TokenType type = token.Type;
 
                     switch (type)
@@ -41,7 +42,7 @@ namespace CalculatorApp
             public Windows.UI.Xaml.DataTemplate OperandTemplate { get; set; }
 
             public Windows.UI.Xaml.DataTemplate SeparatorTemplate { get; set; }
+            public Windows.UI.Xaml.DataTemplate EditableTemplate { get; set; }
         }
     }
 }
-

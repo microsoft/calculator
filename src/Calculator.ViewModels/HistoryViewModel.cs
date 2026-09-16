@@ -91,6 +91,7 @@ namespace CalculatorApp.ViewModel
             localizer.LocalizeDisplayValue(ref result);
 
             var item = new HistoryItemViewModel(expression, result, newItem.Tokens, newItem.Commands);
+            item.ScientificState = newItem.ScientificState;
 
             // Check if we have hit the max items
             if (Items.Count >= (int)(_calculatorManager?.MaxHistorySize ?? 0))
@@ -141,7 +142,7 @@ namespace CalculatorApp.ViewModel
 
         public void ShowItem(HistoryItemViewModel e)
         {
-            if (IsReadOnly)
+            if (IsReadOnly || !e.CanReplay)
             {
                 AnnounceUnsupportedAction();
                 return;
@@ -166,7 +167,7 @@ namespace CalculatorApp.ViewModel
             int itemIndex = Items.IndexOf(e);
             if (itemIndex >= 0)
             {
-                if ((_calculatorManager?.RemoveHistoryItem((uint)itemIndex) ?? false))
+                if ((_calculatorManager?.RemoveHistoryItem((uint)(Items.Count - 1 - itemIndex)) ?? false))
                 {
                     Items.RemoveAt(itemIndex);
                     OnPropertyChanged(nameof(ItemsCount));
@@ -212,6 +213,7 @@ namespace CalculatorApp.ViewModel
                     localizer.LocalizeDisplayValue(ref result);
 
                     var item = new HistoryItemViewModel(expression, result, histItem.Tokens, histItem.Commands);
+                    item.ScientificState = histItem.ScientificState;
                     historyListVM.Add(item);
                 }
             }

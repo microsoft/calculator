@@ -229,6 +229,10 @@
     <ClInclude Include="Epsilon\tmp.hpp" />
     <ClInclude Include="Epsilon\z.hpp" />
     <ClInclude Include="EpsilonEngine\EpsilonEngine.h" />
+    <ClInclude Include="EpsilonEngine\Syntax.h" />
+    <ClInclude Include="EpsilonEngine\Evaluator.h" />
+    <ClInclude Include="EpsilonEngine\Numerics.h" />
+    <ClInclude Include="ScientificCalculator.h" />
     <ClInclude Include="CalculatorHistory.h" />
     <ClInclude Include="CalculatorManager.h" />
     <ClInclude Include="CalculatorResource.h" />
@@ -255,7 +259,18 @@
     <ClInclude Include="UnitConverter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ScientificCalculator.cpp" />
+    <ClCompile Include="EpsilonEngine\Parser.cpp">
+      <LanguageStandard>stdcpp23</LanguageStandard>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles />
+    </ClCompile>
     <ClCompile Include="EpsilonEngine\EpsilonEngine.cpp">
+      <LanguageStandard>stdcpp23</LanguageStandard>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles />
+    </ClCompile>
+    <ClCompile Include="EpsilonEngine\Evaluator.cpp">
       <LanguageStandard>stdcpp23</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <ForcedIncludeFiles />
@@ -306,7 +321,9 @@
     <None Include="Epsilon\LICENSE" />
     <None Include="Epsilon\VENDOR.md" />
     <None Include="EpsilonEngine\README.md" />
+    <None Include="EpsilonEngine\Lexer.re" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="..\..\build\Re2c.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

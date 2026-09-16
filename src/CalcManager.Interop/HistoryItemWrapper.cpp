@@ -40,6 +40,7 @@ namespace winrt::CalcManager::Interop::implementation
 
         m_expression = hstring(histVec.expression);
         m_result = hstring(histVec.result);
+        m_scientificState = hstring(histVec.scientificState);
     }
 
     HistoryItemWrapper::HistoryItemWrapper(
@@ -80,9 +81,9 @@ namespace winrt::CalcManager::Interop::implementation
 
         nativeItem.expression = std::wstring(m_expression);
         nativeItem.result = std::wstring(m_result);
+        nativeItem.scientificState = std::wstring(m_scientificState);
 
-        return std::make_shared<CalculationManager::HISTORYITEM>(
-            CalculationManager::HISTORYITEM{ std::move(nativeItem) });
+        return std::make_shared<CalculationManager::HISTORYITEM>(CalculationManager::HISTORYITEM{ std::move(nativeItem) });
     }
 
     com_array<CalcManager::Interop::HistoryToken> HistoryItemWrapper::Tokens()

@@ -74,6 +74,9 @@ jobs:
     - uses: actions/checkout@v4
     - uses: microsoft/setup-msbuild@v2
       name: Setup msbuild
+    - run: .\build\scripts\SetupRe2c.ps1
+      shell: pwsh
+      name: Provision pinned re2c 4.6
     - uses: nuget/setup-nuget@v2
       name: Use nuget 6.x
       with:

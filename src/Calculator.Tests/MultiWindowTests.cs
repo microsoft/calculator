@@ -283,7 +283,7 @@ namespace Calculator.Tests
             ValidateViewModelMode(scientificViewModel1, 1);
             ValidateViewModelMode(scientificViewModel2, 1);
 
-            // Scientific 1: Degrees; unsupported HYP leaves the first instance unchanged.
+            // Scientific 1 uses hyperbolic functions independently of the second instance.
             var initItems1 = new TestItem[]
             {
                 new(NumbersAndOperatorsEnum.Degree, "0", ""),
@@ -291,7 +291,7 @@ namespace Calculator.Tests
                 new(NumbersAndOperatorsEnum.None, "", "")
             };
             ValidateViewModelByCommands(scientificViewModel1, initItems1, true);
-            Assert.IsFalse(scientificViewModel1.IsCommandSupported(NumbersAndOperatorsEnum.Hyp));
+            Assert.IsTrue(scientificViewModel1.IsCommandSupported(NumbersAndOperatorsEnum.Hyp));
 
             // Scientific 2: Radians with F-E checked
             var initItems2 = new TestItem[]
@@ -646,12 +646,12 @@ namespace Calculator.Tests
                 viewModels[i].ButtonPressed.Execute(NumbersAndOperatorsEnum.Memory);
             }
 
-            Assert.IsFalse(viewModels[1].IsMemorySupported);
-            Assert.AreEqual(0, viewModels[1].MemorizedNumbers.Count);
+            Assert.IsTrue(viewModels[1].IsMemorySupported);
+            Assert.AreEqual(1, viewModels[1].MemorizedNumbers.Count);
             Assert.AreEqual("7", viewModels[1].DisplayValue);
-            string[] expectedMemoryValues = { "3", null, "F" };
+            string[] expectedMemoryValues = { "3", "7", "F" };
 
-            foreach (int i in new[] { 0, 2 })
+            foreach (int i in new[] { 0, 1, 2 })
             {
                 Assert.AreEqual(1, viewModels[i].MemorizedNumbers.Count);
                 var memorySlot = viewModels[i].MemorizedNumbers[0];

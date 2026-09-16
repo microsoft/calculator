@@ -76,6 +76,12 @@ jobs:
       filePath: $(Build.SourcesDirectory)\build\scripts\UpdateAppxManifestVersion.ps1
       arguments: '-AppxManifest $(Build.SourcesDirectory)\src\Calculator\$(ManifestFileName) -Version $(Build.BuildNumber)'
 
+  - task: PowerShell@2
+    displayName: Provision pinned re2c 4.6
+    inputs:
+      filePath: $(Build.SourcesDirectory)\build\scripts\SetupRe2c.ps1
+      pwsh: true
+
   - task: VSBuild@1
     displayName: 'Build solution src/Calculator.slnx'
     inputs:

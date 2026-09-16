@@ -28,6 +28,7 @@ namespace CalculatorApp.ViewModel.Snapshot
 
     public sealed class CalcManagerHistoryItem
     {
+        public string ScientificState { get; set; } = string.Empty;
         public IList<CalcManagerToken> Tokens { get; set; }
         public IList<ExpressionCommandWrapper> Commands { get; set; }
         public string Expression { get; set; }
@@ -84,6 +85,7 @@ namespace CalculatorApp.ViewModel.Snapshot
 
     public sealed class StandardCalculatorSnapshot
     {
+        public string ScientificState { get; set; } = string.Empty;
         public CalcManagerSnapshot CalcManager { get; set; }
         public PrimaryDisplaySnapshot PrimaryDisplay { get; set; }
         public ExpressionDisplaySnapshot ExpressionDisplay { get; set; }
@@ -114,6 +116,7 @@ namespace CalculatorApp.ViewModel.Snapshot
             }
 
             var mode = (ViewMode)snapshot.Mode;
+            ValidateScientificState(snapshot.StandardCalculator?.ScientificState);
             if (!NavCategoryStates.IsValidViewMode(mode) || !NavCategoryStates.IsViewModeEnabled(mode))
             {
                 throw new ArgumentOutOfRangeException(nameof(snapshot), snapshot.Mode, "Invalid calculator mode.");
@@ -138,6 +141,7 @@ namespace CalculatorApp.ViewModel.Snapshot
                 {
                     var item = historyItems[i]
                         ?? throw new ArgumentException($"History item {i} is null.", nameof(snapshot));
+                    ValidateScientificState(item.ScientificState);
                     ValidateTokenIndexes(item.Tokens, item.Commands, $"history item {i}");
                 }
             }
@@ -152,23 +156,32 @@ namespace CalculatorApp.ViewModel.Snapshot
         internal static void ValidateProtocol(ApplicationSnapshot snapshot)
         {
             Validate(snapshot);
+            bool scientific = snapshot.Mode == (int)ViewMode.Scientific;
 
             var historyItems = snapshot.StandardCalculator?.CalcManager?.HistoryItems;
             if (historyItems != null)
             {
                 for (int i = 0; i < historyItems.Count; i++)
                 {
-                    ValidateCommands(historyItems[i].Commands, $"history item {i}");
+                    if (!scientific || string.IsNullOrEmpty(historyItems[i].ScientificState))
+                        ValidateCommands(historyItems[i].Commands, $"history item {i}");
                 }
             }
 
             var expression = snapshot.StandardCalculator?.ExpressionDisplay;
-            if (expression != null)
+            if (expression != null && (!scientific || string.IsNullOrEmpty(snapshot.StandardCalculator?.ScientificState)))
             {
                 ValidateCommands(expression.Commands, "expression");
             }
 
-            ValidateCommands(snapshot.StandardCalculator?.DisplayCommands, "display");
+            if (!scientific || string.IsNullOrEmpty(snapshot.StandardCalculator?.ScientificState))
+                ValidateCommands(snapshot.StandardCalculator?.DisplayCommands, "display");
+        }
+
+        private static void ValidateScientificState(string state)
+        {
+            if (!string.IsNullOrEmpty(state) && (state.Length > 1048576 || !state.StartsWith("Scientific/1 ", StringComparison.Ordinal)))
+                throw new ArgumentException("Unsupported or oversized Scientific state.");
         }
 
         private static void ValidateTokenIndexes(

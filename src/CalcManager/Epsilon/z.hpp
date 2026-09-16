@@ -82,7 +82,7 @@ constexpr auto div_2d(D u0, D u1, D v) {
     W q;
     D r;
   };
-  assert(v != 0);
+  if (v == 0) throw divide_by_zero_error{};
   W u = (static_cast<W>(u1) << (sizeof(D) * CHAR_BIT)) | u0;
   return result_t{.q = static_cast<W>(u / v), .r = static_cast<D>(u % v)};
 }

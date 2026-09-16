@@ -5,9 +5,24 @@
 #include "CalcManagerInterop.h"
 #include "HistoryToken.h"
 
-
 namespace winrt::CalcManager::Interop::implementation
 {
+    hstring CalculatorManagerWrapper::ScientificState()
+    {
+        return hstring(m_manager->GetScientificState());
+    }
+    bool CalculatorManagerWrapper::IsScientificFormat()
+    {
+        return m_manager->IsScientificFormat();
+    }
+    void CalculatorManagerWrapper::RestoreScientificState(hstring const& state)
+    {
+        m_manager->RestoreScientificState(std::wstring(state));
+    }
+    void CalculatorManagerWrapper::EditScientificToken(uint32_t index, CalcManager::Interop::CalculatorCommand command, bool append)
+    {
+        m_manager->EditScientificToken(index, static_cast<CalculationManager::Command>(command), append);
+    }
     namespace
     {
         void RequireCapability(bool supported)
@@ -18,8 +33,7 @@ namespace winrt::CalcManager::Interop::implementation
             }
         }
 
-        com_array<CalcManager::Interop::HistoryItemWrapper> WrapHistoryItems(
-            std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> const& items)
+        com_array<CalcManager::Interop::HistoryItemWrapper> WrapHistoryItems(std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> const& items)
         {
             std::vector<CalcManager::Interop::HistoryItemWrapper> result;
             result.reserve(items.size());
@@ -61,12 +75,18 @@ namespace winrt::CalcManager::Interop::implementation
 
     void CalcDisplayBridge::SetPrimaryDisplay(const std::wstring& pszText, bool isError)
     {
-        if (m_onSetPrimaryDisplay) { m_onSetPrimaryDisplay(hstring(pszText), isError); }
+        if (m_onSetPrimaryDisplay)
+        {
+            m_onSetPrimaryDisplay(hstring(pszText), isError);
+        }
     }
 
     void CalcDisplayBridge::SetIsInError(bool isInError)
     {
-        if (m_onSetIsInError) { m_onSetIsInError(isInError); }
+        if (m_onSetIsInError)
+        {
+            m_onSetIsInError(isInError);
+        }
     }
 
     void CalcDisplayBridge::SetExpressionDisplay(
@@ -104,27 +124,42 @@ namespace winrt::CalcManager::Interop::implementation
 
     void CalcDisplayBridge::SetParenthesisNumber(unsigned int count)
     {
-        if (m_onSetParenthesisNumber) { m_onSetParenthesisNumber(count); }
+        if (m_onSetParenthesisNumber)
+        {
+            m_onSetParenthesisNumber(count);
+        }
     }
 
     void CalcDisplayBridge::OnNoRightParenAdded()
     {
-        if (m_onNoRightParenAdded) { m_onNoRightParenAdded(); }
+        if (m_onNoRightParenAdded)
+        {
+            m_onNoRightParenAdded();
+        }
     }
 
     void CalcDisplayBridge::MaxDigitsReached()
     {
-        if (m_onMaxDigitsReached) { m_onMaxDigitsReached(); }
+        if (m_onMaxDigitsReached)
+        {
+            m_onMaxDigitsReached();
+        }
     }
 
     void CalcDisplayBridge::BinaryOperatorReceived()
     {
-        if (m_onBinaryOperatorReceived) { m_onBinaryOperatorReceived(); }
+        if (m_onBinaryOperatorReceived)
+        {
+            m_onBinaryOperatorReceived();
+        }
     }
 
     void CalcDisplayBridge::OnHistoryItemAdded(unsigned int addedItemIndex)
     {
-        if (m_onHistoryItemAdded) { m_onHistoryItemAdded(addedItemIndex); }
+        if (m_onHistoryItemAdded)
+        {
+            m_onHistoryItemAdded(addedItemIndex);
+        }
     }
 
     void CalcDisplayBridge::SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers)
@@ -135,17 +170,26 @@ namespace winrt::CalcManager::Interop::implementation
         {
             winrtNumbers.push_back(hstring(num));
         }
-        if (m_onSetMemorizedNumbers) { m_onSetMemorizedNumbers(com_array<hstring>(std::move(winrtNumbers))); }
+        if (m_onSetMemorizedNumbers)
+        {
+            m_onSetMemorizedNumbers(com_array<hstring>(std::move(winrtNumbers)));
+        }
     }
 
     void CalcDisplayBridge::MemoryItemChanged(unsigned int indexOfMemory)
     {
-        if (m_onMemoryItemChanged) { m_onMemoryItemChanged(indexOfMemory); }
+        if (m_onMemoryItemChanged)
+        {
+            m_onMemoryItemChanged(indexOfMemory);
+        }
     }
 
     void CalcDisplayBridge::InputChanged()
     {
-        if (m_onInputChanged) { m_onInputChanged(); }
+        if (m_onInputChanged)
+        {
+            m_onInputChanged();
+        }
     }
 
     // ---- ResourceProviderBridge ----
@@ -182,10 +226,17 @@ namespace winrt::CalcManager::Interop::implementation
         CalcManager::Interop::GetCEngineStringHandler const& onGetCEngineString)
     {
         m_displayBridge = std::make_unique<CalcDisplayBridge>(
-            onSetPrimaryDisplay, onSetIsInError, onSetExpressionDisplay,
-            onSetParenthesisNumber, onNoRightParenAdded, onMaxDigitsReached,
-            onBinaryOperatorReceived, onHistoryItemAdded, onSetMemorizedNumbers,
-            onMemoryItemChanged, onInputChanged);
+            onSetPrimaryDisplay,
+            onSetIsInError,
+            onSetExpressionDisplay,
+            onSetParenthesisNumber,
+            onNoRightParenAdded,
+            onMaxDigitsReached,
+            onBinaryOperatorReceived,
+            onHistoryItemAdded,
+            onSetMemorizedNumbers,
+            onMemoryItemChanged,
+            onInputChanged);
         m_resourceBridge = std::make_unique<ResourceProviderBridge>(onGetCEngineString);
         m_manager = std::make_unique<CalculationManager::CalculatorManager>(m_displayBridge.get(), m_resourceBridge.get());
     }

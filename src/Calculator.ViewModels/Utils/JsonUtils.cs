@@ -90,6 +90,8 @@ namespace CalculatorApp.JsonUtils
     {
         [JsonIgnore]
         public CalcManagerHistoryItem Value;
+        [JsonPropertyName("sci")]
+        public string ScientificState { get => Value.ScientificState; set => Value.ScientificState = value; }
 
         [JsonPropertyName("t")]
         public IEnumerable<CalcManagerTokenAlias> Tokens
@@ -134,7 +136,8 @@ namespace CalculatorApp.JsonUtils
                 Tokens = x.Tokens.Select(Helpers.MapToken).ToList(),
                 Commands = x.Commands.Select(Helpers.MapCommandAlias).ToList(),
                 Expression = x.Expression,
-                Result = x.Result
+                Result = x.Result,
+                ScientificState = x.ScientificState
             }).ToList();
         }
 
@@ -190,6 +193,8 @@ namespace CalculatorApp.JsonUtils
     {
         [JsonIgnore]
         public StandardCalculatorSnapshot Value;
+        [JsonPropertyName("sci")]
+        public string ScientificState { get => Value.ScientificState; set => Value.ScientificState = value; }
 
         [JsonPropertyName("m")]
         public CalcManagerSnapshotAlias CalcManager

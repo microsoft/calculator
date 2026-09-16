@@ -24,6 +24,11 @@ namespaces, copyright notices, and SPDX identifiers intact.
    integer upper bound `ceil(k * 1661 / 1000)`. This prevents binary floating
    point and truncation from controlling Epsilon result materialization.
    `SquareRootRegressionValues` covers the rounded irrational output.
+4. `z.hpp`: replace the debug-only nonzero assertion in `details::div_2d`
+   with an explicit `divide_by_zero_error` guard. The expanded evaluator
+   instantiates division paths under Release link-time optimization; the guard
+   preserves defined error behavior with assertions disabled and eliminates
+   C4723/C4724 warnings without suppressing diagnostics.
 
 The adapter applies input, operation, nesting, precision, magnitude, and
 realization budgets before invoking the library. If another compilation or

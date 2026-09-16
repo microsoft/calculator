@@ -1,103 +1,171 @@
-# Epsilon scientific adapter
+# Stateless Epsilon expression engine
 
-`EpsilonEngine.h` is a C++17-compatible PIMPL boundary. Epsilon types occur
-only in `EpsilonEngine.cpp`, which must be compiled as C++23.
+`EpsilonEngine::Evaluate(source, limits)` is a C++17-compatible, stateless native
+entry point. It returns an `EvaluationResult`: either an owned `EpsilonValue` or
+an `ExpressionException` containing an error code and source span. Internal
+implementation files use C++23.
 
-## Build integration
+```text
+ScientificCalculator -> complete canonical source
+                      -> re2c Lexer -> Pratt Parser -> owned AST
+                      -> bounded, iterative Epsilon evaluator -> EpsilonValue
+                      -> numeric formatting -> localized display
+```
 
-Add `EpsilonEngine/EpsilonEngine.cpp` to `CalcManager`. For that item only:
+The engine has no session fields, command dependency, display callback, resource
+provider, angle setting, history, memory, RNG, or retained-result environment.
+Every invocation owns its source, AST, proof metadata, work accounting and lazy
+real graph. Independent requests can execute concurrently. Values survive the
+source and AST; copies own independent lazy graphs. Do not format the **same**
+value concurrently: Epsilon's approximation cache is mutable.
 
-- set `LanguageStandard` to `stdcpp23` (VS v145 maps this to
-  `/std:c++23preview`);
-- set `PrecompiledHeader` to `NotUsing`, because CalcManager's PCH is built
-  under C++20;
-- clear `ForcedIncludeFiles` for this item so the project PCH is not forced;
-- do not add a global Epsilon include directory. Relative includes deliberately
-  keep the generic vendored header names private.
+`ScientificCalculator` owns all interaction state and features. It keeps original
+expression provenance even after formatting and submits that source again for
+continuations. Thus `1/3=`, then `*3=` evaluates `(1/3)*3`, not rounded display text.
+No hidden value bindings, `<retained>` tokens, `Ans`, RatPack fallback, or C#
+evaluator participate in Scientific calculations.
 
-Add `CalculatorUnitTests/EpsilonEngineTests.cpp` to the native test project.
-It consumes only the public PIMPL header and remains C++17.
+## Grammar
 
-## Deterministic limits
+Canonical input is ASCII and locale-independent. Numbers include `2`, `.5`,
+`2.`, `1.e+3`, and `1e-3`. Prefix signs are operators; an exponent requires digits.
+Constants are `pi` and `e`.
 
-| Resource | Limit |
+| Syntax | Meaning |
+|---|---|
+| `+x`, `-x`, `(x)` | Prefix signs and grouping |
+| `x+y`, `x-y`, `x*y`, `x/y` | Arithmetic |
+| `x mod y` | Scientific modulus; sign follows the divisor |
+| `x^y`, `pow(x,y)` | Real power |
+| `x root y`, `root(x,y)` | y-th root of x |
+| `x logbase y`, `logbase(x,y)` | Logarithm of x to base y |
+| `x!`, `fact(x)` | Factorial, including real gamma continuation |
+| `sqr`, `cube`, `sqrt`, `cbrt`, `recip`, `abs` | Unary mathematical functions |
+| `ln`, `log`/`log10`, `exp` | Natural/base-10 logarithm and exponential |
+| `floor`, `ceil`, `trunc`, `frac`, `dms`, `degrees` | Discrete and angle-display conversions |
+| `sin`, `cos`, `tan`, `sec`, `csc`, `cot` | Trigonometric functions |
+| `asin`, `acos`, `atan`, `asec`, `acsc`, `acot` | Principal inverse trigonometric functions |
+| `sinh`, `cosh`, `tanh`, `sech`, `csch`, `coth` | Hyperbolic functions |
+| `asinh`, `acosh`, `atanh`, `asech`, `acsch`, `acoth` | Inverse hyperbolic functions |
+
+Unary names use parentheses. Trigonometric and inverse-trigonometric calls accept
+an optional second argument `deg`, `rad`, or `grad`; absent units mean radians.
+Units are not standalone values. Hyperbolic functions do not accept units.
+`ScientificCalculator` always emits the selected unit explicitly and preserves it
+when the expression is reused under a different angle mode.
+
+Calls/postfix factorial bind most tightly, followed by power/root/logbase, unary
+signs, multiplication/division/modulus, then addition/subtraction. Power is
+right-associative; the other infix operators are left-associative. `-2^2` means
+`-(2^2)`. Button entry preserves Calculator's grouping policy by explicitly
+grouping already committed operations; it need not match an unparenthesized text
+power chain.
+
+The parser never evaluates or repairs input. It requires EOF after a complete
+expression. Unknown functions, wrong arity/units, malformed numbers, embedded
+NUL, adjacent operands and unmatched delimiters produce diagnostics.
+There are no variables, assignments, imports, implicit multiplication, percent
+operator, commands, or random function in the engine.
+
+## Interaction normalization
+
+ScientificCalculator handles incomplete **editor** state without sending
+incomplete expressions to the engine. First equals closes unmatched opening
+parentheses and supplies the displayed operand for a trailing operator (`4+=`
+becomes `4+4`). Empty groups remain errors. Repeated equals reuses the last
+effective operation and its original operand expression.
+
+Immediate unary operations submit a complete function call for the current
+operand/group. EXP editing of a computed value emits `(<original source>)*1eN`.
+Implicit multiplication becomes `*`. Contextual percent becomes ordinary
+arithmetic: `200+10%` becomes `200+(200*10/100)`, while `200*10%` becomes
+`200*(10/100)`. Random is sampled in ScientificCalculator and converted to an
+exact terminating decimal before entering source; replay never samples again.
+
+The editable primary display, expression labels, canonical source, and numeric
+value are separate. Localization and F-E formatting never replace canonical
+source. Scientific memory is separate from Standard/Programmer memory.
+
+## Numerical semantics and resource limits
+
+Expression values are Epsilon reals. Bounded exact rational, rational-pi,
+zero/sign and cancellation certificates support sound domain decisions and exact
+special cases; they are not a second floating-point evaluator. Structural
+identities must represent the actual arguments and angle units.
+
+Domain checks precede numerical shortcuts: neither `0*(1/0)` nor
+`sqrt(-1)^2` suppresses an error. Exact negative rational powers and odd roots
+have explicit real-domain handling. Unknown zero/sign/integer-boundary decisions
+use bounded enclosures, not tolerance-based equality. An unresolved decision
+reports a resource error rather than a false zero or a false domain result.
+
+Integer factorial uses Epsilon integers; half-integer factorial uses the exact
+recurrence from sqrt(pi). Other factorials use Spouge's gamma formula with
+outward-rounded fixed-point enclosures and its positive-argument relative
+remainder bound (conservatively `6^-a`). Negative inputs are shifted by recurrence.
+The kernel only returns an approximation when its final enclosure establishes
+Epsilon's one-base-4-unit error contract; otherwise it reports a resource error.
+There is no binary floating-point math fallback.
+
+| Resource | Default/hard ceiling |
 |---|---:|
-| Editable numeric input | 256 characters |
-| Pratt tokens | 256 |
-| Parenthesis/lazy-operation depth | 32 |
-| Operations retained in a lazy value | 128 |
-| Input decimal exponent/scale | +/-256 |
-| Display precision | 1-100 significant decimal digits (clamped) |
-| Bounded zero/sign probe | 640 base-4 places |
-| Materialized integer magnitude | 54 32-bit limbs (~520 decimal digits) |
-| Exponential-function argument | absolute value <= 1,000 |
-| Formatted output | 1,024 characters |
+| Canonical source | 65,536 characters |
+| Lexer tokens / AST nodes | 8,192 each |
+| Parser / AST depth | 32 |
+| Estimated expression graph work | 4,096 |
+| Editable number / literal length | 256 characters |
+| Decimal input exponent/scale | +/-256 |
+| Significant display digits | 1-100 (clamped) |
+| Sign/zero classification | up to 640 base-4 places |
+| Fractional display materialization | 370 decimal places |
+| Integer magnitude | 54 32-bit limbs (about 520 decimal digits) |
+| Exponential argument magnitude | 1,000 |
+| Integer power exponent magnitude | 4,096 |
+| Integer factorial argument | 0-250 |
+| Half-integer factorial numerator magnitude | 200 |
+| Gamma recurrence shifts | at most 101 |
+| Gamma positive argument / target precision | bounded at 128 / 1,024 base-4 places |
+| Serialized Scientific state | 1 MiB |
+| Scientific memory / history | 100 / existing CalculatorHistory limit |
 
-Limits are checked before or while composing/materializing lazy Epsilon values.
-Limit failures use the calculator's overflow display contract. Domain and
-divide-by-zero failures use their existing display errors. Unsupported
-commands are rejected before state changes with `std::invalid_argument`.
-The bounded probe is never treated as a proof that a real is exactly zero:
-exact zero, one, sign, and cancellation facts are retained only when they
-follow soundly from input or an operation. If a nonzero/sign decision remains
-unresolved at the probe limit, the adapter reports overflow instead of
-displaying a false zero or a false domain error. Values whose first significant
-decimal digit is beyond the 370-place materialization budget likewise report
-overflow.
+Callers may lower `EvaluationLimits`, not raise them past hard ceilings.
+Checks cover parser construction and lazy graph expansion, including repeated
+squares. Source re-emission grows with continued operations, percent and memory
+arithmetic; long sessions can reach limits even if a displayed result is small.
+Exact-real correctness takes precedence over legacy tolerance heuristics.
 
-Trigonometric arguments have no separate magnitude cap; they use the shared
-input, magnitude, and expression budgets. Epsilon reduces large arguments with
-precision scaled to their magnitude. Proven quarter turns are resolved before
-numerical evaluation, including tangent poles.
+## Diagnostics and persistence
 
-Exact-relation metadata is deliberately small: canonical decimal input atoms,
-opaque identities for retained Epsilon values, bounded signed-64-bit decimal
-addition/subtraction certificates, and a bounded 64-bit perfect-square
-certificate. One-step certificates preserve `(x / y) * y`, `sqr(sqrt(x))`,
-base-10 logs of exact powers of ten, and exact quadrant zeros/poles for
-DEG/GRAD inputs and rational multiples of pi in RAD mode. Angle certificates
-retain a reduced rational coefficient and whether it multiplies pi, with each
-integer bounded to 54 limbs. They propagate through supported arithmetic,
-negation, and retained exponent entry; mixed rational/pi sums and powers of pi
-other than zero or one have no certificate. These nonrecursive certificates
-only establish exact angle identities, not a replacement expression evaluator.
-Numerical results remain Epsilon reals, including exact trigonometric zeros
-and units. A zero numerical approximation alone never establishes a quadrant.
+Syntax, domain, divide-by-zero, undefined and resource-limit diagnostics are
+distinct. ScientificCalculator maps them to existing localized display errors.
+Materialization may also produce an `ExpressionException`; callers must handle
+formatting errors as well as evaluation results.
 
-Primary results use the configured count as significant decimal digits,
-preserve the locale decimal separator, and apply `sThousand`/`sGrouping` to
-fixed-format output, including the editable primary display. Grouping changes
-only presentation; the editable lexeme and retained Epsilon value are separate.
-Terminal-zero grouping patterns such as `3;0` and
-`3;2;0` repeat their preceding group. Scientific-format mantissas remain
-ungrouped. Large values are normalized before decimal materialization so
-significant-digit rounding occurs once. Scientific output preserves the
-explicit exponent sign and decimal marker used by the existing UI, including
-`0.e+0`, `1.e+3`, and `-1.e+0` when F-E formatting is enabled.
+The versioned `Scientific/1` state stores canonical operand source, editable
+input, grouping, result provenance, repeat state, angle/inverse/hyperbolic/F-E
+settings and display labels. Restore validates and evaluates into a temporary
+calculator before replacing the live state. Memory is deliberately not restored
+from a snapshot; restoring Scientific state preserves each mode's memory.
 
-The first equals preserves Calculator button semantics: unmatched opening
-parentheses are closed, and a trailing binary operator repeats the current
-operand (`4 + =` produces `8`). A completed result ignores subsequent equals.
-Pending operators reduce only the current parenthesized group and operators
-that bind at least as tightly as the incoming operator. Thus `1 + 2 *` keeps
-the primary display at `2`, while `2 * (2) + =` uses the retained displayed
-value `4` for the omitted right operand and produces `8`.
-Opening a group after an operand and entering a digit after a closed group
-insert implicit multiplication. Structurally malformed expressions still
-produce an explicit domain error.
+New history records carry this state separately from display text and legacy
+commands. They support load, operand/operator edits, delete and clear.
+Old records with valid legacy commands use the validated command replay path;
+old display-only records remain display-only and removable. Lost exact
+provenance is never reconstructed from a formatted result.
 
-Clear Entry removes only the editable or retained current operand and displays
-zero. `IsInputEmpty()` then reports true even when a pending expression prefix
-remains, allowing the UI to expose Clear so the next Clear removes that prefix.
+## Build
 
-Editable operands remain on the primary display and are not published as
-committed expression tokens. Operators publish with Calculator spacing and
-glyphs; failed division retains the last valid prefix. Unary failures publish
-the attempted unary expression. History receives one display-only token with
-command index `-1` and an empty command list, so Scientific history cannot be
-replayed or edited.
+Run `build\scripts\SetupRe2c.ps1` once before building. It downloads the official
+re2c 4.6 source archive, checks SHA-256, and builds the tool with Visual Studio
+CMake. Ordinary builds never download tools.
 
-Exponent entry always includes an explicit sign (`1.e+3`). A retained unary or
-constant value remains an Epsilon value while its exponent is edited; formatted
-display text is never reparsed. Backspace restores the retained value, and a
-binary operator cancels an incomplete retained exponent before continuing.
+`build\Re2c.targets` validates the version and generates
+`$(IntDir)EpsilonEngine\Lexer.g.cpp` before compilation. Set `Re2cExe` to use an
+already provisioned re2c 4.6 executable. Source/tool/target timestamps invalidate
+generation; outputs are configuration/platform-local and tracked for clean.
+Generated C++ and the local tool directory are not committed.
+
+Evaluator.cpp, EpsilonEngine.cpp, Parser.cpp and the generated lexer compile as C++23 without
+the project's C++20 PCH or forced include. ScientificCalculator and other
+CalcManager units retain C++20. WinRT consumers and native tests remain C++17.
+Do not edit generated WinRT projections.

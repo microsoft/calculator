@@ -6,7 +6,7 @@
 #include "Header Files/CalcEngine.h"
 #include "CalculatorManager.h"
 #include "CalculatorResource.h"
-#include "EpsilonEngine/EpsilonEngine.h"
+#include "ScientificCalculator.h"
 
 using namespace std;
 using namespace CalcEngine;
@@ -24,7 +24,8 @@ namespace CalculationManager
         class EngineConstruction
         {
         public:
-            explicit EngineConstruction(bool& constructing) : m_constructing(constructing)
+            explicit EngineConstruction(bool& constructing)
+                : m_constructing(constructing)
             {
                 m_constructing = true;
             }
@@ -165,6 +166,8 @@ namespace CalculationManager
         if (m_scientificCalculatorEngine)
         {
             m_scientificCalculatorEngine->Reset();
+            if (clearMemory)
+                m_scientificCalculatorEngine->MemorizedNumberClearAll();
         }
         m_currentDegreeMode = Command::CommandDEG;
 
@@ -178,6 +181,7 @@ namespace CalculationManager
         {
             this->MemorizedNumberClearAll();
         }
+        SetMemorizedNumbersString();
     }
 
     /// <summary>
@@ -201,6 +205,7 @@ namespace CalculationManager
         m_currentCalculatorEngine->ChangePrecision(static_cast<int>(CalculatorPrecision::StandardModePrecision));
         UpdateMaxIntDigits();
         SetPrimaryDisplay(m_currentCalculatorEngine->GetCurrentResultForRadix(10, static_cast<int>(CalculatorPrecision::StandardModePrecision), true), false);
+        SetMemorizedNumbersString();
     }
 
     /// <summary>
@@ -210,7 +215,7 @@ namespace CalculationManager
     {
         if (!m_scientificCalculatorEngine)
         {
-            m_scientificCalculatorEngine = make_unique<EpsilonEngine>(m_resourceProvider, this, m_pSciHistory);
+            m_scientificCalculatorEngine = make_unique<ScientificCalculator>(m_resourceProvider, this, m_pSciHistory);
         }
 
         m_isScientificMode = true;
@@ -219,6 +224,7 @@ namespace CalculationManager
         m_pHistory = m_pSciHistory.get();
         m_scientificCalculatorEngine->ProcessCommand(Command::CommandCLEAR);
         m_scientificCalculatorEngine->SetPrecision(static_cast<int>(CalculatorPrecision::ScientificModePrecision));
+        m_scientificCalculatorEngine->PublishMemory();
     }
 
     /// <summary>
@@ -241,6 +247,7 @@ namespace CalculationManager
         m_currentCalculatorEngine->ProcessCommand(IDC_CLEAR);
         m_currentCalculatorEngine->ChangePrecision(static_cast<int>(CalculatorPrecision::ProgrammerModePrecision));
         SetPrimaryDisplay(m_currentCalculatorEngine->GetCurrentResultForRadix(10, static_cast<int>(CalculatorPrecision::ProgrammerModePrecision), true), false);
+        SetMemorizedNumbersString();
     }
 
     /// <summary>
@@ -356,17 +363,17 @@ namespace CalculationManager
     bool CalculatorManager::IsCommandSupported(Command command) const
     {
         return !m_isScientificMode || command == Command::ModeBasic || command == Command::ModeScientific || command == Command::ModeProgrammer
-            || EpsilonEngine::IsCommandSupported(command);
+               || ScientificCalculator::IsCommandSupported(command);
     }
 
     bool CalculatorManager::IsMemorySupported() const
     {
-        return !m_isScientificMode;
+        return true;
     }
 
     bool CalculatorManager::IsHistoryReadOnly() const
     {
-        return m_isScientificMode;
+        return false;
     }
 
     void CalculatorManager::RequireMemorySupport() const
@@ -401,6 +408,11 @@ namespace CalculationManager
     /// </summary>
     void CalculatorManager::MemorizeNumber()
     {
+        if (m_isScientificMode)
+        {
+            m_scientificCalculatorEngine->MemorizeNumber();
+            return;
+        }
         RequireMemorySupport();
         if (m_currentCalculatorEngine->FInErrorState())
         {
@@ -429,6 +441,11 @@ namespace CalculationManager
     /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberLoad(_In_ unsigned int indexOfMemory)
     {
+        if (m_isScientificMode)
+        {
+            m_scientificCalculatorEngine->MemorizedNumberLoad(indexOfMemory);
+            return;
+        }
         RequireMemorySupport();
         if (m_currentCalculatorEngine->FInErrorState())
         {
@@ -448,6 +465,11 @@ namespace CalculationManager
     /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberAdd(_In_ unsigned int indexOfMemory)
     {
+        if (m_isScientificMode)
+        {
+            m_scientificCalculatorEngine->MemorizedNumberAdd(indexOfMemory);
+            return;
+        }
         RequireMemorySupport();
         if (m_currentCalculatorEngine->FInErrorState())
         {
@@ -473,6 +495,11 @@ namespace CalculationManager
 
     void CalculatorManager::MemorizedNumberClear(_In_ unsigned int indexOfMemory)
     {
+        if (m_isScientificMode)
+        {
+            m_scientificCalculatorEngine->MemorizedNumberClear(indexOfMemory);
+            return;
+        }
         RequireMemorySupport();
         if (indexOfMemory < m_memorizedNumbers.size())
         {
@@ -488,6 +515,11 @@ namespace CalculationManager
     /// <param name="indexOfMemory">Index of the target memory</param>
     void CalculatorManager::MemorizedNumberSubtract(_In_ unsigned int indexOfMemory)
     {
+        if (m_isScientificMode)
+        {
+            m_scientificCalculatorEngine->MemorizedNumberSubtract(indexOfMemory);
+            return;
+        }
         RequireMemorySupport();
         if (m_currentCalculatorEngine->FInErrorState())
         {
@@ -520,6 +552,11 @@ namespace CalculationManager
     /// </summary>
     void CalculatorManager::MemorizedNumberClearAll()
     {
+        if (m_isScientificMode)
+        {
+            m_scientificCalculatorEngine->MemorizedNumberClearAll();
+            return;
+        }
         RequireMemorySupport();
         m_memorizedNumbers.clear();
 
@@ -574,8 +611,23 @@ namespace CalculationManager
 
     void CalculatorManager::SetHistoryItems(_In_ std::vector<std::shared_ptr<HISTORYITEM>> const& historyItems)
     {
+        if (m_isScientificMode)
+        {
+            if (historyItems.size() > m_pHistory->MaxHistorySize())
+                throw invalid_argument("Scientific history exceeds its size limit.");
+            ScientificCalculator validator(m_resourceProvider, nullptr, nullptr);
+            for (const auto& item : historyItems)
+            {
+                if (!item)
+                    throw invalid_argument("History cannot contain null records.");
+                if (!item->historyItemVector.scientificState.empty())
+                    validator.RestoreState(item->historyItemVector.scientificState);
+            }
+        }
         for (auto const& historyItem : historyItems)
         {
+            if (!historyItem)
+                throw invalid_argument("History cannot contain null records.");
             auto item = historyItem;
             if (IsHistoryReadOnly())
             {
@@ -651,6 +703,11 @@ namespace CalculationManager
 
     void CalculatorManager::SetMemorizedNumbersString()
     {
+        if (m_isScientificMode)
+        {
+            m_scientificCalculatorEngine->PublishMemory();
+            return;
+        }
         RequireMemorySupport();
         vector<wstring> resultVector;
         for (auto const& memoryItem : m_memorizedNumbers)
@@ -745,5 +802,31 @@ namespace CalculationManager
             return {};
         }
         return m_currentCalculatorEngine->GetHistoryCollectorCommandsSnapshot();
+    }
+
+    std::wstring CalculatorManager::GetScientificState() const
+    {
+        return m_isScientificMode ? m_scientificCalculatorEngine->SaveState() : L"";
+    }
+
+    void CalculatorManager::RestoreScientificState(const std::wstring& state)
+    {
+        if (!m_isScientificMode)
+            throw invalid_argument("Scientific state requires Scientific mode.");
+        m_scientificCalculatorEngine->RestoreState(state);
+        m_currentDegreeMode = m_scientificCalculatorEngine->Angle();
+    }
+
+    void CalculatorManager::EditScientificToken(unsigned index, Command command, bool append)
+    {
+        if (!m_isScientificMode)
+            throw invalid_argument("Scientific editing requires Scientific mode.");
+        if (!ScientificCalculator::IsCommandSupported(command))
+            throw invalid_argument("Unsupported Scientific edit command.");
+        m_scientificCalculatorEngine->EditToken(index, command, append);
+    }
+    bool CalculatorManager::IsScientificFormat() const
+    {
+        return m_isScientificMode && m_scientificCalculatorEngine->ScientificFormat();
     }
 }

@@ -3,43 +3,81 @@
 
 #pragma once
 
-#include "../Command.h"
-
+#include <cstddef>
 #include <cstdint>
 #include <memory>
+#include <stdexcept>
 #include <string>
-
-class ICalcDisplay;
+#include <string_view>
+#include <variant>
 
 namespace CalculationManager
 {
-    class CalculatorHistory;
-    class IResourceProvider;
+    namespace Expression
+    {
+        class Evaluator;
+    }
+    struct ExpressionSpan
+    {
+        size_t begin = 0;
+        size_t end = 0;
+    };
 
-    class EpsilonEngine
+    enum class ExpressionError
+    {
+        Syntax,
+        Domain,
+        DivideByZero,
+        Undefined,
+        ResourceLimit
+    };
+
+    class ExpressionException : public std::runtime_error
     {
     public:
-        EpsilonEngine(
-            IResourceProvider* resourceProvider,
-            ICalcDisplay* displayCallback,
-            std::shared_ptr<CalculatorHistory> history);
-        ~EpsilonEngine();
+        ExpressionException(ExpressionError code, std::string message, ExpressionSpan span = {})
+            : std::runtime_error(std::move(message))
+            , code(code)
+            , span(span)
+        {
+        }
+        ExpressionError code;
+        ExpressionSpan span;
+    };
 
-        EpsilonEngine(const EpsilonEngine&) = delete;
-        EpsilonEngine& operator=(const EpsilonEngine&) = delete;
+    struct EvaluationLimits
+    {
+        size_t sourceCharacters = 65536;
+        size_t tokens = 8192;
+        size_t nodes = 8192;
+        unsigned depth = 32;
+        unsigned operations = 4096;
+    };
 
-        static bool IsCommandSupported(Command command) noexcept;
-        void ProcessCommand(Command command);
-        void Reset();
-        bool IsInputEmpty() const;
-        bool IsEngineRecording() const;
-        void SetPrecision(int32_t precision);
-        wchar_t DecimalSeparator() const;
-        std::wstring GetResult() const;
-        void DisplayError(int32_t errorCode);
+    class EpsilonValue
+    {
+    public:
+        EpsilonValue(const EpsilonValue&);
+        EpsilonValue& operator=(const EpsilonValue&);
+        EpsilonValue(EpsilonValue&&) noexcept;
+        EpsilonValue& operator=(EpsilonValue&&) noexcept;
+        ~EpsilonValue();
+
+        // Each copy owns an independent lazy graph, including approximation caches.
+        std::string Format(int32_t significantDigits = 32, bool scientific = false) const;
 
     private:
-        class Impl;
+        struct Impl;
+        explicit EpsilonValue(std::unique_ptr<Impl> impl);
         std::unique_ptr<Impl> m_impl;
+        friend class Expression::Evaluator;
+    };
+
+    using EvaluationResult = std::variant<EpsilonValue, ExpressionException>;
+
+    class EpsilonEngine final
+    {
+    public:
+        static EvaluationResult Evaluate(std::string_view source, EvaluationLimits limits = {});
     };
 }

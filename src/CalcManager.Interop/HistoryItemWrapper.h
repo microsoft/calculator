@@ -22,6 +22,14 @@ namespace winrt::CalcManager::Interop::implementation
         com_array<CalcManager::Interop::ExpressionCommandWrapper> Commands();
         hstring Expression();
         hstring Result();
+        hstring ScientificState() const
+        {
+            return m_scientificState;
+        }
+        void ScientificState(hstring const& value)
+        {
+            m_scientificState = value;
+        }
 
         std::shared_ptr<CalculationManager::HISTORYITEM> ToUnderlying(bool includeCommands = true) const;
 
@@ -30,6 +38,7 @@ namespace winrt::CalcManager::Interop::implementation
         std::vector<CalcManager::Interop::ExpressionCommandWrapper> m_commands;
         hstring m_expression;
         hstring m_result;
+        hstring m_scientificState;
     };
 }
 

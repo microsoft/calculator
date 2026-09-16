@@ -546,10 +546,9 @@ namespace Calculator.Tests
             _viewModel.ButtonPressed.Execute(NumbersAndOperatorsEnum.Clear);
             _viewModel.ButtonPressed.Execute(NumbersAndOperatorsEnum.IsScientificMode);
             _viewModel.ButtonPressed.Execute(NumbersAndOperatorsEnum.Five);
-            string displayBeforeUnsupportedCommand = _viewModel.DisplayValue;
             _viewModel.ButtonPressed.Execute(NumbersAndOperatorsEnum.InvSin);
-            Assert.AreEqual(displayBeforeUnsupportedCommand, _viewModel.DisplayValue);
-            Assert.AreEqual("Display is 5", _viewModel.CalculationResultAutomationName);
+            Assert.IsTrue(_viewModel.IsInError);
+            Assert.AreEqual("Invalid input", _viewModel.DisplayValue);
         }
 
         #endregion
@@ -806,7 +805,7 @@ namespace Calculator.Tests
                 new(NumbersAndOperatorsEnum.Clear, "0", ""),
                 new(NumbersAndOperatorsEnum.IsScientificMode, "0", ""),
                 new(NumbersAndOperatorsEnum.Five, "5", ""),
-                new(NumbersAndOperatorsEnum.InvSin, "5", ""),
+                new(NumbersAndOperatorsEnum.InvSin, "Invalid input", ""),
                 new(NumbersAndOperatorsEnum.None, "", "")
             };
             ValidateViewModelByCommands(_viewModel, items4, false);
@@ -815,7 +814,7 @@ namespace Calculator.Tests
             {
                 new(NumbersAndOperatorsEnum.Clear, "0", ""),
                 new(NumbersAndOperatorsEnum.Four, "4", ""),
-                new(NumbersAndOperatorsEnum.Factorial, "4", ""),
+                new(NumbersAndOperatorsEnum.Factorial, "24", ""),
                 new(NumbersAndOperatorsEnum.None, "", "")
             };
             ValidateViewModelByCommands(_viewModel, items5, false);
@@ -941,8 +940,7 @@ namespace Calculator.Tests
             Assert.AreEqual("-1,001", memorySlotStandard.Value);
 
             ChangeMode(_viewModel, 1 /*Scientific*/);
-            var memorySlotScientific = _viewModel.MemorizedNumbers[0];
-            Assert.AreEqual("-1,001", memorySlotScientific.Value);
+            Assert.AreEqual(0, _viewModel.MemorizedNumbers.Count);
 
             ChangeMode(_viewModel, 2 /*Programmer*/);
             var memorySlotProgrammer = _viewModel.MemorizedNumbers[0];
@@ -972,8 +970,7 @@ namespace Calculator.Tests
             Assert.AreEqual("1,001.1", memorySlotStandard.Value);
 
             ChangeMode(_viewModel, 1 /*Scientific*/);
-            var memorySlotScientific = _viewModel.MemorizedNumbers[0];
-            Assert.AreEqual("1,001.1", memorySlotScientific.Value);
+            Assert.AreEqual(0, _viewModel.MemorizedNumbers.Count);
 
             ChangeMode(_viewModel, 2 /*Programmer*/);
             var memorySlotProgrammer = _viewModel.MemorizedNumbers[0];
@@ -1048,12 +1045,7 @@ namespace Calculator.Tests
             ValidateViewModelByCommands(_viewModel, items, true);
             _viewModel.OnMemoryButtonPressed();
             ChangeMode(_viewModel, 1 /*Scientific*/);
-            string scientificDisplay = _viewModel.DisplayValue;
-            _viewModel.OnMemoryItemPressed(0);
-            Assert.AreEqual(scientificDisplay, _viewModel.DisplayValue);
-
-            var memorySlot = _viewModel.MemorizedNumbers[0];
-            Assert.AreEqual("FF", memorySlot.Value);
+            Assert.AreEqual(0, _viewModel.MemorizedNumbers.Count);
 
             ChangeMode(_viewModel, 0 /*Standard*/);
             _viewModel.OnMemoryItemPressed(0);

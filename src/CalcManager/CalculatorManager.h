@@ -12,7 +12,7 @@ namespace CalculationManager
 {
     enum class Command;
     struct HISTORYITEM;
-    class EpsilonEngine;
+    class ScientificCalculator;
 
     enum class CalculatorMode
     {
@@ -48,7 +48,7 @@ namespace CalculationManager
         static const unsigned int m_maximumMemorySize = 100;
         ICalcDisplay* const m_displayCallback;
         CCalcEngine* m_currentCalculatorEngine;
-        std::unique_ptr<EpsilonEngine> m_scientificCalculatorEngine;
+        std::unique_ptr<ScientificCalculator> m_scientificCalculatorEngine;
         std::unique_ptr<CCalcEngine> m_standardCalculatorEngine;
         std::unique_ptr<CCalcEngine> m_programmerCalculatorEngine;
         IResourceProvider* const m_resourceProvider;
@@ -128,5 +128,9 @@ namespace CalculationManager
         CalculationManager::Command GetCurrentDegreeMode();
         void SetInHistoryItemLoadMode(_In_ bool isHistoryItemLoadMode);
         std::vector<std::shared_ptr<IExpressionCommand>> GetDisplayCommandsSnapshot() const;
+        std::wstring GetScientificState() const;
+        void RestoreScientificState(const std::wstring& state);
+        void EditScientificToken(unsigned index, Command command, bool append);
+        bool IsScientificFormat() const;
     };
 }

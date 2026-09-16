@@ -74,6 +74,7 @@ namespace CalculatorApp.ViewModel
         private BitLength _valueBitLength;
         private string _selectedExpressionLastData;
         private DisplayExpressionToken _selectedExpressionToken = null;
+        private bool _appendScientificEdit;
         private string _feedbackForButtonPress;
 
         // Expression data
@@ -743,7 +744,8 @@ namespace CalculatorApp.ViewModel
                 var historyItem = new Snapshot.CalcManagerHistoryItem
                 {
                     Expression = item.Expression,
-                    Result = item.Result
+                    Result = item.Result,
+                    ScientificState = item.ScientificState
                 };
 
                 foreach (HistoryToken token in item.Tokens ?? Array.Empty<HistoryToken>())
@@ -788,13 +790,14 @@ namespace CalculatorApp.ViewModel
                 }
 
                 var commands = Array.Empty<ExpressionCommandWrapper>();
-                if (!IsHistoryReadOnly)
+                if (!IsHistoryReadOnly && string.IsNullOrEmpty(item.ScientificState))
                 {
                     commands = new ExpressionCommandWrapper[item.Commands.Count];
                     item.Commands.CopyTo(commands, 0);
                 }
 
                 restored[i] = new HistoryItemWrapper(tokens, commands, item.Expression, item.Result);
+                restored[i].ScientificState = item.ScientificState ?? string.Empty;
             }
 
             _standardCalculatorManager.SetHistoryItems(restored);
@@ -805,6 +808,7 @@ namespace CalculatorApp.ViewModel
             get
             {
                 var result = new Snapshot.StandardCalculatorSnapshot();
+                if (IsScientific) result.ScientificState = _standardCalculatorManager?.ScientificState ?? string.Empty;
                 result.CalcManager = CaptureCalcManagerSnapshot();
                 result.PrimaryDisplay = new Snapshot.PrimaryDisplaySnapshot(DisplayValue, _isInError);
                 if (_tokens != null && _tokens.Count > 0 && _commands != null && _commands.Count > 0)
@@ -831,7 +835,7 @@ namespace CalculatorApp.ViewModel
                 var snapshot = value ?? throw new ArgumentNullException(nameof(value));
 
                 ViewMode mode = GetCalculatorMode();
-                bool restoreDisplayOnlyHistory = IsHistoryReadOnly;
+                bool restoreDisplayOnlyHistory = IsScientific;
                 _standardCalculatorManager?.Reset(!restoreDisplayOnlyHistory);
                 ResetManagedCalculatorSubmodes();
                 SetNativeCalculatorMode(mode);
@@ -839,8 +843,11 @@ namespace CalculatorApp.ViewModel
 
                 if (restoreDisplayOnlyHistory)
                 {
-                    // Snapshots have no retained Epsilon value. Keep the native zero authoritative,
-                    // rather than presenting rounded snapshot text as a live operand.
+                    if (!string.IsNullOrEmpty(snapshot.ScientificState))
+                    {
+                        _standardCalculatorManager?.RestoreScientificState(snapshot.ScientificState);
+                        SynchronizeScientificSettings();
+                    }
                     return;
                 }
 
@@ -1098,7 +1105,7 @@ namespace CalculatorApp.ViewModel
                     uint unsignedPosition = (uint)position;
                     _standardCalculatorManager?.MemorizedNumberClear(unsignedPosition);
 
-                    MemorizedNumbers.RemoveAt(position);
+                    if (!IsScientific) MemorizedNumbers.RemoveAt(position);
                     for (int i = 0; i < MemorizedNumbers.Count; i++)
                     {
                         MemorizedNumbers[i].Position = i;
@@ -1125,6 +1132,18 @@ namespace CalculatorApp.ViewModel
 
         public void SelectHistoryItem(HistoryItemViewModel item)
         {
+            if (IsScientific && !string.IsNullOrEmpty(item.ScientificState))
+            {
+                IsEditingEnabled = false;
+                _standardCalculatorManager?.RestoreScientificState(item.ScientificState);
+                SynchronizeScientificSettings();
+                return;
+            }
+            if (IsScientific && item.GetCommands().Count == 0)
+            {
+                AnnounceUnsupportedAction();
+                return;
+            }
             if (IsHistoryReadOnly)
             {
                 AnnounceUnsupportedAction();
@@ -1364,46 +1383,18 @@ namespace CalculatorApp.ViewModel
         public void SetMemorizedNumbers(string[] newMemorizedNumbers)
         {
             var localizer = LocalizationSettings.GetInstance();
-
-            if (newMemorizedNumbers.Length == 0)
+            while (MemorizedNumbers.Count > newMemorizedNumbers.Length)
+                MemorizedNumbers.RemoveAt(MemorizedNumbers.Count - 1);
+            while (MemorizedNumbers.Count < newMemorizedNumbers.Length)
+                MemorizedNumbers.Insert(0, new MemoryItemViewModel(this));
+            for (int i = 0; i < newMemorizedNumbers.Length; i++)
             {
-                MemorizedNumbers.Clear();
-                IsMemoryEmpty = true;
+                string value = newMemorizedNumbers[i];
+                localizer.LocalizeDisplayValue(ref value);
+                MemorizedNumbers[i].Value = value;
+                MemorizedNumbers[i].Position = i;
             }
-            else if (newMemorizedNumbers.Length > MemorizedNumbers.Count)
-            {
-                while (newMemorizedNumbers.Length > MemorizedNumbers.Count)
-                {
-                    int newValuePosition = newMemorizedNumbers.Length - MemorizedNumbers.Count - 1;
-                    string stringValue = newMemorizedNumbers[newValuePosition];
-
-                    var memorySlot = new MemoryItemViewModel(this);
-                    memorySlot.Position = 0;
-                    localizer.LocalizeDisplayValue(ref stringValue);
-                    memorySlot.Value = stringValue;
-
-                    MemorizedNumbers.Insert(0, memorySlot);
-                    IsMemoryEmpty = IsAlwaysOnTop;
-
-                    for (int i = 1; i < MemorizedNumbers.Count; i++)
-                    {
-                        MemorizedNumbers[i].Position++;
-                    }
-                }
-            }
-            else if (newMemorizedNumbers.Length == MemorizedNumbers.Count)
-            {
-                for (int i = 0; i < MemorizedNumbers.Count; i++)
-                {
-                    string newStringValue = newMemorizedNumbers[i];
-                    localizer.LocalizeDisplayValue(ref newStringValue);
-
-                    if (MemorizedNumbers[i].Value != newStringValue)
-                    {
-                        MemorizedNumbers[i].Value = newStringValue;
-                    }
-                }
-            }
+            IsMemoryEmpty = MemorizedNumbers.Count == 0 || IsAlwaysOnTop;
         }
 
         public void OnMaxDigitsReached()
@@ -1605,7 +1596,8 @@ namespace CalculatorApp.ViewModel
                 if (i < _expressionTokens.Count)
                 {
                     var existingItem = _expressionTokens[i];
-                    if (type == existingItem.Type && existingItem.Token == currentTokenString)
+                    if (type == existingItem.Type && existingItem.Token == currentTokenString
+                        && existingItem.IsScientificEditable == (IsScientific && isEditable))
                     {
                         existingItem.TokenPosition = i;
                         existingItem.IsTokenEditable = isEditable;
@@ -1614,12 +1606,14 @@ namespace CalculatorApp.ViewModel
                     else
                     {
                         var expressionToken = new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+                        expressionToken.IsScientificEditable = IsScientific && isEditable;
                         _expressionTokens.Insert(i, expressionToken);
                     }
                 }
                 else
                 {
                     var expressionToken = new DisplayExpressionToken(currentTokenString, i, isEditable, type);
+                    expressionToken.IsScientificEditable = IsScientific && isEditable;
                     _expressionTokens.Add(expressionToken);
                 }
             }
@@ -1702,7 +1696,7 @@ namespace CalculatorApp.ViewModel
                 && numOpEnum != NumbersAndOperatorsEnum.Radians
                 && numOpEnum != NumbersAndOperatorsEnum.Grads)
             {
-                if (!_keyPressed)
+                if (IsScientific || !_keyPressed)
                 {
                     SaveEditedCommand(_selectedExpressionToken?.TokenPosition ?? 0, cmdenum);
                 }
@@ -2298,7 +2292,43 @@ namespace CalculatorApp.ViewModel
 
         private void SaveEditedCommand(int tokenPosition, int command)
         {
+            if (IsScientific && tokenPosition >= 0 && tokenPosition < _tokens.Count)
+            {
+                if (command == (int)CalculatorCommand.CommandEQU)
+                {
+                    IsEditingEnabled = false;
+                    return;
+                }
+                int index = _tokens[tokenPosition].CommandIndex;
+                if (index >= 0)
+                {
+                    IsEditingEnabled = false;
+                    _standardCalculatorManager?.EditScientificToken((uint)index, (CalculatorCommand)command, _appendScientificEdit);
+                    _appendScientificEdit = IsDigitOrBackspace(command) && !IsInError;
+                    IsEditingEnabled = _appendScientificEdit;
+                    if (IsEditingEnabled) DisableButtons(CommandType.OperandCommand);
+                }
+
+                return;
+            }
             // SaveEditedCommand not available via interop - expression editing handled through command replay
+        }
+
+        public void SelectScientificExpressionToken(DisplayExpressionToken token)
+        {
+            if (!IsScientific || token == null || !token.IsTokenEditable) return;
+            _selectedExpressionToken = token;
+            _appendScientificEdit = false;
+            IsEditingEnabled = true;
+            int index = _tokens[token.TokenPosition].CommandIndex;
+            if (index >= 0 && index < _commands.Count) DisableButtons(_commands[index].Type);
+        }
+
+        private void SynchronizeScientificSettings()
+        {
+            if (_standardCalculatorManager == null) return;
+            IsFToEChecked = _standardCalculatorManager.IsScientificFormat;
+            _currentAngleType = (NumbersAndOperatorsEnum)(int)_standardCalculatorManager.GetCurrentDegreeMode();
         }
 
         private static bool IsOperator(int cmd)

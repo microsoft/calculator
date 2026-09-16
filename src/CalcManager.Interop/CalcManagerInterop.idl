@@ -240,6 +240,7 @@ namespace CalcManager.Interop
         ExpressionCommandWrapper[] Commands{ get; };
         String Expression{ get; };
         String Result{ get; };
+        String ScientificState;
     };
 
     // Delegates for display callbacks
@@ -303,5 +304,9 @@ namespace CalcManager.Interop
         CalculatorCommand GetCurrentDegreeMode();
         void SetInHistoryItemLoadMode(Boolean isHistoryItemLoadMode);
         ExpressionCommandWrapper[] GetDisplayCommandsSnapshot();
+        String ScientificState{ get; };
+        Boolean IsScientificFormat{ get; };
+        void RestoreScientificState(String state);
+        void EditScientificToken(UInt32 index, CalculatorCommand command, Boolean append);
     };
 }

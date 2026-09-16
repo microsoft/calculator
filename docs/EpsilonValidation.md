@@ -1,4 +1,73 @@
-# Epsilon prototype validation
+# Epsilon validation
+
+## Refreshed engine acceptance (2026-09-15)
+
+The stateless expression engine and ScientificCalculator refresh was built and
+tested in `E:\r\calc` using Visual Studio Enterprise 2026/v145 and Windows SDK
+10.0.26100.0.
+
+| Check | Result |
+|---|---|
+| Final Debug x64 solution build | PASS |
+| Native packaged test suite | **147/147 passed**; 14.315 seconds |
+| Managed packaged test suite | **309/309 passed**; 13.419 seconds |
+| Independent numerical references | **39/39 passed at 32 digits and 39/39 at 100 digits** |
+| Release CalcManager builds | PASS on x64, x86 and ARM64 |
+| Generated lexer | Deterministic output, incremental no-op, missing/wrong-tool rejection verified |
+| Repository code-style check / patch whitespace | PASS |
+
+Both test suites used VSTest with freshly built `.build.appxrecipe` layouts on
+the developer-mode host. This exercised the actual WinRT wrapper and managed
+ViewModels, not mocks. Unsigned MSIX deployment was rejected; the supported
+developer-layout path avoided certificate provisioning, elevation and uninstalls.
+
+The numerical reference matrix used mpmath 1.3.0 at 130 decimal working digits,
+independent of Epsilon. It covers all direct/inverse/reciprocal trigonometric and
+hyperbolic families, logs/exp, non-integer factorial including negative inputs,
+large-angle reduction, exact powers/roots and identity counterexamples.
+The comparison bound was `max(1, abs(reference)) * 10^(1-precision)`.
+The final 39-case runs took about 0.38 seconds at 32 digits and 0.70 seconds at
+100 digits. An earlier, mathematically equivalent gamma implementation took
+about 400 seconds for the 100-digit matrix. Exact coefficient powers and an
+enclosed exponential recurrence removed that bottleneck without reducing the
+error guarantees or adding shared caches.
+
+Native regressions cover source/token spans, AST ownership, independent calls,
+concurrency, bounded work, error propagation, exact continuation, exponent entry,
+locale grouping, repeated equals, Scientific memory, history edits and snapshots.
+Managed additions cover multi-digit history editing, angle/F-E/incomplete-input
+restore and prevention of a Scientific payload bypassing Standard command
+validation. Prototype-only expectations were updated for restored features.
+
+Transient evidence lives in this implementation session's `files` directory:
+
+```text
+C:\Users\tilia\.copilot\session-state\b5aabae7-4cfc-457b-8b6a-1eaad1ee117e\files
+
+acceptance-build.log
+acceptance-release.log
+acceptance-native\*.trx
+acceptance-managed\*.trx
+math-reference-32.json
+math-reference-100.json
+verify-math.py
+x86-verified.log
+arm64-verified.log
+```
+
+Earlier failures and interrupted runs remain distinct from these passing
+acceptance results. One unchanged currency test failed in an intermediate full
+run and passed in subsequent full runs; its implementation was not changed.
+
+**Coverage limits:** Release core builds do not imply Release packaged-app or
+x86/ARM64 runtime test coverage. The full native/managed runtime suites ran on
+Debug x64. No new retail/VM UI automation, signed-store deployment, or hosted-CI
+execution is claimed. The prior prototype's VM report below is historical, not
+validation of the refreshed engine.
+
+## Historical prototype validation
+
+The remainder records the earlier prototype and its former feature restrictions.
 
 ## Final result
 

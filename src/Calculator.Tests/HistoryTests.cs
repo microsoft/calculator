@@ -93,7 +93,7 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
-        public void TestScientificHistoryItemCannotBeLoaded()
+        public void TestScientificHistoryItemRestoresExactState()
         {
             Initialize();
             m_standardViewModel.SendCommandToCalcManager(ModeScientific);
@@ -106,7 +106,7 @@ namespace Calculator.Tests
             var historyItem = (HistoryItemViewModel)m_historyViewModel.Items[m_historyViewModel.ItemsCount - 1];
             m_standardViewModel.SendCommandToCalcManager(CommandCLEAR);
             m_standardViewModel.SelectHistoryItem(historyItem);
-            Assert.AreEqual("0", m_standardViewModel.DisplayValue);
+            Assert.AreEqual("9", m_standardViewModel.DisplayValue);
             Assert.AreEqual(1, m_historyViewModel.ItemsCount);
             Cleanup();
         }

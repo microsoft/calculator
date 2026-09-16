@@ -259,11 +259,11 @@ namespace Calculator.Tests
 
             calculator.HistoryVM.ReloadHistory(ViewMode.Scientific);
             Assert.AreEqual(ViewMode.Scientific, viewModel.Mode);
-            Assert.AreEqual("0", calculator.DisplayValue);
+            Assert.AreEqual("3", calculator.DisplayValue);
             Assert.AreEqual(1, calculator.HistoryVM.Items.Count);
             Assert.AreEqual("3", calculator.HistoryVM.Items[0].Result);
             Evaluate(calculator, CommandADD, Command1);
-            Assert.AreEqual("1", calculator.DisplayValue);
+            Assert.AreEqual("4", calculator.DisplayValue);
         }
 
         [TestMethod]

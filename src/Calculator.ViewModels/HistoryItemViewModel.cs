@@ -55,6 +55,8 @@ namespace CalculatorApp.ViewModel
         }
 
         public string Expression => _expression;
+        public string ScientificState { get; internal set; } = string.Empty;
+        public bool CanReplay => !string.IsNullOrEmpty(ScientificState) || _commands.Count > 0;
         public string AccExpression => _accExpression;
         public string Result => _result;
         public string AccResult => _accResult;

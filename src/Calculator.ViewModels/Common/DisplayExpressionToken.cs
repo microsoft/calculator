@@ -28,6 +28,7 @@ namespace CalculatorApp.ViewModel.Common
 
         private string _originalToken;
         private bool _inEditMode;
+        public bool IsScientificEditable { get; internal set; }
 
         internal DisplayExpressionToken(string token, int tokenPosition, bool isEditable, TokenType type)
         {

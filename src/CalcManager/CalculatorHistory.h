@@ -13,6 +13,7 @@ namespace CalculationManager
         std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> spCommands;
         std::wstring expression;
         std::wstring result;
+        std::wstring scientificState;
     };
 
     struct HISTORYITEM

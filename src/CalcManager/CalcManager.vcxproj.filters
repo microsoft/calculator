@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="ScientificCalculator.cpp" />
+    <ClCompile Include="EpsilonEngine\Parser.cpp"><Filter>EpsilonEngine</Filter></ClCompile>
     <Filter Include="Epsilon">
       <UniqueIdentifier>{18a5c0d8-fefc-460d-89c2-c3e6819eb206}</UniqueIdentifier>
     </Filter>
@@ -21,6 +23,7 @@
     <ClCompile Include="EpsilonEngine\EpsilonEngine.cpp">
       <Filter>EpsilonEngine</Filter>
     </ClCompile>
+    <ClCompile Include="EpsilonEngine\Evaluator.cpp"><Filter>EpsilonEngine</Filter></ClCompile>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="ExpressionCommand.cpp" />
     <ClCompile Include="CEngine\calc.cpp">
@@ -125,6 +128,10 @@
     <ClInclude Include="EpsilonEngine\EpsilonEngine.h">
       <Filter>EpsilonEngine</Filter>
     </ClInclude>
+    <ClInclude Include="EpsilonEngine\Syntax.h"><Filter>EpsilonEngine</Filter></ClInclude>
+    <ClInclude Include="EpsilonEngine\Evaluator.h"><Filter>EpsilonEngine</Filter></ClInclude>
+    <ClInclude Include="EpsilonEngine\Numerics.h"><Filter>EpsilonEngine</Filter></ClInclude>
+    <ClInclude Include="ScientificCalculator.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="ExpressionCommand.h" />
     <ClInclude Include="ExpressionCommandInterface.h" />
@@ -213,5 +220,6 @@
     <None Include="EpsilonEngine\README.md">
       <Filter>EpsilonEngine</Filter>
     </None>
+    <None Include="EpsilonEngine\Lexer.re"><Filter>EpsilonEngine</Filter></None>
   </ItemGroup>
 </Project>

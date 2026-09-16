@@ -296,3 +296,5 @@ src/GraphControl/GraphingImplOverrides.props
 !src/x64
 !src/x86
 !src/out
+# Local, pinned lexer build tool (provisioned by SetupRe2c.ps1).
+Tools/re2c/

@@ -31,6 +31,13 @@
                        Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
 
+        <DataTemplate x:Key="EditableExpression" x:DataType="vmcommon:DisplayExpressionToken">
+            <Button Margin="2,0,0,0" Padding="0" BorderThickness="0" Background="Transparent"
+                       Click="OnExpressionTokenClicked" IsEnabled="{x:Bind IsTokenEditable, Mode=OneWay}"
+                       Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
+                       Content="{x:Bind Token, Mode=OneWay}"/>
+        </DataTemplate>
+
         <DataTemplate x:Key="Separator" x:DataType="vmcommon:DisplayExpressionToken">
             <TextBlock x:Name="MainText" Text="{x:Bind Token, Mode=OneWay}"/>
         </DataTemplate>
@@ -389,6 +396,7 @@
         <converters:ExpressionItemTemplateSelector x:Key="ExpressionItemTemplateSelector"
                                                    OperandTemplate="{StaticResource Operand}"
                                                    OperatorTemplate="{StaticResource Operator}"
+                                                   EditableTemplate="{StaticResource EditableExpression}"
                                                    SeparatorTemplate="{StaticResource Separator}"/>
 
         <!-- Miscellaneous Resources -->

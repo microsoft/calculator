@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Re2cExe Condition="'$(Re2cExe)' == ''">$(MSBuildThisFileDirectory)..\Tools\re2c\4.6\bin\re2c.exe</Re2cExe>
+    <EpsilonLexerOutput>$(IntDir)EpsilonEngine\Lexer.g.cpp</EpsilonLexerOutput>
+  </PropertyGroup>
+  <ItemGroup>
+    <ClCompile Include="$(EpsilonLexerOutput)">
+      <LanguageStandard>stdcpp23</LanguageStandard>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles />
+      <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\EpsilonEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemGroup>
+  <Target Name="CheckRe2c" BeforeTargets="GenerateEpsilonLexer">
+    <Error Condition="!Exists('$(Re2cExe)')" Text="re2c 4.6 is required. Run build\scripts\SetupRe2c.ps1 or set Re2cExe to the pinned executable." />
+    <Exec Command="&quot;$(Re2cExe)&quot; --version" ConsoleToMSBuild="true" StandardOutputImportance="Low">
+      <Output TaskParameter="ConsoleOutput" ItemName="Re2cVersion" />
+    </Exec>
+    <Error Condition="'@(Re2cVersion)' != 're2c 4.6'" Text="Expected re2c 4.6; found @(Re2cVersion)." />
+  </Target>
+  <Target Name="GenerateEpsilonLexer" BeforeTargets="ClCompile"
+          Inputs="$(MSBuildProjectDirectory)\EpsilonEngine\Lexer.re;$(MSBuildProjectDirectory)\EpsilonEngine\Syntax.h;$(Re2cExe);$(MSBuildThisFileFullPath)"
+          Outputs="$(EpsilonLexerOutput)">
+    <MakeDir Directories="$(IntDir)EpsilonEngine" />
+    <Exec Command="&quot;$(Re2cExe)&quot; --no-generation-date --no-version --no-debug-info -W -Werror -o &quot;$(EpsilonLexerOutput)&quot; &quot;$(MSBuildProjectDirectory)\EpsilonEngine\Lexer.re&quot;" />
+  </Target>
+  <Target Name="TrackEpsilonLexer" BeforeTargets="ClCompile">
+    <ItemGroup><FileWrites Include="$(EpsilonLexerOutput)" /></ItemGroup>
+  </Target>
+</Project>

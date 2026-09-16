@@ -40,6 +40,12 @@ namespace CalculatorApp
 
         public static string OrEmpty(string value) => value ?? string.Empty;
 
+        private void OnExpressionTokenClicked(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.DataContext is DisplayExpressionToken token)
+                ViewModel?.SelectScientificExpressionToken(token);
+        }
+
         public Calculator()
         {
             m_doAnimate = false;
