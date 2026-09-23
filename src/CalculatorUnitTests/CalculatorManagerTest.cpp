@@ -6,7 +6,7 @@
 #include <CppUnitTest.h>
 
 #include "CalcManager/CalculatorHistory.h"
-#include "CalcViewModel/Common/EngineResourceProvider.h"
+#include "EngineResourceProvider.h"
 #include "CalcManager/NumberFormattingUtils.h"
 
 using namespace CalculatorApp;
@@ -171,7 +171,7 @@ namespace CalculatorManagerTest
     TEST_CLASS(CalculatorManagerTest)
     {
     public:
-        TEST_CLASS_INITIALIZE(CommonSetup);
+        TEST_METHOD_INITIALIZE(CommonSetup);
 
         TEST_METHOD(CalculatorManagerTestStandard);
 

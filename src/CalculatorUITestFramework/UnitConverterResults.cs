@@ -11,9 +11,9 @@ namespace CalculatorUITestFramework
     public class UnitConverterResults
     {
         private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
-        private WindowsElement CalculationResult1 => this.session.TryFindElementByAccessibilityId("Value1");
+        private WindowsElement CalculationResult1 => session.TryFindElementByAccessibilityId("Value1");
 
-        private WindowsElement CalculationResult2 => this.session.TryFindElementByAccessibilityId("Value2");
+        private WindowsElement CalculationResult2 => session.TryFindElementByAccessibilityId("Value2");
 
         /// <summary>
         /// Gets the text from the Value1 control and removes the narrator text that is not displayed in the UI.
@@ -21,7 +21,7 @@ namespace CalculatorUITestFramework
         /// <returns>The string shown in the UI.</returns>
         public string GetCalculationResult1Text()
         {
-            return Regex.Replace(this.CalculationResult1.Text.Trim(), "[^0-9.]", "");
+            return Regex.Replace(CalculationResult1.Text.Trim(), "[^0-9.]", "");
         }
 
         /// <summary>
@@ -30,8 +30,8 @@ namespace CalculatorUITestFramework
         /// <returns>The string shown in the UI.</returns>
         public void IsResultsDisplayPresent()
         {
-            Assert.IsNotNull(this.CalculationResult1);
-            Assert.IsNotNull(this.CalculationResult2);
+            Assert.IsNotNull(CalculationResult1);
+            Assert.IsNotNull(CalculationResult2);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace CalculatorUITestFramework
         /// <returns>The string shown in the UI.</returns>
         public string GetCalculationResult2Text()
         {
-            return Regex.Replace(this.CalculationResult2.Text.Trim(), "[^0-9.]", "");
+            return Regex.Replace(CalculationResult2.Text.Trim(), "[^0-9.]", "");
         }
 
     }

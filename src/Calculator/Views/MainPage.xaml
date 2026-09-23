@@ -92,38 +92,38 @@
             -->
             <Button x:Name="CopyButton"
                     common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=copyButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
-                    Command="{x:Bind Model.CopyCommand}"/>
+                    Command="{x:Bind ViewModel.CopyCommand}"/>
             <Button x:Name="PasteButton"
                     common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=pasteButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
-                    Command="{x:Bind Model.PasteCommand}"/>
+                    Command="{x:Bind ViewModel.PasteCommand}"/>
             <Button x:Name="CopyButtonAlternate"
                     common:KeyboardShortcutManager.VirtualKeyControlChord="{utils:ResourceVirtualKey Name=copyButtonAlternate/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyControlChord}"
-                    Command="{x:Bind Model.CopyCommand}"/>
+                    Command="{x:Bind ViewModel.CopyCommand}"/>
             <Button x:Name="PasteButtonAlternate"
                     common:KeyboardShortcutManager.VirtualKeyShiftChord="{utils:ResourceVirtualKey Name=pasteButtonAlternate/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKeyShiftChord}"
-                    Command="{x:Bind Model.PasteCommand}"/>
+                    Command="{x:Bind ViewModel.PasteCommand}"/>
         </StackPanel>
 
         <local:TitleBar x:Name="AppTitleBar"
                         Grid.Row="0"
                         AlwaysOnTopClick="TitleBarAlwaysOnTopButtonClick"
-                        BackButtonSpaceReserved="{x:Bind ShouldShowBackButton(Model.IsAlwaysOnTop, Popup.IsOpen), Mode=OneWay}"
-                        IsAlwaysOnTopMode="{x:Bind Model.IsAlwaysOnTop, Mode=OneWay}"/>
+                        BackButtonSpaceReserved="{x:Bind ShouldShowBackButton(ViewModel.IsAlwaysOnTop, Popup.IsOpen), Mode=OneWay}"
+                        IsAlwaysOnTopMode="{x:Bind ViewModel.IsAlwaysOnTop, Mode=OneWay}"/>
 
         <muxc:NavigationView x:Name="NavView"
                              Grid.Row="1"
                              AccessKey="{utils:ResourceString Name=NavView/AccessKey}"
                              CompactModeThresholdWidth="Infinity"
-                             DataContext="{x:Bind Model}"
+                             DataContext="{x:Bind ViewModel}"
                              ExpandedModeThresholdWidth="Infinity"
                              IsBackButtonVisible="Collapsed"
-                             IsPaneToggleButtonVisible="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
+                             IsPaneToggleButtonVisible="{x:Bind ViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanNegationConverter}, Mode=OneWay}"
                              IsSettingsVisible="True"
                              ItemInvoked="OnNavItemInvoked"
                              Loaded="OnNavLoaded"
                              MenuItemTemplateSelector="{StaticResource NavViewMenuItemTemplateSelector}"
                              MenuItemsSource="{x:Bind NavViewCategoriesSource, Mode=OneWay}"
-                             OpenPaneLength="{x:Bind NavigationViewOpenPaneLength(Model.IsAlwaysOnTop), Mode=OneWay}"
+                             OpenPaneLength="{x:Bind NavigationViewOpenPaneLength(ViewModel.IsAlwaysOnTop), Mode=OneWay}"
                              PaneClosed="OnNavPaneClosed"
                              PaneDisplayMode="LeftMinimal"
                              PaneOpened="OnNavPaneOpened"
@@ -159,8 +159,8 @@
                     <TextBlock x:Name="Header"
                                Grid.Column="1"
                                Style="{StaticResource CategoryNameTextBlockStyle}"
-                               Text="{x:Bind Model.CategoryName, Mode=OneWay}"
-                               Visibility="{x:Bind Model.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
+                               Text="{x:Bind ViewModel.CategoryName, Mode=OneWay}"
+                               Visibility="{x:Bind ViewModel.IsAlwaysOnTop, Converter={StaticResource BooleanToVisibilityNegationConverter}, Mode=OneWay}"/>
 
                     <Button x:Name="NormalAlwaysOnTopButton"
                             Grid.Column="2"
@@ -171,7 +171,7 @@
                             Content="&#xEE49;"
                             TabIndex="3"
                             ToolTipService.ToolTip="{utils:ResourceString Name=EnterAlwaysOnTopButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
-                            Visibility="{x:Bind Model.DisplayNormalAlwaysOnTopOption, Mode=OneWay}">
+                            Visibility="{x:Bind ViewModel.DisplayNormalAlwaysOnTopOption, Mode=OneWay}">
                         <Button.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Up" Modifiers="Menu"/>
                         </Button.KeyboardAccelerators>

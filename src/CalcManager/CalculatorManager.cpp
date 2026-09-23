@@ -130,8 +130,8 @@ namespace CalculationManager
 
         if (m_scientificCalculatorEngine)
         {
-            m_scientificCalculatorEngine->ProcessCommand(IDC_DEG);
             m_scientificCalculatorEngine->ProcessCommand(IDC_CLEAR);
+            m_scientificCalculatorEngine->ProcessCommand(IDC_DEG);
 
             if (m_isExponentialFormat)
             {
@@ -139,9 +139,12 @@ namespace CalculationManager
                 m_scientificCalculatorEngine->ProcessCommand(IDC_FE);
             }
         }
+        m_currentDegreeMode = Command::CommandDEG;
+
         if (m_programmerCalculatorEngine)
         {
             m_programmerCalculatorEngine->ProcessCommand(IDC_CLEAR);
+            m_programmerCalculatorEngine->ProcessCommand(IDC_QWORD);
         }
 
         if (clearMemory)

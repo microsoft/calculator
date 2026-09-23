@@ -38,6 +38,8 @@ namespace CalculatorApp
     {
         public event FullscreenFlyoutClosedEventHandler FullscreenFlyoutClosed;
 
+        public static string OrEmpty(string value) => value ?? string.Empty;
+
         public Calculator()
         {
             m_doAnimate = false;
@@ -49,7 +51,7 @@ namespace CalculatorApp
             InitializeComponent();
             LoadResourceStrings();
 
-            if (LocalizationService.GetInstance().IsRtlLayout())
+            if (LocalizationSettings.GetInstance().IsRtlLayout())
             {
                 HistoryButton.HorizontalAlignment = HorizontalAlignment.Left;
             }
@@ -62,7 +64,14 @@ namespace CalculatorApp
             this.SizeChanged += Calculator_SizeChanged;
         }
 
-        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
+        public CalculatorApp.ViewModel.StandardCalculatorViewModel ViewModel
+        {
+            get => (StandardCalculatorViewModel)GetValue(ViewModelProperty);
+            set => SetValue(ViewModelProperty, value);
+        }
+
+        public static readonly DependencyProperty ViewModelProperty =
+            DependencyProperty.Register(nameof(ViewModel), typeof(StandardCalculatorViewModel), typeof(Calculator), new PropertyMetadata(null));
 
         public bool IsStandard
         {
@@ -186,6 +195,7 @@ namespace CalculatorApp
                 };
                 historyVM.HideHistoryClicked += OnHideHistoryClicked;
                 historyVM.HistoryItemClicked += OnHistoryItemClicked;
+                m_historyList.HistoryEmptied += OnHistoryEmptied;
             }
         }
 
@@ -237,11 +247,11 @@ namespace CalculatorApp
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            Model.PropertyChanged += OnCalcPropertyChanged;
-            Model.HideMemoryClicked += OnHideMemoryClicked;
+            ViewModel.PropertyChanged += OnCalcPropertyChanged;
+            ViewModel.HideMemoryClicked += OnHideMemoryClicked;
 
-            InitializeHistoryView(Model.HistoryVM);
-            string historyPaneName = AppResourceProvider.GetInstance().GetResourceString("HistoryPane");
+            InitializeHistoryView(ViewModel.HistoryVM);
+            string historyPaneName= AppResourceProvider.GetInstance().GetResourceString("HistoryPane");
             HistoryFlyout.FlyoutPresenterStyle.Setters.Add(new Setter(AutomationProperties.NameProperty, historyPaneName));
             string memoryPaneName = AppResourceProvider.GetInstance().GetResourceString("MemoryPane");
             MemoryFlyout.FlyoutPresenterStyle.Setters.Add(new Setter(AutomationProperties.NameProperty, memoryPaneName));
@@ -282,19 +292,19 @@ namespace CalculatorApp
             if (IsProgrammer)
             {
                 state = "Programmer";
-                Model.IsDecimalEnabled = false;
+                ViewModel.IsDecimalEnabled = false;
                 ResultsMVisualStateTrigger.MinWindowHeight = 640;
             }
             else if (IsScientific)
             {
                 state = "Scientific";
-                Model.IsDecimalEnabled = true;
+                ViewModel.IsDecimalEnabled = true;
                 ResultsMVisualStateTrigger.MinWindowHeight = 544;
             }
             else
             {
                 state = "Standard";
-                Model.IsDecimalEnabled = true;
+                ViewModel.IsDecimalEnabled = true;
                 ResultsMVisualStateTrigger.MinWindowHeight = 1;
             }
 
@@ -308,7 +318,7 @@ namespace CalculatorApp
         {
             if (!IsAlwaysOnTop)
             {
-                if (!Model.IsMemoryEmpty)
+                if (!ViewModel.IsMemoryEmpty)
                 {
                     MemRecall.IsEnabled = true;
                     ClearMemoryButton.IsEnabled = true;
@@ -318,7 +328,7 @@ namespace CalculatorApp
                     MemRecall.IsEnabled = false;
                     ClearMemoryButton.IsEnabled = false;
                 }
-                MemoryPivotItemUiaName = GetMemoryPivotItemUiaString(Model.IsMemoryEmpty);
+                MemoryPivotItemUiaName = GetMemoryPivotItemUiaString(ViewModel.IsMemoryEmpty);
 
                 if (DockPanel.Visibility == Visibility.Visible)
                 {
@@ -351,7 +361,7 @@ namespace CalculatorApp
                 {
                     DockPivot.SelectedIndex = 0;
                 }
-                HistoryPivotItemUiaName = GetHistoryPivotItemUiaString(Model.HistoryVM.ItemsCount == 0);
+                HistoryPivotItemUiaName = GetHistoryPivotItemUiaString(ViewModel.HistoryVM.ItemsCount == 0);
             }
             else
             {
@@ -432,14 +442,14 @@ namespace CalculatorApp
             else
             {
                 VisualStateManager.GoToState(this, "DisplayModeNormal", false);
-                if (!Model.IsInError)
+                if (!ViewModel.IsInError)
                 {
                     EnableMemoryControls(true);
                 }
                 Results.UpdateTextState();
             }
 
-            Model.IsMemoryEmpty = (Model.MemorizedNumbers.Count == 0) || IsAlwaysOnTop;
+            ViewModel.IsMemoryEmpty = (ViewModel.MemorizedNumbers.Count == 0) || IsAlwaysOnTop;
 
             UpdateViewState();
             UpdatePanelViewState();
@@ -447,7 +457,7 @@ namespace CalculatorApp
 
         private void OnIsInErrorPropertyChanged()
         {
-            bool isError = Model.IsInError;
+            bool isError = ViewModel.IsInError;
 
             string newState = isError ? "ErrorLayout" : "NoErrorLayout";
             VisualStateManager.GoToState(this, newState, false);
@@ -546,7 +556,7 @@ namespace CalculatorApp
             }
 
             OpsPanel.EnsureProgrammerRadixOps();
-            ProgrammerOperators.SetRadixButton(Model.CurrentRadixType);
+            ProgrammerOperators.SetRadixButton(ViewModel.CurrentRadixType);
         }
 
         // Since we need different font sizes for different numeric system,
@@ -590,7 +600,7 @@ namespace CalculatorApp
 
         private void SetFontSizeResources()
         {
-            DecimalFormatter formatter = LocalizationService.GetInstance().GetRegionalSettingsAwareDecimalFormatter();
+            DecimalFormatter formatter = LocalizationSettings.GetInstance().GetRegionalSettingsAwareDecimalFormatter();
 
             int currentItemIdx = 0;
             while (!fontTables[currentItemIdx].numericSystem.Equals("Default") &&
@@ -627,7 +637,7 @@ namespace CalculatorApp
 
         private void Calculator_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (Model.IsAlwaysOnTop)
+            if (ViewModel.IsAlwaysOnTop)
             {
                 AlwaysOnTopResults.UpdateScrollButtons();
             }
@@ -695,15 +705,49 @@ namespace CalculatorApp
 
         private void OnHistoryItemClicked(HistoryItemViewModel e)
         {
-            Model.SelectHistoryItem(e);
+            ViewModel.SelectHistoryItem(e);
 
             CloseHistoryFlyout();
             this.Focus(FocusState.Programmatic);
         }
 
+        private void OnHistoryEmptied(object sender, EventArgs e)
+        {
+            // Raised before the last item is removed, so focusing here keeps focus from
+            // briefly escaping (e.g. to the hamburger) while the list empties.
+            if (HistoryButton.IsEnabled && HistoryButton.Visibility == Visibility.Visible)
+            {
+                // Narrow (flyout) layout: focus the History toggle button, mirroring
+                // the focus target used when the history flyout closes.
+                HistoryButton.Focus(FocusState.Programmatic);
+            }
+            else
+            {
+                // Docked layout: no History toggle button exists, so keep focus
+                // within the docked History/Memory pivot instead of escaping.
+                DockPivot.Focus(FocusState.Programmatic);
+            }
+        }
+
+        private void OnMemoryEmptied(object sender, EventArgs e)
+        {
+            // Raised before the last item is removed. Focus M+ up front so focus never
+            // escapes to the hamburger while the list empties.
+            MemPlus?.Focus(FocusState.Programmatic);
+
+            if (m_fIsMemoryFlyoutOpen)
+            {
+                // Narrow (flyout) layout: the keypad sits behind the open flyout. Close
+                // it and re-assert M+ focus once it has fully closed (OnMemoryFlyoutClosed),
+                // so focus isn't handed to the now-disabled memory button.
+                m_focusMemoryPlusOnFlyoutClose = true;
+                MemoryFlyout.Hide();
+            }
+        }
+
         private void ToggleHistoryFlyout(object parameter)
         {
-            if (Model.IsProgrammer || DockPanel.Visibility == Visibility.Visible)
+            if (ViewModel.IsProgrammer || DockPanel.Visibility == Visibility.Visible)
             {
                 return;
             }
@@ -742,6 +786,7 @@ namespace CalculatorApp
         private CalculatorApp.HistoryList m_historyList;
         private bool m_fIsHistoryFlyoutOpen;
         private bool m_fIsMemoryFlyoutOpen;
+        private bool m_focusMemoryPlusOnFlyoutClose;
 
         private void OnMemoryFlyoutOpened(object sender, object args)
         {
@@ -762,7 +807,14 @@ namespace CalculatorApp
         {
             m_fIsMemoryFlyoutOpen = false;
             EnableControls(true);
-            if (MemoryButton.IsEnabled)
+            if (m_focusMemoryPlusOnFlyoutClose)
+            {
+                // The flyout was closed because its last memory item was cleared; move focus
+                // to M+ on the now-visible keypad rather than the (disabled) memory button.
+                m_focusMemoryPlusOnFlyoutClose = false;
+                MemPlus?.Focus(FocusState.Programmatic);
+            }
+            else if (MemoryButton.IsEnabled)
             {
                 MemoryButton.Focus(FocusState.Programmatic);
             }
@@ -782,7 +834,7 @@ namespace CalculatorApp
         {
             if (m_historyList == null)
             {
-                InitializeHistoryView(Model.HistoryVM);
+                InitializeHistoryView(ViewModel.HistoryVM);
             }
 
             if (DockHistoryHolder.Child != m_historyList)
@@ -796,6 +848,7 @@ namespace CalculatorApp
             if (m_memory == null)
             {
                 m_memory = new Memory();
+                m_memory.MemoryEmptied += OnMemoryEmptied;
                 VisualStateManager.GoToState(m_memory, GetCurrentLayoutState(), true);
             }
 
@@ -813,7 +866,7 @@ namespace CalculatorApp
             MemButton.IsEnabled = enable;
             MemMinus.IsEnabled = enable;
             MemPlus.IsEnabled = enable;
-            if (!Model.IsMemoryEmpty)
+            if (!ViewModel.IsMemoryEmpty)
             {
                 MemRecall.IsEnabled = enable;
                 ClearMemoryButton.IsEnabled = enable;

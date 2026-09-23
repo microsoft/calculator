@@ -53,7 +53,7 @@ namespace CalculatorApp
             OnPropertyChanged(p);
         }
 
-        public Windows.Foundation.Collections.IObservableVector<ViewModel.EquationViewModel> Equations
+        public ObservableCollection<ViewModel.EquationViewModel> Equations
         {
             get => m_Equations;
             set
@@ -65,9 +65,9 @@ namespace CalculatorApp
                 }
             }
         }
-        private Windows.Foundation.Collections.IObservableVector<ViewModel.EquationViewModel> m_Equations;
+        private ObservableCollection<ViewModel.EquationViewModel> m_Equations;
 
-        public Windows.Foundation.Collections.IObservableVector<ViewModel.VariableViewModel> Variables
+        public ObservableCollection<ViewModel.VariableViewModel> Variables
         {
             get => m_Variables;
             set
@@ -79,7 +79,7 @@ namespace CalculatorApp
                 }
             }
         }
-        private Windows.Foundation.Collections.IObservableVector<ViewModel.VariableViewModel> m_Variables;
+        private ObservableCollection<ViewModel.VariableViewModel> m_Variables;
 
         public ObservableCollection<SolidColorBrush> AvailableColors
         {

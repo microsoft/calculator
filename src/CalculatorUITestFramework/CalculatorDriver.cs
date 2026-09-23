@@ -38,10 +38,10 @@ namespace CalculatorUITestFramework
 
         public void SetupCalculatorSession(TestContext context)
         {
-            this.server = new WinAppDriverLocalServer();
+            server = new WinAppDriverLocalServer();
 
             // Launch Calculator application if it is not yet launched
-            if (this.CalculatorSession == null)
+            if (CalculatorSession == null)
             {
                 // Create a new  WinAppDriver session to bring up an instance of the Calculator application
                 // Note: Multiple calculator windows (instances) share the same process Id
@@ -57,25 +57,25 @@ namespace CalculatorUITestFramework
                 }
 
                 options.AddAdditionalCapability("deviceName", "WindowsPC");
-                this.CalculatorSession = new WindowsDriver<WindowsElement>(this.server.ServiceUrl, options);
-                this.CalculatorSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-                Assert.IsNotNull(this.CalculatorSession);
+                CalculatorSession = new WindowsDriver<WindowsElement>(server.ServiceUrl, options);
+                CalculatorSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                Assert.IsNotNull(CalculatorSession);
             }
         }
 
         public void TearDownCalculatorSession()
         {
             // Close the application and delete the session
-            if (this.CalculatorSession != null)
+            if (CalculatorSession != null)
             {
-                this.CalculatorSession.Quit();
-                this.CalculatorSession = null;
+                CalculatorSession.Quit();
+                CalculatorSession = null;
             }
 
-            if (this.server != null)
+            if (server != null)
             {
-                this.server.Dispose();
-                this.server = null;
+                server.Dispose();
+                server = null;
             }
         }
     }

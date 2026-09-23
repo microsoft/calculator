@@ -33,7 +33,6 @@
 #include <deque>
 #include <regex>
 #include <concurrent_vector.h>
-#include <experimental/resumable>
 #include <pplawait.h>
 #include <unordered_map>
 #include <mutex>
@@ -53,14 +52,6 @@
 #include "CalcManager/CalculatorResource.h"
 #include "CalcManager/CalculatorManager.h"
 #include "CalcManager/UnitConverter.h"
-
-// CalcViewModel Headers
-#include "CalcViewModel/Common/DelegateCommand.h"
-#include "CalcViewModel/Common/Utils.h"
-#include "CalcViewModel/Common/MyVirtualKey.h"
-#include "CalcViewModel/Common/NavCategory.h"
-#include "CalcViewModel/Common/CalculatorButtonUser.h"
-#include "CalcViewModel/Common/NetworkManager.h"
 
 #include "Helpers.h"
 

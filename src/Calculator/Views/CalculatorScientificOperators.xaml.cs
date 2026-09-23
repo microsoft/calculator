@@ -24,7 +24,7 @@ namespace CalculatorApp
             ExpButton.SetValue(KeyboardShortcutManager.VirtualKeyProperty, MyVirtualKey.E);
         }
 
-        public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
+        public StandardCalculatorViewModel ViewModel => this.DataContext as StandardCalculatorViewModel;
 
         public bool IsErrorVisualState
         {
@@ -42,7 +42,7 @@ namespace CalculatorApp
 
         public void OpenParenthesisButton_GotFocus(object sender, RoutedEventArgs e)
         {
-            Model.SetOpenParenthesisCountNarratorAnnouncement();
+            ViewModel.SetOpenParenthesisCountNarratorAnnouncement();
         }
 
         public string ParenthesisCountToString(uint count)

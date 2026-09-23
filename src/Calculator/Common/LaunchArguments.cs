@@ -1,20 +1,11 @@
 using System;
 using System.Linq;
-using System.Text.Json;
 using Windows.ApplicationModel.Activation;
 
-using CalculatorApp.ViewModel.Snapshot;
-using CalculatorApp.JsonUtils;
 using CalculatorApp.ViewModel.Common;
 
 namespace CalculatorApp
 {
-    internal class SnapshotLaunchArguments
-    {
-        public bool HasError { get; set; }
-        public ApplicationSnapshot Snapshot { get; set; }
-    }
-
     internal static class LaunchExtensions
     {
         public static bool TryGetSnapshotProtocol(this IActivatedEventArgs args, out IProtocolActivatedEventArgs result)
@@ -40,13 +31,12 @@ namespace CalculatorApp
                 var rawbase64 = args.Uri.Segments.Skip(1).Aggregate((folded, x) => folded += x);
                 var compressed = Convert.FromBase64String(rawbase64);
                 var jsonStr = DeflateUtils.Decompress(compressed);
-                var snapshot = JsonSerializer.Deserialize<ApplicationSnapshotAlias>(jsonStr);
-                return new SnapshotLaunchArguments { HasError = false, Snapshot = snapshot.Value };
+                return SnapshotLaunchArguments.FromJson(jsonStr);
             }
             catch (Exception ex)
             {
                 TraceLogger.GetInstance().LogRecallError($"Error occurs during the deserialization of Snapshot. Exception: {ex}");
-                return new SnapshotLaunchArguments { HasError = true };
+                return SnapshotLaunchArguments.Error();
             }
         }
     }

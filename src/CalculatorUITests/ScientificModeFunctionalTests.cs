@@ -4,6 +4,7 @@
 using CalculatorUITestFramework;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using System;
 
 namespace CalculatorUITests
@@ -689,6 +690,69 @@ namespace CalculatorUITests
             page.StandardOperators.EqualButton.Click();
             Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0.549306"));
 
+        }
+        #endregion
+
+        #region F-E Tests
+
+        /// <summary>
+        /// In Scientific mode, pressing Clear (C) while the F-E toggle is on
+        /// resets both the button state to off and the display format back to
+        /// fixed-point. The next digit entered renders in fixed form.
+        /// </summary>
+        [TestMethod]
+        [Priority(1)]
+        public void FixedToExponentialResetsOnClear()
+        {
+            // C and CE share a button slot in Scientific mode (visibility on
+            // Model.IsInputEmpty, mutually exclusive). Use the Escape hotkey
+            // to invoke Clear unconditionally — it routes through the same
+            // KeyboardShortcutManager → OnButtonPressed(Clear) path as the
+            // visible button (Resources.resw:clearButton.VirtualKey = Escape).
+            page.ScientificOperators.FixedToExponentialButton.Click();
+
+            // Press Clear via the Escape hotkey.
+            CalculatorApp.EnsureCalculatorHasFocus();
+            CalculatorApp.Window.SendKeys(Keys.Escape);
+
+            // Button-visual invariant: F-E toggle is off immediately after Clear.
+            Assert.AreEqual(
+                "0",
+                page.ScientificOperators.FixedToExponentialButton.GetAttribute("Toggle.ToggleState"),
+                "F-E button should be untoggled after Clear in Scientific mode.");
+
+            // Display invariant: the next digit renders in fixed form, not exponent form.
+            page.StandardOperators.NumberPad.Input(2);
+            Assert.AreEqual(
+                "2",
+                page.CalculatorResults.GetCalculatorResultText(),
+                "Display should render in fixed form after Clear resets F-E.");
+        }
+
+        /// <summary>
+        /// In Scientific mode, pressing Clear-Entry (CE) while the F-E toggle
+        /// is on resets both the button state to off and the display format
+        /// back to fixed-point. The next digit entered renders in fixed form.
+        /// </summary>
+        [TestMethod]
+        [Priority(1)]
+        public void FixedToExponentialResetsOnClearEntry()
+        {
+            page.ScientificOperators.FixedToExponentialButton.Click();
+            page.StandardOperators.NumberPad.Input(2);
+
+            page.StandardOperators.ClearEntryButton.Click();
+
+            Assert.AreEqual(
+                "0",
+                page.ScientificOperators.FixedToExponentialButton.GetAttribute("Toggle.ToggleState"),
+                "F-E button should be untoggled after Clear-Entry in Scientific mode.");
+
+            page.StandardOperators.NumberPad.Input(2);
+            Assert.AreEqual(
+                "2",
+                page.CalculatorResults.GetCalculatorResultText(),
+                "Display should render in fixed form after Clear-Entry resets F-E.");
         }
         #endregion
     }

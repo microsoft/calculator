@@ -65,7 +65,7 @@
                          AutomationProperties.AutomationId="fullKeypad"
                          AutomationProperties.Name="{utils:ResourceString Name=fullKeypad/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                          Content="&#xe75f;"
-                         IsChecked="{x:Bind Model.IsBitFlipChecked, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"
+                         IsChecked="{x:Bind ViewModel.IsBitFlipChecked, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"
                          ToolTipService.ToolTip="{utils:ResourceString Name=fullKeypad/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"/>
             <RadioButton x:Name="BitFlip"
                          Grid.Column="1"
@@ -73,7 +73,7 @@
                          AutomationProperties.AutomationId="bitFlip"
                          AutomationProperties.Name="{utils:ResourceString Name=bitFlip/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                          Content="&#xf7d0;"
-                         IsChecked="{x:Bind Model.IsBitFlipChecked, Mode=TwoWay}"
+                         IsChecked="{x:Bind ViewModel.IsBitFlipChecked, Mode=TwoWay}"
                          ToolTipService.ToolTip="{utils:ResourceString Name=bitFlip/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"/>
         </Grid>
 

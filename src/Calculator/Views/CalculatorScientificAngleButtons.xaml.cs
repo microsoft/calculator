@@ -23,7 +23,7 @@ namespace CalculatorApp
             InitializeComponent();
         }
 
-        public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
+        public StandardCalculatorViewModel ViewModel => this.DataContext as StandardCalculatorViewModel;
 
         public System.Windows.Input.ICommand ButtonPressed
         {
@@ -66,19 +66,19 @@ namespace CalculatorApp
 
             if (buttonId == "0")
             {
-                Model.SwitchAngleType(NumbersAndOperatorsEnum.Radians);
+                ViewModel.SwitchAngleType(NumbersAndOperatorsEnum.Radians);
                 RadianButton.Visibility = Visibility.Visible;
                 RadianButton.Focus(FocusState.Programmatic);
             }
             else if (buttonId == "1")
             {
-                Model.SwitchAngleType(NumbersAndOperatorsEnum.Grads);
+                ViewModel.SwitchAngleType(NumbersAndOperatorsEnum.Grads);
                 GradsButton.Visibility = Visibility.Visible;
                 GradsButton.Focus(FocusState.Programmatic);
             }
             else if (buttonId == "2")
             {
-                Model.SwitchAngleType(NumbersAndOperatorsEnum.Degree);
+                ViewModel.SwitchAngleType(NumbersAndOperatorsEnum.Degree);
                 DegreeButton.Visibility = Visibility.Visible;
                 DegreeButton.Focus(FocusState.Programmatic);
             }

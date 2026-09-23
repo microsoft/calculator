@@ -14,6 +14,8 @@ namespace CalculatorApp
     [Windows.Foundation.Metadata.WebHostHidden]
     public sealed partial class CalculatorProgrammerOperators
     {
+        public static string OrEmpty(string value) => value ?? string.Empty;
+
         public CalculatorProgrammerOperators()
         {
             InitializeComponent();
@@ -21,7 +23,7 @@ namespace CalculatorApp
             CopyMenuItem.Text = AppResourceProvider.GetInstance().GetResourceString("copyMenuItem");
         }
 
-        public StandardCalculatorViewModel Model => (StandardCalculatorViewModel)this.DataContext;
+        public StandardCalculatorViewModel ViewModel => this.DataContext as StandardCalculatorViewModel;
 
         public Style SymbolButtonStyle
         {
@@ -58,36 +60,36 @@ namespace CalculatorApp
         private void DecButtonChecked(object sender, RoutedEventArgs e)
         {
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.DecButton, ViewMode.Programmer);
-            if (Model != null)
+            if (ViewModel != null)
             {
-                Model.SwitchProgrammerModeBase(NumberBase.DecBase);
+                ViewModel.SwitchProgrammerModeBase(NumberBase.DecBase);
             }
         }
 
         private void HexButtonChecked(object sender, RoutedEventArgs e)
         {
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.HexButton, ViewMode.Programmer);
-            if (Model != null)
+            if (ViewModel != null)
             {
-                Model.SwitchProgrammerModeBase(NumberBase.HexBase);
+                ViewModel.SwitchProgrammerModeBase(NumberBase.HexBase);
             }
         }
 
         private void BinButtonChecked(object sender, RoutedEventArgs e)
         {
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.BinButton, ViewMode.Programmer);
-            if (Model != null)
+            if (ViewModel != null)
             {
-                Model.SwitchProgrammerModeBase(NumberBase.BinBase);
+                ViewModel.SwitchProgrammerModeBase(NumberBase.BinBase);
             }
         }
 
         private void OctButtonChecked(object sender, RoutedEventArgs e)
         {
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.OctButton, ViewMode.Programmer);
-            if (Model != null)
+            if (ViewModel != null)
             {
-                Model.SwitchProgrammerModeBase(NumberBase.OctBase);
+                ViewModel.SwitchProgrammerModeBase(NumberBase.OctBase);
             }
         }
 

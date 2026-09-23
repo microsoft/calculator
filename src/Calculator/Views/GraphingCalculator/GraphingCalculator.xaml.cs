@@ -15,7 +15,6 @@ using System;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
@@ -258,12 +257,12 @@ namespace CalculatorApp
         {
             if (ViewModel != null)
             {
-                ViewModel.Equations.VectorChanged -= OnEquationsVectorChanged;
+                ViewModel.Equations.CollectionChanged -= OnEquationsCollectionChanged;
                 ViewModel.VariableUpdated -= OnVariableChanged;
             }
 
             ViewModel = args.NewValue as GraphingCalculatorViewModel;
-            ViewModel.Equations.VectorChanged += OnEquationsVectorChanged;
+            ViewModel.Equations.CollectionChanged += OnEquationsCollectionChanged;
             ViewModel.VariableUpdated += OnVariableChanged;
 
             UpdateGraphAutomationName();
@@ -271,25 +270,23 @@ namespace CalculatorApp
 
         private void OnVariableChanged(object sender, VariableChangedEventArgs args)
         {
-            GraphingControl.SetVariable(args.variableName, args.newValue);
+            GraphingControl.SetVariable(args.VariableName, args.NewValue);
         }
 
-        private void OnEquationsVectorChanged(IObservableVector<EquationViewModel> sender, IVectorChangedEventArgs e)
+        private void OnEquationsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            // If an item is already added to the graph, changing it should automatically trigger a graph update
-            if (e.CollectionChange == CollectionChange.ItemChanged)
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
             {
                 return;
             }
 
-            // Do not plot the graph if we are removing an empty equation, just remove it
-            if (e.CollectionChange == CollectionChange.ItemRemoved)
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove && e.OldStartingIndex >= 0)
             {
-                var itemToRemove = GraphingControl.Equations[(int)e.Index];
+                var itemToRemove = GraphingControl.Equations[e.OldStartingIndex];
 
                 if (string.IsNullOrEmpty(itemToRemove.Expression))
                 {
-                    GraphingControl.Equations.RemoveAt((int)e.Index);
+                    GraphingControl.Equations.RemoveAt(e.OldStartingIndex);
 
                     if (GraphingControl.Equations.Count == 1 && string.IsNullOrEmpty(GraphingControl.Equations[0].Expression))
                     {
@@ -300,10 +297,9 @@ namespace CalculatorApp
                 }
             }
 
-            // Do not plot the graph if we are adding an empty equation, just add it
-            if (e.CollectionChange == CollectionChange.ItemInserted)
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add && e.NewItems?.Count > 0)
             {
-                var itemToAdd = sender[(int)e.Index];
+                var itemToAdd = (EquationViewModel)e.NewItems[0];
 
                 if (string.IsNullOrEmpty(itemToAdd.Expression))
                 {
