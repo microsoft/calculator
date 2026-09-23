@@ -1,70 +1,127 @@
-#
-# Release
-# This pipeline builds a version of the app in a production configuration to be released to the
-# Store and the Windows image. This pipeline relies on Microsoft-internal resources to run.
-#
 
+
+# This pipeline builds a version of the app in a production configuration to be released to the
+# Store and the Windows image.
 trigger: none
 pr: none
 
 variables:
-  versionMajor: 11
-  versionMinor: 2210
-  versionBuild: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
-  versionPatch: 0
+  + name: version
+    value: 11
+  + name: version
+    value: 2607
+    value: 2606
+  - name: versionBuild
+    value: $[counter(format('{0}.{1}.*', variables['versionMajor'], variables['versionMinor']), 0)]
+  - name: versionPatch
+    value: 0
+  # Docker image which is used to build the project https://aka.ms/obpipelines/containers
+  - name: WindowsContainerImage
+    value: 'onebranch.azurecr.io/windows/ltsc2025/vse2026:latest'
+  - name: Codeql.Enabled
+    value: true
 
 name: '$(versionMajor).$(versionMinor).$(versionBuild).$(versionPatch)'
 
-jobs:
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    platform: x64
-    isReleaseBuild: true
-    useReleaseAppxmanifest: true
+parameters:
+- name: publishStore
+  displayName: Publish and flight the package on Store
+  type: boolean
+  default: true
 
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    platform: x86
-    isReleaseBuild: true
-    useReleaseAppxmanifest: true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+- name: publishVPack
+  displayName: Publish as undocked inbox app via VPack
+  type: boolean
+  default: true
 
-- template: ./templates/build-single-architecture.yaml
-  parameters:
-    platform: ARM
-    isReleaseBuild: true
-    useReleaseAppxmanifest: true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: OneBranch.Pipelines/GovernedTemplates
+      ref: refs/heads/main
 
-- template: ./templates/build-single-architecture.yaml
+extends:
+  template: v2/Microsoft.Official.yml@templates # https://aka.ms/obpipelines/templates
   parameters:
-    platform: ARM64
-    isReleaseBuild: true
-    useReleaseAppxmanifest: true
-    condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+    featureFlags:
+      EnableCDPxPAT: false
+      WindowsHostVersion:
+        Version: 2025
 
-- template: ./templates/run-ui-tests.yaml
-  parameters:
-    platform: x64
-    runsettingsFileName: CalculatorUITests.release.runsettings
+    platform:
+      name: 'windows_undocked'
 
-- template: ./templates/run-ui-tests.yaml
-  parameters:
-    platform: x86
-    runsettingsFileName: CalculatorUITests.release.runsettings
+    globalSdl:
+      isNativeCode: true
+      enableCheckCFlags: false
+      enableXFGCheck: false
 
-- template: ./templates/run-unit-tests.yaml
-  parameters:
-    platform: x64
+      tsa:
+        enabled: true
+        configFile: '$(Build.SourcesDirectory)\.config\TSAOptions.json'
 
-- template: ./templates/run-unit-tests.yaml
-  parameters:
-    platform: x86
+      policheck:
+        enabled: true
+        exclusionsFile: '$(Build.SourcesDirectory)\build\config\PoliCheckExclusions.xml'
 
-- template: ./templates/package-msixbundle.yaml
-  parameters:
-    signBundle: true
-    createStoreBrokerPackages: true
+      evidence:
+        enabled: false
 
-- template: ./templates/release-store.yaml
-- template: ./templates/release-vpack.yaml
+    stages:
+    - stage: Calculator
+      jobs:
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
+        parameters:
+          platform: x64
+          isReleaseBuild: true
+          useReleaseAppxmanifest: true
+
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
+        parameters:
+          platform: x86
+          isReleaseBuild: true
+          useReleaseAppxmanifest: true
+
+      - template: /build/pipelines/templates/build-single-architecture.yaml@self
+        parameters:
+          platform: ARM64
+          isReleaseBuild: true
+          useReleaseAppxmanifest: true
+          condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
+        parameters:
+          platform: x64
+          runsettingsFileName: CalculatorUITests.release.runsettings
+
+      - template: /build/pipelines/templates/run-ui-tests.yaml@self
+        parameters:
+          platform: x86
+          runsettingsFileName: CalculatorUITests.release.runsettings
+
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
+        parameters:
+          platform: x64
+
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
+        parameters:
+          platform: x64
+          testAppName: Calculator.Tests
+          jobName: ManagedUnitTests
+          treatNoTestsAsError: true
+
+      - template: /build/pipelines/templates/run-unit-tests.yaml@self
+        parameters:
+          platform: x86
+
+      - template: /build/pipelines/templates/package-msixbundle.yaml@self
+        parameters:
+          signBundle: true
+          includeX86: true
+
+      - template: /build/pipelines/templates/release-store.yaml@self
+        parameters:
+          publishToStore: ${{ parameters.publishStore }}
+      - ${{ if eq(parameters.publishVPack, true) }}:
+        - template: /build/pipelines/templates/release-vpack.yaml@self

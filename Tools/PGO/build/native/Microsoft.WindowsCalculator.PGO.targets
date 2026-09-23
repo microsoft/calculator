@@ -3,7 +3,7 @@
 
     <PropertyGroup>
         <VC_PGO_RunTime_Dir>$(VCToolsInstallDir)bin\Host$(PlatformShortName)\$(PlatformShortName)</VC_PGO_RunTime_Dir>
-        <VC_PGO_RunTime_Dir Condition="'$(Platform)'=='ARM' or '$(Platform)'=='ARM64'">$(VCToolsInstallDir)bin\$(PlatformShortName)</VC_PGO_RunTime_Dir>
+        <VC_PGO_RunTime_Dir Condition="'$(Platform)'=='ARM64'">$(VCToolsInstallDir)bin\$(PlatformShortName)</VC_PGO_RunTime_Dir>
         <ProfileGuidedDatabaseFileName>$(MSBuildThisFileDirectory)..\..\tools\$(PlatformShortName)\Calculator.pgd</ProfileGuidedDatabaseFileName>
     </PropertyGroup>
 
@@ -11,7 +11,6 @@
     <ItemDefinitionGroup Condition="'$(Configuration)' == 'Release' and '$(PGOBuildMode)' == 'Instrument'">
         <Link>
             <LinkTimeCodeGeneration>PGInstrument</LinkTimeCodeGeneration>
-            <AdditionalDependencies Condition="'$(Platform)'=='ARM'">$(VC_ReferencesPath_VC_ARM)\pgort.lib;%(AdditionalDependencies)</AdditionalDependencies>
             <AdditionalDependencies Condition="'$(Platform)'=='ARM64'">$(VC_ReferencesPath_VC_ARM64)\pgort.lib;%(AdditionalDependencies)</AdditionalDependencies>
             <AdditionalDependencies Condition="'$(Platform)'=='Win32'">$(VC_ReferencesPath_VC_x86)\pgort.lib;%(AdditionalDependencies)</AdditionalDependencies>
             <AdditionalDependencies Condition="'$(Platform)'=='x64'">$(VC_ReferencesPath_VC_x64)\pgort.lib;%(AdditionalDependencies)</AdditionalDependencies>

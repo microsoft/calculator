@@ -12,6 +12,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:triggers="using:CalculatorApp.Views.StateTriggers"
+             xmlns:utils="using:CalculatorApp.Utils"
              xmlns:vm="using:CalculatorApp.ViewModel"
              d:DesignHeight="658"
              d:DesignWidth="830"
@@ -22,11 +23,9 @@
 
     <UserControl.Resources>
         <common:VisibilityNegationConverter x:Name="VisibilityNegationConverter"/>
-        <common:AlwaysSelectedCollectionViewConverter x:Name="AlwaysSelectedConverter"/>
-        <common:ValidSelectedItemConverter x:Name="ValidSelectedItemConverter"/>
         <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
-        <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind Model.Announcement, Mode=OneWay}"/>
+        <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind ViewModel.Announcement, Mode=OneWay}"/>
 
         <DataTemplate x:Key="UnitTemplate" x:DataType="vm:Unit">
             <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
@@ -35,13 +34,11 @@
                        TextWrapping="NoWrap"/>
         </DataTemplate>
 
-        <!-- Native bindings can't be use with this template, it will launch an exception when ComboxBox.SelectedItem == null -->
-        <!-- if you switch between modes when no currencies are available for example) -->
-        <DataTemplate x:Key="SelectedUnitTemplate">
+        <DataTemplate x:Key="SelectedUnitTemplate" x:DataType="vm:Unit">
             <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
                        FontWeight="Normal"
-                       AutomationProperties.Name="{Binding AccessibleName, Mode=OneTime, FallbackValue=''}"
-                       Text="{Binding Name, Mode=OneTime, FallbackValue=''}"
+                       AutomationProperties.Name="{x:Bind AccessibleName, Mode=OneTime}"
+                       Text="{x:Bind Name, Mode=OneTime}"
                        TextWrapping="NoWrap"/>
         </DataTemplate>
 
@@ -543,18 +540,18 @@
                        Padding="16,0,0,0"
                        Style="{ThemeResource CurrencySymbolMediumStyle}"
                        AutomationProperties.AccessibilityView="Raw"
-                       Text="{x:Bind Model.CurrencySymbol1, Mode=OneWay}"
-                       Visibility="{x:Bind Model.CurrencySymbolVisibility, Mode=OneWay}"/>
+                       Text="{x:Bind ViewModel.CurrencySymbol1, Mode=OneWay}"
+                       Visibility="{x:Bind ViewModel.CurrencySymbolVisibility, Mode=OneWay}"/>
             <controls:CalculationResult x:Name="Value1"
                                         Grid.Column="1"
                                         Style="{ThemeResource ValueMediumStyle}"
                                         AutomationProperties.AutomationId="Value1"
-                                        AutomationProperties.Name="{x:Bind Model.Value1AutomationName, Mode=OneWay}"
+                                        AutomationProperties.Name="{x:Bind local:UnitConverter.OrEmpty(ViewModel.Value1AutomationName), Mode=OneWay}"
                                         ContextCanceled="OnContextCanceled"
                                         ContextRequested="OnContextRequested"
-                                        DisplayValue="{x:Bind Model.Value1, Mode=OneWay}"
+                                        DisplayValue="{x:Bind ViewModel.Value1, Mode=OneWay}"
                                         FlowDirection="{x:Bind LayoutDirection}"
-                                        IsActive="{Binding Value1Active, Mode=TwoWay}"
+                                        IsActive="{x:Bind ViewModel.Value1Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
                                         Selected="OnValueSelected"
                                         TabIndex="1"/>
@@ -566,16 +563,17 @@
                   HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
                   Style="{ThemeResource ConditionalComboStyle}"
                   AutomationProperties.AutomationId="Units1"
-                  AutomationProperties.Name="{x:Bind Model.Unit1AutomationName, Mode=OneWay}"
+                  AutomationProperties.Name="{x:Bind local:UnitConverter.OrEmpty(ViewModel.Unit1AutomationName), Mode=OneWay}"
                   DropDownClosed="UpdateDropDownState"
                   DropDownOpened="UpdateDropDownState"
                   FlowDirection="{x:Bind LayoutDirection}"
                   IsEnabledChanged="Units1_IsEnabledChanged"
                   ItemTemplate="{StaticResource UnitTemplate}"
-                  ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
-                  SelectedItem="{Binding Unit1, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
+                  ItemsSource="{x:Bind ViewModel.Units, Mode=OneWay}"
+                  SelectedItem="{x:Bind ViewModel.Unit1, Mode=OneWay}"
+                  SelectionChanged="OnUnitSelectionChanged"
                   TabIndex="2"
-                  IsEnabled="{Binding IsDropDownEnabled}"/>
+                  IsEnabled="{x:Bind ViewModel.IsDropDownEnabled, Mode=OneWay}"/>
 
         <Grid x:Name="Value2Container"
               Grid.Row="3"
@@ -592,19 +590,19 @@
                        Padding="16,0,0,0"
                        Style="{ThemeResource CurrencySymbolMediumStyle}"
                        AutomationProperties.AccessibilityView="Raw"
-                       Text="{x:Bind Model.CurrencySymbol2, Mode=OneWay}"
-                       Visibility="{x:Bind Model.CurrencySymbolVisibility, Mode=OneWay}"/>
+                       Text="{x:Bind ViewModel.CurrencySymbol2, Mode=OneWay}"
+                       Visibility="{x:Bind ViewModel.CurrencySymbolVisibility, Mode=OneWay}"/>
             <controls:CalculationResult x:Name="Value2"
                                         Grid.Column="1"
                                         Style="{ThemeResource ValueMediumStyle}"
                                         AutomationProperties.AutomationId="Value2"
                                         AutomationProperties.LiveSetting="Polite"
-                                        AutomationProperties.Name="{x:Bind Model.Value2AutomationName, Mode=OneWay}"
+                                        AutomationProperties.Name="{x:Bind local:UnitConverter.OrEmpty(ViewModel.Value2AutomationName), Mode=OneWay}"
                                         ContextCanceled="OnContextCanceled"
                                         ContextRequested="OnContextRequested"
-                                        DisplayValue="{x:Bind Model.Value2, Mode=OneWay}"
+                                        DisplayValue="{x:Bind ViewModel.Value2, Mode=OneWay}"
                                         FlowDirection="{x:Bind LayoutDirection}"
-                                        IsActive="{Binding Value2Active, Mode=TwoWay}"
+                                        IsActive="{x:Bind ViewModel.Value2Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
                                         Selected="OnValueSelected"
                                         TabIndex="3"/>
@@ -616,15 +614,16 @@
                   HorizontalAlignment="{x:Bind FlowDirectionHorizontalAlignment}"
                   Style="{ThemeResource ConditionalComboStyle}"
                   AutomationProperties.AutomationId="Units2"
-                  AutomationProperties.Name="{x:Bind Model.Unit2AutomationName, Mode=OneWay}"
+                  AutomationProperties.Name="{x:Bind local:UnitConverter.OrEmpty(ViewModel.Unit2AutomationName), Mode=OneWay}"
                   DropDownClosed="UpdateDropDownState"
                   DropDownOpened="UpdateDropDownState"
                   FlowDirection="{x:Bind LayoutDirection}"
                   ItemTemplate="{StaticResource UnitTemplate}"
-                  ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
-                  SelectedItem="{Binding Unit2, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
+                  ItemsSource="{x:Bind ViewModel.Units, Mode=OneWay}"
+                  SelectedItem="{x:Bind ViewModel.Unit2, Mode=OneWay}"
+                  SelectionChanged="OnUnitSelectionChanged"
                   TabIndex="4"
-                  IsEnabled="{Binding IsDropDownEnabled}"/>
+                  IsEnabled="{x:Bind ViewModel.IsDropDownEnabled, Mode=OneWay}"/>
 
         <StackPanel x:Name="SupplementaryResultsPanelInGrid"
                     Grid.Row="5"
@@ -638,23 +637,23 @@
             <local:SupplementaryResults x:Name="SupplementaryResults"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Results="{x:Bind Model.SupplementaryResults, Mode=OneWay}"
-                                        Visibility="{x:Bind Model.SupplementaryVisibility, Mode=OneWay}"/>
-            <StackPanel Visibility="{x:Bind Model.IsCurrencyCurrentCategory, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        Results="{x:Bind ViewModel.SupplementaryResults, Mode=OneWay}"
+                                        Visibility="{x:Bind ViewModel.SupplementaryVisibility, Mode=OneWay}"/>
+            <StackPanel Visibility="{x:Bind ViewModel.IsCurrencyCurrentCategory, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <!-- Currency Ratio Equality -->
                 <TextBlock x:Name="CurrencyRatioEqualityBlock"
                            Margin="16,0,0,0"
                            Style="{ThemeResource CaptionTextBlockStyle}"
                            Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
-                           AutomationProperties.Name="{x:Bind Model.CurrencyRatioEqualityAutomationName, Mode=OneWay}"
-                           Text="{x:Bind Model.CurrencyRatioEquality, Mode=OneWay}"/>
+                           AutomationProperties.Name="{x:Bind local:UnitConverter.OrEmpty(ViewModel.CurrencyRatioEqualityAutomationName), Mode=OneWay}"
+                           Text="{x:Bind ViewModel.CurrencyRatioEquality, Mode=OneWay}"/>
 
                 <!-- Currency Timestamp -->
                 <TextBlock x:Name="CurrencyTimestampTextBlock"
                            Margin="16,0,0,0"
                            Style="{ThemeResource CaptionTextBlockStyle}"
                            Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
-                           Text="{x:Bind Model.CurrencyTimestamp, Mode=OneWay}"/>
+                           Text="{x:Bind ViewModel.CurrencyTimestamp, Mode=OneWay}"/>
 
                 <!-- Currency Refresh button and additional status text -->
                 <ContentControl x:Name="CurrencyRefreshBlockControl"
@@ -663,12 +662,12 @@
                                 Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <HyperlinkButton x:Name="CurrencyRefreshBlock"
-                                         x:Uid="RefreshButtonText"
                                          Margin="16,4,0,0"
                                          Padding="0"
                                          Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                                          BorderThickness="0"
-                                         Click="CurrencyRefreshButton_Click">
+                                         Click="CurrencyRefreshButton_Click"
+                                         Content="{utils:ResourceString Name=RefreshButtonText/Content}">
                             <HyperlinkButton.Resources>
                                 <ResourceDictionary>
                                     <StaticResource x:Key="HyperlinkButtonBackgroundPointerOver" ResourceKey="SubtleFillColorTransparentBrush"/>
@@ -677,8 +676,7 @@
                             </HyperlinkButton.Resources>
                         </HyperlinkButton>
                         <TextBlock Margin="3,6,0,0" Style="{ThemeResource CaptionTextBlockStyle}">
-                            <Run x:Name="CurrencySecondaryStatus"
-                                 Text=""/>
+                            <Run x:Name="CurrencySecondaryStatus" Text=""/>
                         </TextBlock>
                     </StackPanel>
                 </ContentControl>
@@ -724,54 +722,58 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Grid x:Uid="DisplayControls"
-                  Grid.Row="0"
+            <Grid Grid.Row="0"
                   Grid.Column="1"
                   Grid.ColumnSpan="2"
-                  AutomationProperties.HeadingLevel="Level1">
+                  AutomationProperties.HeadingLevel="Level1"
+                  AutomationProperties.Name="{utils:ResourceString Name=DisplayControls/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <controls:CalculatorButton x:Name="ClearEntryButtonPos0"
-                                           x:Uid="clearEntryButton"
                                            HorizontalAlignment="Stretch"
                                            Style="{StaticResource OperatorButtonStyle}"
                                            FontSize="14"
+                                           common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=clearEntryButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
+                                           AutomationProperties.Name="{utils:ResourceString Name=clearEntryButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Clear"
                                            Content="CE"
                                            TabIndex="7"/>
                 <controls:CalculatorButton x:Name="BackSpaceButtonSmall"
-                                           x:Uid="backSpaceButton"
                                            Grid.Column="1"
                                            Style="{StaticResource SymbolOperatorButtonStyle}"
                                            FontSize="14"
+                                           common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=backSpaceButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
+                                           AutomationProperties.Name="{utils:ResourceString Name=backSpaceButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                            ButtonId="Backspace"
                                            Content="&#xE94F;"
                                            TabIndex="8"/>
             </Grid>
 
             <local:NumberPad x:Name="NumberPad"
-                             x:Uid="NumberPad"
                              Grid.Row="1"
                              Grid.RowSpan="4"
                              Grid.Column="0"
                              Grid.ColumnSpan="3"
                              VerticalAlignment="Stretch"
                              AutomationProperties.HeadingLevel="Level1"
+                             AutomationProperties.Name="{utils:ResourceString Name=NumberPad/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                              ButtonStyle="{StaticResource NumericButtonStyle18}"
                              TabIndex="10"
                              TabNavigation="Local"/>
             <controls:CalculatorButton x:Name="ConverterNegateButton"
-                                       x:Uid="converterNegateButton"
                                        Grid.Row="4"
                                        Grid.Column="0"
                                        Style="{StaticResource SymbolOperatorKeypadButtonStyle}"
                                        FontSize="16"
+                                       common:KeyboardShortcutManager.Character="{utils:ResourceString Name=converterNegateButton/[using:CalculatorApp.Common]KeyboardShortcutManager/Character}"
+                                       common:KeyboardShortcutManager.VirtualKey="{utils:ResourceVirtualKey Name=converterNegateButton/[using:CalculatorApp.Common]KeyboardShortcutManager/VirtualKey}"
+                                       AutomationProperties.Name="{utils:ResourceString Name=converterNegateButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                        ButtonId="Negate"
                                        Content="&#xF898;"
                                        TabIndex="6"
-                                       Visibility="{x:Bind Model.CurrentCategory.NegateVisibility, Mode=OneWay}"/>
+                                       Visibility="{x:Bind ViewModel.CurrentCategory.NegateVisibility, Mode=OneWay}"/>
         </Grid>
         <!-- End ConverterNumPad -->
     </Grid>

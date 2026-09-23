@@ -1,39 +1,55 @@
 # This template contains jobs to run unit tests.
 
 parameters:
-  isOSSBuild: false
   platform: ''
   runsettingsFileName: ''
+  testAppName: 'CalculatorUnitTests'
+  jobName: 'UnitTests'
+  continueOnTestFailure: true
+  treatNoTestsAsError: false
 
 jobs:
-- job: UnitTests${{ parameters.platform }}
-  displayName: UnitTests ${{ parameters.platform }}
+- job: ${{ parameters.jobName }}${{ parameters.platform }}
+  displayName: ${{ parameters.testAppName }} ${{ parameters.platform }}
   dependsOn: Build${{ parameters.platform }}
   condition: succeeded()
   pool:
-    ${{ if eq(parameters.isOSSBuild, true) }}:
-      name: EssentialExperiencesOpenSource-windows-2022
-    ${{ if eq(parameters.isOSSBuild, false) }}:
-      name: EssentialExperiences-windows-2022
+    type: windows
+    isCustom: true
+    name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
-  steps:
-  - checkout: none
-  
-  - task: DownloadBuildArtifacts@0
-    displayName: Download CalculatorUnitTests
-    inputs:
-      artifactName: drop
-      itemPattern: drop/Release/${{ parameters.platform }}/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test/**
+    UnitTestsDir: $(Pipeline.Workspace)\drop-${{ parameters.platform }}\${{ parameters.testAppName }}\AppPackages\${{ parameters.testAppName }}_Test
+    # Test results are just log files, not release binaries — skip SDL scanning
+    ob_outputDirectory: '$(Common.TestResultsDirectory)'
+    ob_artifactBaseName: 'drop-${{ parameters.jobName }}-${{ parameters.platform }}-Attempt$(System.JobAttempt)'
+    ob_sdl_binskim_enabled: false
+    ob_sdl_sbom_enabled: false
 
-  - task: PowerShell@2
-    displayName: Install Certificate
+  steps:
+  - task: UseDotNet@2
+    displayName: Install .NET 10 SDK
     inputs:
-      filePath: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\Add-AppDevPackage.ps1
-      arguments: -CertificatePath $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.cer -Force
+      packageType: 'sdk'
+      version: '10.x'
+
+  - task: DownloadPipelineArtifact@2
+    displayName: Download ${{ parameters.testAppName }}
+    inputs:
+      artifactName: drop-${{ parameters.platform }}
+      itemPattern: '**/${{ parameters.testAppName }}_Test/**'
+      targetPath: $(Pipeline.Workspace)\drop-${{ parameters.platform }}
+
+  - powershell: |
+      $(Build.SourcesDirectory)/build/scripts/SignTestApp.ps1 -AppToSign '$(UnitTestsDir)\${{ parameters.testAppName }}.msix'
+    displayName: Sign unit tests
 
   - task: VSTest@2
-    displayName: Run CalculatorUnitTests
+    displayName: Run ${{ parameters.testAppName }}
+    continueOnError: ${{ parameters.continueOnTestFailure }}
     inputs:
-      testAssemblyVer2: $(Build.ArtifactStagingDirectory)\drop\Release\${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test\CalculatorUnitTests.msix
-      otherConsoleOptions: /Platform:${{ parameters.platform }}
+      testAssemblyVer2: $(UnitTestsDir)\${{ parameters.testAppName }}.msix
+      ${{ if eq(parameters.treatNoTestsAsError, true) }}:
+        otherConsoleOptions: /Platform:${{ parameters.platform }} -- RunConfiguration.TreatNoTestsAsError=true
+      ${{ else }}:
+        otherConsoleOptions: /Platform:${{ parameters.platform }}

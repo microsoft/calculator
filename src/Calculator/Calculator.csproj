@@ -13,19 +13,18 @@
     <AppContainerApplication>true</AppContainerApplication>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.26100.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <!-- We want to manually control the MinVersion/MaxVersionTested in the manifest so turn of the replacement. -->
     <AppxOSMinVersionReplaceManifestVersion>false</AppxOSMinVersionReplaceManifestVersion>
     <AppxOSMaxVersionTestedReplaceManifestVersion>false</AppxOSMaxVersionTestedReplaceManifestVersion>
-    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>18</MinimumVisualStudioVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <AppxDefaultResourceQualifierUAP_Contrast>black</AppxDefaultResourceQualifierUAP_Contrast>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateKeyFile>WindowsDev_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <AppxBundle>Always</AppxBundle>
     <GenerateProjectSpecificOutputFolder>true</GenerateProjectSpecificOutputFolder>
@@ -36,6 +35,7 @@
     <AppxBundlePlatforms>$(Platform)</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <IlcParameters>/disableStackTraceMetadata /disableExceptionMessages</IlcParameters>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <!-- This has to be exactly in this place for this to work -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -56,29 +56,6 @@
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\ARM\Debug\Calculator\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>ARM</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
-    <OutputPath>..\ARM\Release\Calculator\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>ARM</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
@@ -136,15 +113,15 @@
   </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <AssetTargetFallback>native;$(AssetTargetFallback)</AssetTargetFallback>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\AlwaysSelectedCollectionView.cs" />
     <Compile Include="Common\AppLifecycleLogger.cs" />
     <Compile Include="Common\KeyboardShortcutManager.cs" />
-    <Compile Include="Common\ValidatingConverters.cs" />
+    <Compile Include="Common\LaunchArguments.cs" />
     <Compile Include="Controls\CalculationResult.cs" />
     <Compile Include="Controls\CalculationResultAutomationPeer.cs" />
     <Compile Include="Controls\CalculatorButton.cs" />
@@ -165,6 +142,9 @@
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
     <Compile Include="Selectors\NavViewMenuItemTemplateSelector.cs" />
+    <Compile Include="Utils\DeflateUtils.cs" />
+    <Compile Include="Utils\ResourceVirtualKey.cs" />
+    <Compile Include="Utils\ResourceString.cs" />
     <Compile Include="Utils\ThemeHelper.cs" />
     <Compile Include="Views\GraphingCalculator\EquationStylePanelControl.xaml.cs">
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
@@ -248,7 +228,6 @@
     <Compile Include="Views\UnitConverter.xaml.cs">
       <DependentUpon>UnitConverter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WindowFrameService.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseReleaseAppxManifest)' == 'True'">
     <AppxManifest Include="Package.Release.appxmanifest">
@@ -259,6 +238,11 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Calculator.ViewModels\DataLoaders\DefaultFromToCurrency.json">
+      <Link>DataLoaders\DefaultFromToCurrency.json</Link>
+    </Content>
   </ItemGroup>
   <ItemGroup Condition="'$(IsStoreBuild)' == 'True'">
     <Content Include="Assets\CalculatorAppList.scale-100.png" />
@@ -791,28 +775,39 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls">
+      <Version>8.2.251219</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.1" />
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
+    <PackageReference Include="System.Text.Json">
+      <Version>10.0.5</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
-      <Project>{812d1a7b-b8ac-49e4-8e6d-af5d59500d56}</Project>
-      <Name>CalcViewModel</Name>
+    <ProjectReference Include="..\Calculator.ViewModels\Calculator.ViewModels.csproj">
+      <Project>{E1E2E3E4-1234-5678-ABCD-555555555555}</Project>
+      <Name>Calculator.ViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
       <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
       <Name>GraphControl</Name>
+      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
     </ProjectReference>
-    <ProjectReference Include="..\TraceLogging\TraceLogging.vcxproj">
-      <Project>{fc81ff41-02cd-4cd9-9bc5-45a1e39ac6ed}</Project>
-      <Name>TraceLogging</Name>
+    <ProjectReference Include="..\TraceLogging.Managed\TraceLogging.Managed.csproj">
+      <Project>{3E4B3AB2-A1E0-4B28-B191-7B423E00B5A1}</Project>
+      <Name>TraceLogging.Managed</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CalcManager.Interop\CalcManager.Interop.vcxproj">
+      <Project>{A2D3E6B4-88C1-4D6F-9A7E-2B4C5D6E7F80}</Project>
+      <Name>CalcManager.Interop</Name>
+      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\CalculatorIcons.ttf" />
-    <None Include="WindowsDev_TemporaryKey.pfx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

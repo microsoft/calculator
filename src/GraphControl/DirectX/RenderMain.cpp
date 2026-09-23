@@ -30,11 +30,10 @@ namespace
 namespace GraphControl::DX
 {
     RenderMain::RenderMain(SwapChainPanel ^ panel)
-        : m_deviceResources{ panel }
-        , m_nearestPointRenderer{ &m_deviceResources }
-        , m_backgroundColor{ {} }
-        , m_swapChainPanel{ panel }
-        , m_TraceLocation(Point(0, 0))
+        : m_deviceResources(panel)
+        , m_nearestPointRenderer(&m_deviceResources)
+        , m_swapChainPanel(panel)
+        , m_TraceLocation(Point{ 0, 0 })
         , m_Tracing(false)
     {
         // Register to be notified if the Device is lost or recreated
@@ -97,7 +96,7 @@ namespace GraphControl::DX
             bool wasPointRendered = m_Tracing;
             if (CanRenderPoint() || wasPointRendered)
             {
-                RunRenderPassAsync();
+                [](RenderMain ^ self) -> winrt::fire_and_forget { co_await self->RunRenderPassAsync(); }(this);
             }
         }
     }
@@ -111,7 +110,7 @@ namespace GraphControl::DX
             bool wasPointRendered = m_Tracing;
             if (CanRenderPoint() || wasPointRendered)
             {
-                RunRenderPassAsync();
+                [](RenderMain ^ self) -> winrt::fire_and_forget { co_await self->RunRenderPassAsync(); }(this);
             }
         }
     }
@@ -130,8 +129,8 @@ namespace GraphControl::DX
         if (m_swapChainPanel != nullptr)
         {
             // Initialize the active tracing location to just above and to the right of the center of the graph area
-            m_activeTracingPointerLocation.X = m_swapChainPanel->ActualWidth / 2 + 40;
-            m_activeTracingPointerLocation.Y = m_swapChainPanel->ActualHeight / 2 - 40;
+            m_activeTracingPointerLocation.X = static_cast<float>(m_swapChainPanel->ActualWidth / 2 + 40);
+            m_activeTracingPointerLocation.Y = static_cast<float>(m_swapChainPanel->ActualHeight / 2 - 40);
         }
     }
 
@@ -145,15 +144,6 @@ namespace GraphControl::DX
             {
                 trackPoint = m_activeTracingPointerLocation;
             }
-
-            if (!m_criticalSection.try_lock())
-            {
-                return false;
-            }
-
-            m_criticalSection.unlock();
-
-            critical_section::scoped_lock lock(m_criticalSection);
 
             int formulaId = -1;
             double outNearestPointValueX, outNearestPointValueY;
@@ -210,67 +200,37 @@ namespace GraphControl::DX
 
     bool RenderMain::RunRenderPass()
     {
-        // Non async render passes cancel if they can't obtain the lock immediatly
-        if (!m_criticalSection.try_lock())
-        {
-            return false;
-        }
-
-        m_criticalSection.unlock();
-
-        critical_section::scoped_lock lock(m_criticalSection);
-
         return RunRenderPassInternal();
     }
 
-    IAsyncAction ^ RenderMain::RunRenderPassAsync(bool allowCancel)
+    concurrency::task<bool> RenderMain::RunRenderPassAsync(bool allowCancel)
     {
-        // Try to cancel the renderPass that is in progress
-        if (m_renderPass != nullptr && m_renderPass->Status == ::AsyncStatus::Started)
-        {
-            m_renderPass->Cancel();
-        }
-
-        auto device = m_deviceResources;
-        auto workItemHandler = ref new WorkItemHandler([this, allowCancel](IAsyncAction ^ action) {
-            critical_section::scoped_lock lock(m_criticalSection);
-
-            // allowCancel is passed as false when the grapher relies on the render pass to validate that an equation can be succesfully rendered.
-            // Passing false garauntees that another render pass doesn't cancel this one.
-            if (allowCancel && action->Status == ::AsyncStatus::Canceled)
-            {
-                return;
-            }
-
-            RunRenderPassInternal();
-        });
-
-        m_renderPass = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::None);
-
-        return m_renderPass;
+        bool result = false;
+        auto currentVer = ++m_renderPassVer;
+        Platform::WeakReference that{ this };
+        co_await m_coreWindow->Dispatcher->RunAsync(
+            CoreDispatcherPriority::High,
+            ref new DispatchedHandler(
+                [&]
+                {
+                    auto self = that.Resolve<RenderMain>();
+                    if (self == nullptr || (allowCancel && m_renderPassVer != currentVer))
+                    {
+                        return;
+                    }
+                    result = self->RunRenderPassInternal();
+                }));
+        co_return result;
     }
 
     bool RenderMain::RunRenderPassInternal()
     {
-        // We are accessing Direct3D resources directly without Direct2D's knowledge, so we
-        // must manually acquire and apply the Direct2D factory lock.
-        ID2D1Multithread* m_D2DMultithread;
-        m_deviceResources.GetD2DFactory()->QueryInterface(IID_PPV_ARGS(&m_D2DMultithread));
-        m_D2DMultithread->Enter();
-
-        bool succesful = Render();
-
-        if (succesful)
+        if (Render())
         {
             m_deviceResources.Present();
+            return true;
         }
-
-        // It is absolutely critical that the factory lock be released upon
-        // exiting this function, or else any consequent Direct2D calls will be blocked.
-        m_D2DMultithread->Leave();
-
-        m_isRenderPassSuccesful = succesful;
-        return m_isRenderPassSuccesful;
+        return false;
     }
 
     // Renders the current frame according to the current application state.

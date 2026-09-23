@@ -24,7 +24,7 @@ namespace CalculatorUITests
         public static void ClassInitialize(TestContext context)
         {
             // Create session to launch a Calculator window
-            WinAppDriver.Instance.SetupCalculatorSession(context);
+            CalculatorDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in programmer mode
             page.NavigateToProgrammerCalculator();
@@ -40,7 +40,7 @@ namespace CalculatorUITests
         public static void ClassCleanup()
         {
             // Tear down Calculator session.
-            WinAppDriver.Instance.TearDownCalculatorSession();
+            CalculatorDriver.Instance.TearDownCalculatorSession();
         }
 
         /// <summary>

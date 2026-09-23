@@ -17,6 +17,6 @@
 
 <Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
   <Application>
-    <!-- Add your application specific runtime directives here. -->
+      <Namespace Name="CalculatorApp.JsonUtils" Serialize="Required Public"/>
   </Application>
 </Directives>

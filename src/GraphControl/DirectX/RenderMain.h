@@ -51,17 +51,7 @@ namespace GraphControl::DX
 
         bool RunRenderPass();
 
-        Windows::Foundation::IAsyncAction ^ RunRenderPassAsync(bool allowCancel = true);
-
-        Concurrency::critical_section& GetCriticalSection()
-        {
-            return m_criticalSection;
-        }
-
-        bool IsRenderPassSuccesful()
-        {
-            return m_isRenderPassSuccesful;
-        }
+        concurrency::task<bool> RunRenderPassAsync(bool allowCancel = true);
 
         HRESULT GetRenderError();
 
@@ -185,10 +175,6 @@ namespace GraphControl::DX
         Windows::Foundation::EventRegistrationToken m_tokenOrientationChanged;
         Windows::Foundation::EventRegistrationToken m_tokenDisplayContentsInvalidated;
 
-        // Track our independent input on a background worker thread.
-        Windows::Foundation::IAsyncAction ^ m_inputLoopWorker = nullptr;
-        Windows::UI::Core::CoreIndependentInputSource ^ m_coreInput = nullptr;
-
         double m_XTraceValue;
         double m_YTraceValue;
 
@@ -198,11 +184,7 @@ namespace GraphControl::DX
         // Are we currently showing the tracing value
         bool m_Tracing;
 
-        Concurrency::critical_section m_criticalSection;
-
-        Windows::Foundation::IAsyncAction ^ m_renderPass = nullptr;
-
-        bool m_isRenderPassSuccesful;
+        unsigned m_renderPassVer = 0;
 
         HRESULT m_HResult;
     };

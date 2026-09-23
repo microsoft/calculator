@@ -16,8 +16,7 @@ namespace CalculatorApp
         {
             protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
             {
-                DisplayExpressionToken token = (item as DisplayExpressionToken);
-                if (token != null)
+                if (item is DisplayExpressionToken token)
                 {
                     CalculatorApp.ViewModel.Common.TokenType type = token.Type;
 
@@ -30,7 +29,7 @@ namespace CalculatorApp
                         case TokenType.Separator:
                             return SeparatorTemplate;
                         default:
-                            throw new Exception("Invalid token type");
+                            throw new ArgumentOutOfRangeException(nameof(type), type, "Invalid token type");
                     }
                 }
 

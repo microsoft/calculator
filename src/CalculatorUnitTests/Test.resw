@@ -162,6 +162,9 @@
     <data name="Megabytes-Bits">
         <value>0.000000125</value>
     </data>
+    <data name="Megabytes-Nibble">
+        <value>0.0000005</value>
+    </data>
     <data name="Megabytes-Bytes">
         <value>0.000001</value>
     </data>
@@ -320,6 +323,9 @@
     </data>
     <data name="Meters-Nanometers">
         <value>0.000000001</value>
+    </data>
+    <data name="Meters-Angstroms">
+        <value>0.0000000001</value>
     </data>
     <data name="Meters-Centimeters">
         <value>0.01</value>
@@ -585,7 +591,10 @@
     <data name="Milliliters-Milliliters" xml:space="preserve">
     <value>1</value>
   </data>
-    <data name="Nanometers-Microns-3" xml:space="preserve">
-    <value>0.003</value>
+    <data name="Angstroms-Nanometers-3" xml:space="preserve">
+    <value>0.3</value>
+  </data>
+  <data name="Joules-Kilowatthour" xml:space="preserve">
+    <value>3600000</value>
   </data>
 </root>

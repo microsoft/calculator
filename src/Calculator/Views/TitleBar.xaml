@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="using:CalculatorApp.Utils"
              Height="32"
              mc:Ignorable="d">
     <Grid x:Name="LayoutRoot"
@@ -73,7 +74,6 @@
             </Grid>
         </Grid>
         <Button x:Name="ExitAlwaysOnTopButton"
-                x:Uid="ExitAlwaysOnTopButton"
                 Width="46"
                 Height="Auto"
                 HorizontalAlignment="Left"
@@ -84,8 +84,10 @@
                 FontSize="14"
                 FontWeight="Thin"
                 AutomationProperties.AutomationId="ExitAlwaysOnTopButton"
+                AutomationProperties.Name="{utils:ResourceString Name=ExitAlwaysOnTopButton/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                 Click="AlwaysOnTopButton_Click"
                 Content="&#xEE47;"
+                ToolTipService.ToolTip="{utils:ResourceString Name=ExitAlwaysOnTopButton/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}"
                 Visibility="Collapsed"
                 x:Load="False">
             <Button.KeyboardAccelerators>

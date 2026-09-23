@@ -6,6 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="using:CalculatorApp.Utils"
              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
              mc:Ignorable="d">
     <UserControl.Resources>
@@ -110,26 +111,26 @@
     <Grid>
         <StackPanel Margin="4,0,4,4">
             <TextBlock x:Name="GraphOptionsHeading"
-                       x:Uid="GraphOptionsHeading"
                        FontSize="20"
                        FontWeight="Medium"
-                       AutomationProperties.HeadingLevel="Level1"/>
+                       AutomationProperties.HeadingLevel="Level1"
+                       Text="{utils:ResourceString Name=GraphOptionsHeading/Text}"/>
             <Grid Margin="0,16,0,4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="GridHeading"
-                           x:Uid="GridHeading"
                            Style="{StaticResource SubTitleTextBoxStyle}"
-                           AutomationProperties.HeadingLevel="Level2"/>
-                <HyperlinkButton x:Uid="ResetViewButton"
-                                 Grid.Column="1"
+                           AutomationProperties.HeadingLevel="Level2"
+                           Text="{utils:ResourceString Name=GridHeading/Text}"/>
+                <HyperlinkButton Grid.Column="1"
                                  Padding="0"
-                                 FontSize="12"
                                  Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                                  BorderThickness="0"
-                                 Click="ResetViewButton_Clicked">
+                                 FontSize="12"
+                                 Click="ResetViewButton_Clicked"
+                                 Content="{utils:ResourceString Name=ResetViewButton/Content}">
                     <HyperlinkButton.Resources>
                         <ResourceDictionary>
                             <StaticResource x:Key="HyperlinkButtonBackgroundPointerOver" ResourceKey="SubtleFillColorTransparentBrush"/>
@@ -151,73 +152,73 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox x:Name="SettingsXMin"
-                         x:Uid="GraphSettingsXMin"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMinError), Mode=OneWay}"
                          contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
+                         Header="{utils:ResourceString Name=GraphSettingsXMin/Header}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.XMin, Mode=TwoWay}"/>
                 <TextBox x:Name="SettingsXMax"
-                         x:Uid="GraphSettingsXMax"
                          Grid.Column="2"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.XError, ViewModel.XMaxError), Mode=OneWay}"
                          contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
+                         Header="{utils:ResourceString Name=GraphSettingsXMax/Header}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.XMax, Mode=TwoWay}"/>
                 <TextBox x:Name="SettingsYMin"
-                         x:Uid="GraphSettingsYMin"
                          Grid.Row="2"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMinError), Mode=OneWay}"
                          contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
+                         Header="{utils:ResourceString Name=GraphSettingsYMin/Header}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.YMin, Mode=TwoWay}"/>
                 <TextBox x:Name="SettingsYMax"
-                         x:Uid="GraphSettingsYMax"
                          Grid.Row="2"
                          Grid.Column="2"
                          MaxWidth="160"
                          Style="{x:Bind SelectTextBoxStyle(ViewModel.YError, ViewModel.YMaxError), Mode=OneWay}"
                          contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
+                         Header="{utils:ResourceString Name=GraphSettingsYMax/Header}"
                          HeaderTemplate="{StaticResource XYTextBoxHeaderTemplate}"
                          PreviewKeyDown="GridSettingsTextBox_PreviewKeyDown"
                          Text="{x:Bind ViewModel.YMax, Mode=TwoWay}"/>
             </Grid>
 
             <TextBlock x:Name="UnitsHeading"
-                       x:Uid="UnitsHeading"
                        Margin="0,16,0,6"
                        Style="{StaticResource SubTitleTextBoxStyle}"
-                       AutomationProperties.HeadingLevel="Level2"/>
+                       AutomationProperties.HeadingLevel="Level2"
+                       Text="{utils:ResourceString Name=UnitsHeading/Text}"/>
 
             <StackPanel AutomationProperties.LabeledBy="{Binding ElementName=UnitsHeading}" Orientation="Horizontal">
                 <RadioButton x:Name="Radians"
-                             x:Uid="TrigModeRadians"
                              Style="{StaticResource TrigUnitsRadioButtonStyle}"
                              contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
+                             Content="{utils:ResourceString Name=TrigModeRadians/Content}"
                              IsChecked="{x:Bind ViewModel.TrigModeRadians, Mode=TwoWay}"/>
                 <RadioButton x:Name="Degrees"
-                             x:Uid="TrigModeDegrees"
                              Margin="4,0"
                              Style="{StaticResource TrigUnitsRadioButtonStyle}"
                              contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
+                             Content="{utils:ResourceString Name=TrigModeDegrees/Content}"
                              IsChecked="{x:Bind ViewModel.TrigModeDegrees, Mode=TwoWay}"/>
                 <RadioButton x:Name="Gradians"
-                             x:Uid="TrigModeGradians"
                              Style="{StaticResource TrigUnitsRadioButtonStyle}"
                              contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
+                             Content="{utils:ResourceString Name=TrigModeGradians/Content}"
                              IsChecked="{x:Bind ViewModel.TrigModeGradians, Mode=TwoWay}"/>
             </StackPanel>
 
             <TextBlock x:Name="LineThicknessBoxHeading"
-                       x:Uid="LineThicknessBoxHeading"
                        Margin="0,16,0,6"
                        Style="{StaticResource SubTitleTextBoxStyle}"
-                       AutomationProperties.HeadingLevel="Level2"/>
+                       AutomationProperties.HeadingLevel="Level2"
+                       Text="{utils:ResourceString Name=LineThicknessBoxHeading/Text}"/>
             <ComboBox MinWidth="200"
                       HorizontalAlignment="Stretch"
                       AutomationProperties.LabeledBy="{Binding ElementName=LineThicknessBoxHeading}"
@@ -246,15 +247,19 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <TextBlock x:Name="GraphThemeHeading"
-                       x:Uid="GraphThemeHeading"
                        Margin="0,16,0,6"
                        Style="{StaticResource SubTitleTextBoxStyle}"
-                       AutomationProperties.HeadingLevel="Level2"/>
+                       AutomationProperties.HeadingLevel="Level2"
+                       AutomationProperties.Name="{utils:ResourceString Name=GraphThemeHeading/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                       Text="{utils:ResourceString Name=GraphThemeHeading/Text}"/>
 
             <StackPanel AutomationProperties.LabeledBy="{Binding ElementName=GraphThemeHeading}">
-                <RadioButton x:Uid="AlwaysLightTheme" IsChecked="{x:Bind IsMatchAppTheme, Mode=TwoWay, Converter={StaticResource BooleanNegationConverter}}"/>
-                <RadioButton x:Uid="MatchAppTheme"
-                             Margin="1,0"
+                <RadioButton AutomationProperties.Name="{utils:ResourceString Name=AlwaysLightTheme/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                             Content="{utils:ResourceString Name=AlwaysLightTheme/Content}"
+                             IsChecked="{x:Bind IsMatchAppTheme, Mode=TwoWay, Converter={StaticResource BooleanNegationConverter}}"/>
+                <RadioButton Margin="1,0"
+                             AutomationProperties.Name="{utils:ResourceString Name=MatchAppTheme/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                             Content="{utils:ResourceString Name=MatchAppTheme/Content}"
                              IsChecked="{x:Bind IsMatchAppTheme, Mode=TwoWay}"/>
             </StackPanel>
         </StackPanel>

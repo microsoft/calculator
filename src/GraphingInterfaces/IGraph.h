@@ -18,7 +18,7 @@ namespace Graphing
 
         virtual std::optional<std::vector<std::shared_ptr<IEquation>>> TryInitialize(const IExpression* graphingExp = nullptr) = 0;
 
-        virtual HRESULT GetInitializationError() = 0;
+        virtual HRESULT GetInitializationError() const = 0;
 
         virtual IGraphingOptions& GetOptions() = 0;
 

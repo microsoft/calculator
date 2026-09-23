@@ -25,7 +25,7 @@ namespace CalculatorUITests
         public static void ClassInitialize(TestContext context)
         {
             // Create session to launch a Calculator window
-            WinAppDriver.Instance.SetupCalculatorSession(context);
+            CalculatorDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in standard mode
             page.NavigateToStandardCalculator();
@@ -41,7 +41,7 @@ namespace CalculatorUITests
         public static void ClassCleanup()
         {
             // Tear down Calculator session.
-            WinAppDriver.Instance.TearDownCalculatorSession();
+            CalculatorDriver.Instance.TearDownCalculatorSession();
         }
 
         /// <summary>
@@ -98,21 +98,21 @@ namespace CalculatorUITests
 
             Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
 
-            Actions clickHistoryItemsw1 = new Actions(WinAppDriver.Instance.CalculatorSession);
+            Actions clickHistoryItemsw1 = new Actions(CalculatorDriver.Instance.CalculatorSession);
             clickHistoryItemsw1.Click(historyItems[1].Item);
             clickHistoryItemsw1.Perform();
 
             Assert.AreEqual("-5.6", page.CalculatorResults.GetCalculatorResultText());
             Assert.AreEqual("-3 + -2.6=", page.CalculatorResults.GetCalculatorExpressionText());
 
-            Actions clickHistoryItemsw0 = new Actions(WinAppDriver.Instance.CalculatorSession);
+            Actions clickHistoryItemsw0 = new Actions(CalculatorDriver.Instance.CalculatorSession);
             clickHistoryItemsw0.Click(historyItems[0].Item);
             clickHistoryItemsw0.Perform();
 
             Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
 
             page.HistoryPanel.ClearHistory();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
         }
 
         [TestMethod]
@@ -164,10 +164,75 @@ namespace CalculatorUITests
             page.HistoryPanel.ClearHistoryButton.Click();
 
             page.HistoryPanel.OpenHistoryFlyout();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
 
             page.HistoryPanel.OpenHistoryPanel();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
+        }
+
+        /// <summary>
+        /// Issue #312: verifies focus does NOT fall back to the "Clear all history"
+        /// button (the regression in this bug) after deleting the only history item
+        /// from the docked History panel via the context menu. The fix focuses the
+        /// docked pivot, which keeps focus inside the pane; the exact element that
+        /// ends up focused varies by OS/WinUI build (pivot focus delegation), so we
+        /// assert the regression invariant rather than a specific id.
+        /// </summary>
+        [TestMethod]
+        [Priority(2)]
+        public void StandardHistory_Panel_FocusDoesNotFallBackToClearAllAfterDeletingOnlyItem()
+        {
+            page.HistoryPanel.OpenHistoryPanel();
+
+            // Create a single history entry.
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.PlusButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
+
+            // Open the item's context menu and activate "Delete". The menu opens with
+            // "Copy" pre-highlighted, so ArrowDown then Enter reaches "Delete".
+            var historyItems = page.HistoryPanel.GetAllHistoryListViewItems();
+            Actions openContextMenu = new Actions(CalculatorDriver.Instance.CalculatorSession);
+            openContextMenu.MoveToElement(historyItems[0].Item);
+            openContextMenu.ContextClick(historyItems[0].Item);
+            openContextMenu.Perform();
+            CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.Enter);
+            System.Threading.Thread.Sleep(1500);
+
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty"));
+            // The bug was that focus fell back to the "Clear all history" button. Assert
+            // that does not happen; the fix keeps focus inside the docked pivot instead.
+            Assert.AreNotEqual("ClearHistory", CalculatorApp.GetFocusedElementAutomationId());
+        }
+
+        /// <summary>
+        /// Issue #312: verifies focus moves to the History toggle button after
+        /// deleting the only history item from the narrow History flyout via the
+        /// context menu.
+        /// </summary>
+        [TestMethod]
+        [Priority(2)]
+        public void StandardHistory_Flyout_FocusMovesToHistoryButtonAfterDeletingOnlyItem()
+        {
+            // Create a single history entry.
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.PlusButton.Click();
+            page.StandardOperators.NumberPad.Input(3);
+            page.StandardOperators.EqualButton.Click();
+
+            var historyItems = page.HistoryPanel.GetAllHistoryFlyoutListViewItems();
+            Actions openContextMenu = new Actions(CalculatorDriver.Instance.CalculatorSession);
+            openContextMenu.MoveToElement(historyItems[0].Item);
+            openContextMenu.ContextClick(historyItems[0].Item);
+            openContextMenu.Perform();
+            CalculatorApp.Window.SendKeys(Keys.ArrowDown + Keys.Enter);
+            System.Threading.Thread.Sleep(1500);
+
+            Assert.AreEqual("HistoryButton", CalculatorApp.GetFocusedElementAutomationId());
+
+            // Restore a window size suitable for subsequent tests.
+            page.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
         }
 
         #endregion

@@ -10,14 +10,14 @@ namespace CalculatorUITestFramework
     /// </summary>
     public class ProgrammerCalculatorPage
     {
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         public ScientificOperatorsPanel ScientificOperators = new ScientificOperatorsPanel();
         public StandardOperatorsPanel StandardOperators = new StandardOperatorsPanel();
         public ProgrammerOperatorsPanel ProgrammerOperators = new ProgrammerOperatorsPanel();
         public MemoryPanel MemoryPanel = new MemoryPanel();
         public HistoryPanel HistoryPanel = new HistoryPanel();
         public NavigationMenu NavigationMenu = new NavigationMenu();
-        public WindowsElement Header => this.session.TryFindElementByAccessibilityId("Header");
+        public WindowsElement Header => session.TryFindElementByAccessibilityId("Header");
 
         public CalculatorResults CalculatorResults = new CalculatorResults();
 
@@ -32,7 +32,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ClearAll()
         {
-            string source = this.session.PageSource;
+            string source = session.PageSource;
 
             if (source.Contains("clearEntryButton"))
             {

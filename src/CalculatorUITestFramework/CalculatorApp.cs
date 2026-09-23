@@ -16,7 +16,7 @@ namespace CalculatorUITestFramework
 
         internal static WindowsElement Header => session.TryFindElementByAccessibilityId("Header");
 
-        private static WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private static WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
         private static WindowsElement AppName => session.TryFindElementByAccessibilityId("AppName");
 
         /// <summary>
@@ -37,6 +37,22 @@ namespace CalculatorUITestFramework
         }
 
         /// <summary>
+        /// Gets the AutomationId of the element that currently has keyboard focus.
+        /// </summary>
+        public static string GetFocusedElementAutomationId()
+        {
+            return session.SwitchTo().ActiveElement().GetAttribute("AutomationId");
+        }
+
+        /// <summary>
+        /// Gets the UIA ClassName of the element that currently has keyboard focus.
+        /// </summary>
+        public static string GetFocusedElementClassName()
+        {
+            return session.SwitchTo().ActiveElement().GetAttribute("ClassName");
+        }
+
+        /// <summary>
         /// Click the window (to lose focus on components)
         /// </summary>
         public static void ClickOnWindow()
@@ -51,8 +67,8 @@ namespace CalculatorUITestFramework
         public static void ResizeWindowToDisplayMemoryHistoryDockPanel()
         {
             // Put the calculator in the upper left region of the screen
-            WinAppDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
-            GrowWindowToShowDock(WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
+            CalculatorDriver.Instance.CalculatorSession.Manage().Window.Position = new Point(8, 8);
+            GrowWindowToShowDock(CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size.Width);
         }
 
         /// <summary>
@@ -67,8 +83,8 @@ namespace CalculatorUITestFramework
 
             if (!session.PageSource.Contains("DockPanel"))
             {
-                var height = WinAppDriver.Instance.CalculatorSession.Manage().Window.Size.Height;
-                WinAppDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
+                var height = CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size.Height;
+                CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
                 //give window time to render new size
                 System.Threading.Thread.Sleep(10);
                 GrowWindowToShowDock(width + 100);

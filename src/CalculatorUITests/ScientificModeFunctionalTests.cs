@@ -4,6 +4,8 @@
 using CalculatorUITestFramework;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
+using System;
 
 namespace CalculatorUITests
 {
@@ -20,7 +22,7 @@ namespace CalculatorUITests
         public static void ClassInitialize(TestContext context)
         {
             // Create session to launch a Calculator window
-            WinAppDriver.Instance.SetupCalculatorSession(context);
+            CalculatorDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in scientific mode
             page.NavigateToScientificCalculator();
@@ -36,7 +38,7 @@ namespace CalculatorUITests
         public static void ClassCleanup()
         {
             // Tear down Calculator session.
-            WinAppDriver.Instance.TearDownCalculatorSession();
+            CalculatorDriver.Instance.TearDownCalculatorSession();
         }
 
         /// <summary>
@@ -131,6 +133,81 @@ namespace CalculatorUITests
             page.ScientificOperators.ParenthesisRightButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("12", page.CalculatorResults.GetCalculatorResultText());
+        }
+
+        [TestMethod]
+        [Priority(0)]
+        public void SmokeTest_CloseParenthesis()
+        {
+            /*
+             * TEST #1
+             */
+            page.ScientificOperators.ParenthesisLeftButton.Click();
+            page.StandardOperators.NumberPad.Input(8);
+            page.ScientificOperators.ParenthesisRightButton.Click();
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.EqualButton.Click();
+
+            // Assert calculator & history results
+            Assert.AreEqual("16", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("(8) \x00D7 2=", page.CalculatorResults.GetCalculatorExpressionText());
+
+            var historyItems0 = page.HistoryPanel.GetAllHistoryListViewItems();
+            Assert.IsTrue(historyItems0[0].GetValue().Equals("16", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems0[0].GetExpression().Equals("(8) \x00D7 2=", StringComparison.InvariantCultureIgnoreCase));
+
+            /*
+             * TEST #2
+             */
+            page.ScientificOperators.ParenthesisLeftButton.Click();
+            page.StandardOperators.NumberPad.Input(7);
+            page.StandardOperators.MultiplyButton.Click();
+            page.StandardOperators.NumberPad.Input(2);
+            page.ScientificOperators.ParenthesisRightButton.Click();
+            page.StandardOperators.NumberPad.Input(2);
+            page.StandardOperators.EqualButton.Click();
+
+            // Assert calculator & history results
+            Assert.AreEqual("28", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("(7 \x00D7 2) \x00D7 2=", page.CalculatorResults.GetCalculatorExpressionText());
+
+            var historyItems1 = page.HistoryPanel.GetAllHistoryListViewItems();
+            Assert.IsTrue(historyItems1[0].GetValue().Equals("28", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems1[0].GetExpression().Equals("(7 \x00D7 2) \x00D7 2=", StringComparison.InvariantCultureIgnoreCase));
+
+            /*
+             * TEST #3
+             */
+            page.ScientificOperators.ParenthesisLeftButton.Click();
+            page.StandardOperators.NumberPad.Input(8);
+            page.ScientificOperators.ParenthesisRightButton.Click();
+            page.StandardOperators.NumberPad.Input(0.5);
+            page.StandardOperators.EqualButton.Click();
+
+            // Assert calculator & history results
+            Assert.AreEqual("4", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("(8) \x00D7 0.5=", page.CalculatorResults.GetCalculatorExpressionText());
+
+            var historyItems2 = page.HistoryPanel.GetAllHistoryListViewItems();
+            Assert.IsTrue(historyItems2[0].GetValue().Equals("4", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems2[0].GetExpression().Equals("(8) \x00D7 0.5=", StringComparison.InvariantCultureIgnoreCase));
+
+            /*
+             * TEST #4
+             */
+            page.ScientificOperators.ParenthesisLeftButton.Click();
+            page.StandardOperators.NumberPad.Input(8);
+            page.ScientificOperators.ParenthesisRightButton.Click();
+            page.StandardOperators.NumberPad.Input(.5);
+            page.StandardOperators.EqualButton.Click();
+
+            // Assert calculator & history results
+            Assert.AreEqual("4", page.CalculatorResults.GetCalculatorResultText());
+            Assert.AreEqual("(8) \x00D7 0.5=", page.CalculatorResults.GetCalculatorExpressionText());
+
+            var historyItems3 = page.HistoryPanel.GetAllHistoryListViewItems();
+            Assert.IsTrue(historyItems3[0].GetValue().Equals("4", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(historyItems3[0].GetExpression().Equals("(8) \x00D7 0.5=", StringComparison.InvariantCultureIgnoreCase));
         }
 
         [TestMethod]
@@ -613,6 +690,69 @@ namespace CalculatorUITests
             page.StandardOperators.EqualButton.Click();
             Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0.549306"));
 
+        }
+        #endregion
+
+        #region F-E Tests
+
+        /// <summary>
+        /// In Scientific mode, pressing Clear (C) while the F-E toggle is on
+        /// resets both the button state to off and the display format back to
+        /// fixed-point. The next digit entered renders in fixed form.
+        /// </summary>
+        [TestMethod]
+        [Priority(1)]
+        public void FixedToExponentialResetsOnClear()
+        {
+            // C and CE share a button slot in Scientific mode (visibility on
+            // Model.IsInputEmpty, mutually exclusive). Use the Escape hotkey
+            // to invoke Clear unconditionally — it routes through the same
+            // KeyboardShortcutManager → OnButtonPressed(Clear) path as the
+            // visible button (Resources.resw:clearButton.VirtualKey = Escape).
+            page.ScientificOperators.FixedToExponentialButton.Click();
+
+            // Press Clear via the Escape hotkey.
+            CalculatorApp.EnsureCalculatorHasFocus();
+            CalculatorApp.Window.SendKeys(Keys.Escape);
+
+            // Button-visual invariant: F-E toggle is off immediately after Clear.
+            Assert.AreEqual(
+                "0",
+                page.ScientificOperators.FixedToExponentialButton.GetAttribute("Toggle.ToggleState"),
+                "F-E button should be untoggled after Clear in Scientific mode.");
+
+            // Display invariant: the next digit renders in fixed form, not exponent form.
+            page.StandardOperators.NumberPad.Input(2);
+            Assert.AreEqual(
+                "2",
+                page.CalculatorResults.GetCalculatorResultText(),
+                "Display should render in fixed form after Clear resets F-E.");
+        }
+
+        /// <summary>
+        /// In Scientific mode, pressing Clear-Entry (CE) while the F-E toggle
+        /// is on resets both the button state to off and the display format
+        /// back to fixed-point. The next digit entered renders in fixed form.
+        /// </summary>
+        [TestMethod]
+        [Priority(1)]
+        public void FixedToExponentialResetsOnClearEntry()
+        {
+            page.ScientificOperators.FixedToExponentialButton.Click();
+            page.StandardOperators.NumberPad.Input(2);
+
+            page.StandardOperators.ClearEntryButton.Click();
+
+            Assert.AreEqual(
+                "0",
+                page.ScientificOperators.FixedToExponentialButton.GetAttribute("Toggle.ToggleState"),
+                "F-E button should be untoggled after Clear-Entry in Scientific mode.");
+
+            page.StandardOperators.NumberPad.Input(2);
+            Assert.AreEqual(
+                "2",
+                page.CalculatorResults.GetCalculatorResultText(),
+                "Display should render in fixed form after Clear-Entry resets F-E.");
         }
         #endregion
     }

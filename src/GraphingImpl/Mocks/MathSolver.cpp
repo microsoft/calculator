@@ -20,7 +20,7 @@ shared_ptr<Graphing::IGraph> MockGraphingImpl::MathSolver::CreateGrapher()
     return make_shared<MockGraphingImpl::Graph>();
 }
 
-shared_ptr<Graphing::IGraph> MockGraphingImpl::MathSolver::CreateGrapher(const Graphing::IExpression* expression)
+shared_ptr<Graphing::IGraph> MockGraphingImpl::MathSolver::CreateGrapher(const Graphing::IExpression* /*expression*/)
 {
     return make_shared<MockGraphingImpl::Graph>();
 }

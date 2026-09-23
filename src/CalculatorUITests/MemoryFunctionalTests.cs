@@ -25,7 +25,7 @@ namespace CalculatorUITests
         public static void ClassInitialize(TestContext context)
         {
             // Create session to launch a Calculator window
-            WinAppDriver.Instance.SetupCalculatorSession(context);
+            CalculatorDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in standard mode
             page.NavigateToStandardCalculator();
@@ -41,7 +41,7 @@ namespace CalculatorUITests
         public static void ClassCleanup()
         {
             // Tear down Calculator session.
-            WinAppDriver.Instance.TearDownCalculatorSession();
+            CalculatorDriver.Instance.TearDownCalculatorSession();
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace CalculatorUITests
             page.MemoryPanel.NumberpadMSButton.Click();
             page.MemoryPanel.OpenMemoryPanel();
 
-            Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
+            Actions moveToListView = new Actions(CalculatorDriver.Instance.CalculatorSession);
             var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
             moveToListView.MoveToElement(memoryItems[0].Item);
             moveToListView.ContextClick(memoryItems[0].Item);
@@ -96,7 +96,7 @@ namespace CalculatorUITests
             Assert.IsTrue(memoryItems2[0].GetValue().Equals("3", StringComparison.InvariantCultureIgnoreCase));
 
             page.MemoryPanel.PanelClearMemoryButton.Click();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
         }
 
         [TestMethod]
@@ -110,7 +110,7 @@ namespace CalculatorUITests
 
             page.MemoryPanel.OpenMemoryFlyout();
             var memoryItems = page.MemoryPanel.GetAllMemoryFlyoutListViewItems();
-            Actions moveToListView = new Actions(WinAppDriver.Instance.CalculatorSession);
+            Actions moveToListView = new Actions(CalculatorDriver.Instance.CalculatorSession);
             moveToListView.MoveToElement(memoryItems[0].Item);
             moveToListView.ContextClick(memoryItems[0].Item);
             moveToListView.Perform();
@@ -130,10 +130,96 @@ namespace CalculatorUITests
 
             page.MemoryPanel.OpenMemoryFlyout();
             page.MemoryPanel.PanelClearMemoryButton.Click();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
 
             page.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+        }
+
+        /// <summary>
+        /// Issue #312: verifies focus lands on the M+ keypad button (not "Clear all
+        /// memory" or the hamburger) after clearing the only memory item from the
+        /// docked Memory panel via the context menu.
+        /// </summary>
+        [TestMethod]
+        [Priority(2)]
+        public void StandardMemory_Panel_FocusMovesToMemoryPlusAfterClearingOnlyItem()
+        {
+            // Store a single memory item and open the docked memory panel.
+            page.StandardOperators.NumberPad.Num3Button.Click();
+            page.MemoryPanel.NumberpadMSButton.Click();
+            page.MemoryPanel.OpenMemoryPanel();
+
+            // Open the item's context menu; "Clear memory item" is the first,
+            // pre-highlighted entry, so Enter activates it.
+            var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
+            Actions openContextMenu = new Actions(CalculatorDriver.Instance.CalculatorSession);
+            openContextMenu.MoveToElement(memoryItems[0].Item);
+            openContextMenu.ContextClick(memoryItems[0].Item);
+            openContextMenu.Perform();
+            CalculatorApp.Window.SendKeys(Keys.Enter);
+            System.Threading.Thread.Sleep(1500);
+
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+            Assert.AreEqual("MemPlus", CalculatorApp.GetFocusedElementAutomationId());
+        }
+
+        /// <summary>
+        /// Issue #312: verifies focus stays within the Memory list (on the next
+        /// item) after clearing the first of multiple items via the context menu.
+        /// </summary>
+        [TestMethod]
+        [Priority(2)]
+        public void StandardMemory_Panel_FocusMovesToNextItemAfterClearingFirstOfMultiple()
+        {
+            // Store two memory items and open the docked memory panel.
+            page.StandardOperators.NumberPad.Num3Button.Click();
+            page.MemoryPanel.NumberpadMSButton.Click();
+            page.MemoryPanel.NumberpadMSButton.Click();
+            page.MemoryPanel.OpenMemoryPanel();
+
+            // Clear the first item via its context menu.
+            var memoryItems = page.MemoryPanel.GetAllMemoryListViewItems();
+            Actions openContextMenu = new Actions(CalculatorDriver.Instance.CalculatorSession);
+            openContextMenu.MoveToElement(memoryItems[0].Item);
+            openContextMenu.ContextClick(memoryItems[0].Item);
+            openContextMenu.Perform();
+            CalculatorApp.Window.SendKeys(Keys.Enter);
+            System.Threading.Thread.Sleep(1500);
+
+            // Focus stays on a memory list item, and one item remains.
+            Assert.AreEqual("ListViewItem", CalculatorApp.GetFocusedElementClassName());
+            Assert.AreEqual(1, page.MemoryPanel.GetAllMemoryListViewItems().Count);
+
+            // Clean up the remaining memory item.
+            page.MemoryPanel.PanelClearMemoryButton.Click();
+        }
+
+        /// <summary>
+        /// Issue #312: verifies that clearing the only memory item from the narrow
+        /// Memory flyout closes the flyout and moves focus to the M+ keypad button.
+        /// </summary>
+        [TestMethod]
+        [Priority(2)]
+        public void StandardMemory_Flyout_FocusMovesToMemoryPlusAfterClearingOnlyItem()
+        {
+            // Store a single memory item and open the memory flyout (narrow layout).
+            page.StandardOperators.NumberPad.Num3Button.Click();
+            page.MemoryPanel.NumberpadMSButton.Click();
+            page.MemoryPanel.OpenMemoryFlyout();
+
+            var memoryItems = page.MemoryPanel.GetAllMemoryFlyoutListViewItems();
+            Actions openContextMenu = new Actions(CalculatorDriver.Instance.CalculatorSession);
+            openContextMenu.MoveToElement(memoryItems[0].Item);
+            openContextMenu.ContextClick(memoryItems[0].Item);
+            openContextMenu.Perform();
+            CalculatorApp.Window.SendKeys(Keys.Enter);
+            System.Threading.Thread.Sleep(1500);
+
+            Assert.AreEqual("MemPlus", CalculatorApp.GetFocusedElementAutomationId());
+
+            // Restore a window size suitable for subsequent tests.
+            page.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
         }
 
         #endregion

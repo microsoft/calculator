@@ -14,4 +14,9 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="TraceLoggingCommon.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TraceLogging.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
 </Project>

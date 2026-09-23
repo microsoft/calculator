@@ -17,7 +17,7 @@ namespace CalculatorUITestFramework
         public StandardAoTCalculatorPage StandardAoTCalculatorPage = new StandardAoTCalculatorPage();
         public CalculatorResults CalculatorResults = new CalculatorResults();
 
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
 
         /// <summary>
         /// Navigates the calculator to Standard mode and ensures that it is in standard mode
@@ -25,8 +25,8 @@ namespace CalculatorUITestFramework
         public void NavigateToStandardCalculator()
         {
             // Ensure that calculator is in standard mode
-            this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
-            this.CalculatorResults.IsResultsDisplayPresent();
+            NavigationMenu.ChangeCalculatorMode(CalculatorMode.StandardCalculator);
+            CalculatorResults.IsResultsDisplayPresent();
         }
 
         /// <summary>
@@ -34,11 +34,11 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ClearAll()
         {
-            this.StandardAoTCalculatorPage.NavigateToStandardMode();
-            this.MemoryPanel.ResizeWindowToDisplayMemoryLabel();
-            this.StandardOperators.ClearButton.Click();
-            this.MemoryPanel.NumberpadMCButton.Click();
-            this.HistoryPanel.ClearHistory();
+            StandardAoTCalculatorPage.NavigateToStandardMode();
+            MemoryPanel.ResizeWindowToDisplayMemoryLabel();
+            StandardOperators.ClearButton.Click();
+            MemoryPanel.NumberpadMCButton.Click();
+            HistoryPanel.ClearHistory();
         }
 
         ///// <summary>
@@ -46,9 +46,9 @@ namespace CalculatorUITestFramework
         ///// </summary>
         public void EnsureCalculatorResultTextIsZero()
         {
-            if ("0" != this.CalculatorResults.GetCalculatorResultText())
+            if ("0" != CalculatorResults.GetCalculatorResultText())
             {
-                this.ClearAll();
+                ClearAll();
             }
         }
 
@@ -57,7 +57,7 @@ namespace CalculatorUITestFramework
         ///// </summary>
         public void EnsureCalculatorIsInStandardMode()
         {
-            string source = WinAppDriver.Instance.CalculatorSession.PageSource;
+            string source = CalculatorDriver.Instance.CalculatorSession.PageSource;
             if (source.Contains("Header"))
             {
                 string header = CalculatorApp.Header.Text;
@@ -67,12 +67,12 @@ namespace CalculatorUITestFramework
                 }
                 else
                 {
-                    this.NavigateToStandardCalculator();
+                    NavigateToStandardCalculator();
                 }
             }
             else
             {
-                this.StandardAoTCalculatorPage.NavigateToStandardMode();
+                StandardAoTCalculatorPage.NavigateToStandardMode();
             }
         }
 

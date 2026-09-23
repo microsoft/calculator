@@ -25,7 +25,7 @@ namespace CalculatorUITests
         public static void ClassInitialize(TestContext context)
         {
             // Create session to launch a Calculator window
-            WinAppDriver.Instance.SetupCalculatorSession(context);
+            CalculatorDriver.Instance.SetupCalculatorSession(context);
 
             // Ensure that calculator is in standard mode
             page.NavigateToStandardCalculator();
@@ -41,7 +41,7 @@ namespace CalculatorUITests
         public static void ClassCleanup()
         {
             // Tear down Calculator session.
-            WinAppDriver.Instance.TearDownCalculatorSession();
+            CalculatorDriver.Instance.TearDownCalculatorSession();
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace CalculatorUITests
             Assert.IsTrue(historyItems[1].GetValue().Equals("20", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
             Assert.IsTrue(historyItems[1].GetExpression().Equals("4 × 5=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button
             page.HistoryPanel.ClearHistoryButton.Click();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty")); //verifies the History panel's clear history button
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty")); //verifies the History panel's clear history button
         }
 
         [TestMethod]
@@ -209,7 +209,7 @@ namespace CalculatorUITests
             Assert.IsTrue(memoryItems[0].GetValue().Equals("1", StringComparison.InvariantCultureIgnoreCase));
             Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText()); //verifies MemMinus button
             page.MemoryPanel.NumberpadMCButton.Click();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty")); //verifies the Memory panel's memory clear button
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty")); //verifies the Memory panel's memory clear button
         }
         #endregion
 
@@ -367,7 +367,7 @@ namespace CalculatorUITests
             Assert.IsTrue(memoryItems[0].GetValue().Equals("1", StringComparison.InvariantCultureIgnoreCase));
             Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText()); //verifies MemMinus hotkey
             CalculatorApp.Window.SendKeys(Keys.Control + "l" + Keys.Control);
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty")); //verifies the Memory panel's memory clear button hotkey
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty")); //verifies the Memory panel's memory clear button hotkey
         }
 
         [TestMethod]
@@ -398,7 +398,7 @@ namespace CalculatorUITests
             Assert.IsTrue(historyExpression0.Equals("20÷2=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button hotkeys
             Assert.IsTrue(historyExpression1.Equals("4×5=", StringComparison.InvariantCultureIgnoreCase)); //verifies History button hotkeys
             CalculatorApp.Window.SendKeys(Keys.Shift + Keys.Control + "d" + Keys.Control + Keys.Shift);
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty")); //verifies the History panel's clear history button hotkeys
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("HistoryEmpty")); //verifies the History panel's clear history button hotkeys
         }
 
         #endregion
@@ -690,7 +690,7 @@ namespace CalculatorUITests
             CalculatorApp.Window.SendKeys(Keys.Shift); //Hotkeys such as "Delete" will break without this line
             page.StandardAoTCalculatorPage.NavigateToStandardMode();
             page.MemoryPanel.OpenMemoryPanel();
-            Assert.IsNotNull(WinAppDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
+            Assert.IsNotNull(CalculatorDriver.Instance.CalculatorSession.FindElementByAccessibilityId("MemoryPaneEmpty"));
         }
 
         [TestMethod]
@@ -703,7 +703,7 @@ namespace CalculatorUITests
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
             page.StandardOperators.EqualButton.Click();
             CalculatorApp.Window.SendKeys(Keys.Control + "H" + Keys.Control);
-            string source = WinAppDriver.Instance.CalculatorSession.PageSource;
+            string source = CalculatorDriver.Instance.CalculatorSession.PageSource;
             if (source.Contains("HistoryFlyout"))
             {
                 throw new NotFoundException("This test fails; history flyout is present");

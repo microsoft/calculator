@@ -8,6 +8,7 @@
              xmlns:local="using:CalculatorApp"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ts="using:CalculatorApp.TemplateSelectors"
+             xmlns:utils="using:CalculatorApp.Utils"
              xmlns:vm="using:CalculatorApp.ViewModel"
              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
              mc:Ignorable="d">
@@ -221,7 +222,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Uid="FunctionAnalysisGrid">
+    <Grid AutomationProperties.Name="{utils:ResourceString Name=FunctionAnalysisGrid/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -235,12 +236,13 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="BackButton"
-                    x:Uid="equationAnalysisBack"
                     MinWidth="44"
                     VerticalAlignment="Stretch"
                     Style="{ThemeResource ThemedBackButtonStyle}"
                     contract7Present:CornerRadius="{ThemeResource ControlCornerRadius}"
-                    Click="BackButton_Click">
+                    AutomationProperties.Name="{utils:ResourceString Name=equationAnalysisBack/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
+                    Click="BackButton_Click"
+                    ToolTipService.ToolTip="{utils:ResourceString Name=equationAnalysisBack/[using:Windows.UI.Xaml.Controls]ToolTipService/ToolTip}">
                 <StackPanel Margin="5,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -258,22 +260,22 @@
                     </StackPanel>
                 </StackPanel>
             </Button>
-            <controls:MathRichEditBox x:Uid="KGFEquationTextBox"
-                                      Grid.Column="1"
+            <controls:MathRichEditBox Grid.Column="1"
                                       Padding="10,0,6,0"
                                       VerticalAlignment="Stretch"
                                       VerticalContentAlignment="Center"
                                       Style="{StaticResource KGF_RichEditBoxStyle}"
                                       Foreground="{ThemeResource TitleMathRichEditBoxForegroundBrush}"
+                                      AutomationProperties.Name="{utils:ResourceString Name=KGFEquationTextBox/[using:Windows.UI.Xaml.Automation]AutomationProperties/Name}"
                                       MathText="{x:Bind ViewModel.Expression, Mode=OneWay}"/>
         </Grid>
-        <TextBlock x:Uid="KeyGraphFeaturesLabel"
-                   Grid.Row="1"
+        <TextBlock Grid.Row="1"
                    Margin="12,12,10,0"
                    Style="{StaticResource KGF_TitleTextBlockStyle}"
                    FontSize="20"
                    FontWeight="Medium"
-                   AutomationProperties.HeadingLevel="Level1"/>
+                   AutomationProperties.HeadingLevel="Level1"
+                   Text="{utils:ResourceString Name=KeyGraphFeaturesLabel/Text}"/>
 
         <ListView x:Name="KeyGraphFeaturesListView"
                   Grid.Row="2"

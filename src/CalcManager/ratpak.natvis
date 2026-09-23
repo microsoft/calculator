@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <Type Name="_number">
+    <Expand>
+        <Item Name="sign">sign</Item>
+        <Item Name="exp">exp</Item>
+        <ArrayItems>
+          <Size>cdigit</Size>
+          <ValuePointer>mant</ValuePointer>
+        </ArrayItems>
+    </Expand>
+  </Type>
+  <Type Name="_rat">
+    <DisplayString>{*pp}/{*pq}</DisplayString>
+  </Type>
+</AutoVisualizer>

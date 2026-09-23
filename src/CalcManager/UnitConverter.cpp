@@ -10,6 +10,7 @@
 #include "NumberFormattingUtils.h"
 
 using namespace std;
+using namespace concurrency;
 using namespace UnitConversionManager;
 using namespace UnitConversionManager::NumberFormattingUtils;
 
@@ -555,23 +556,20 @@ void UnitConverter::SetViewModelCurrencyCallback(_In_ const shared_ptr<IViewMode
     }
 }
 
-future<pair<bool, wstring>> UnitConverter::RefreshCurrencyRatios()
+task<pair<bool, wstring>> UnitConverter::RefreshCurrencyRatios()
 {
     shared_ptr<ICurrencyConverterDataLoader> currencyDataLoader = GetCurrencyConverterDataLoader();
-    future<bool> loadDataResult;
+    task<bool> loadDataResult;
     if (currencyDataLoader != nullptr)
     {
         loadDataResult = currencyDataLoader->TryLoadDataFromWebOverrideAsync();
     }
     else
     {
-        loadDataResult = async([] { return false; });
+        loadDataResult = task_from_result(false);
     }
 
-    shared_future<bool> sharedLoadResult = loadDataResult.share();
-    return async([currencyDataLoader, sharedLoadResult]() {
-        sharedLoadResult.wait();
-        bool didLoad = sharedLoadResult.get();
+    return loadDataResult.then([currencyDataLoader](bool didLoad) {
         wstring timestamp;
         if (currencyDataLoader != nullptr)
         {

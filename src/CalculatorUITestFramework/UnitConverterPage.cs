@@ -10,14 +10,14 @@ namespace CalculatorUITestFramework
         public NavigationMenu NavigationMenu = new NavigationMenu();
         public UnitConverterResults UnitConverterResults = new UnitConverterResults();
 
-        private WindowsDriver<WindowsElement> session => WinAppDriver.Instance.CalculatorSession;
+        private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
 
         /// <summary>
         /// Clear the Calculator display
         /// </summary>
         public void ClearAll()
         {
-            this.UnitConverterOperators.ClearButton.Click();
+            UnitConverterOperators.ClearButton.Click();
         }
 
         ///// <summary>
@@ -25,9 +25,9 @@ namespace CalculatorUITestFramework
         ///// </summary>
         public void EnsureCalculatorResultTextIsZero()
         {
-            if ("0" != this.UnitConverterResults.GetCalculationResult1Text())
+            if ("0" != UnitConverterResults.GetCalculationResult1Text())
             {
-                this.ClearAll();
+                ClearAll();
             }
         }
 
@@ -37,8 +37,8 @@ namespace CalculatorUITestFramework
         public void NavigateToUnitConverter()
         {
             // Ensure that calculator is in Currency Mode
-            this.NavigationMenu.ChangeCalculatorMode(CalculatorMode.Currency);
-            this.UnitConverterResults.IsResultsDisplayPresent();
+            NavigationMenu.ChangeCalculatorMode(CalculatorMode.Currency);
+            UnitConverterResults.IsResultsDisplayPresent();
         }
 
         ///// <summary>
@@ -46,7 +46,7 @@ namespace CalculatorUITestFramework
         ///// </summary>
         public void EnsureCalculatorIsCurrencyMode()
         {
-            string source = WinAppDriver.Instance.CalculatorSession.PageSource;
+            string source = CalculatorDriver.Instance.CalculatorSession.PageSource;
             if (source.Contains("Header"))
             {
                 string header = CalculatorApp.Header.Text;
@@ -56,7 +56,7 @@ namespace CalculatorUITestFramework
                 }
                 else
                 {
-                    this.NavigateToUnitConverter();
+                    NavigateToUnitConverter();
                 }
             }
         }
@@ -81,10 +81,10 @@ namespace CalculatorUITestFramework
         /// <param name="value">Value in ComboBox Units1</param>
         public void SelectUnits1(string value)
         {
-            CalculatorApp.ClickOnWindow();
-            UnitConverterOperators.Units1.SendKeys(value);
-            UnitConverterOperators.Units1.SendKeys(OpenQA.Selenium.Keys.Enter);
-            CalculatorApp.ClickOnWindow();
+            UnitConverterOperators.Units1.Click();
+            var accessibleName = value.Replace(" - ", " ");
+            var item = session.FindElementByXPath($"//ListItem[@Name='{accessibleName}']");
+            item.Click();
         }
 
         /// <summary>
@@ -93,10 +93,10 @@ namespace CalculatorUITestFramework
         /// <param name="value">Value in ComboBox Units2</param>
         public void SelectUnits2(string value)
         {
-            CalculatorApp.ClickOnWindow();
-            UnitConverterOperators.Units2.SendKeys(value);
-            UnitConverterOperators.Units2.SendKeys(OpenQA.Selenium.Keys.Enter);
-            CalculatorApp.ClickOnWindow();
+            UnitConverterOperators.Units2.Click();
+            var accessibleName = value.Replace(" - ", " ");
+            var item = session.FindElementByXPath($"//ListItem[@Name='{accessibleName}']");
+            item.Click();
         }
     }
 }

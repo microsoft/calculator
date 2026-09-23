@@ -306,7 +306,7 @@ namespace CalculatorApp
                     // message is localized and therefore can contain characters that are not
                     // available in the normal font.
                     // We use UIText as the font type because this is the most common font type to use
-                    m_textBlock.FontFamily = LocalizationService.GetInstance().GetLanguageFontFamilyForType(LanguageFontType.UIText);
+                    m_textBlock.FontFamily = LocalizationSettings.GetInstance().GetLanguageFontFamilyForType(LanguageFontType.UIText);
                 }
                 else
                 {
