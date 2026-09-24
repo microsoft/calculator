@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #pragma once
-#include "CalcViewModel/Common/CalculatorButtonUser.h"
 #include <CppUnitTest.h>
 
 namespace CalculatorUnitTests
@@ -12,13 +11,6 @@ namespace CalculatorUnitTests
 #define StandardModePrecision 16
 #define ScientificModePrecision 32
 #define ProgrammerModePrecision 64
-
-    typedef struct item
-    {
-        CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum command;
-        std::wstring expectedPrimaryDisplay;
-        std::wstring expectedExpressions;
-    } TESTITEM;
 
     namespace UtfUtils
     {

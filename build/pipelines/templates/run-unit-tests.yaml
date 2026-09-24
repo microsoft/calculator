@@ -3,30 +3,53 @@
 parameters:
   platform: ''
   runsettingsFileName: ''
+  testAppName: 'CalculatorUnitTests'
+  jobName: 'UnitTests'
+  continueOnTestFailure: true
+  treatNoTestsAsError: false
 
 jobs:
-- job: UnitTests${{ parameters.platform }}
-  displayName: UnitTests ${{ parameters.platform }}
+- job: ${{ parameters.jobName }}${{ parameters.platform }}
+  displayName: ${{ parameters.testAppName }} ${{ parameters.platform }}
   dependsOn: Build${{ parameters.platform }}
   condition: succeeded()
+  pool:
+    type: windows
+    isCustom: true
+    name: EssentialExperiences-windows-2022
   variables:
     skipComponentGovernanceDetection: true
-    UnitTestsDir: $(Pipeline.Workspace)\drop-${{ parameters.platform }}\CalculatorUnitTests\AppPackages\CalculatorUnitTests_Test
+    UnitTestsDir: $(Pipeline.Workspace)\drop-${{ parameters.platform }}\${{ parameters.testAppName }}\AppPackages\${{ parameters.testAppName }}_Test
+    # Test results are just log files, not release binaries — skip SDL scanning
+    ob_outputDirectory: '$(Common.TestResultsDirectory)'
+    ob_artifactBaseName: 'drop-${{ parameters.jobName }}-${{ parameters.platform }}-Attempt$(System.JobAttempt)'
+    ob_sdl_binskim_enabled: false
+    ob_sdl_sbom_enabled: false
+
   steps:
-  - checkout: self
-    fetchDepth: 1
-  
-  - download: current
-    displayName: Download CalculatorUnitTests
-    artifact: drop-${{ parameters.platform }}
-    patterns: '**/CalculatorUnitTests_Test/**'
+  - task: UseDotNet@2
+    displayName: Install .NET 10 SDK
+    inputs:
+      packageType: 'sdk'
+      version: '10.x'
+
+  - task: DownloadPipelineArtifact@2
+    displayName: Download ${{ parameters.testAppName }}
+    inputs:
+      artifactName: drop-${{ parameters.platform }}
+      itemPattern: '**/${{ parameters.testAppName }}_Test/**'
+      targetPath: $(Pipeline.Workspace)\drop-${{ parameters.platform }}
 
   - powershell: |
-      $(Build.SourcesDirectory)/build/scripts/SignTestApp.ps1 -AppToSign '$(UnitTestsDir)\CalculatorUnitTests.msix'
+      $(Build.SourcesDirectory)/build/scripts/SignTestApp.ps1 -AppToSign '$(UnitTestsDir)\${{ parameters.testAppName }}.msix'
     displayName: Sign unit tests
 
   - task: VSTest@2
-    displayName: Run CalculatorUnitTests
+    displayName: Run ${{ parameters.testAppName }}
+    continueOnError: ${{ parameters.continueOnTestFailure }}
     inputs:
-      testAssemblyVer2: $(UnitTestsDir)\CalculatorUnitTests.msix
-      otherConsoleOptions: /Platform:${{ parameters.platform }}
+      testAssemblyVer2: $(UnitTestsDir)\${{ parameters.testAppName }}.msix
+      ${{ if eq(parameters.treatNoTestsAsError, true) }}:
+        otherConsoleOptions: /Platform:${{ parameters.platform }} -- RunConfiguration.TreatNoTestsAsError=true
+      ${{ else }}:
+        otherConsoleOptions: /Platform:${{ parameters.platform }}

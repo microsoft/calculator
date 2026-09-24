@@ -29,7 +29,7 @@ namespace CalculatorApp
                         case TokenType.Separator:
                             return SeparatorTemplate;
                         default:
-                            throw new Exception("Invalid token type");
+                            throw new ArgumentOutOfRangeException(nameof(type), type, "Invalid token type");
                     }
                 }
 

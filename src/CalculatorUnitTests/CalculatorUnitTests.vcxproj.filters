@@ -12,28 +12,16 @@
     <ClCompile Include="CalcEngineTests.cpp" />
     <ClCompile Include="CalcInputTest.cpp" />
     <ClCompile Include="CalculatorManagerTest.cpp" />
-    <ClCompile Include="CopyPasteManagerTest.cpp" />
-    <ClCompile Include="CurrencyConverterUnitTests.cpp" />
-    <ClCompile Include="DateCalculatorUnitTests.cpp" />
-    <ClCompile Include="HistoryTests.cpp" />
-    <ClCompile Include="MultiWindowUnitTests.cpp" />
-    <ClCompile Include="NavCategoryUnitTests.cpp" />
-    <ClCompile Include="StandardViewModelUnitTests.cpp" />
+    <ClCompile Include="EngineResourceProvider.cpp" />
     <ClCompile Include="UnitConverterTest.cpp" />
-    <ClCompile Include="UnitConverterViewModelUnitTests.cpp" />
     <ClCompile Include="UnitTestApp.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="UtilsTests.cpp" />
-    <ClCompile Include="LocalizationServiceUnitTests.cpp" />
     <ClCompile Include="RationalTest.cpp" />
-    <ClCompile Include="LocalizationSettingsUnitTests.cpp" />
-    <ClCompile Include="NarratorAnnouncementUnitTests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DateUtils.h" />
+    <ClInclude Include="EngineResourceProvider.h" />
     <ClInclude Include="Helpers.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="UnitConverterViewModelUnitTests.h" />
     <ClInclude Include="UnitTestApp.xaml.h" />
   </ItemGroup>
   <ItemGroup>

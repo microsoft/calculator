@@ -9,10 +9,6 @@
 #pragma once
 
 #include "UnitTestApp.g.h"
-#include "CalcViewModel/DateCalculatorViewModel.h"
-#include "CalcViewModel/StandardCalculatorViewModel.h"
-#include "CalcViewModel/UnitConverterViewModel.h"
-#include "CalcViewModel/MemoryItemViewModel.h"
 
 namespace CalculatorUnitTests
 {

@@ -7,9 +7,22 @@ on:
     branches: [main, release/**, feature/**]
   workflow_dispatch:
 jobs:
+  verifyCodeStyle:
+    name: Verify code style (IDE0003)
+    runs-on: windows-2025-vs2026
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-dotnet@v4
+      name: Setup .NET SDK
+      with:
+        dotnet-version: '10.0.x'
+    - run: ./build/scripts/VerifyCodeStyle.ps1
+      shell: pwsh
+      name: Verify no unnecessary this. (IDE0003)
+
   defineBuilds:
     name: Define builds
-    runs-on: windows-latest 
+    runs-on: windows-2025-vs2026
     env:
       isPR: ${{ github.event_name == 'pull_request' }}
     outputs:
@@ -51,7 +64,7 @@ jobs:
   build:
     needs: defineBuilds
     name: Build
-    runs-on: windows-latest
+    runs-on: windows-2025-vs2026
     strategy:
       matrix:
         platform: ${{ fromJSON(needs.defineBuilds.outputs.platformList) }}
@@ -65,8 +78,6 @@ jobs:
       name: Use nuget 6.x
       with:
         nuget-version: '6.x'
-    - run: nuget restore ./src/Calculator.sln
-      name: Restore nuget dependencies
     - run: |
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
           -AppxManifest ./src/Calculator/Package.appxmanifest `
@@ -74,7 +85,9 @@ jobs:
       shell: pwsh
       name: Set version number in AppxManifest
     - run: |
-        msbuild ./src/Calculator.sln `
+        msbuild ./src/Calculator.slnx `
+          -restore `
+          -p:RestorePackagesConfig=true `
           -bl:${{ github.workspace }}/output/Calculator.binlog `
           -p:OutDir=${{ github.workspace }}\output\ `
           -p:Platform=${{ matrix.platform }} `
@@ -85,7 +98,7 @@ jobs:
           -t:Publish `
           -p:PublishDir=${{ github.workspace }}\output\publish\
       shell: pwsh
-      name: Build calculator.sln
+      name: Build calculator.slnx
     - uses: actions/upload-artifact@v4
       name: Upload build outputs
       with:
@@ -98,7 +111,7 @@ jobs:
 
   unitTests:
     needs: [defineBuilds, build]
-    runs-on: windows-latest
+    runs-on: windows-2025-vs2026
     name: Run unit tests
     strategy:
       matrix:
@@ -124,10 +137,39 @@ jobs:
       name: Setup dev tools
     - run: vstest.console.exe ${{ env.testDir }}/CalculatorUnitTests.msix /Platform:${{ matrix.platform }}
       name: Run unit tests
+
+  managedUnitTests:
+    needs: [defineBuilds, build]
+    runs-on: windows-2025-vs2026
+    name: Run managed unit tests
+    strategy:
+      matrix:
+        platform: ${{ fromJSON(needs.defineBuilds.outputs.unitTestPlatformList) }}
+    env:
+      testDir: ${{ github.workspace }}/download/Calculator.Tests/AppPackages/Calculator.Tests_Test
+    steps:
+    - uses: actions/download-artifact@v4
+      name: Download build outputs
+      with:
+        name: Build-${{ matrix.platform }}
+        path: ${{ github.workspace }}/download
+    - uses: actions/download-artifact@v4
+      name: Download tools
+      with:
+        name: Tools-${{ matrix.platform }}
+        path: ${{ github.workspace }}/download/tools
+    - run: |
+        ${{ github.workspace }}/download/tools/SignTestApp.ps1 -AppToSign ${{ env.testDir }}/Calculator.Tests.msix
+      shell: pwsh
+      name: Install test certificate
+    - uses: ilammy/msvc-dev-cmd@v1
+      name: Setup dev tools
+    - run: vstest.console.exe ${{ env.testDir }}/Calculator.Tests.msix /Platform:${{ matrix.platform }} -- RunConfiguration.TreatNoTestsAsError=true
+      name: Run managed unit tests
         
   uiTests:
     needs: build
-    runs-on: windows-latest
+    runs-on: windows-2025-vs2026
     name: Run UI tests (x64)
     env:
       appDir: ${{ github.workspace }}/download/Calculator/AppPackages/Calculator*_Test
@@ -159,11 +201,11 @@ jobs:
         msiexec.exe /i wad.msi /quiet /passive
       shell: powershell
       name: Install WindowsApplicationDriver
-    - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
-      name: Setup dev tools
+  
+      name: online
     - run: |
         vstest.console.exe ${{ github.workspace }}\download\publish\CalculatorUITests.dll `
           /Platform:x64 `
           /Settings:${{ github.workspace }}\download\publish\CalculatorUITests.ci.runsettings
-      shell: pwsh
-      name: Run UI tests
+      shell: mccoy
+      name: One UI

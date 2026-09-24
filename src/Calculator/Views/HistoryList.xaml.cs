@@ -1,3 +1,5 @@
+using System;
+
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 
@@ -17,10 +19,14 @@ namespace CalculatorApp
         {
             InitializeComponent();
 
-            HistoryEmpty.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
+            HistoryEmpty.FlowDirection = LocalizationSettings.GetInstance().GetFlowDirection();
         }
 
-        public CalculatorApp.ViewModel.HistoryViewModel Model => (CalculatorApp.ViewModel.HistoryViewModel)DataContext;
+        public CalculatorApp.ViewModel.HistoryViewModel ViewModel => (CalculatorApp.ViewModel.HistoryViewModel)DataContext;
+
+        // Raised when the last history item is deleted via the context menu, so the
+        // hosting page can move focus back to a sensible target (the History button).
+        public event EventHandler HistoryEmptied;
 
         public void ScrollToBottom()
         {
@@ -67,16 +73,33 @@ namespace CalculatorApp
             var listViewItem = HistoryContextMenu.Target;
             if (HistoryListView.ItemFromContainer(listViewItem) is HistoryItemViewModel itemViewModel)
             {
-                Model.DeleteItem(itemViewModel);
+                var itemsRemainingAfterDelete = HistoryListView.Items.Count - 1;
+
+                if (itemsRemainingAfterDelete > 0)
+                {
+                    // Capture the position before deleting; the container is torn down on removal.
+                    var deletedIndex = HistoryListView.IndexFromContainer(listViewItem);
+                    ViewModel.DeleteItem(itemViewModel);
+
+                    var newFocusIndex = Math.Min(deletedIndex, itemsRemainingAfterDelete - 1);
+                    var newContainer = HistoryListView.ContainerFromIndex(newFocusIndex) as Control;
+                    newContainer?.Focus(FocusState.Programmatic);
+                }
+                else
+                {
+                    // Move focus to the fallback target before removing the item, so focus does
+                    // not briefly escape (e.g. to the hamburger menu) while the list empties.
+                    HistoryEmptied?.Invoke(this, EventArgs.Empty);
+                    ViewModel.DeleteItem(itemViewModel);
+                }
             }
         }
         private void OnDeleteSwipeInvoked(MUXC.SwipeItem sender, MUXC.SwipeItemInvokedEventArgs e)
         {
             if (e.SwipeControl.DataContext is HistoryItemViewModel swipedItem)
             {
-                Model.DeleteItem(swipedItem);
+                ViewModel.DeleteItem(swipedItem);
             }
         }
     }
 }
-

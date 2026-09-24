@@ -8,7 +8,6 @@
 
 #include "pch.h"
 #include "UnitTestApp.xaml.h"
-#include "Common/LocalizationService.h"
 
 using namespace CalculatorUnitTests;
 
@@ -81,7 +80,7 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
     Window::Current->Activate();
 
     // Override the current locale to use English (US) to be compatible with all tests based on formatting
-    CalculatorApp::ViewModel::Common::LocalizationService::OverrideWithLanguage(L"en-US");
+    Windows::Globalization::ApplicationLanguages::PrimaryLanguageOverride = ref new Platform::String(L"en-US");
 
     Microsoft::VisualStudio::TestPlatform::TestExecutor::WinRTCore::UnitTestClient::Run(e->Arguments);
 }

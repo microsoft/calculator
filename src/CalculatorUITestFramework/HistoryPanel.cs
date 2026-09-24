@@ -13,22 +13,22 @@ namespace CalculatorUITestFramework
 {
     public class HistoryPanel
     {
-        public WindowsElement HistoryButton => this.session.TryFindElementByAccessibilityId("HistoryButton");
-        public WindowsElement ListViewItem => this.session.FindElementByClassName("ListViewItem");
-        public WindowsElement ClearHistoryButton => this.session.TryFindElementByAccessibilityId("ClearHistory");
+        public WindowsElement HistoryButton => session.TryFindElementByAccessibilityId("HistoryButton");
+        public WindowsElement ListViewItem => session.FindElementByClassName("ListViewItem");
+        public WindowsElement ClearHistoryButton => session.TryFindElementByAccessibilityId("ClearHistory");
 
         private WindowsDriver<WindowsElement> session => CalculatorDriver.Instance.CalculatorSession;
-        private WindowsElement HistoryLabel => this.session.TryFindElementByAccessibilityId("HistoryLabel");
-        private WindowsElement HistoryListView => this.session.TryFindElementByAccessibilityId("HistoryListView");
-        private WindowsElement HistoryFlyout => this.session.TryFindElementByAccessibilityId("HistoryFlyout");
+        private WindowsElement HistoryLabel => session.TryFindElementByAccessibilityId("HistoryLabel");
+        private WindowsElement HistoryListView => session.TryFindElementByAccessibilityId("HistoryListView");
+        private WindowsElement HistoryFlyout => session.TryFindElementByAccessibilityId("HistoryFlyout");
 
         /// <summary>
         /// Opens the History Pane by clicking the History pivot label.
         /// </summary>
         public void OpenHistoryPanel()
         {
-            this.ResizeWindowToDisplayHistoryLabel();
-            this.HistoryLabel.Click();
+            ResizeWindowToDisplayHistoryLabel();
+            HistoryLabel.Click();
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace CalculatorUITestFramework
         public List<HistoryItem> GetAllHistoryListViewItems()
         {
             OpenHistoryPanel();
-            return (from item in this.HistoryListView.FindElementsByClassName("ListViewItem") select new HistoryItem(item)).ToList();
+            return (from item in HistoryListView.FindElementsByClassName("ListViewItem") select new HistoryItem(item)).ToList();
         }
 
         /// <summary>
@@ -47,11 +47,11 @@ namespace CalculatorUITestFramework
         public void ClearHistory()
         {
 
-            this.HistoryLabel.Click();
-            string source = this.session.PageSource;
+            HistoryLabel.Click();
+            string source = session.PageSource;
             if (source.Contains("ClearHistory"))
             {
-                this.ClearHistoryButton.Click();
+                ClearHistoryButton.Click();
             }
         }
 
@@ -81,7 +81,7 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void OpenHistoryFlyout()
         {
-            this.ResizeWindowToDisplayHistoryButton();
+            ResizeWindowToDisplayHistoryButton();
             CalculatorApp.EnsureCalculatorHasFocus();
             CalculatorApp.Window.SendKeys(Keys.Control + "h" + Keys.Control);
             Actions moveToHistoryFlyout = new Actions(CalculatorDriver.Instance.CalculatorSession);
@@ -96,7 +96,7 @@ namespace CalculatorUITestFramework
         public List<HistoryItem> GetAllHistoryFlyoutListViewItems()
         {
             OpenHistoryFlyout();
-            return (from item in this.HistoryListView.FindElementsByClassName("ListViewItem") select new HistoryItem(item)).ToList();
+            return (from item in HistoryListView.FindElementsByClassName("ListViewItem") select new HistoryItem(item)).ToList();
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace CalculatorUITestFramework
                 throw new NotFoundException("Could not the History Label");
             }
 
-            if (!this.session.PageSource.Contains("HistoryLabel"))
+            if (!session.PageSource.Contains("HistoryLabel"))
             {
                 var height = CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size.Height;
                 CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);
@@ -129,7 +129,7 @@ namespace CalculatorUITestFramework
                 throw new NotFoundException("Could not find the History Button");
             }
 
-            if (!this.session.PageSource.Contains("HistoryButton"))
+            if (!session.PageSource.Contains("HistoryButton"))
             {
                 var height = CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size.Height;
                 CalculatorDriver.Instance.CalculatorSession.Manage().Window.Size = new Size(width, height);

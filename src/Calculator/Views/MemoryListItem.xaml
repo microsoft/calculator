@@ -57,7 +57,7 @@
                        AutomationProperties.AutomationId="MemoryItemValue"
                        FlowDirection="LeftToRight"
                        IsTextSelectionEnabled="True"
-                       Text="{x:Bind Model.Value, Mode=OneWay}"
+                       Text="{x:Bind ViewModel.Value, Mode=OneWay}"
                        TextAlignment="Right"
                        TextReadingOrder="DetectFromContent"
                        TextWrapping="Wrap"/>

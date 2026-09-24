@@ -32,7 +32,7 @@ namespace CalculatorApp
 
         private ICommand donotuse_BitLengthButtonPressed;
 
-        public ViewModel.StandardCalculatorViewModel Model
+        public ViewModel.StandardCalculatorViewModel ViewModel
         {
             get
             {
@@ -72,25 +72,25 @@ namespace CalculatorApp
             ByteButton.Visibility = Visibility.Collapsed;
             if (buttonId == "0")
             {
-                Model.ValueBitLength = BitLength.BitLengthDWord;
+                ViewModel.ValueBitLength = BitLength.BitLengthDWord;
                 DwordButton.Visibility = Visibility.Visible;
                 DwordButton.Focus(FocusState.Programmatic);
             }
             else if (buttonId == "1")
             {
-                Model.ValueBitLength = BitLength.BitLengthWord;
+                ViewModel.ValueBitLength = BitLength.BitLengthWord;
                 WordButton.Visibility = Visibility.Visible;
                 WordButton.Focus(FocusState.Programmatic);
             }
             else if (buttonId == "2")
             {
-                Model.ValueBitLength = BitLength.BitLengthByte;
+                ViewModel.ValueBitLength = BitLength.BitLengthByte;
                 ByteButton.Visibility = Visibility.Visible;
                 ByteButton.Focus(FocusState.Programmatic);
             }
             else if (buttonId == "3")
             {
-                Model.ValueBitLength = BitLength.BitLengthQWord;
+                ViewModel.ValueBitLength = BitLength.BitLengthQWord;
                 QwordButton.Visibility = Visibility.Visible;
                 QwordButton.Focus(FocusState.Programmatic);
             }

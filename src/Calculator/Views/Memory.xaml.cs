@@ -1,3 +1,5 @@
+using System;
+
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 
@@ -14,10 +16,14 @@ namespace CalculatorApp
         {
             InitializeComponent();
 
-            MemoryPaneEmpty.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
+            MemoryPaneEmpty.FlowDirection = LocalizationSettings.GetInstance().GetFlowDirection();
         }
 
-        public CalculatorApp.ViewModel.StandardCalculatorViewModel Model => (CalculatorApp.ViewModel.StandardCalculatorViewModel)this.DataContext;
+        public CalculatorApp.ViewModel.StandardCalculatorViewModel ViewModel => this.DataContext as CalculatorApp.ViewModel.StandardCalculatorViewModel;
+
+        // Raised when the last memory item is cleared via the context menu, so the
+        // hosting page can move focus back to the main keypad (M+).
+        public event EventHandler MemoryEmptied;
 
         public GridLength RowHeight
         {
@@ -53,15 +59,35 @@ namespace CalculatorApp
             // On Item clicked event gets fired and e->ClickedItem is Null.
             if (memorySlot != null)
             {
-                Model.OnMemoryItemPressed(memorySlot.Position);
+                ViewModel.OnMemoryItemPressed(memorySlot.Position);
             }
         }
 
         private void OnClearMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var memoryItem = GetMemoryItemForCurrentFlyout();
-            if (memoryItem != null)
+            if (memoryItem == null)
             {
+                return;
+            }
+
+            var itemsRemainingAfterClear = MemoryListView.Items.Count - 1;
+
+            if (itemsRemainingAfterClear > 0)
+            {
+                // Capture the position before clearing; the container is torn down on removal.
+                var clearedIndex = MemoryListView.IndexFromContainer(MemoryContextMenu.Target);
+                memoryItem.Clear();
+
+                var newFocusIndex = Math.Min(clearedIndex, itemsRemainingAfterClear - 1);
+                var newContainer = MemoryListView.ContainerFromIndex(newFocusIndex) as Control;
+                newContainer?.Focus(FocusState.Programmatic);
+            }
+            else
+            {
+                // Move focus to the fallback target before removing the item, so focus does not
+                // briefly escape (e.g. to the hamburger menu) while the list empties.
+                MemoryEmptied?.Invoke(this, EventArgs.Empty);
                 memoryItem.Clear();
             }
         }
