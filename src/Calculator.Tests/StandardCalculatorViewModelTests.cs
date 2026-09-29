@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CalcManager.Interop;
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModel.Snapshot;
 
 namespace Calculator.Tests
 {
@@ -152,6 +154,58 @@ namespace Calculator.Tests
             }
         }
 
+        private void ValidateSnapshotReplayRejectsInvalidCommands(bool includeExpression)
+        {
+            int[] invalidCommands =
+            {
+                (int)CalculatorCommand.CommandEQU,
+                (int)CalculatorCommand.CommandCLEAR,
+                (int)CalculatorCommand.CommandCENTR,
+                (int)CalculatorCommand.CommandBACK,
+                (int)CalculatorCommand.CommandMCLEAR,
+                -1,
+                int.MaxValue
+            };
+
+            foreach (int invalidCommand in invalidCommands)
+            {
+                var snapshot = new StandardCalculatorSnapshot();
+                if (includeExpression)
+                {
+                    snapshot.ExpressionDisplay = new ExpressionDisplaySnapshot();
+                }
+                AppendSnapshotOperand(snapshot, (int)CalculatorCommand.Command1);
+                AppendSnapshotBinaryCommand(snapshot, invalidCommand);
+                AppendSnapshotOperand(snapshot, (int)CalculatorCommand.Command2);
+
+                _viewModel.Snapshot = snapshot;
+
+                ValidateViewModelValue("12");
+            }
+        }
+
+        private static void AppendSnapshotOperand(StandardCalculatorSnapshot snapshot, int command)
+        {
+            snapshot.DisplayCommands.Add(new ExpressionCommandWrapper(
+                CommandType.OperandCommand,
+                0,
+                new[] { command },
+                false,
+                false,
+                false));
+        }
+
+        private static void AppendSnapshotBinaryCommand(StandardCalculatorSnapshot snapshot, int command)
+        {
+            snapshot.DisplayCommands.Add(new ExpressionCommandWrapper(
+                CommandType.BinaryCommand,
+                command,
+                Array.Empty<int>(),
+                false,
+                false,
+                false));
+        }
+
         #endregion
 
         #region Constructor Tests
@@ -171,6 +225,56 @@ namespace Calculator.Tests
             var vm = new StandardCalculatorViewModel();
             vm.IsStandard = true;
             Assert.IsNotNull(vm.ButtonPressed);
+        }
+
+        [TestMethod]
+        public void SnapshotReplayRejectsInvalidCommandsWithoutExpression()
+        {
+            ValidateSnapshotReplayRejectsInvalidCommands(false);
+        }
+
+        [TestMethod]
+        public void SnapshotReplayRejectsInvalidCommandsWithExpression()
+        {
+            ValidateSnapshotReplayRejectsInvalidCommands(true);
+        }
+
+        [TestMethod]
+        public void SnapshotReplayRejectsModeCommands()
+        {
+            int[] modeCommands =
+            {
+                (int)NumbersAndOperatorsEnum.Degree,
+                (int)NumbersAndOperatorsEnum.Radians,
+                (int)NumbersAndOperatorsEnum.Grads
+            };
+
+            foreach (int modeCommand in modeCommands)
+            {
+                var snapshot = new StandardCalculatorSnapshot();
+                AppendSnapshotBinaryCommand(snapshot, modeCommand);
+                AppendSnapshotOperand(snapshot, (int)CalculatorCommand.Command9);
+                AppendSnapshotOperand(snapshot, (int)CalculatorCommand.Command0);
+                AppendSnapshotBinaryCommand(snapshot, (int)CalculatorCommand.CommandSIN);
+
+                _viewModel.Snapshot = snapshot;
+
+                ValidateViewModelValue("1");
+            }
+        }
+
+        [TestMethod]
+        public void SnapshotReplayRejectsMemoryCommands()
+        {
+            var snapshot = new StandardCalculatorSnapshot();
+            AppendSnapshotOperand(snapshot, (int)CalculatorCommand.Command1);
+            AppendSnapshotBinaryCommand(snapshot, (int)CalculatorCommand.CommandMPLUS);
+            AppendSnapshotOperand(snapshot, (int)CalculatorCommand.Command2);
+
+            _viewModel.Snapshot = snapshot;
+
+            ValidateViewModelValue("12");
+            Assert.IsTrue(_viewModel.IsMemoryEmpty);
         }
 
         #endregion
