@@ -419,8 +419,8 @@ void _divnum(PNUMBER* pa, PNUMBER b, uint32_t radix, int32_t precision)
     destroynum(tmp);
 
     int32_t digit;
-    int32_t cdigits = 0;
-    while (cdigits++ < thismax && !zernum(rem))
+    int32_t cdigits;
+    for (cdigits = 0; cdigits < thismax && !zernum(rem); cdigits++)
     {
         digit = radix - 1;
         PNUMBER multiple = nullptr;
@@ -442,11 +442,10 @@ void _divnum(PNUMBER* pa, PNUMBER b, uint32_t radix, int32_t precision)
         rem->exp++;
         *ptrc-- = (MANTTYPE)digit;
     }
-    cdigits--;
 
     if (c->mant != ++ptrc)
     {
-        memmove(c->mant, ptrc, (int)(cdigits * sizeof(MANTTYPE)));
+        memmove(c->mant, ptrc, cdigits * sizeof(MANTTYPE));
     }
 
     // Cleanup table structure
@@ -604,12 +603,11 @@ bool zernum(_In_ PNUMBER a)
 {
     int32_t length;
     MANTTYPE* pcha;
-    length = a->cdigit;
     pcha = a->mant;
 
     // loop over all the digits until you find a nonzero or until you run
     // out of digits
-    while (length-- > 0)
+    for (length = a->cdigit; length > 0; length--)
     {
         if (*pcha++)
         {

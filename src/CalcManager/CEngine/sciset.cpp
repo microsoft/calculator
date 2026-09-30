@@ -50,7 +50,7 @@ void CCalcEngine::SetRadixTypeAndNumWidth(RadixType radixtype, NUM_WIDTH numwidt
     DisplayNum();
 }
 
-int32_t CCalcEngine::DwWordBitWidthFromNumWidth(NUM_WIDTH numwidth)
+uint32_t CCalcEngine::DwWordBitWidthFromNumWidth(NUM_WIDTH numwidth)
 {
     switch (numwidth)
     {
