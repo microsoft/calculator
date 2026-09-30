@@ -755,5 +755,39 @@ namespace CalculatorUITests
                 "Display should render in fixed form after Clear-Entry resets F-E.");
         }
         #endregion
+
+        #region Accessibility Tests
+
+        /// <summary>
+        /// In Scientific mode, the Trigonometry operator-panel button opens a flyout
+        /// menu, so it exposes the ExpandCollapse automation pattern: collapsed while
+        /// the flyout is closed and expanded while it is open, so screen-reader users
+        /// hear a menu expander rather than a misleading On/Off toggle state.
+        /// </summary>
+        [TestMethod]
+        [Priority(1)]
+        public void TrigButtonExposesExpandCollapseState()
+        {
+            // A flyout opener reports ExpandCollapse, collapsed while the flyout is closed.
+            Assert.AreEqual(
+                "Collapsed",
+                page.ScientificOperators.TrigButton.GetAttribute("ExpandCollapse.ExpandCollapseState"),
+                "Trigonometry flyout button should report Collapsed when its flyout is closed.");
+
+            // Opening the flyout transitions the button to Expanded.
+            page.ScientificOperators.TrigButton.Click();
+            Assert.AreEqual(
+                "Expanded",
+                page.ScientificOperators.TrigButton.GetAttribute("ExpandCollapse.ExpandCollapseState"),
+                "Trigonometry flyout button should report Expanded while its flyout is open.");
+
+            // Dismissing the flyout transitions it back to Collapsed.
+            page.ScientificOperators.LightDismiss.Click();
+            Assert.AreEqual(
+                "Collapsed",
+                page.ScientificOperators.TrigButton.GetAttribute("ExpandCollapse.ExpandCollapseState"),
+                "Trigonometry flyout button should report Collapsed after its flyout is dismissed.");
+        }
+        #endregion
     }
 }
