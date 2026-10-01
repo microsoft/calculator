@@ -631,6 +631,12 @@ namespace CalculatorManagerTest
 
         Command commands42[] = { Command::Command5, Command::CommandLogBaseY, Command::Command3, Command::CommandADD, Command::CommandNULL };
         TestDriver::Test(L"1.4649735207179271671970404076786", L"5 log base 3 + ", commands42, true, true);
+
+        // (-1) ^ (-2^31) must not overflow when negating the INT32_MIN exponent.
+        Command commands43[] = { Command::Command1, Command::CommandSIGN, Command::CommandPWR, Command::Command2,   Command::Command1, Command::Command4,
+                                 Command::Command7, Command::Command4,    Command::Command8,   Command::Command3,   Command::Command6, Command::Command4,
+                                 Command::Command8, Command::CommandSIGN, Command::CommandADD, Command::CommandNULL };
+        TestDriver::Test(L"1", L"N/A", commands43, true, true);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientificParenthesis()

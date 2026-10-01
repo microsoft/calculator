@@ -1500,34 +1500,34 @@ void numpowi32(_Inout_ PNUMBER* proot, int32_t power, uint32_t radix, int32_t pr
 void ratpowi32(_Inout_ PRAT* proot, int32_t power, int32_t precision)
 
 {
+    // Take the magnitude of the power in unsigned arithmetic, since negating
+    // INT32_MIN overflows a signed int32_t.
+    uint32_t upower = power < 0 ? 0u - static_cast<uint32_t>(power) : static_cast<uint32_t>(power);
+
+    PRAT lret = nullptr;
+
+    lret = i32torat(1);
+
+    while (upower > 0)
+    {
+        if (upower & 1)
+        {
+            mulnumx(&(lret->pp), (*proot)->pp);
+            mulnumx(&(lret->pq), (*proot)->pq);
+        }
+        mulrat(proot, *proot, precision);
+        trimit(&lret, precision);
+        trimit(proot, precision);
+        upower >>= 1;
+    }
+    destroyrat(*proot);
+    *proot = lret;
+
     if (power < 0)
     {
-        // Take the positive power and invert answer.
-        PNUMBER pnumtemp = nullptr;
-        ratpowi32(proot, -power, precision);
-        pnumtemp = (*proot)->pp;
+        // Negative power, invert answer.
+        PNUMBER pnumtemp = (*proot)->pp;
         (*proot)->pp = (*proot)->pq;
         (*proot)->pq = pnumtemp;
-    }
-    else
-    {
-        PRAT lret = nullptr;
-
-        lret = i32torat(1);
-
-        while (power > 0)
-        {
-            if (power & 1)
-            {
-                mulnumx(&(lret->pp), (*proot)->pp);
-                mulnumx(&(lret->pq), (*proot)->pq);
-            }
-            mulrat(proot, *proot, precision);
-            trimit(&lret, precision);
-            trimit(proot, precision);
-            power >>= 1;
-        }
-        destroyrat(*proot);
-        *proot = lret;
     }
 }
