@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E1E2E3E4-1234-5678-ABCD-555555555555}</ProjectGuid>
+    <ProjectGuid>{FC81FF41-02CD-4CD9-9BC5-45A1E39AC6ED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CalculatorApp.ViewModel</RootNamespace>
-    <AssemblyName>Calculator.ViewModels</AssemblyName>
+    <RootNamespace>TraceLogging</RootNamespace>
+    <AssemblyName>TraceLogging</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.26100.0</TargetPlatformVersion>
@@ -99,40 +99,17 @@
   </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <NoWarn>NU1201</NoWarn>
-    <AssetTargetFallback>native;$(AssetTargetFallback)</AssetTargetFallback>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-    <LangVersion>13.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsStoreBuild)' == 'True'">
+    <DefineConstants>$(DefineConstants);SEND_DIAGNOSTICS</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" />
-    <EmbeddedResource Include="Properties\Calculator.ViewModels.rd.xml" />
+    <Compile Include="TraceLoggingCommon.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
-    <PackageReference Include="CommunityToolkit.Mvvm">
-      <Version>8.2.2</Version>
-    </PackageReference>
-    <PackageReference Include="System.Text.Json">
-      <Version>10.0.5</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CalcManager.Interop\CalcManager.Interop.csproj">
-      <Project>{A2D3E6B4-88C1-4D6F-9A7E-2B4C5D6E7F80}</Project>
-      <Name>CalcManager.Interop</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TraceLogging.Managed\TraceLogging.Managed.csproj">
-      <Project>{3E4B3AB2-A1E0-4B28-B191-7B423E00B5A1}</Project>
-      <Name>TraceLogging.Managed</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphControl\GraphControl.csproj">
-      <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
-      <Name>GraphControl</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

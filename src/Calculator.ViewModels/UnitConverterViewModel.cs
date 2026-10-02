@@ -1412,13 +1412,13 @@ namespace CalculatorApp.ViewModel
             private UnitConverterViewModel ViewModel =>
                 _vm.TryGetTarget(out UnitConverterViewModel vm) ? vm : null;
 
-            protected override void DisplayCallback(string fromValue, string toValue)
+            public override void DisplayCallback(string fromValue, string toValue)
             {
                 UnitConverterViewModel vm = ViewModel;
                 vm?.RunOnUIThread(() => vm.UpdateDisplay(fromValue, toValue));
             }
 
-            protected override void SuggestedValueCallback(CalcManager.Interop.SuggestedValueWrapper[] suggestedValues)
+            public override void SuggestedValueCallback(CalcManager.Interop.SuggestedValueWrapper[] suggestedValues)
             {
                 UnitConverterViewModel vm = ViewModel;
                 if (vm == null)
@@ -1437,7 +1437,7 @@ namespace CalculatorApp.ViewModel
                 vm.RunOnUIThread(() => vm.UpdateSupplementaryResults(converted));
             }
 
-            protected override void MaxDigitsReached()
+            public override void MaxDigitsReached()
             {
                 UnitConverterViewModel vm = ViewModel;
                 vm?.RunOnUIThread(() => vm.OnMaxDigitsReached());

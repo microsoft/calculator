@@ -207,7 +207,7 @@ namespace CalculatorApp.ViewModel.DataLoaders
 
         #endregion
 
-        protected override void LoadData()
+        public override void LoadData()
         {
             var resProvider = AppResourceProvider.GetInstance();
 
@@ -763,12 +763,12 @@ namespace CalculatorApp.ViewModel.DataLoaders
             }
         }
 
-        protected override CategoryWrapper[] GetOrderedCategories()
+        public override CategoryWrapper[] GetOrderedCategories()
         {
             return _categories ?? Array.Empty<CategoryWrapper>();
         }
 
-        protected override UnitWrapper[] GetOrderedUnits(CategoryWrapper category)
+        public override UnitWrapper[] GetOrderedUnits(CategoryWrapper category)
         {
             if (_unitsByCategory != null && _unitsByCategory.TryGetValue(category.Id, out var units) && units.Length > 0)
             {
@@ -798,7 +798,7 @@ namespace CalculatorApp.ViewModel.DataLoaders
         /// </summary>
         public UnitWrapper[] GetUnitsForCategory(CategoryWrapper category) => GetOrderedUnits(category);
 
-        protected override UnitConversionEntry[] LoadOrderedRatios(UnitWrapper unit)
+        public override UnitConversionEntry[] LoadOrderedRatios(UnitWrapper unit)
         {
             if (_ratiosByUnit != null && _ratiosByUnit.TryGetValue(unit.Id, out var ratios))
             {
@@ -859,7 +859,7 @@ namespace CalculatorApp.ViewModel.DataLoaders
             };
         }
 
-        protected override bool SupportsCategory(CategoryWrapper target)
+        public override bool SupportsCategory(CategoryWrapper target)
         {
             return target.Id != NavCategoryStates.Serialize(ViewMode.Currency);
         }
