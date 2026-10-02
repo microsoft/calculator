@@ -11,8 +11,8 @@ jobs:
     name: Verify code style (IDE0003)
     runs-on: windows-2025-vs2026
     steps:
-    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
-    - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
       name: Setup .NET SDK
       with:
         dotnet-version: '10.0.x'
@@ -71,10 +71,10 @@ jobs:
     env:
       buildVersion: ${{ fromJSON(needs.defineBuilds.outputs.version) }}
     steps:
-    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
-    - uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # v2.0.0
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3.0.0
       name: Setup msbuild
-    - uses: nuget/setup-nuget@d105a947828025cd7a980103c35ba2bfae586d0f # v2.0.2
+    - uses: nuget/setup-nuget@b26b823c478ee115be5c9403e62c90b0bf943843 # v3.1.0
       name: Use nuget 6.x
       with:
         nuget-version: '6.x'
@@ -99,12 +99,12 @@ jobs:
           -p:PublishDir=${{ github.workspace }}\output\publish\
       shell: pwsh
       name: Build calculator.slnx
-    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+    - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       name: Upload build outputs
       with:
         name: Build-${{ matrix.platform }}
         path: ${{ github.workspace }}/output
-    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+    - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: Tools-${{ matrix.platform }}
         path: ${{ github.workspace }}/build/scripts/SignTestApp.ps1
@@ -119,12 +119,12 @@ jobs:
     env:
       testDir: ${{ github.workspace }}/download/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test
     steps:
-    - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+    - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
       name: Download build outputs
       with:
         name: Build-${{ matrix.platform }}
         path: ${{ github.workspace }}/download
-    - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+    - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
       name: Download tools
       with:
         name: Tools-${{ matrix.platform }}
@@ -148,12 +148,12 @@ jobs:
     env:
       testDir: ${{ github.workspace }}/download/Calculator.Tests/AppPackages/Calculator.Tests_Test
     steps:
-    - uses: actions/download-artifact@v4
+    - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
       name: Download build outputs
       with:
         name: Build-${{ matrix.platform }}
         path: ${{ github.workspace }}/download
-    - uses: actions/download-artifact@v4
+    - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
       name: Download tools
       with:
         name: Tools-${{ matrix.platform }}
@@ -162,7 +162,7 @@ jobs:
         ${{ github.workspace }}/download/tools/SignTestApp.ps1 -AppToSign ${{ env.testDir }}/Calculator.Tests.msix
       shell: pwsh
       name: Install test certificate
-    - uses: ilammy/msvc-dev-cmd@v1
+    - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
       name: Setup dev tools
     - run: vstest.console.exe ${{ env.testDir }}/Calculator.Tests.msix /Platform:${{ matrix.platform }} -- RunConfiguration.TreatNoTestsAsError=true
       name: Run managed unit tests
@@ -175,12 +175,12 @@ jobs:
       appDir: ${{ github.workspace }}/download/Calculator/AppPackages/Calculator*_Test
       pubDir: ${{ github.workspace }}/download/publish
     steps:
-    - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+    - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
       name: Download build outputs
       with:
         name: Build-x64
         path: ${{ github.workspace }}/download
-    - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+    - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
       name: Download tools
       with:
         name: Tools-x64
