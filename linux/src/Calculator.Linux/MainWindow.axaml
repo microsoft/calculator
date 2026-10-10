@@ -47,6 +47,7 @@
       <ListBoxItem Content="Standard" Tag="Standard" IsSelected="True" />
       <ListBoxItem Content="Scientific" Tag="Scientific" />
       <ListBoxItem Content="Programmer" Tag="Programmer" />
+      <ListBoxItem Content="Date calculation" Tag="Date" />
     </ListBox>
 
     <!-- History / Memory dock -->
@@ -89,7 +90,7 @@
     </TabControl>
 
     <!-- Calculator -->
-    <DockPanel LastChildFill="True" Margin="8">
+    <DockPanel LastChildFill="True" Margin="8" Name="CalculatorPanel">
       <StackPanel DockPanel.Dock="Top">
         <ItemsControl ItemsSource="{Binding ExpressionTokens}" Height="28">
           <ItemsControl.ItemsPanel>
@@ -254,5 +255,37 @@
         </Grid>
       </DockPanel>
     </DockPanel>
+    <!-- Date calculator -->
+    <StackPanel Name="DatePanel" IsVisible="False" Margin="8" Width="420" HorizontalAlignment="Left">
+      <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+        <RadioButton Content="Difference" GroupName="DateMode" Name="DateModeDiff" Click="DateMode_Click" Margin="0,0,12,0" />
+        <RadioButton Content="Add / subtract" GroupName="DateMode" Name="DateModeAddSub" Click="DateMode_Click" />
+      </StackPanel>
+      <StackPanel Name="DateDiffStack">
+        <TextBlock Text="From" Opacity="0.7" />
+        <DatePicker SelectedDate="{Binding FromDate, Mode=TwoWay}" Margin="0,0,0,8" />
+        <TextBlock Text="To" Opacity="0.7" />
+        <DatePicker SelectedDate="{Binding ToDate, Mode=TwoWay}" Margin="0,0,0,8" />
+        <TextBlock Text="{Binding StrDateDiffResult}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" />
+        <TextBlock Text="{Binding StrDateDiffResultInDays}" FontSize="16" Opacity="0.7" TextWrapping="Wrap" />
+      </StackPanel>
+      <StackPanel Name="DateAddSubStack" IsVisible="False">
+        <TextBlock Text="From" Opacity="0.7" />
+        <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}" Margin="0,0,0,8" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+          <RadioButton Content="Add" GroupName="DateAddSub" Name="DateAdd" Click="DateAddSub_Click" Margin="0,0,12,0" />
+          <RadioButton Content="Subtract" GroupName="DateAddSub" Name="DateSub" Click="DateAddSub_Click" />
+        </StackPanel>
+        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" Margin="0,0,0,8">
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="Years" VerticalAlignment="Center" Margin="0,0,8,4" />
+          <TextBox Grid.Row="0" Grid.Column="1" Name="YearsBox" TextChanged="OffsetBox_Changed" Margin="0,0,0,4" />
+          <TextBlock Grid.Row="1" Grid.Column="0" Text="Months" VerticalAlignment="Center" Margin="0,0,8,4" />
+          <TextBox Grid.Row="1" Grid.Column="1" Name="MonthsBox" TextChanged="OffsetBox_Changed" Margin="0,0,0,4" />
+          <TextBlock Grid.Row="2" Grid.Column="0" Text="Days" VerticalAlignment="Center" Margin="0,0,8,0" />
+          <TextBox Grid.Row="2" Grid.Column="1" Name="DaysBox" TextChanged="OffsetBox_Changed" />
+        </Grid>
+        <TextBlock Text="{Binding StrDateResult}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" />
+      </StackPanel>
+    </StackPanel>
   </DockPanel>
 </Window>

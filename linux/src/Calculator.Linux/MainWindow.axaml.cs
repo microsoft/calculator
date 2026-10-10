@@ -11,12 +11,14 @@ using Avalonia.Markup.Xaml;
 using Calculator.Linux.Common;
 using Calculator.Linux.Services;
 using Calculator.Linux.ViewModels;
+using Calculator.Linux.ViewModels;
 
 namespace Calculator.Linux;
 
 public sealed partial class MainWindow : Window
 {
     private readonly StandardCalculatorViewModel _vm;
+    private readonly DateCalculatorViewModel _dateVM;
 
     public MainWindow()
     {
@@ -26,10 +28,16 @@ public sealed partial class MainWindow : Window
         _vm.SetCalculatorType(ViewMode.Standard);
         _vm.HistoryVM.HistoryItemClicked += item => _vm.SelectHistoryItem(item);
         DataContext = _vm;
+        _dateVM = new DateCalculatorViewModel();
+        if (Find<StackPanel>("DatePanel") is { } datePanel)
+        {
+            datePanel.DataContext = _dateVM;
+        }
         Opened += OnOpened;
         SyncAngle();
         SyncRadix();
         SyncBits();
+        SyncDateMode();
     }
 
     private void InitializeComponent() => AvaloniaXamlLoader.Load(this);
@@ -55,15 +63,106 @@ public sealed partial class MainWindow : Window
         switch (selected.Tag as string)
         {
             case "Scientific":
-                _vm.SetCalculatorType(ViewMode.Scientific);
+                ShowCalculator(ViewMode.Scientific);
                 break;
             case "Programmer":
-                _vm.SetCalculatorType(ViewMode.Programmer);
+                ShowCalculator(ViewMode.Programmer);
                 SyncRadix();
                 SyncBits();
                 break;
+            case "Date":
+                ShowDate();
+                break;
             default:
-                _vm.SetCalculatorType(ViewMode.Standard);
+                ShowCalculator(ViewMode.Standard);
+                break;
+        }
+    }
+
+    private void ShowCalculator(ViewMode mode)
+    {
+        _vm.SetCalculatorType(mode);
+        if (Find<DockPanel>("CalculatorPanel") is { } calc)
+        {
+            calc.IsVisible = true;
+        }
+        if (Find<StackPanel>("DatePanel") is { } date)
+        {
+            date.IsVisible = false;
+        }
+    }
+
+    private void ShowDate()
+    {
+        if (Find<DockPanel>("CalculatorPanel") is { } calc)
+        {
+            calc.IsVisible = false;
+        }
+        if (Find<StackPanel>("DatePanel") is { } date)
+        {
+            date.IsVisible = true;
+        }
+    }
+
+    // --- Date calculator ---------------------------------------------------------------
+
+    private void DateMode_Click(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not RadioButton radio)
+        {
+            return;
+        }
+        _dateVM.IsDateDiffMode = radio.Name != "DateModeAddSub";
+        SyncDateMode();
+    }
+
+    private void DateAddSub_Click(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not RadioButton radio)
+        {
+            return;
+        }
+        _dateVM.IsAddMode = radio.Name != "DateSub";
+        SyncDateMode();
+    }
+
+    private void SyncDateMode()
+    {
+        SetChecked("DateModeDiff", _dateVM.IsDateDiffMode);
+        SetChecked("DateModeAddSub", !_dateVM.IsDateDiffMode);
+        SetChecked("DateAdd", _dateVM.IsAddMode);
+        SetChecked("DateSub", !_dateVM.IsAddMode);
+        if (Find<StackPanel>("DateDiffStack") is { } diff)
+        {
+            diff.IsVisible = _dateVM.IsDateDiffMode;
+        }
+        if (Find<StackPanel>("DateAddSubStack") is { } addSub)
+        {
+            addSub.IsVisible = !_dateVM.IsDateDiffMode;
+        }
+    }
+
+    private void OffsetBox_Changed(object? sender, TextChangedEventArgs e)
+    {
+        if (sender is not TextBox box)
+        {
+            return;
+        }
+        if (!int.TryParse(box.Text, out int value))
+        {
+            return;
+        }
+        value = Math.Clamp(value, 0, 999);
+        switch (box.Name)
+        {
+            case "YearsBox":
+                _dateVM.YearsOffset = value;
+                break;
+            case "MonthsBox":
+                _dateVM.MonthsOffset = value;
+                break;
+            case "DaysBox":
+                _dateVM.DaysOffset = value;
                 break;
         }
     }
