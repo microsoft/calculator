@@ -297,20 +297,26 @@ namespace Calculator.Linux.ViewModels
             }
         }
 
-        public UnitConverterViewModel(LinuxSettings? settings = null)
+        public UnitConverterViewModel(LinuxSettings? settings = null, CurrencyDataLoader? currencyLoader = null)
         {
             _settings = settings ?? new LinuxSettings();
-            // Create the real native engine via interop
+            // Static unit data (region-aware defaults)
             var dataLoader = new DataLoaders.UnitConverterDataLoader(DefaultRegionCode());
-            _model = new ManagedUnitConverter(dataLoader);
 
-            // Create currency data loader
-            _currencyDataLoader = new DataLoaders.CurrencyDataLoader();
+            // Create currency data loader (live Frankfurter feed, Task 7).
+            // Tests inject a mock-backed loader; production uses defaults
+            // (XDG settings/cache + live HTTP).
+            _currencyDataLoader = currencyLoader ?? new DataLoaders.CurrencyDataLoader();
             _currencyDataLoader.SetViewModelCallback(new CurrencyVMCallback(this));
 
             // Wire currency data into the unit converter data loader so the native engine
-            // can load currency units and ratios via GetOrderedUnits/LoadOrderedRatios
-            dataLoader.CurrencySource = null; // Task 7 wires live FX
+            // can load currency units and ratios via GetOrderedUnits/LoadOrderedRatios.
+            // Must precede the managed converter: its constructor initializes the engine.
+            dataLoader.CurrencySource = _currencyDataLoader;
+            dataLoader.IncludeCurrency = true;
+
+            // Create the real native engine via interop
+            _model = new ManagedUnitConverter(dataLoader);
 
             _categories = new ObservableCollection<Category>();
             _units = new ObservableCollection<Unit>();

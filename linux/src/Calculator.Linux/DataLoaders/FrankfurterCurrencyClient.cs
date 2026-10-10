@@ -95,7 +95,7 @@ public sealed class FrankfurterCurrencyClient
         }
     }
 
-    internal static string BuildMetadataJson()
+    public static string BuildMetadataJson()
     {
         // One entry per ISO currency present in .NET region data. The issuing
         // country is preferred by matching the region code against the first

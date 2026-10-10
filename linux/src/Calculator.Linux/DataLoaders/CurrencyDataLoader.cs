@@ -41,7 +41,7 @@ namespace Calculator.Linux.DataLoaders
         public const long WeekDuration = DayDuration * 7;
     }
 
-    public sealed class CurrencyDataLoader
+    public sealed class CurrencyDataLoader : ICurrencySource
     {
         private const int UnitEnd = 168;
         private const string DefaultCurrencyCode = "USD";

@@ -6,6 +6,7 @@
 // input editing, persistence).
 using System.Globalization;
 using Calculator.Linux.Common;
+using Calculator.Linux.DataLoaders;
 using Calculator.Linux.Services;
 using Calculator.Linux.ViewModels;
 using Xunit;
@@ -20,11 +21,13 @@ public sealed class UnitConverterViewModelTests : IDisposable
     public UnitConverterViewModelTests()
     {
         LinuxLocalization.Current = new LinuxLocalization(new CultureInfo("en-US"));
+        FrankfurterCurrencyClient.ForceWebFailure = true; // hermetic: no live FX in converter tests
         _vm = new UnitConverterViewModel(new LinuxSettings(_settingsDir));
     }
 
     public void Dispose()
     {
+        FrankfurterCurrencyClient.ForceWebFailure = false;
         try
         {
             Directory.Delete(_settingsDir, recursive: true);
@@ -51,9 +54,10 @@ public sealed class UnitConverterViewModelTests : IDisposable
     }
 
     [Fact]
-    public void Categories_ListsTwelveNonCurrency()
+    public void Categories_ListsTwelvePlusCurrencyPlaceholder()
     {
-        Assert.Equal(12, _vm.Categories.Count);
+        Assert.Equal(13, _vm.Categories.Count);
+        Assert.Contains(_vm.Categories, c => c.Name.Contains("Currency"));
         ToCategory("Length");
         Assert.NotEmpty(_vm.Units);
     }

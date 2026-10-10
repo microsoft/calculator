@@ -48,7 +48,7 @@
       <ListBoxItem Content="Scientific" Tag="Scientific" />
       <ListBoxItem Content="Programmer" Tag="Programmer" />
       <ListBoxItem Content="Date calculation" Tag="Date" />
-      <ListBoxItem Content="Currency" Tag="Currency" IsEnabled="False" />
+      <ListBoxItem Content="Currency" Tag="Currency" />
       <ListBoxItem Content="Volume" Tag="Volume" />
       <ListBoxItem Content="Length" Tag="Length" />
       <ListBoxItem Content="Weight and Mass" Tag="Weight" />

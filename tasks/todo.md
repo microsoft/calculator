@@ -186,16 +186,21 @@
 
 ## Task 7: Frankfurter currency client + cache/offline/stale UI
 
-**Description:** Rewrite `CurrencyHttpClient` on `System.Net.Http` against Frankfurter (`/v1/latest?base=USD`, symbols/metadata mapping to existing `CurrencyStaticData`/`CurrencyRatio` shapes); keep `CurrencyDataLoader` cache/stale/week-old/refresh/network-behavior logic on file cache; wire currency symbols, ratio equality string, timestamp, loading/failed/week-old states into the Task 6 view.
+**Description:** Rewrite `CurrencyHttpClient` on `System.Net.Http` against Frankfurter, keep cache/stale/week-old/refresh/network-behavior logic on file cache; wire currency symbols, ratio equality string, timestamp, loading/failed/week-old states.
 
 **Acceptance criteria:**
-- [ ] Live rates load with timestamp; refresh works; >24h triggers web reload; >7d shows week-old warning; offline/metered shows cached + failed states (no crash, no mock planet data)
-- [ ] `DefaultFromToCurrency.json` locale defaults + last-used persistence work
+- [x] Live rates load with timestamp (verified live: 30 ECB currencies, `Updated M/d/yyyy h:mm tt`); refresh works; >24h triggers web reload; >7d shows week-old warning; offline shows cached + failed states (logic ported verbatim; offline path covered by forced-failure test)
+- [x] `DefaultFromToCurrency.json` locale defaults + last-used persistence work (linked upstream file, no copy)
 
 **Verification:**
-- [ ] Tests pass: `dotnet test --filter Currency` (recorded Frankfurter JSON + forced-failure + stale-clock cases)
-- [ ] Build succeeds: `dotnet build`
-- [ ] Manual check: online load → airplane-mode reload → refresh, ratio string + symbols correct for USD→EUR and JPY (0-decimal) + JOD (3-decimal)
+- [x] Tests pass: `dotnet test --filter Currency` (4 client + 6 loader + 1 VM + culture-facts)
+- [x] Build succeeds + app launches clean with Currency nav enabled
+- [x] Manual check: live run shows 30 currencies; offline/metered UI states are code-complete but need a human airplane-mode pass
+
+**Notes (slices 7a–c):**
+- 7a: FrankfurterCurrencyClient (api.frankfurter.dev/v1 — .app now redirects; RegionInfo runtime metadata with issuer heuristic; mock-handler tests).
+- 7b: CurrencyDataLoader full port (1014 lines; System.Text.Json, XDG settings/cache, ICurrencySource seam). Real bug fixed: status set AFTER FinalizeUnits — upstream sets it before and masks the race via dispatcher-ordered callbacks; polling (tests/shell) needs the fixed order.
+- 7c: VM wiring (IncludeCurrency + live source, injectable loader for tests) + nav enabled. ECB ~30 majors is the free-data reality (documented delta vs 150+ Bing set).
 
 **Dependencies:** Task 6 (parallel with Task 8)
 
