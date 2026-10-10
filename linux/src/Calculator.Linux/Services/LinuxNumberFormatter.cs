@@ -18,6 +18,16 @@
 //     equivalent and avoids locale-specific symbol surgery.
 namespace Calculator.Linux.Services;
 
+public enum CurrencyFormatterMode
+{
+    UseCurrencyCode = 0,
+}
+
+public enum CurrencyRoundingAlgorithm
+{
+    RoundHalfDown = 0,
+}
+
 public sealed class LinuxNumberFormatter
 {
     private readonly LinuxLocalization _loc;
@@ -31,6 +41,14 @@ public sealed class LinuxNumberFormatter
     public bool IsGrouped { get; set; } = true;
     public bool IsDecimalPointAlwaysDisplayed { get; set; }
     public string Currency { get; private set; } = string.Empty;
+
+    // WinRT-compat surface used by the converter ViewModel. Mode never
+    // affects output (Format returns the number only — see class docs);
+    // rounding is always half-away-from-zero (documented delta).
+    public CurrencyFormatterMode Mode { get; set; } = CurrencyFormatterMode.UseCurrencyCode;
+    public void ApplyRoundingForCurrency(CurrencyRoundingAlgorithm algorithm)
+    {
+    }
 
     public static LinuxNumberFormatter ForCurrency(string currencyCode, LinuxLocalization loc)
     {

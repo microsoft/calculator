@@ -7,15 +7,9 @@
 // returns Normal when any interface is up, Offline otherwise. Change events
 // come from System.Net.NetworkInformation.NetworkChange.
 using System.Net.NetworkInformation;
+using Calculator.Linux.Common;
 
 namespace Calculator.Linux.Services;
-
-public enum NetworkAccessBehavior
-{
-    Normal = 0,
-    OptIn = 1,
-    Offline = 2,
-}
 
 public sealed class LinuxNetworkManager : IDisposable
 {

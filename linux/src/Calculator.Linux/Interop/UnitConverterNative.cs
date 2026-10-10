@@ -297,6 +297,20 @@ public sealed class ManagedUnitConverter : IDisposable
 
     public void SetUnitTypes(int fromId, int toId) => UnitConverterNative.unit_converter_set_unit_types(_handle, fromId, toId);
     public void SwitchActive(string value) => UnitConverterNative.unit_converter_switch_active(_handle, value);
+
+    public CategoryData CurrentCategory()
+    {
+        if (UnitConverterNative.unit_converter_get_current_category(_handle, out UCCategoryNative native) != 0)
+        {
+            return new CategoryData();
+        }
+        return new CategoryData
+        {
+            Id = native.Id,
+            Name = Marshal.PtrToStringUTF8(native.Name) ?? string.Empty,
+            SupportsNegative = native.SupportsNegative != 0,
+        };
+    }
     public bool IsSwitchedActive => UnitConverterNative.unit_converter_is_switched_active(_handle) != 0;
     public void Send(UnitConverterCommand command) => UnitConverterNative.unit_converter_send(_handle, (int)command);
     public void Calculate() => UnitConverterNative.unit_converter_calculate(_handle);
