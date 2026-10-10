@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Calculator.Linux/Calculator.Linux.csproj" />
+  </Folder>
+</Solution>
