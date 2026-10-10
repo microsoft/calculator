@@ -1,5 +1,23 @@
-// Placeholder entry point (Task 1). Proves the .NET toolchain restores and
-// runs alongside libCalcManager.so. Replaced by the Avalonia App in Task 4.
-Console.WriteLine($"Calculator.Linux placeholder — Avalonia {typeof(Avalonia.Application).Assembly.GetName().Version} loads OK.");
-Console.WriteLine($"Runtime: {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}");
-return 0;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Avalonia;
+
+namespace Calculator.Linux;
+
+internal static class Program
+{
+    // Avalonia desktop entry point. The engine must only be touched from the
+    // UI thread (native globals are single-threaded); all ViewModel calls in
+    // this app originate here.
+    public static void Main(string[] args)
+    {
+        BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+    }
+
+    public static AppBuilder BuildAvaloniaApp() =>
+        AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .WithInterFont()
+            .LogToTrace();
+}
