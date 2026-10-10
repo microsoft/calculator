@@ -53,10 +53,50 @@ public sealed class ConversionData
     public double Ratio { get; set; }
     public double Offset { get; set; }
     public bool OffsetFirst { get; set; }
+
+    public ConversionData(double ratio, double offset = 0, bool offsetFirst = false)
+    {
+        Ratio = ratio;
+        Offset = offset;
+        OffsetFirst = offsetFirst;
+    }
+}
+
+public sealed class CurrencyUnitMetadata
+{
+    public string Symbol { get; set; } = string.Empty;
+
+    public CurrencyUnitMetadata(string symbol)
+    {
+        Symbol = symbol;
+    }
+}
+
+public struct CurrencyStaticData
+{
+    public string CountryCode;
+    public string CountryName;
+    public string CurrencyCode;
+    public string CurrencyName;
+    public string CurrencySymbol;
+}
+
+public struct CurrencyRatio
+{
+    public double Ratio;
+    public string SourceCurrencyCode;
+    public string TargetCurrencyCode;
 }
 
 public interface ICurrencySource
 {
     List<CurrencyUnit> GetOrderedUnits();
     Dictionary<int, ConversionData> LoadOrderedRatios(int unitId);
+}
+
+public interface IViewModelCurrencyCallback
+{
+    void CurrencyDataLoadFinished(bool didLoad);
+    void CurrencyTimestampUpdated(string timestamp, bool isWeekOld);
+    void NetworkBehaviorChanged(Common.NetworkAccessBehavior newBehavior);
 }
