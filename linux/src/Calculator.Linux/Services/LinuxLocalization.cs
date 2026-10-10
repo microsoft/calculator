@@ -23,6 +23,10 @@ public sealed class LinuxLocalization
 {
     private readonly char[] _digitSymbols = new char[10];
 
+    // Mirrors upstream LocalizationSettings.GetInstance(): process-wide
+    // current locale, replaceable in tests.
+    public static LinuxLocalization Current { get; set; } = new LinuxLocalization();
+
     public LinuxLocalization(CultureInfo? culture = null)
     {
         CultureInfo cultureInfo = culture ?? CultureInfo.CurrentCulture;
@@ -60,6 +64,18 @@ public sealed class LinuxLocalization
 
     public string DecimalSeparatorString => new(DecimalSeparator, 1);
     public string GroupSeparatorString => new(GroupSeparator, 1);
+
+    // Upstream-compatible aliases so ported ViewModels keep their call sites.
+    public char GetDecimalSeparator() => DecimalSeparator;
+    public char GetNumberGroupSeparator() => GroupSeparator;
+    public string GetDecimalSeparatorStr() => DecimalSeparatorString;
+    public string GetNumberGroupingSeparatorStr() => GroupSeparatorString;
+    public string GetNumberGroupingStr() => NumberGrouping;
+    public string GetListSeparator() => ListSeparator;
+    public bool IsRtlLayout() => IsRightToLeft;
+    public char GetDigitSymbolFromEnUsDigit(char digit) => DigitSymbolFromEnUsDigit(digit);
+    public string GetEnglishValueFromLocalizedDigits(string localized) => EnglishValueFromLocalizedDigits(localized);
+    public LinuxNumberFormatter GetRegionalSettingsAwareDecimalFormatter() => new(this);
 
     public string EnglishValueFromLocalizedDigits(string localized)
     {

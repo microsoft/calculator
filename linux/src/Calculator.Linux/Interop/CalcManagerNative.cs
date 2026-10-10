@@ -229,6 +229,9 @@ internal static class Native
 
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     public static extern void calc_manager_set_in_history_load_mode(IntPtr h, int enabled);
+
+    [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void calc_manager_refresh_memorized_numbers(IntPtr h);
 }
 
 /// <summary>
@@ -250,17 +253,28 @@ public sealed class CalcEngine : IDisposable
     private readonly MemoryCallback _onMemory;
     private readonly SimpleCallback _onInputChanged;
     private readonly ParenthesisCallback _onParenthesis;
+    private readonly SimpleCallback _onNoRightParen;
+    private readonly SimpleCallback _onMaxDigits;
+    private readonly SimpleCallback _onBinaryOp;
 
     public string PrimaryDisplay { get; private set; } = "0";
     public bool IsInError { get; private set; }
     public int HistoryAddedCount { get; private set; }
     public uint OpenParenthesisCount { get; private set; }
     public bool IsInputEmpty => _handle != IntPtr.Zero && Native.calc_manager_is_input_empty(_handle) != 0;
+    public bool IsEngineRecording => _handle != IntPtr.Zero && Native.calc_manager_is_engine_recording(_handle) != 0;
     public uint HistoryCount => _handle != IntPtr.Zero ? Native.calc_manager_history_count(_handle) : 0;
 
     public event Action? ExpressionChanged;
-    public event Action? MemoryChanged;
+    public event Action<int>? MemoryChanged;
     public event Action? InputChanged;
+    public event Action<string, bool>? PrimaryDisplayChanged;
+    public event Action<bool>? IsInErrorChanged;
+    public event Action<uint>? ParenthesesChanged;
+    public event Action? NoRightParenAdded;
+    public event Action? MaxDigitsReached;
+    public event Action? BinaryOperatorReceived;
+    public event Action<uint>? HistoryItemAdded;
 
     public List<(string Token, int CommandIndex, int CommandType)> ExpressionTokens { get; } = new();
 
@@ -274,6 +288,9 @@ public sealed class CalcEngine : IDisposable
         _onMemory = OnMemoryChanged;
         _onInputChanged = OnInputChanged;
         _onParenthesis = OnParenthesis;
+        _onNoRightParen = OnNoRightParenAdded;
+        _onMaxDigits = OnMaxDigitsReached;
+        _onBinaryOp = OnBinaryOperatorReceived;
         _self = GCHandle.Alloc(this);
 
         var cb = new DisplayCallbacksEx
@@ -287,6 +304,9 @@ public sealed class CalcEngine : IDisposable
                 OnMemoryChanged = _onMemory,
                 OnInputChanged = _onInputChanged,
                 OnParenthesis = _onParenthesis,
+                OnNoRightParenAdded = _onNoRightParen,
+                OnMaxDigitsReached = _onMaxDigits,
+                OnBinaryOperatorReceived = _onBinaryOp,
             },
             OnExpressionEx = _onExpressionEx,
         };
@@ -314,6 +334,7 @@ public sealed class CalcEngine : IDisposable
     public void SetPrecision(int precision) => Native.calc_manager_set_precision(_handle, precision);
     public void UpdateMaxIntDigits() => Native.calc_manager_update_max_int_digits(_handle);
     public void SetHistoryLoadMode(bool enabled) => Native.calc_manager_set_in_history_load_mode(_handle, enabled ? 1 : 0);
+    public void RefreshMemorizedNumbers() => Native.calc_manager_refresh_memorized_numbers(_handle);
     public int CurrentDegreeMode => Native.calc_manager_get_current_degree_mode(_handle);
     public uint MaxHistorySize => Native.calc_manager_max_history_size(_handle);
     public bool RemoveHistoryItem(uint index) => Native.calc_manager_remove_history_item(_handle, index) != 0;
@@ -449,10 +470,22 @@ public sealed class CalcEngine : IDisposable
         var self = Target(userData);
         self.PrimaryDisplay = Marshal.PtrToStringUTF8(utf8Text) ?? string.Empty;
         self.IsInError = isError != 0;
+        self.PrimaryDisplayChanged?.Invoke(self.PrimaryDisplay, self.IsInError);
     }
 
-    private static void OnIsInError(int isError, IntPtr userData) => Target(userData).IsInError = isError != 0;
-    private static void OnHistoryAdded(uint index, IntPtr userData) => Target(userData).HistoryAddedCount++;
+    private static void OnIsInError(int isError, IntPtr userData)
+    {
+        var self = Target(userData);
+        self.IsInError = isError != 0;
+        self.IsInErrorChanged?.Invoke(self.IsInError);
+    }
+
+    private static void OnHistoryAdded(uint index, IntPtr userData)
+    {
+        var self = Target(userData);
+        self.HistoryAddedCount++;
+        self.HistoryItemAdded?.Invoke(index);
+    }
 
     private static void OnExpressionEx(IntPtr tokens, IntPtr indices, IntPtr cmdTypes, int count, IntPtr userData)
     {
@@ -474,9 +507,18 @@ public sealed class CalcEngine : IDisposable
         self.ExpressionChanged?.Invoke();
     }
 
-    private static void OnMemoryChanged(int changedIndex, IntPtr userData) => Target(userData).MemoryChanged?.Invoke();
+    private static void OnMemoryChanged(int changedIndex, IntPtr userData) =>
+        Target(userData).MemoryChanged?.Invoke(changedIndex);
     private static void OnInputChanged(IntPtr userData) => Target(userData).InputChanged?.Invoke();
-    private static void OnParenthesis(uint count, IntPtr userData) => Target(userData).OpenParenthesisCount = count;
+    private static void OnParenthesis(uint count, IntPtr userData)
+    {
+        var self = Target(userData);
+        self.OpenParenthesisCount = count;
+        self.ParenthesesChanged?.Invoke(count);
+    }
+    private static void OnNoRightParenAdded(IntPtr userData) => Target(userData).NoRightParenAdded?.Invoke();
+    private static void OnMaxDigitsReached(IntPtr userData) => Target(userData).MaxDigitsReached?.Invoke();
+    private static void OnBinaryOperatorReceived(IntPtr userData) => Target(userData).BinaryOperatorReceived?.Invoke();
 
     public void Dispose()
     {

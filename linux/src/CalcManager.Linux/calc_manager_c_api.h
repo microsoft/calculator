@@ -217,6 +217,10 @@ extern "C"
     // Returns needed size incl. NUL, or -1 for bad index.
     CALC_MANAGER_API int calc_manager_memorized_at(CalcManagerHandle h, unsigned int index, char* buffer, int capacity);
 
+    // Re-pushes the memorized-numbers vector through the callback
+    // (mirrors CalculatorManager::SetMemorizedNumbersString).
+    CALC_MANAGER_API void calc_manager_refresh_memorized_numbers(CalcManagerHandle h);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

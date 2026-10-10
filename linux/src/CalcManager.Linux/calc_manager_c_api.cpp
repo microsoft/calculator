@@ -916,4 +916,12 @@ extern "C"
         return CopyToBuffer(numbers[index], buffer, capacity);
     }
 
+    void calc_manager_refresh_memorized_numbers(CalcManagerHandle h)
+    {
+        if (h != nullptr)
+        {
+            reinterpret_cast<CalcManagerInstance*>(h)->manager->SetMemorizedNumbersString();
+        }
+    }
+
 } // extern "C"
