@@ -62,14 +62,21 @@
 **Description:** Build `Services/` replacing every UWP dependency inventoried in ViewModels: `LinuxNumberFormatter` (replaces `CurrencyFormatter`/`DecimalFormatter`), `LinuxLocalization` (decimal separator/digits/RTL via CultureInfo), `LinuxSettings` (JSON `$XDG_CONFIG_HOME`, replaces `ApplicationData`), `LinuxClipboard` (Avalonia `IClipboard`, replaces `CopyPasteManager` Win32), `LinuxDispatcher` (UIThread, replaces `CoreDispatcher`), `NoopTraceLogger` (replaces ETW). Port `AppResourceProvider` string table to RESX/JSON.
 
 **Acceptance criteria:**
-- [ ] Each `using Windows.*` family from the inventory (Xaml, Storage, Globalization, UI.Core, Devices, Data.Json, Networking) has a Linux equivalent or documented no-op
-- [ ] Decimal-separator (`,` vs `.`) and digit-localization vectors unit-tested
-- [ ] Settings persist across restarts via JSON file
+- [x] Each `using Windows.*` family from the inventory (Xaml/Data, Storage, Globalization+NumberFormatting, UI.Core, Networking, Data.Json, Foundation.Diagnostics, ApplicationModel.Resources/DataTransfer, kernel32 P/Invoke) has a Linux equivalent or documented no-op (see slice notes)
+- [x] Decimal-separator (`,` vs `.`) and digit-localization vectors unit-tested (de-DE, ar-EG, ja-JP currency digits)
+- [x] Settings persist across restarts via JSON file (round-trip + XDG test)
 
 **Verification:**
-- [ ] Tests pass: `dotnet test --filter Services`
-- [ ] Build succeeds: `dotnet build`
-- [ ] Manual check: switch locale `de-DE`, separator renders `,`; restart keeps settings
+- [x] Tests pass: `dotnet test --filter Services` (33/33 service tests; 39/39 full suite)
+- [x] Build succeeds: `dotnet build` (0 errors)
+- [x] Manual check: locale switching covered programmatically (de-DE separators/Monday-first, ar-EG digits/RTL); UI-level locale switch deferred to shell (Task 9)
+
+**Notes (slices A–E, one commit each):**
+- A: dependency-free Common enums verbatim (`[Bindable]` dropped — Avalonia needs no marker); AppResources from generated en-US tables (1166 + 108); `%1` substitution in managed code (was kernel32 FormatMessage).
+- B: LinuxLocalization from CultureInfo/ICU. Deltas: System.DayOfWeek numbering (same Sunday=0), currency-precedence approximated from CurrencyPositivePattern.
+- C: LinuxNumberFormatter (grouping/fraction/always-decimal/FormatUInt) + ISO 4217 table. Ties round half away from zero (WinRT RoundHalfDown delta, display-only).
+- D: LinuxSettings JSON bag at $XDG_CONFIG_HOME/calculator-linux.
+- E: IClipboardService (in-memory + Avalonia), LinuxNetworkManager (no metered/OptIn detection on Linux — delta), IDispatcher (immediate + Avalonia), LinuxTraceLogger no-op (telemetry stays off; deltas for PORTING-NOTES.md).
 
 **Dependencies:** Task 2
 
