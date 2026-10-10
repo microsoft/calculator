@@ -39,6 +39,7 @@ list(FILTER ENGINE_SOURCES EXCLUDE REGEX ".*/pch\\.cpp$")
 add_library(CalcManager SHARED
     ${ENGINE_SOURCES}
     "${CMAKE_CURRENT_SOURCE_DIR}/calc_manager_c_api.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/unit_converter_bridge.cpp"
 )
 
 target_compile_options(CalcManager PRIVATE

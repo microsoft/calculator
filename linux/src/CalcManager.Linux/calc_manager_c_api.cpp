@@ -17,116 +17,13 @@
 #include "Header Files/RadixType.h"
 
 #include "engine_strings_en.inc"
+#include "utf8_util.h"
 
 namespace
 {
     constexpr char kDefaultDecimal[] = ".";
     constexpr char kDefaultThousand[] = ",";
     constexpr char kDefaultGrouping[] = "3;0";
-
-    // --- UTF-8 <-> wchar_t (UTF-32 on Linux) ----------------------------------
-    // Implemented manually: <codecvt> is deprecated in C++17 and iconv would
-    // add a link dependency for something the engine barely needs (display
-    // strings with BMP math symbols and localized digits).
-
-    void AppendUtf8(std::string& out, unsigned int cp)
-    {
-        if (cp < 0x80)
-        {
-            out.push_back(static_cast<char>(cp));
-        }
-        else if (cp < 0x800)
-        {
-            out.push_back(static_cast<char>(0xC0 | (cp >> 6)));
-            out.push_back(static_cast<char>(0x80 | (cp & 0x3F)));
-        }
-        else if (cp < 0x10000)
-        {
-            out.push_back(static_cast<char>(0xE0 | (cp >> 12)));
-            out.push_back(static_cast<char>(0x80 | ((cp >> 6) & 0x3F)));
-            out.push_back(static_cast<char>(0x80 | (cp & 0x3F)));
-        }
-        else
-        {
-            out.push_back(static_cast<char>(0xF0 | (cp >> 18)));
-            out.push_back(static_cast<char>(0x80 | ((cp >> 12) & 0x3F)));
-            out.push_back(static_cast<char>(0x80 | ((cp >> 6) & 0x3F)));
-            out.push_back(static_cast<char>(0x80 | (cp & 0x3F)));
-        }
-    }
-
-    std::string ToUtf8(const std::wstring& wide)
-    {
-        std::string out;
-        out.reserve(wide.size());
-        for (wchar_t wc : wide)
-        {
-            unsigned int cp = static_cast<unsigned int>(wc);
-            if (cp >= 0xD800 && cp <= 0xDFFF)
-            {
-                cp = 0xFFFD; // lone surrogate: never valid from the engine, stay safe
-            }
-            AppendUtf8(out, cp);
-        }
-        return out;
-    }
-
-    std::wstring ToWide(const std::string& utf8)
-    {
-        std::wstring out;
-        out.reserve(utf8.size());
-        size_t i = 0;
-        while (i < utf8.size())
-        {
-            unsigned char c = static_cast<unsigned char>(utf8[i]);
-            unsigned int cp = 0xFFFD;
-            size_t len = 1;
-            if (c < 0x80)
-            {
-                cp = c;
-                len = 1;
-            }
-            else if ((c >> 5) == 0x6 && i + 1 < utf8.size())
-            {
-                cp = ((c & 0x1F) << 6) | (utf8[i + 1] & 0x3F);
-                len = 2;
-            }
-            else if ((c >> 4) == 0xE && i + 2 < utf8.size())
-            {
-                cp = ((c & 0x0F) << 12) | ((utf8[i + 1] & 0x3F) << 6) | (utf8[i + 2] & 0x3F);
-                len = 3;
-            }
-            else if ((c >> 3) == 0x1E && i + 3 < utf8.size())
-            {
-                cp = ((c & 0x07) << 18) | ((utf8[i + 1] & 0x3F) << 12) | ((utf8[i + 2] & 0x3F) << 6) | (utf8[i + 3] & 0x3F);
-                len = 4;
-            }
-            out.push_back(static_cast<wchar_t>(cp));
-            i += len;
-        }
-        return out;
-    }
-
-    int CopyToBuffer(const std::string& text, char* buffer, int capacity)
-    {
-        int needed = static_cast<int>(text.size()) + 1; // NUL included
-        if (buffer != nullptr && capacity > 0)
-        {
-            size_t copy = text.size();
-            if (copy > static_cast<size_t>(capacity) - 1)
-            {
-                // Truncate on a UTF-8 boundary so we never split a code point.
-                copy = static_cast<size_t>(capacity) - 1;
-                while (copy > 0 && (static_cast<unsigned char>(text[copy]) >> 6) == 0x2)
-                {
-                    --copy;
-                }
-            }
-            std::memcpy(buffer, text.data(), copy);
-            buffer[copy] = '\0';
-        }
-        return needed;
-    }
 
     // --- Resource provider ------------------------------------------------------
     // English engine strings (generated from en-US CEngineStrings.resw) plus
@@ -145,23 +42,23 @@ namespace
 
         std::wstring GetCEngineString(std::wstring_view id) override
         {
-            std::string key = ToUtf8(std::wstring(id));
+            std::string key = calc_linux::ToUtf8(std::wstring(id));
             if (key == "sDecimal")
             {
-                return ToWide(m_decimal);
+                return calc_linux::ToWide(m_decimal);
             }
             if (key == "sThousand")
             {
-                return ToWide(m_thousand);
+                return calc_linux::ToWide(m_thousand);
             }
             if (key == "sGrouping")
             {
-                return ToWide(m_grouping);
+                return calc_linux::ToWide(m_grouping);
             }
             auto it = kCEngineStringsEn.find(key);
             if (it != kCEngineStringsEn.end())
             {
-                return ToWide(it->second);
+                return calc_linux::ToWide(it->second);
             }
             return L"";
         }
@@ -268,7 +165,7 @@ namespace
         void SetPrimaryDisplay(const std::wstring& text, bool isError) override
         {
             std::lock_guard<std::mutex> lock(m_mutex);
-            m_primaryUtf8 = ToUtf8(text);
+            m_primaryUtf8 = calc_linux::ToUtf8(text);
             m_isError = isError;
             if (m_callbacks.onPrimaryDisplay != nullptr)
             {
@@ -301,7 +198,7 @@ namespace
             utf8.reserve(tokens->size());
             for (const auto& pair : *tokens)
             {
-                utf8.push_back(ToUtf8(pair.first));
+                utf8.push_back(calc_linux::ToUtf8(pair.first));
                 indices.push_back(pair.second);
                 cmdTypes.push_back(CommandTypeFor(pair.second, commands));
             }
@@ -375,7 +272,7 @@ namespace
                 m_memorized.reserve(numbers.size());
                 for (const auto& number : numbers)
                 {
-                    m_memorized.push_back(ToUtf8(number));
+                    m_memorized.push_back(calc_linux::ToUtf8(number));
                 }
             }
             if (m_callbacks.onMemoryChanged != nullptr)
@@ -594,9 +491,9 @@ extern "C"
     {
         if (h == nullptr)
         {
-            return CopyToBuffer("0", buffer, capacity);
+            return calc_linux::CopyToBuffer("0", buffer, capacity);
         }
-        return CopyToBuffer(reinterpret_cast<CalcManagerInstance*>(h)->forwarder.GetPrimaryUtf8(), buffer, capacity);
+        return calc_linux::CopyToBuffer(reinterpret_cast<CalcManagerInstance*>(h)->forwarder.GetPrimaryUtf8(), buffer, capacity);
     }
 
     void calc_manager_set_radix(CalcManagerHandle h, int radixType)
@@ -633,21 +530,21 @@ extern "C"
     {
         if (h == nullptr)
         {
-            return CopyToBuffer("0", buffer, capacity);
+            return calc_linux::CopyToBuffer("0", buffer, capacity);
         }
         std::wstring wide =
             reinterpret_cast<CalcManagerInstance*>(h)->manager->GetResultForRadix(radix, precision, groupDigits != 0);
-        return CopyToBuffer(ToUtf8(wide), buffer, capacity);
+        return calc_linux::CopyToBuffer(calc_linux::ToUtf8(wide), buffer, capacity);
     }
 
     int calc_manager_get_decimal_separator(CalcManagerHandle h, char* buffer, int capacity)
     {
         if (h == nullptr)
         {
-            return CopyToBuffer(kDefaultDecimal, buffer, capacity);
+            return calc_linux::CopyToBuffer(kDefaultDecimal, buffer, capacity);
         }
         wchar_t sep = reinterpret_cast<CalcManagerInstance*>(h)->manager->DecimalSeparator();
-        return CopyToBuffer(ToUtf8(std::wstring(1, sep)), buffer, capacity);
+        return calc_linux::CopyToBuffer(calc_linux::ToUtf8(std::wstring(1, sep)), buffer, capacity);
     }
 
     unsigned int calc_manager_history_count(CalcManagerHandle h)
@@ -765,8 +662,8 @@ extern "C"
         {
             return -1;
         }
-        CopyToBuffer(ToUtf8(item->historyItemVector.expression), expression, expressionCapacity);
-        CopyToBuffer(ToUtf8(item->historyItemVector.result), result, resultCapacity);
+        calc_linux::CopyToBuffer(calc_linux::ToUtf8(item->historyItemVector.expression), expression, expressionCapacity);
+        calc_linux::CopyToBuffer(calc_linux::ToUtf8(item->historyItemVector.result), result, resultCapacity);
         return 0;
     }
 
@@ -834,7 +731,7 @@ extern "C"
             return -1;
         }
         const auto& pair = (*historyItem->historyItemVector.spTokens)[token];
-        CopyToBuffer(ToUtf8(pair.first), buffer, capacity);
+        calc_linux::CopyToBuffer(calc_linux::ToUtf8(pair.first), buffer, capacity);
         if (cmdIndex != nullptr)
         {
             *cmdIndex = pair.second;
@@ -913,7 +810,7 @@ extern "C"
         {
             return -1;
         }
-        return CopyToBuffer(numbers[index], buffer, capacity);
+        return calc_linux::CopyToBuffer(numbers[index], buffer, capacity);
     }
 
     void calc_manager_refresh_memorized_numbers(CalcManagerHandle h)

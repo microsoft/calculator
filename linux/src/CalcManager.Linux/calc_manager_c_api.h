@@ -217,6 +217,98 @@ extern "C"
     // Returns needed size incl. NUL, or -1 for bad index.
     CALC_MANAGER_API int calc_manager_memorized_at(CalcManagerHandle h, unsigned int index, char* buffer, int capacity);
 
+    // --- Task 6 additive section: unit converter --------------------------------
+    // The native UnitConversionManager::UnitConverter (input state machine,
+    // supplementary values, preference strings) with data and display sinks
+    // implemented C#-side. All strings UTF-8, valid only during the call.
+    // Added additively; everything above is unchanged.
+
+    typedef struct UCCategory
+    {
+        int id;
+        const char* name;
+        int supportsNegative;
+    } UCCategory;
+
+    typedef struct UCUnit
+    {
+        int id;
+        const char* name;
+        const char* abbreviation;
+        const char* accessibleName;
+        int isSource;
+        int isTarget;
+        int isWhimsical;
+    } UCUnit;
+
+    typedef struct UCRatio
+    {
+        UCUnit target;
+        double ratio;
+        double offset;
+        int offsetFirst;
+    } UCRatio;
+
+    typedef struct UCSuggested
+    {
+        const char* value;
+        UCUnit unit;
+    } UCSuggested;
+
+    // Data loader (C#-side). Each returns the item count; with out==NULL or
+    // cap==0 nothing is written.
+    typedef int (*UCGetCategoriesFn)(UCCategory* out, int cap, void* userData);
+    typedef int (*UCGetUnitsFn)(int categoryId, UCUnit* out, int cap, void* userData);
+    typedef int (*UCGetRatiosFn)(int unitId, UCRatio* out, int cap, void* userData);
+    typedef int (*UCSupportsCategoryFn)(int categoryId, void* userData);
+    // Display sinks (C#-side).
+    typedef void (*UCDisplayFn)(const char* from, const char* to, void* userData);
+    typedef void (*UCSuggestedFn)(const UCSuggested* items, int count, void* userData);
+    typedef void (*UCSimpleFn)(void* userData);
+
+    // NOTE: append new callback fields only at the end of this struct.
+    typedef struct UnitConverterCbs
+    {
+        void* userData;
+        UCGetCategoriesFn getCategories;     // required
+        UCGetUnitsFn getUnits;               // required
+        UCGetRatiosFn getRatios;             // required
+        UCSupportsCategoryFn supportsCategory; // may be NULL (= support all)
+        UCDisplayFn onDisplay;               // may be NULL
+        UCSuggestedFn onSuggested;           // may be NULL
+        UCSimpleFn onMaxDigits;              // may be NULL
+    } UnitConverterCbs;
+
+    typedef struct UnitConverterOpaque* UnitConverterHandle;
+
+    // regionCode is a two-letter ISO region ("US" default when NULL) used for
+    // region-dependent unit defaults. Callbacks must be non-NULL.
+    CALC_MANAGER_API UnitConverterHandle unit_converter_create(const UnitConverterCbs* callbacks, const char* regionCode);
+    CALC_MANAGER_API void unit_converter_destroy(UnitConverterHandle h);
+    CALC_MANAGER_API void unit_converter_initialize(UnitConverterHandle h);
+    CALC_MANAGER_API int unit_converter_get_categories(UnitConverterHandle h, UCCategory* out, int cap);
+    // Selects a category by id; returns the unit count and the default
+    // from/to unit ids. fromId/toId may be NULL.
+    CALC_MANAGER_API int unit_converter_set_category(
+        UnitConverterHandle h,
+        int categoryId,
+        UCUnit* unitsOut,
+        int cap,
+        int* fromId,
+        int* toId);
+    // Returns 0 on success, -1 when there is no current category yet.
+    CALC_MANAGER_API int unit_converter_get_current_category(UnitConverterHandle h, UCCategory* out);
+    CALC_MANAGER_API void unit_converter_set_unit_types(UnitConverterHandle h, int fromId, int toId);
+    CALC_MANAGER_API void unit_converter_switch_active(UnitConverterHandle h, const char* newValue);
+    CALC_MANAGER_API int unit_converter_is_switched_active(UnitConverterHandle h);
+    // Preference blob. Returns needed size incl. NUL.
+    CALC_MANAGER_API int unit_converter_save_prefs(UnitConverterHandle h, char* buffer, int capacity);
+    CALC_MANAGER_API void unit_converter_restore_prefs(UnitConverterHandle h, const char* prefs);
+    // command matches UnitConversionManager::Command (Zero..None).
+    CALC_MANAGER_API void unit_converter_send(UnitConverterHandle h, int command);
+    CALC_MANAGER_API void unit_converter_calculate(UnitConverterHandle h);
+    CALC_MANAGER_API void unit_converter_reset_ratios(UnitConverterHandle h);
+
     // Re-pushes the memorized-numbers vector through the callback
     // (mirrors CalculatorManager::SetMemorizedNumbersString).
     CALC_MANAGER_API void calc_manager_refresh_memorized_numbers(CalcManagerHandle h);
