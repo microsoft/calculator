@@ -347,13 +347,15 @@ namespace UnitConverterUnitTests
     // Test switching of unit types
     void UnitConverterTest::UnitConverterTestUnitTypeSwitching()
     {
-        // Enter 57 into the from field, then switch focus to the to field (making it the new from field)
-        s_unitConverter->SendCommand(Command::Five);
-        s_unitConverter->SendCommand(Command::Seven);
-        s_unitConverter->SwitchActive(wstring(L"57"));
-        // Now set unit conversion to go from kilograms to pounds
+        // Now set unit conversion to go from pounds to kilograms
         s_unitConverter->SetCurrentCategory(s_testWeight);
-        s_unitConverter->SetCurrentUnitTypes(s_testKilograms, s_testPounds);
+        s_unitConverter->SetCurrentUnitTypes(s_testPounds, s_testKilograms);
+        // Enter 5 into the from field, then switch focus to the to field (making it the new from field) (switch focus to kilograms)
+        s_unitConverter->SendCommand(Command::Five);
+        s_unitConverter->SwitchActive(wstring(L"2.26796"));
+        VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"5"), wstring(L"2.26796")));
+        VERIFY_IS_TRUE(s_testVMCallback->CheckSuggestedValues(vector<tuple<wstring, Unit>>()));
+        // Enter 5 again into the to field
         s_unitConverter->SendCommand(Command::Five);
         VERIFY_IS_TRUE(s_testVMCallback->CheckDisplayValues(wstring(L"5"), wstring(L"11.0231")));
         VERIFY_IS_TRUE(s_testVMCallback->CheckSuggestedValues(vector<tuple<wstring, Unit>>()));
