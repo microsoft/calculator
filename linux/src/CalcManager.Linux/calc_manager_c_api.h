@@ -135,6 +135,88 @@ extern "C"
     CALC_MANAGER_API int calc_manager_get_current_degree_mode(CalcManagerHandle h);
     CALC_MANAGER_API void calc_manager_set_in_history_load_mode(CalcManagerHandle h, int enabled);
 
+    // --- Task 4 additive section ------------------------------------------------
+    // History/memory/command marshalling. Added additively; everything above
+    // is unchanged (frozen since Task 1).
+    //
+    // Modes for history access: 0 = standard, 1 = scientific.
+    // CommandType ids mirror CalculationManager::CommandType
+    // (0 Unary, 1 Binary, 2 Operand, 3 Parentheses); tokens without a command
+    // report -1 for both index and type.
+
+    // Expression display with per-token command types. Replaces onExpression
+    // for new consumers (legacy field kept and still invoked).
+    typedef void (*CalcExpressionExFn)(
+        const char** tokens,
+        const int* indices,
+        const int* cmdTypes,
+        int count,
+        void* userData);
+
+    // NOTE: append new callback fields only at the end of this struct.
+    typedef struct CalcDisplayCallbacksEx
+    {
+        CalcDisplayCallbacks base;
+        CalcExpressionExFn onExpressionEx; // may be NULL
+    } CalcDisplayCallbacksEx;
+
+    // Create with extended callbacks (base part behaves exactly like
+    // calc_manager_create). Returns NULL on failure.
+    CALC_MANAGER_API CalcManagerHandle calc_manager_create_ex(
+        const CalcDisplayCallbacksEx* callbacks,
+        const char* decimalSep,
+        const char* thousandSep,
+        const char* grouping);
+
+    // History item texts. Returns 0 on success, -1 for bad mode/index.
+    // Buffers follow the CopyToBuffer convention (NUL-terminated, truncated).
+    CALC_MANAGER_API int calc_manager_history_item(
+        CalcManagerHandle h,
+        int mode,
+        unsigned int index,
+        char* expression,
+        int expressionCapacity,
+        char* result,
+        int resultCapacity);
+
+    CALC_MANAGER_API unsigned int calc_manager_history_count_for_mode(CalcManagerHandle h, int mode);
+    CALC_MANAGER_API unsigned int calc_manager_max_history_size(CalcManagerHandle h);
+    // Remove from the CURRENT mode history (mirrors native RemoveHistoryItem).
+    // Returns 1 when an item was removed.
+    CALC_MANAGER_API int calc_manager_remove_history_item(CalcManagerHandle h, unsigned int index);
+
+    // History item tokens. Returns token count, or 0 for bad mode/index.
+    CALC_MANAGER_API unsigned int calc_manager_history_item_token_count(CalcManagerHandle h, int mode, unsigned int index);
+    // Returns 0 on success, -1 for bad index. cmdIndex/cmdType may be NULL.
+    CALC_MANAGER_API int calc_manager_history_item_token(
+        CalcManagerHandle h,
+        int mode,
+        unsigned int item,
+        unsigned int token,
+        char* buffer,
+        int capacity,
+        int* cmdIndex,
+        int* cmdType);
+
+    // Flat engine command ids for replaying an item (see
+    // StandardCalculatorViewModel.Recalculate). Returns the needed count;
+    // with out==NULL or cap==0 nothing is written. Order matches the
+    // upstream GetCommandsFromExpressionCommands flattening.
+    CALC_MANAGER_API unsigned int calc_manager_history_item_commands(
+        CalcManagerHandle h,
+        int mode,
+        unsigned int index,
+        int* out,
+        unsigned int capacity);
+
+    // Flat command ids of the live display (Recalculate parity).
+    CALC_MANAGER_API unsigned int calc_manager_display_commands(CalcManagerHandle h, int* out, unsigned int capacity);
+
+    // Memorized numbers (cached from the SetMemorizedNumbers callback).
+    CALC_MANAGER_API unsigned int calc_manager_memorized_count(CalcManagerHandle h);
+    // Returns needed size incl. NUL, or -1 for bad index.
+    CALC_MANAGER_API int calc_manager_memorized_at(CalcManagerHandle h, unsigned int index, char* buffer, int capacity);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

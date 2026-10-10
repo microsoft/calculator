@@ -172,13 +172,96 @@ namespace
         std::string m_grouping;
     };
 
+    // Maps a token's command index to a CalculationManager::CommandType id
+    // (0 Unary, 1 Binary, 2 Operand, 3 Parentheses), or -1 when the token
+    // has no command. Mirrors how the C# VM classifies tokens for display.
+    int CommandTypeFor(
+        int commandIndex,
+        std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands)
+    {
+        if (commands == nullptr || commandIndex < 0 || commandIndex >= static_cast<int>(commands->size()))
+        {
+            return -1;
+        }
+        const auto& command = (*commands)[static_cast<size_t>(commandIndex)];
+        if (command == nullptr)
+        {
+            return -1;
+        }
+        return static_cast<int>(command->GetCommandType());
+    }
+
+    // Flattens structured commands to replayable engine command ids.
+    // Must match StandardCalculatorViewModel.GetCommandsFromExpressionCommands:
+    // unary -> all codes; binary/paren -> single code; operand -> codes with
+    // CommandSIGN inserted after the first non-zero code when negative.
+    void FlattenCommands(
+        const std::vector<std::shared_ptr<IExpressionCommand>>& commands,
+        std::vector<int>& out)
+    {
+        constexpr int commandSign = static_cast<int>(CalculationManager::Command::CommandSIGN);
+        constexpr int commandZero = static_cast<int>(CalculationManager::Command::Command0);
+        for (const auto& command : commands)
+        {
+            if (command == nullptr)
+            {
+                continue;
+            }
+            switch (command->GetCommandType())
+            {
+            case CalculationManager::CommandType::UnaryCommand:
+                if (auto* unary = dynamic_cast<IUnaryCommand*>(command.get()))
+                {
+                    const auto& codes = unary->GetCommands();
+                    if (codes != nullptr)
+                    {
+                        out.insert(out.end(), codes->begin(), codes->end());
+                    }
+                }
+                break;
+            case CalculationManager::CommandType::BinaryCommand:
+                if (auto* binary = dynamic_cast<IBinaryCommand*>(command.get()))
+                {
+                    out.push_back(binary->GetCommand());
+                }
+                break;
+            case CalculationManager::CommandType::Parentheses:
+                if (auto* paren = dynamic_cast<IParenthesisCommand*>(command.get()))
+                {
+                    out.push_back(paren->GetCommand());
+                }
+                break;
+            case CalculationManager::CommandType::OperandCommand:
+                if (auto* opnd = dynamic_cast<IOpndCommand*>(command.get()))
+                {
+                    const auto& codes = opnd->GetCommands();
+                    if (codes != nullptr)
+                    {
+                        bool needSign = opnd->IsNegative();
+                        for (int code : *codes)
+                        {
+                            out.push_back(code);
+                            if (needSign && code != commandZero)
+                            {
+                                out.push_back(commandSign);
+                                needSign = false;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+        }
+    }
+
     // --- Display forwarder -------------------------------------------------------
 
     class DisplayForwarder : public ICalcDisplay
     {
     public:
-        explicit DisplayForwarder(CalcDisplayCallbacks callbacks)
+        explicit DisplayForwarder(CalcDisplayCallbacks callbacks, CalcExpressionExFn onExpressionEx = nullptr)
             : m_callbacks(callbacks)
+            , m_onExpressionEx(onExpressionEx)
         {
         }
 
@@ -205,31 +288,43 @@ namespace
 
         void SetExpressionDisplay(
             std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
-            std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& /*commands*/) override
+            std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands) override
         {
-            if (m_callbacks.onExpression == nullptr || tokens == nullptr)
+            if ((m_callbacks.onExpression == nullptr && m_onExpressionEx == nullptr) || tokens == nullptr)
             {
                 return;
             }
             std::vector<std::string> utf8;
             std::vector<const char*> ptrs;
             std::vector<int> indices;
+            std::vector<int> cmdTypes;
             utf8.reserve(tokens->size());
             for (const auto& pair : *tokens)
             {
                 utf8.push_back(ToUtf8(pair.first));
                 indices.push_back(pair.second);
+                cmdTypes.push_back(CommandTypeFor(pair.second, commands));
             }
             ptrs.reserve(utf8.size());
             for (const auto& s : utf8)
             {
                 ptrs.push_back(s.c_str());
             }
-            m_callbacks.onExpression(
-                ptrs.empty() ? nullptr : ptrs.data(),
-                indices.empty() ? nullptr : indices.data(),
-                static_cast<int>(ptrs.size()),
-                m_callbacks.userData);
+            const char** tokenPtrs = ptrs.empty() ? nullptr : ptrs.data();
+            const int* indexPtrs = indices.empty() ? nullptr : indices.data();
+            if (m_callbacks.onExpression != nullptr)
+            {
+                m_callbacks.onExpression(tokenPtrs, indexPtrs, static_cast<int>(ptrs.size()), m_callbacks.userData);
+            }
+            if (m_onExpressionEx != nullptr)
+            {
+                m_onExpressionEx(
+                    tokenPtrs,
+                    indexPtrs,
+                    cmdTypes.empty() ? nullptr : cmdTypes.data(),
+                    static_cast<int>(ptrs.size()),
+                    m_callbacks.userData);
+            }
         }
 
         void SetParenthesisNumber(unsigned int count) override
@@ -272,8 +367,17 @@ namespace
             }
         }
 
-        void SetMemorizedNumbers(const std::vector<std::wstring>& /*numbers*/) override
+        void SetMemorizedNumbers(const std::vector<std::wstring>& numbers) override
         {
+            {
+                std::lock_guard<std::mutex> lock(m_mutex);
+                m_memorized.clear();
+                m_memorized.reserve(numbers.size());
+                for (const auto& number : numbers)
+                {
+                    m_memorized.push_back(ToUtf8(number));
+                }
+            }
             if (m_callbacks.onMemoryChanged != nullptr)
             {
                 m_callbacks.onMemoryChanged(-1, m_callbacks.userData);
@@ -302,6 +406,12 @@ namespace
             return m_primaryUtf8;
         }
 
+        std::vector<std::string> GetMemorizedCopy()
+        {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            return m_memorized;
+        }
+
         bool IsInError()
         {
             std::lock_guard<std::mutex> lock(m_mutex);
@@ -310,9 +420,11 @@ namespace
 
     private:
         CalcDisplayCallbacks m_callbacks;
+        CalcExpressionExFn m_onExpressionEx;
         std::mutex m_mutex;
         std::string m_primaryUtf8 = "0";
         bool m_isError = false;
+        std::vector<std::string> m_memorized;
     };
 
     struct CalcManagerInstance
@@ -322,8 +434,13 @@ namespace
         LinuxResourceProvider resources;
         std::unique_ptr<CalculationManager::CalculatorManager> manager;
 
-        explicit CalcManagerInstance(CalcDisplayCallbacks callbacks, std::string decimalSep, std::string thousandSep, std::string grouping)
-            : forwarder(callbacks)
+        explicit CalcManagerInstance(
+            CalcDisplayCallbacks callbacks,
+            CalcExpressionExFn onExpressionEx,
+            std::string decimalSep,
+            std::string thousandSep,
+            std::string grouping)
+            : forwarder(callbacks, onExpressionEx)
             , resources(std::move(decimalSep), std::move(thousandSep), std::move(grouping))
             , manager(std::make_unique<CalculationManager::CalculatorManager>(&forwarder, &resources))
         {
@@ -353,6 +470,7 @@ extern "C"
         {
             auto* instance = new CalcManagerInstance(
                 *callbacks,
+                nullptr,
                 FirstNonNull(decimalSep, kDefaultDecimal),
                 FirstNonNull(thousandSep, kDefaultThousand),
                 FirstNonNull(grouping, kDefaultGrouping));
@@ -564,6 +682,238 @@ extern "C"
         {
             reinterpret_cast<CalcManagerInstance*>(h)->manager->SetInHistoryItemLoadMode(enabled != 0);
         }
+    }
+
+    // --- Task 4 additive section --------------------------------------------------
+
+    CalcManagerHandle calc_manager_create_ex(
+        const CalcDisplayCallbacksEx* callbacks,
+        const char* decimalSep,
+        const char* thousandSep,
+        const char* grouping)
+    {
+        if (callbacks == nullptr || callbacks->base.onPrimaryDisplay == nullptr)
+        {
+            return nullptr;
+        }
+        try
+        {
+            auto* instance = new CalcManagerInstance(
+                callbacks->base,
+                callbacks->onExpressionEx,
+                FirstNonNull(decimalSep, kDefaultDecimal),
+                FirstNonNull(thousandSep, kDefaultThousand),
+                FirstNonNull(grouping, kDefaultGrouping));
+            return reinterpret_cast<CalcManagerHandle>(instance);
+        }
+        catch (...)
+        {
+            return nullptr;
+        }
+    }
+
+} // extern "C"
+
+namespace
+{
+    const std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>* HistoryForMode(
+        CalculationManager::CalculatorManager* manager,
+        int mode)
+    {
+        if (manager == nullptr)
+        {
+            return nullptr;
+        }
+        auto calcMode = (mode == 0) ? CalculationManager::CalculatorMode::Standard
+                                    : CalculationManager::CalculatorMode::Scientific;
+        return &manager->GetHistoryItems(calcMode);
+    }
+
+    const CalculationManager::HISTORYITEM* HistoryItemAt(
+        CalculationManager::CalculatorManager* manager,
+        int mode,
+        unsigned int index)
+    {
+        const auto* history = HistoryForMode(manager, mode);
+        if (history == nullptr || index >= history->size())
+        {
+            return nullptr;
+        }
+        const auto& item = (*history)[index];
+        return item.get();
+    }
+} // namespace
+
+extern "C"
+{
+
+    int calc_manager_history_item(
+        CalcManagerHandle h,
+        int mode,
+        unsigned int index,
+        char* expression,
+        int expressionCapacity,
+        char* result,
+        int resultCapacity)
+    {
+        if (h == nullptr)
+        {
+            return -1;
+        }
+        const auto* item = HistoryItemAt(reinterpret_cast<CalcManagerInstance*>(h)->manager.get(), mode, index);
+        if (item == nullptr)
+        {
+            return -1;
+        }
+        CopyToBuffer(ToUtf8(item->historyItemVector.expression), expression, expressionCapacity);
+        CopyToBuffer(ToUtf8(item->historyItemVector.result), result, resultCapacity);
+        return 0;
+    }
+
+    unsigned int calc_manager_history_count_for_mode(CalcManagerHandle h, int mode)
+    {
+        if (h == nullptr)
+        {
+            return 0;
+        }
+        const auto* history = HistoryForMode(reinterpret_cast<CalcManagerInstance*>(h)->manager.get(), mode);
+        return history == nullptr ? 0 : static_cast<unsigned int>(history->size());
+    }
+
+    unsigned int calc_manager_max_history_size(CalcManagerHandle h)
+    {
+        if (h == nullptr)
+        {
+            return 0;
+        }
+        return static_cast<unsigned int>(reinterpret_cast<CalcManagerInstance*>(h)->manager->MaxHistorySize());
+    }
+
+    int calc_manager_remove_history_item(CalcManagerHandle h, unsigned int index)
+    {
+        if (h == nullptr)
+        {
+            return 0;
+        }
+        return reinterpret_cast<CalcManagerInstance*>(h)->manager->RemoveHistoryItem(index) ? 1 : 0;
+    }
+
+    unsigned int calc_manager_history_item_token_count(CalcManagerHandle h, int mode, unsigned int index)
+    {
+        if (h == nullptr)
+        {
+            return 0;
+        }
+        const auto* item = HistoryItemAt(reinterpret_cast<CalcManagerInstance*>(h)->manager.get(), mode, index);
+        if (item == nullptr || item->historyItemVector.spTokens == nullptr)
+        {
+            return 0;
+        }
+        return static_cast<unsigned int>(item->historyItemVector.spTokens->size());
+    }
+
+    int calc_manager_history_item_token(
+        CalcManagerHandle h,
+        int mode,
+        unsigned int item,
+        unsigned int token,
+        char* buffer,
+        int capacity,
+        int* cmdIndex,
+        int* cmdType)
+    {
+        if (h == nullptr)
+        {
+            return -1;
+        }
+        const auto* historyItem =
+            HistoryItemAt(reinterpret_cast<CalcManagerInstance*>(h)->manager.get(), mode, item);
+        if (historyItem == nullptr || historyItem->historyItemVector.spTokens == nullptr
+            || token >= historyItem->historyItemVector.spTokens->size())
+        {
+            return -1;
+        }
+        const auto& pair = (*historyItem->historyItemVector.spTokens)[token];
+        CopyToBuffer(ToUtf8(pair.first), buffer, capacity);
+        if (cmdIndex != nullptr)
+        {
+            *cmdIndex = pair.second;
+        }
+        if (cmdType != nullptr)
+        {
+            *cmdType = CommandTypeFor(pair.second, historyItem->historyItemVector.spCommands);
+        }
+        return 0;
+    }
+
+    unsigned int calc_manager_history_item_commands(
+        CalcManagerHandle h,
+        int mode,
+        unsigned int index,
+        int* out,
+        unsigned int capacity)
+    {
+        std::vector<int> flat;
+        if (h != nullptr)
+        {
+            const auto* item = HistoryItemAt(reinterpret_cast<CalcManagerInstance*>(h)->manager.get(), mode, index);
+            if (item != nullptr && item->historyItemVector.spCommands != nullptr)
+            {
+                std::vector<std::shared_ptr<IExpressionCommand>> commands(
+                    item->historyItemVector.spCommands->begin(), item->historyItemVector.spCommands->end());
+                FlattenCommands(commands, flat);
+            }
+        }
+        if (out != nullptr && capacity > 0)
+        {
+            size_t copy = flat.size() < capacity ? flat.size() : capacity;
+            for (size_t i = 0; i < copy; i++)
+            {
+                out[i] = flat[i];
+            }
+        }
+        return static_cast<unsigned int>(flat.size());
+    }
+
+    unsigned int calc_manager_display_commands(CalcManagerHandle h, int* out, unsigned int capacity)
+    {
+        std::vector<int> flat;
+        if (h != nullptr)
+        {
+            FlattenCommands(reinterpret_cast<CalcManagerInstance*>(h)->manager->GetDisplayCommandsSnapshot(), flat);
+        }
+        if (out != nullptr && capacity > 0)
+        {
+            size_t copy = flat.size() < capacity ? flat.size() : capacity;
+            for (size_t i = 0; i < copy; i++)
+            {
+                out[i] = flat[i];
+            }
+        }
+        return static_cast<unsigned int>(flat.size());
+    }
+
+    unsigned int calc_manager_memorized_count(CalcManagerHandle h)
+    {
+        if (h == nullptr)
+        {
+            return 0;
+        }
+        return static_cast<unsigned int>(reinterpret_cast<CalcManagerInstance*>(h)->forwarder.GetMemorizedCopy().size());
+    }
+
+    int calc_manager_memorized_at(CalcManagerHandle h, unsigned int index, char* buffer, int capacity)
+    {
+        if (h == nullptr)
+        {
+            return -1;
+        }
+        std::vector<std::string> numbers = reinterpret_cast<CalcManagerInstance*>(h)->forwarder.GetMemorizedCopy();
+        if (index >= numbers.size())
+        {
+            return -1;
+        }
+        return CopyToBuffer(numbers[index], buffer, capacity);
     }
 
 } // extern "C"

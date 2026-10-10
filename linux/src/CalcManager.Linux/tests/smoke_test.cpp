@@ -138,7 +138,52 @@ int main()
         return Fail("sin(30)", Pull(h), "0.5");
     }
 
+    // Task 4 ABI: history item texts + replay commands + memorized numbers.
+    if (calc_manager_history_count_for_mode(h, 0) < 1)
+    {
+        std::printf("FAIL: standard history empty\n");
+        return 1;
+    }
+    char expr[256] = {};
+    char result[256] = {};
+    if (calc_manager_history_item(h, 0, 0, expr, sizeof(expr), result, sizeof(result)) != 0)
+    {
+        std::printf("FAIL: history_item(0) failed\n");
+        return 1;
+    }
+    if (std::string(result) != "4")
+    {
+        return Fail("history result", result, "4");
+    }
+    unsigned cmdCount = calc_manager_history_item_commands(h, 0, 0, nullptr, 0);
+    // "2 + 2" replays as exactly [2, +, 2] (= is not a stored command).
+    int cmds[16] = {};
+    if (cmdCount != 3 || calc_manager_history_item_commands(h, 0, 0, cmds, 16) != 3 || cmds[0] != 132
+        || cmds[1] != 93 || cmds[2] != 132)
+    {
+        std::printf("FAIL: history commands != [132,93,132] (count=%u)\n", cmdCount);
+        return 1;
+    }
+    if (calc_manager_history_item(h, 0, 99, expr, sizeof(expr), result, sizeof(result)) == 0)
+    {
+        std::printf("FAIL: history_item(99) must fail\n");
+        return 1;
+    }
+
+    calc_manager_memorize(h);
+    if (calc_manager_memorized_count(h) != 1)
+    {
+        std::printf("FAIL: memorized count != 1\n");
+        return 1;
+    }
+    char mem[256] = {};
+    if (calc_manager_memorized_at(h, 0, mem, sizeof(mem)) < 0)
+    {
+        std::printf("FAIL: memorized_at(0) failed\n");
+        return 1;
+    }
+
     calc_manager_destroy(h);
-    std::printf("PASS: calc_manager_smoke (2+2=4, clear, div0-error, sin30=0.5, history)\n");
+    std::printf("PASS: calc_manager_smoke (2+2=4, clear, div0-error, sin30=0.5, history, history-items, memory)\n");
     return 0;
 }
