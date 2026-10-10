@@ -19,6 +19,7 @@ public sealed partial class MainWindow : Window
 {
     private readonly StandardCalculatorViewModel _vm;
     private readonly DateCalculatorViewModel _dateVM;
+    private UnitConverterViewModel? _converterVM;
 
     public MainWindow()
     {
@@ -73,14 +74,66 @@ public sealed partial class MainWindow : Window
             case "Date":
                 ShowDate();
                 break;
+            case string tag when Enum.TryParse<ViewMode>(tag, out var converterMode)
+                && converterMode != ViewMode.Currency:
+                ShowConverter(converterMode);
+                break;
             default:
                 ShowCalculator(ViewMode.Standard);
                 break;
         }
     }
 
+    private void HideConverter()
+    {
+        if (Find<DockPanel>("ConverterPanel") is { } converter && converter.IsVisible)
+        {
+            _converterVM?.SaveUserPreferences();
+        }
+    }
+
+    private void ShowConverter(ViewMode mode)
+    {
+        _converterVM ??= new UnitConverterViewModel();
+        _converterVM.Dispatcher = AvaloniaDispatcher.Instance;
+        _converterVM.Mode = mode;
+        int categoryId = NavCategoryStates.Serialize(mode);
+        var category = _converterVM.Categories.FirstOrDefault(c => c.GetModelCategoryId() == categoryId);
+        if (category != null)
+        {
+            _converterVM.CurrentCategory = category;
+        }
+        if (Find<DockPanel>("ConverterPanel") is { } panel)
+        {
+            panel.DataContext = _converterVM;
+            panel.IsVisible = true;
+        }
+        if (Find<DockPanel>("CalculatorPanel") is { } calc)
+        {
+            calc.IsVisible = false;
+        }
+        if (Find<StackPanel>("DatePanel") is { } date)
+        {
+            date.IsVisible = false;
+        }
+    }
+
+    private void ConverterValue_GotFocus(object? sender, GotFocusEventArgs e)
+    {
+        if (_converterVM == null || sender is not TextBox box)
+        {
+            return;
+        }
+        if (box.Name == "ConverterValue1" && !_converterVM.Value1Active
+            || box.Name == "ConverterValue2" && !_converterVM.Value2Active)
+        {
+            _converterVM.SwitchActiveCommand.Execute(null);
+        }
+    }
+
     private void ShowCalculator(ViewMode mode)
     {
+        HideConverter();
         _vm.SetCalculatorType(mode);
         if (Find<DockPanel>("CalculatorPanel") is { } calc)
         {
@@ -90,10 +143,15 @@ public sealed partial class MainWindow : Window
         {
             date.IsVisible = false;
         }
+        if (Find<DockPanel>("ConverterPanel") is { } converter)
+        {
+            converter.IsVisible = false;
+        }
     }
 
     private void ShowDate()
     {
+        HideConverter();
         if (Find<DockPanel>("CalculatorPanel") is { } calc)
         {
             calc.IsVisible = false;
@@ -101,6 +159,10 @@ public sealed partial class MainWindow : Window
         if (Find<StackPanel>("DatePanel") is { } date)
         {
             date.IsVisible = true;
+        }
+        if (Find<DockPanel>("ConverterPanel") is { } converter)
+        {
+            converter.IsVisible = false;
         }
     }
 

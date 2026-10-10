@@ -48,6 +48,19 @@
       <ListBoxItem Content="Scientific" Tag="Scientific" />
       <ListBoxItem Content="Programmer" Tag="Programmer" />
       <ListBoxItem Content="Date calculation" Tag="Date" />
+      <ListBoxItem Content="Currency" Tag="Currency" IsEnabled="False" />
+      <ListBoxItem Content="Volume" Tag="Volume" />
+      <ListBoxItem Content="Length" Tag="Length" />
+      <ListBoxItem Content="Weight and Mass" Tag="Weight" />
+      <ListBoxItem Content="Temperature" Tag="Temperature" />
+      <ListBoxItem Content="Energy" Tag="Energy" />
+      <ListBoxItem Content="Area" Tag="Area" />
+      <ListBoxItem Content="Speed" Tag="Speed" />
+      <ListBoxItem Content="Time" Tag="Time" />
+      <ListBoxItem Content="Power" Tag="Power" />
+      <ListBoxItem Content="Data" Tag="Data" />
+      <ListBoxItem Content="Pressure" Tag="Pressure" />
+      <ListBoxItem Content="Angle" Tag="Angle" />
     </ListBox>
 
     <!-- History / Memory dock -->
@@ -287,5 +300,66 @@
         <TextBlock Text="{Binding StrDateResult}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" />
       </StackPanel>
     </StackPanel>
+    <!-- Unit converter -->
+    <DockPanel Name="ConverterPanel" IsVisible="False" LastChildFill="True" Margin="8">
+      <StackPanel DockPanel.Dock="Top" Margin="0,0,0,8">
+        <TextBlock Text="Converting..." Opacity="0.7" IsVisible="{Binding IsCurrencyLoadingVisible}" />
+        <TextBlock Text="{Binding CurrencyTimestamp}" Opacity="0.7" />
+        <TextBlock Text="Check your connection and try again." Foreground="Red"
+                   IsVisible="{Binding CurrencyDataLoadFailed}" />
+        <TextBlock Text="Rates are more than a week old." Foreground="Orange"
+                   IsVisible="{Binding CurrencyDataIsWeekOld}" />
+      </StackPanel>
+      <Grid DockPanel.Dock="Top" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto,*" Margin="0,0,0,8">
+        <ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Units}" SelectedItem="{Binding Unit1, Mode=TwoWay}"
+                  HorizontalAlignment="Stretch" Margin="0,0,4,4">
+          <ComboBox.ItemTemplate>
+            <DataTemplate><TextBlock Text="{Binding Name}" /></DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Button Grid.Row="0" Grid.Column="1" Content="⇄" Command="{Binding SwitchActiveCommand}" Margin="4,0,4,4" />
+        <ComboBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Units}" SelectedItem="{Binding Unit2, Mode=TwoWay}"
+                  HorizontalAlignment="Stretch" Margin="4,0,0,4">
+          <ComboBox.ItemTemplate>
+            <DataTemplate><TextBlock Text="{Binding Name}" /></DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Value1}" FontSize="28" TextAlignment="Right"
+                 IsReadOnly="True" GotFocus="ConverterValue_GotFocus" Name="ConverterValue1" Margin="0,0,4,0" />
+        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Value2}" FontSize="28" TextAlignment="Right"
+                 IsReadOnly="True" GotFocus="ConverterValue_GotFocus" Name="ConverterValue2" Margin="4,0,0,0" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrencySymbol1}" Opacity="0.7"
+                   IsVisible="{Binding CurrencySymbolVisibility}" />
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding CurrencySymbol2}" Opacity="0.7"
+                   IsVisible="{Binding CurrencySymbolVisibility}" />
+      </Grid>
+      <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding SupplementaryResults}" MaxHeight="140" Margin="0,0,0,8">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding Value}" FontWeight="Bold" Margin="0,0,8,0" />
+              <TextBlock Text="{Binding Unit.Name}" Opacity="0.7" />
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <Grid RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,*,*">
+        <Button Grid.Row="0" Grid.Column="0" Content="C" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Clear}" />
+        <Button Grid.Row="0" Grid.Column="1" Content="⌫" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Backspace}" />
+        <Button Grid.Row="0" Grid.Column="2" Content="⇄" Command="{Binding SwitchActiveCommand}" />
+        <Button Grid.Row="1" Grid.Column="0" Content="7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" />
+        <Button Grid.Row="1" Grid.Column="1" Content="8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" />
+        <Button Grid.Row="1" Grid.Column="2" Content="9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" />
+        <Button Grid.Row="2" Grid.Column="0" Content="4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" />
+        <Button Grid.Row="2" Grid.Column="1" Content="5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" />
+        <Button Grid.Row="2" Grid.Column="2" Content="6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" />
+        <Button Grid.Row="3" Grid.Column="0" Content="1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" />
+        <Button Grid.Row="3" Grid.Column="1" Content="2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" />
+        <Button Grid.Row="3" Grid.Column="2" Content="3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" />
+        <Button Grid.Row="4" Grid.Column="0" Content="±" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Negate}" />
+        <Button Grid.Row="4" Grid.Column="1" Content="0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" />
+        <Button Grid.Row="4" Grid.Column="2" Content="." Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Decimal}" />
+      </Grid>
+    </DockPanel>
   </DockPanel>
 </Window>

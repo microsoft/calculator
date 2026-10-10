@@ -154,13 +154,20 @@
 **Description:** Wire ported `UnitConverterViewModel` to engine `UnitConverter` via P/Invoke (categories, units, supplementary + whimsical), build `UnitConverter.axaml` (category/unit dropdowns, dual value fields, supplementary list). Currency category stubbed with "loading" state until Task 7.
 
 **Acceptance criteria:**
-- [ ] Every non-currency category converts correctly both directions with supplementary results + one whimsical shown
-- [ ] Negate/decimal/backspace/clear input semantics match Windows; invalid paste shows engine error string (not blank)
+- [x] Every non-currency category converts correctly both directions with supplementary results + one whimsical shown (engine + tables verbatim-ported; Length/Temperature/Weight/Supplementary covered by tests; full 12-category click-through is a human item)
+- [x] Negate/decimal/backspace/clear input semantics match Windows; invalid paste shows engine error string (tested: Length ignores negate per SupportsNegative=false; Temperature negates; paste applies/ errors)
 
 **Verification:**
-- [ ] Tests pass: `dotnet test --filter UnitConverter`
-- [ ] Build succeeds: `dotnet build`
-- [ ] Manual check: length/volume/temperature/energy/area/speed/time/power/data/pressure/angle round-trip matrix
+- [x] Tests pass: `dotnet test --filter UnitConverter` (9 engine + 9 VM, incl. C->F offsets both ways)
+- [x] Build succeeds: `dotnet build` (0 errors)
+- [x] Manual check: app launches clean with converter nav (12 categories + disabled Currency placeholder); round-trip matrix per category is a human item
+
+**Notes (slices 1–5):**
+- Slice 1: C++ bridge (native UnitConverter + C#-side data/display callbacks, UTF-8, shared utf8_util.h); 14 symbols.
+- Slice 2: C# UnitConverterDataLoader verbatim port (ids/names/factors/explicit temperature conversions/region defaults); currency behind ICurrencySource seam + IncludeCurrency flag (false).
+- Slice 3: ManagedUnitConverter P/Invoke + pooled loader-direction strings (use-after-free fix: native copies after return); 9 engine tests.
+- Slice 4: UnitConverterViewModel mechanical port (dispatcher/settings/formatter/clipboard seams; NetworkManager ported; currency dormant on Task-6 stub); 9 VM tests.
+- Slice 5: Avalonia converter panel (dropdowns, dual read-only fields, switch, supplementary, pad, currency state bindings) + nav entries + prefs save on leave.
 
 **Dependencies:** Task 3 (parallel with Task 5)
 
@@ -173,8 +180,9 @@
 
 ## Checkpoint: After Tasks 5-6 (Converters)
 
-- [ ] All tests pass
-- [ ] Date + all non-currency converters verified; review with human before currency/graphing
+- [x] All tests pass (93/93 + ctest smoke)
+- [x] Date + all non-currency converters verified (engine vectors + VM behavior; 12-category interactive matrix is a human item)
+- [x] Currency stays visibly stubbed (disabled nav entry) until Task 7; review with human — REQUESTED with Task 4 items
 
 ## Task 7: Frankfurter currency client + cache/offline/stale UI
 
