@@ -31,14 +31,16 @@
 **Description:** Reimplement `CalculatorManagerWrapper` / `UnitConverterWrapper` (today C++/CX in `src/CalcManager.Interop`) as C# `LibraryImport` over the Task 1 C ABI, with rooted display-callback delegates (`SetPrimaryDisplay`, expression tokens, history/memory events). Prove with an integration test doing real calculations through the `.so`.
 
 **Acceptance criteria:**
-- [ ] `2+2=4`, `sin(30°)=0.5`-class vectors compute via P/Invoke against real `.so` (no mocks)
-- [ ] History-add and memory-store/recall callbacks fire through the ABI
-- [ ] No `Windows.*` usings in new wrapper code
+- [x] `2+2=4`, `sin(30°)=0.5`-class vectors compute via P/Invoke against real `.so` (no mocks) — plus clear→0, div0 error+recovery
+- [x] History-add and memory-store/recall callbacks fire through the ABI
+- [x] No `Windows.*` usings in new wrapper code (`grep -rn "using Windows" linux/src linux/tests` empty)
 
 **Verification:**
-- [ ] Tests pass: `dotnet test --filter EngineInterop` green
-- [ ] Build succeeds: `dotnet build`
-- [ ] Manual check: `grep -rn "using Windows" linux/src --include="*.cs"` empty
+- [x] Tests pass: `dotnet test --filter EngineInterop` green (6/6)
+- [x] Build succeeds: `dotnet build` (full solution, 0 warnings/errors)
+- [x] Manual check: `grep -rn "using Windows" linux/src --include="*.cs"` empty
+
+**Notes:** `UnitConverterWrapper` P/Invoke deferred to Task 6 together with the additive UnitConverter C ABI section (plan allows additive ABI growth; core stays frozen). Resolver walks up to 8 levels to find `linux/build/calc-manager/libCalcManager.so`, honoring `CALCMANAGER_PATH` override and system paths.
 
 **Dependencies:** Task 1
 

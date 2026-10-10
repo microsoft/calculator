@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/Calculator.Linux/Calculator.Linux.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Calculator.Linux.Tests/Calculator.Linux.Tests.csproj" />
+  </Folder>
 </Solution>
