@@ -1,0 +1,7 @@
+# Linux port build outputs (see SPEC-linux-port.md). Upstream Windows
+# build/ at the repo root is unrelated and stays as-is.
+build/
+bin/
+obj/
+publish/
+TestResults/
