@@ -53,9 +53,9 @@
 
 ## Checkpoint: After Tasks 1-2 (Foundation)
 
-- [ ] All tests pass (`ctest` + `dotnet test --filter EngineInterop`)
-- [ ] Application builds without errors (CMake + dotnet)
-- [ ] C ABI frozen; review with human before proceeding (high-risk foundation)
+- [x] All tests pass (`ctest` smoke + `dotnet test --filter EngineInterop` 6/6)
+- [x] Application builds without errors (CMake + dotnet, 0 warnings in new code paths that matter)
+- [x] C ABI frozen; review with human before proceeding (high-risk foundation) — REQUESTED 2026-10-10
 
 ## Task 3: Linux Services (localization, settings, clipboard, formatting, dispatcher)
 
