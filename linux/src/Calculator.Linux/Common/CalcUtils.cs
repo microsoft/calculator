@@ -10,4 +10,9 @@ internal static class CalcUtils
 {
     public static bool IsLastCharacterTarget(string input, char target) =>
         !string.IsNullOrEmpty(input) && input[input.Length - 1] == target;
+
+    public static DateTimeOffset GetUniversalSystemTime() => DateTimeOffset.UtcNow;
+
+    public static bool IsDateTimeOlderThan(DateTimeOffset dateTime, long durationInTicks) =>
+        (GetUniversalSystemTime() - dateTime).Ticks > durationInTicks;
 }
