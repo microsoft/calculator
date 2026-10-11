@@ -301,6 +301,20 @@ public sealed partial class MainWindow : Window
         Title = "Calculator – " + mode;
         ShowOnly("CalculatorPanel");
         SetCategoryName(mode.ToString());
+
+        // AUD-S2-003: the engine keeps a SEPARATE history list per mode
+        // (m_pStdHistory / m_pSciHistory in CalculatorManager.cpp), and
+        // HistoryViewModel reads whichever list _currentMode selects. Without
+        // this reload _currentMode stays Standard forever, so calculations made
+        // in Scientific mode were computed correctly but never appeared in the
+        // History pane.
+        //
+        // The reference does the same on every calculator-mode change -
+        // src/Calculator/Views/MainPage.xaml.cs:281 and :290.
+        if (mode is ViewMode.Standard or ViewMode.Scientific)
+        {
+            _vm.HistoryVM.ReloadHistory(mode);
+        }
     }
 
     private void ShowDate()

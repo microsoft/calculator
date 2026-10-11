@@ -132,6 +132,31 @@ def license_of(pkgdir, pid):
     return "", ""
 
 
+def vulnerabilities():
+    """Ask the NuGet audit for packages with a known advisory.
+
+    `dotnet list package --vulnerable --include-transitive` returns non-zero
+    when it finds one, so the exit code is the signal. Run from linux/ because
+    the solution path is relative to it.
+    """
+    result = subprocess.run(
+        ["dotnet", "list", "Calculator.Linux.slnx", "package",
+         "--vulnerable", "--include-transitive"],
+        capture_output=True, text=True, cwd=os.path.join(ROOT, "linux"))
+
+    findings = []
+    for line in result.stdout.splitlines():
+        low = line.lower()
+        if any(s in low for s in ("high", "critical", "moderate", "low")) and ">" in line:
+            cells = [c.strip() for c in line.replace(">", " ").split()]
+            cells = [c for c in cells if c]
+            if cells:
+                findings.append((cells[0], cells[1] if len(cells) > 1 else "?", line.strip()))
+
+    no_vuln = "no vulnerable packages" in result.stdout.lower()
+    return findings, no_vuln
+
+
 def main():
     pkgdir = packages_dir()
     print(f"NuGet global packages folder: {pkgdir}\n")
@@ -173,9 +198,25 @@ def main():
         print(f"\nFAIL: {len(problems)} package(s) without a recognised permissive licence:")
         for pid, expr in problems:
             print(f"   {pid}: {expr}")
+        rc = 1
+    else:
+        print("OK: every transitive package declares a permissive licence")
+        rc = 0
+
+    # Known-advisory gate. AUD-S2-002 was found this way: Avalonia.FreeDesktop
+    # 11.3.6 pins Tmds.DBus.Protocol 0.21.2, which carries CVE-2026-39959.
+    findings, no_vuln = vulnerabilities()
+    print()
+    if no_vuln and not findings:
+        print("OK: no known vulnerabilities in the transitive graph")
+        return rc
+    if findings:
+        print(f"FAIL: {len(findings)} package(s) with a known advisory:")
+        for pid, ver, line in findings:
+            print(f"   {pid} {ver}: {line}")
         return 1
-    print("OK: every transitive package declares a permissive licence")
-    return 0
+    print("FAIL: could not determine the vulnerability status - treating as a failure")
+    return 1
 
 
 if __name__ == "__main__":

@@ -306,11 +306,105 @@ lists all nineteen entries. This is what surfaced AUD-S3-006 and AUD-S3-007.
 
 ---
 
+## AUD-S2-002 — Known high-severity CVE in a shipped dependency
+
+**Severity:** S2 (security)
+**Status:** FIXED (this audit)
+
+### Repro
+```
+dotnet list linux/Calculator.Linux.slnx package --vulnerable --include-transitive
+```
+Before the fix:
+
+```
+> Tmds.DBus.Protocol   0.21.2   High   https://github.com/advisories/GHSA-xrw6-gwf8-vvr9
+```
+
+### Expected
+No package with a known advisory in the transitive graph that is redistributed
+in the `.deb`.
+
+### Actual
+`Avalonia.FreeDesktop` 11.3.6 pins `Tmds.DBus.Protocol` 0.21.2, which carries
+**CVE-2026-39959** (CVSS 7.1 High, CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H):
+a peer on the same D-Bus bus can impersonate the owner of a well-known name and
+spoof signals, exhaust file descriptors, or crash the process with a malformed
+message body. There are no known workarounds; the fix is an upgrade.
+
+### Fix
+A direct `PackageReference` to `Tmds.DBus.Protocol` **0.21.3** (the backported
+patch) in `linux/src/Calculator.Linux/Calculator.Linux.csproj`, which overrides
+Avalonia's transitive pin. `dotnet list ... --vulnerable` now reports no
+vulnerable packages for either project.
+
+### Regression gate
+`AUDIT/license_audit.py` now also runs `dotnet list package --vulnerable
+--include-transitive` and exits non-zero on any advisory, so this cannot
+silently regress when a dependency is bumped. Wired into `run_all.sh`.
+
+---
+
+## AUD-S2-003 — Scientific-mode calculations never appeared in History
+
+**Severity:** S2 (missing user-visible functionality)
+**Status:** FIXED (this audit)
+
+### Repro
+1. Switch to Scientific mode.
+2. Compute `1 + 5 + 3 =`. The display shows 9 - correct.
+3. Open the History pane. **It is empty.**
+
+Do the same in Standard mode and the entry appears.
+
+### Expected
+`src/Calculator/Views/MainPage.xaml.cs` calls
+`CalculatorViewModel.HistoryVM.ReloadHistory(newValue)` whenever the calculator
+mode changes (line 281 for Standard, line 290 for Scientific). The reference's
+own `TestHistoryItemClicked` switches to `ModeScientific`, computes, and then
+indexes the history list - so history in scientific mode is expected to work.
+
+### Actual
+`HistoryViewModel._currentMode` ("0 = standard, 1 = scientific") is assigned in
+exactly one place: the first line of `ReloadHistory`. `ReloadHistory` was
+**never called from anywhere in the port** - `grep -rn ReloadHistory src/` found
+only its own definition.
+
+The engine keeps two independent history lists (`m_pStdHistory` and
+`m_pSciHistory` in `CalculatorManager.cpp:28-29`, selected by `m_pHistory` at
+lines 172 and 190). `OnHistoryItemAdded` reads whichever list `_currentMode`
+names, so with `_currentMode` pinned at 0 every scientific-mode calculation was
+computed, stored in the scientific list, and then looked up in the standard list
+- which is empty.
+
+### Root cause
+A ported method was wired up in the view model but never invoked from the mode
+change path.
+
+### Fix
+`StandardCalculatorViewModel.SetCalculatorType` now calls
+`_historyVM.ReloadHistory(targetState)` for Standard and Scientific. It is in
+the view model rather than the window so the reload happens wherever the mode
+actually changes. Programmer is deliberately excluded, matching the reference,
+whose Programmer branch sets `AreHistoryShortcutsEnabled = false` instead of
+reloading.
+
+### Regression test
+`ReferenceHistoryTests` (21 tests) replays the reference's HistoryTests, all 13
+`TestHistoryStandardOrderOfOperations_*` cases verbatim, the three-space history
+expression format (`1   +   8 =`), the 20-item cap with eviction, clear
+behaviour, and the scientific-mode case that failed. It was this suite that
+found the defect.
+
+---
+
 ## Summary of this audit pass
 
 | ID | Sev | Status |
 |---|---|---|
 | AUD-S2-001 Scientific/Programmer keypad incomplete | S2 | FIXED + verified on screen |
+| AUD-S2-002 CVE-2026-39959 in a shipped dependency | S2 | FIXED + gated |
+| AUD-S2-003 Scientific-mode history never recorded | S2 | FIXED |
 | AUD-S3-002 build-deb.sh exits 2 on success | S3 | FIXED |
 | AUD-S3-003 currency mojibake | S3 | FIXED + verified on screen |
 | AUD-S3-004 shortcuts bound to hardware keys, not characters | S3 | FIXED |
@@ -336,6 +430,11 @@ lists all nineteen entries. This is what surfaced AUD-S3-006 and AUD-S3-007.
 | AUD-NOTE-007 | NuGet transitive licence audit: 44 packages, all permissive |
 | AUD-NOTE-008 | Live on-screen pass over every mode |
 
+Two more of my own test bugs were retracted rather than charged to the port:
+history is newest-first so "Newest" had to index 0, not the end; and the
+reference's own `TestHistoryItemAddMaxItems` expects the oldest surviving entry
+after eviction, which is not the entry just computed.
+
 ### Retracted false positives (recorded so they are not re-raised)
 
 | Subject | Why retracted |
@@ -350,6 +449,7 @@ lists all nineteen entries. This is what surfaced AUD-S3-006 and AUD-S3-007.
 
 ### Test totals
 
-- Managed: **525** in the main run + **18** in the isolated locale process = **543**
+- Managed: **549** in the main run + **18** in the isolated locale process = **567**
 - Native: `ctest` green
-- Reference-authored assertions replayed: 158 engine + 114 VM + 9 date + 4 copy/paste
+- Reference-authored assertions replayed: 158 engine + 114 VM + 9 date +
+  4 copy/paste + 61 nav + 21 history

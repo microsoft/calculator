@@ -16,6 +16,15 @@
     <PackageReference Include="Avalonia.Desktop" Version="11.3.6" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.6" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.6" />
+    <!--
+      AUD-S2-002: Avalonia.FreeDesktop 11.3.6 pins Tmds.DBus.Protocol 0.21.2,
+      which carries CVE-2026-39959 / GHSA-xrw6-gwf8-vvr9 (CVSS 7.1 High):
+      a peer on the same D-Bus bus can spoof signals, exhaust file descriptors,
+      or crash the process with a malformed message body. Fixed in 0.21.3.
+      Pin the patched version so it ships in the .deb.
+      https://github.com/advisories/GHSA-xrw6-gwf8-vvr9
+    -->
+    <PackageReference Include="Tmds.DBus.Protocol" Version="0.21.3" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0" />
   </ItemGroup>

@@ -611,6 +611,21 @@ namespace Calculator.Linux.ViewModels
                     SetPrecision(ProgrammerModePrecision);
                     break;
             }
+
+            // AUD-S2-003: the engine keeps a SEPARATE history list per mode
+            // (m_pStdHistory / m_pSciHistory in CalculatorManager.cpp) and
+            // HistoryViewModel reads whichever list _currentMode selects. That
+            // field is only ever assigned by ReloadHistory, so without this call
+            // it stays Standard forever and calculations made in Scientific mode
+            // were computed correctly but never appeared in the History pane.
+            //
+            // The reference reloads on every calculator-mode change -
+            // src/Calculator/Views/MainPage.xaml.cs:281 and :290. Programmer is
+            // deliberately not reloaded there either, so it is not here.
+            if (targetState is ViewMode.Standard or ViewMode.Scientific)
+            {
+                _historyVM.ReloadHistory(targetState);
+            }
         }
 
         public void OnCopyCommand(object parameter)
