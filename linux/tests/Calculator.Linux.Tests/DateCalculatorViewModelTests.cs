@@ -95,6 +95,17 @@ public sealed class DateCalculatorViewModelTests : IDisposable
     }
 
     [Fact]
+    public void Diff_AcrossDstBoundary_CountsCalendarDays()
+    {
+        // US DST 2026 starts Mar 8; UTC-clipped arithmetic is immune.
+        // Sub-week differences render in StrDateDiffResult (not the InDays field).
+        _vm.IsDateDiffMode = true;
+        _vm.FromDate = Day(2026, 3, 7);
+        _vm.ToDate = Day(2026, 3, 9);
+        Assert.Equal("2 days", _vm.StrDateDiffResult);
+    }
+
+    [Fact]
     public void DisplayStrings_UseRealResources_NotFallbackKeys()
     {
         _vm.IsDateDiffMode = true;

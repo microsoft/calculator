@@ -3,6 +3,7 @@
 
 // Task 8, slice 8b: GraphingViewModel (series building, errors, features,
 // settings rebuild, remove).
+using Calculator.Linux.Services.Graphing;
 using Calculator.Linux.ViewModels;
 using LiveChartsCore.SkiaSharpView;
 using Xunit;
@@ -84,5 +85,32 @@ public sealed class GraphingViewModelTests : IDisposable
         equation.Expression = "2*(";
         Assert.False(string.IsNullOrEmpty(equation.Error));
         Assert.Empty(_vm.Series);
+    }
+
+    [Fact]
+    public void Parameters_SubstituteInPlot()
+    {
+        _vm.Parameters["a"] = 2;
+        _vm.Parameters["b"] = 1;
+        var equation = _vm.AddEquation("a*x+b");
+        Assert.Null(equation.Error);
+        var series = Assert.IsType<LineSeries<LiveChartsCore.Defaults.ObservablePoint?>>(_vm.Series[0]);
+        var points = series.Values!.Where(p => p != null).Select(p => p!).ToList();
+        var atTwo = points.Where(p => Math.Abs((p.X ?? double.NaN) - 2) < 0.05).OrderBy(p => Math.Abs((p.X ?? 0) - 2)).FirstOrDefault();
+        Assert.NotNull(atTwo);
+        Assert.True(Math.Abs((atTwo!.Y ?? double.NaN) - 5.0) < 0.06);
+    }
+
+    [Fact]
+    public void DegreesMode_Sin90PeaksAtOne()
+    {
+        _vm.TrigMode = AngleMode.Degrees;
+        _vm.XMin = 0;
+        _vm.XMax = 100;
+        var equation = _vm.AddEquation("sin(x)");
+        Assert.Null(equation.Error);
+        var series = Assert.IsType<LineSeries<LiveChartsCore.Defaults.ObservablePoint?>>(_vm.Series[0]);
+        double maxY = series.Values!.Where(p => p != null).Max(p => p!.Y) ?? double.NaN;
+        Assert.Equal(1.0, maxY, precision: 3);
     }
 }

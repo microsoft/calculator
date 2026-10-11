@@ -168,7 +168,10 @@ namespace Calculator.Linux.ViewModels
             _tokens = new List<(string, int, int)>();
             _commands = new List<int>();
 
-            _engine = new CalcEngine();
+            _engine = new CalcEngine(
+                LinuxLocalization.Current.DecimalSeparatorString,
+                LinuxLocalization.Current.GroupSeparatorString,
+                LinuxLocalization.Current.NumberGrouping);
             _calculatorDisplay = new CalculatorDisplay(_engine);
             _calculatorDisplay.SetCallback(this);
 
