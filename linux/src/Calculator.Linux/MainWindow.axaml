@@ -150,55 +150,80 @@
               <ToggleButton Grid.Column="1" Classes="chip" Content="F-E" Name="FToEToggle"
                             IsChecked="{Binding IsFToEChecked, Mode=TwoWay}" IsEnabled="{Binding IsFToEEnabled}" />
             </Grid>
-            <Grid Grid.Row="1" RowDefinitions="*,*,*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*">
-              <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="0" Content="&#x2329;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.OpenParenthesis}" />
-              <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="1" Content="&#x03C0;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Pi}" />
-              <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="2" Content="e" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Exp}" />
-              <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="3" Content="C" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Clear}" />
-              <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="4" Content="&#x232B;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Backspace}" />
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+  <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*" MinHeight="560">
+    <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="0" Content="(" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.OpenParenthesis}" />
+    <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="1" Content="&#x03C0;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Pi}" />
+    <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="2" Content="e" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Euler}" />
+    <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="3" Content="C" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Clear}" />
+    <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="4" Content="CE" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.ClearEntry}" />
+    <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="0" Content="sin" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sin}" />
+    <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="1" Content="cos" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Cos}" />
+    <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="2" Content="tan" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Tan}" />
+    <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="3" Content="sec" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sec}" />
+    <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="4" Content="csc" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Csc}" />
+    <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="0" Content="sin&#x207B;&#x00B9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvSin}" />
+    <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="1" Content="cos&#x207B;&#x00B9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvCos}" />
+    <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="2" Content="tan&#x207B;&#x00B9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvTan}" />
+    <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="3" Content="sec&#x207B;&#x00B9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvSec}" />
+    <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="4" Content="csc&#x207B;&#x00B9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvCsc}" />
+    <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="0" Content="sinh" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sinh}" />
+    <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="1" Content="cosh" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Cosh}" />
+    <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="2" Content="tanh" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Tanh}" />
+    <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="3" Content="sech" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sech}" />
+    <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="4" Content="csch" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Csch}" />
+    <Button Classes="calc calcOp" Grid.Row="4" Grid.Column="0" Content="sinh&#x207B;&#x00B9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvSinh}" />
+    <Button Classes="calc calcOp" Grid.Row="4" Grid.Column="1" Content="cosh&#x207B;&#x00B9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvCosh}" />
+    <Button Classes="calc calcOp" Grid.Row="4" Grid.Column="2" Content="tanh&#x207B;&#x00B9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvTanh}" />
+    <Button Classes="calc calcOp" Grid.Row="4" Grid.Column="3" Content="sech&#x207B;&#x00B9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvSech}" />
+    <Button Classes="calc calcOp" Grid.Row="4" Grid.Column="4" Content="csch&#x207B;&#x00B9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvCsch}" />
+    <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="0" Content="cot" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Cot}" />
+    <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="1" Content="coth" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Coth}" />
+    <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="2" Content="cot&#x207B;&#x00B9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvCot}" />
+    <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="3" Content="coth&#x207B;&#x00B9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvCoth}" />
+    <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="4" Content="x!" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Factorial}" />
+    <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="0" Content="x&#x00B2;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.XPower2}" />
+    <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="1" Content="x&#x00B3;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Cube}" />
+    <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="2" Content="|x|" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Abs}" />
+    <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="3" Content="&#x221A;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sqrt}" />
+    <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="4" Content="&#x221B;x" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.CubeRoot}" />
+    <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="0" Content="x&#x1D67;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.XPowerY}" />
+    <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="1" Content="&#x02E3;x" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.YRootX}" />
+    <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="2" Content="10&#x1D58;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.TenPowerX}" />
+    <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="3" Content="2&#x1D58;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.TwoPowerX}" />
+    <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="4" Content="e&#x1D58;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.EPowerX}" />
+    <Button Classes="calc calcOp" Grid.Row="8" Grid.Column="0" Content="log" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.LogBase10}" />
+    <Button Classes="calc calcOp" Grid.Row="8" Grid.Column="1" Content="log&#x1D63;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.LogBaseY}" />
+    <Button Classes="calc calcOp" Grid.Row="8" Grid.Column="2" Content="ln" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.LogBaseE}" />
+    <Button Classes="calc calcOp" Grid.Row="8" Grid.Column="3" Content="exp" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Exp}" />
+    <Button Classes="calc calcOp" Grid.Row="8" Grid.Column="4" Content="mod" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Mod}" />
+    <Button Classes="calc calcOp" Grid.Row="9" Grid.Column="0" Content="&#x230A;x&#x230B;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Floor}" />
+    <Button Classes="calc calcOp" Grid.Row="9" Grid.Column="1" Content="&#x2308;x&#x2309;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Ceil}" />
+    <Button Classes="calc calcOp" Grid.Row="9" Grid.Column="2" Content="1/x" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Invert}" />
+    <Button Classes="calc calcOp" Grid.Row="9" Grid.Column="3" Content="&#x221A;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sqrt}" />
+    <Button Classes="calc calcOp" Grid.Row="9" Grid.Column="4" Content="rand" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Rand}" />
+    <Button Classes="calc calcNum" Grid.Row="10" Grid.Column="0" Content="7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" />
+    <Button Classes="calc calcNum" Grid.Row="10" Grid.Column="1" Content="8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" />
+    <Button Classes="calc calcNum" Grid.Row="10" Grid.Column="2" Content="9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" />
+    <Button Classes="calc calcOp" Grid.Row="10" Grid.Column="3" Content="&#x00F7;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Divide}" />
+    <Button Classes="calc calcOp" Grid.Row="10" Grid.Column="4" Content="&#x00D7;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Multiply}" />
+    <Button Classes="calc calcNum" Grid.Row="11" Grid.Column="0" Content="4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" />
+    <Button Classes="calc calcNum" Grid.Row="11" Grid.Column="1" Content="5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" />
+    <Button Classes="calc calcNum" Grid.Row="11" Grid.Column="2" Content="6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" />
+    <Button Classes="calc calcOp" Grid.Row="11" Grid.Column="3" Content="&#x2212;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Subtract}" />
+    <Button Classes="calc calcOp" Grid.Row="11" Grid.Column="4" Content="+" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Add}" />
+    <Button Classes="calc calcNum" Grid.Row="12" Grid.Column="0" Content="1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" />
+    <Button Classes="calc calcNum" Grid.Row="12" Grid.Column="1" Content="2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" />
+    <Button Classes="calc calcNum" Grid.Row="12" Grid.Column="2" Content="3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" />
+    <Button Classes="calc calcNum" Grid.Row="12" Grid.Column="3" Content="&#x00B1;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Negate}" />
+    <Button Classes="calc calcAccent" Grid.Row="12" Grid.Column="4" Content="=" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Equals}" />
+    <Button Classes="calc calcNum" Grid.Row="13" Grid.Column="0" Content="0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" />
+    <Button Classes="calc calcNum" Grid.Row="13" Grid.Column="1" Content="." Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Decimal}" />
 
-              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="0" Content="x&#x00B2;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.XPower2}" />
-              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="1" Content="1/x" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Invert}" />
-              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="2" Content="|x|" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Abs}" />
-              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="3" Content="exp" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Exp}" />
-              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="4" Content="mod" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Mod}" />
-
-              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="0" Content="&#x221A;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sqrt}" />
-              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="1" Content="&#x221B;x" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.CubeRoot}" />
-              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="2" Content="x!" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Factorial}" />
-              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="3" Content=")" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.CloseParenthesis}" />
-              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="4" Content="&#x00F7;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Divide}" />
-
-              <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="0" Content="x&#x1D67;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.XPowerY}" />
-              <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="1" Content="7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" />
-              <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="2" Content="8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" />
-              <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="3" Content="9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" />
-              <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="4" Content="&#x00D7;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Multiply}" />
-
-              <Button Classes="calc calcOp" Grid.Row="4" Grid.Column="0" Content="10&#x1D58;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.TenPowerX}" />
-              <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="1" Content="4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" />
-              <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="2" Content="5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" />
-              <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="3" Content="6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" />
-              <Button Classes="calc calcOp" Grid.Row="4" Grid.Column="4" Content="&#x2212;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Subtract}" />
-
-              <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="0" Content="log" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.LogBase10}" />
-              <Button Classes="calc calcNum" Grid.Row="5" Grid.Column="1" Content="1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" />
-              <Button Classes="calc calcNum" Grid.Row="5" Grid.Column="2" Content="2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" />
-              <Button Classes="calc calcNum" Grid.Row="5" Grid.Column="3" Content="3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" />
-              <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="4" Content="+" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Add}" />
-
-              <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="0" Content="ln" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.LogBaseE}" />
-              <Button Classes="calc calcNum" Grid.Row="6" Grid.Column="1" Content="0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" />
-              <Button Classes="calc calcNum" Grid.Row="6" Grid.Column="2" Content="." Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Decimal}" />
-              <Button Classes="calc calcNum" Grid.Row="6" Grid.Column="3" Content="&#x00B1;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Negate}" />
-              <Button Classes="calc calcAccent" Grid.Row="6" Grid.Column="4" Content="=" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Equals}" />
-
-              <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="0" Content="sin" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sin}" />
-              <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="1" Content="cos" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Cos}" />
-              <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="2" Content="tan" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Tan}" />
-              <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="3" Content="e&#x1D58;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.EPowerX}" />
-              <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="4" Content="10&#x1D58;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.TenPowerX}" />
-            </Grid>
+              <Button Classes="calc calcOp" Grid.Row="14" Grid.Column="0" Content="&#x2192;dms" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.DMS}" />
+              <Button Classes="calc calcOp" Grid.Row="14" Grid.Column="1" Content="&#x2192;deg" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Degrees}" />
+  </Grid>
+</ScrollViewer>
           </Grid>
 
           <!-- Programmer: 7 rows x 6 cols -->
@@ -233,7 +258,7 @@
               </ItemsControl>
             </ScrollViewer>
 
-            <Grid Grid.Row="3" RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*,*">
+            <Grid Grid.Row="3" RowDefinitions="*,*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*,*">
               <Button Classes="calc calcNum" Grid.Row="0" Grid.Column="0" Content="A" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.A}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
               <Button Classes="calc calcNum" Grid.Row="0" Grid.Column="1" Content="B" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.B}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
               <Button Classes="calc calcNum" Grid.Row="0" Grid.Column="2" Content="C" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.C}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
@@ -275,6 +300,13 @@
               <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="3" Content="R&#x21A9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Rsh}" />
               <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="4" Content="R&#x21AA;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.RshL}" />
               <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="5" Content="&#x00B1;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Negate}" />
+
+              <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="0" Content="L&#x21A9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Lsh}" />
+              <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="1" Content="R&#x21AA;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.RshL}" />
+              <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="2" Content="NAND" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nand}" />
+              <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="3" Content="NOR" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nor}" />
+              <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="4" Content="&#x21BA;&#x21BB;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.RolC}" />
+              <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="5" Content="&#x21BC;&#x21BD;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.RorC}" />
             </Grid>
           </Grid>
           </Grid>
