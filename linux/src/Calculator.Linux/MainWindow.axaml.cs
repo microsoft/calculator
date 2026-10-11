@@ -576,6 +576,77 @@ public sealed partial class MainWindow : Window
     private bool IsConverterActive() =>
         Find("ConverterPanel") is { } panel && panel.IsVisible;
 
+
+    // Reference keyboard shortcuts, keyed by the TYPED CHARACTER so they work on
+    // any keyboard layout (AZERTY/QWERTZ/non-Latin). The reference declares
+    // 71 Button shortcuts (src/Calculator/Views/*.xaml + Resources.resw
+    // KeyboardShortcutManager.Character); the single-character ones are listed
+    // here. The port previously mapped hardware Key codes only (OemPlus etc.),
+    // which silently breaks on non-US layouts.
+    // Operators are shared by every mode; they must work in Standard too, not
+    // only where the mode table below applies.
+    private static readonly Dictionary<char, NumbersAndOperatorsEnum> s_commonChars = new()
+    {
+        ['*'] = NumbersAndOperatorsEnum.Multiply,
+        ['+'] = NumbersAndOperatorsEnum.Add,
+        ['-'] = NumbersAndOperatorsEnum.Subtract,
+        ['/'] = NumbersAndOperatorsEnum.Divide,
+        ['('] = NumbersAndOperatorsEnum.OpenParenthesis,
+        [')'] = NumbersAndOperatorsEnum.CloseParenthesis,
+    };
+
+    private static readonly Dictionary<char, NumbersAndOperatorsEnum> s_scientificChars = new()
+    {
+        ['!'] = NumbersAndOperatorsEnum.Factorial,
+        ['#'] = NumbersAndOperatorsEnum.Cube,
+        ['('] = NumbersAndOperatorsEnum.OpenParenthesis,
+        [')'] = NumbersAndOperatorsEnum.CloseParenthesis,
+        ['*'] = NumbersAndOperatorsEnum.Multiply,
+        ['+'] = NumbersAndOperatorsEnum.Add,
+        ['-'] = NumbersAndOperatorsEnum.Subtract,
+        ['/'] = NumbersAndOperatorsEnum.Divide,
+        ['@'] = NumbersAndOperatorsEnum.Sqrt,
+        ['^'] = NumbersAndOperatorsEnum.XPowerY,
+        ['['] = NumbersAndOperatorsEnum.Floor,
+        [']'] = NumbersAndOperatorsEnum.Ceil,
+        ['|'] = NumbersAndOperatorsEnum.Abs,
+        ['%'] = NumbersAndOperatorsEnum.Mod,
+        ['g'] = NumbersAndOperatorsEnum.TwoPowerX,
+        ['i'] = NumbersAndOperatorsEnum.Csc,
+        ['j'] = NumbersAndOperatorsEnum.Cot,
+        ['l'] = NumbersAndOperatorsEnum.LogBase10,
+        ['m'] = NumbersAndOperatorsEnum.DMS,
+        ['n'] = NumbersAndOperatorsEnum.LogBaseE,
+        ['o'] = NumbersAndOperatorsEnum.Cos,
+        ['p'] = NumbersAndOperatorsEnum.Pi,
+        ['q'] = NumbersAndOperatorsEnum.XPower2,
+        ['r'] = NumbersAndOperatorsEnum.Invert,
+        ['s'] = NumbersAndOperatorsEnum.Sin,
+        ['t'] = NumbersAndOperatorsEnum.Tan,
+        ['u'] = NumbersAndOperatorsEnum.Sec,
+        ['x'] = NumbersAndOperatorsEnum.Exp,
+        ['y'] = NumbersAndOperatorsEnum.XPowerY,
+    };
+
+    private static readonly Dictionary<char, NumbersAndOperatorsEnum> s_programmerChars = new()
+    {
+        ['*'] = NumbersAndOperatorsEnum.Multiply,
+        ['+'] = NumbersAndOperatorsEnum.Add,
+        ['-'] = NumbersAndOperatorsEnum.Subtract,
+        ['/'] = NumbersAndOperatorsEnum.Divide,
+        ['%'] = NumbersAndOperatorsEnum.Mod,
+        ['&'] = NumbersAndOperatorsEnum.And,
+        ['|'] = NumbersAndOperatorsEnum.Or,
+        ['~'] = NumbersAndOperatorsEnum.Not,
+        ['^'] = NumbersAndOperatorsEnum.Xor,
+        ['\\'] = NumbersAndOperatorsEnum.Nor,
+        ['.'] = NumbersAndOperatorsEnum.Nand,
+        ['<'] = NumbersAndOperatorsEnum.Lsh,
+        ['>'] = NumbersAndOperatorsEnum.Ror,
+        ['('] = NumbersAndOperatorsEnum.OpenParenthesis,
+        [')'] = NumbersAndOperatorsEnum.CloseParenthesis,
+    };
+
     protected override void OnKeyDown(KeyEventArgs e)
     {
         bool ctrl = e.KeyModifiers.HasFlag(KeyModifiers.Control);
@@ -647,6 +718,31 @@ public sealed partial class MainWindow : Window
         {
             base.OnKeyDown(e);
             return;
+        }
+
+        // Layout-independent first: map the character the user actually typed.
+        string typed = e.KeySymbol == default ? string.Empty : e.KeySymbol.ToString();
+        if (typed.Length == 1)
+        {
+            char c = typed[0];
+            if (s_commonChars.TryGetValue(c, out var commonOp))
+            {
+                _vm.ButtonPressedCommand.Execute(commonOp);
+                e.Handled = true;
+                return;
+            }
+            if (_vm.IsProgrammer && s_programmerChars.TryGetValue(c, out var progOp))
+            {
+                _vm.ButtonPressedCommand.Execute(progOp);
+                e.Handled = true;
+                return;
+            }
+            if (_vm.IsScientific && s_scientificChars.TryGetValue(c, out var sciOp))
+            {
+                _vm.ButtonPressedCommand.Execute(sciOp);
+                e.Handled = true;
+                return;
+            }
         }
 
         bool shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);

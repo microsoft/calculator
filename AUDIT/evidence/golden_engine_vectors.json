@@ -1,0 +1,2351 @@
+{
+ "source": "src/CalculatorUnitTests/CalculatorManagerTest.cpp",
+ "commit": "d125246a4e19842ce1332e6c7839cf0e110027d8",
+ "contract": "TestDriver::Test(expectedPrimary, expectedExpression, commands[], cleanup=true, isScientific=false): Reset(); if isScientific -> ModeScientific; send commands until NULL; assert primary, and expression unless 'N/A'",
+ "count": 158,
+ "unresolved": [],
+ "vectors": [
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    131,
+    132,
+    133,
+    84,
+    134,
+    135,
+    136,
+    0
+   ],
+   "expectedPrimary": "123.456",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    93,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "0 + ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    110,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "√(0)",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    132,
+    93,
+    133,
+    121,
+    134,
+    121,
+    0
+   ],
+   "expectedPrimary": "7",
+   "expectedExpression": "4 + 3=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    134,
+    121,
+    0
+   ],
+   "expectedPrimary": "4",
+   "expectedExpression": "4=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    132,
+    135,
+    136,
+    110,
+    110,
+    110,
+    0
+   ],
+   "expectedPrimary": "2",
+   "expectedExpression": "√(√(√(256)))",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    133,
+    94,
+    136,
+    121,
+    92,
+    133,
+    121,
+    0
+   ],
+   "expectedPrimary": "-9",
+   "expectedExpression": "-3 × 3=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    139,
+    92,
+    136,
+    94,
+    82,
+    138,
+    121,
+    0
+   ],
+   "expectedPrimary": "46",
+   "expectedExpression": "54 - 8=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    136,
+    92,
+    136,
+    118,
+    121,
+    0
+   ],
+   "expectedPrimary": "0.36",
+   "expectedExpression": "6 × 0.06=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    135,
+    130,
+    93,
+    132,
+    130,
+    118,
+    121,
+    0
+   ],
+   "expectedPrimary": "60",
+   "expectedExpression": "50 + 10=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    134,
+    93,
+    121,
+    0
+   ],
+   "expectedPrimary": "8",
+   "expectedExpression": "4 + 4=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    135,
+    93,
+    92,
+    133,
+    0
+   ],
+   "expectedPrimary": "3",
+   "expectedExpression": "5 × ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    131,
+    127,
+    80,
+    139,
+    139,
+    139,
+    139,
+    91,
+    131,
+    130,
+    121,
+    0
+   ],
+   "expectedPrimary": "Overflow",
+   "expectedExpression": "1.e-9999 ÷ ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    135,
+    130,
+    93,
+    132,
+    130,
+    118,
+    121,
+    0
+   ],
+   "expectedPrimary": "60",
+   "expectedExpression": "50 + 10=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    130,
+    91,
+    130,
+    121,
+    0
+   ],
+   "expectedPrimary": "Result is undefined",
+   "expectedExpression": "0 ÷ ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    131,
+    91,
+    130,
+    121,
+    0
+   ],
+   "expectedPrimary": "Cannot divide by zero",
+   "expectedExpression": "1 ÷ ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    131,
+    132,
+    93,
+    135,
+    82,
+    132,
+    93,
+    0
+   ],
+   "expectedPrimary": "14",
+   "expectedExpression": "14 + ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    131,
+    130,
+    130,
+    80,
+    114,
+    0
+   ],
+   "expectedPrimary": "-0.01",
+   "expectedExpression": "1/(-100)",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    131,
+    132,
+    133,
+    83,
+    83,
+    0
+   ],
+   "expectedPrimary": "1",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    131,
+    132,
+    133,
+    83,
+    83,
+    83,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    134,
+    110,
+    94,
+    132,
+    93,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "0 + ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    131,
+    130,
+    132,
+    134,
+    110,
+    94,
+    133,
+    132,
+    93,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "0 + ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandard",
+   "commands": [
+    132,
+    84,
+    132,
+    135,
+    110,
+    94,
+    131,
+    84,
+    135,
+    121,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "√(2.25) - 1.5=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    131,
+    132,
+    133,
+    84,
+    134,
+    135,
+    136,
+    0
+   ],
+   "expectedPrimary": "123.456",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    93,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "0 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    110,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "√(0)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    131,
+    93,
+    130,
+    92,
+    132,
+    121,
+    0
+   ],
+   "expectedPrimary": "1",
+   "expectedExpression": "1 + 0 × 2=",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    134,
+    121,
+    0
+   ],
+   "expectedPrimary": "4",
+   "expectedExpression": "4=",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    132,
+    135,
+    136,
+    110,
+    110,
+    110,
+    0
+   ],
+   "expectedPrimary": "2",
+   "expectedExpression": "√(√(√(256)))",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    133,
+    94,
+    136,
+    121,
+    92,
+    133,
+    93,
+    0
+   ],
+   "expectedPrimary": "-9",
+   "expectedExpression": "-3 × 3 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    139,
+    92,
+    136,
+    94,
+    82,
+    138,
+    92,
+    132,
+    93,
+    0
+   ],
+   "expectedPrimary": "38",
+   "expectedExpression": "9 × 6 - 8 × 2 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    136,
+    92,
+    136,
+    80,
+    110,
+    0
+   ],
+   "expectedPrimary": "Invalid input",
+   "expectedExpression": "6 × √(-6)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    135,
+    130,
+    93,
+    132,
+    130,
+    114,
+    94,
+    0
+   ],
+   "expectedPrimary": "50.05",
+   "expectedExpression": "50 + 1/(20) - ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    134,
+    93,
+    121,
+    0
+   ],
+   "expectedPrimary": "8",
+   "expectedExpression": "4 + 4=",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    135,
+    93,
+    92,
+    133,
+    0
+   ],
+   "expectedPrimary": "3",
+   "expectedExpression": "5 × ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    131,
+    127,
+    80,
+    139,
+    139,
+    139,
+    139,
+    91,
+    131,
+    130,
+    121,
+    0
+   ],
+   "expectedPrimary": "Overflow",
+   "expectedExpression": "1.e-9999 ÷ ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    135,
+    130,
+    93,
+    132,
+    130,
+    118,
+    121,
+    0
+   ],
+   "expectedPrimary": "60",
+   "expectedExpression": "50 + 10=",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    130,
+    91,
+    130,
+    121,
+    0
+   ],
+   "expectedPrimary": "Result is undefined",
+   "expectedExpression": "0 ÷ ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    131,
+    91,
+    130,
+    121,
+    0
+   ],
+   "expectedPrimary": "Cannot divide by zero",
+   "expectedExpression": "1 ÷ ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    131,
+    132,
+    93,
+    135,
+    82,
+    132,
+    93,
+    0
+   ],
+   "expectedPrimary": "14",
+   "expectedExpression": "12 + 2 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    131,
+    130,
+    130,
+    80,
+    114,
+    0
+   ],
+   "expectedPrimary": "-0.01",
+   "expectedExpression": "1/(-100)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    131,
+    132,
+    133,
+    83,
+    83,
+    0
+   ],
+   "expectedPrimary": "1",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    131,
+    132,
+    133,
+    83,
+    83,
+    83,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    134,
+    110,
+    94,
+    132,
+    93,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "√(4) - 2 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    130,
+    110,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "√(0)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    131,
+    130,
+    132,
+    134,
+    110,
+    94,
+    133,
+    132,
+    93,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "√(1024) - 32 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    132,
+    135,
+    137,
+    110,
+    110,
+    110,
+    0
+   ],
+   "expectedPrimary": "2.0009748976330773374220277351385",
+   "expectedExpression": "√(√(√(257)))",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    132,
+    84,
+    132,
+    135,
+    110,
+    94,
+    131,
+    84,
+    135,
+    121,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "√(2.25) - 1.5=",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific",
+   "commands": [
+    128,
+    132,
+    84,
+    132,
+    135,
+    110,
+    91,
+    131,
+    84,
+    135,
+    129,
+    109,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "log(√(2.25) ÷ 1.5)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    132,
+    111,
+    0
+   ],
+   "expectedPrimary": "144",
+   "expectedExpression": "sqr(12)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    135,
+    113,
+    0
+   ],
+   "expectedPrimary": "120",
+   "expectedExpression": "fact(5)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    135,
+    97,
+    132,
+    93,
+    0
+   ],
+   "expectedPrimary": "25",
+   "expectedExpression": "5 ^ 2 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    138,
+    96,
+    133,
+    92,
+    0
+   ],
+   "expectedPrimary": "2",
+   "expectedExpression": "8 yroot 3 × ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    138,
+    112,
+    0
+   ],
+   "expectedPrimary": "512",
+   "expectedExpression": "cube(8)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    138,
+    112,
+    116,
+    0
+   ],
+   "expectedPrimary": "8",
+   "expectedExpression": "cuberoot(cube(8))",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    130,
+    109,
+    0
+   ],
+   "expectedPrimary": "1",
+   "expectedExpression": "log(10)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    135,
+    117,
+    0
+   ],
+   "expectedPrimary": "100,000",
+   "expectedExpression": "10^(5)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    130,
+    108,
+    0
+   ],
+   "expectedPrimary": "2.3025850929940456840179914546844",
+   "expectedExpression": "ln(10)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    102,
+    0
+   ],
+   "expectedPrimary": "0.01745240643728351281941897851632",
+   "expectedExpression": "sin₀(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    103,
+    0
+   ],
+   "expectedPrimary": "0.99984769515639123915701155881391",
+   "expectedExpression": "cos₀(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    104,
+    0
+   ],
+   "expectedPrimary": "0.01745506492821758576512889521973",
+   "expectedExpression": "tan₀(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    202,
+    0
+   ],
+   "expectedPrimary": "90",
+   "expectedExpression": "sin₀⁻¹(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    203,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "cos₀⁻¹(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    204,
+    0
+   ],
+   "expectedPrimary": "45",
+   "expectedExpression": "tan₀⁻¹(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    132,
+    205,
+    0
+   ],
+   "expectedPrimary": "7.389056098930650227230427460575",
+   "expectedExpression": "e^(2)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    135,
+    97,
+    130,
+    93,
+    0
+   ],
+   "expectedPrimary": "1",
+   "expectedExpression": "5 ^ 0 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    130,
+    97,
+    130,
+    93,
+    0
+   ],
+   "expectedPrimary": "1",
+   "expectedExpression": "0 ^ 0 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    132,
+    137,
+    80,
+    96,
+    133,
+    93,
+    0
+   ],
+   "expectedPrimary": "-3",
+   "expectedExpression": "-27 yroot 3 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    138,
+    97,
+    128,
+    132,
+    91,
+    133,
+    129,
+    94,
+    134,
+    93,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "8 ^ (2 ÷ 3) - 4 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    134,
+    97,
+    128,
+    133,
+    91,
+    132,
+    129,
+    94,
+    138,
+    93,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "4 ^ (3 ÷ 2) - 8 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    130,
+    97,
+    131,
+    84,
+    132,
+    133,
+    134,
+    135,
+    136,
+    93,
+    0
+   ],
+   "expectedPrimary": "17.161687912241792074207286679393",
+   "expectedExpression": "10 ^ 1.23456 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    400,
+    0
+   ],
+   "expectedPrimary": "1.0001523280439076654284264342126",
+   "expectedExpression": "sec₀(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    402,
+    0
+   ],
+   "expectedPrimary": "57.298688498550183476612683735174",
+   "expectedExpression": "csc₀(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    404,
+    0
+   ],
+   "expectedPrimary": "57.289961630759424687278147537113",
+   "expectedExpression": "cot₀(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    401,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "sec₀⁻¹(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    403,
+    0
+   ],
+   "expectedPrimary": "90",
+   "expectedExpression": "csc₀⁻¹(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    405,
+    0
+   ],
+   "expectedPrimary": "45",
+   "expectedExpression": "cot₀⁻¹(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    406,
+    0
+   ],
+   "expectedPrimary": "0.64805427366388539957497735322615",
+   "expectedExpression": "sech(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    408,
+    0
+   ],
+   "expectedPrimary": "0.85091812823932154513384276328718",
+   "expectedExpression": "csch(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    410,
+    0
+   ],
+   "expectedPrimary": "1.3130352854993313036361612469308",
+   "expectedExpression": "coth(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    407,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "sech⁻¹(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    131,
+    409,
+    0
+   ],
+   "expectedPrimary": "0.88137358701954302523260932497979",
+   "expectedExpression": "csch⁻¹(1)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    132,
+    411,
+    0
+   ],
+   "expectedPrimary": "0.54930614433405484569762261846126",
+   "expectedExpression": "coth⁻¹(2)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    138,
+    412,
+    0
+   ],
+   "expectedPrimary": "256",
+   "expectedExpression": "2^(8)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    600,
+    415,
+    0
+   ],
+   "expectedPrimary": "1",
+   "expectedExpression": null,
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    600,
+    414,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": null,
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    600,
+    80,
+    415,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": null,
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    600,
+    80,
+    414,
+    0
+   ],
+   "expectedPrimary": "-1",
+   "expectedExpression": null,
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    133,
+    84,
+    138,
+    414,
+    0
+   ],
+   "expectedPrimary": "3",
+   "expectedExpression": "floor(3.8)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    133,
+    84,
+    138,
+    415,
+    0
+   ],
+   "expectedPrimary": "4",
+   "expectedExpression": "ceil(3.8)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientific2",
+   "commands": [
+    135,
+    500,
+    133,
+    93,
+    0
+   ],
+   "expectedPrimary": "1.4649735207179271671970404076786",
+   "expectedExpression": "5 log base 3 + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificParenthesis",
+   "commands": [
+    131,
+    93,
+    128,
+    93,
+    133,
+    129,
+    0
+   ],
+   "expectedPrimary": "3",
+   "expectedExpression": "1 + (0 + 3)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificParenthesis",
+   "commands": [
+    128,
+    128,
+    131,
+    132,
+    129,
+    0
+   ],
+   "expectedPrimary": "12",
+   "expectedExpression": "((12)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificParenthesis",
+   "commands": [
+    131,
+    132,
+    129,
+    129,
+    128,
+    0
+   ],
+   "expectedPrimary": "12",
+   "expectedExpression": "12 × (",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificParenthesis",
+   "commands": [
+    132,
+    128,
+    132,
+    129,
+    93,
+    0
+   ],
+   "expectedPrimary": "4",
+   "expectedExpression": "2 × (2) + ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificParenthesis",
+   "commands": [
+    132,
+    128,
+    132,
+    129,
+    93,
+    121,
+    0
+   ],
+   "expectedPrimary": "8",
+   "expectedExpression": "2 × (2) + 4=",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificParenthesis",
+   "commands": [
+    128,
+    138,
+    129,
+    132,
+    121,
+    0
+   ],
+   "expectedPrimary": "16",
+   "expectedExpression": "(8) × 2=",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificParenthesis",
+   "commands": [
+    128,
+    137,
+    92,
+    132,
+    129,
+    132,
+    121,
+    0
+   ],
+   "expectedPrimary": "28",
+   "expectedExpression": "(7 × 2) × 2=",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificParenthesis",
+   "commands": [
+    128,
+    137,
+    92,
+    132,
+    129,
+    132,
+    121,
+    128,
+    131,
+    134,
+    129,
+    132,
+    121,
+    0
+   ],
+   "expectedPrimary": "28",
+   "expectedExpression": "(14) × 2=",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificParenthesis",
+   "commands": [
+    128,
+    138,
+    129,
+    130,
+    84,
+    135,
+    121,
+    0
+   ],
+   "expectedPrimary": "4",
+   "expectedExpression": "(8) × 0.5=",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificParenthesis",
+   "commands": [
+    128,
+    138,
+    129,
+    84,
+    135,
+    121,
+    0
+   ],
+   "expectedPrimary": "4",
+   "expectedExpression": "(8) × 0.5=",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificError",
+   "commands": [
+    131,
+    91,
+    130,
+    121,
+    0
+   ],
+   "expectedPrimary": "Cannot divide by zero",
+   "expectedExpression": "1 ÷ ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificError",
+   "commands": [
+    132,
+    80,
+    109,
+    0
+   ],
+   "expectedPrimary": "Invalid input",
+   "expectedExpression": "log(-2)",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificError",
+   "commands": [
+    130,
+    91,
+    130,
+    121,
+    0
+   ],
+   "expectedPrimary": "Result is undefined",
+   "expectedExpression": "0 ÷ ",
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificError",
+   "commands": [
+    131,
+    91,
+    130,
+    121,
+    0
+   ],
+   "expectedPrimary": "Cannot divide by zero",
+   "expectedExpression": "1 ÷ ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificError",
+   "commands": [
+    132,
+    80,
+    109,
+    0
+   ],
+   "expectedPrimary": "Invalid input",
+   "expectedExpression": "log(-2)",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificError",
+   "commands": [
+    130,
+    91,
+    130,
+    121,
+    0
+   ],
+   "expectedPrimary": "Result is undefined",
+   "expectedExpression": "0 ÷ ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificModeChange",
+   "commands": [
+    322,
+    120,
+    102,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": null,
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificModeChange",
+   "commands": [
+    322,
+    120,
+    103,
+    0
+   ],
+   "expectedPrimary": "-1",
+   "expectedExpression": null,
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificModeChange",
+   "commands": [
+    322,
+    120,
+    104,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": null,
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificModeChange",
+   "commands": [
+    323,
+    134,
+    130,
+    130,
+    102,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": null,
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificModeChange",
+   "commands": [
+    323,
+    134,
+    130,
+    130,
+    103,
+    0
+   ],
+   "expectedPrimary": "1",
+   "expectedExpression": null,
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestScientificModeChange",
+   "commands": [
+    323,
+    134,
+    130,
+    130,
+    104,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": null,
+   "cleanup": true,
+   "scientific": true
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestModeChange",
+   "commands": [
+    131,
+    132,
+    133,
+    0
+   ],
+   "expectedPrimary": "123",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestModeChange",
+   "commands": [
+    201,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestModeChange",
+   "commands": [
+    131,
+    132,
+    133,
+    0
+   ],
+   "expectedPrimary": "123",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestModeChange",
+   "commands": [
+    209,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestModeChange",
+   "commands": [
+    131,
+    132,
+    133,
+    0
+   ],
+   "expectedPrimary": "123",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestModeChange",
+   "commands": [
+    201,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestModeChange",
+   "commands": [
+    136,
+    137,
+    93,
+    0
+   ],
+   "expectedPrimary": "67",
+   "expectedExpression": "67 + ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestModeChange",
+   "commands": [
+    200,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    135,
+    133,
+    501,
+    138,
+    133,
+    86,
+    0
+   ],
+   "expectedPrimary": "-18",
+   "expectedExpression": "53 NAND 83 AND ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    135,
+    133,
+    502,
+    138,
+    133,
+    86,
+    0
+   ],
+   "expectedPrimary": "-120",
+   "expectedExpression": "53 NOR 83 AND ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    135,
+    89,
+    131,
+    86,
+    0
+   ],
+   "expectedPrimary": "10",
+   "expectedExpression": "5 Lsh 1 AND ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    135,
+    505,
+    131,
+    86,
+    0
+   ],
+   "expectedPrimary": "2",
+   "expectedExpression": "5 Rsh 1 AND ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    763,
+    90,
+    135,
+    136,
+    86,
+    0
+   ],
+   "expectedPrimary": "-128",
+   "expectedExpression": "-9223372036854775808 Rsh 56 AND ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    131,
+    99,
+    0
+   ],
+   "expectedPrimary": "2",
+   "expectedExpression": "RoL(1)",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    131,
+    100,
+    0
+   ],
+   "expectedPrimary": "-9,223,372,036,854,775,808",
+   "expectedExpression": "RoR(1)",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    131,
+    417,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "RoR(1)",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    131,
+    417,
+    417,
+    0
+   ],
+   "expectedPrimary": "-9,223,372,036,854,775,808",
+   "expectedExpression": "RoR(RoR(1))",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    314,
+    134,
+    132,
+    139,
+    134,
+    139,
+    136,
+    137,
+    132,
+    139,
+    136,
+    91,
+    132,
+    135,
+    135,
+    121,
+    0
+   ],
+   "expectedPrimary": "16,843,009",
+   "expectedExpression": "4294967296 ÷ 255=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    314,
+    134,
+    132,
+    139,
+    134,
+    139,
+    136,
+    137,
+    133,
+    130,
+    133,
+    91,
+    132,
+    135,
+    135,
+    121,
+    0
+   ],
+   "expectedPrimary": "16,843,009",
+   "expectedExpression": "4294967303 ÷ 255=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    314,
+    131,
+    130,
+    130,
+    130,
+    130,
+    130,
+    130,
+    130,
+    130,
+    130,
+    91,
+    136,
+    134,
+    134,
+    138,
+    137,
+    121,
+    0
+   ],
+   "expectedPrimary": "15,507",
+   "expectedExpression": "1000000000 ÷ 64487=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestProgrammer",
+   "commands": [
+    209,
+    314,
+    131,
+    130,
+    130,
+    130,
+    130,
+    130,
+    130,
+    130,
+    130,
+    130,
+    91,
+    136,
+    134,
+    134,
+    138,
+    138,
+    121,
+    0
+   ],
+   "expectedPrimary": "15,506",
+   "expectedExpression": "1000000000 ÷ 64488=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    131,
+    114,
+    0
+   ],
+   "expectedPrimary": "1",
+   "expectedExpression": "1/(1)",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    134,
+    110,
+    0
+   ],
+   "expectedPrimary": "2",
+   "expectedExpression": "√(4)",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    131,
+    93,
+    134,
+    110,
+    0
+   ],
+   "expectedPrimary": "2",
+   "expectedExpression": "1 + √(4)",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    131,
+    93,
+    134,
+    110,
+    94,
+    0
+   ],
+   "expectedPrimary": "3",
+   "expectedExpression": "3 - ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    132,
+    92,
+    134,
+    114,
+    0
+   ],
+   "expectedPrimary": "0.25",
+   "expectedExpression": "2 × 1/(4)",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    135,
+    91,
+    136,
+    118,
+    0
+   ],
+   "expectedPrimary": "0.06",
+   "expectedExpression": "5 ÷ 0.06",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    134,
+    110,
+    94,
+    0
+   ],
+   "expectedPrimary": "2",
+   "expectedExpression": "√(4) - ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    137,
+    111,
+    91,
+    0
+   ],
+   "expectedPrimary": "49",
+   "expectedExpression": "sqr(7) ÷ ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    138,
+    111,
+    110,
+    0
+   ],
+   "expectedPrimary": "8",
+   "expectedExpression": "√(sqr(8))",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    131,
+    130,
+    93,
+    132,
+    94,
+    0
+   ],
+   "expectedPrimary": "12",
+   "expectedExpression": "12 - ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    133,
+    92,
+    134,
+    91,
+    0
+   ],
+   "expectedPrimary": "12",
+   "expectedExpression": "12 ÷ ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    136,
+    91,
+    133,
+    94,
+    93,
+    0
+   ],
+   "expectedPrimary": "2",
+   "expectedExpression": "2 + ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    137,
+    94,
+    134,
+    91,
+    92,
+    0
+   ],
+   "expectedPrimary": "3",
+   "expectedExpression": "3 × ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    138,
+    92,
+    132,
+    93,
+    110,
+    0
+   ],
+   "expectedPrimary": "4",
+   "expectedExpression": "16 + √(16)",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    139,
+    93,
+    130,
+    92,
+    80,
+    0
+   ],
+   "expectedPrimary": "-9",
+   "expectedExpression": "9 × negate(9)",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    139,
+    80,
+    130,
+    93,
+    92,
+    0
+   ],
+   "expectedPrimary": "-90",
+   "expectedExpression": "-90 × ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    131,
+    93,
+    132,
+    121,
+    0
+   ],
+   "expectedPrimary": "3",
+   "expectedExpression": "1 + 2=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    132,
+    130,
+    92,
+    130,
+    132,
+    121,
+    0
+   ],
+   "expectedPrimary": "40",
+   "expectedExpression": "20 × 2=",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    131,
+    93,
+    132,
+    93,
+    83,
+    0
+   ],
+   "expectedPrimary": "3",
+   "expectedExpression": "3 + ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    131,
+    93,
+    132,
+    93,
+    81,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    131,
+    93,
+    132,
+    93,
+    82,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "3 + ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    131,
+    93,
+    132,
+    81,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    131,
+    93,
+    132,
+    82,
+    0
+   ],
+   "expectedPrimary": "0",
+   "expectedExpression": "1 + ",
+   "cleanup": true,
+   "scientific": false
+  },
+  {
+   "origin": "src/CalculatorUnitTests/CalculatorManagerTest.cpp::CalculatorManagerTestStandardOrderOfOperations",
+   "commands": [
+    131,
+    92,
+    132,
+    92,
+    133,
+    92,
+    134,
+    92,
+    135,
+    92,
+    0
+   ],
+   "expectedPrimary": "120",
+   "expectedExpression": "120 × ",
+   "cleanup": true,
+   "scientific": false
+  }
+ ]
+}
