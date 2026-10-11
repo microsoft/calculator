@@ -49,11 +49,12 @@ public sealed class CurrencyDataLoaderTests : IDisposable
 
     private static async Task WaitLoaded(CurrencyDataLoader loader)
     {
-        var entered = new TaskCompletionSource();
-        loader.LoadGateEnteredForTest = async () => { await Task.Yield(); entered.TrySetResult(); };
+        // Gate on the exited hook (fires in LoadData's finally, strictly after
+        // Notify): true completion signal, immune to flag-polling races.
+        var exited = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        loader.LoadGateExitedForTest = () => exited.TrySetResult();
         loader.LoadData();
-        await entered.Task.WaitAsync(TimeSpan.FromSeconds(10));
-        SpinWait.SpinUntil(() => loader.LoadFinished(), TimeSpan.FromSeconds(10));
+        await exited.Task.WaitAsync(TimeSpan.FromSeconds(30));
         Assert.True(loader.LoadFinished());
     }
 

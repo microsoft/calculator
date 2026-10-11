@@ -123,7 +123,7 @@ namespace Calculator.Linux.ViewModels
         private char _decimalSeparator;
         private bool _isInputBlocked;
         private bool _isCategoryChanging;
-        private bool _isCurrencyDataLoaded;
+        private volatile bool _isCurrencyDataLoaded;
 
         // Observable properties backing fields
         private ObservableCollection<Category> _categories;

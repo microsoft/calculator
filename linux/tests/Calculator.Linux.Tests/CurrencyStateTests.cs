@@ -46,10 +46,12 @@ public sealed class CurrencyStateTests : IDisposable
         return client;
     }
 
-    private static void WaitLoaded(CurrencyDataLoader loader)
+    private static async Task WaitLoaded(CurrencyDataLoader loader)
     {
+        var exited = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        loader.LoadGateExitedForTest = () => exited.TrySetResult();
         loader.LoadData();
-        SpinWait.SpinUntil(() => loader.LoadFinished(), TimeSpan.FromSeconds(10));
+        await exited.Task.WaitAsync(TimeSpan.FromSeconds(30));
         Assert.True(loader.LoadFinished());
     }
 
@@ -57,7 +59,7 @@ public sealed class CurrencyStateTests : IDisposable
     public async Task WeekOldCache_FlagsStale()
     {
         var loader = NewLoader("a", MockClient());
-        WaitLoaded(loader);
+        await WaitLoaded(loader);
         Assert.True(loader.LoadedFromWeb());
 
         // Backdate the cache timestamp 8 days; kill the web; reload.
@@ -67,7 +69,7 @@ public sealed class CurrencyStateTests : IDisposable
         FrankfurterCurrencyClient.ForceWebFailure = true;
         var loader2 = NewLoader("a", MockClient());
         loader2.SetViewModelCallback(recorder);
-        WaitLoaded(loader2);
+        await WaitLoaded(loader2);
 
         Assert.True(loader2.LoadedFromCache());
         await recorder.StampSeen.Task.WaitAsync(TimeSpan.FromSeconds(10));
@@ -76,25 +78,25 @@ public sealed class CurrencyStateTests : IDisposable
     }
 
     [Fact]
-    public void StaleCache_ReloadsFromWeb()
+    public async Task StaleCache_ReloadsFromWeb()
     {
         var loader = NewLoader("b", MockClient());
-        WaitLoaded(loader);
+        await WaitLoaded(loader);
 
         var settings = new LinuxSettings(Path.Combine(_root, "b", "settings"));
         settings.Set("CURRENCY_CONVERTER_TIMESTAMP", DateTimeOffset.UtcNow.AddDays(-2));
         var loader2 = NewLoader("b", MockClient());
-        WaitLoaded(loader2);
+        await WaitLoaded(loader2);
 
         Assert.True(loader2.LoadedFromWeb());
     }
 
     [Fact]
-    public void NoCacheWebFailure_FailsClosed()
+    public async Task NoCacheWebFailure_FailsClosed()
     {
         FrankfurterCurrencyClient.ForceWebFailure = true;
         var loader = NewLoader("c", MockClient());
-        WaitLoaded(loader);
+        await WaitLoaded(loader);
 
         Assert.False(loader.LoadedFromWeb());
         Assert.False(loader.LoadedFromCache());
@@ -102,7 +104,7 @@ public sealed class CurrencyStateTests : IDisposable
     }
 
     [Fact]
-    public void ViewModel_JpyShowsNoDecimals_JodShowsThree()
+    public async Task ViewModel_JpyShowsNoDecimals_JodShowsThree()
     {
         var vmSettings = new LinuxSettings(Path.Combine(_root, "vm", "settings"));
         var vm = new UnitConverterViewModel(vmSettings, NewLoader("vm", MockClient()));
@@ -127,7 +129,7 @@ public sealed class CurrencyStateTests : IDisposable
     }
 
     [Fact]
-    public void ViewModel_FailedLoad_SurfacesFlag()
+    public async Task ViewModel_FailedLoad_SurfacesFlag()
     {
         FrankfurterCurrencyClient.ForceWebFailure = true;
         var vm = new UnitConverterViewModel(

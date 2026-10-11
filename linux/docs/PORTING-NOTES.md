@@ -82,6 +82,10 @@ Additionally fixed during the port (behavior-preserving robustness):
   polling would otherwise observe empty data — found via a long debug hunt).
 - Loader-direction P/Invoke strings are pooled (native copies **after** the
   callback returns; freeing inside the callback is use-after-free).
+- Completion status is a volatile int with release/acquire pairing, and tests
+  gate on the exited hook (true completion) rather than polling the flag —
+  SpinUntil-polling a plain field flakes under JIT tiering (~1/6 runs hung
+  the full 10s spin while the loader had completed).
 - Engine locale separators (decimal/grouping) are passed at engine creation
   from the UI locale (German decimal comma verified); upstream resolves them
   per-call via delegate.

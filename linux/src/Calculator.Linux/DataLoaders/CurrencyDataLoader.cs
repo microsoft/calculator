@@ -88,7 +88,10 @@ namespace Calculator.Linux.DataLoaders
         private string _timestampFormat;
         private DateTimeOffset _cacheTimestamp;
 
-        private CurrencyLoadStatus _loadStatus;
+        // Volatile int (not enum: Volatile<T> is reference-typed): release/acquire
+        // pairing so LoadFinished() polling never observes a stale flag while
+        // units/timestamps published before it are still in flight.
+        private volatile int _loadStatusRaw;
 
         private NetworkAccessBehavior _networkAccessBehavior;
         private bool _meteredOverrideSet;
@@ -103,7 +106,7 @@ namespace Calculator.Linux.DataLoaders
             _cache = cache ?? new LinuxFileCache();
             _client = client ?? new FrankfurterCurrencyClient();
             _networkManager = new NetworkManager();
-            _loadStatus = CurrencyLoadStatus.NotLoaded;
+            _loadStatusRaw = (int)CurrencyLoadStatus.NotLoaded;
             _responseLanguage = "en-US";
             _ratioFormat = string.Empty;
             _timestampFormat = string.Empty;
@@ -144,9 +147,9 @@ namespace Calculator.Linux.DataLoaders
             _currencyMetadata = new Dictionary<int, CurrencyUnitMetadata>();
         }
 
-        public bool LoadFinished() => _loadStatus != CurrencyLoadStatus.NotLoaded;
-        public bool LoadedFromCache() => _loadStatus == CurrencyLoadStatus.LoadedFromCache;
-        public bool LoadedFromWeb() => _loadStatus == CurrencyLoadStatus.LoadedFromWeb;
+        public bool LoadFinished() => (CurrencyLoadStatus)_loadStatusRaw != CurrencyLoadStatus.NotLoaded;
+        public bool LoadedFromCache() => (CurrencyLoadStatus)_loadStatusRaw == CurrencyLoadStatus.LoadedFromCache;
+        public bool LoadedFromWeb() => (CurrencyLoadStatus)_loadStatusRaw == CurrencyLoadStatus.LoadedFromWeb;
 
         public async void LoadData()
         {
@@ -452,7 +455,7 @@ namespace Calculator.Linux.DataLoaders
                 }
 
                 await FinalizeUnits(staticData, ratioMap);
-                _loadStatus = CurrencyLoadStatus.LoadedFromWeb;
+                _loadStatusRaw = (int)CurrencyLoadStatus.LoadedFromWeb;
 
                 return true;
             }
@@ -479,7 +482,7 @@ namespace Calculator.Linux.DataLoaders
                 bool didLoad = await TryLoadDataFromWebAsync();
                 if (!didLoad)
                 {
-                    _loadStatus = CurrencyLoadStatus.FailedToLoad;
+                    _loadStatusRaw = (int)CurrencyLoadStatus.FailedToLoad;
                 }
 
                 // Timestamp formatting must not suppress the caller's completion path.
@@ -516,14 +519,14 @@ namespace Calculator.Linux.DataLoaders
 
         private void ResetLoadStatus()
         {
-            _loadStatus = CurrencyLoadStatus.NotLoaded;
+            _loadStatusRaw = (int)CurrencyLoadStatus.NotLoaded;
         }
 
         private void NotifyDataLoadFinished(bool didLoad)
         {
             if (!didLoad)
             {
-                _loadStatus = CurrencyLoadStatus.FailedToLoad;
+                _loadStatusRaw = (int)CurrencyLoadStatus.FailedToLoad;
             }
 
             _vmCallback?.CurrencyDataLoadFinished(didLoad);
@@ -546,7 +549,7 @@ namespace Calculator.Linux.DataLoaders
             }
 
             await FinalizeUnits(staticData, ratioMap);
-            _loadStatus = CurrencyLoadStatus.LoadedFromCache;
+            _loadStatusRaw = (int)CurrencyLoadStatus.LoadedFromCache;
 
             return true;
         }
