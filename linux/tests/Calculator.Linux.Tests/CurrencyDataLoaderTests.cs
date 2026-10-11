@@ -47,21 +47,21 @@ public sealed class CurrencyDataLoaderTests : IDisposable
         return loader;
     }
 
-    private static void WaitLoaded(CurrencyDataLoader loader)
+    private static async Task WaitLoaded(CurrencyDataLoader loader)
     {
         var entered = new TaskCompletionSource();
         loader.LoadGateEnteredForTest = async () => { await Task.Yield(); entered.TrySetResult(); };
         loader.LoadData();
-        Assert.True(entered.Task.Wait(TimeSpan.FromSeconds(10)));
+        await entered.Task.WaitAsync(TimeSpan.FromSeconds(10));
         SpinWait.SpinUntil(() => loader.LoadFinished(), TimeSpan.FromSeconds(10));
         Assert.True(loader.LoadFinished());
     }
 
     [Fact]
-    public void WebLoad_PopulatesUnitsAndRatios()
+    public async Task WebLoad_PopulatesUnitsAndRatios()
     {
         var loader = CreateLoader();
-        WaitLoaded(loader);
+        await WaitLoaded(loader);
 
         Assert.True(loader.LoadedFromWeb());
         var units = loader.GetOrderedUnits();
@@ -75,10 +75,10 @@ public sealed class CurrencyDataLoaderTests : IDisposable
     }
 
     [Fact]
-    public void SecondInstance_LoadsFromCacheWithoutWeb()
+    public async Task SecondInstance_LoadsFromCacheWithoutWeb()
     {
         var first = CreateLoader();
-        WaitLoaded(first);
+        await WaitLoaded(first);
         Assert.True(first.LoadedFromWeb());
 
         FrankfurterCurrencyClient.ForceWebFailure = true;
@@ -87,17 +87,17 @@ public sealed class CurrencyDataLoaderTests : IDisposable
             new LinuxSettings(SettingsDir),
             new LinuxFileCache(CacheDir),
             new FrankfurterCurrencyClient(new HttpClient(new CountingHandler(RecordedLatest))));
-        WaitLoaded(second);
+        await WaitLoaded(second);
 
         Assert.True(second.LoadedFromCache());
         Assert.Contains(second.GetOrderedUnits(), u => u.Abbreviation == "EUR");
     }
 
     [Fact]
-    public void RatioEquality_FormatsBothNames()
+    public async Task RatioEquality_FormatsBothNames()
     {
         var loader = CreateLoader();
-        WaitLoaded(loader);
+        await WaitLoaded(loader);
 
         var units = loader.GetOrderedUnits();
         int usd = units.First(u => u.Abbreviation == "USD").Id;
@@ -108,10 +108,10 @@ public sealed class CurrencyDataLoaderTests : IDisposable
     }
 
     [Fact]
-    public void Symbols_ReturnDollarAndEuro()
+    public async Task Symbols_ReturnDollarAndEuro()
     {
         var loader = CreateLoader();
-        WaitLoaded(loader);
+        await WaitLoaded(loader);
 
         var units = loader.GetOrderedUnits();
         int usd = units.First(u => u.Abbreviation == "USD").Id;
@@ -129,10 +129,10 @@ public sealed class CurrencyDataLoaderTests : IDisposable
     }
 
     [Fact]
-    public void Timestamp_ProvidedAfterLoad()
+    public async Task Timestamp_ProvidedAfterLoad()
     {
         var loader = CreateLoader();
-        WaitLoaded(loader);
+        await WaitLoaded(loader);
         Assert.False(string.IsNullOrEmpty(loader.GetCurrencyTimestamp()));
     }
 

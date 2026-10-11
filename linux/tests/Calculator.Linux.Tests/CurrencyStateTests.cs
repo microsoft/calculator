@@ -54,7 +54,7 @@ public sealed class CurrencyStateTests : IDisposable
     }
 
     [Fact]
-    public void WeekOldCache_FlagsStale()
+    public async Task WeekOldCache_FlagsStale()
     {
         var loader = NewLoader("a", MockClient());
         WaitLoaded(loader);
@@ -70,7 +70,7 @@ public sealed class CurrencyStateTests : IDisposable
         WaitLoaded(loader2);
 
         Assert.True(loader2.LoadedFromCache());
-        Assert.True(recorder.StampSeen.Task.Wait(TimeSpan.FromSeconds(10)));
+        await recorder.StampSeen.Task.WaitAsync(TimeSpan.FromSeconds(10));
         Assert.True(recorder.WeekOld);
         Assert.False(string.IsNullOrEmpty(recorder.Timestamp));
     }

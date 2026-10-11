@@ -61,7 +61,7 @@ instances crash the process (observed as a test-host crash, Task 4).
 | 14 | Proprietary graphing engine + `GraphingImpl/Mocks` | Local parser + numeric analysis + **LiveCharts2** (MIT, Avalonia-11-native) | Equations render (linear/quadratic/trig verified). Key features are numeric (roots/extrema/parity/observed range). **No symbolic analysis**: asymptotes, periodicity, monotonicity, inflection points omitted. Parameters are value editors (no min/max sliders). `OxyPlot.Avalonia` was tried first and rejected: 2.1.0 binds Avalonia 0.10 assemblies → `FileNotFoundException` at XAML load under Avalonia 11. |
 | 15 | `ppltasks.h` / `intsafe.h` / `winerror.h` (MSVC-only, pulled via `pch.h`) | `shims/` (eager `task<T>` + `.then`, empty `intsafe`, HRESULT macros) + `linux_prelude.h` (`-include`d STL baseline) | Engine compiles unmodified with GCC 15. Currency async path in C++ is synchronous-by-construction (web loading is driven C#-side). |
 | 16 | `GraphControl` (UWP control) | `CartesianChart` + `GraphingViewModel` | Zoom/pan via chart defaults; grid toggle; radians/degrees; style (color/width/solid/dash/dot); per-equation visibility + inline errors. |
-| 17 | WinAppDriver UI tests | xUnit headless parity (126 tests) + manual matrix | UI tests are Windows-only by nature; logic is proven headless, pixels need human eyes (checklist §5). |
+| 17 | WinAppDriver UI tests | xUnit headless parity (171 tests) + manual matrix | UI tests are Windows-only by nature; logic is proven headless, pixels need human eyes (checklist §5). |
 | 18 | Store packaging (`Package.appxmanifest`) | `.deb` (`linux/packaging/build-deb.sh` → self-contained `linux-x64` + side-by-side `.so`) | No Store, no MSIX. `.desktop` + SVG icon included. No hard `Depends` (self-contained). |
 | 19 | Segoe MDL2 glyphs / `LanguageFontGroup` | Text labels + Inter font | Icon font has no Linux equivalent; nav uses text. |
 | 20 | Narrator live regions (`NarratorNotifier`) | Data-only announcements (`NarratorAnnouncement` preserved) | Screen-reader live-region wiring is Task-9 UI work; announcement strings/codes intact. |
@@ -82,6 +82,9 @@ Additionally fixed during the port (behavior-preserving robustness):
   polling would otherwise observe empty data — found via a long debug hunt).
 - Loader-direction P/Invoke strings are pooled (native copies **after** the
   callback returns; freeing inside the callback is use-after-free).
+- Engine locale separators (decimal/grouping) are passed at engine creation
+  from the UI locale (German decimal comma verified); upstream resolves them
+  per-call via delegate.
 - `SpinWait`-polled async completion in tests only (production uses callbacks).
 
 ## 3. Build / run / package
@@ -113,24 +116,31 @@ xUnit, CommunityToolkit.Mvvm). No Wine, Windows SDK, or Visual Studio.
 
 - `ctest`: engine smoke through the frozen C ABI (2+2=4, clear, div0-error,
   sin30=0.5, history texts, `[132,93,132]` command replay, memory).
-- `dotnet test` (126, serialized — engine is single-threaded): engine
+- `dotnet test` (171, serialized — engine is single-threaded): engine
   interop/history, all services (localization incl. de-DE/ar-EG, formatting,
   settings, infra), Standard VM (3 modes, radix, memory, history recall,
-  errors, paste), date engine + VM (upstream full-range/leap/OOB vectors),
-  converter engine + VM (offsets, supplementary, prefs), currency (recorded
-  feed + cache/stale + VM end-to-end), graphing (parser, analysis, VM).
+  errors, paste, domain errors, F-to-E, shifts, angles, de-DE display),
+  date engine + VM (upstream full-range/leap/OOB vectors + DST),
+  converter engine + VM (12-category matrix, offsets, supplementary, prefs,
+  negate gating), currency (recorded feed, cache/stale/week-old/failed,
+  JPY/JOD digits, VM end-to-end), graphing (parser, analysis, VM),
+  paste validation per mode.
 - Live checks performed: Frankfurter fetch (30 currencies + timestamp),
   app launch per milestone (no exceptions), installed-layout launch.
 
 ## 5. Human verification checklist (needs eyes)
 
-- [ ] Interactive matrix: every button in all 3 calc modes, bit-flip clicks,
-      radix/bit-length switches, `1/0`, domain errors, locale separators.
-- [ ] 12-category converter round-trips (Length/Temperature/Weight automated).
-- [ ] Airplane-mode currency: cached rates + failed/refresh states.
-- [ ] Graphing visuals: `y=x`, `y=x^2`, `y=sin(x)` render, zoom/pan, styles.
+Covered headlessly already (no human pass needed): 12-category round-trips +
+negate gating, JPY/JOD fraction digits, week-old/stale/failed currency states,
+DST date math, German decimal comma, domain errors, F-to-E, shifts, angle
+modes, paste validation per mode, graphing parser/analysis/VM.
+
+- [ ] Interactive feel: button-by-button in all 3 calc modes, bit-flip clicks,
+      radix/bit-length switches (logic proven; this is about feel).
+- [ ] Airplane-mode currency on a real machine (code paths tested forced).
+- [ ] Graphing visuals: `y=x`, `y=x^2`, `y=sin(x)` render, zoom/pan feel.
 - [ ] Resize 320/768/1024/1440 (dock auto-collapses <720px; confirm usability).
-- [ ] Non-English UI locale sanity (decimal comma, RTL).
+- [ ] RTL UI mirroring + full non-English session sanity.
 - [ ] Clean-machine `dpkg -i` install + launch (couldn't `sudo` here; verified
       via extract-and-run of the same payload instead).
 

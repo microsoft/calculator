@@ -812,16 +812,9 @@ namespace Calculator.Linux.DataLoaders
         {
             if (_vmCallback != null)
             {
-                try
-                {
-                    string timestamp = GetCurrencyTimestamp();
-                    bool isWeekOld = CalcUtils.IsDateTimeOlderThan(_cacheTimestamp, CurrencyDataLoaderConstants.WeekDuration);
-                    _vmCallback.CurrencyTimestampUpdated(timestamp, isWeekOld);
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
+                string timestamp = GetCurrencyTimestamp();
+                bool isWeekOld = CalcUtils.IsDateTimeOlderThan(_cacheTimestamp, CurrencyDataLoaderConstants.WeekDuration);
+                _vmCallback.CurrencyTimestampUpdated(timestamp, isWeekOld);
             }
         }
 
