@@ -17,6 +17,7 @@
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.6" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.6" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="OxyPlot.Avalonia" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
