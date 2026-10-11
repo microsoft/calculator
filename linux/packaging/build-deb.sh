@@ -90,4 +90,6 @@ EOF
 echo "==> dpkg-deb --build"
 dpkg-deb --root-owner-group --build "$STAGE" "$DEB"
 echo "Built: $DEB"
-dpkg-deb --contents "$DEB" | head -n 12
+# Informational only: `head` closing the pipe gives dpkg-deb a SIGPIPE, which
+# would otherwise become the script's exit status and look like a build failure.
+dpkg-deb --contents "$DEB" 2>/dev/null | head -n 12 || true

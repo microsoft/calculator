@@ -1,0 +1,4 @@
+NOTE: port values compared AFTER C# string-literal unescaping.
+Resources.resw      ref=1166 port=1166 missing=0 mismatched=0
+CEngineStrings.resw ref=108 port=108 missing=0 mismatched=0
+duplicate keys within Strings=0 within CEngineStrings=0
