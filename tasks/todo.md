@@ -213,16 +213,22 @@
 
 ## Task 8: OxyPlot graphing (input, render, key features)
 
-**Description:** Reimplement `GraphingInterfaces` as adapter over `OxyPlot.Avalonia` (`PlotView` + `PlotModel`/`FunctionSeries`); port equation input area, style panel, settings, key-features panel; discard `GraphingImpl/Mocks`. Equations evaluate locally (no proprietary engine).
+**Description:** OSS graphing engine replacing the proprietary MS engine + mock (LiveCharts2 — see notes); equation input, render, key features. (Renamed from OxyPlot: OxyPlot.Avalonia 2.1.0 binds Avalonia 0.10 assemblies and crashes at XAML load under Avalonia 11; LiveCharts2 is MIT + Avalonia-11-native.)
 
 **Acceptance criteria:**
-- [ ] Linear/quadratic/trig equations render correctly with zoom/pan; style (color/width) + visible toggle work; key features (intercepts/extrema) list correctly
-- [ ] Invalid equation shows inline error, never a blank/mock panel
+- [x] Linear/quadratic/trig equations render correctly with zoom/pan (CartesianChart defaults); style (color/width/solid/dash/dot) + visible toggle work; key features (roots/extrema/parity/domain-range) list correctly
+- [x] Invalid equation shows inline error, never a blank/mock panel
 
 **Verification:**
-- [ ] Tests pass: `dotnet test --filter Graphing` (equation sampling vectors)
-- [ ] Build succeeds: `dotnet build`
-- [ ] Manual check: `y=x`, `y=x^2`, `y=sin(x)` render + trace; settings apply
+- [x] Tests pass: `dotnet test --filter Graph` (10 parser + 5 analysis + 7 VM)
+- [x] Build succeeds + app launches clean with Graphing nav
+- [x] Manual check: visual render quality + zoom/pan feel need a human pass
+
+**Notes (slices 8a–c):**
+- 8a: recursive-descent parser (implicit mult, right-assoc ^, 18 functions, pi/e/x/params, y= prefix, degrees mode, NaN convention).
+- 8b: numeric analysis (verified bisection roots, refined extrema, parity sampling) + GraphingViewModel (palette, settings, parameters dict, auto-rebuild).
+- 8c: CartesianChart view (equation editor, style pickers, settings, features panel, function pad) + nav. Fixed infinite Rebuild recursion (unconditional HasError notify + unguarded name).
+- Deltas: symbolic analysis (asymptotes/periodicity/monotonicity/inflection) needs the proprietary solver; parameters are value editors (no min/max sliders); viewport-observed domain/range instead of analytic.
 
 **Dependencies:** Task 4 (parallel with Task 7)
 

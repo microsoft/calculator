@@ -10,6 +10,7 @@ using Avalonia.LogicalTree;
 using Avalonia.Markup.Xaml;
 using Calculator.Linux.Common;
 using Calculator.Linux.Services;
+using Calculator.Linux.Services.Graphing;
 using Calculator.Linux.ViewModels;
 using Calculator.Linux.ViewModels;
 
@@ -20,6 +21,7 @@ public sealed partial class MainWindow : Window
     private readonly StandardCalculatorViewModel _vm;
     private readonly DateCalculatorViewModel _dateVM;
     private UnitConverterViewModel? _converterVM;
+    private GraphingViewModel? _graphVM;
 
     public MainWindow()
     {
@@ -74,14 +76,93 @@ public sealed partial class MainWindow : Window
             case "Date":
                 ShowDate();
                 break;
+            case "Graphing":
+                ShowGraphing();
+                break;
             case string tag when Enum.TryParse<ViewMode>(tag, out var converterMode)
-                && converterMode != ViewMode.Currency:
+                && converterMode != ViewMode.Currency
+                && converterMode != ViewMode.Graphing:
                 ShowConverter(converterMode);
                 break;
             default:
                 ShowCalculator(ViewMode.Standard);
                 break;
         }
+    }
+
+    private void ShowGraphing()
+    {
+        HideConverter();
+        _graphVM ??= new GraphingViewModel();
+        if (Find<DockPanel>("GraphingPanel") is { } panel)
+        {
+            panel.DataContext = _graphVM;
+            panel.IsVisible = true;
+        }
+        if (Find<DockPanel>("CalculatorPanel") is { } calc)
+        {
+            calc.IsVisible = false;
+        }
+        if (Find<StackPanel>("DatePanel") is { } date)
+        {
+            date.IsVisible = false;
+        }
+        if (Find<DockPanel>("ConverterPanel") is { } converter)
+        {
+            converter.IsVisible = false;
+        }
+        SyncTrig();
+    }
+
+    private void Equation_Delete(object? sender, RoutedEventArgs e)
+    {
+        if (_graphVM != null && (sender as Control)?.DataContext is GraphEquation equation)
+        {
+            _graphVM.RemoveEquation(equation);
+        }
+    }
+
+    private void GraphPad_Insert(object? sender, RoutedEventArgs e)
+    {
+        if (_graphVM == null || sender is not Button button || button.Tag is not string text)
+        {
+            return;
+        }
+        GraphEquation equation = _graphVM.SelectedEquation ?? _graphVM.AddEquation(string.Empty);
+        _graphVM.SelectedEquation = equation;
+        equation.Expression += text;
+    }
+
+    private void Trig_Click(object? sender, RoutedEventArgs e)
+    {
+        if (_graphVM == null || sender is not RadioButton radio)
+        {
+            return;
+        }
+        _graphVM.TrigMode = radio.Name == "TrigDeg" ? AngleMode.Degrees : AngleMode.Radians;
+        SyncTrig();
+    }
+
+    private void SyncTrig()
+    {
+        if (_graphVM == null)
+        {
+            return;
+        }
+        SetChecked("TrigRad", _graphVM.TrigMode == AngleMode.Radians);
+        SetChecked("TrigDeg", _graphVM.TrigMode == AngleMode.Degrees);
+    }
+
+    private void Graph_Reset(object? sender, RoutedEventArgs e)
+    {
+        if (_graphVM == null)
+        {
+            return;
+        }
+        _graphVM.XMin = -10;
+        _graphVM.XMax = 10;
+        _graphVM.YMin = -10;
+        _graphVM.YMax = 10;
     }
 
     private void HideConverter()
@@ -147,6 +228,10 @@ public sealed partial class MainWindow : Window
         {
             converter.IsVisible = false;
         }
+        if (Find<DockPanel>("GraphingPanel") is { } graphing)
+        {
+            graphing.IsVisible = false;
+        }
     }
 
     private void ShowDate()
@@ -163,6 +248,10 @@ public sealed partial class MainWindow : Window
         if (Find<DockPanel>("ConverterPanel") is { } converter)
         {
             converter.IsVisible = false;
+        }
+        if (Find<DockPanel>("GraphingPanel") is { } graphing)
+        {
+            graphing.IsVisible = false;
         }
     }
 

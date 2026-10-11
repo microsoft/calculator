@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:common="clr-namespace:Calculator.Linux.Common;assembly=Calculator.Linux"
+        xmlns:oxy="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
         x:Class="Calculator.Linux.MainWindow"
         Title="Calculator" Width="980" Height="640" MinWidth="640" MinHeight="480">
   <Window.KeyBindings>
@@ -61,6 +62,7 @@
       <ListBoxItem Content="Data" Tag="Data" />
       <ListBoxItem Content="Pressure" Tag="Pressure" />
       <ListBoxItem Content="Angle" Tag="Angle" />
+      <ListBoxItem Content="Graphing" Tag="Graphing" />
     </ListBox>
 
     <!-- History / Memory dock -->
@@ -360,6 +362,82 @@
         <Button Grid.Row="4" Grid.Column="1" Content="0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" />
         <Button Grid.Row="4" Grid.Column="2" Content="." Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Decimal}" />
       </Grid>
+    </DockPanel>
+    <!-- Graphing -->
+    <DockPanel Name="GraphingPanel" IsVisible="False" LastChildFill="True" Margin="8">
+      <StackPanel DockPanel.Dock="Right" Width="320" Margin="8,0,0,0">
+        <TextBlock Text="Equations" FontWeight="Bold" Margin="0,0,0,4" />
+        <ListBox ItemsSource="{Binding Equations}" SelectedItem="{Binding SelectedEquation, Mode=TwoWay}"
+                 Name="EquationList" MaxHeight="220">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="y =" VerticalAlignment="Center" Margin="0,0,4,0" />
+                  <TextBox Text="{Binding Expression, Mode=TwoWay}" Width="150" />
+                  <CheckBox IsChecked="{Binding IsVisible, Mode=TwoWay}" Content="Show" Margin="4,0,0,0" />
+                  <Button Content="✕" Click="Equation_Delete" Margin="4,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                  <ComboBox ItemsSource="{Binding $parent[ListBox].DataContext.LinePalette}"
+                            SelectedItem="{Binding LineColor, Mode=TwoWay}" Width="110" />
+                  <ComboBox ItemsSource="{Binding $parent[ListBox].DataContext.LineStyles}"
+                            SelectedItem="{Binding LineStyle, Mode=TwoWay}" Width="100" Margin="4,0,0,0" />
+                </StackPanel>
+                <TextBlock Text="{Binding Error}" Foreground="Red" TextWrapping="Wrap"
+                           IsVisible="{Binding HasError}" />
+              </StackPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Content="Add equation" Command="{Binding AddEquationCommand}" HorizontalAlignment="Stretch" Margin="0,4,0,8" />
+        <TextBlock Text="Key features" FontWeight="Bold" Margin="0,0,0,4" />
+        <ItemsControl ItemsSource="{Binding SelectedFeatures}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Margin="0,0,0,6">
+                <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="12" />
+                <ItemsControl ItemsSource="{Binding Items}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate><TextBlock Text="{Binding}" FontSize="12" Opacity="0.85" /></DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <TextBlock Text="Settings" FontWeight="Bold" Margin="0,4,0,4" />
+        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,*">
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="X:" VerticalAlignment="Center" Margin="0,0,4,0" />
+          <NumericUpDown Grid.Row="0" Grid.Column="1" Value="{Binding XMin, Mode=TwoWay}" Margin="0,0,4,0" />
+          <NumericUpDown Grid.Row="0" Grid.Column="2" Value="{Binding XMax, Mode=TwoWay}" />
+          <TextBlock Grid.Row="1" Grid.Column="0" Text="Y:" VerticalAlignment="Center" Margin="0,4,4,0" />
+          <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding YMin, Mode=TwoWay}" Margin="0,4,4,0" />
+          <NumericUpDown Grid.Row="1" Grid.Column="2" Value="{Binding YMax, Mode=TwoWay}" Margin="0,4,0,0" />
+          <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Grid" IsChecked="{Binding IsGridVisible, Mode=TwoWay}" Margin="0,4,0,0" />
+          <Button Grid.Row="2" Grid.Column="2" Content="Reset" Click="Graph_Reset" Margin="0,4,0,0" />
+        </Grid>
+        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+          <RadioButton Content="Radians" GroupName="Trig" Name="TrigRad" Click="Trig_Click" Margin="0,0,8,0" />
+          <RadioButton Content="Degrees" GroupName="Trig" Name="TrigDeg" Click="Trig_Click" />
+        </StackPanel>
+      </StackPanel>
+      <oxy:CartesianChart Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}"
+                            Name="GraphPlot" />
+      <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,4,0,0">
+        <Button Content="x" Click="GraphPad_Insert" Tag="x" Width="40" />
+        <Button Content="^" Click="GraphPad_Insert" Tag="^" Width="40" />
+        <Button Content="(" Click="GraphPad_Insert" Tag="(" Width="40" />
+        <Button Content=")" Click="GraphPad_Insert" Tag=")" Width="40" />
+        <Button Content="sin" Click="GraphPad_Insert" Tag="sin(" Width="52" />
+        <Button Content="cos" Click="GraphPad_Insert" Tag="cos(" Width="52" />
+        <Button Content="tan" Click="GraphPad_Insert" Tag="tan(" Width="52" />
+        <Button Content="π" Click="GraphPad_Insert" Tag="pi" Width="40" />
+        <Button Content="+" Click="GraphPad_Insert" Tag="+" Width="40" />
+        <Button Content="−" Click="GraphPad_Insert" Tag="-" Width="40" />
+        <Button Content="×" Click="GraphPad_Insert" Tag="*" Width="40" />
+        <Button Content="÷" Click="GraphPad_Insert" Tag="/" Width="40" />
+      </StackPanel>
     </DockPanel>
   </DockPanel>
 </Window>
