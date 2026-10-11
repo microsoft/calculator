@@ -20,7 +20,7 @@ ctest --test-dir linux/build/calc-manager
 
 # App (needs .NET 10 SDK; NuGet for restore)
 dotnet build linux/Calculator.Linux.slnx
-dotnet test linux/Calculator.Linux.slnx        # 199 tests, serialized (engine is single-threaded); headless UI layout + pixel checks
+dotnet test linux/Calculator.Linux.slnx        # 206 tests, serialized (engine is single-threaded); headless UI layout + pixel checks
 dotnet run --project linux/src/Calculator.Linux/Calculator.Linux.csproj
 ```
 

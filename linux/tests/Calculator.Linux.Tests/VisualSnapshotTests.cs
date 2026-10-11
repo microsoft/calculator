@@ -140,6 +140,28 @@ public sealed class VisualSnapshotTests
         }
     }
 
+    [AvaloniaTheory]
+    [InlineData("Currency", 960, 680)]
+    [InlineData("Scientific", 340, 520)]
+    [InlineData("Programmer", 1200, 900)]
+    [InlineData("Angle", 960, 680)]
+    [InlineData("Date", 520, 640)]
+    public void ExtraCombinations_RenderSomething(string tag, int width, int height)
+    {
+        var window = Show(width, height);
+        try
+        {
+            SelectMode(window, tag);
+            WriteableBitmap frame = Render(window, $"x-{tag.ToLowerInvariant()}-{width}x{height}");
+            Assert.True(InkedFraction(frame) > 0.04,
+                $"{tag} @{width}x{height} renders nearly blank");
+        }
+        finally
+        {
+            window.Close();
+        }
+    }
+
     [AvaloniaFact]
     public void DarkTheme_RendersTheCalculatorPalette()
     {

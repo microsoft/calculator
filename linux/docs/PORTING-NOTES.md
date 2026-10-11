@@ -61,7 +61,7 @@ instances crash the process (observed as a test-host crash, Task 4).
 | 14 | Proprietary graphing engine + `GraphingImpl/Mocks` | Local parser + numeric analysis + **LiveCharts2** (MIT, Avalonia-11-native) | Equations render (linear/quadratic/trig verified). Key features are numeric (roots/extrema/parity/observed range). **No symbolic analysis**: asymptotes, periodicity, monotonicity, inflection points omitted. Parameters are value editors (no min/max sliders). `OxyPlot.Avalonia` was tried first and rejected: 2.1.0 binds Avalonia 0.10 assemblies → `FileNotFoundException` at XAML load under Avalonia 11. |
 | 15 | `ppltasks.h` / `intsafe.h` / `winerror.h` (MSVC-only, pulled via `pch.h`) | `shims/` (eager `task<T>` + `.then`, empty `intsafe`, HRESULT macros) + `linux_prelude.h` (`-include`d STL baseline) | Engine compiles unmodified with GCC 15. Currency async path in C++ is synchronous-by-construction (web loading is driven C#-side). |
 | 16 | `GraphControl` (UWP control) | `CartesianChart` + `GraphingViewModel` | Zoom/pan via chart defaults; grid toggle; radians/degrees; style (color/width/solid/dash/dot); per-equation visibility + inline errors. |
-| 17 | WinAppDriver UI tests | xUnit headless parity (199 tests) incl. Avalonia.Headless layout + Skia pixel snapshots + manual matrix | UI tests are Windows-only by nature; logic, layout and pixels are proven headless, interactive feel still needs human eyes (checklist §5). |
+| 17 | WinAppDriver UI tests | xUnit headless parity (206 tests) incl. Avalonia.Headless layout + Skia pixel snapshots + manual matrix | UI tests are Windows-only by nature; logic, layout and pixels are proven headless, interactive feel still needs human eyes (checklist §5). |
 | 18 | Store packaging (`Package.appxmanifest`) | `.deb` (`linux/packaging/build-deb.sh` → self-contained `linux-x64` + side-by-side `.so`) | No Store, no MSIX. `.desktop` + SVG icon included. No hard `Depends` (self-contained). |
 | 19 | Segoe MDL2 glyphs / `LanguageFontGroup` | Text labels + Inter font | Icon font has no Linux equivalent; nav uses text. |
 | 20 | Narrator live regions (`NarratorNotifier`) | Announcement strings bound as `AutomationProperties.Name` (verified: Avalonia 11.3 has no `RaiseNotificationEvent` API) | Screen-reader live announcements need platform API that doesn't exist yet; focus labels work. |
@@ -117,6 +117,12 @@ regression test in `linux/tests/Calculator.Linux.Tests/`):
 - Chrome restyled against upstream `App.xaml`: `CalcButtonStyle` /
   `OperatorButtonStyle` / `AccentEmphasizedCalcButtonStyle` fills and opacities,
   flat memory row, large right-aligned display, light+dark variants.
+- Currency country names came from `RegionInfo.DisplayName` for whatever
+  culture `CultureInfo.GetCultures` listed first — including `chr-US`, so USD
+  rendered as "Cherokee - US Dollar" and EUR as "España - Euro". Now
+  `EnglishName`, with a deterministic neutral/English region preference.
+  (Static data is cached for a week, so an old cache keeps the old names;
+  delete `~/.cache/calculator-linux` to refresh.)
 
 ## 3. Build / run / package
 
@@ -147,7 +153,7 @@ xUnit, CommunityToolkit.Mvvm). No Wine, Windows SDK, or Visual Studio.
 
 - `ctest`: engine smoke through the frozen C ABI (2+2=4, clear, div0-error,
   sin30=0.5, history texts, `[132,93,132]` command replay, memory).
-- `dotnet test` (199, serialized — engine is single-threaded): engine
+- `dotnet test` (206, serialized — engine is single-threaded): engine
   interop/history, all services (localization incl. de-DE/ar-EG, formatting,
   settings, infra), Standard VM (3 modes, radix, memory, history recall,
   errors, paste, domain errors, F-to-E, shifts, angles, de-DE display),

@@ -101,4 +101,44 @@ public sealed class FrankfurterClientTests : IDisposable
             return Task.FromResult(new HttpResponseMessage(_code) { Content = new StringContent(_body) });
         }
     }
+
+    [Fact]
+    public void Metadata_UsesEnglishCountryNames()
+    {
+        // Regression: the region for USD was picked from CultureInfo's culture
+        // list, which contains "chr-US", and the name came from
+        // RegionInfo.DisplayName (UI-culture dependent) — so USD rendered as
+        // "<Cherokee> - US Dollar" and EUR as "España - Euro".
+        string json = FrankfurterCurrencyClient.BuildMetadataJson();
+
+        Assert.Contains("\"CountryCode\": \"US\", \"CountryName\": \"United States\"", json);
+        Assert.Contains("\"CountryCode\": \"ES\", \"CountryName\": \"Spain\"", json);
+        Assert.Contains("\"CountryCode\": \"GB\", \"CountryName\": \"United Kingdom\"", json);
+    }
+
+    [Fact]
+    public void Metadata_CountryNamesAreCultureIndependent()
+    {
+        // Must equal RegionInfo.EnglishName, never DisplayName: the latter
+        // follows the UI culture ("España", "Deutschland", Cherokee for chr-US).
+        using var document = System.Text.Json.JsonDocument.Parse(
+            FrankfurterCurrencyClient.BuildMetadataJson());
+
+        var byCurrency = document.RootElement.EnumerateArray().ToDictionary(
+            e => e.GetProperty("CurrencyCode").GetString()!,
+            e => e.GetProperty("CountryCode").GetString()!);
+
+        foreach (string currency in new[] { "USD", "EUR", "GBP", "JPY", "TRY", "CHF", "AUD" })
+        {
+            if (!byCurrency.TryGetValue(currency, out string? countryCode))
+            {
+                continue;
+            }
+            string expected = new System.Globalization.RegionInfo(countryCode!).EnglishName;
+            string actual = document.RootElement.EnumerateArray()
+                .First(e => e.GetProperty("CurrencyCode").GetString() == currency)
+                .GetProperty("CountryName").GetString()!;
+            Assert.Equal(expected, actual);
+        }
+    }
 }

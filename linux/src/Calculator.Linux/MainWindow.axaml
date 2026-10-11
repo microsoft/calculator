@@ -73,7 +73,8 @@
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <TextBlock Grid.Row="1" Text="{Binding DisplayValue}" FontSize="62" FontWeight="SemiBold"
+            <TextBlock Grid.Row="1" Text="{Binding DisplayValue}" IsVisible="{Binding !IsProgrammer}"
+                       FontSize="62" FontWeight="SemiBold"
                        TextAlignment="Right" Margin="0,4,0,4" TextTrimming="CharacterEllipsis"
                        auto:AutomationProperties.Name="{Binding CalculationResultAutomationName}" />
             <!-- Programmer radix readout replaces the plain display when active -->

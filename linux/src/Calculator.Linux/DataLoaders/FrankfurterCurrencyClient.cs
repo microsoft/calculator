@@ -101,7 +101,7 @@ public sealed class FrankfurterCurrencyClient
         // country is preferred by matching the region code against the first
         // two letters of the currency code (ISO 4217 convention: USD -> US);
         // otherwise the current region (if it uses the currency), else first.
-        var byCurrency = new Dictionary<string, List<RegionInfo>>(StringComparer.OrdinalIgnoreCase);
+        var byCurrency = new Dictionary<string, List<(string Culture, RegionInfo Region)>>(StringComparer.OrdinalIgnoreCase);
         foreach (CultureInfo culture in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
         {
             RegionInfo region;
@@ -120,14 +120,14 @@ public sealed class FrankfurterCurrencyClient
             }
             if (!byCurrency.TryGetValue(code, out var list))
             {
-                list = new List<RegionInfo>();
+                list = new List<(string, RegionInfo)>();
                 byCurrency[code] = list;
             }
-            if (list.Exists(r => r.Name == region.Name))
+            if (list.Exists(e => e.Region.Name == region.Name))
             {
                 continue;
             }
-            list.Add(region);
+            list.Add((culture.Name, region));
         }
 
         string currentRegion = string.Empty;
@@ -142,16 +142,39 @@ public sealed class FrankfurterCurrencyClient
         var entries = new List<string>(byCurrency.Count);
         foreach (var pair in byCurrency)
         {
+            // CultureInfo.GetCultures also yields e.g. "chr-US", so the first
+            // region whose code matches the currency prefix can be an exotic
+            // one. Prefer the neutral region (culture == region code), then an
+            // English one, then any match - and always render EnglishName, not
+            // DisplayName (which follows the UI culture and would show
+            // "Cherokee - US Dollar" for USD).
             RegionInfo? best = null;
-            foreach (RegionInfo region in pair.Value)
+            string bestCulture = string.Empty;
+            foreach ((string cultureName, RegionInfo region) in pair.Value)
             {
-                if (region.Name.Equals(pair.Key.Substring(0, 2), StringComparison.OrdinalIgnoreCase))
+                if (!region.Name.Equals(pair.Key.Substring(0, 2), StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+                if (best == null)
                 {
                     best = region;
+                    bestCulture = cultureName;
+                }
+                if (cultureName.Equals(region.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    best = region;
+                    bestCulture = cultureName;
                     break;
                 }
+                if (cultureName.Equals("en-" + region.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    best = region;
+                    bestCulture = cultureName;
+                }
             }
-            best ??= pair.Value.Find(r => r.Name == currentRegion) ?? pair.Value[0];
+            best ??= pair.Value.Find(e => e.Region.Name == currentRegion).Region
+                ?? pair.Value[0].Region;
 
             string symbol = best.CurrencySymbol;
             if (string.IsNullOrEmpty(symbol))
@@ -160,12 +183,28 @@ public sealed class FrankfurterCurrencyClient
             }
             entries.Add(
                 "{ \"CountryCode\": \"" + JsonEncoded(best.TwoLetterISORegionName) + "\"" +
-                ", \"CountryName\": \"" + JsonEncoded(best.DisplayName) + "\"" +
+                ", \"CountryName\": \"" + JsonEncoded(EnglishCountryName(best)) + "\"" +
                 ", \"CurrencyCode\": \"" + JsonEncoded(pair.Key) + "\"" +
                 ", \"CurrencyName\": \"" + JsonEncoded(CurrencyEnglishName(best)) + "\"" +
                 ", \"CurrencySymbol\": \"" + JsonEncoded(symbol) + "\" }");
         }
         return "[ " + string.Join(", ", entries) + " ]";
+    }
+
+    /// <summary>Culture-independent country name ("United States", not "España").</summary>
+    private static string EnglishCountryName(RegionInfo region)
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(region.EnglishName))
+            {
+                return region.EnglishName;
+            }
+        }
+        catch
+        {
+        }
+        return region.Name;
     }
 
     private static string CurrencyEnglishName(RegionInfo region)
