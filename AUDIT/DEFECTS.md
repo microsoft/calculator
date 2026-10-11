@@ -453,3 +453,53 @@ after eviction, which is not the entry just computed.
 - Native: `ctest` green
 - Reference-authored assertions replayed: 158 engine + 114 VM + 9 date +
   4 copy/paste + 61 nav + 21 history
+
+---
+
+## AUD-NOTE-009 — Scaling, live dark mode and the AT-SPI bus: verified
+
+`AUDIT/ui_deep_check.sh` closes the three areas that were previously recorded as
+"not started".
+
+**Display scaling — PASS.** Launched at `AVALONIA_GLOBAL_SCALE_FACTOR` 1.0,
+1.25, 1.5 and 2.0. Captures in `AUDIT/evidence/screens/scaling/scale-*.png`.
+At 200 % the whole UI scales proportionally — text, keypad, memory row, display —
+with nothing clipped, overlapping or truncated, and all 24 standard buttons
+remain visible and legible. Avalonia applies the factor; the port's layouts use
+`*` sizing throughout, so nothing was pinned to absolute pixels.
+
+**Live dark-mode toggle — PASS.** Started under `prefer-dark`, then flipped
+`org.gnome.desktop.interface color-scheme` to `prefer-light` **without
+restarting the app**. It repainted in place: white surfaces, dark glyphs, a
+darker accent for `=`, and the operator column in a distinct grey. This
+confirms the theme follows the desktop setting at runtime rather than only at
+startup. Captures: `theme-dark-then-light.png` and its inverse.
+
+**Accessibility — PARTIAL.** The session AT-SPI bus **is reachable**
+(`gdbus introspect --session --dest org.a11y.Bus` succeeds), which is the
+precondition for any screen reader to see the application at all. The accessible
+tree itself was **not enumerated**, because `pyatspi` is not installed on this
+machine and installing it is outside the port's scope. Automation IDs and names
+are asserted in the test suite (`ConverterSymbolLayoutTests` and the
+screen-reader name tests), but whether Orca announces them *sensibly* is still a
+human judgement — see REPORT.md section 7.
+
+No defects found in any of the three.
+
+---
+
+## AUD-NOTE-010 — Two of my own test/infra bugs found on the final pass
+
+**Non-hermetic test.** `ConverterSymbolLayoutTests` located the two currency
+symbol TextBlocks by their *text* (`₺`, `¥`). Those characters come from the
+live Frankfurter feed, so the test passed when the network answered and failed
+when it did not — a coin-flip that showed up as a failure in the final gate run.
+Rewritten to locate the blocks **structurally** (Row 2, Columns 0 and 2 of the
+three-column display grid), which is what the assertion is actually about. No
+network dependency remains.
+
+**Silently skipped gate step.** `run_all.sh` step 9 printed
+`SKIP: no X display / xdotool` and still reported `ALL CHECKS GREEN`, because
+`DISPLAY` was unset in the calling shell. A gate that skips a check quietly is
+worse than one that fails. It now defaults `DISPLAY` to `:0` when
+`/tmp/.X11-unix/X0` exists, and `AUDIT_REQUIRE_DISPLAY=1` makes the skip fatal.

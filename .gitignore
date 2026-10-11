@@ -295,3 +295,8 @@ src/GraphControl/GraphingImplOverrides.props
 !src/x64
 !src/x86
 !src/out
+# User's local reference material. Must never be committed to the fork.
+TEMP FOLDER SKILLS/
+
+# Audit run artefacts (logs are committed selectively under AUDIT/evidence/logs/)
+AUDIT/evidence/logs/*.tmp

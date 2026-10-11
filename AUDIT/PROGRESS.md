@@ -13,8 +13,9 @@ REFERENCE: microsoft/calculator @ d125246a4e19842ce1332e6c7839cf0e110027d8
       (`AUDIT/ui_drive.sh`, `AUDIT/evidence/screens/`)
 - [x] Phase 4 CROSS-CUTTING — keyboard shortcut parity (42), locale matrix (22),
       mode navigation (15+61), converter layout (3)
-- [~] Phase 5 PACKAGING — deb + lintian + extract + exit code verified;
-      NuGet transitive licence audit added and green
+- [x] Phase 5 PACKAGING — deb + lintian + extract + exit code verified;
+      NuGet transitive licence + CVE audit green and gated;
+      display scaling (100/125/150/200 %) and live dark-mode toggle verified
 - [x] Phase 6 FIX + REGRESS — 8 defects fixed, suite green
 
 ## Reference test replay (Microsoft-authored expectations)
@@ -57,18 +58,21 @@ the structural tests.
 1. User decision: keep the scrollable Scientific keypad (AUD-DEV-001, a superset
    of the reference's functions) or rebuild it with the reference's shift-toggle
    for exact presentation parity.
-2. Scaling at 125 / 150 / 200 %, accessibility/AT-SPI/Orca, soak + RSS growth —
-   not yet exercised.
-3. Remaining reference test files not yet replayed:
+2. **Soak / RSS growth** — the only genuinely unstarted item left.
+3. **AT-SPI tree enumeration** — the session bus is confirmed reachable, but
+   `pyatspi` is absent so the tree was not walked; Orca announcement quality is
+   a human judgement.
+4. Remaining reference test files not yet replayed:
    `UnitConverterViewModelTests.cs` (31), `NarratorAnnouncementTests.cs` (19),
    `SnapshotRoundTripTests.cs` (17), `CurrencyConverterTests.cs` (17),
    `MultiWindowTests.cs` (16), `LocalizationSettingsTests.cs` (8),
    `SnapshotJsonTests.cs` (8), `UtilsTests.cs` (6), `KeystrokeLatencyTests.cs` (1).
    Note Graphing and Currency are 100% mocks upstream, so their suites cannot be
    replayed meaningfully against real behaviour.
-4. `git remote add fork <url> && git push -u fork linux-port` — not pushed yet.
+5. Pushed to the fork `ell-shad/calculator` as branch `linux-port`.
 
 ## State
 
 Branch `linux-port`. Suite: **549 + 18 = 567** managed tests, ctest green.
-`AUDIT/run_all.sh`: 9 steps including the licence audit and the on-screen drive.
+`AUDIT/run_all.sh`: **10 steps**, and `AUDIT_REQUIRE_DISPLAY=1` makes a missing
+X display fatal instead of a quiet skip.

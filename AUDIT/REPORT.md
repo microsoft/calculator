@@ -37,8 +37,10 @@ What the audit has established:
 The release is still blocked, but on **incomplete coverage rather than on
 anything known to be wrong**:
 
-1. **BLOCKER-1 (coverage):** scaling at 125/150/200 %, accessibility via
-   AT-SPI/Orca, and soak/RSS growth are not yet exercised. See §6.
+1. **BLOCKER-1 (coverage):** soak/RSS growth is not yet exercised, and the
+   accessibility tree could not be enumerated (`pyatspi` absent — though the
+   AT-SPI bus itself is confirmed reachable). Scaling and live dark-mode
+   toggling are now verified. See §6.
 2. **BLOCKER-2 (decision):** AUD-DEV-001 — the Scientific keypad scrolls where
    the reference uses a shift-toggle. It is a superset functionally, but
    presentation parity is part of the contract and this needs your call.
@@ -266,6 +268,8 @@ both are areas where the port is *better* than the reference.
 | **On-screen UI-RUN (mouse, keyboard, every mode, resize)** | **DONE** — the display works after logout/login. 17 captures in `AUDIT/evidence/screens/`, driven by `AUDIT/ui_drive.sh`. Found AUD-S3-008. |
 | **Keyboard shortcut parity** | **DONE** — the reference's 71 button shortcuts extracted to `reference_shortcuts.json` and transcribed into three dispatch tables. 42 tests, driving the real window with a non-US `Key` code. Found AUD-S3-004/005. (The remaining Ctrl/Shift chord variants for nav and converters are not separately bound; the reference has 28 Ctrl and 24 Shift chords, mostly the same buttons under different modifier contexts.) |
 | **Locale matrix** (de_DE, ru_RU, en_IN, RTL) | **DONE** — 15 cultures for separators, en-IN 2/2/3 grouping, RTL detection, invariant-globalization fallback, ar-EG Arabic-Indic digits. No defect found. |
+| **Scaling 125 / 150 / 200 %** | **DONE** — launched at 1.0/1.25/1.5/2.0. At 200 % everything scales proportionally with nothing clipped; all 24 standard buttons stay visible. Captures in `AUDIT/evidence/screens/scaling/`. |
+| **Live dark-mode toggle** | **DONE** — flipped `color-scheme` to `prefer-light` with the app running; it repainted in place without a restart. |
 | **NuGet transitive licences + advisories** | **DONE** — 44 packages, all permissive; 0 advisories after the AUD-S2-002 fix. Gated in `run_all.sh`. |
 | **Reference golden vectors** | **DONE for the engine** — 158 vectors replayed via `extract_golden.py`. **Partly done for the C# suites** — 114 VM sequences, 61 nav, 21 history, 9 date, 4 copy/paste. Remaining files listed below. |
 
@@ -273,8 +277,7 @@ both are areas where the port is *better* than the reference.
 
 | Area | Why | Status |
 |---|---|---|
-| **Scaling 125 / 150 / 200 %** | Not exercised. `AVALONIA_GLOBAL_SCALE_FACTOR` exists but was never run at those values. | NOT VERIFIED |
-| **Accessibility / AT-SPI / Orca** | Needs a live accessibility bus; Avalonia's AT-SPI bridge was not exercised with a screen reader. | NOT VERIFIED |
+| **Accessibility tree enumeration** | The session AT-SPI bus **is reachable**, which is the precondition for any screen reader to see the app. The tree itself was not enumerated: `pyatspi` is not installed on this machine. Automation IDs and names are asserted in tests; whether Orca announces them sensibly is still a human judgement (§7). | PARTIAL |
 | **Soak / performance / RSS growth** | No long-running session was held open. | NOT VERIFIED |
 | **Reference C# suites not yet replayed** | `UnitConverterViewModelTests` (31), `NarratorAnnouncementTests` (19), `SnapshotRoundTripTests` (17), `CurrencyConverterTests` (17), `MultiWindowTests` (16), `LocalizationSettingsTests` (8), `SnapshotJsonTests` (8), `UtilsTests` (6). Note the Graphing and Currency suites cannot be replayed meaningfully — both are 100% mocks upstream (§5). | EXTRACTED, NOT REPLAYED |
 | **Differential fuzz (10k sequences/mode vs an oracle)** | No independent oracle buildable (the reference needs Windows); deferred. | NOT RUN |
@@ -319,8 +322,8 @@ nav entries in the reference's order, types with `xdotool`, and resizes to
 3. **Screen reader** - run under `orca` and Tab through every control. The
    automation names are asserted in tests; that Orca actually announces them
    sensibly is not something a headless test can establish.
-4. **Display scaling** at 125 / 150 / 200 % - never exercised.
-5. **Soak** - leave it running and watch RSS.
+4. **Soak** - leave it running and watch RSS. (Scaling and the live theme
+   toggle are now automated in `ui_deep_check.sh` and no longer need a human.)
 
 ---
 
@@ -330,7 +333,8 @@ nav entries in the reference's order, types with `xdotool`, and resizes to
 cd ~/Documents/calculator
 ./AUDIT/run_all.sh          # 9-step gate: engine, ctest, build, suite,
                             #   isolated locale run, deb, reference parity,
-                            #   licences + CVEs, live on-screen drive
+                            #   licences + CVEs, live on-screen drive,
+                            #   scaling + theme toggle + a11y bus
 python3 AUDIT/parity_check.py
 python3 AUDIT/license_audit.py
 python3 AUDIT/extract_golden.py      # reference engine vectors -> JSON
@@ -344,15 +348,16 @@ cd linux && dotnet test Calculator.Linux.slnx --filter "Category=IsolatedProcess
 **Final full run (this audit, after all eight fixes):**
 
 ```
-=== 1/9 engine build ===        OK: cmake configure / OK: cmake build
-=== 2/9 engine smoke ===        100% tests passed, 0 tests failed out of 1    OK: ctest
-=== 3/9 managed build ===       OK: dotnet build
-=== 4/9 full test suite ===     Passed! - Failed: 0, Passed: 549              OK: dotnet test
-=== 5/9 locale (own process) == Passed! - Failed: 0, Passed: 18               OK: dotnet test
-=== 6/9 packaging ===          OK: build-deb.sh / OK: deb produced / OK: deb extracts
-=== 7/9 data parity ===         OK: converter + resource parity
-=== 8/9 licences + CVEs ===     OK: license_audit.py (44 packages, all permissive, 0 advisories)
-=== 9/9 on-screen drive ===     OK: ui_drive.sh
+=== 1/10 engine build ===        OK: cmake configure / OK: cmake build
+=== 2/10 engine smoke ===        100% tests passed, 0 tests failed out of 1    OK: ctest
+=== 3/10 managed build ===       OK: dotnet build
+=== 4/10 full test suite ===     Passed! - Failed: 0, Passed: 549              OK: dotnet test
+=== 5/10 locale (own process) == Passed! - Failed: 0, Passed: 18               OK: dotnet test
+=== 6/10 packaging ===          OK: build-deb.sh / OK: deb produced / OK: deb extracts
+=== 7/10 data parity ===         OK: converter + resource parity
+=== 8/10 licences + CVEs ===     OK: license_audit.py (44 packages, all permissive, 0 advisories)
+=== 9/10 on-screen drive ===    OK: ui_drive.sh
+=== 10/10 scaling/theme/a11y ==  OK: ui_deep_check.sh
 ########## AUDIT RUN: ALL CHECKS GREEN ##########
 ```
 
@@ -373,7 +378,8 @@ cd linux && dotnet test Calculator.Linux.slnx --filter "Category=IsolatedProcess
 | `AUDIT/license_audit.py` | transitive licence + CVE gate |
 | `AUDIT/parity_check.py` | converter data and resource-table byte parity |
 | `AUDIT/ui_drive.sh` | live on-screen driver |
-| `AUDIT/run_all.sh` | the 9-step gate |
+| `AUDIT/ui_deep_check.sh` | scaling, live theme toggle, AT-SPI bus |
+| `AUDIT/run_all.sh` | the 10-step gate |
 | `AUDIT/TEST_MATRIX.csv` | ID → steps → expected → expected-source → actual → method → result |
 | `AUDIT/DECISIONS.md` | 4 deviations, 1 assumption, 1 environment blocker (now resolved) |
 | `AUDIT/INVENTORY.md` | reference contract |

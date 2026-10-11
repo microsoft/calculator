@@ -45,17 +45,6 @@ public sealed class ConverterSymbolLayoutTests : IDisposable
         Avalonia.Threading.Dispatcher.UIThread.RunJobs();
     }
 
-    private TextBlock Symbol(string text)
-    {
-        Avalonia.Threading.Dispatcher.UIThread.RunJobs();
-        return _window.GetLogicalDescendants()
-            .OfType<TextBlock>()
-            .FirstOrDefault(t => t.Text == text && t.Name.Length == 0 && t.Opacity < 1)
-            ?? _window.GetLogicalDescendants()
-                .OfType<TextBlock>()
-                .First(t => t.Text == text && t.Opacity < 1);
-    }
-
     private void ShowCurrency()
     {
         var list = _window.GetLogicalDescendants().OfType<ListBox>().First(c => c.Name == "ModeList");
@@ -64,28 +53,48 @@ public sealed class ConverterSymbolLayoutTests : IDisposable
         Avalonia.Threading.Dispatcher.UIThread.RunJobs();
     }
 
+    /// <summary>
+    /// The two currency-symbol TextBlocks, located STRUCTURALLY: they are the
+    /// only TextBlocks on the converter's Row 2 (the symbol row), at Column 0
+    /// and Column 2 of the three-column display grid.
+    ///
+    /// Deliberately not located by their text. The symbol characters come from
+    /// the live rate feed, so a text-based lookup makes the test depend on the
+    /// network - it passed when the feed answered and failed when it did not.
+    /// </summary>
+    private (TextBlock Leading, TextBlock Trailing) SymbolBlocks()
+    {
+        var converter = _window.GetLogicalDescendants().OfType<Grid>()
+            .First(g => g.Name == "ConverterPanel");
+
+        var display = converter.GetLogicalDescendants().OfType<Grid>()
+            .First(g => g.RowDefinitions.Count == 3 && g.ColumnDefinitions.Count == 3);
+
+        var row = display.GetLogicalDescendants().OfType<TextBlock>()
+            .Where(t => Grid.GetRow(t) == 2)
+            .OrderBy(t => Grid.GetColumn(t))
+            .ToList();
+
+        Assert.True(row.Count == 2, $"expected 2 symbol blocks on row 2, found {row.Count}");
+        Assert.Equal(0, Grid.GetColumn(row[0]));
+        Assert.Equal(2, Grid.GetColumn(row[1]));
+        return (row[0], row[1]);
+    }
+
     [AvaloniaFact]
     public void CurrencySymbolsSitBesideTheirAmounts()
     {
         ShowCurrency();
-
-        // Both symbol TextBlocks exist and are bound to the VM.
-        TextBlock? first = _window.GetLogicalDescendants().OfType<TextBlock>()
-            .FirstOrDefault(t => t.Text == "₺");
-        TextBlock? second = _window.GetLogicalDescendants().OfType<TextBlock>()
-            .FirstOrDefault(t => t.Text == "¥");
-
-        Assert.NotNull(first);
-        Assert.NotNull(second);
+        var (leading, trailing) = SymbolBlocks();
 
         // Leading symbol: the reference pads it 16px so the glyph is not clipped
         // by the window edge (AUD-S3-008).
-        Assert.Equal(16, first!.Padding.Left);
-        Assert.Equal(Avalonia.Layout.HorizontalAlignment.Left, first.HorizontalAlignment);
+        Assert.Equal(16, leading.Padding.Left);
+        Assert.Equal(Avalonia.Layout.HorizontalAlignment.Left, leading.HorizontalAlignment);
 
         // Trailing symbol: right-aligned so it trails Value2, which the port
         // renders with TextAlignment="Right".
-        Assert.Equal(Avalonia.Layout.HorizontalAlignment.Right, second!.HorizontalAlignment);
+        Assert.Equal(Avalonia.Layout.HorizontalAlignment.Right, trailing.HorizontalAlignment);
     }
 
     [AvaloniaFact]
@@ -120,9 +129,13 @@ public sealed class ConverterSymbolLayoutTests : IDisposable
     [AvaloniaFact]
     public void NonCurrencyConverters_HideTheSymbolRow()
     {
-        // Switching away from Currency must clear the symbols, or Volume et al.
-        // would keep showing a stray glyph (the Currency->Volume transition is
+        // Switching away from Currency must hide the symbol row, or Volume et al.
+        // would keep showing a stray glyph (the Currency -> Volume transition is
         // exactly where stale state would show up).
+        //
+        // Again structural: CurrencySymbolVisibility is false for every
+        // non-currency converter, so the blocks are hidden whatever text (if any)
+        // they happen to hold.
         foreach (string tag in new[]
                  {
                      "Volume", "Length", "Weight", "Temperature", "Energy",
@@ -132,12 +145,9 @@ public sealed class ConverterSymbolLayoutTests : IDisposable
             ShowCurrency();
             SelectConverter(tag);
 
-            foreach (TextBlock t in _window.GetLogicalDescendants().OfType<TextBlock>()
-                         .Where(t => t.Opacity < 1 && !string.IsNullOrEmpty(t.Text)))
-            {
-                Assert.False(t.IsVisible && (t.Text == "₺" || t.Text == "¥" || t.Text == "$" || t.Text == "€"),
-                    $"{tag}: currency symbol '{t.Text}' still visible after leaving Currency");
-            }
+            var (leading, trailing) = SymbolBlocks();
+            Assert.False(leading.IsVisible, $"{tag}: leading symbol still visible");
+            Assert.False(trailing.IsVisible, $"{tag}: trailing symbol still visible");
         }
     }
 }

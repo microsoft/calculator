@@ -15,25 +15,25 @@ check() { if [ "$1" -ne 0 ]; then echo "FAIL: $2 (exit $1)"; FAIL=1; else echo "
 
 cd "$ROOT" || exit 1
 
-step "1/9 engine build (CMake, documented steps)"
+step "1/10 engine build (CMake, documented steps)"
 cmake -S linux/src/CalcManager.Linux -B linux/build/calc-manager -DCMAKE_BUILD_TYPE=Release > "$LOGDIR/run_engine_build.log" 2>&1
 check $? "cmake configure"
 cmake --build linux/build/calc-manager -j"$(nproc)" >> "$LOGDIR/run_engine_build.log" 2>&1
 check $? "cmake build"
 
-step "2/9 engine smoke (ctest)"
+step "2/10 engine smoke (ctest)"
 ctest --test-dir linux/build/calc-manager 2>&1 | tee "$LOGDIR/run_ctest.log"
 check ${PIPESTATUS[0]} "ctest"
 
-step "3/9 managed build"
+step "3/10 managed build"
 ( cd linux && dotnet build Calculator.Linux.slnx ) > "$LOGDIR/run_dotnet_build.log" 2>&1
 check $? "dotnet build"
 
-step "4/9 full test suite (engine + VM + headless UI)"
+step "4/10 full test suite (engine + VM + headless UI)"
 ( cd linux && dotnet test Calculator.Linux.slnx --filter "Category!=IsolatedProcess" ) 2>&1 | tee "$LOGDIR/run_dotnet_test.log"
 check ${PIPESTATUS[0]} "dotnet test"
 
-step "5/9 locale display tests, in their own process"
+step "5/10 locale display tests, in their own process"
 # The unmodified engine installs its separator resource provider globally on the
 # first instance built in the process and cannot change it afterwards (the
 # member is `const`). Locale-dependent display assertions are therefore only
@@ -41,7 +41,7 @@ step "5/9 locale display tests, in their own process"
 ( cd linux && dotnet test Calculator.Linux.slnx --filter "Category=IsolatedProcess" ) 2>&1 | tee "$LOGDIR/run_dotnet_test_locale.log"
 check ${PIPESTATUS[0]} "dotnet test (isolated locale process)"
 
-step "6/9 packaging"
+step "6/10 packaging"
 ./linux/packaging/build-deb.sh 1.0.0 > "$LOGDIR/run_deb.log" 2>&1
 check $? "build-deb.sh (must exit 0 on success - see AUD-S3-002)"
 DEB="$ROOT/linux/publish/calculator-linux_1.0.0_amd64.deb"
@@ -51,23 +51,39 @@ dpkg-deb -x "$DEB" /tmp/opencode/auditdeb > /dev/null 2>&1
 check $? "deb extracts"
 command -v lintian > /dev/null && { lintian "$DEB" 2>&1 | tee "$LOGDIR/run_lintian.log"; echo "(lintian output above; empty = clean)"; }
 
-step "7/9 data-parity checks vs the reference"
+step "7/10 data-parity checks vs the reference"
 python3 "$ROOT/AUDIT/parity_check.py" 2>&1 | tee "$LOGDIR/run_parity.log"
 check ${PIPESTATUS[0]} "converter + resource parity"
 
-step "8/9 NuGet transitive licence audit"
+step "8/10 NuGet transitive licence audit"
 python3 "$ROOT/AUDIT/license_audit.py" > "$LOGDIR/run_license_audit.log" 2>&1
 check $? "license_audit.py (non-permissive licence in the dependency graph)"
 
-step "9/9 reference live on-screen drive (requires an X display)"
+step "9/10 reference live on-screen drive (requires an X display)"
+# The gate must not silently skip: an earlier run reported ALL CHECKS GREEN
+# while skipping this step because DISPLAY was unset in the calling shell.
+if [ -z "${DISPLAY:-}" ] && [ -S /tmp/.X11-unix/X0 ]; then
+  export DISPLAY=:0
+fi
 if [ -n "${DISPLAY:-}" ] && command -v xdotool > /dev/null 2>&1 && \
    xdotool search --name Calculator > /dev/null 2>&1; then
   ./AUDIT/ui_drive.sh > "$LOGDIR/run_ui_drive.log" 2>&1
   check $? "ui_drive.sh"
+elif [ -n "${AUDIT_REQUIRE_DISPLAY:-}" ]; then
+  echo "FAIL: no X display, and AUDIT_REQUIRE_DISPLAY is set"
+  FAIL=1
 else
-  echo "  SKIP: no X display / xdotool; run manually on a desktop session"
+  echo "  SKIP: no X display / xdotool. Set AUDIT_REQUIRE_DISPLAY=1 to make this fatal."
 fi
 
+
+step "10/10 scaling / live dark mode / AT-SPI bus"
+if [ -n "${DISPLAY:-}" ] && [ -S /tmp/.X11-unix/X0 ]; then
+  ./AUDIT/ui_deep_check.sh > "$LOGDIR/run_ui_deep_check.log" 2>&1
+  check $? "ui_deep_check.sh (scaling, live theme toggle, a11y bus)"
+else
+  echo "  SKIP: no X display. Run AUDIT/ui_deep_check.sh on a desktop session."
+fi
 
 echo
 if [ "$FAIL" -ne 0 ]; then echo "########## AUDIT RUN: FAILURES PRESENT ##########"; exit 1; fi
