@@ -1,5 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+// Nullable analysis is disabled here: this file is a verbatim port of
+// non-nullable-annotated upstream code; behavior is covered by tests.
+#nullable disable
+#pragma warning disable CS8632 // annotations kept for readers; analysis off (see above)
 
 // The NavCategory group of classes and enumerations is intended to serve
 // as a single location for storing metadata about a navigation mode.
