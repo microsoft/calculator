@@ -158,8 +158,7 @@ int main()
     unsigned cmdCount = calc_manager_history_item_commands(h, 0, 0, nullptr, 0);
     // "2 + 2" replays as exactly [2, +, 2] (= is not a stored command).
     int cmds[16] = {};
-    if (cmdCount != 3 || calc_manager_history_item_commands(h, 0, 0, cmds, 16) != 3 || cmds[0] != 132
-        || cmds[1] != 93 || cmds[2] != 132)
+    if (cmdCount != 3 || calc_manager_history_item_commands(h, 0, 0, cmds, 16) != 3 || cmds[0] != 132 || cmds[1] != 93 || cmds[2] != 132)
     {
         std::printf("FAIL: history commands != [132,93,132] (count=%u)\n", cmdCount);
         return 1;

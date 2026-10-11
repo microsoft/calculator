@@ -72,9 +72,7 @@ namespace
     // Maps a token's command index to a CalculationManager::CommandType id
     // (0 Unary, 1 Binary, 2 Operand, 3 Parentheses), or -1 when the token
     // has no command. Mirrors how the C# VM classifies tokens for display.
-    int CommandTypeFor(
-        int commandIndex,
-        std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands)
+    int CommandTypeFor(int commandIndex, std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands)
     {
         if (commands == nullptr || commandIndex < 0 || commandIndex >= static_cast<int>(commands->size()))
         {
@@ -92,9 +90,7 @@ namespace
     // Must match StandardCalculatorViewModel.GetCommandsFromExpressionCommands:
     // unary -> all codes; binary/paren -> single code; operand -> codes with
     // CommandSIGN inserted after the first non-zero code when negative.
-    void FlattenCommands(
-        const std::vector<std::shared_ptr<IExpressionCommand>>& commands,
-        std::vector<int>& out)
+    void FlattenCommands(const std::vector<std::shared_ptr<IExpressionCommand>>& commands, std::vector<int>& out)
     {
         constexpr int commandSign = static_cast<int>(CalculationManager::Command::CommandSIGN);
         constexpr int commandZero = static_cast<int>(CalculationManager::Command::Command0);
@@ -215,12 +211,7 @@ namespace
             }
             if (m_onExpressionEx != nullptr)
             {
-                m_onExpressionEx(
-                    tokenPtrs,
-                    indexPtrs,
-                    cmdTypes.empty() ? nullptr : cmdTypes.data(),
-                    static_cast<int>(ptrs.size()),
-                    m_callbacks.userData);
+                m_onExpressionEx(tokenPtrs, indexPtrs, cmdTypes.empty() ? nullptr : cmdTypes.data(), static_cast<int>(ptrs.size()), m_callbacks.userData);
             }
         }
 
@@ -353,11 +344,7 @@ namespace
 
 extern "C"
 {
-    CalcManagerHandle calc_manager_create(
-        const CalcDisplayCallbacks* callbacks,
-        const char* decimalSep,
-        const char* thousandSep,
-        const char* grouping)
+    CalcManagerHandle calc_manager_create(const CalcDisplayCallbacks* callbacks, const char* decimalSep, const char* thousandSep, const char* grouping)
     {
         if (callbacks == nullptr || callbacks->onPrimaryDisplay == nullptr)
         {
@@ -520,20 +507,13 @@ extern "C"
         }
     }
 
-    int calc_manager_get_result_for_radix(
-        CalcManagerHandle h,
-        unsigned int radix,
-        int precision,
-        int groupDigits,
-        char* buffer,
-        int capacity)
+    int calc_manager_get_result_for_radix(CalcManagerHandle h, unsigned int radix, int precision, int groupDigits, char* buffer, int capacity)
     {
         if (h == nullptr)
         {
             return calc_linux::CopyToBuffer("0", buffer, capacity);
         }
-        std::wstring wide =
-            reinterpret_cast<CalcManagerInstance*>(h)->manager->GetResultForRadix(radix, precision, groupDigits != 0);
+        std::wstring wide = reinterpret_cast<CalcManagerInstance*>(h)->manager->GetResultForRadix(radix, precision, groupDigits != 0);
         return calc_linux::CopyToBuffer(calc_linux::ToUtf8(wide), buffer, capacity);
     }
 
@@ -583,11 +563,7 @@ extern "C"
 
     // --- Task 4 additive section --------------------------------------------------
 
-    CalcManagerHandle calc_manager_create_ex(
-        const CalcDisplayCallbacksEx* callbacks,
-        const char* decimalSep,
-        const char* thousandSep,
-        const char* grouping)
+    CalcManagerHandle calc_manager_create_ex(const CalcDisplayCallbacksEx* callbacks, const char* decimalSep, const char* thousandSep, const char* grouping)
     {
         if (callbacks == nullptr || callbacks->base.onPrimaryDisplay == nullptr)
         {
@@ -613,23 +589,17 @@ extern "C"
 
 namespace
 {
-    const std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>* HistoryForMode(
-        CalculationManager::CalculatorManager* manager,
-        int mode)
+    const std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>* HistoryForMode(CalculationManager::CalculatorManager* manager, int mode)
     {
         if (manager == nullptr)
         {
             return nullptr;
         }
-        auto calcMode = (mode == 0) ? CalculationManager::CalculatorMode::Standard
-                                    : CalculationManager::CalculatorMode::Scientific;
+        auto calcMode = (mode == 0) ? CalculationManager::CalculatorMode::Standard : CalculationManager::CalculatorMode::Scientific;
         return &manager->GetHistoryItems(calcMode);
     }
 
-    const CalculationManager::HISTORYITEM* HistoryItemAt(
-        CalculationManager::CalculatorManager* manager,
-        int mode,
-        unsigned int index)
+    const CalculationManager::HISTORYITEM* HistoryItemAt(CalculationManager::CalculatorManager* manager, int mode, unsigned int index)
     {
         const auto* history = HistoryForMode(manager, mode);
         if (history == nullptr || index >= history->size())
@@ -643,15 +613,7 @@ namespace
 
 extern "C"
 {
-
-    int calc_manager_history_item(
-        CalcManagerHandle h,
-        int mode,
-        unsigned int index,
-        char* expression,
-        int expressionCapacity,
-        char* result,
-        int resultCapacity)
+    int calc_manager_history_item(CalcManagerHandle h, int mode, unsigned int index, char* expression, int expressionCapacity, char* result, int resultCapacity)
     {
         if (h == nullptr)
         {
@@ -723,10 +685,8 @@ extern "C"
         {
             return -1;
         }
-        const auto* historyItem =
-            HistoryItemAt(reinterpret_cast<CalcManagerInstance*>(h)->manager.get(), mode, item);
-        if (historyItem == nullptr || historyItem->historyItemVector.spTokens == nullptr
-            || token >= historyItem->historyItemVector.spTokens->size())
+        const auto* historyItem = HistoryItemAt(reinterpret_cast<CalcManagerInstance*>(h)->manager.get(), mode, item);
+        if (historyItem == nullptr || historyItem->historyItemVector.spTokens == nullptr || token >= historyItem->historyItemVector.spTokens->size())
         {
             return -1;
         }
@@ -743,12 +703,7 @@ extern "C"
         return 0;
     }
 
-    unsigned int calc_manager_history_item_commands(
-        CalcManagerHandle h,
-        int mode,
-        unsigned int index,
-        int* out,
-        unsigned int capacity)
+    unsigned int calc_manager_history_item_commands(CalcManagerHandle h, int mode, unsigned int index, int* out, unsigned int capacity)
     {
         std::vector<int> flat;
         if (h != nullptr)

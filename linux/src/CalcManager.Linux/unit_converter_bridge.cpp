@@ -80,8 +80,7 @@ namespace calc_linux
         return result;
     }
 
-    std::vector<UnitConversionManager::Unit> BridgeDataLoader::GetOrderedUnits(
-        const UnitConversionManager::Category& category)
+    std::vector<UnitConversionManager::Unit> BridgeDataLoader::GetOrderedUnits(const UnitConversionManager::Category& category)
     {
         std::vector<UnitConversionManager::Unit> result;
         if (m_callbacks.getUnits == nullptr)
@@ -102,17 +101,10 @@ namespace calc_linux
         return result;
     }
 
-    std::unordered_map<
-        UnitConversionManager::Unit,
-        UnitConversionManager::ConversionData,
-        UnitConversionManager::UnitHash>
+    std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>
     BridgeDataLoader::LoadOrderedRatios(const UnitConversionManager::Unit& unit)
     {
-        std::unordered_map<
-            UnitConversionManager::Unit,
-            UnitConversionManager::ConversionData,
-            UnitConversionManager::UnitHash>
-            result;
+        std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash> result;
         if (m_callbacks.getRatios == nullptr)
         {
             return result;
@@ -126,8 +118,7 @@ namespace calc_linux
         int written = m_callbacks.getRatios(unit.id, raw.data(), count, m_callbacks.userData);
         for (int i = 0; i < written && i < count; i++)
         {
-            result[ToNativeUnit(raw[i].target)] =
-                UnitConversionManager::ConversionData(raw[i].ratio, raw[i].offset, raw[i].offsetFirst != 0);
+            result[ToNativeUnit(raw[i].target)] = UnitConversionManager::ConversionData(raw[i].ratio, raw[i].offset, raw[i].offsetFirst != 0);
         }
         return result;
     }
@@ -157,8 +148,7 @@ namespace calc_linux
         m_callbacks.onDisplay(fromUtf8.c_str(), toUtf8.c_str(), m_callbacks.userData);
     }
 
-    void BridgeVMCallback::SuggestedValueCallback(
-        const std::vector<std::tuple<std::wstring, UnitConversionManager::Unit>>& suggestedValues)
+    void BridgeVMCallback::SuggestedValueCallback(const std::vector<std::tuple<std::wstring, UnitConversionManager::Unit>>& suggestedValues)
     {
         if (m_callbacks.onSuggested == nullptr)
         {
@@ -229,8 +219,7 @@ extern "C"
 {
     UnitConverterHandle unit_converter_create(const UnitConverterCbs* callbacks, const char* /*regionCode*/)
     {
-        if (callbacks == nullptr || callbacks->getCategories == nullptr || callbacks->getUnits == nullptr
-            || callbacks->getRatios == nullptr)
+        if (callbacks == nullptr || callbacks->getCategories == nullptr || callbacks->getUnits == nullptr || callbacks->getRatios == nullptr)
         {
             return nullptr;
         }
@@ -284,13 +273,7 @@ extern "C"
         return static_cast<int>(categories.size());
     }
 
-    int unit_converter_set_category(
-        UnitConverterHandle h,
-        int categoryId,
-        UCUnit* unitsOut,
-        int cap,
-        int* fromId,
-        int* toId)
+    int unit_converter_set_category(UnitConverterHandle h, int categoryId, UCUnit* unitsOut, int cap, int* fromId, int* toId)
     {
         if (h == nullptr)
         {
@@ -355,8 +338,7 @@ extern "C"
         }
         try
         {
-            *out = calc_linux::FromNativeCategory(
-                reinterpret_cast<calc_linux::UnitConverterInstance*>(h)->converter->GetCurrentCategory());
+            *out = calc_linux::FromNativeCategory(reinterpret_cast<calc_linux::UnitConverterInstance*>(h)->converter->GetCurrentCategory());
             return 0;
         }
         catch (...)
@@ -398,8 +380,7 @@ extern "C"
     {
         if (h != nullptr)
         {
-            reinterpret_cast<calc_linux::UnitConverterInstance*>(h)->converter->SwitchActive(
-                calc_linux::ToWide(newValue != nullptr ? newValue : "0"));
+            reinterpret_cast<calc_linux::UnitConverterInstance*>(h)->converter->SwitchActive(calc_linux::ToWide(newValue != nullptr ? newValue : "0"));
         }
     }
 
@@ -415,9 +396,7 @@ extern "C"
             return calc_linux::CopyToBuffer("", buffer, capacity);
         }
         return calc_linux::CopyToBuffer(
-            calc_linux::ToUtf8(reinterpret_cast<calc_linux::UnitConverterInstance*>(h)->converter->SaveUserPreferences()),
-            buffer,
-            capacity);
+            calc_linux::ToUtf8(reinterpret_cast<calc_linux::UnitConverterInstance*>(h)->converter->SaveUserPreferences()), buffer, capacity);
     }
 
     void unit_converter_restore_prefs(UnitConverterHandle h, const char* prefs)
@@ -432,8 +411,7 @@ extern "C"
     {
         if (h != nullptr)
         {
-            reinterpret_cast<calc_linux::UnitConverterInstance*>(h)->converter->SendCommand(
-                static_cast<UnitConversionManager::Command>(command));
+            reinterpret_cast<calc_linux::UnitConverterInstance*>(h)->converter->SendCommand(static_cast<UnitConversionManager::Command>(command));
         }
     }
 

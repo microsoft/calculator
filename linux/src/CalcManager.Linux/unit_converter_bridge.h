@@ -26,10 +26,7 @@ namespace calc_linux
         void LoadData() override;
         std::vector<UnitConversionManager::Category> GetOrderedCategories() override;
         std::vector<UnitConversionManager::Unit> GetOrderedUnits(const UnitConversionManager::Category& category) override;
-        std::unordered_map<
-            UnitConversionManager::Unit,
-            UnitConversionManager::ConversionData,
-            UnitConversionManager::UnitHash>
+        std::unordered_map<UnitConversionManager::Unit, UnitConversionManager::ConversionData, UnitConversionManager::UnitHash>
         LoadOrderedRatios(const UnitConversionManager::Unit& unit) override;
         bool SupportsCategory(const UnitConversionManager::Category& target) override;
 

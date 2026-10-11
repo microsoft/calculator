@@ -82,11 +82,8 @@ extern "C"
     // ("sDecimal"/"sThousand"/"sGrouping"); NULL selects en-US defaults
     // (".", ",", "3;0"). callbacks->onPrimaryDisplay must be non-NULL.
     // Returns NULL on failure.
-    CALC_MANAGER_API CalcManagerHandle calc_manager_create(
-        const CalcDisplayCallbacks* callbacks,
-        const char* decimalSep,
-        const char* thousandSep,
-        const char* grouping);
+    CALC_MANAGER_API CalcManagerHandle
+    calc_manager_create(const CalcDisplayCallbacks* callbacks, const char* decimalSep, const char* thousandSep, const char* grouping);
 
     CALC_MANAGER_API void calc_manager_destroy(CalcManagerHandle h);
 
@@ -120,13 +117,7 @@ extern "C"
     CALC_MANAGER_API void calc_manager_set_radix(CalcManagerHandle h, int radixType);
     CALC_MANAGER_API void calc_manager_set_precision(CalcManagerHandle h, int precision);
     CALC_MANAGER_API void calc_manager_update_max_int_digits(CalcManagerHandle h);
-    CALC_MANAGER_API int calc_manager_get_result_for_radix(
-        CalcManagerHandle h,
-        unsigned int radix,
-        int precision,
-        int groupDigits,
-        char* buffer,
-        int capacity);
+    CALC_MANAGER_API int calc_manager_get_result_for_radix(CalcManagerHandle h, unsigned int radix, int precision, int groupDigits, char* buffer, int capacity);
     CALC_MANAGER_API int calc_manager_get_decimal_separator(CalcManagerHandle h, char* buffer, int capacity);
 
     // --- History (counts only; item marshalling is added in Task 2) ------------
@@ -146,12 +137,7 @@ extern "C"
 
     // Expression display with per-token command types. Replaces onExpression
     // for new consumers (legacy field kept and still invoked).
-    typedef void (*CalcExpressionExFn)(
-        const char** tokens,
-        const int* indices,
-        const int* cmdTypes,
-        int count,
-        void* userData);
+    typedef void (*CalcExpressionExFn)(const char** tokens, const int* indices, const int* cmdTypes, int count, void* userData);
 
     // NOTE: append new callback fields only at the end of this struct.
     typedef struct CalcDisplayCallbacksEx
@@ -162,22 +148,13 @@ extern "C"
 
     // Create with extended callbacks (base part behaves exactly like
     // calc_manager_create). Returns NULL on failure.
-    CALC_MANAGER_API CalcManagerHandle calc_manager_create_ex(
-        const CalcDisplayCallbacksEx* callbacks,
-        const char* decimalSep,
-        const char* thousandSep,
-        const char* grouping);
+    CALC_MANAGER_API CalcManagerHandle
+    calc_manager_create_ex(const CalcDisplayCallbacksEx* callbacks, const char* decimalSep, const char* thousandSep, const char* grouping);
 
     // History item texts. Returns 0 on success, -1 for bad mode/index.
     // Buffers follow the CopyToBuffer convention (NUL-terminated, truncated).
-    CALC_MANAGER_API int calc_manager_history_item(
-        CalcManagerHandle h,
-        int mode,
-        unsigned int index,
-        char* expression,
-        int expressionCapacity,
-        char* result,
-        int resultCapacity);
+    CALC_MANAGER_API int
+    calc_manager_history_item(CalcManagerHandle h, int mode, unsigned int index, char* expression, int expressionCapacity, char* result, int resultCapacity);
 
     CALC_MANAGER_API unsigned int calc_manager_history_count_for_mode(CalcManagerHandle h, int mode);
     CALC_MANAGER_API unsigned int calc_manager_max_history_size(CalcManagerHandle h);
@@ -202,12 +179,7 @@ extern "C"
     // StandardCalculatorViewModel.Recalculate). Returns the needed count;
     // with out==NULL or cap==0 nothing is written. Order matches the
     // upstream GetCommandsFromExpressionCommands flattening.
-    CALC_MANAGER_API unsigned int calc_manager_history_item_commands(
-        CalcManagerHandle h,
-        int mode,
-        unsigned int index,
-        int* out,
-        unsigned int capacity);
+    CALC_MANAGER_API unsigned int calc_manager_history_item_commands(CalcManagerHandle h, int mode, unsigned int index, int* out, unsigned int capacity);
 
     // Flat command ids of the live display (Recalculate parity).
     CALC_MANAGER_API unsigned int calc_manager_display_commands(CalcManagerHandle h, int* out, unsigned int capacity);
@@ -270,13 +242,13 @@ extern "C"
     typedef struct UnitConverterCbs
     {
         void* userData;
-        UCGetCategoriesFn getCategories;     // required
-        UCGetUnitsFn getUnits;               // required
-        UCGetRatiosFn getRatios;             // required
+        UCGetCategoriesFn getCategories;       // required
+        UCGetUnitsFn getUnits;                 // required
+        UCGetRatiosFn getRatios;               // required
         UCSupportsCategoryFn supportsCategory; // may be NULL (= support all)
-        UCDisplayFn onDisplay;               // may be NULL
-        UCSuggestedFn onSuggested;           // may be NULL
-        UCSimpleFn onMaxDigits;              // may be NULL
+        UCDisplayFn onDisplay;                 // may be NULL
+        UCSuggestedFn onSuggested;             // may be NULL
+        UCSimpleFn onMaxDigits;                // may be NULL
     } UnitConverterCbs;
 
     typedef struct UnitConverterOpaque* UnitConverterHandle;
@@ -289,13 +261,7 @@ extern "C"
     CALC_MANAGER_API int unit_converter_get_categories(UnitConverterHandle h, UCCategory* out, int cap);
     // Selects a category by id; returns the unit count and the default
     // from/to unit ids. fromId/toId may be NULL.
-    CALC_MANAGER_API int unit_converter_set_category(
-        UnitConverterHandle h,
-        int categoryId,
-        UCUnit* unitsOut,
-        int cap,
-        int* fromId,
-        int* toId);
+    CALC_MANAGER_API int unit_converter_set_category(UnitConverterHandle h, int categoryId, UCUnit* unitsOut, int cap, int* fromId, int* toId);
     // Returns 0 on success, -1 when there is no current category yet.
     CALC_MANAGER_API int unit_converter_get_current_category(UnitConverterHandle h, UCCategory* out);
     CALC_MANAGER_API void unit_converter_set_unit_types(UnitConverterHandle h, int fromId, int toId);
