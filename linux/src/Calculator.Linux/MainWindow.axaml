@@ -573,8 +573,17 @@
     <Border Background="{DynamicResource AppSurfaceBrush}" CornerRadius="4" Padding="0,6"
             MinWidth="240" MaxHeight="620" BoxShadow="0 8 24 0 #66000000">
       <ListBox Classes="panel" SelectionChanged="ModeList_SelectionChanged" Name="ModeList">
+        <!--
+          Order and access keys are the reference's, from
+          src/Calculator.ViewModels/Common/NavCategory.cs CategoryManifest:
+            Calculator group : Standard(1) Scientific(2) Graphing(3) Programmer(4) Date(5)
+            Converter group  : Currency, Volume, Length, Weight, Temperature, Energy,
+                               Area, Speed, Time, Power, Data, Pressure, Angle
+          Graphing sits THIRD, between Scientific and Programmer.
+        -->
         <ListBoxItem Classes="nav" Content="Standard" Tag="Standard" IsSelected="True" />
         <ListBoxItem Classes="nav" Content="Scientific" Tag="Scientific" />
+        <ListBoxItem Classes="nav" Content="Graphing" Tag="Graphing" />
         <ListBoxItem Classes="nav" Content="Programmer" Tag="Programmer" />
         <ListBoxItem Classes="nav" Content="Date calculation" Tag="Date" />
         <ListBoxItem Classes="nav" Content="Currency" Tag="Currency" />
@@ -590,7 +599,6 @@
         <ListBoxItem Classes="nav" Content="Data" Tag="Data" />
         <ListBoxItem Classes="nav" Content="Pressure" Tag="Pressure" />
         <ListBoxItem Classes="nav" Content="Angle" Tag="Angle" />
-        <ListBoxItem Classes="nav" Content="Graphing" Tag="Graphing" />
         <ListBoxItem Classes="nav" Content="About" Tag="About" />
       </ListBox>
     </Border>

@@ -1,0 +1,677 @@
+{
+ "source": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs",
+ "commit": "d125246a4e19842ce1332e6c7839cf0e110027d8",
+ "contract": "ValidateViewModelByCommands(vm, items, doReset): if doReset -> ButtonPressed(Clear), ButtonPressed(ClearEntry), ClearMemoryCommand(null); then for each item: ButtonPressed(command) and assert DisplayValue. '{DEC}' is resolved from the active localization's decimal separator.",
+ "count": 21,
+ "assertions": 114,
+ "skipped_needing_setup": [
+  {
+   "method": "ButtonPressedLeftHandOperandAndDecimalEnteredTest",
+   "reason": "no constant-only TestItem array"
+  },
+  {
+   "method": "ButtonPressedDecimalOperationTest",
+   "reason": "no constant-only TestItem array"
+  },
+  {
+   "method": "CalculationResultAutomationNameVerification",
+   "reason": "extra setup: Assert.AreEqual(\"Display is 123\", _viewModel.CalculationResultAutomationName); Assert.AreEqual(\"Display is 7\", _viewModel.CalculationResultAutomationName); Asse"
+  },
+  {
+   "method": "ProgrammerModeAutoConvertedValue",
+   "reason": "extra setup: _viewModel.IsProgrammer = true; Assert.AreEqual(\"F\", _viewModel.HexDisplayValue); Assert.AreEqual(\"15\", _viewModel.DecimalDisplayValue); Assert.AreEqual(\"17\", _"
+  },
+  {
+   "method": "ProgrammerModeRadixGrouping",
+   "reason": "extra setup: _viewModel.IsProgrammer = true; Assert.AreEqual(\"75B CD15\", _viewModel.HexDisplayValue); Assert.AreEqual(\"123,456,789\", _viewModel.DecimalDisplayValue); Assert."
+  },
+  {
+   "method": "ProgrammerModeNot",
+   "reason": "extra setup: _viewModel.IsProgrammer = true; Assert.AreEqual(\"FFFF FFFF FFFF FFFE\", _viewModel.HexDisplayValue); Assert.AreEqual(\"-2\", _viewModel.DecimalDisplayValue); Asser"
+  },
+  {
+   "method": "ProgrammerModeAndOr",
+   "reason": "extra setup: _viewModel.IsProgrammer = true;"
+  },
+  {
+   "method": "ProgrammerModeClear",
+   "reason": "extra setup: _viewModel.IsProgrammer = true;"
+  },
+  {
+   "method": "OnMemoryAddWhenMemoryEmpty",
+   "reason": "no constant-only TestItem array"
+  },
+  {
+   "method": "OnMemorySubtractWhenMemoryEmpty",
+   "reason": "no constant-only TestItem array"
+  },
+  {
+   "method": "OnNegativeEntryInMemory",
+   "reason": "no constant-only TestItem array"
+  },
+  {
+   "method": "OnDecimalEntryInMemory",
+   "reason": "no constant-only TestItem array"
+  },
+  {
+   "method": "OnNegativeDecimalInMemory",
+   "reason": "no constant-only TestItem array"
+  },
+  {
+   "method": "OnDecimalAddedToMemory",
+   "reason": "no constant-only TestItem array"
+  },
+  {
+   "method": "OnMemorySavedInHexRadixAndSwitchedToStandardMode",
+   "reason": "extra setup: ChangeMode(_viewModel, 2 /*Programmer*/); _viewModel.OnMemoryButtonPressed(); ChangeMode(_viewModel, 1 /*Scientific*/); _viewModel.OnMemoryItemPressed(0); Asser"
+  },
+  {
+   "method": "OnMemorySavedInHexRadixAndRadixChanges",
+   "reason": "extra setup: ChangeMode(_viewModel, 2 /*Programmer*/); _viewModel.OnMemoryButtonPressed(); _viewModel.SwitchProgrammerModeBase(NumberBase.OctBase); var memorySlotOct = _view"
+  },
+  {
+   "method": "OnMemoryItemPressed",
+   "reason": "no constant-only TestItem array"
+  },
+  {
+   "method": "OnMemoryItemPressedNoMemory",
+   "reason": "extra setup: _viewModel.OnMemoryItemPressed(0); Assert.AreEqual(\"12\", _viewModel.DisplayValue); Assert.AreEqual(0, _viewModel.MemorizedNumbers.Count);"
+  },
+  {
+   "method": "OnMemoryItemAddAndSubtract",
+   "reason": "no constant-only TestItem array"
+  },
+  {
+   "method": "VerifyAnnouncementAfterBinaryOperatorReceived",
+   "reason": "no constant-only TestItem array"
+  },
+  {
+   "method": "VerifyAnnouncementAfterMultipleBinaryOperatorsReceived",
+   "reason": "no constant-only TestItem array"
+  }
+ ],
+ "vectors": [
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedLeftHandOperandEnteredTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "One",
+     "expected": "1"
+    },
+    {
+     "command": "Three",
+     "expected": "13"
+    },
+    {
+     "command": "Five",
+     "expected": "135"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedLeftHandOperandAndEqualsEnteredTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "One",
+     "expected": "1"
+    },
+    {
+     "command": "Three",
+     "expected": "13"
+    },
+    {
+     "command": "Equals",
+     "expected": "13"
+    },
+    {
+     "command": "Equals",
+     "expected": "13"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedLeftHandOperandAndOperationEnteredTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "One",
+     "expected": "1"
+    },
+    {
+     "command": "Three",
+     "expected": "13"
+    },
+    {
+     "command": "Add",
+     "expected": "13"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedRightHandOperandEnteredTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "One",
+     "expected": "1"
+    },
+    {
+     "command": "Three",
+     "expected": "13"
+    },
+    {
+     "command": "Add",
+     "expected": "13"
+    },
+    {
+     "command": "Eight",
+     "expected": "8"
+    },
+    {
+     "command": "Zero",
+     "expected": "80"
+    },
+    {
+     "command": "One",
+     "expected": "801"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedAdditionWithEqualsTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "One",
+     "expected": "1"
+    },
+    {
+     "command": "Add",
+     "expected": "1"
+    },
+    {
+     "command": "Two",
+     "expected": "2"
+    },
+    {
+     "command": "Equals",
+     "expected": "3"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedSubtractionWithEqualsTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "One",
+     "expected": "1"
+    },
+    {
+     "command": "Subtract",
+     "expected": "1"
+    },
+    {
+     "command": "Two",
+     "expected": "2"
+    },
+    {
+     "command": "Equals",
+     "expected": "-1"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedMultiplyWithEqualsTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "Three",
+     "expected": "3"
+    },
+    {
+     "command": "Multiply",
+     "expected": "3"
+    },
+    {
+     "command": "Five",
+     "expected": "5"
+    },
+    {
+     "command": "Equals",
+     "expected": "15"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedDivideTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "Nine",
+     "expected": "9"
+    },
+    {
+     "command": "Divide",
+     "expected": "9"
+    },
+    {
+     "command": "Three",
+     "expected": "3"
+    },
+    {
+     "command": "Equals",
+     "expected": "3"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedDivideByZeroNegativeTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "Seven",
+     "expected": "7"
+    },
+    {
+     "command": "Divide",
+     "expected": "7"
+    },
+    {
+     "command": "Zero",
+     "expected": "0"
+    },
+    {
+     "command": "Equals",
+     "expected": "Cannot divide by zero"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedExpressionWithMultipleOperatorsTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "Eight",
+     "expected": "8"
+    },
+    {
+     "command": "Divide",
+     "expected": "8"
+    },
+    {
+     "command": "Two",
+     "expected": "2"
+    },
+    {
+     "command": "Multiply",
+     "expected": "4"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedExpressionWithMultipleOperatorsInSuccessionTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "Eight",
+     "expected": "8"
+    },
+    {
+     "command": "Divide",
+     "expected": "8"
+    },
+    {
+     "command": "Add",
+     "expected": "8"
+    },
+    {
+     "command": "Multiply",
+     "expected": "8"
+    },
+    {
+     "command": "Two",
+     "expected": "2"
+    },
+    {
+     "command": "Multiply",
+     "expected": "16"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedExpressionWithMultipleEqualsAfterEvaluateTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "Eight",
+     "expected": "8"
+    },
+    {
+     "command": "Multiply",
+     "expected": "8"
+    },
+    {
+     "command": "Two",
+     "expected": "2"
+    },
+    {
+     "command": "Equals",
+     "expected": "16"
+    },
+    {
+     "command": "Equals",
+     "expected": "32"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedExpressionWithBackSpaceTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "Seven",
+     "expected": "7"
+    },
+    {
+     "command": "Subtract",
+     "expected": "7"
+    },
+    {
+     "command": "Six",
+     "expected": "6"
+    },
+    {
+     "command": "Backspace",
+     "expected": "0"
+    },
+    {
+     "command": "Backspace",
+     "expected": "0"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedExpressionWithClearTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "Nine",
+     "expected": "9"
+    },
+    {
+     "command": "One",
+     "expected": "91"
+    },
+    {
+     "command": "Subtract",
+     "expected": "91"
+    },
+    {
+     "command": "Six",
+     "expected": "6"
+    },
+    {
+     "command": "Eight",
+     "expected": "68"
+    },
+    {
+     "command": "Clear",
+     "expected": "0"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedCalculatorModeSwitch",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "IsStandardMode",
+     "expected": "0"
+    },
+    {
+     "command": "One",
+     "expected": "1"
+    },
+    {
+     "command": "Add",
+     "expected": "1"
+    },
+    {
+     "command": "Two",
+     "expected": "2"
+    },
+    {
+     "command": "Multiply",
+     "expected": "3"
+    },
+    {
+     "command": "Three",
+     "expected": "3"
+    },
+    {
+     "command": "Equals",
+     "expected": "9"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedCalculatorModeSwitch",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "IsScientificMode",
+     "expected": "0"
+    },
+    {
+     "command": "One",
+     "expected": "1"
+    },
+    {
+     "command": "Add",
+     "expected": "1"
+    },
+    {
+     "command": "Two",
+     "expected": "2"
+    },
+    {
+     "command": "Multiply",
+     "expected": "2"
+    },
+    {
+     "command": "Three",
+     "expected": "3"
+    },
+    {
+     "command": "Equals",
+     "expected": "7"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedUnaryOperatorTest",
+   "doReset": true,
+   "steps": [
+    {
+     "command": "IsStandardMode",
+     "expected": "0"
+    },
+    {
+     "command": "Five",
+     "expected": "5"
+    },
+    {
+     "command": "Invert",
+     "expected": "0{DEC}2"
+    },
+    {
+     "command": "Equals",
+     "expected": "0{DEC}2"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedUnaryOperatorTest",
+   "doReset": false,
+   "steps": [
+    {
+     "command": "One",
+     "expected": "1"
+    },
+    {
+     "command": "Six",
+     "expected": "16"
+    },
+    {
+     "command": "Sqrt",
+     "expected": "4"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedUnaryOperatorTest",
+   "doReset": false,
+   "steps": [
+    {
+     "command": "Six",
+     "expected": "6"
+    },
+    {
+     "command": "Negate",
+     "expected": "-6"
+    },
+    {
+     "command": "Nine",
+     "expected": "-69"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedUnaryOperatorTest",
+   "doReset": false,
+   "steps": [
+    {
+     "command": "Clear",
+     "expected": "0"
+    },
+    {
+     "command": "IsScientificMode",
+     "expected": "0"
+    },
+    {
+     "command": "Five",
+     "expected": "5"
+    },
+    {
+     "command": "InvSin",
+     "expected": "Invalid input"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  },
+  {
+   "origin": "src/Calculator.Tests/StandardCalculatorViewModelTests.cs::ButtonPressedUnaryOperatorTest",
+   "doReset": false,
+   "steps": [
+    {
+     "command": "Clear",
+     "expected": "0"
+    },
+    {
+     "command": "Four",
+     "expected": "4"
+    },
+    {
+     "command": "Factorial",
+     "expected": "24"
+    },
+    {
+     "command": "None",
+     "expected": ""
+    }
+   ]
+  }
+ ]
+}

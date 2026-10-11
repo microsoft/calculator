@@ -196,6 +196,116 @@ was already correct).
 
 ---
 
+## AUD-S3-006 — Graphing was last in the navigation flyout, not third
+
+**Severity:** S3 (presentation deviation from the reference)
+**Status:** FIXED (this audit)
+
+### Repro
+Open the hamburger flyout and read the list: the port showed
+
+    Standard, Scientific, Programmer, Date calculation, Currency, Volume, Length,
+    Weight and Mass, Temperature, Energy, Area, Speed, Time, Power, Data,
+    Pressure, Angle, Graphing, About
+
+### Expected
+The reference's `CategoryManifest`
+(`src/Calculator.ViewModels/Common/NavCategory.cs`) declares the calculator group
+in this order:
+
+    Standard (Number1), Scientific (Number2), **Graphing (Number3)**,
+    Programmer (Number4), Date (Number5)
+
+followed by the converter group: Currency, Volume, Length, Weight and Mass,
+Temperature, Energy, Area, Speed, Time, Power, Data, Pressure, Angle.
+
+Graphing is **third**, between Scientific and Programmer.
+
+### Actual
+Graphing appeared **last**, after all thirteen converters. The port had been
+built against the older Windows 10 ordering where Graphing trailed the list.
+
+### Root cause
+The flyout list was authored by hand from memory rather than transcribed from
+the reference's manifest.
+
+### Fix
+`linux/src/Calculator.Linux/MainWindow.axaml` now lists Graphing third, in the
+reference's order.
+
+### Regression test
+`ModeNavigationParityTests.FlyoutOrder_MatchesReferenceCategoryManifest` asserts
+the exact 19-entry sequence, and `Graphing_IsThird_NotLast` pins the position
+explicitly. The pre-existing `WindowLayoutTests.ModeFlyout_IsClosedByDefault_
+AndListsEveryMode` had silently recorded the wrong order; it was corrected to the
+reference's sequence rather than relaxed.
+
+---
+
+## AUD-S3-007 — The reference's Ctrl+Alt+1..5 mode shortcuts were missing
+
+**Severity:** S3 (missing shortcut behaviour)
+**Status:** FIXED (this audit)
+
+### Repro
+Focus the window, press Ctrl+Alt+1 through Ctrl+Alt+5. Nothing happened; the only
+way to change mode was to open the flyout and click.
+
+### Expected
+`CategoryManifest` binds `VirtualKey = MyVirtualKey.Number1..5` with
+`AccessKey = "1".."5"` to Standard, Scientific, Graphing, Programmer and Date.
+
+### Actual
+No mode was reachable from the keyboard.
+
+### Fix
+`MainWindow.SwitchModeByShortcut(Key)` handles Ctrl+Alt+1..5 (how Windows
+resolves those access keys) and also plain Alt+1..5 (the Linux/desktop mnemonic
+convention; the app has no Alt menu so it cannot collide). Digits 6-9 are not
+mode shortcuts.
+
+`AccessKey` was deliberately **not** added to the XAML: Avalonia 11.3 has no
+such property on `ListBoxItem` (AVLN2000 at build time), so the behaviour lives
+in the key handler where it can actually work.
+
+### Regression test
+`ModeNavigationParityTests` - 5 Ctrl+Alt+digit cases, 5 Alt+digit cases, and 3
+negative cases proving digits 6/7/9 are not bound.
+
+---
+
+## AUD-NOTE-004 — Reference C# test replay (new in this pass)
+
+Three more reference test bodies replayed verbatim against the port:
+
+| Reference source | Port test | Result |
+|---|---|---|
+| `CalculatorUnitTests/CalculatorManagerTest.cpp` (158 vectors) | `ReferenceGoldenVectorTests` | 158/158 |
+| `Calculator.Tests/DateCalculatorTests.cs` - `DateCalculatorUnitTests` | `ReferenceDateEngineTests` | 9/9 |
+| `Calculator.Tests/CopyPasteManagerTests.cs` (4 bodies) | `ReferenceCopyPasteTests` | 4/4 |
+| `Calculator.Tests/StandardCalculatorViewModelTests.cs` (21 sequences / 114 assertions) | `ReferenceVmGoldenVectorTests` | 22/22 |
+
+The VM sequences are extracted by `AUDIT/extract_vm_vectors.py`, which also
+reports the 21 methods it deliberately skips because they need bespoke view-model
+setup (mode switches, radix changes, memory preloading) - reported, not silently
+mis-replayed. `{DEC}` stands in for the reference's `_decimalSeparator`
+concatenation and is resolved from the active localization at replay time.
+
+All passed with no code changes: the port's C# layer was already correct.
+
+---
+
+## AUD-NOTE-005 — On-screen verification unblocked
+
+After a logout/login the X11 display maps windows normally and the real app was
+driven with `xdotool` through every mode (`AUDIT/ui_drive.sh`,
+`AUDIT/evidence/screens/`). Confirmed on screen: the Programmer keypad is complete
+(HEX/DEC/OCT/BIN, QWORD/DWORD/WORD/BYTE/Bit flip, A-F, all 13 operator and
+memory buttons), the Standard keypad matches upstream exactly, and the flyout
+lists all nineteen entries. This is what surfaced AUD-S3-006 and AUD-S3-007.
+
+---
+
 ## Summary of this audit pass
 
 | ID | Sev | Status |

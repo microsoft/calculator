@@ -216,12 +216,18 @@ public sealed class WindowLayoutTests : IDisposable
 
         var list = Descendant<ListBox>(popup, "ModeList")!;
         var tags = list.Items.OfType<ListBoxItem>().Select(i => i.Tag as string).ToList();
+
+        // Order and membership are the reference's CategoryManifest
+        // (src/Calculator.ViewModels/Common/NavCategory.cs): the five calculator
+        // modes first - Standard, Scientific, Graphing, Programmer, Date - then
+        // the thirteen converters, then About (a port addition).
         Assert.Equal(
             new[]
             {
-                "Standard", "Scientific", "Programmer", "Date", "Currency", "Volume",
-                "Length", "Weight", "Temperature", "Energy", "Area", "Speed",
-                "Time", "Power", "Data", "Pressure", "Angle", "Graphing", "About",
+                "Standard", "Scientific", "Graphing", "Programmer", "Date",
+                "Currency", "Volume", "Length", "Weight", "Temperature", "Energy",
+                "Area", "Speed", "Time", "Power", "Data", "Pressure", "Angle",
+                "About",
             },
             tags);
     }

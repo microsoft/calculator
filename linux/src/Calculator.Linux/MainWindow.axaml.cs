@@ -647,6 +647,51 @@ public sealed partial class MainWindow : Window
         [')'] = NumbersAndOperatorsEnum.CloseParenthesis,
     };
 
+    /// <summary>
+    /// Ctrl+Alt+1..5 select Standard, Scientific, Graphing, Programmer and Date,
+    /// matching the reference's CategoryManifest (VirtualKey Number1..5,
+    /// AccessKey "1".."5"). Returns true when the key was a mode shortcut.
+    /// </summary>
+    private bool SwitchModeByShortcut(Key key)
+    {
+        ViewMode mode = key switch
+        {
+            Key.D1 or Key.NumPad1 => ViewMode.Standard,
+            Key.D2 or Key.NumPad2 => ViewMode.Scientific,
+            Key.D3 or Key.NumPad3 => ViewMode.Graphing,
+            Key.D4 or Key.NumPad4 => ViewMode.Programmer,
+            Key.D5 or Key.NumPad5 => ViewMode.Date,
+            _ => ViewMode.None,
+        };
+
+        if (mode == ViewMode.None)
+        {
+            return false;
+        }
+
+        // Keep the flyout in sync, so reopening it shows the current mode.
+        if (Find("ModeList") is ListBox list)
+        {
+            list.SelectedItem = list.Items.OfType<ListBoxItem>()
+                .FirstOrDefault(i => string.Equals(i.Tag as string, mode.ToString(), StringComparison.OrdinalIgnoreCase));
+        }
+
+        switch (mode)
+        {
+            case ViewMode.Date:
+                ShowDate();
+                break;
+            case ViewMode.Graphing:
+                ShowGraphing();
+                break;
+            default:
+                ShowCalculator(mode);
+                break;
+        }
+
+        return true;
+    }
+
     protected override void OnKeyDown(KeyEventArgs e)
     {
         bool ctrl = e.KeyModifiers.HasFlag(KeyModifiers.Control);
@@ -684,6 +729,28 @@ public sealed partial class MainWindow : Window
                 base.OnKeyDown(e);
                 return;
             }
+            e.Handled = true;
+            return;
+        }
+
+        // Reference mode shortcuts: CategoryManifest binds VirtualKey Number1..5
+        // (with AccessKey "1".."5") to Standard, Scientific, Graphing,
+        // Programmer and Date - src/Calculator.ViewModels/Common/NavCategory.cs.
+        // Reference mode shortcuts: CategoryManifest binds VirtualKey Number1..5
+        // (with AccessKey "1".."5") to Standard, Scientific, Graphing,
+        // Programmer and Date - src/Calculator.ViewModels/Common/NavCategory.cs.
+        // Windows resolves those access keys as Ctrl+Alt+<digit>; on Linux both
+        // that and the plain Alt+<digit> mnemonic form are accepted. The app has
+        // no Alt menu, so neither can collide with anything else.
+        bool alt = e.KeyModifiers.HasFlag(KeyModifiers.Alt);
+        if (alt && !ctrl && SwitchModeByShortcut(e.Key))
+        {
+            e.Handled = true;
+            return;
+        }
+
+        if (ctrl && alt && SwitchModeByShortcut(e.Key))
+        {
             e.Handled = true;
             return;
         }
