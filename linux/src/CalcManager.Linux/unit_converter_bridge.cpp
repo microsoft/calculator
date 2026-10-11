@@ -49,25 +49,6 @@ namespace calc_linux
         return result;
     }
 
-    UCUnit FromNativeUnit(const UnitConversionManager::Unit& unit)
-    {
-        thread_local std::string nameCache;
-        thread_local std::string abbrCache;
-        thread_local std::string accCache;
-        nameCache = ToUtf8(unit.name);
-        abbrCache = ToUtf8(unit.abbreviation);
-        accCache = ToUtf8(unit.accessibleName);
-        UCUnit result{};
-        result.id = unit.id;
-        result.name = nameCache.c_str();
-        result.abbreviation = abbrCache.c_str();
-        result.accessibleName = accCache.c_str();
-        result.isSource = unit.isConversionSource ? 1 : 0;
-        result.isTarget = unit.isConversionTarget ? 1 : 0;
-        result.isWhimsical = unit.isWhimsical ? 1 : 0;
-        return result;
-    }
-
     BridgeDataLoader::BridgeDataLoader(const UnitConverterCbs& callbacks)
         : m_callbacks(callbacks)
     {
@@ -183,49 +164,46 @@ namespace calc_linux
         {
             return;
         }
-        std::vector<std::string> values;
-        std::vector<UCUnit> units;
-        std::vector<UCSuggested> items;
-        values.reserve(suggestedValues.size());
-        units.reserve(suggestedValues.size());
-        items.reserve(suggestedValues.size());
-        for (const auto& entry : suggestedValues)
+        // Own every string up front: nothing here may alias shared caches,
+        // because all pointers must stay valid for the whole callback.
+        struct OwnedSuggested
         {
-            values.push_back(ToUtf8(std::get<0>(entry)));
-            units.push_back(FromNativeUnit(std::get<1>(entry)));
-        }
-        // FromNativeUnit aliases thread_local caches — re-resolve per item so
-        // every pointer in the batch stays distinct and valid during the call.
-        // (Rebuild units without aliasing: copy strings into per-item storage.)
-        struct OwnedUnit
-        {
+            std::string value;
             std::string name;
             std::string abbr;
             std::string acc;
-            UCUnit view{};
+            UCUnit unit{};
+            UCSuggested view{};
         };
-        std::vector<OwnedUnit> owned;
-        owned.reserve(units.size());
-        for (size_t i = 0; i < units.size(); i++)
+        std::vector<OwnedSuggested> owned;
+        owned.reserve(suggestedValues.size());
+        for (const auto& entry : suggestedValues)
         {
-            OwnedUnit ou;
-            ou.name = units[i].name;
-            ou.abbr = units[i].abbreviation;
-            ou.acc = units[i].accessibleName;
-            ou.view = units[i];
-            ou.view.name = ou.name.c_str();
-            ou.view.abbreviation = ou.abbr.c_str();
-            ou.view.accessibleName = ou.acc.c_str();
-            owned.push_back(std::move(ou));
+            OwnedSuggested item;
+            item.value = ToUtf8(std::get<0>(entry));
+            const auto& unit = std::get<1>(entry);
+            item.name = ToUtf8(unit.name);
+            item.abbr = ToUtf8(unit.abbreviation);
+            item.acc = ToUtf8(unit.accessibleName);
+            item.unit.id = unit.id;
+            item.unit.isSource = unit.isConversionSource ? 1 : 0;
+            item.unit.isTarget = unit.isConversionTarget ? 1 : 0;
+            item.unit.isWhimsical = unit.isWhimsical ? 1 : 0;
+            owned.push_back(std::move(item));
         }
-        for (size_t i = 0; i < values.size(); i++)
+        std::vector<UCSuggested> views;
+        views.reserve(owned.size());
+        for (auto& item : owned)
         {
-            UCSuggested item{};
-            item.value = values[i].c_str();
-            item.unit = owned[i].view;
-            items.push_back(item);
+            // Seat pointers AFTER all moves, at final addresses (SSO-safe).
+            item.unit.name = item.name.c_str();
+            item.unit.abbreviation = item.abbr.c_str();
+            item.unit.accessibleName = item.acc.c_str();
+            item.view.value = item.value.c_str();
+            item.view.unit = item.unit;
+            views.push_back(item.view);
         }
-        m_callbacks.onSuggested(items.empty() ? nullptr : items.data(), static_cast<int>(items.size()), m_callbacks.userData);
+        m_callbacks.onSuggested(views.empty() ? nullptr : views.data(), static_cast<int>(views.size()), m_callbacks.userData);
     }
 
     void BridgeVMCallback::MaxDigitsReached()
@@ -286,16 +264,20 @@ extern "C"
         {
             return 0;
         }
-        auto categories = reinterpret_cast<calc_linux::UnitConverterInstance*>(h)->converter->GetCategories();
+        auto* instance = reinterpret_cast<calc_linux::UnitConverterInstance*>(h);
+        auto categories = instance->converter->GetCategories();
         if (out != nullptr && cap > 0)
         {
             int copy = static_cast<int>(categories.size()) < cap ? static_cast<int>(categories.size()) : cap;
-            std::vector<std::string> keepAlive(static_cast<size_t>(copy));
+            instance->scratch.clear();
+            instance->scratch.reserve(static_cast<size_t>(copy));
             for (int i = 0; i < copy; i++)
             {
-                UCCategory c = calc_linux::FromNativeCategory(categories[i]);
-                keepAlive[size_t(i)] = c.name;
-                c.name = keepAlive[size_t(i)].c_str();
+                instance->scratch.push_back(calc_linux::ToUtf8(categories[i].name));
+                UCCategory c{};
+                c.id = categories[i].id;
+                c.name = instance->scratch.back().c_str();
+                c.supportsNegative = categories[i].supportsNegative ? 1 : 0;
                 out[i] = c;
             }
         }
@@ -336,16 +318,21 @@ extern "C"
         if (unitsOut != nullptr && cap > 0)
         {
             int copy = static_cast<int>(units.size()) < cap ? static_cast<int>(units.size()) : cap;
-            std::vector<std::string> keepAlive(static_cast<size_t>(copy) * 3);
+            instance->scratch.clear();
+            instance->scratch.reserve(static_cast<size_t>(copy) * 3);
             for (int i = 0; i < copy; i++)
             {
-                UCUnit u = calc_linux::FromNativeUnit(units[i]);
-                keepAlive[size_t(i) * 3] = u.name;
-                keepAlive[size_t(i) * 3 + 1] = u.abbreviation;
-                keepAlive[size_t(i) * 3 + 2] = u.accessibleName;
-                u.name = keepAlive[size_t(i) * 3].c_str();
-                u.abbreviation = keepAlive[size_t(i) * 3 + 1].c_str();
-                u.accessibleName = keepAlive[size_t(i) * 3 + 2].c_str();
+                instance->scratch.push_back(calc_linux::ToUtf8(units[i].name));
+                instance->scratch.push_back(calc_linux::ToUtf8(units[i].abbreviation));
+                instance->scratch.push_back(calc_linux::ToUtf8(units[i].accessibleName));
+                UCUnit u{};
+                u.id = units[i].id;
+                u.name = instance->scratch[size_t(i) * 3].c_str();
+                u.abbreviation = instance->scratch[size_t(i) * 3 + 1].c_str();
+                u.accessibleName = instance->scratch[size_t(i) * 3 + 2].c_str();
+                u.isSource = units[i].isConversionSource ? 1 : 0;
+                u.isTarget = units[i].isConversionTarget ? 1 : 0;
+                u.isWhimsical = units[i].isWhimsical ? 1 : 0;
                 unitsOut[i] = u;
             }
         }

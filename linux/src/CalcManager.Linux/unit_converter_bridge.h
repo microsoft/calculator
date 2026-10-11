@@ -55,6 +55,10 @@ namespace calc_linux
         std::shared_ptr<BridgeDataLoader> dataLoader;
         std::shared_ptr<BridgeVMCallback> vmCallback;
         std::unique_ptr<UnitConversionManager::UnitConverter> converter;
+        // Scratch string storage for out-param structs below. Pointers handed
+        // to C# alias this storage and stay valid until the next call on this
+        // instance (all calls originate on the UI thread).
+        std::vector<std::string> scratch;
 
         explicit UnitConverterInstance(UnitConverterCbs callbacks);
     };

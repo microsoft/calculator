@@ -18,4 +18,11 @@
     <ProjectReference Include="..\..\src\Calculator.Linux\Calculator.Linux.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Upstream default currency pairs (single source, linked not copied). -->
+    <Content Include="..\..\..\src\Calculator.ViewModels\DataLoaders\DefaultFromToCurrency.json" Link="DefaultFromToCurrency.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

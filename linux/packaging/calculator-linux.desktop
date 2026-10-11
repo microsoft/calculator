@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Calculator
+GenericName=Calculator
+Comment=Standard, scientific and programmer calculator with converters (Linux port of Windows Calculator)
+Exec=/usr/lib/calculator-linux/Calculator.Linux
+Icon=calculator-linux
+Terminal=false
+Categories=Utility;
+Keywords=calculator;calc;converter;currency;graphing;
+StartupWMClass=Calculator.Linux
