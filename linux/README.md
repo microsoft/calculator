@@ -20,7 +20,7 @@ ctest --test-dir linux/build/calc-manager
 
 # App (needs .NET 10 SDK; NuGet for restore)
 dotnet build linux/Calculator.Linux.slnx
-dotnet test linux/Calculator.Linux.slnx        # 171 tests, serialized (engine is single-threaded)
+dotnet test linux/Calculator.Linux.slnx        # 199 tests, serialized (engine is single-threaded); headless UI layout + pixel checks
 dotnet run --project linux/src/Calculator.Linux/Calculator.Linux.csproj
 ```
 
@@ -37,7 +37,8 @@ sudo dpkg -i linux/publish/calculator-linux_*_amd64.deb
 ## Layout
 
 - `src/Calculator.Linux/` — Avalonia app (`Program`, `App`, `MainWindow`,
-  `AboutWindow`; `Common/`, `Services/`, `DataLoaders/`, `Interop/`, `ViewModels/`)
+  `AboutWindow`; `Common/`, `Services/`, `DataLoaders/`, `Interop/`, `ViewModels/`,
+  `Styles/` — theme brushes + control styles ported from upstream `App.xaml`)
 - `src/CalcManager.Linux/` — CMake + shims + frozen UTF-8 C ABI + converter bridge
 - `tests/Calculator.Linux.Tests/` — xUnit parity suite
 - `docs/PORTING-NOTES.md` — the full porting record
