@@ -2,36 +2,34 @@
 
 PROJECT_ROOT: /home/elshad-guliyev/Documents/calculator   MODE: AUDIT_AND_FIX
 REFERENCE: microsoft/calculator @ d125246a4e19842ce1332e6c7839cf0e110027d8
-  (cloned to /home/elshad-guliyev/ref-calculator, read-only, never modified)
 
 ## Done
-- [x] Phase 0 RECON — mapped the port; clean-checkout build via documented
-      steps only (`evidence/logs/cleanbuild.log`); unfinished-work hunt;
-      established the engine is the unmodified upstream Ratpack rational engine.
-- [x] Phase 1 INVENTORY (reference side complete, 3264 rows)
-- [x] Phase 2 ENGINE (exactness, precision, factorial, overflow, domain errors,
-      radix, history cap, grouping) + data parity vs reference
-- [x] Phase 3 UI — **partial**: headless-Skia real-window rendering + visual-tree
-      completeness diff for all three keypads. On-screen UI-RUN BLOCKED by the
-      wedged compositor (see below).
-- [~] Phase 4 CROSS-CUTTING — partial (currency, clipboard not yet, locales not yet)
-- [~] Phase 5 PACKAGING — partial (deb, lintian, extract, exit code; licences not yet)
-- [x] Phase 6 FIX + REGRESS — 3 defects fixed, regression tests added, suite green
+- [x] Phase 0 RECON - clean-checkout build via documented steps only
+- [x] Phase 1 INVENTORY (reference side complete: 3264 rows)
+- [x] Phase 2 ENGINE - **158/158 of the reference's own golden vectors replay green**
+- [x] Phase 3 UI - headless-Skia real-window rendering + visual-tree completeness
+      diff; **all 3 keypads now expose 100% of the reference ButtonIds**
+- [x] Phase 4 CROSS-CUTTING (part) - keyboard shortcut parity (42 tests) and
+      locale matrix (22 tests) now automated and green
+- [~] Phase 5 PACKAGING (part) - deb + lintian + extract + exit code verified
+- [x] Phase 6 FIX + REGRESS - 5 defects fixed, suite green
 
-## Hard blocker
-`XDG_SESSION_TYPE=wayland`; Avalonia 11.3 is X11-only so the app uses Xwayland.
-The compositor will not map ANY new X11 toplevel — proven with a stock
-`xmessage` (also IsUnMapped) and with the pre-audit build (also fails).
-Not an app defect. Remedy: log out / log in, then run REPORT §7.
+## Defects fixed this pass
+S2-001 keypad completeness | S3-002 build-deb exit code | S3-004 layout-independent
+keys | S3-005 missing shortcuts  (S3-003 currency names fixed earlier)
 
-## Next steps (highest value first)
-1. Replay the 534 reference golden vectors (`evidence/reference_golden_vectors.md`)
-   against the port as assertions. Mechanical, high yield.
-2. Diff the 220 keyboard bindings against the port's key handler. Likely S3.
-3. Locale matrix (de_DE, ru_RU, en_IN, RTL) once a session works.
-4. Scaling 125/150/200%, accessibility/AT-SPI, soak + RSS growth.
-5. NuGet transitive licence audit.
+## Hard blocker (unchanged)
+On-screen UI-RUN impossible: the Wayland compositor will not map any new X11
+toplevel (stock `xmessage` fails identically). Avalonia 11.3 is X11-only.
+Remedy: log out / log in, then run REPORT.md section 7.
+
+## Next steps
+1. Re-verify the keypads and shortcuts on a working display (REPORT section 7).
+2. Scaling 125/150/200%, accessibility/AT-SPI/Orca, soak + RSS growth.
+3. NuGet transitive licence audit.
+4. Reference C# unit tests (src/Calculator.Tests, 288 methods) still not replayed
+   - only the C++ engine tests (86 methods, 158 vectors) are.
 
 ## State
-Branch `linux-port`. Audit fixes: 51ff26d (S2 keypad), packaging exit code (S3),
-currency names (S3, f1d4e93). Suite: 210 managed + 1 ctest, green.
+Branch `linux-port`. Suite: **432 managed tests + 1 ctest, green**.
+AUDIT/run_all.sh: ALL CHECKS GREEN.

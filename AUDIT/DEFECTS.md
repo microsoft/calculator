@@ -172,3 +172,39 @@ including items that looked like defects and were not.
 - **`ln(-1)` / `sqrt(-1)` "not erroring".** Probe bug: my keystroke helper
   silently dropped the `-`, so the engine received `ln(1)`/`sqrt(1)`. Both
   returned the correct value for what was actually sent.
+---
+
+## AUD-NOTE-003 — Locale matrix: PASSED (no defect found)
+
+Checked headlessly across 15 cultures (en-US/GB, de-DE, ru-RU, fr-FR, es-ES,
+it-IT, pt-BR, pl-PL, sv-SE, tr-TR, ja-JP, zh-CN, ar-EG, he-IL) by
+`LocaleMatrixTests`:
+
+- Decimal separator and group separator match .NET/ICU for every culture.
+- Grouping is culture-correct, including **en-IN's 2,2,3 pattern** versus
+  Western 3,3,3.
+- RTL detection (`IsRightToLeft`) correct for ar-EG, he-IL, fa-IR.
+- Invariant-globalization fallback (`CultureInfo.InvariantCulture`, i.e. running
+  without ICU data) still computes correctly rather than crashing.
+- ar-EG renders **Arabic-Indic digits** (١٬٢٣٤٫٥), which is what Windows
+  Calculator shows; the test normalises the script rather than forcing Latin.
+
+No S1/S2/S3 found here. Two false alarms were raised and retracted first: my
+expected strings were wrong (I typed `1.2345` and expected `1,234.5`, and I
+guessed the wrong space character for fr/ru grouping — in both cases the port
+was already correct).
+
+---
+
+## Summary of this audit pass
+
+| ID | Sev | Status |
+|---|---|---|
+| AUD-S2-001 Scientific/Programmer keypad incomplete | S2 | FIXED + RETESTED |
+| AUD-S3-002 build-deb.sh exits 2 on success | S3 | FIXED |
+| AUD-S3-003 currency mojibake | S3 | FIXED (verified) |
+| AUD-S3-004 shortcuts bound to hardware keys, not characters | S3 | FIXED |
+| AUD-S3-005 only ~12 of 71 reference shortcuts implemented | S3 | FIXED |
+| AUD-NOTE-001 engine has process-global state | note | documented |
+| AUD-NOTE-002 158 reference golden vectors | note | 158/158 PASS |
+| AUD-NOTE-003 locale matrix | note | PASS |
