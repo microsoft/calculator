@@ -31,7 +31,7 @@ public sealed partial class MainWindow : Window
         _vm.HistoryVM.HistoryItemClicked += item => _vm.SelectHistoryItem(item);
         DataContext = _vm;
         _dateVM = new DateCalculatorViewModel();
-        if (Find<StackPanel>("DatePanel") is { } datePanel)
+        if (Find("DatePanel") is { } datePanel)
         {
             datePanel.DataContext = _dateVM;
         }
@@ -59,10 +59,30 @@ public sealed partial class MainWindow : Window
         new AboutWindow().ShowDialog(this);
     }
 
+    private void Hamburger_Click(object? sender, RoutedEventArgs e)
+    {
+        if (Find("NavPopup") is Popup popup)
+        {
+            popup.IsOpen = !popup.IsOpen;
+        }
+    }
+
+    private void NavPopup_Closed(object? sender, EventArgs e)
+    {
+    }
+
+    private void CloseNavPopup()
+    {
+        if (Find("NavPopup") is Popup popup)
+        {
+            popup.Close();
+        }
+    }
+
     private void HistoryToggle_Click(object? sender, RoutedEventArgs e)
     {
-        if (Find<TabControl>("SidePanel") is { } panel
-            && Find<ToggleButton>("HistoryToggle") is { } toggle)
+        if (Find("SidePanel") is TabControl panel
+            && Find("HistoryToggle") is ToggleButton toggle)
         {
             panel.IsVisible = toggle.IsChecked == true;
         }
@@ -75,10 +95,10 @@ public sealed partial class MainWindow : Window
         // keypad never clips (upstream uses flyouts at small sizes; delta).
         if (change.Property == BoundsProperty && Bounds.Width < 720)
         {
-            if (Find<TabControl>("SidePanel") is { } panel && panel.IsVisible)
+            if (Find("SidePanel") is TabControl panel && panel.IsVisible)
             {
                 panel.IsVisible = false;
-                if (Find<ToggleButton>("HistoryToggle") is { } toggle)
+                if (Find("HistoryToggle") is ToggleButton toggle)
                 {
                     toggle.IsChecked = false;
                 }
@@ -88,61 +108,97 @@ public sealed partial class MainWindow : Window
 
     // --- Mode navigation -------------------------------------------------------
 
+    // Only these tags are converters. "Standard"/"Scientific"/"Programmer" are
+    // also ViewMode members, so routing them through Enum.TryParse sent the
+    // calculator modes into the converter panel.
+    private static readonly HashSet<string> ConverterTags = new(StringComparer.Ordinal)
+    {
+        "Currency", "Volume", "Length", "Weight", "Temperature",
+        "Energy", "Area", "Speed", "Time", "Power", "Data", "Pressure", "Angle",
+    };
+
     private void ModeList_SelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (sender is not ListBox list || list.SelectedItem is not ListBoxItem selected)
         {
             return;
         }
-        switch (selected.Tag as string)
+
+        string tag = selected.Tag as string ?? "Standard";
+        if (tag == "About")
         {
-            case "Scientific":
-                ShowCalculator(ViewMode.Scientific);
-                break;
-            case "Programmer":
-                ShowCalculator(ViewMode.Programmer);
-                SyncRadix();
-                SyncBits();
-                break;
-            case "Date":
-                ShowDate();
-                break;
-            case "Graphing":
-                ShowGraphing();
-                break;
-            case string tag when Enum.TryParse<ViewMode>(tag, out var converterMode)
-                && converterMode != ViewMode.Currency
-                && converterMode != ViewMode.Graphing:
-                ShowConverter(converterMode);
-                break;
-            default:
-                ShowCalculator(ViewMode.Standard);
-                break;
+            CloseNavPopup();
+            new AboutWindow().ShowDialog(this);
+            return;
+        }
+
+        // Close the flyout before switching so the keypad re-measures into the
+        // space the pane was occupying.
+        CloseNavPopup();
+
+        if (Enum.TryParse<ViewMode>(tag, out var mode) && ConverterTags.Contains(tag))
+        {
+            ShowConverter(mode);
+        }
+        else if (Enum.TryParse<ViewMode>(tag, out mode))
+        {
+            switch (mode)
+            {
+                case ViewMode.Date:
+                    ShowDate();
+                    break;
+                case ViewMode.Graphing:
+                    ShowGraphing();
+                    break;
+                default:
+                    ShowCalculator(mode);
+                    break;
+            }
+        }
+        else
+        {
+            ShowCalculator(ViewMode.Standard);
+        }
+
+        if (mode != ViewMode.Standard)
+        {
+            SyncAngle();
+            SyncRadix();
+            SyncBits();
+        }
+    }
+
+    private void SetCategoryName(string name)
+    {
+        if (Find("CategoryNameText") is TextBlock text)
+        {
+            text.Text = name;
+        }
+    }
+
+    /// <summary>Shows exactly one panel; the content host stacks them all.</summary>
+    private void ShowOnly(string panelName)
+    {
+        foreach (string name in new[] { "CalculatorPanel", "DatePanel", "ConverterPanel", "GraphingPanel" })
+        {
+            if (Find(name) is { } control)
+            {
+                control.IsVisible = name == panelName;
+            }
         }
     }
 
     private void ShowGraphing()
     {
         HideConverter();
-        Title = "Calculator – Graphing";
         _graphVM ??= new GraphingViewModel();
-        if (Find<DockPanel>("GraphingPanel") is { } panel)
+        if (Find("GraphingPanel") is { } panel)
         {
             panel.DataContext = _graphVM;
-            panel.IsVisible = true;
         }
-        if (Find<DockPanel>("CalculatorPanel") is { } calc)
-        {
-            calc.IsVisible = false;
-        }
-        if (Find<StackPanel>("DatePanel") is { } date)
-        {
-            date.IsVisible = false;
-        }
-        if (Find<DockPanel>("ConverterPanel") is { } converter)
-        {
-            converter.IsVisible = false;
-        }
+        ShowOnly("GraphingPanel");
+        Title = "Calculator – Graphing";
+        SetCategoryName("Graphing");
         SyncTrig();
     }
 
@@ -199,7 +255,7 @@ public sealed partial class MainWindow : Window
 
     private void HideConverter()
     {
-        if (Find<DockPanel>("ConverterPanel") is { } converter && converter.IsVisible)
+        if (Find("ConverterPanel") is { } converter && converter.IsVisible)
         {
             _converterVM?.SaveUserPreferences();
         }
@@ -217,19 +273,12 @@ public sealed partial class MainWindow : Window
         {
             _converterVM.CurrentCategory = category;
         }
-        if (Find<DockPanel>("ConverterPanel") is { } panel)
+        if (Find("ConverterPanel") is { } panel)
         {
             panel.DataContext = _converterVM;
-            panel.IsVisible = true;
         }
-        if (Find<DockPanel>("CalculatorPanel") is { } calc)
-        {
-            calc.IsVisible = false;
-        }
-        if (Find<StackPanel>("DatePanel") is { } date)
-        {
-            date.IsVisible = false;
-        }
+        ShowOnly("ConverterPanel");
+        SetCategoryName(mode.ToString());
     }
 
     private void ConverterValue_GotFocus(object? sender, GotFocusEventArgs e)
@@ -250,44 +299,16 @@ public sealed partial class MainWindow : Window
         HideConverter();
         _vm.SetCalculatorType(mode);
         Title = "Calculator – " + mode;
-        if (Find<DockPanel>("CalculatorPanel") is { } calc)
-        {
-            calc.IsVisible = true;
-        }
-        if (Find<StackPanel>("DatePanel") is { } date)
-        {
-            date.IsVisible = false;
-        }
-        if (Find<DockPanel>("ConverterPanel") is { } converter)
-        {
-            converter.IsVisible = false;
-        }
-        if (Find<DockPanel>("GraphingPanel") is { } graphing)
-        {
-            graphing.IsVisible = false;
-        }
+        ShowOnly("CalculatorPanel");
+        SetCategoryName(mode.ToString());
     }
 
     private void ShowDate()
     {
         HideConverter();
         Title = "Calculator – Date calculation";
-        if (Find<DockPanel>("CalculatorPanel") is { } calc)
-        {
-            calc.IsVisible = false;
-        }
-        if (Find<StackPanel>("DatePanel") is { } date)
-        {
-            date.IsVisible = true;
-        }
-        if (Find<DockPanel>("ConverterPanel") is { } converter)
-        {
-            converter.IsVisible = false;
-        }
-        if (Find<DockPanel>("GraphingPanel") is { } graphing)
-        {
-            graphing.IsVisible = false;
-        }
+        ShowOnly("DatePanel");
+        SetCategoryName("Date calculation");
     }
 
     // --- Date calculator ---------------------------------------------------------------
@@ -318,11 +339,11 @@ public sealed partial class MainWindow : Window
         SetChecked("DateModeAddSub", !_dateVM.IsDateDiffMode);
         SetChecked("DateAdd", _dateVM.IsAddMode);
         SetChecked("DateSub", !_dateVM.IsAddMode);
-        if (Find<StackPanel>("DateDiffStack") is { } diff)
+        if (Find("DateDiffStack") is { } diff)
         {
             diff.IsVisible = _dateVM.IsDateDiffMode;
         }
-        if (Find<StackPanel>("DateAddSubStack") is { } addSub)
+        if (Find("DateAddSubStack") is { } addSub)
         {
             addSub.IsVisible = !_dateVM.IsDateDiffMode;
         }
@@ -359,7 +380,7 @@ public sealed partial class MainWindow : Window
 
     private void MemoryRow_Recall(object? sender, RoutedEventArgs e)
     {
-        if (Find<TabControl>("SidePanel") is { } panel)
+        if (Find("SidePanel") is TabControl panel)
         {
             panel.SelectedIndex = 1;
         }
@@ -492,12 +513,18 @@ public sealed partial class MainWindow : Window
         SetChecked("BitsByte", _vm.ValueBitLength == BitLength.BitLengthByte);
     }
 
-    private T? Find<T>(string name) where T : Control =>
-        this.GetLogicalDescendants().OfType<T>().FirstOrDefault(c => c.Name == name);
+    /// <summary>
+    /// Finds a named control. Deliberately type-agnostic: the panel elements
+    /// have changed type between DockPanel/StackPanel/Grid during the UI port,
+    /// and a type-specific lookup silently returned null, leaving those panels
+    /// without a DataContext (blank date/converter/graphing views).
+    /// </summary>
+    private Control? Find(string name) =>
+        this.GetLogicalDescendants().OfType<Control>().FirstOrDefault(c => c.Name == name);
 
     private void SetChecked(string name, bool value)
     {
-        if (Find<ToggleButton>(name) is { } toggle)
+        if (Find(name) is ToggleButton toggle)
         {
             toggle.IsChecked = value;
         }
@@ -521,7 +548,7 @@ public sealed partial class MainWindow : Window
 
     private int IndexOfBit(ToggleButton button)
     {
-        if (Find<ItemsControl>("BitFlipPanel") is { } panel)
+        if (Find("BitFlipPanel") is ItemsControl panel)
         {
             int index = panel.IndexFromContainer(button);
             if (index >= 0)
@@ -544,10 +571,10 @@ public sealed partial class MainWindow : Window
     // upstream map (digits, +-*/%^(), Enter, Esc, Backspace, Delete, F9, E, A-F).
 
     private bool IsCalculatorActive() =>
-        Find<DockPanel>("CalculatorPanel") is { } panel && panel.IsVisible;
+        Find("CalculatorPanel") is { } panel && panel.IsVisible;
 
     private bool IsConverterActive() =>
-        Find<DockPanel>("ConverterPanel") is { } panel && panel.IsVisible;
+        Find("ConverterPanel") is { } panel && panel.IsVisible;
 
     protected override void OnKeyDown(KeyEventArgs e)
     {

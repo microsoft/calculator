@@ -1,0 +1,79 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!--
+    Calculator surface colors, ported from upstream App.xaml.
+
+    Upstream expresses button fills as a single base color plus per-state
+    opacity over the app background (CalcButtonBaseFillColor = #FFFFFF), so
+    the same scheme is reproduced here with opacity-bearing brushes:
+
+      dark : numbers @0.125, operators @0.0852, hover/pressed as upstream
+      light: opaque white numbers, operators one step darker
+
+    Values sampled from the upstream dark screenshots: window #202020,
+    number key #3B3B3B, operator key #323232, accent #4CC2FF.
+  -->
+
+  <ResourceDictionary.ThemeDictionaries>
+
+    <ResourceDictionary x:Key="Dark">
+      <SolidColorBrush x:Key="AppBackgroundBrush" Color="#202020" />
+      <SolidColorBrush x:Key="AppSurfaceBrush" Color="#272727" />
+      <SolidColorBrush x:Key="AppSeparatorBrush" Color="#0D0D0D" />
+
+      <SolidColorBrush x:Key="CalcNumFillBrush" Color="#FFFFFF" Opacity="0.125" />
+      <SolidColorBrush x:Key="CalcNumFillPointerOverBrush" Color="#FFFFFF" Opacity="0.1654" />
+      <SolidColorBrush x:Key="CalcNumFillPressedBrush" Color="#FFFFFF" Opacity="0.0359" />
+
+      <SolidColorBrush x:Key="CalcOpFillBrush" Color="#FFFFFF" Opacity="0.0852" />
+      <SolidColorBrush x:Key="CalcOpFillPointerOverBrush" Color="#FFFFFF" Opacity="0.1256" />
+      <SolidColorBrush x:Key="CalcOpFillPressedBrush" Color="#FFFFFF" Opacity="0.0852" />
+
+      <SolidColorBrush x:Key="CalcDisabledFillBrush" Color="#FFFFFF" Opacity="0.0359" />
+      <SolidColorBrush x:Key="CalcDisabledTextBrush" Color="#FFFFFF" Opacity="0.35" />
+      <SolidColorBrush x:Key="CalcButtonTextBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="CalcAccentTextBrush" Color="#202020" />
+
+      <SolidColorBrush x:Key="CalcAccentFillBrush" Color="#4CC2FF" />
+      <SolidColorBrush x:Key="CalcAccentFillPointerOverBrush" Color="#42B0E8" />
+      <SolidColorBrush x:Key="CalcAccentFillPressedBrush" Color="#3A9DD1" />
+
+      <SolidColorBrush x:Key="CalcFlatFillPointerOverBrush" Color="#FFFFFF" Opacity="0.0852" />
+      <SolidColorBrush x:Key="CalcFlatFillPressedBrush" Color="#FFFFFF" Opacity="0.1654" />
+
+      <SolidColorBrush x:Key="NavSelectedFillBrush" Color="#4CC2FF" Opacity="0.2" />
+      <SolidColorBrush x:Key="NavSelectedHoverFillBrush" Color="#4CC2FF" Opacity="0.3" />
+    </ResourceDictionary>
+
+    <ResourceDictionary x:Key="Light">
+      <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F3F3F3" />
+      <SolidColorBrush x:Key="AppSurfaceBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="AppSeparatorBrush" Color="#E6E6E6" />
+
+      <SolidColorBrush x:Key="CalcNumFillBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="CalcNumFillPointerOverBrush" Color="#F5F5F5" />
+      <SolidColorBrush x:Key="CalcNumFillPressedBrush" Color="#EBEBEB" />
+
+      <SolidColorBrush x:Key="CalcOpFillBrush" Color="#F6F6F6" />
+      <SolidColorBrush x:Key="CalcOpFillPointerOverBrush" Color="#EDEDED" />
+      <SolidColorBrush x:Key="CalcOpFillPressedBrush" Color="#E0E0E0" />
+
+      <SolidColorBrush x:Key="CalcDisabledFillBrush" Color="#F0F0F0" />
+      <SolidColorBrush x:Key="CalcDisabledTextBrush" Color="#9E9E9E" />
+      <SolidColorBrush x:Key="CalcButtonTextBrush" Color="#1A1A1A" />
+      <SolidColorBrush x:Key="CalcAccentTextBrush" Color="#FFFFFF" />
+
+      <SolidColorBrush x:Key="CalcAccentFillBrush" Color="#0078D4" />
+      <SolidColorBrush x:Key="CalcAccentFillPointerOverBrush" Color="#2A7EBB" />
+      <SolidColorBrush x:Key="CalcAccentFillPressedBrush" Color="#1A6BB0" />
+
+      <SolidColorBrush x:Key="CalcFlatFillPointerOverBrush" Color="#000000" Opacity="0.04" />
+      <SolidColorBrush x:Key="CalcFlatFillPressedBrush" Color="#000000" Opacity="0.08" />
+
+      <SolidColorBrush x:Key="NavSelectedFillBrush" Color="#0078D4" Opacity="0.12" />
+      <SolidColorBrush x:Key="NavSelectedHoverFillBrush" Color="#0078D4" Opacity="0.2" />
+    </ResourceDictionary>
+
+  </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

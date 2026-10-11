@@ -4,45 +4,507 @@
         xmlns:auto="clr-namespace:Avalonia.Automation;assembly=Avalonia.Controls"
         xmlns:oxy="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
         x:Class="Calculator.Linux.MainWindow"
-        Title="Calculator" Width="980" Height="640" MinWidth="640" MinHeight="480">
+        Title="Calculator" Width="960" Height="680" MinWidth="320" MinHeight="500"
+        Background="{DynamicResource AppBackgroundBrush}">
 
-  <DockPanel LastChildFill="True">
-    <!-- Mode navigation -->
-    <DockPanel DockPanel.Dock="Left" Width="150" LastChildFill="True">
-      <Button DockPanel.Dock="Bottom" Content="About" Click="About_Click" Margin="4" HorizontalAlignment="Stretch" />
-      <ListBox SelectionChanged="ModeList_SelectionChanged" Name="ModeList">
-      <ListBoxItem Content="Standard" Tag="Standard" IsSelected="True" />
-      <ListBoxItem Content="Scientific" Tag="Scientific" />
-      <ListBoxItem Content="Programmer" Tag="Programmer" />
-      <ListBoxItem Content="Date calculation" Tag="Date" />
-      <ListBoxItem Content="Currency" Tag="Currency" />
-      <ListBoxItem Content="Volume" Tag="Volume" />
-      <ListBoxItem Content="Length" Tag="Length" />
-      <ListBoxItem Content="Weight and Mass" Tag="Weight" />
-      <ListBoxItem Content="Temperature" Tag="Temperature" />
-      <ListBoxItem Content="Energy" Tag="Energy" />
-      <ListBoxItem Content="Area" Tag="Area" />
-      <ListBoxItem Content="Speed" Tag="Speed" />
-      <ListBoxItem Content="Time" Tag="Time" />
-      <ListBoxItem Content="Power" Tag="Power" />
-      <ListBoxItem Content="Data" Tag="Data" />
-      <ListBoxItem Content="Pressure" Tag="Pressure" />
-      <ListBoxItem Content="Angle" Tag="Angle" />
-      <ListBoxItem Content="Graphing" Tag="Graphing" />
-    </ListBox>
-    </DockPanel>
+  <!--
+    Structure mirrors upstream MainPage.xaml: a NavigationView-style LeftMinimal
+    hamburger header (MainPage.xaml:150-179) over a single content host whose
+    four stacked holders (CalcHolder / DateCalcHolder / GraphingCalcHolder /
+    ConverterHolder) each show one mode.
 
-    <!-- History / Memory dock -->
-    <TabControl DockPanel.Dock="Right" Width="270" Name="SidePanel">
+    All four panels are children of ONE Grid, never siblings competing for a
+    DockPanel LastChildFill slot: only the last declared child fills, so a
+    hidden trailing panel starved the visible one and the keypad collapsed to
+    content-sized buttons.
+  -->
+  <Grid ColumnDefinitions="*,Auto">
+
+    <!-- ==== Main column: header + content host ==== -->
+    <Grid Grid.Column="0" RowDefinitions="Auto,*">
+
+      <!-- Header: hamburger, category name, history/memory toggle -->
+      <Grid Grid.Row="0" Height="48" ColumnDefinitions="Auto,*,Auto" Margin="4,0,4,4">
+        <Button Grid.Column="0" Classes="icon" Name="HamburgerButton"
+                Click="Hamburger_Click" ToolTip.Tip="Modes"
+                auto:AutomationProperties.Name="Modes">
+          <StackPanel VerticalAlignment="Center" Spacing="4">
+            <Border Height="2" Width="18" Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" CornerRadius="1" />
+            <Border Height="2" Width="18" Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" CornerRadius="1" />
+            <Border Height="2" Width="18" Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" CornerRadius="1" />
+          </StackPanel>
+        </Button>
+        <TextBlock Grid.Column="1" Text="Standard" Name="CategoryNameText"
+                   FontSize="24" FontWeight="SemiBold" VerticalAlignment="Center"
+                   Margin="8,0,0,0" TextTrimming="CharacterEllipsis" />
+        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+          <ToggleButton Classes="icon" Name="HistoryToggle" Click="HistoryToggle_Click"
+                        ToolTip.Tip="History and memory"
+                        auto:AutomationProperties.Name="History and memory">
+            <Panel VerticalAlignment="Center">
+              <Border Width="19" Height="19" CornerRadius="10" BorderThickness="2"
+                      BorderBrush="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" />
+              <Border Width="2" Height="7" Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}"
+                      HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,4,0,0" CornerRadius="1" />
+              <Border Width="6" Height="2" Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}"
+                      HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0,0,0" CornerRadius="1" />
+            </Panel>
+          </ToggleButton>
+        </StackPanel>
+      </Grid>
+
+      <!-- ==== Content host: exactly one panel visible at a time ==== -->
+      <Grid Grid.Row="1" Name="ContentHost" Margin="4,2,4,6">
+
+        <!-- ========== Calculator (Standard / Scientific / Programmer) ========== -->
+        <Grid Name="CalculatorPanel" RowDefinitions="Auto,Auto,*">
+
+          <!-- Display -->
+          <Grid Grid.Row="0" RowDefinitions="Auto,Auto,Auto" Margin="12,4,12,8">
+            <ItemsControl Grid.Row="0" ItemsSource="{Binding ExpressionTokens}"
+                          HorizontalAlignment="Right"
+                          auto:AutomationProperties.Name="{Binding CalculationExpressionAutomationName}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding Token}" FontSize="15" Opacity="0.7" Margin="2,0" />
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock Grid.Row="1" Text="{Binding DisplayValue}" FontSize="62" FontWeight="SemiBold"
+                       TextAlignment="Right" Margin="0,4,0,4" TextTrimming="CharacterEllipsis"
+                       auto:AutomationProperties.Name="{Binding CalculationResultAutomationName}" />
+            <!-- Programmer radix readout replaces the plain display when active -->
+            <StackPanel Grid.Row="2" IsVisible="{Binding IsProgrammer}" Margin="0,8,0,0"
+                        HorizontalAlignment="Right">
+              <TextBlock Text="{Binding HexDisplayValue, StringFormat='HEX   {0}'}"
+                         FontFamily="DejaVu Sans Mono,Consolas,monospace" FontSize="16" TextAlignment="Right" />
+              <TextBlock Text="{Binding DecimalDisplayValue, StringFormat='DEC   {0}'}"
+                         FontFamily="DejaVu Sans Mono,Consolas,monospace" FontSize="16" TextAlignment="Right" />
+              <TextBlock Text="{Binding OctalDisplayValue, StringFormat='OCT   {0}'}"
+                         FontFamily="DejaVu Sans Mono,Consolas,monospace" FontSize="16" TextAlignment="Right" />
+              <TextBlock Text="{Binding BinaryDisplayValue, StringFormat='BIN   {0}'}"
+                         FontFamily="DejaVu Sans Mono,Consolas,monospace" FontSize="16" TextAlignment="Right" />
+            </StackPanel>
+          </Grid>
+
+          <!-- Memory row (upstream Memory.xaml: flat text buttons, not keys) -->
+          <Grid Grid.Row="1" ColumnDefinitions="*,*,*,*,*,*" Height="40" VerticalAlignment="Center" Margin="8,0,8,4">
+            <Button Grid.Column="0" Classes="strip" Content="MC" Command="{Binding ClearMemoryCommand}" />
+            <Button Grid.Column="1" Classes="strip" Content="MR" Click="MemoryRow_Recall" />
+            <Button Grid.Column="2" Classes="strip" Content="M+" Click="MemoryRow_Add" />
+            <Button Grid.Column="3" Classes="strip" Content="M&#x2212;" Click="MemoryRow_Subtract" />
+            <Button Grid.Column="4" Classes="strip" Content="MS" Click="MemoryRow_Store" />
+            <Button Grid.Column="5" Classes="strip" Content="M&#x2304;" Click="MemoryRow_Recall" />
+          </Grid>
+
+          <Grid Grid.Row="2">
+
+          <!-- Standard: 6 rows x 4 cols, numpad spanning rows 3-6 (upstream
+               CalculatorStandardOperators.xaml) -->
+          <Grid IsVisible="{Binding IsStandard}"
+                RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*,*,*">
+            <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="0" Content="%" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Percent}" />
+            <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="1" Content="CE" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.ClearEntry}" />
+            <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="2" Content="C" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Clear}" />
+            <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="3" Content="&#x232B;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Backspace}" />
+
+            <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="0" Content="1/x" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Invert}" IsEnabled="{Binding IsUnaryOperatorEnabled}" />
+            <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="1" Content="x&#x00B2;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.XPower2}" IsEnabled="{Binding IsUnaryOperatorEnabled}" />
+            <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="2" Content="&#x221A;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sqrt}" IsEnabled="{Binding IsUnaryOperatorEnabled}" />
+            <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="3" Content="&#x00F7;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Divide}" IsEnabled="{Binding IsBinaryOperatorEnabled}" />
+
+            <Button Classes="calc calcNum" Grid.Row="2" Grid.Column="0" Content="7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" IsEnabled="{Binding IsOperandEnabled}" />
+            <Button Classes="calc calcNum" Grid.Row="2" Grid.Column="1" Content="8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" IsEnabled="{Binding IsOperandEnabled}" />
+            <Button Classes="calc calcNum" Grid.Row="2" Grid.Column="2" Content="9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" IsEnabled="{Binding IsOperandEnabled}" />
+            <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="3" Content="&#x00D7;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Multiply}" IsEnabled="{Binding IsBinaryOperatorEnabled}" />
+
+            <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="0" Content="4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" IsEnabled="{Binding IsOperandEnabled}" />
+            <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="1" Content="5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" IsEnabled="{Binding IsOperandEnabled}" />
+            <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="2" Content="6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" IsEnabled="{Binding IsOperandEnabled}" />
+            <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="3" Content="&#x2212;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Subtract}" IsEnabled="{Binding IsBinaryOperatorEnabled}" />
+
+            <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="0" Content="1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" IsEnabled="{Binding IsOperandEnabled}" />
+            <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="1" Content="2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" IsEnabled="{Binding IsOperandEnabled}" />
+            <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="2" Content="3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" IsEnabled="{Binding IsOperandEnabled}" />
+            <Button Classes="calc calcOp" Grid.Row="4" Grid.Column="3" Content="+" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Add}" IsEnabled="{Binding IsBinaryOperatorEnabled}" />
+
+            <Button Classes="calc calcNum" Grid.Row="5" Grid.Column="0" Content="&#x00B1;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Negate}" IsEnabled="{Binding IsNegateEnabled}" />
+            <Button Classes="calc calcNum" Grid.Row="5" Grid.Column="1" Content="0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" IsEnabled="{Binding IsOperandEnabled}" />
+            <Button Classes="calc calcNum" Grid.Row="5" Grid.Column="2" Content="." Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Decimal}" IsEnabled="{Binding IsDecimalEnabled}" />
+            <Button Classes="calc calcAccent" Grid.Row="5" Grid.Column="3" Content="=" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Equals}" />
+          </Grid>
+
+          <!-- Scientific: 8 rows x 5 cols; numpad rows 5-8 cols 2-4
+               (upstream CalculatorScientificOperators.xaml) -->
+          <Grid IsVisible="{Binding IsScientific}" RowDefinitions="Auto,*">
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="6,0,6,6">
+              <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <RadioButton Classes="chip" Content="DEG" GroupName="Angle" Name="AngleDeg" Click="Angle_Click" />
+                <RadioButton Classes="chip" Content="RAD" GroupName="Angle" Name="AngleRad" Click="Angle_Click" />
+                <RadioButton Classes="chip" Content="GRAD" GroupName="Angle" Name="AngleGrad" Click="Angle_Click" />
+              </StackPanel>
+              <ToggleButton Grid.Column="1" Classes="chip" Content="F-E" Name="FToEToggle"
+                            IsChecked="{Binding IsFToEChecked, Mode=TwoWay}" IsEnabled="{Binding IsFToEEnabled}" />
+            </Grid>
+            <Grid Grid.Row="1" RowDefinitions="*,*,*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*">
+              <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="0" Content="&#x2329;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.OpenParenthesis}" />
+              <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="1" Content="&#x03C0;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Pi}" />
+              <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="2" Content="e" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Exp}" />
+              <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="3" Content="C" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Clear}" />
+              <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="4" Content="&#x232B;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Backspace}" />
+
+              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="0" Content="x&#x00B2;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.XPower2}" />
+              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="1" Content="1/x" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Invert}" />
+              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="2" Content="|x|" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Abs}" />
+              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="3" Content="exp" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Exp}" />
+              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="4" Content="mod" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Mod}" />
+
+              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="0" Content="&#x221A;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sqrt}" />
+              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="1" Content="&#x221B;x" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.CubeRoot}" />
+              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="2" Content="x!" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Factorial}" />
+              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="3" Content=")" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.CloseParenthesis}" />
+              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="4" Content="&#x00F7;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Divide}" />
+
+              <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="0" Content="x&#x1D67;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.XPowerY}" />
+              <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="1" Content="7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" />
+              <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="2" Content="8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" />
+              <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="3" Content="9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" />
+              <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="4" Content="&#x00D7;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Multiply}" />
+
+              <Button Classes="calc calcOp" Grid.Row="4" Grid.Column="0" Content="10&#x1D58;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.TenPowerX}" />
+              <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="1" Content="4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" />
+              <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="2" Content="5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" />
+              <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="3" Content="6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" />
+              <Button Classes="calc calcOp" Grid.Row="4" Grid.Column="4" Content="&#x2212;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Subtract}" />
+
+              <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="0" Content="log" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.LogBase10}" />
+              <Button Classes="calc calcNum" Grid.Row="5" Grid.Column="1" Content="1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" />
+              <Button Classes="calc calcNum" Grid.Row="5" Grid.Column="2" Content="2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" />
+              <Button Classes="calc calcNum" Grid.Row="5" Grid.Column="3" Content="3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" />
+              <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="4" Content="+" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Add}" />
+
+              <Button Classes="calc calcOp" Grid.Row="6" Grid.Column="0" Content="ln" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.LogBaseE}" />
+              <Button Classes="calc calcNum" Grid.Row="6" Grid.Column="1" Content="0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" />
+              <Button Classes="calc calcNum" Grid.Row="6" Grid.Column="2" Content="." Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Decimal}" />
+              <Button Classes="calc calcNum" Grid.Row="6" Grid.Column="3" Content="&#x00B1;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Negate}" />
+              <Button Classes="calc calcAccent" Grid.Row="6" Grid.Column="4" Content="=" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Equals}" />
+
+              <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="0" Content="sin" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sin}" />
+              <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="1" Content="cos" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Cos}" />
+              <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="2" Content="tan" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Tan}" />
+              <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="3" Content="e&#x1D58;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.EPowerX}" />
+              <Button Classes="calc calcOp" Grid.Row="7" Grid.Column="4" Content="10&#x1D58;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.TenPowerX}" />
+            </Grid>
+          </Grid>
+
+          <!-- Programmer: 7 rows x 6 cols -->
+          <Grid IsVisible="{Binding IsProgrammer}" RowDefinitions="Auto,Auto,Auto,*">
+            <StackPanel Grid.Row="0" Margin="6,0,6,6">
+              <StackPanel Orientation="Horizontal">
+                <RadioButton Classes="chip" Content="HEX" GroupName="Radix" Name="RadixHex" Click="Radix_Click" />
+                <RadioButton Classes="chip" Content="DEC" GroupName="Radix" Name="RadixDec" Click="Radix_Click" />
+                <RadioButton Classes="chip" Content="OCT" GroupName="Radix" Name="RadixOct" Click="Radix_Click" />
+                <RadioButton Classes="chip" Content="BIN" GroupName="Radix" Name="RadixBin" Click="Radix_Click" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                <RadioButton Classes="chip" Content="QWORD" GroupName="Bits" Name="BitsQword" Click="Bits_Click" />
+                <RadioButton Classes="chip" Content="DWORD" GroupName="Bits" Name="BitsDword" Click="Bits_Click" />
+                <RadioButton Classes="chip" Content="WORD" GroupName="Bits" Name="BitsWord" Click="Bits_Click" />
+                <RadioButton Classes="chip" Content="BYTE" GroupName="Bits" Name="BitsByte" Click="Bits_Click" />
+                <ToggleButton Classes="chip" Content="Bit flip" Name="BitFlipToggle" IsChecked="{Binding IsBitFlipChecked, Mode=TwoWay}" Margin="8,0,0,0" />
+              </StackPanel>
+            </StackPanel>
+
+            <ScrollViewer Grid.Row="1" IsVisible="{Binding IsBitFlipChecked}" MaxHeight="86" Margin="6,0,6,4">
+              <ItemsControl ItemsSource="{Binding BinaryDigits}" Name="BitFlipPanel">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate><WrapPanel Orientation="Horizontal" /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <ToggleButton Classes="calc calcOp" Content="{Binding}" IsChecked="{Binding}"
+                                  Click="Bit_Click" Width="36" Height="34" />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </ScrollViewer>
+
+            <Grid Grid.Row="3" RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*,*">
+              <Button Classes="calc calcNum" Grid.Row="0" Grid.Column="0" Content="A" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.A}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
+              <Button Classes="calc calcNum" Grid.Row="0" Grid.Column="1" Content="B" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.B}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
+              <Button Classes="calc calcNum" Grid.Row="0" Grid.Column="2" Content="C" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.C}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
+              <Button Classes="calc calcNum" Grid.Row="0" Grid.Column="3" Content="D" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.D}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
+              <Button Classes="calc calcNum" Grid.Row="0" Grid.Column="4" Content="E" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.E}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
+              <Button Classes="calc calcNum" Grid.Row="0" Grid.Column="5" Content="F" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.F}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
+
+              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="0" Content="&#x2329;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.OpenParenthesis}" />
+              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="1" Content="&#x232A;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.CloseParenthesis}" />
+              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="2" Content="mod" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Mod}" />
+              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="3" Content="C" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Clear}" />
+              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="4" Content="CE" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.ClearEntry}" />
+              <Button Classes="calc calcOp" Grid.Row="1" Grid.Column="5" Content="&#x232B;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Backspace}" />
+
+              <Button Classes="calc calcNum" Grid.Row="2" Grid.Column="0" Content="7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" />
+              <Button Classes="calc calcNum" Grid.Row="2" Grid.Column="1" Content="8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" />
+              <Button Classes="calc calcNum" Grid.Row="2" Grid.Column="2" Content="9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" />
+              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="3" Content="&#x00F7;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Divide}" />
+              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="4" Content="&#x00D7;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Multiply}" />
+              <Button Classes="calc calcOp" Grid.Row="2" Grid.Column="5" Content="AND" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.And}" />
+
+              <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="0" Content="4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" />
+              <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="1" Content="5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" />
+              <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="2" Content="6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" />
+              <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="3" Content="&#x2212;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Subtract}" />
+              <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="4" Content="+" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Add}" />
+              <Button Classes="calc calcOp" Grid.Row="3" Grid.Column="5" Content="OR" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Or}" />
+
+              <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="0" Content="1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" />
+              <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="1" Content="2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" />
+              <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="2" Content="3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" />
+              <Button Classes="calc calcAccent" Grid.Row="4" Grid.Column="3" Content="=" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Equals}" />
+              <Button Classes="calc calcOp" Grid.Row="4" Grid.Column="4" Content="XOR" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Xor}" />
+              <Button Classes="calc calcOp" Grid.Row="4" Grid.Column="5" Content="R&#x21A9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Rol}" />
+
+              <Button Classes="calc calcNum" Grid.Row="5" Grid.Column="0" Content="0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" />
+              <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="1" Content="Not" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Not}" />
+              <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="2" Content="R&#x21A0;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Ror}" />
+              <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="3" Content="R&#x21A9;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Rsh}" />
+              <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="4" Content="R&#x21AA;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.RshL}" />
+              <Button Classes="calc calcOp" Grid.Row="5" Grid.Column="5" Content="&#x00B1;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Negate}" />
+            </Grid>
+          </Grid>
+          </Grid>
+        </Grid>
+
+        <!-- ========== Date calculation ========== -->
+        <ScrollViewer Name="DatePanel" IsVisible="False">
+          <StackPanel Margin="24" MaxWidth="560" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+              <RadioButton Classes="chip" Content="Difference (days)" GroupName="DateMode" Name="DateModeDiff" Click="DateMode_Click" />
+              <RadioButton Classes="chip" Content="Add / subtract" GroupName="DateMode" Name="DateModeAddSub" Click="DateMode_Click" />
+            </StackPanel>
+            <StackPanel Name="DateDiffStack">
+              <TextBlock Text="From" Opacity="0.7" Margin="0,0,0,4" />
+              <DatePicker SelectedDate="{Binding FromDate, Mode=TwoWay}" Margin="0,0,0,12" />
+              <TextBlock Text="To" Opacity="0.7" Margin="0,0,0,4" />
+              <DatePicker SelectedDate="{Binding ToDate, Mode=TwoWay}" Margin="0,0,0,16" />
+              <Border Background="{DynamicResource AppSurfaceBrush}" CornerRadius="4" Padding="20,16">
+                <StackPanel>
+                  <TextBlock Text="Difference" FontSize="13" Opacity="0.7" Margin="0,0,0,6" />
+                  <TextBlock Text="{Binding StrDateDiffResult}" FontSize="26" FontWeight="SemiBold"
+                             TextWrapping="Wrap"
+                             auto:AutomationProperties.Name="{Binding StrDateDiffResultAutomationName}" />
+                  <TextBlock Text="{Binding StrDateDiffResultInDays}" FontSize="14" Opacity="0.7"
+                             TextWrapping="Wrap" Margin="0,6,0,0" />
+                </StackPanel>
+              </Border>
+            </StackPanel>
+            <StackPanel Name="DateAddSubStack" IsVisible="False">
+              <TextBlock Text="From" Opacity="0.7" Margin="0,0,0,4" />
+              <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}" Margin="0,0,0,12" />
+              <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                <RadioButton Classes="chip" Content="Add" GroupName="DateAddSub" Name="DateAdd" Click="DateAddSub_Click" />
+                <RadioButton Classes="chip" Content="Subtract" GroupName="DateAddSub" Name="DateSub" Click="DateAddSub_Click" />
+              </StackPanel>
+              <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="120,*" Margin="0,0,0,16">
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Years" VerticalAlignment="Center" Margin="0,0,8,4" />
+                <TextBox Grid.Row="0" Grid.Column="1" Name="YearsBox" TextChanged="OffsetBox_Changed" Margin="0,0,0,4" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Months" VerticalAlignment="Center" Margin="0,0,8,4" />
+                <TextBox Grid.Row="1" Grid.Column="1" Name="MonthsBox" TextChanged="OffsetBox_Changed" Margin="0,0,0,4" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Days" VerticalAlignment="Center" Margin="0,0,8,0" />
+                <TextBox Grid.Row="2" Grid.Column="1" Name="DaysBox" TextChanged="OffsetBox_Changed" />
+              </Grid>
+              <Border Background="{DynamicResource AppSurfaceBrush}" CornerRadius="4" Padding="20,16">
+                <StackPanel>
+                  <TextBlock Text="Result" FontSize="13" Opacity="0.7" Margin="0,0,0,6" />
+                  <TextBlock Text="{Binding StrDateResult}" FontSize="26" FontWeight="SemiBold" TextWrapping="Wrap"
+                             auto:AutomationProperties.Name="{Binding StrDateResultAutomationName}" />
+                </StackPanel>
+              </Border>
+            </StackPanel>
+          </StackPanel>
+        </ScrollViewer>
+
+        <!-- ========== Unit converter ========== -->
+        <Grid Name="ConverterPanel" IsVisible="False" RowDefinitions="Auto,Auto,Auto,*" MinHeight="0">
+          <Grid Grid.Row="0" Margin="12,0,12,8">
+            <TextBlock Text="Getting the latest rates&#8230;" Opacity="0.7" IsVisible="{Binding IsCurrencyLoadingVisible}" />
+            <TextBlock Text="{Binding CurrencyTimestamp}" Opacity="0.7" IsVisible="{Binding IsCurrencyCurrentCategory}" />
+            <TextBlock Text="Check your connection and try again." Foreground="#E06C75"
+                       IsVisible="{Binding CurrencyDataLoadFailed}" />
+            <TextBlock Text="Rates are more than a week old." Foreground="#E5A50A"
+                       IsVisible="{Binding CurrencyDataIsWeekOld}" />
+          </Grid>
+
+          <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto,*" Margin="8,0,12,8">
+            <ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Units}" SelectedItem="{Binding Unit1, Mode=TwoWay}"
+                      HorizontalAlignment="Stretch" MinHeight="40" Margin="0,0,4,4">
+              <ComboBox.ItemTemplate>
+                <DataTemplate><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Grid.Row="0" Grid.Column="1" Classes="calc calcOp" Content="&#x21C4;" Command="{Binding SwitchActiveCommand}" Margin="4,0,4,4" MinWidth="48" />
+            <ComboBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Units}" SelectedItem="{Binding Unit2, Mode=TwoWay}"
+                      HorizontalAlignment="Stretch" MinHeight="40" Margin="4,0,0,4">
+              <ComboBox.ItemTemplate>
+                <DataTemplate><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="{DynamicResource AppSurfaceBrush}"
+                    CornerRadius="4" Padding="8,6" Margin="0,0,0,4">
+              <Grid ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0" Text="{Binding Value1}" FontSize="28" TextAlignment="Left"
+                           auto:AutomationProperties.Name="{Binding Value1AutomationName}" />
+                <TextBlock Grid.Column="1" Text="{Binding Value2}" FontSize="28" TextAlignment="Right"
+                           auto:AutomationProperties.Name="{Binding Value2AutomationName}" />
+              </Grid>
+            </Border>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrencySymbol1}" Opacity="0.7"
+                       IsVisible="{Binding CurrencySymbolVisibility}" />
+            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding CurrencySymbol2}" Opacity="0.7"
+                       IsVisible="{Binding CurrencySymbolVisibility}" />
+          </Grid>
+
+          <Border Grid.Row="2" Background="{DynamicResource AppSurfaceBrush}" CornerRadius="4"
+                  Padding="12,8" Margin="8,0,12,8" MaxHeight="110"
+                  IsVisible="{Binding SupplementaryVisibility}">
+            <ScrollViewer>
+              <ItemsControl ItemsSource="{Binding SupplementaryResults}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,2">
+                      <TextBlock Grid.Column="0" Text="{Binding Value}" FontWeight="SemiBold" />
+                      <TextBlock Grid.Column="1" Text="{Binding Unit.Name}" Opacity="0.7" />
+                    </Grid>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </ScrollViewer>
+          </Border>
+
+          <Grid Grid.Row="3" RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,*,*">
+            <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="0" Content="C" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Clear}" />
+            <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="1" Content="&#x232B;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Backspace}" />
+            <Button Classes="calc calcOp" Grid.Row="0" Grid.Column="2" Content="&#x21C4;" Command="{Binding SwitchActiveCommand}" />
+            <Button Classes="calc calcNum" Grid.Row="1" Grid.Column="0" Content="7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" />
+            <Button Classes="calc calcNum" Grid.Row="1" Grid.Column="1" Content="8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" />
+            <Button Classes="calc calcNum" Grid.Row="1" Grid.Column="2" Content="9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" />
+            <Button Classes="calc calcNum" Grid.Row="2" Grid.Column="0" Content="4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" />
+            <Button Classes="calc calcNum" Grid.Row="2" Grid.Column="1" Content="5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" />
+            <Button Classes="calc calcNum" Grid.Row="2" Grid.Column="2" Content="6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" />
+            <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="0" Content="1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" />
+            <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="1" Content="2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" />
+            <Button Classes="calc calcNum" Grid.Row="3" Grid.Column="2" Content="3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" />
+            <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="0" Content="&#x00B1;" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Negate}" />
+            <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="1" Content="0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" />
+            <Button Classes="calc calcNum" Grid.Row="4" Grid.Column="2" Content="." Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Decimal}" />
+          </Grid>
+        </Grid>
+
+        <!-- ========== Graphing ========== -->
+        <Grid Name="GraphingPanel" IsVisible="False" RowDefinitions="*,Auto" ColumnDefinitions="*,Auto">
+          <Grid Grid.Row="1" Grid.ColumnSpan="2" ColumnDefinitions="*,Auto" Margin="8,4,8,8">
+            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+              <Button Classes="flat" Content="x" Click="GraphPad_Insert" Tag="x" />
+              <Button Classes="flat" Content="^" Click="GraphPad_Insert" Tag="^" />
+              <Button Classes="flat" Content="(" Click="GraphPad_Insert" Tag="(" />
+              <Button Classes="flat" Content=")" Click="GraphPad_Insert" Tag=")" />
+              <Button Classes="flat" Content="sin" Click="GraphPad_Insert" Tag="sin(" />
+              <Button Classes="flat" Content="cos" Click="GraphPad_Insert" Tag="cos(" />
+              <Button Classes="flat" Content="tan" Click="GraphPad_Insert" Tag="tan(" />
+              <Button Classes="flat" Content="&#x03C0;" Click="GraphPad_Insert" Tag="pi" />
+              <Button Classes="flat" Content="+" Click="GraphPad_Insert" Tag="+" />
+              <Button Classes="flat" Content="&#x2212;" Click="GraphPad_Insert" Tag="-" />
+              <Button Classes="flat" Content="&#x00D7;" Click="GraphPad_Insert" Tag="*" />
+              <Button Classes="flat" Content="&#x00F7;" Click="GraphPad_Insert" Tag="/" />
+            </StackPanel>
+          </Grid>
+          <ScrollViewer Grid.Row="0" Grid.Column="1" Width="300" Margin="8,0,0,0">
+            <StackPanel>
+              <TextBlock Text="Equations" FontWeight="SemiBold" Margin="0,0,0,8" />
+              <ItemsControl ItemsSource="{Binding Equations}" Name="EquationList">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border Background="{DynamicResource AppSurfaceBrush}" CornerRadius="4" Padding="8" Margin="0,0,0,8">
+                      <StackPanel>
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                          <TextBlock Grid.Column="0" Text="y =" VerticalAlignment="Center" Margin="0,0,8,0" />
+                          <TextBox Grid.Column="1" Text="{Binding Expression, Mode=TwoWay}" />
+                          <CheckBox Grid.Column="2" IsChecked="{Binding IsVisible, Mode=TwoWay}" Content="Show" Margin="8,0,0,0" VerticalAlignment="Center" />
+                          <Button Grid.Column="3" Classes="flat" Content="&#x2715;" Click="Equation_Delete" Margin="4,0,0,0" Padding="4,2" />
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                          <ComboBox ItemsSource="{Binding $parent[ItemsControl].DataContext.LinePalette}"
+                                    SelectedItem="{Binding LineColor, Mode=TwoWay}" Width="130" />
+                          <ComboBox ItemsSource="{Binding $parent[ItemsControl].DataContext.LineStyles}"
+                                    SelectedItem="{Binding LineStyle, Mode=TwoWay}" Width="110" Margin="6,0,0,0" />
+                        </StackPanel>
+                        <TextBlock Text="{Binding Error}" Foreground="#E06C75" TextWrapping="Wrap"
+                                   IsVisible="{Binding HasError}" Margin="0,4,0,0" FontSize="12" />
+                      </StackPanel>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <Button Classes="flat" Content="Add equation" Command="{Binding AddEquationCommand}"
+                      HorizontalAlignment="Stretch" Margin="0,0,0,12" />
+              <TextBlock Text="Key features" FontWeight="SemiBold" Margin="0,0,0,4" />
+              <ItemsControl ItemsSource="{Binding SelectedFeatures}" Margin="0,0,0,12">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <StackPanel Margin="0,0,0,8">
+                      <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="12" />
+                      <ItemsControl ItemsSource="{Binding Items}">
+                        <ItemsControl.ItemTemplate>
+                          <DataTemplate><TextBlock Text="{Binding}" FontSize="12" Opacity="0.85" /></DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                    </StackPanel>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <TextBlock Text="Settings" FontWeight="SemiBold" Margin="0,0,0,4" />
+              <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*,*" Margin="0,0,0,8">
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="X:" VerticalAlignment="Center" Margin="0,0,8,0" />
+                <NumericUpDown Grid.Row="0" Grid.Column="1" Value="{Binding XMin, Mode=TwoWay}" Margin="0,0,4,0" />
+                <NumericUpDown Grid.Row="0" Grid.Column="2" Value="{Binding XMax, Mode=TwoWay}" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Y:" VerticalAlignment="Center" Margin="0,4,8,0" />
+                <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding YMin, Mode=TwoWay}" Margin="0,4,4,0" />
+                <NumericUpDown Grid.Row="1" Grid.Column="2" Value="{Binding YMax, Mode=TwoWay}" Margin="0,4,0,0" />
+                <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Grid"
+                          IsChecked="{Binding IsGridVisible, Mode=TwoWay}" Margin="0,8,0,0" />
+                <Button Grid.Row="2" Grid.Column="2" Classes="flat" Content="Reset" Click="Graph_Reset" Margin="0,8,0,0" />
+                <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,8,0,0">
+                  <RadioButton Classes="chip" Content="Radians" GroupName="Trig" Name="TrigRad" Click="Trig_Click" />
+                  <RadioButton Classes="chip" Content="Degrees" GroupName="Trig" Name="TrigDeg" Click="Trig_Click" />
+                </StackPanel>
+              </Grid>
+            </StackPanel>
+          </ScrollViewer>
+          <Border Grid.Row="0" Grid.Column="0" Background="{DynamicResource AppSurfaceBrush}" CornerRadius="4" Margin="0,0,0,0">
+            <oxy:CartesianChart Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}"
+                                Name="GraphPlot" />
+          </Border>
+        </Grid>
+      </Grid>
+    </Grid>
+
+    <!-- ==== History / Memory dock (collapsible; auto-collapses when narrow) ==== -->
+    <TabControl Grid.Column="1" Width="280" Name="SidePanel" IsVisible="False"
+                Background="Transparent" Margin="0,4,4,4">
       <TabItem Header="History">
         <DockPanel LastChildFill="True">
-          <Button DockPanel.Dock="Bottom" Content="Clear history" Command="{Binding HistoryVM.ClearCommand}" HorizontalAlignment="Stretch" Margin="4" />
-          <ListBox ItemsSource="{Binding HistoryVM.Items}" DoubleTapped="HistoryList_DoubleTapped" Name="HistoryList">
+          <Button DockPanel.Dock="Bottom" Classes="flat" Content="Clear history"
+                  Command="{Binding HistoryVM.ClearCommand}" HorizontalAlignment="Stretch" Margin="4" />
+          <ListBox Classes="panel" ItemsSource="{Binding HistoryVM.Items}" DoubleTapped="HistoryList_DoubleTapped" Name="HistoryList">
             <ListBox.ItemTemplate>
               <DataTemplate>
-                <StackPanel>
+                <StackPanel Margin="4">
                   <TextBlock Text="{Binding Expression}" Opacity="0.7" FontSize="12" TextWrapping="Wrap" />
-                  <TextBlock Text="{Binding Result}" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" />
+                  <TextBlock Text="{Binding Result}" FontSize="20" FontWeight="SemiBold" TextWrapping="Wrap" />
                 </StackPanel>
               </DataTemplate>
             </ListBox.ItemTemplate>
@@ -51,19 +513,20 @@
       </TabItem>
       <TabItem Header="Memory">
         <DockPanel LastChildFill="True">
-          <Button DockPanel.Dock="Bottom" Content="Clear all" Command="{Binding ClearMemoryCommand}" HorizontalAlignment="Stretch" Margin="4" />
-          <ListBox ItemsSource="{Binding MemorizedNumbers}" Name="MemoryList">
+          <Button DockPanel.Dock="Bottom" Classes="flat" Content="Clear all"
+                  Command="{Binding ClearMemoryCommand}" HorizontalAlignment="Stretch" Margin="4" />
+          <ListBox Classes="panel" ItemsSource="{Binding MemorizedNumbers}" Name="MemoryList">
             <ListBox.ItemTemplate>
               <DataTemplate>
-                <StackPanel>
-                  <TextBlock Text="{Binding Value}" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" />
-                  <StackPanel Orientation="Horizontal">
-                    <Button Content="MC" Click="MemoryItem_Clear" FontSize="11" Margin="0,0,4,0" />
-                    <Button Content="MR" Click="MemoryItem_Recall" FontSize="11" Margin="0,0,4,0" />
-                    <Button Content="M+" Click="MemoryItem_Add" FontSize="11" Margin="0,0,4,0" />
-                    <Button Content="M–" Click="MemoryItem_Subtract" FontSize="11" />
+                <Grid ColumnDefinitions="*,Auto" Margin="4">
+                  <TextBlock Grid.Column="0" Text="{Binding Value}" FontSize="20" FontWeight="SemiBold" TextWrapping="Wrap" />
+                  <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Classes="strip" Content="MC" Click="MemoryItem_Clear" />
+                    <Button Classes="strip" Content="MR" Click="MemoryItem_Recall" />
+                    <Button Classes="strip" Content="M+" Click="MemoryItem_Add" />
+                    <Button Classes="strip" Content="M&#x2212;" Click="MemoryItem_Subtract" />
                   </StackPanel>
-                </StackPanel>
+                </Grid>
               </DataTemplate>
             </ListBox.ItemTemplate>
           </ListBox>
@@ -71,347 +534,34 @@
       </TabItem>
     </TabControl>
 
-    <!-- Calculator -->
-    <DockPanel LastChildFill="True" Margin="8" Name="CalculatorPanel">
-      <StackPanel DockPanel.Dock="Top">
-        <ItemsControl ItemsSource="{Binding ExpressionTokens}" Height="28"
-                      auto:AutomationProperties.Name="{Binding CalculationExpressionAutomationName}">
-          <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate><StackPanel Orientation="Horizontal" HorizontalAlignment="Right" /></ItemsPanelTemplate>
-          </ItemsControl.ItemsPanel>
-          <ItemsControl.ItemTemplate>
-            <DataTemplate><TextBlock Text="{Binding Token}" FontSize="16" Opacity="0.7" Margin="2,0" /></DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <TextBox Text="{Binding DisplayValue}" IsReadOnly="True" FontSize="44" FontWeight="Bold"
-                 TextAlignment="Right" BorderThickness="0" Background="Transparent" Name="DisplayBox"
-                 auto:AutomationProperties.Name="{Binding CalculationResultAutomationName}" />
-      </StackPanel>
-
-      <!-- Memory row -->
-      <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,4">
-        <Button Content="MC" Command="{Binding ClearMemoryCommand}" Width="52" />
-        <Button Content="MR" Click="MemoryRow_Recall" Width="52" />
-        <Button Content="M+" Click="MemoryRow_Add" Width="52" />
-        <Button Content="M–" Click="MemoryRow_Subtract" Width="52" />
-        <Button Content="MS" Click="MemoryRow_Store" Width="52" />
-        <ToggleButton Content="History" Name="HistoryToggle" IsChecked="True" Click="HistoryToggle_Click" Margin="8,0,0,0" />
-      </StackPanel>
-
-      <!-- Standard panel -->
-      <Grid IsVisible="{Binding IsStandard}" RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*,*,*">
-        <Button Grid.Row="0" Grid.Column="0" Content="%" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Percent}" />
-        <Button Grid.Row="0" Grid.Column="1" Content="CE" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.ClearEntry}" />
-        <Button Grid.Row="0" Grid.Column="2" Content="C" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Clear}" />
-        <Button Grid.Row="0" Grid.Column="3" Content="⌫" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Backspace}" />
-        <Button Grid.Row="1" Grid.Column="0" Content="1/x" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Invert}" IsEnabled="{Binding IsUnaryOperatorEnabled}" />
-        <Button Grid.Row="1" Grid.Column="1" Content="x²" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.XPower2}" IsEnabled="{Binding IsUnaryOperatorEnabled}" />
-        <Button Grid.Row="1" Grid.Column="2" Content="√" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sqrt}" IsEnabled="{Binding IsUnaryOperatorEnabled}" />
-        <Button Grid.Row="1" Grid.Column="3" Content="÷" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Divide}" IsEnabled="{Binding IsBinaryOperatorEnabled}" />
-        <Button Grid.Row="2" Grid.Column="0" Content="7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" IsEnabled="{Binding IsOperandEnabled}" />
-        <Button Grid.Row="2" Grid.Column="1" Content="8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" IsEnabled="{Binding IsOperandEnabled}" />
-        <Button Grid.Row="2" Grid.Column="2" Content="9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" IsEnabled="{Binding IsOperandEnabled}" />
-        <Button Grid.Row="2" Grid.Column="3" Content="×" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Multiply}" IsEnabled="{Binding IsBinaryOperatorEnabled}" />
-        <Button Grid.Row="3" Grid.Column="0" Content="4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" IsEnabled="{Binding IsOperandEnabled}" />
-        <Button Grid.Row="3" Grid.Column="1" Content="5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" IsEnabled="{Binding IsOperandEnabled}" />
-        <Button Grid.Row="3" Grid.Column="2" Content="6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" IsEnabled="{Binding IsOperandEnabled}" />
-        <Button Grid.Row="3" Grid.Column="3" Content="−" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Subtract}" IsEnabled="{Binding IsBinaryOperatorEnabled}" />
-        <Button Grid.Row="4" Grid.Column="0" Content="1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" IsEnabled="{Binding IsOperandEnabled}" />
-        <Button Grid.Row="4" Grid.Column="1" Content="2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" IsEnabled="{Binding IsOperandEnabled}" />
-        <Button Grid.Row="4" Grid.Column="2" Content="3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" IsEnabled="{Binding IsOperandEnabled}" />
-        <Button Grid.Row="4" Grid.Column="3" Content="+" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Add}" IsEnabled="{Binding IsBinaryOperatorEnabled}" />
-        <Button Grid.Row="5" Grid.Column="0" Content="±" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Negate}" IsEnabled="{Binding IsNegateEnabled}" />
-        <Button Grid.Row="5" Grid.Column="1" Content="0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" IsEnabled="{Binding IsOperandEnabled}" />
-        <Button Grid.Row="5" Grid.Column="2" Content="." Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Decimal}" IsEnabled="{Binding IsDecimalEnabled}" />
-        <Button Grid.Row="5" Grid.Column="3" Content="=" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Equals}" />
-      </Grid>
-
-      <!-- Scientific panel -->
-      <DockPanel IsVisible="{Binding IsScientific}" LastChildFill="True">
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,4">
-          <RadioButton Content="DEG" GroupName="Angle" Name="AngleDeg" Click="Angle_Click" Margin="0,0,8,0" />
-          <RadioButton Content="RAD" GroupName="Angle" Name="AngleRad" Click="Angle_Click" Margin="0,0,8,0" />
-          <RadioButton Content="GRAD" GroupName="Angle" Name="AngleGrad" Click="Angle_Click" Margin="0,0,8,0" />
-          <ToggleButton Content="F-E" IsChecked="{Binding IsFToEChecked, Mode=TwoWay}" IsEnabled="{Binding IsFToEEnabled}" Margin="8,0,0,0" />
-        </StackPanel>
-        <Grid RowDefinitions="*,*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*">
-          <Button Grid.Row="0" Grid.Column="0" Content="(" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.OpenParenthesis}" />
-          <Button Grid.Row="0" Grid.Column="1" Content=")" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.CloseParenthesis}" />
-          <Button Grid.Row="0" Grid.Column="2" Content="π" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Pi}" />
-          <Button Grid.Row="0" Grid.Column="3" Content="!" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Factorial}" />
-          <Button Grid.Row="0" Grid.Column="4" Content="⌫" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Backspace}" />
-          <Button Grid.Row="1" Grid.Column="0" Content="sin" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sin}" />
-          <Button Grid.Row="1" Grid.Column="1" Content="cos" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Cos}" />
-          <Button Grid.Row="1" Grid.Column="2" Content="tan" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Tan}" />
-          <Button Grid.Row="1" Grid.Column="3" Content="ln" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.LogBaseE}" />
-          <Button Grid.Row="1" Grid.Column="4" Content="log" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.LogBase10}" />
-          <Button Grid.Row="2" Grid.Column="0" Content="sin⁻¹" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvSin}" />
-          <Button Grid.Row="2" Grid.Column="1" Content="cos⁻¹" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvCos}" />
-          <Button Grid.Row="2" Grid.Column="2" Content="tan⁻¹" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.InvTan}" />
-          <Button Grid.Row="2" Grid.Column="3" Content="eˣ" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.EPowerX}" />
-          <Button Grid.Row="2" Grid.Column="4" Content="10ˣ" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.TenPowerX}" />
-          <Button Grid.Row="3" Grid.Column="0" Content="sinh" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sinh}" />
-          <Button Grid.Row="3" Grid.Column="1" Content="cosh" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Cosh}" />
-          <Button Grid.Row="3" Grid.Column="2" Content="tanh" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Tanh}" />
-          <Button Grid.Row="3" Grid.Column="3" Content="xʸ" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.XPowerY}" />
-          <Button Grid.Row="3" Grid.Column="4" Content="ʸ√x" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.YRootX}" />
-          <Button Grid.Row="4" Grid.Column="0" Content="7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" />
-          <Button Grid.Row="4" Grid.Column="1" Content="8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" />
-          <Button Grid.Row="4" Grid.Column="2" Content="9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" />
-          <Button Grid.Row="4" Grid.Column="3" Content="÷" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Divide}" />
-          <Button Grid.Row="4" Grid.Column="4" Content="Mod" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Mod}" />
-          <Button Grid.Row="5" Grid.Column="0" Content="4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" />
-          <Button Grid.Row="5" Grid.Column="1" Content="5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" />
-          <Button Grid.Row="5" Grid.Column="2" Content="6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" />
-          <Button Grid.Row="5" Grid.Column="3" Content="×" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Multiply}" />
-          <Button Grid.Row="5" Grid.Column="4" Content="x²" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.XPower2}" />
-          <Button Grid.Row="6" Grid.Column="0" Content="1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" />
-          <Button Grid.Row="6" Grid.Column="1" Content="2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" />
-          <Button Grid.Row="6" Grid.Column="2" Content="3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" />
-          <Button Grid.Row="6" Grid.Column="3" Content="−" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Subtract}" />
-          <Button Grid.Row="6" Grid.Column="4" Content="√" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Sqrt}" />
-        </Grid>
-      </DockPanel>
-
-      <!-- Programmer panel -->
-      <DockPanel IsVisible="{Binding IsProgrammer}" LastChildFill="True">
-        <StackPanel DockPanel.Dock="Top" Margin="0,0,0,4">
-          <TextBlock Text="{Binding HexDisplayValue, StringFormat='HEX  {0}'}" FontFamily="Monospace" />
-          <TextBlock Text="{Binding DecimalDisplayValue, StringFormat='DEC  {0}'}" FontFamily="Monospace" />
-          <TextBlock Text="{Binding OctalDisplayValue, StringFormat='OCT  {0}'}" FontFamily="Monospace" />
-          <TextBlock Text="{Binding BinaryDisplayValue, StringFormat='BIN  {0}'}" FontFamily="Monospace" />
-          <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-            <RadioButton Content="HEX" GroupName="Radix" Name="RadixHex" Click="Radix_Click" Margin="0,0,8,0" />
-            <RadioButton Content="DEC" GroupName="Radix" Name="RadixDec" Click="Radix_Click" Margin="0,0,8,0" />
-            <RadioButton Content="OCT" GroupName="Radix" Name="RadixOct" Click="Radix_Click" Margin="0,0,8,0" />
-            <RadioButton Content="BIN" GroupName="Radix" Name="RadixBin" Click="Radix_Click" />
-          </StackPanel>
-          <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-            <RadioButton Content="QWORD" GroupName="Bits" Name="BitsQword" Click="Bits_Click" Margin="0,0,8,0" />
-            <RadioButton Content="DWORD" GroupName="Bits" Name="BitsDword" Click="Bits_Click" Margin="0,0,8,0" />
-            <RadioButton Content="WORD" GroupName="Bits" Name="BitsWord" Click="Bits_Click" Margin="0,0,8,0" />
-            <RadioButton Content="BYTE" GroupName="Bits" Name="BitsByte" Click="Bits_Click" Margin="0,0,8,0" />
-            <ToggleButton Content="Bit flip" IsChecked="{Binding IsBitFlipChecked, Mode=TwoWay}" Margin="8,0,0,0" />
-          </StackPanel>
-        </StackPanel>
-        <ScrollViewer IsVisible="{Binding IsBitFlipChecked}" MaxHeight="120">
-          <ItemsControl ItemsSource="{Binding BinaryDigits}" Name="BitFlipPanel">
-            <ItemsControl.ItemsPanel>
-              <ItemsPanelTemplate><WrapPanel Orientation="Horizontal" /></ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>
-                <ToggleButton Content="{Binding}" IsChecked="{Binding}" Click="Bit_Click" Width="36" />
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
-        </ScrollViewer>
-        <Grid IsVisible="{Binding AreProgrammerRadixOperatorsVisible}" RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*">
-          <Button Grid.Row="0" Grid.Column="0" Content="A" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.A}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
-          <Button Grid.Row="0" Grid.Column="1" Content="B" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.B}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
-          <Button Grid.Row="0" Grid.Column="2" Content="C" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.C}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
-          <Button Grid.Row="0" Grid.Column="3" Content="D" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.D}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
-          <Button Grid.Row="0" Grid.Column="4" Content="E" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.E}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
-          <Button Grid.Row="1" Grid.Column="0" Content="F" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.F}" IsEnabled="{Binding AreHEXButtonsEnabled}" />
-          <Button Grid.Row="1" Grid.Column="1" Content="(" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.OpenParenthesis}" />
-          <Button Grid.Row="1" Grid.Column="2" Content=")" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.CloseParenthesis}" />
-          <Button Grid.Row="1" Grid.Column="3" Content="Mod" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Mod}" />
-          <Button Grid.Row="1" Grid.Column="4" Content="⌫" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Backspace}" />
-          <Button Grid.Row="2" Grid.Column="0" Content="7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" />
-          <Button Grid.Row="2" Grid.Column="1" Content="8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" />
-          <Button Grid.Row="2" Grid.Column="2" Content="9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" />
-          <Button Grid.Row="2" Grid.Column="3" Content="÷" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Divide}" />
-          <Button Grid.Row="2" Grid.Column="4" Content="And" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.And}" />
-          <Button Grid.Row="3" Grid.Column="0" Content="4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" />
-          <Button Grid.Row="3" Grid.Column="1" Content="5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" />
-          <Button Grid.Row="3" Grid.Column="2" Content="6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" />
-          <Button Grid.Row="3" Grid.Column="3" Content="×" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Multiply}" />
-          <Button Grid.Row="3" Grid.Column="4" Content="Or" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Or}" />
-          <Button Grid.Row="4" Grid.Column="0" Content="1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" />
-          <Button Grid.Row="4" Grid.Column="1" Content="2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" />
-          <Button Grid.Row="4" Grid.Column="2" Content="3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" />
-          <Button Grid.Row="4" Grid.Column="3" Content="−" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Subtract}" />
-          <Button Grid.Row="4" Grid.Column="4" Content="Xor" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Xor}" />
-          <Button Grid.Row="5" Grid.Column="0" Content="±" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Negate}" />
-          <Button Grid.Row="5" Grid.Column="1" Content="0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" />
-          <Button Grid.Row="5" Grid.Column="2" Content="=" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Equals}" />
-          <Button Grid.Row="5" Grid.Column="3" Content="+" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Add}" />
-          <Button Grid.Row="5" Grid.Column="4" Content="Not" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Not}" />
-        </Grid>
-      </DockPanel>
-    </DockPanel>
-    <!-- Date calculator -->
-    <StackPanel Name="DatePanel" IsVisible="False" Margin="8" Width="420" HorizontalAlignment="Left">
-      <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-        <RadioButton Content="Difference" GroupName="DateMode" Name="DateModeDiff" Click="DateMode_Click" Margin="0,0,12,0" />
-        <RadioButton Content="Add / subtract" GroupName="DateMode" Name="DateModeAddSub" Click="DateMode_Click" />
-      </StackPanel>
-      <StackPanel Name="DateDiffStack">
-        <TextBlock Text="From" Opacity="0.7" />
-        <DatePicker SelectedDate="{Binding FromDate, Mode=TwoWay}" Margin="0,0,0,8" />
-        <TextBlock Text="To" Opacity="0.7" />
-        <DatePicker SelectedDate="{Binding ToDate, Mode=TwoWay}" Margin="0,0,0,8" />
-        <TextBlock Text="{Binding StrDateDiffResult}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap"
-                   auto:AutomationProperties.Name="{Binding StrDateDiffResultAutomationName}" />
-        <TextBlock Text="{Binding StrDateDiffResultInDays}" FontSize="16" Opacity="0.7" TextWrapping="Wrap" />
-      </StackPanel>
-      <StackPanel Name="DateAddSubStack" IsVisible="False">
-        <TextBlock Text="From" Opacity="0.7" />
-        <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}" Margin="0,0,0,8" />
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-          <RadioButton Content="Add" GroupName="DateAddSub" Name="DateAdd" Click="DateAddSub_Click" Margin="0,0,12,0" />
-          <RadioButton Content="Subtract" GroupName="DateAddSub" Name="DateSub" Click="DateAddSub_Click" />
-        </StackPanel>
-        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" Margin="0,0,0,8">
-          <TextBlock Grid.Row="0" Grid.Column="0" Text="Years" VerticalAlignment="Center" Margin="0,0,8,4" />
-          <TextBox Grid.Row="0" Grid.Column="1" Name="YearsBox" TextChanged="OffsetBox_Changed" Margin="0,0,0,4" />
-          <TextBlock Grid.Row="1" Grid.Column="0" Text="Months" VerticalAlignment="Center" Margin="0,0,8,4" />
-          <TextBox Grid.Row="1" Grid.Column="1" Name="MonthsBox" TextChanged="OffsetBox_Changed" Margin="0,0,0,4" />
-          <TextBlock Grid.Row="2" Grid.Column="0" Text="Days" VerticalAlignment="Center" Margin="0,0,8,0" />
-          <TextBox Grid.Row="2" Grid.Column="1" Name="DaysBox" TextChanged="OffsetBox_Changed" />
-        </Grid>
-        <TextBlock Text="{Binding StrDateResult}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap"
-                   auto:AutomationProperties.Name="{Binding StrDateResultAutomationName}" />
-      </StackPanel>
-    </StackPanel>
-    <!-- Unit converter -->
-    <DockPanel Name="ConverterPanel" IsVisible="False" LastChildFill="True" Margin="8">
-      <StackPanel DockPanel.Dock="Top" Margin="0,0,0,8">
-        <TextBlock Text="Converting..." Opacity="0.7" IsVisible="{Binding IsCurrencyLoadingVisible}" />
-        <TextBlock Text="{Binding CurrencyTimestamp}" Opacity="0.7" />
-        <TextBlock Text="Check your connection and try again." Foreground="Red"
-                   IsVisible="{Binding CurrencyDataLoadFailed}" />
-        <TextBlock Text="Rates are more than a week old." Foreground="Orange"
-                   IsVisible="{Binding CurrencyDataIsWeekOld}" />
-      </StackPanel>
-      <Grid DockPanel.Dock="Top" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto,*" Margin="0,0,0,8">
-        <ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Units}" SelectedItem="{Binding Unit1, Mode=TwoWay}"
-                  HorizontalAlignment="Stretch" Margin="0,0,4,4">
-          <ComboBox.ItemTemplate>
-            <DataTemplate><TextBlock Text="{Binding Name}" /></DataTemplate>
-          </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Button Grid.Row="0" Grid.Column="1" Content="⇄" Command="{Binding SwitchActiveCommand}" Margin="4,0,4,4" />
-        <ComboBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Units}" SelectedItem="{Binding Unit2, Mode=TwoWay}"
-                  HorizontalAlignment="Stretch" Margin="4,0,0,4">
-          <ComboBox.ItemTemplate>
-            <DataTemplate><TextBlock Text="{Binding Name}" /></DataTemplate>
-          </ComboBox.ItemTemplate>
-        </ComboBox>
-        <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Value1}" FontSize="28" TextAlignment="Right"
-                 IsReadOnly="True" GotFocus="ConverterValue_GotFocus" Name="ConverterValue1" Margin="0,0,4,0"
-                 auto:AutomationProperties.Name="{Binding Value1AutomationName}" />
-        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Value2}" FontSize="28" TextAlignment="Right"
-                 IsReadOnly="True" GotFocus="ConverterValue_GotFocus" Name="ConverterValue2" Margin="4,0,0,0"
-                 auto:AutomationProperties.Name="{Binding Value2AutomationName}" />
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrencySymbol1}" Opacity="0.7"
-                   IsVisible="{Binding CurrencySymbolVisibility}" />
-        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding CurrencySymbol2}" Opacity="0.7"
-                   IsVisible="{Binding CurrencySymbolVisibility}" />
-      </Grid>
-      <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding SupplementaryResults}" MaxHeight="140" Margin="0,0,0,8">
-        <ListBox.ItemTemplate>
-          <DataTemplate>
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Text="{Binding Value}" FontWeight="Bold" Margin="0,0,8,0" />
-              <TextBlock Text="{Binding Unit.Name}" Opacity="0.7" />
-            </StackPanel>
-          </DataTemplate>
-        </ListBox.ItemTemplate>
+  <!-- ==== Mode navigation flyout (upstream PaneDisplayMode=LeftMinimal) ==== -->
+  <Popup Name="NavPopup" PlacementTarget="HamburgerButton" Placement="BottomEdgeAlignedLeft"
+         IsLightDismissEnabled="True" Closed="NavPopup_Closed">
+    <Border Background="{DynamicResource AppSurfaceBrush}" CornerRadius="4" Padding="0,6"
+            MinWidth="240" MaxHeight="620" BoxShadow="0 8 24 0 #66000000">
+      <ListBox Classes="panel" SelectionChanged="ModeList_SelectionChanged" Name="ModeList">
+        <ListBoxItem Classes="nav" Content="Standard" Tag="Standard" IsSelected="True" />
+        <ListBoxItem Classes="nav" Content="Scientific" Tag="Scientific" />
+        <ListBoxItem Classes="nav" Content="Programmer" Tag="Programmer" />
+        <ListBoxItem Classes="nav" Content="Date calculation" Tag="Date" />
+        <ListBoxItem Classes="nav" Content="Currency" Tag="Currency" />
+        <ListBoxItem Classes="nav" Content="Volume" Tag="Volume" />
+        <ListBoxItem Classes="nav" Content="Length" Tag="Length" />
+        <ListBoxItem Classes="nav" Content="Weight and Mass" Tag="Weight" />
+        <ListBoxItem Classes="nav" Content="Temperature" Tag="Temperature" />
+        <ListBoxItem Classes="nav" Content="Energy" Tag="Energy" />
+        <ListBoxItem Classes="nav" Content="Area" Tag="Area" />
+        <ListBoxItem Classes="nav" Content="Speed" Tag="Speed" />
+        <ListBoxItem Classes="nav" Content="Time" Tag="Time" />
+        <ListBoxItem Classes="nav" Content="Power" Tag="Power" />
+        <ListBoxItem Classes="nav" Content="Data" Tag="Data" />
+        <ListBoxItem Classes="nav" Content="Pressure" Tag="Pressure" />
+        <ListBoxItem Classes="nav" Content="Angle" Tag="Angle" />
+        <ListBoxItem Classes="nav" Content="Graphing" Tag="Graphing" />
+        <ListBoxItem Classes="nav" Content="About" Tag="About" />
       </ListBox>
-      <Grid RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,*,*">
-        <Button Grid.Row="0" Grid.Column="0" Content="C" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Clear}" />
-        <Button Grid.Row="0" Grid.Column="1" Content="⌫" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Backspace}" />
-        <Button Grid.Row="0" Grid.Column="2" Content="⇄" Command="{Binding SwitchActiveCommand}" />
-        <Button Grid.Row="1" Grid.Column="0" Content="7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" />
-        <Button Grid.Row="1" Grid.Column="1" Content="8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" />
-        <Button Grid.Row="1" Grid.Column="2" Content="9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" />
-        <Button Grid.Row="2" Grid.Column="0" Content="4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" />
-        <Button Grid.Row="2" Grid.Column="1" Content="5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" />
-        <Button Grid.Row="2" Grid.Column="2" Content="6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" />
-        <Button Grid.Row="3" Grid.Column="0" Content="1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" />
-        <Button Grid.Row="3" Grid.Column="1" Content="2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" />
-        <Button Grid.Row="3" Grid.Column="2" Content="3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" />
-        <Button Grid.Row="4" Grid.Column="0" Content="±" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Negate}" />
-        <Button Grid.Row="4" Grid.Column="1" Content="0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" />
-        <Button Grid.Row="4" Grid.Column="2" Content="." Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Decimal}" />
-      </Grid>
-    </DockPanel>
-    <!-- Graphing -->
-    <DockPanel Name="GraphingPanel" IsVisible="False" LastChildFill="True" Margin="8">
-      <StackPanel DockPanel.Dock="Right" Width="320" Margin="8,0,0,0">
-        <TextBlock Text="Equations" FontWeight="Bold" Margin="0,0,0,4" />
-        <ListBox ItemsSource="{Binding Equations}" SelectedItem="{Binding SelectedEquation, Mode=TwoWay}"
-                 Name="EquationList" MaxHeight="220">
-          <ListBox.ItemTemplate>
-            <DataTemplate>
-              <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                  <TextBlock Text="y =" VerticalAlignment="Center" Margin="0,0,4,0" />
-                  <TextBox Text="{Binding Expression, Mode=TwoWay}" Width="150" />
-                  <CheckBox IsChecked="{Binding IsVisible, Mode=TwoWay}" Content="Show" Margin="4,0,0,0" />
-                  <Button Content="✕" Click="Equation_Delete" Margin="4,0,0,0" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-                  <ComboBox ItemsSource="{Binding $parent[ListBox].DataContext.LinePalette}"
-                            SelectedItem="{Binding LineColor, Mode=TwoWay}" Width="110" />
-                  <ComboBox ItemsSource="{Binding $parent[ListBox].DataContext.LineStyles}"
-                            SelectedItem="{Binding LineStyle, Mode=TwoWay}" Width="100" Margin="4,0,0,0" />
-                </StackPanel>
-                <TextBlock Text="{Binding Error}" Foreground="Red" TextWrapping="Wrap"
-                           IsVisible="{Binding HasError}" />
-              </StackPanel>
-            </DataTemplate>
-          </ListBox.ItemTemplate>
-        </ListBox>
-        <Button Content="Add equation" Command="{Binding AddEquationCommand}" HorizontalAlignment="Stretch" Margin="0,4,0,8" />
-        <TextBlock Text="Key features" FontWeight="Bold" Margin="0,0,0,4" />
-        <ItemsControl ItemsSource="{Binding SelectedFeatures}">
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <StackPanel Margin="0,0,0,6">
-                <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="12" />
-                <ItemsControl ItemsSource="{Binding Items}">
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate><TextBlock Text="{Binding}" FontSize="12" Opacity="0.85" /></DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
-              </StackPanel>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <TextBlock Text="Settings" FontWeight="Bold" Margin="0,4,0,4" />
-        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,*">
-          <TextBlock Grid.Row="0" Grid.Column="0" Text="X:" VerticalAlignment="Center" Margin="0,0,4,0" />
-          <NumericUpDown Grid.Row="0" Grid.Column="1" Value="{Binding XMin, Mode=TwoWay}" Margin="0,0,4,0" />
-          <NumericUpDown Grid.Row="0" Grid.Column="2" Value="{Binding XMax, Mode=TwoWay}" />
-          <TextBlock Grid.Row="1" Grid.Column="0" Text="Y:" VerticalAlignment="Center" Margin="0,4,4,0" />
-          <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding YMin, Mode=TwoWay}" Margin="0,4,4,0" />
-          <NumericUpDown Grid.Row="1" Grid.Column="2" Value="{Binding YMax, Mode=TwoWay}" Margin="0,4,0,0" />
-          <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Grid" IsChecked="{Binding IsGridVisible, Mode=TwoWay}" Margin="0,4,0,0" />
-          <Button Grid.Row="2" Grid.Column="2" Content="Reset" Click="Graph_Reset" Margin="0,4,0,0" />
-        </Grid>
-        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-          <RadioButton Content="Radians" GroupName="Trig" Name="TrigRad" Click="Trig_Click" Margin="0,0,8,0" />
-          <RadioButton Content="Degrees" GroupName="Trig" Name="TrigDeg" Click="Trig_Click" />
-        </StackPanel>
-      </StackPanel>
-      <oxy:CartesianChart Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}"
-                            Name="GraphPlot" />
-      <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,4,0,0">
-        <Button Content="x" Click="GraphPad_Insert" Tag="x" Width="40" />
-        <Button Content="^" Click="GraphPad_Insert" Tag="^" Width="40" />
-        <Button Content="(" Click="GraphPad_Insert" Tag="(" Width="40" />
-        <Button Content=")" Click="GraphPad_Insert" Tag=")" Width="40" />
-        <Button Content="sin" Click="GraphPad_Insert" Tag="sin(" Width="52" />
-        <Button Content="cos" Click="GraphPad_Insert" Tag="cos(" Width="52" />
-        <Button Content="tan" Click="GraphPad_Insert" Tag="tan(" Width="52" />
-        <Button Content="π" Click="GraphPad_Insert" Tag="pi" Width="40" />
-        <Button Content="+" Click="GraphPad_Insert" Tag="+" Width="40" />
-        <Button Content="−" Click="GraphPad_Insert" Tag="-" Width="40" />
-        <Button Content="×" Click="GraphPad_Insert" Tag="*" Width="40" />
-        <Button Content="÷" Click="GraphPad_Insert" Tag="/" Width="40" />
-      </StackPanel>
-    </DockPanel>
-  </DockPanel>
+    </Border>
+  </Popup>
+  </Grid>
+
 </Window>

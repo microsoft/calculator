@@ -12,6 +12,10 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Include="xunit" Version="2.9.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <!-- Real Avalonia layout pass without a display: catches the fill/sizing
+         regressions that are invisible to headless VM tests. -->
+    <PackageReference Include="Avalonia.Headless.XUnit" Version="11.3.6" />
+    <PackageReference Include="Avalonia.Skia" Version="11.3.6" />
   </ItemGroup>
 
   <ItemGroup>

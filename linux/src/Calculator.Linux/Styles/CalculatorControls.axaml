@@ -1,0 +1,223 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!--
+    Upstream equivalents: CalcButtonStyle (calc numbers), OperatorButtonStyle
+    (operators), AccentEmphasizedCalcButtonStyle (=), TextButton style (memory
+    row), SquareIconButtonStyle (header icons).
+
+    Upstream's CalcButtonStyle explicitly sets HorizontalAlignment/VerticalAlignment
+    to Stretch. Avalonia's Fluent Button does not, which is why keypads render as
+    tiny content-sized squares floating inside their grid cells. Every keypad
+    button here is forced to Stretch.
+  -->
+
+  <!-- Common shape: stretch to the whole cell, 1px gutter, rounded, no border. -->
+  <Style Selector="Button.calc">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Margin" Value="2" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="MinWidth" Value="24" />
+    <Setter Property="MinHeight" Value="12" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="FontSize" Value="20" />
+    <Setter Property="FontWeight" Value="Normal" />
+  </Style>
+
+  <!-- Number keys (CalcButtonFillColor*). -->
+  <Style Selector="Button.calcNum">
+    <Setter Property="Background" Value="{DynamicResource CalcNumFillBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcButtonTextBrush}" />
+    <Setter Property="FontSize" Value="24" />
+  </Style>
+  <Style Selector="Button.calcNum:pointerover">
+    <Setter Property="Background" Value="{DynamicResource CalcNumFillPointerOverBrush}" />
+  </Style>
+  <Style Selector="Button.calcNum:pressed">
+    <Setter Property="Background" Value="{DynamicResource CalcNumFillPressedBrush}" />
+  </Style>
+  <Style Selector="Button.calcNum:disabled">
+    <Setter Property="Background" Value="{DynamicResource CalcDisabledFillBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcDisabledTextBrush}" />
+  </Style>
+
+  <!-- Operator keys (CalcButtonAltFillColor*). -->
+  <Style Selector="Button.calcOp">
+    <Setter Property="Background" Value="{DynamicResource CalcOpFillBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcButtonTextBrush}" />
+    <Setter Property="FontSize" Value="18" />
+  </Style>
+  <Style Selector="Button.calcOp:pointerover">
+    <Setter Property="Background" Value="{DynamicResource CalcOpFillPointerOverBrush}" />
+  </Style>
+  <Style Selector="Button.calcOp:pressed">
+    <Setter Property="Background" Value="{DynamicResource CalcOpFillPressedBrush}" />
+  </Style>
+  <Style Selector="Button.calcOp:disabled">
+    <Setter Property="Background" Value="{DynamicResource CalcDisabledFillBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcDisabledTextBrush}" />
+  </Style>
+
+  <!-- Equals (AccentEmphasizedCalcButtonStyle). -->
+  <Style Selector="Button.calcAccent">
+    <Setter Property="Background" Value="{DynamicResource CalcAccentFillBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcAccentTextBrush}" />
+    <Setter Property="FontSize" Value="22" />
+  </Style>
+  <Style Selector="Button.calcAccent:pointerover">
+    <Setter Property="Background" Value="{DynamicResource CalcAccentFillPointerOverBrush}" />
+  </Style>
+  <Style Selector="Button.calcAccent:pressed">
+    <Setter Property="Background" Value="{DynamicResource CalcAccentFillPressedBrush}" />
+  </Style>
+  <Style Selector="Button.calcAccent:disabled">
+    <Setter Property="Background" Value="{DynamicResource CalcDisabledFillBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcDisabledTextBrush}" />
+  </Style>
+
+  <!-- Flat, borderless chrome buttons: memory row, header icons, graph pad. -->
+  <Style Selector="Button.flat">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Padding" Value="8,4" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcButtonTextBrush}" />
+  </Style>
+  <Style Selector="Button.flat:pointerover">
+    <Setter Property="Background" Value="{DynamicResource CalcFlatFillPointerOverBrush}" />
+  </Style>
+  <Style Selector="Button.flat:pressed">
+    <Setter Property="Background" Value="{DynamicResource CalcFlatFillPressedBrush}" />
+  </Style>
+
+  <!-- Square icon buttons in the header (upstream SquareIconButtonStyle). -->
+  <Style Selector="Button.icon">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Width" Value="40" />
+    <Setter Property="Height" Value="40" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="FontSize" Value="18" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcButtonTextBrush}" />
+  </Style>
+  <Style Selector="Button.icon:pointerover">
+    <Setter Property="Background" Value="{DynamicResource CalcFlatFillPointerOverBrush}" />
+  </Style>
+  <Style Selector="Button.icon:pressed">
+    <Setter Property="Background" Value="{DynamicResource CalcFlatFillPressedBrush}" />
+  </Style>
+  <!-- ToggleButton has its own default template (border + fill), so the icon
+       look needs a dedicated base style rather than inheriting Button.icon. -->
+  <Style Selector="ToggleButton.icon">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Width" Value="40" />
+    <Setter Property="Height" Value="40" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcButtonTextBrush}" />
+  </Style>
+  <Style Selector="ToggleButton.icon:pointerover">
+    <Setter Property="Background" Value="{DynamicResource CalcFlatFillPointerOverBrush}" />
+  </Style>
+  <Style Selector="ToggleButton.icon:checked">
+    <Setter Property="Background" Value="{DynamicResource CalcFlatFillPointerOverBrush}" />
+  </Style>
+
+  <!-- Secondary/tertiary operator keys (memory & display strip). -->
+  <Style Selector="Button.strip">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Padding" Value="4,2" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcButtonTextBrush}" />
+    <Setter Property="Opacity" Value="0.85" />
+  </Style>
+  <Style Selector="Button.strip:pointerover">
+    <Setter Property="Background" Value="{DynamicResource CalcFlatFillPointerOverBrush}" />
+    <Setter Property="Opacity" Value="1" />
+  </Style>
+  <Style Selector="Button.strip:disabled">
+    <Setter Property="Foreground" Value="{DynamicResource CalcDisabledTextBrush}" />
+  </Style>
+
+  <!-- Segmented selector chips (angle mode, radix, bit length, date mode). -->
+  <Style Selector="Button.chip">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Padding" Value="12,6" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcButtonTextBrush}" />
+  </Style>
+  <Style Selector="Button.chip:pointerover">
+    <Setter Property="Background" Value="{DynamicResource CalcFlatFillPointerOverBrush}" />
+  </Style>
+  <Style Selector="ToggleButton.chip:checked">
+    <Setter Property="Background" Value="{DynamicResource CalcFlatFillPointerOverBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcButtonTextBrush}" />
+  </Style>
+  <!-- RadioButton keeps upstream's mutual-exclusion semantics (GroupName) but
+       renders as a borderless chip: the default template's radio dot is dropped. -->
+  <Style Selector="RadioButton.chip">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="14,7" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcButtonTextBrush}" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Template">
+      <ControlTemplate TargetType="RadioButton">
+        <Border Background="{TemplateBinding Background}"
+                CornerRadius="4"
+                Padding="{TemplateBinding Padding}">
+          <ContentPresenter Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="{TemplateBinding Foreground}" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="RadioButton.chip:checked">
+    <Setter Property="Background" Value="{DynamicResource CalcFlatFillPressedBrush}" />
+  </Style>
+  <Style Selector="RadioButton.chip:pointerover">
+    <Setter Property="Background" Value="{DynamicResource CalcFlatFillPointerOverBrush}" />
+  </Style>
+
+  <!-- Mode navigation list (upstream NavigationViewItem). -->
+  <Style Selector="ListBoxItem.nav">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="Padding" Value="16,10" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Margin" Value="4,1" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="FontSize" Value="14" />
+  </Style>
+  <Style Selector="ListBoxItem.nav:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource CalcFlatFillPointerOverBrush}" />
+  </Style>
+  <Style Selector="ListBoxItem.nav:selected">
+    <Setter Property="Background" Value="{DynamicResource NavSelectedFillBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource CalcButtonTextBrush}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <Style Selector="ListBoxItem.nav:selected:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource NavSelectedHoverFillBrush}" />
+  </Style>
+
+  <Style Selector="ListBox.panel">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
+</Styles>
