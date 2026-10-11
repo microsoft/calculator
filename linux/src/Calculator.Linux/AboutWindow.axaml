@@ -1,0 +1,20 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Calculator.Linux.AboutWindow"
+        Title="About Calculator" Width="420" Height="300"
+        WindowStartupLocation="CenterOwner" CanResize="False">
+  <StackPanel Margin="20">
+    <TextBlock Text="Calculator for Linux" FontSize="24" FontWeight="Bold" />
+    <TextBlock Name="VersionText" Opacity="0.7" Margin="0,4,0,12" />
+    <TextBlock TextWrapping="Wrap" Opacity="0.9">
+      A native Linux port of Windows Calculator (MIT), with the portable C++
+      engine reused unmodified and the UI rebuilt on Avalonia.
+    </TextBlock>
+    <TextBlock Margin="0,12,0,0" Opacity="0.7" TextWrapping="Wrap">
+      Currency rates: Frankfurter/ECB (free, no key). Graphing: local engine
+      over LiveCharts. See PORTING-NOTES in the repository for every
+      proprietary-component replacement.
+    </TextBlock>
+    <Button Content="Close" Click="Close_Click" HorizontalAlignment="Right" Margin="0,16,0,0" Width="90" />
+  </StackPanel>
+</Window>

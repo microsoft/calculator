@@ -4,47 +4,12 @@
         xmlns:oxy="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
         x:Class="Calculator.Linux.MainWindow"
         Title="Calculator" Width="980" Height="640" MinWidth="640" MinHeight="480">
-  <Window.KeyBindings>
-    <KeyBinding Gesture="Enter" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Equals}" />
-    <KeyBinding Gesture="Escape" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Clear}" />
-    <KeyBinding Gesture="Back" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Backspace}" />
-    <KeyBinding Gesture="Delete" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.ClearEntry}" />
-    <KeyBinding Gesture="D0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" />
-    <KeyBinding Gesture="D1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" />
-    <KeyBinding Gesture="D2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" />
-    <KeyBinding Gesture="D3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" />
-    <KeyBinding Gesture="D4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" />
-    <KeyBinding Gesture="D5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" />
-    <KeyBinding Gesture="D6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" />
-    <KeyBinding Gesture="D7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" />
-    <KeyBinding Gesture="D8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" />
-    <KeyBinding Gesture="D9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" />
-    <KeyBinding Gesture="NumPad0" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Zero}" />
-    <KeyBinding Gesture="NumPad1" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.One}" />
-    <KeyBinding Gesture="NumPad2" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Two}" />
-    <KeyBinding Gesture="NumPad3" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Three}" />
-    <KeyBinding Gesture="NumPad4" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Four}" />
-    <KeyBinding Gesture="NumPad5" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Five}" />
-    <KeyBinding Gesture="NumPad6" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Six}" />
-    <KeyBinding Gesture="NumPad7" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Seven}" />
-    <KeyBinding Gesture="NumPad8" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Eight}" />
-    <KeyBinding Gesture="NumPad9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Nine}" />
-    <KeyBinding Gesture="OemPlus" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Add}" />
-    <KeyBinding Gesture="OemMinus" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Subtract}" />
-    <KeyBinding Gesture="Multiply" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Multiply}" />
-    <KeyBinding Gesture="Divide" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Divide}" />
-    <KeyBinding Gesture="OemComma" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Decimal}" />
-    <KeyBinding Gesture="Decimal" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Decimal}" />
-    <KeyBinding Gesture="OemOpenBrackets" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.OpenParenthesis}" />
-    <KeyBinding Gesture="OemCloseBrackets" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.CloseParenthesis}" />
-    <KeyBinding Gesture="D5+Shift" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Percent}" />
-    <KeyBinding Gesture="D6+Shift" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.XPowerY}" />
-    <KeyBinding Gesture="F9" Command="{Binding ButtonPressedCommand}" CommandParameter="{x:Static common:NumbersAndOperatorsEnum.Negate}" />
-  </Window.KeyBindings>
 
   <DockPanel LastChildFill="True">
     <!-- Mode navigation -->
-    <ListBox DockPanel.Dock="Left" Width="150" SelectionChanged="ModeList_SelectionChanged" Name="ModeList">
+    <DockPanel DockPanel.Dock="Left" Width="150" LastChildFill="True">
+      <Button DockPanel.Dock="Bottom" Content="About" Click="About_Click" Margin="4" HorizontalAlignment="Stretch" />
+      <ListBox SelectionChanged="ModeList_SelectionChanged" Name="ModeList">
       <ListBoxItem Content="Standard" Tag="Standard" IsSelected="True" />
       <ListBoxItem Content="Scientific" Tag="Scientific" />
       <ListBoxItem Content="Programmer" Tag="Programmer" />
@@ -64,6 +29,7 @@
       <ListBoxItem Content="Angle" Tag="Angle" />
       <ListBoxItem Content="Graphing" Tag="Graphing" />
     </ListBox>
+    </DockPanel>
 
     <!-- History / Memory dock -->
     <TabControl DockPanel.Dock="Right" Width="270" Name="SidePanel">
@@ -126,6 +92,7 @@
         <Button Content="M+" Click="MemoryRow_Add" Width="52" />
         <Button Content="M–" Click="MemoryRow_Subtract" Width="52" />
         <Button Content="MS" Click="MemoryRow_Store" Width="52" />
+        <ToggleButton Content="History" Name="HistoryToggle" IsChecked="True" Click="HistoryToggle_Click" Margin="8,0,0,0" />
       </StackPanel>
 
       <!-- Standard panel -->

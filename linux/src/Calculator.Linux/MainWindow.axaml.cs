@@ -55,6 +55,38 @@ public sealed partial class MainWindow : Window
         }
     }
 
+    private void About_Click(object? sender, RoutedEventArgs e)
+    {
+        new AboutWindow().ShowDialog(this);
+    }
+
+    private void HistoryToggle_Click(object? sender, RoutedEventArgs e)
+    {
+        if (Find<TabControl>("SidePanel") is { } panel
+            && Find<ToggleButton>("HistoryToggle") is { } toggle)
+        {
+            panel.IsVisible = toggle.IsChecked == true;
+        }
+    }
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        // Collapse the docked History/Memory panel on narrow windows so the
+        // keypad never clips (upstream uses flyouts at small sizes; delta).
+        if (change.Property == BoundsProperty && Bounds.Width < 720)
+        {
+            if (Find<TabControl>("SidePanel") is { } panel && panel.IsVisible)
+            {
+                panel.IsVisible = false;
+                if (Find<ToggleButton>("HistoryToggle") is { } toggle)
+                {
+                    toggle.IsChecked = false;
+                }
+            }
+        }
+    }
+
     // --- Mode navigation -------------------------------------------------------
 
     private void ModeList_SelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -93,6 +125,7 @@ public sealed partial class MainWindow : Window
     private void ShowGraphing()
     {
         HideConverter();
+        Title = "Calculator – Graphing";
         _graphVM ??= new GraphingViewModel();
         if (Find<DockPanel>("GraphingPanel") is { } panel)
         {
@@ -175,6 +208,7 @@ public sealed partial class MainWindow : Window
 
     private void ShowConverter(ViewMode mode)
     {
+        Title = "Calculator – " + mode;
         _converterVM ??= new UnitConverterViewModel();
         _converterVM.Dispatcher = AvaloniaDispatcher.Instance;
         _converterVM.Mode = mode;
@@ -216,6 +250,7 @@ public sealed partial class MainWindow : Window
     {
         HideConverter();
         _vm.SetCalculatorType(mode);
+        Title = "Calculator – " + mode;
         if (Find<DockPanel>("CalculatorPanel") is { } calc)
         {
             calc.IsVisible = true;
@@ -237,6 +272,7 @@ public sealed partial class MainWindow : Window
     private void ShowDate()
     {
         HideConverter();
+        Title = "Calculator – Date calculation";
         if (Find<DockPanel>("CalculatorPanel") is { } calc)
         {
             calc.IsVisible = false;
@@ -503,44 +539,164 @@ public sealed partial class MainWindow : Window
         return -1;
     }
 
-    // --- Keyboard: hex digits (mode-gated), copy/paste -----------------------------------------------
+    // --- Keyboard: panel-aware routing ------------------------------------------------------
+    // Window-level routing (replaces per-button shortcuts): text-editing controls
+    // keep native behavior; otherwise keys drive the visible panel. Matches the
+    // upstream map (digits, +-*/%^(), Enter, Esc, Backspace, Delete, F9, E, A-F).
+
+    private bool IsCalculatorActive() =>
+        Find<DockPanel>("CalculatorPanel") is { } panel && panel.IsVisible;
+
+    private bool IsConverterActive() =>
+        Find<DockPanel>("ConverterPanel") is { } panel && panel.IsVisible;
 
     protected override void OnKeyDown(KeyEventArgs e)
     {
-        if (e.KeyModifiers.HasFlag(KeyModifiers.Control) && e.Key == Key.C)
+        bool ctrl = e.KeyModifiers.HasFlag(KeyModifiers.Control);
+        if (ctrl && e.Key == Key.C)
         {
-            _vm.CopyCommand.Execute(null);
+            if (IsCalculatorActive())
+            {
+                _vm.CopyCommand.Execute(null);
+            }
+            else if (IsConverterActive() && _converterVM != null)
+            {
+                _converterVM.CopyCommand.Execute(null);
+            }
+            else
+            {
+                base.OnKeyDown(e);
+                return;
+            }
             e.Handled = true;
             return;
         }
 
-        if (e.KeyModifiers.HasFlag(KeyModifiers.Control) && e.Key == Key.V)
+        if (ctrl && e.Key == Key.V)
         {
-            _vm.PasteCommand.Execute(null);
+            if (IsCalculatorActive())
+            {
+                _vm.PasteCommand.Execute(null);
+            }
+            else if (IsConverterActive() && _converterVM != null)
+            {
+                _converterVM.PasteCommand.Execute(null);
+            }
+            else
+            {
+                base.OnKeyDown(e);
+                return;
+            }
             e.Handled = true;
             return;
         }
 
-        if (_vm.IsProgrammer && e.KeyModifiers == KeyModifiers.None)
+        if (ctrl)
         {
-            var op = e.Key switch
+            base.OnKeyDown(e);
+            return;
+        }
+
+        // Text-editing controls keep native behavior (no calculator side effects).
+        var focused = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+        if (focused is TextBox or DatePicker or ComboBox or NumericUpDown)
+        {
+            base.OnKeyDown(e);
+            return;
+        }
+
+        if (IsConverterActive() && _converterVM != null)
+        {
+            if (TryConverterKey(e.Key, e.KeyModifiers, out NumbersAndOperatorsEnum op))
             {
-                Key.A => NumbersAndOperatorsEnum.A,
-                Key.B => NumbersAndOperatorsEnum.B,
-                Key.C => NumbersAndOperatorsEnum.C,
-                Key.D => NumbersAndOperatorsEnum.D,
-                Key.E => NumbersAndOperatorsEnum.E,
-                Key.F => NumbersAndOperatorsEnum.F,
-                _ => (NumbersAndOperatorsEnum?)null,
-            };
-            if (op != null)
-            {
-                _vm.ButtonPressedCommand.Execute(op);
+                _converterVM.ButtonPressedCommand.Execute(op);
                 e.Handled = true;
                 return;
             }
+            base.OnKeyDown(e);
+            return;
+        }
+
+        if (!IsCalculatorActive())
+        {
+            base.OnKeyDown(e);
+            return;
+        }
+
+        bool shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
+        NumbersAndOperatorsEnum? calcOp = e.Key switch
+        {
+            Key.D0 or Key.NumPad0 => NumbersAndOperatorsEnum.Zero,
+            Key.D1 or Key.NumPad1 => NumbersAndOperatorsEnum.One,
+            Key.D2 or Key.NumPad2 => NumbersAndOperatorsEnum.Two,
+            Key.D3 or Key.NumPad3 => NumbersAndOperatorsEnum.Three,
+            Key.D4 or Key.NumPad4 => NumbersAndOperatorsEnum.Four,
+            Key.D5 or Key.NumPad5 => shift ? NumbersAndOperatorsEnum.Percent : NumbersAndOperatorsEnum.Five,
+            Key.D6 or Key.NumPad6 => shift ? NumbersAndOperatorsEnum.XPowerY : NumbersAndOperatorsEnum.Six,
+            Key.D7 or Key.NumPad7 => NumbersAndOperatorsEnum.Seven,
+            Key.D8 or Key.NumPad8 => NumbersAndOperatorsEnum.Eight,
+            Key.D9 or Key.NumPad9 => NumbersAndOperatorsEnum.Nine,
+            Key.Add or Key.OemPlus => NumbersAndOperatorsEnum.Add,
+            Key.Subtract or Key.OemMinus => NumbersAndOperatorsEnum.Subtract,
+            Key.Multiply => NumbersAndOperatorsEnum.Multiply,
+            Key.Divide => NumbersAndOperatorsEnum.Divide,
+            Key.OemComma or Key.OemPeriod or Key.Decimal or Key.AbntC1 => NumbersAndOperatorsEnum.Decimal,
+            Key.OemOpenBrackets => NumbersAndOperatorsEnum.OpenParenthesis,
+            Key.OemCloseBrackets => NumbersAndOperatorsEnum.CloseParenthesis,
+            Key.Enter => NumbersAndOperatorsEnum.Equals,
+            Key.Escape => NumbersAndOperatorsEnum.Clear,
+            Key.Back => NumbersAndOperatorsEnum.Backspace,
+            Key.Delete => NumbersAndOperatorsEnum.ClearEntry,
+            Key.F9 => NumbersAndOperatorsEnum.Negate,
+            _ => null,
+        };
+
+        if (calcOp == null && e.KeyModifiers == KeyModifiers.None)
+        {
+            calcOp = e.Key switch
+            {
+                Key.E when _vm.IsScientific => NumbersAndOperatorsEnum.Exp,
+                Key.E when _vm.IsProgrammer => NumbersAndOperatorsEnum.E,
+                Key.A when _vm.IsProgrammer => NumbersAndOperatorsEnum.A,
+                Key.B when _vm.IsProgrammer => NumbersAndOperatorsEnum.B,
+                Key.C when _vm.IsProgrammer => NumbersAndOperatorsEnum.C,
+                Key.D when _vm.IsProgrammer => NumbersAndOperatorsEnum.D,
+                Key.F when _vm.IsProgrammer => NumbersAndOperatorsEnum.F,
+                _ => null,
+            };
+        }
+
+        if (calcOp != null)
+        {
+            _vm.ButtonPressedCommand.Execute(calcOp);
+            e.Handled = true;
+            return;
         }
 
         base.OnKeyDown(e);
+    }
+
+    private static bool TryConverterKey(Key key, KeyModifiers modifiers, out NumbersAndOperatorsEnum op)
+    {
+        bool shift = modifiers.HasFlag(KeyModifiers.Shift);
+        NumbersAndOperatorsEnum? mapped = key switch
+        {
+            Key.D0 or Key.NumPad0 => NumbersAndOperatorsEnum.Zero,
+            Key.D1 or Key.NumPad1 => NumbersAndOperatorsEnum.One,
+            Key.D2 or Key.NumPad2 => NumbersAndOperatorsEnum.Two,
+            Key.D3 or Key.NumPad3 => NumbersAndOperatorsEnum.Three,
+            Key.D4 or Key.NumPad4 => NumbersAndOperatorsEnum.Four,
+            Key.D5 or Key.NumPad5 => NumbersAndOperatorsEnum.Five,
+            Key.D6 or Key.NumPad6 => NumbersAndOperatorsEnum.Six,
+            Key.D7 or Key.NumPad7 => NumbersAndOperatorsEnum.Seven,
+            Key.D8 or Key.NumPad8 => NumbersAndOperatorsEnum.Eight,
+            Key.D9 or Key.NumPad9 => NumbersAndOperatorsEnum.Nine,
+            Key.OemComma or Key.OemPeriod or Key.Decimal => NumbersAndOperatorsEnum.Decimal,
+            Key.Back => NumbersAndOperatorsEnum.Backspace,
+            Key.Escape => NumbersAndOperatorsEnum.Clear,
+            _ => null,
+        };
+        op = mapped ?? NumbersAndOperatorsEnum.None;
+        return mapped != null && !shift;
     }
 }
