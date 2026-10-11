@@ -65,8 +65,10 @@ step "9/10 reference live on-screen drive (requires an X display)"
 if [ -z "${DISPLAY:-}" ] && [ -S /tmp/.X11-unix/X0 ]; then
   export DISPLAY=:0
 fi
-if [ -n "${DISPLAY:-}" ] && command -v xdotool > /dev/null 2>&1 && \
-   xdotool search --name Calculator > /dev/null 2>&1; then
+# Only a usable DISPLAY and xdotool are required - ui_drive.sh launches the
+# application itself. (An earlier version also demanded an already-running
+# Calculator window, which made this step fail on a perfectly good display.)
+if [ -n "${DISPLAY:-}" ] && command -v xdotool > /dev/null 2>&1; then
   ./AUDIT/ui_drive.sh > "$LOGDIR/run_ui_drive.log" 2>&1
   check $? "ui_drive.sh"
 elif [ -n "${AUDIT_REQUIRE_DISPLAY:-}" ]; then
