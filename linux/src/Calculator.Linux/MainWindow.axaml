@@ -395,9 +395,20 @@
                            auto:AutomationProperties.Name="{Binding Value2AutomationName}" />
               </Grid>
             </Border>
+            <!--
+              Currency symbols. The reference (src/Calculator/Views/
+              UnitConverter.xaml) puts each symbol in an Auto column immediately
+              beside its amount, with Padding="16,0,0,0" on the leading one, and
+              right-aligns the trailing one to match the right-aligned Value2.
+              Without that the symbols rendered flush against the window edge
+              (clipping the glyph) and the second one at the start of its third
+              of the grid rather than beside its amount.
+            -->
             <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrencySymbol1}" Opacity="0.7"
+                       Padding="16,0,0,0" HorizontalAlignment="Left"
                        IsVisible="{Binding CurrencySymbolVisibility}" />
             <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding CurrencySymbol2}" Opacity="0.7"
+                       HorizontalAlignment="Right"
                        IsVisible="{Binding CurrencySymbolVisibility}" />
           </Grid>
 

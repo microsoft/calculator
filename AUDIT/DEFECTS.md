@@ -310,59 +310,46 @@ lists all nineteen entries. This is what surfaced AUD-S3-006 and AUD-S3-007.
 
 | ID | Sev | Status |
 |---|---|---|
-| AUD-S2-001 Scientific/Programmer keypad incomplete | S2 | FIXED + RETESTED |
+| AUD-S2-001 Scientific/Programmer keypad incomplete | S2 | FIXED + verified on screen |
 | AUD-S3-002 build-deb.sh exits 2 on success | S3 | FIXED |
-| AUD-S3-003 currency mojibake | S3 | FIXED (verified) |
+| AUD-S3-003 currency mojibake | S3 | FIXED + verified on screen |
 | AUD-S3-004 shortcuts bound to hardware keys, not characters | S3 | FIXED |
 | AUD-S3-005 only ~12 of 71 reference shortcuts implemented | S3 | FIXED |
-| AUD-NOTE-001 engine has process-global state | note | documented |
-| AUD-NOTE-002 158 reference golden vectors | note | 158/158 PASS |
-| AUD-NOTE-003 locale matrix | note | PASS |
+| AUD-S3-006 Graphing last in nav, reference puts it third | S3 | FIXED |
+| AUD-S3-007 Ctrl+Alt+1..5 mode shortcuts missing | S3 | FIXED |
+| AUD-S3-008 currency symbols in the wrong places | S3 | FIXED + verified on screen |
+| AUD-DEV-001 Scientific scrolls instead of shift-toggle | accepted deviation | user decision pending |
+| AUD-DEV-002 Frankfurter instead of the dead fwlink URL | accepted deviation | — |
+| AUD-DEV-003 English-only | accepted deviation | — |
+| AUD-DEV-004 History/Memory docked rather than floating | accepted deviation | — |
 
----
+### Notes (verified, not defects)
 
-## AUD-NOTE-006 — Order-dependent locale tests: root cause and fix
+| ID | Subject |
+|---|---|
+| AUD-NOTE-001 | Native engine has process-global state (single-window app, not user-visible) |
+| AUD-NOTE-002 | 158 reference engine golden vectors replay green |
+| AUD-NOTE-003 | Locale matrix across 15 cultures, no defect |
+| AUD-NOTE-004 | Reference C# test replay: date, copy/paste, VM sequences all green first time |
+| AUD-NOTE-005 | On-screen verification unblocked after logout/login |
+| AUD-NOTE-006 | Order-dependent locale tests: root-caused and moved to an isolated process |
+| AUD-NOTE-007 | NuGet transitive licence audit: 44 packages, all permissive |
+| AUD-NOTE-008 | Live on-screen pass over every mode |
 
-**Severity:** test-infrastructure defect (not a product defect)
-**Status:** FIXED
+### Retracted false positives (recorded so they are not re-raised)
 
-### Symptom
-`LocaleMatrixTests.DecimalSeparatorAndGrouping_FollowCulture(ru-RU)` failed in
-full-suite runs and passed when the class was run alone. Re-running the full
-suite would sometimes pass. Same input, same code, different result - a flake.
+| Subject | Why retracted |
+|---|---|
+| 38 "wrong" resource strings | two resw tables had been merged during extraction |
+| `scientific=0` extraction result | a stray earlier `IsProgrammer` binding polluted the scrape |
+| grouping separators | correct per the engine's `GroupDigitsPerRadix` |
+| `ln(-1)` probe | the helper dropped the `-` before evaluating |
+| golden-vector failures (81, then 34) | harness bugs: `\x00D7` decoded as `chr(0)`, and `CommandNULL` was being sent |
+| locale matrix failures | wrong expected strings in the test, port was correct |
+| currency symbol layout, first fix attempt | wrong assertions in the test, port was correct |
 
-### Root cause
-The port's C# layer is not at fault. The unmodified engine stores its resource
-provider behind a **`const`** member (`CalcEngine.h:117 m_resourceProvider`),
-installed by the **first** `CalculatorManagerInstance` built in the process.
-The decimal and group separators live in that provider, so the first engine
-created in a test process fixes the separators for every engine after it -
-including ones created later with a different `LinuxLocalization.Current`.
+### Test totals
 
-A test that sets `LinuxLocalization.Current` and then builds a view-model is
-therefore asserting against whatever locale happened to run first.
-
-### Is it user-visible?
-No. The app builds its single engine at startup from
-`CultureInfo.CurrentCulture` and never changes locale afterwards, so the
-separators it formats with are the correct ones. It cannot be fixed in the port
-without modifying the engine header, which the brief forbids.
-
-### Fix
-Assertions whose result depends on engine separators are tagged
-`[Trait("Category", "IsolatedProcess")]` and `AUDIT/run_all.sh` runs them in a
-separate `dotnet test --filter "Category=IsolatedProcess"` process, so each
-starts from a clean engine. The main run uses `--filter
-"Category!=IsolatedProcess"`.
-
-Counts after the split: **525** in the main run, **18** in the isolated run.
-
-Assertions that do not depend on an engine (separators and RTL agreement with
-the framework, across 20 cultures) stay in the normal run because they are
-order-independent.
-
-### Also strengthened
-`IndianGrouping_IsTwoTwoThree` had been asserting `12,000`, which groups the same
-under en-IN and en-US and so could not detect pollution at all. It now asserts
-`1234567 -> 12,34,567` under en-IN against `1,234,567` under en-US, which is
-actually discriminating.
+- Managed: **525** in the main run + **18** in the isolated locale process = **543**
+- Native: `ctest` green
+- Reference-authored assertions replayed: 158 engine + 114 VM + 9 date + 4 copy/paste
