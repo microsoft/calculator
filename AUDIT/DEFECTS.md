@@ -318,3 +318,51 @@ lists all nineteen entries. This is what surfaced AUD-S3-006 and AUD-S3-007.
 | AUD-NOTE-001 engine has process-global state | note | documented |
 | AUD-NOTE-002 158 reference golden vectors | note | 158/158 PASS |
 | AUD-NOTE-003 locale matrix | note | PASS |
+
+---
+
+## AUD-NOTE-006 — Order-dependent locale tests: root cause and fix
+
+**Severity:** test-infrastructure defect (not a product defect)
+**Status:** FIXED
+
+### Symptom
+`LocaleMatrixTests.DecimalSeparatorAndGrouping_FollowCulture(ru-RU)` failed in
+full-suite runs and passed when the class was run alone. Re-running the full
+suite would sometimes pass. Same input, same code, different result - a flake.
+
+### Root cause
+The port's C# layer is not at fault. The unmodified engine stores its resource
+provider behind a **`const`** member (`CalcEngine.h:117 m_resourceProvider`),
+installed by the **first** `CalculatorManagerInstance` built in the process.
+The decimal and group separators live in that provider, so the first engine
+created in a test process fixes the separators for every engine after it -
+including ones created later with a different `LinuxLocalization.Current`.
+
+A test that sets `LinuxLocalization.Current` and then builds a view-model is
+therefore asserting against whatever locale happened to run first.
+
+### Is it user-visible?
+No. The app builds its single engine at startup from
+`CultureInfo.CurrentCulture` and never changes locale afterwards, so the
+separators it formats with are the correct ones. It cannot be fixed in the port
+without modifying the engine header, which the brief forbids.
+
+### Fix
+Assertions whose result depends on engine separators are tagged
+`[Trait("Category", "IsolatedProcess")]` and `AUDIT/run_all.sh` runs them in a
+separate `dotnet test --filter "Category=IsolatedProcess"` process, so each
+starts from a clean engine. The main run uses `--filter
+"Category!=IsolatedProcess"`.
+
+Counts after the split: **525** in the main run, **18** in the isolated run.
+
+Assertions that do not depend on an engine (separators and RTL agreement with
+the framework, across 20 cultures) stay in the normal run because they are
+order-independent.
+
+### Also strengthened
+`IndianGrouping_IsTwoTwoThree` had been asserting `12,000`, which groups the same
+under en-IN and en-US and so could not detect pollution at all. It now asserts
+`1234567 -> 12,34,567` under en-IN against `1,234,567` under en-US, which is
+actually discriminating.

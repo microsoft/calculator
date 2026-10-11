@@ -1,5 +1,22 @@
 // AUDIT — locale matrix (addendum A2 / brief §8 Localization).
 //
+// IMPORTANT - the display-output cases are tagged [Trait("Category",
+// "IsolatedProcess")] and AUDIT/run_all.sh runs them in their own `dotnet test`
+// process. That is not ceremony: the unmodified engine stores its resource
+// provider (decimal + group separators) behind a `const` member installed by the
+// first CalculatorManagerInstance built in the process, so once any test has
+// created an engine, a later VM cannot change the separators it formats with.
+// Asserting locale-dependent display output in a shared process therefore
+// depends on test order - it passed or failed depending on what ran first, which
+// is a flake, not a result.
+//
+// This is NOT user-visible: the app builds its single engine at startup from
+// CultureInfo.CurrentCulture and never changes locale afterwards, so the
+// separators it formats with are the correct ones. See AUD-NOTE-001.
+//
+// The assertions that do NOT need an engine (separator/RTL agreement with the
+// framework) run normally and are order-independent.
+//
 // The machine has no de_DE/ru_RU system locales installed, but .NET resolves
 // cultures through ICU, so each locale is applied explicitly through
 // LinuxLocalization (exactly as the app does at startup from
@@ -23,6 +40,7 @@ namespace Calculator.Linux.Tests.Audit;
 public sealed class LocaleMatrixTests
 {
     [Theory]
+    [Trait("Category", "IsolatedProcess")]
     // 1234.5: four integer digits so grouping is exercised, plus a fraction.
     [InlineData("en-US")]
     [InlineData("en-GB")]
@@ -89,6 +107,7 @@ public sealed class LocaleMatrixTests
     }
 
     [Fact]
+    [Trait("Category", "IsolatedProcess")]
     public void IndianGrouping_IsTwoTwoThree()
     {
         var previous = LinuxLocalization.Current;
@@ -111,6 +130,7 @@ public sealed class LocaleMatrixTests
     }
 
     [Fact]
+    [Trait("Category", "IsolatedProcess")]
     public void WesternGrouping_IsThreeThreeThree()
     {
         var previous = LinuxLocalization.Current;
@@ -168,6 +188,7 @@ public sealed class LocaleMatrixTests
     }
 
     [Fact]
+    [Trait("Category", "IsolatedProcess")]
     public void InvariantGlobalizationFallback_DoesNotCrash()
     {
         // The brief requires the app to behave sanely without ICU. CultureInfo
