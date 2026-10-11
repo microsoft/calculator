@@ -99,7 +99,7 @@ public sealed class StandardViewModelTests : IDisposable
     {
         Press(NumbersAndOperatorsEnum.Five, NumbersAndOperatorsEnum.Equals);
         _vm.OnMemoryButtonPressed();
-        Assert.Equal(1, _vm.MemorizedNumbers.Count);
+        Assert.Single(_vm.MemorizedNumbers);
 
         Press(NumbersAndOperatorsEnum.Clear);
         _vm.OnMemoryItemPressed(0);
@@ -108,7 +108,7 @@ public sealed class StandardViewModelTests : IDisposable
         _vm.OnMemoryAdd(0);
         _vm.OnMemorySubtract(0);
         _vm.OnMemoryClear(0);
-        Assert.Equal(0, _vm.MemorizedNumbers.Count);
+        Assert.Empty(_vm.MemorizedNumbers);
         Assert.True(_vm.IsMemoryEmpty);
     }
 

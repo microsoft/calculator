@@ -12,7 +12,6 @@ using Calculator.Linux.Common;
 using Calculator.Linux.Services;
 using Calculator.Linux.Services.Graphing;
 using Calculator.Linux.ViewModels;
-using Calculator.Linux.ViewModels;
 
 namespace Calculator.Linux;
 
@@ -524,7 +523,7 @@ public sealed partial class MainWindow : Window
     {
         if (Find<ItemsControl>("BitFlipPanel") is { } panel)
         {
-            int index = panel.ItemContainerGenerator?.IndexFromContainer(button) ?? -1;
+            int index = panel.IndexFromContainer(button);
             if (index >= 0)
             {
                 return index;

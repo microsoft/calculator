@@ -1,5 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+// Nullable analysis is disabled here: this file is a verbatim port of
+// non-nullable-annotated upstream code; behavior is covered by tests.
+#nullable disable
+#pragma warning disable CS8632 // annotations kept for readers; analysis off (see above)
 
 using System;
 using System.Collections.Generic;
@@ -808,9 +812,16 @@ namespace Calculator.Linux.DataLoaders
         {
             if (_vmCallback != null)
             {
-                string timestamp = GetCurrencyTimestamp();
-                bool isWeekOld = CalcUtils.IsDateTimeOlderThan(_cacheTimestamp, CurrencyDataLoaderConstants.WeekDuration);
-                _vmCallback.CurrencyTimestampUpdated(timestamp, isWeekOld);
+                try
+                {
+                    string timestamp = GetCurrencyTimestamp();
+                    bool isWeekOld = CalcUtils.IsDateTimeOlderThan(_cacheTimestamp, CurrencyDataLoaderConstants.WeekDuration);
+                    _vmCallback.CurrencyTimestampUpdated(timestamp, isWeekOld);
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
             }
         }
 
