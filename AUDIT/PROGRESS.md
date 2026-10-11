@@ -26,15 +26,23 @@ REFERENCE: microsoft/calculator @ d125246a4e19842ce1332e6c7839cf0e110027d8
 | `Calculator.Tests/DateCalculatorTests.cs` | `ReferenceDateEngineTests` | 9/9 |
 | `Calculator.Tests/CopyPasteManagerTests.cs` | `ReferenceCopyPasteTests` | 4/4 |
 | `Calculator.Tests/NavCategoryTests.cs` | `ReferenceNavCategoryTests` | 61/61 |
+| `Calculator.Tests/HistoryTests.cs` | `ReferenceHistoryTests` | 21/21 |
 
 Extractors: `AUDIT/extract_golden.py`, `AUDIT/extract_vm_vectors.py`.
 Both report what they deliberately skip rather than mis-replaying it.
 
 ## Defects fixed
 
-S2-001 keypad completeness · S3-002 deb exit code · S3-004 layout-independent
-keys · S3-005 missing shortcuts · S3-006 nav order · S3-007 mode shortcuts ·
-S3-008 currency symbol placement. (S3-003 currency names fixed earlier.)
+- **S2-001** scientific/programmer keypad incomplete
+- **S2-002** CVE-2026-39959 (High) in Tmds.DBus.Protocol, shipped in the .deb
+- **S2-003** scientific-mode calculations never recorded in History
+- **S3-002** build-deb.sh exit code · **S3-003** currency mojibake
+- **S3-004** layout-dependent keys · **S3-005** missing shortcuts
+- **S3-006** nav order · **S3-007** mode shortcuts · **S3-008** currency symbols
+
+S2-002 and S2-003 were both found by replaying reference tests and by the
+vulnerability gate added alongside the licence audit — neither was visible to
+the structural tests.
 
 ## Known constraints (documented, not defects)
 
@@ -51,12 +59,16 @@ S3-008 currency symbol placement. (S3-003 currency names fixed earlier.)
    for exact presentation parity.
 2. Scaling at 125 / 150 / 200 %, accessibility/AT-SPI/Orca, soak + RSS growth —
    not yet exercised.
-3. Remaining reference test files not yet replayed: `HistoryTests.cs` (36),
+3. Remaining reference test files not yet replayed:
    `UnitConverterViewModelTests.cs` (31), `NarratorAnnouncementTests.cs` (19),
-   `MultiWindowTests.cs` (16), `SnapshotRoundTripTests.cs` (17).
+   `SnapshotRoundTripTests.cs` (17), `CurrencyConverterTests.cs` (17),
+   `MultiWindowTests.cs` (16), `LocalizationSettingsTests.cs` (8),
+   `SnapshotJsonTests.cs` (8), `UtilsTests.cs` (6), `KeystrokeLatencyTests.cs` (1).
+   Note Graphing and Currency are 100% mocks upstream, so their suites cannot be
+   replayed meaningfully against real behaviour.
 4. `git remote add fork <url> && git push -u fork linux-port` — not pushed yet.
 
 ## State
 
-Branch `linux-port`. Suite: **525 + 18 = 543** managed tests, ctest green.
+Branch `linux-port`. Suite: **549 + 18 = 567** managed tests, ctest green.
 `AUDIT/run_all.sh`: 9 steps including the licence audit and the on-screen drive.
