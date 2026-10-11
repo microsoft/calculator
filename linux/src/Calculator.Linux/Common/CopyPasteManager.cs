@@ -107,7 +107,7 @@ namespace Calculator.Linux.Common
         public static uint MaxProgrammerBitLength => MaxProgrammerBitLengthValue;
 
         // Clipboard backend. Defaults to in-memory (safe headless behavior);
-        // the Avalonia shell installs the platform backend at startup (Task 9).
+        // the Avalonia shell installs the platform backend at startup (see MainWindow.OnOpened).
         public static IClipboardService Clipboard { get; set; } = new InMemoryClipboardService();
 
         public static void CopyToClipboard(string stringToCopy)

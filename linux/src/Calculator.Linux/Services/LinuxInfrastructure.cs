@@ -52,7 +52,7 @@ public sealed class ImmediateDispatcher : IDispatcher
     public bool HasThreadAccess => true;
 }
 
-/// <summary>Avalonia UI-thread dispatcher (shell, Task 9).</summary>
+/// <summary>Avalonia UI-thread dispatcher (installed by the shell).</summary>
 public sealed class AvaloniaDispatcher : IDispatcher
 {
     public static readonly AvaloniaDispatcher Instance = new();

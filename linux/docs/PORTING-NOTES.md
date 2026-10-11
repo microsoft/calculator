@@ -64,7 +64,7 @@ instances crash the process (observed as a test-host crash, Task 4).
 | 17 | WinAppDriver UI tests | xUnit headless parity (171 tests) + manual matrix | UI tests are Windows-only by nature; logic is proven headless, pixels need human eyes (checklist §5). |
 | 18 | Store packaging (`Package.appxmanifest`) | `.deb` (`linux/packaging/build-deb.sh` → self-contained `linux-x64` + side-by-side `.so`) | No Store, no MSIX. `.desktop` + SVG icon included. No hard `Depends` (self-contained). |
 | 19 | Segoe MDL2 glyphs / `LanguageFontGroup` | Text labels + Inter font | Icon font has no Linux equivalent; nav uses text. |
-| 20 | Narrator live regions (`NarratorNotifier`) | Data-only announcements (`NarratorAnnouncement` preserved) | Screen-reader live-region wiring is Task-9 UI work; announcement strings/codes intact. |
+| 20 | Narrator live regions (`NarratorNotifier`) | Announcement strings bound as `AutomationProperties.Name` (verified: Avalonia 11.3 has no `RaiseNotificationEvent` API) | Screen-reader live announcements need platform API that doesn't exist yet; focus labels work. |
 | 21 | Multi-window snapshots (`Snapshots.cs`, `ICalcDisplayTarget` snapshot APIs) | Deferred (PORT NOTE in code) | History recall works via flat command replay (equivalent observable behavior single-window). |
 | 22 | `GetLocaleInfoEx`/`ResolveLocaleName` P/Invoke | Deleted (ICU covers it) | See #4. |
 | 23 | `DateTimeFormatter` calendar/clock args | Culture patterns | `longdate` → `D` pattern; 24h clock flag irrelevant (no time shown). |

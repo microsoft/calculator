@@ -4,7 +4,8 @@
 // Linux clipboard abstraction. Upstream CopyPasteManager calls WinRT
 // Clipboard/DataPackage directly (3 call sites); ported ViewModels (Task 4)
 // depend on this interface instead. Avalonia wiring lands with the shell
-// (Task 9); ViewModels and tests use the in-memory fake until then.
+// MainWindow installs the platform backend at startup; ViewModels and
+    // tests use the in-memory fake otherwise.
 using Avalonia.Input.Platform;
 
 namespace Calculator.Linux.Services;

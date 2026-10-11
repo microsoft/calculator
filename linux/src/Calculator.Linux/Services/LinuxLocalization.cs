@@ -13,7 +13,7 @@
 //   - CurrencySymbolPrecedence is approximated from CurrencyPositivePattern
 //     (WinRT reads LOCALE_IPOSSYMPRECEDES, which has no .NET equivalent).
 //   - Font APIs (LanguageFontGroup) and WinRT formatter factories are UI-layer
-//     concerns and live with the Avalonia shell (Task 9), not here.
+//     concerns and stay out of this class by design.
 using System.Globalization;
 using System.Text;
 

@@ -6,7 +6,8 @@ using System;
 namespace Calculator.Linux.Common
 {
     // Linux stand-ins for the WinRT automation enums (same member names; the
-    // Avalonia shell in Task 9 maps these to platform live-region behavior).
+    // Avalonia 11 exposes no live-region notification API, so announcements
+    // surface as AutomationProperties.Name bindings (see MainWindow.axaml).
     public enum AutomationNotificationKind
     {
         ItemAdded,

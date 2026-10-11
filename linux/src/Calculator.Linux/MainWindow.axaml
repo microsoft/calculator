@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:common="clr-namespace:Calculator.Linux.Common;assembly=Calculator.Linux"
+        xmlns:auto="clr-namespace:Avalonia.Automation;assembly=Avalonia.Controls"
         xmlns:oxy="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
         x:Class="Calculator.Linux.MainWindow"
         Title="Calculator" Width="980" Height="640" MinWidth="640" MinHeight="480">
@@ -73,7 +74,8 @@
     <!-- Calculator -->
     <DockPanel LastChildFill="True" Margin="8" Name="CalculatorPanel">
       <StackPanel DockPanel.Dock="Top">
-        <ItemsControl ItemsSource="{Binding ExpressionTokens}" Height="28">
+        <ItemsControl ItemsSource="{Binding ExpressionTokens}" Height="28"
+                      auto:AutomationProperties.Name="{Binding CalculationExpressionAutomationName}">
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate><StackPanel Orientation="Horizontal" HorizontalAlignment="Right" /></ItemsPanelTemplate>
           </ItemsControl.ItemsPanel>
@@ -82,7 +84,8 @@
           </ItemsControl.ItemTemplate>
         </ItemsControl>
         <TextBox Text="{Binding DisplayValue}" IsReadOnly="True" FontSize="44" FontWeight="Bold"
-                 TextAlignment="Right" BorderThickness="0" Background="Transparent" Name="DisplayBox" />
+                 TextAlignment="Right" BorderThickness="0" Background="Transparent" Name="DisplayBox"
+                 auto:AutomationProperties.Name="{Binding CalculationResultAutomationName}" />
       </StackPanel>
 
       <!-- Memory row -->
@@ -248,7 +251,8 @@
         <DatePicker SelectedDate="{Binding FromDate, Mode=TwoWay}" Margin="0,0,0,8" />
         <TextBlock Text="To" Opacity="0.7" />
         <DatePicker SelectedDate="{Binding ToDate, Mode=TwoWay}" Margin="0,0,0,8" />
-        <TextBlock Text="{Binding StrDateDiffResult}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" />
+        <TextBlock Text="{Binding StrDateDiffResult}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap"
+                   auto:AutomationProperties.Name="{Binding StrDateDiffResultAutomationName}" />
         <TextBlock Text="{Binding StrDateDiffResultInDays}" FontSize="16" Opacity="0.7" TextWrapping="Wrap" />
       </StackPanel>
       <StackPanel Name="DateAddSubStack" IsVisible="False">
@@ -266,7 +270,8 @@
           <TextBlock Grid.Row="2" Grid.Column="0" Text="Days" VerticalAlignment="Center" Margin="0,0,8,0" />
           <TextBox Grid.Row="2" Grid.Column="1" Name="DaysBox" TextChanged="OffsetBox_Changed" />
         </Grid>
-        <TextBlock Text="{Binding StrDateResult}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" />
+        <TextBlock Text="{Binding StrDateResult}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap"
+                   auto:AutomationProperties.Name="{Binding StrDateResultAutomationName}" />
       </StackPanel>
     </StackPanel>
     <!-- Unit converter -->
@@ -294,9 +299,11 @@
           </ComboBox.ItemTemplate>
         </ComboBox>
         <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Value1}" FontSize="28" TextAlignment="Right"
-                 IsReadOnly="True" GotFocus="ConverterValue_GotFocus" Name="ConverterValue1" Margin="0,0,4,0" />
+                 IsReadOnly="True" GotFocus="ConverterValue_GotFocus" Name="ConverterValue1" Margin="0,0,4,0"
+                 auto:AutomationProperties.Name="{Binding Value1AutomationName}" />
         <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Value2}" FontSize="28" TextAlignment="Right"
-                 IsReadOnly="True" GotFocus="ConverterValue_GotFocus" Name="ConverterValue2" Margin="4,0,0,0" />
+                 IsReadOnly="True" GotFocus="ConverterValue_GotFocus" Name="ConverterValue2" Margin="4,0,0,0"
+                 auto:AutomationProperties.Name="{Binding Value2AutomationName}" />
         <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CurrencySymbol1}" Opacity="0.7"
                    IsVisible="{Binding CurrencySymbolVisibility}" />
         <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding CurrencySymbol2}" Opacity="0.7"
