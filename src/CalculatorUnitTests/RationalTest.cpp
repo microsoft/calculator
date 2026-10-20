@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <CppUnitTest.h>
+#include <limits>
 #include "Header Files/Rational.h"
 #include "Header Files/RationalMath.h"
 
@@ -38,6 +39,16 @@ TEST_METHOD(TestModuloOperandsNotModified)
     VERIFY_ARE_EQUAL(res, 3);
     VERIFY_ARE_EQUAL(ratminus25, -25);
     VERIFY_ARE_EQUAL(rat4, 4);
+}
+
+TEST_METHOD(TestInt32MinIntegerPower)
+{
+    PRAT base = Rational(-1).ToPRAT();
+    ratpowi32(&base, std::numeric_limits<int32_t>::min(), RATIONAL_PRECISION);
+    Rational result{ base };
+    destroyrat(base);
+
+    VERIFY_ARE_EQUAL(result, 1);
 }
 
 TEST_METHOD(TestModuloInteger)

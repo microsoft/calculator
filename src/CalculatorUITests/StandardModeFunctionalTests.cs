@@ -8,7 +8,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
+using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace CalculatorUITests
 {
@@ -782,6 +789,90 @@ namespace CalculatorUITests
             page.StandardAoTCalculatorPage.NavigateToStandardMode();
             Assert.IsFalse(page.StandardAoTCalculatorPage.IsInAlwaysOnTopMode());
             Assert.AreEqual("Result is undefined", page.CalculatorResults.GetCalculatorResultText());
+        }
+
+        #endregion
+
+        #region Snapshot Protocol Tests
+
+        [TestMethod]
+        [DataRow(false)]
+        [DataRow(true)]
+        [Priority(0)]
+        public void SnapshotProtocolRejectsInjectedCommands(bool includeExpression)
+        {
+            var standardSnapshot = new Dictionary<string, object>
+            {
+                ["m"] = new Dictionary<string, object>(),
+                ["p"] = new Dictionary<string, object>
+                {
+                    ["d"] = "12",
+                    ["e"] = false,
+                },
+                ["c"] = new object[]
+                {
+                    BinaryCommand(322),
+                    OperandCommand(139),
+                    BinaryCommand(121),
+                    OperandCommand(130),
+                    BinaryCommand(102),
+                    BinaryCommand(int.MaxValue),
+                },
+            };
+            if (includeExpression)
+            {
+                standardSnapshot["e"] = new Dictionary<string, object>
+                {
+                    ["t"] = Array.Empty<object>(),
+                    ["c"] = Array.Empty<object>(),
+                };
+            }
+
+            var snapshot = new Dictionary<string, object>
+            {
+                ["m"] = 0,
+                ["s"] = standardSnapshot,
+            };
+            var json = JsonSerializer.Serialize(snapshot);
+            var uri = $"ms-calculator:snapshot/{Convert.ToBase64String(Compress(json))}";
+
+            Process.Start(new ProcessStartInfo(uri) { UseShellExecute = true });
+
+            Assert.IsTrue(
+                SpinWait.SpinUntil(() => page.CalculatorResults.GetCalculatorResultText() == "0", TimeSpan.FromSeconds(10)),
+                $"Snapshot replay produced '{page.CalculatorResults.GetCalculatorResultText()}' instead of rejecting the injected commands.");
+        }
+
+        private static Dictionary<string, object> BinaryCommand(int command)
+        {
+            return new Dictionary<string, object>
+            {
+                ["$t"] = 1,
+                ["c"] = command,
+            };
+        }
+
+        private static Dictionary<string, object> OperandCommand(int command)
+        {
+            return new Dictionary<string, object>
+            {
+                ["$t"] = 2,
+                ["n"] = false,
+                ["d"] = false,
+                ["s"] = false,
+                ["c"] = new[] { command },
+            };
+        }
+
+        private static byte[] Compress(string value)
+        {
+            using var compressed = new MemoryStream();
+            using (var stream = new DeflateStream(compressed, CompressionMode.Compress, true))
+            {
+                var bytes = Encoding.UTF8.GetBytes(value);
+                stream.Write(bytes, 0, bytes.Length);
+            }
+            return compressed.ToArray();
         }
 
         #endregion

@@ -1500,34 +1500,30 @@ void numpowi32(_Inout_ PNUMBER* proot, int32_t power, uint32_t radix, int32_t pr
 void ratpowi32(_Inout_ PRAT* proot, int32_t power, int32_t precision)
 
 {
-    if (power < 0)
-    {
-        // Take the positive power and invert answer.
-        PNUMBER pnumtemp = nullptr;
-        ratpowi32(proot, -power, precision);
-        pnumtemp = (*proot)->pp;
-        (*proot)->pp = (*proot)->pq;
-        (*proot)->pq = pnumtemp;
-    }
-    else
-    {
-        PRAT lret = nullptr;
+    const bool invertResult = power < 0;
+    uint32_t magnitude =
+        invertResult ? static_cast<uint32_t>(-static_cast<int64_t>(power)) : static_cast<uint32_t>(power);
 
-        lret = i32torat(1);
+    PRAT lret = i32torat(1);
 
-        while (power > 0)
+    while (magnitude > 0)
+    {
+        if (magnitude & 1)
         {
-            if (power & 1)
-            {
-                mulnumx(&(lret->pp), (*proot)->pp);
-                mulnumx(&(lret->pq), (*proot)->pq);
-            }
-            mulrat(proot, *proot, precision);
-            trimit(&lret, precision);
-            trimit(proot, precision);
-            power >>= 1;
+            mulnumx(&(lret->pp), (*proot)->pp);
+            mulnumx(&(lret->pq), (*proot)->pq);
         }
-        destroyrat(*proot);
-        *proot = lret;
+        mulrat(proot, *proot, precision);
+        trimit(&lret, precision);
+        trimit(proot, precision);
+        magnitude >>= 1;
+    }
+    destroyrat(*proot);
+    *proot = lret;
+
+    if (invertResult)
+    {
+        // Invert after exponentiation so INT32_MIN never needs to be negated as an int32_t.
+        std::swap((*proot)->pp, (*proot)->pq);
     }
 }
