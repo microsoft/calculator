@@ -69,7 +69,6 @@
                                    Style="{ThemeResource BodyTextBlockMediumStyle}"
                                    AutomationProperties.AccessibilityView="Raw"
                                    AutomationProperties.AutomationId="HistoryItemExpression"
-                                   IsTextSelectionEnabled="True"
                                    Text="{x:Bind Expression}"
                                    TextAlignment="Right"
                                    TextWrapping="Wrap"/>
@@ -78,7 +77,6 @@
                                    Style="{ThemeResource SubtitleTextBlockStyle}"
                                    AutomationProperties.AccessibilityView="Raw"
                                    AutomationProperties.AutomationId="HistoryItemValue"
-                                   IsTextSelectionEnabled="True"
                                    Text="{x:Bind Result}"
                                    TextAlignment="Right"
                                    TextWrapping="Wrap"/>
