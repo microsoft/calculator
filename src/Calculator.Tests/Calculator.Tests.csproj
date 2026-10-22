@@ -148,17 +148,13 @@
       <Project>{E1E2E3E4-1234-5678-ABCD-555555555555}</Project>
       <Name>Calculator.ViewModels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CalcManager.Interop\CalcManager.Interop.vcxproj">
+    <ProjectReference Include="..\CalcManager.Interop\CalcManager.Interop.csproj">
       <Project>{A2D3E6B4-88C1-4D6F-9A7E-2B4C5D6E7F80}</Project>
       <Name>CalcManager.Interop</Name>
-      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
-      <TreatAsPackageReference>false</TreatAsPackageReference>
     </ProjectReference>
-    <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
+    <ProjectReference Include="..\GraphControl\GraphControl.csproj">
       <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
       <Name>GraphControl</Name>
-      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
-      <TreatAsPackageReference>false</TreatAsPackageReference>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

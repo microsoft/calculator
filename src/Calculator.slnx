@@ -8,8 +8,8 @@
     <File Path="../.clang-format" />
     <File Path="nuget.config" />
   </Folder>
-  <Project Path="CalcManager.Interop/CalcManager.Interop.vcxproj" Id="a2d3e6b4-88c1-4d6f-9a7e-2b4c5d6e7f80" />
-  <Project Path="CalcManager/CalcManager.vcxproj" Id="311e866d-8b93-4609-a691-265941fee101" />
+  <Project Path="CalcManager.Interop/CalcManager.Interop.csproj" Id="a2d3e6b4-88c1-4d6f-9a7e-2b4c5d6e7f80" />
+  <Project Path="CalcManager/CalcManager.csproj" Id="311e866d-8b93-4609-a691-265941fee101" />
   <Project Path="Calculator.Tests/Calculator.Tests.csproj" Id="b1c2d3e4-5678-9abc-def0-111111111111">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
@@ -31,17 +31,28 @@
   </Project>
   <Project Path="CalculatorUITestFramework/CalculatorUITestFramework.csproj" />
   <Project Path="CalculatorUITests/CalculatorUITests.csproj" />
-  <Project Path="CalculatorUnitTests/CalculatorUnitTests.vcxproj" Id="d3baed2c-4b07-4e1d-8807-9d6499450349">
+  <Project Path="CalculatorUnitTests/CalculatorUnitTests.csproj" Id="d3baed2c-4b07-4e1d-8807-9d6499450349">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
     <Build Solution="*|ARM64" Project="false" />
     <Deploy Solution="*|x64" />
     <Deploy Solution="*|x86" />
   </Project>
-  <Project Path="GraphControl/GraphControl.vcxproj" Id="e727a92b-f149-492c-8117-c039a298719b" />
-  <Project Path="GraphingImpl/GraphingImpl.vcxproj" Id="52e03a58-b378-4f50-8bfb-f659fb85e790" />
+  <Project Path="GraphControl/GraphControl.csproj" Id="e727a92b-f149-492c-8117-c039a298719b">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="GraphingImpl/GraphingImpl.csproj" Id="52e03a58-b378-4f50-8bfb-f659fb85e790" />
   <Project Path="TraceLogging.Managed/TraceLogging.Managed.csproj" Id="3e4b3ab2-a1e0-4b28-b191-7b423e00b5a1">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
     <Platform Solution="*|x86" Project="x86" />
   </Project>
-  <Project Path="TraceLogging/TraceLogging.vcxproj" Id="fc81ff41-02cd-4cd9-9bc5-45a1e39ac6ed" />
+  <Project Path="TraceLogging/TraceLogging.csproj" Id="fc81ff41-02cd-4cd9-9bc5-45a1e39ac6ed">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
 </Solution>

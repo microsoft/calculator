@@ -16,6 +16,7 @@
     <MinimumVisualStudioVersion>18</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -120,19 +121,17 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CalcManager.Interop\CalcManager.Interop.vcxproj">
+    <ProjectReference Include="..\CalcManager.Interop\CalcManager.Interop.csproj">
       <Project>{A2D3E6B4-88C1-4D6F-9A7E-2B4C5D6E7F80}</Project>
       <Name>CalcManager.Interop</Name>
-      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
     </ProjectReference>
     <ProjectReference Include="..\TraceLogging.Managed\TraceLogging.Managed.csproj">
       <Project>{3E4B3AB2-A1E0-4B28-B191-7B423E00B5A1}</Project>
       <Name>TraceLogging.Managed</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
+    <ProjectReference Include="..\GraphControl\GraphControl.csproj">
       <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
       <Name>GraphControl</Name>
-      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

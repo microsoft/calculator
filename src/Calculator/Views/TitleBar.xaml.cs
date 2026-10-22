@@ -25,12 +25,7 @@ namespace CalculatorApp
 
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
-#if IS_STORE_BUILD
             AppName.Text = AppResourceProvider.GetInstance().GetResourceString("AppName");
-
-#else
-            AppName.Text = AppResourceProvider.GetInstance().GetResourceString("DevAppName");
-#endif
         }
 
         public bool IsAlwaysOnTopMode

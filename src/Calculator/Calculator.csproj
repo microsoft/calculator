@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -791,19 +791,17 @@
       <Project>{E1E2E3E4-1234-5678-ABCD-555555555555}</Project>
       <Name>Calculator.ViewModels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
+    <ProjectReference Include="..\GraphControl\GraphControl.csproj">
       <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
       <Name>GraphControl</Name>
-      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
     </ProjectReference>
     <ProjectReference Include="..\TraceLogging.Managed\TraceLogging.Managed.csproj">
       <Project>{3E4B3AB2-A1E0-4B28-B191-7B423E00B5A1}</Project>
       <Name>TraceLogging.Managed</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CalcManager.Interop\CalcManager.Interop.vcxproj">
+    <ProjectReference Include="..\CalcManager.Interop\CalcManager.Interop.csproj">
       <Project>{A2D3E6B4-88C1-4D6F-9A7E-2B4C5D6E7F80}</Project>
       <Name>CalcManager.Interop</Name>
-      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
