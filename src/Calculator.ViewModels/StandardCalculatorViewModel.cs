@@ -708,10 +708,7 @@ namespace CalculatorApp.ViewModel
                     {
                         // Expression was not evaluated before, or it was an error.
                         var displayCommands = GetCommandsFromExpressionCommands(snapshot.DisplayCommands);
-                        foreach (var cmd in displayCommands)
-                        {
-                            _standardCalculatorManager?.SendCommand((CalculatorCommand)cmd);
-                        }
+                        ReplaySnapshotCommands(displayCommands);
                         if (snapshot.PrimaryDisplay.IsError)
                         {
                             SetPrimaryDisplay(snapshot.PrimaryDisplay.DisplayValue, true);
@@ -727,10 +724,7 @@ namespace CalculatorApp.ViewModel
                     else
                     {
                         var commands = GetCommandsFromExpressionCommands(snapshot.DisplayCommands);
-                        foreach (var cmd in commands)
-                        {
-                            _standardCalculatorManager?.SendCommand((CalculatorCommand)cmd);
-                        }
+                        ReplaySnapshotCommands(commands);
                     }
                 }
             }
@@ -2053,6 +2047,34 @@ namespace CalculatorApp.ViewModel
                 }
             }
             return commands;
+        }
+
+        private void ReplaySnapshotCommands(IEnumerable<int> commands)
+        {
+            foreach (int command in commands)
+            {
+                if (IsValidSnapshotReplayCommand(command))
+                {
+                    _standardCalculatorManager?.SendCommand((CalculatorCommand)command);
+                }
+            }
+        }
+
+        private static bool IsValidSnapshotReplayCommand(int command)
+        {
+            return (command >= (int)CalculatorCommand.Command0 && command <= (int)CalculatorCommand.CommandF)
+                || (command >= (int)CalculatorCommand.CommandAnd && command <= (int)CalculatorCommand.CommandPWR)
+                || (command >= (int)CalculatorCommand.CommandLogBaseY && command <= (int)CalculatorCommand.CommandNor)
+                || command == (int)CalculatorCommand.CommandRSHFL
+                || command == (int)CalculatorCommand.CommandSIGN
+                || command == (int)CalculatorCommand.CommandPNT
+                || (command >= (int)CalculatorCommand.CommandCHOP && command <= (int)CalculatorCommand.CommandPERCENT)
+                || command == (int)CalculatorCommand.CommandEXP
+                || command == (int)CalculatorCommand.CommandOPENP
+                || command == (int)CalculatorCommand.CommandCLOSEP
+                || (command >= (int)CalculatorCommand.CommandASIN && command <= (int)CalculatorCommand.CommandATANH)
+                || (command >= (int)CalculatorCommand.CommandSEC && command <= (int)CalculatorCommand.CommandRORC)
+                || command == (int)NumbersAndOperatorsEnum.Degrees;
         }
 
     }

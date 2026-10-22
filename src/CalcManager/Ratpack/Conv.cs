@@ -752,31 +752,32 @@ namespace CalcManager.Ratpack
 
         public static void ratpowi32(ref Rat proot, int power, int precision)
         {
-            if (power < 0)
+            bool invertResult = power < 0;
+            uint magnitude = invertResult ? (uint)(-(long)power) : (uint)power;
+
+            Rat lret = i32torat(1);
+
+            while (magnitude > 0)
             {
-                ratpowi32(ref proot, -power, precision);
+                if ((magnitude & 1) != 0)
+                {
+                    mulnumx(ref lret.P, proot.P);
+                    mulnumx(ref lret.Q, proot.Q);
+                }
+                mulrat(ref proot, proot, precision);
+                trimit(ref lret, precision);
+                trimit(ref proot, precision);
+                magnitude >>= 1;
+            }
+
+            proot = lret;
+
+            if (invertResult)
+            {
+                // Invert after exponentiation so int.MinValue never needs to be negated as an int.
                 Number pnumtemp = proot.P;
                 proot.P = proot.Q;
                 proot.Q = pnumtemp;
-            }
-            else
-            {
-                Rat lret = i32torat(1);
-
-                while (power > 0)
-                {
-                    if ((power & 1) != 0)
-                    {
-                        mulnumx(ref lret.P, proot.P);
-                        mulnumx(ref lret.Q, proot.Q);
-                    }
-                    mulrat(ref proot, proot, precision);
-                    trimit(ref lret, precision);
-                    trimit(ref proot, precision);
-                    power >>= 1;
-                }
-
-                proot = lret;
             }
         }
     }

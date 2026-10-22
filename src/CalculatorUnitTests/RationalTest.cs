@@ -44,6 +44,16 @@ namespace CalculatorEngineTests
         }
 
         [TestMethod]
+        public void TestInt32MinIntegerPower()
+        {
+            Rat @base = new Rational(-1).ToPRAT();
+            Ratpak.ratpowi32(ref @base, int.MinValue, Rational.RATIONAL_PRECISION);
+            Rational result = new Rational(@base);
+
+            Assert.AreEqual(new Rational(1), result);
+        }
+
+        [TestMethod]
         public void TestModuloInteger()
         {
             var res = RationalMath.Mod(new Rational(426), new Rational(56478));
