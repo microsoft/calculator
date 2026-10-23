@@ -16,6 +16,7 @@ using Windows.UI.Xaml;
 
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
+using CalculatorApp.ViewModel.MathAssistant;
 using CalculatorApp.ViewModel.Snapshot;
 
 namespace CalculatorApp.ViewModel
@@ -34,6 +35,9 @@ namespace CalculatorApp.ViewModel
         [ObservableProperty]
         private UnitConverterViewModel _converterViewModel;
 
+        [ObservableProperty]
+        private MathAssistantViewModel _mathAssistantViewModel;
+
         private ViewMode _mode = ViewMode.None;
 
         [ObservableProperty]
@@ -50,6 +54,14 @@ namespace CalculatorApp.ViewModel
 
         public const string WidthLocalSettingsKey = "calculatorAlwaysOnTopLastWidth";
         public const string HeightLocalSettingsKey = "calculatorAlwaysOnTopLastHeight";
+
+        /// <summary>
+        /// Opens the Math Assistant chat so the user can talk with the AI chatbot about their calculations.
+        /// </summary>
+        public void OpenMathAssistant(string apiKey)
+        {
+            MathAssistantViewModel ??= new MathAssistantViewModel(new MathAssistantChatClient(apiKey));
+        }
 
         public ViewMode Mode
         {
