@@ -181,7 +181,7 @@ private:
     CalcEngine::Rational SciCalcFunctions(CalcEngine::Rational const& rat, uint32_t op);
     CalcEngine::Rational DoOperation(int operation, CalcEngine::Rational const& lhs, CalcEngine::Rational const& rhs);
     void SetRadixTypeAndNumWidth(RadixType radixtype, NUM_WIDTH numwidth);
-    int32_t DwWordBitWidthFromNumWidth(NUM_WIDTH numwidth);
+    uint32_t DwWordBitWidthFromNumWidth(NUM_WIDTH numwidth);
     uint32_t NRadixFromRadixType(RadixType radixtype);
     double GenerateRandomNumber();
 
@@ -201,7 +201,7 @@ private:
     static std::vector<uint32_t> DigitGroupingStringToGroupingVector(std::wstring_view groupingString);
     std::wstring GroupDigits(std::wstring_view delimiter, std::vector<uint32_t> const& grouping, std::wstring_view displayString, bool isNumNegative = false);
 
-    static int QuickLog2(int iNum);
+    static unsigned int QuickLog2(unsigned int iNum);
     static void ChangeBaseConstants(uint32_t radix, int maxIntDigits, int32_t precision);
     void BaseOrPrecisionChanged();
 
