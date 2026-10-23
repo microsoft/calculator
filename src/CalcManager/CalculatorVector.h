@@ -102,7 +102,8 @@ public:
 
     ResultCode RemoveAtEnd()
     {
-        m_vector.erase(--(m_vector.end()));
+        if (!m_vector.empty())
+            m_vector.erase(--(m_vector.end()));
         return S_OK;
     }
 
