@@ -22,6 +22,18 @@ Steps:
 4. Navigate to the Memory pane
 *Expected: “6” shows up in the pane*
 
+### Number grouping
+
+**Test 1**
+Steps:
+1. Open Settings and select **Indian**  under **Digit grouping**
+2. In Standard Calculator, enter `12345678`
+*Expected: The display shows `1,23,45,678`*
+3. Open Settings and select **International**
+*Expected: The display updates to `12,345,678`*
+4. Close and reopen Calculator
+*Expected: International grouping remains selected*
+
 ### Math in Scientific Calculator
 
 **Test 1**

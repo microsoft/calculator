@@ -4730,6 +4730,26 @@
     <value>Appearance</value>
     <comment>Subtitle of appearance setting on Settings page</comment>
   </data>
+  <data name="NumberSystemGroupTitle.Text" xml:space="preserve">
+    <value>Number system</value>
+    <comment>Heading for number grouping settings</comment>
+  </data>
+  <data name="NumberGroupingExpander.Header" xml:space="preserve">
+    <value>Digit grouping</value>
+    <comment>Title of the number grouping setting</comment>
+  </data>
+  <data name="NumberGroupingExpander.Description" xml:space="preserve">
+    <value>Choose how large numbers are grouped</value>
+    <comment>Description of the number grouping setting</comment>
+  </data>
+  <data name="InternationalGroupingRadioButton.Content" xml:space="preserve">
+    <value>International (millions, billions)</value>
+    <comment>Label for international digit grouping</comment>
+  </data>
+  <data name="IndianGroupingRadioButton.Content" xml:space="preserve">
+    <value>Indian (lakhs, crores)</value>
+    <comment>Label for Indian digit grouping</comment>
+  </data>
   <data name="AppThemeExpander.Header" xml:space="preserve">
     <value>App theme</value>
     <comment>Title of App theme expander</comment>

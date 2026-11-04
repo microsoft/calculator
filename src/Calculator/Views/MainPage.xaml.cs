@@ -685,6 +685,12 @@ namespace CalculatorApp
             CloseSettingsPopup();
         }
 
+        private void Settings_NumberGroupingSystemChanged(object sender, EventArgs e)
+        {
+            ViewModel.CalculatorViewModel?.RefreshNumberGrouping();
+            ViewModel.ConverterViewModel?.RefreshNumberGrouping();
+        }
+
         private async Task ShowSnapshotLaunchErrorAsync()
         {
             var resProvider = AppResourceProvider.GetInstance();

@@ -153,6 +153,14 @@ namespace CalculationManager
         }
     }
 
+    void CalculatorManager::SettingsChanged()
+    {
+        if (m_currentCalculatorEngine)
+        {
+            m_currentCalculatorEngine->SettingsChanged();
+        }
+    }
+
     /// <summary>
     /// Change the current calculator engine to standard calculator engine.
     /// </summary>
@@ -170,6 +178,7 @@ namespace CalculationManager
         m_currentCalculatorEngine->ChangePrecision(static_cast<int>(CalculatorPrecision::StandardModePrecision));
         UpdateMaxIntDigits();
         m_pHistory = m_pStdHistory.get();
+        SettingsChanged();
     }
 
     /// <summary>
@@ -188,6 +197,7 @@ namespace CalculationManager
         m_currentCalculatorEngine->ProcessCommand(IDC_CLEAR);
         m_currentCalculatorEngine->ChangePrecision(static_cast<int>(CalculatorPrecision::ScientificModePrecision));
         m_pHistory = m_pSciHistory.get();
+        SettingsChanged();
     }
 
     /// <summary>
@@ -205,6 +215,7 @@ namespace CalculationManager
         m_currentCalculatorEngine->ProcessCommand(IDC_DEC);
         m_currentCalculatorEngine->ProcessCommand(IDC_CLEAR);
         m_currentCalculatorEngine->ChangePrecision(static_cast<int>(CalculatorPrecision::ProgrammerModePrecision));
+        SettingsChanged();
     }
 
     /// <summary>

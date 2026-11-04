@@ -194,7 +194,9 @@
             </Popup.ChildTransitions>
 
             <Grid x:Name="PopupContent" x:Load="false">
-                <local:Settings BackButtonClick="Settings_BackButtonClick" TitleBarHeight="{x:Bind DoubleToGridLength(AppTitleBar.Height), Mode=OneWay}"/>
+                <local:Settings BackButtonClick="Settings_BackButtonClick"
+                                NumberGroupingSystemChanged="Settings_NumberGroupingSystemChanged"
+                                TitleBarHeight="{x:Bind DoubleToGridLength(AppTitleBar.Height), Mode=OneWay}"/>
             </Grid>
         </Popup>
     </Grid>

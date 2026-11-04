@@ -286,6 +286,7 @@ namespace CalcManager.Interop
         String GetResultForRadix(UInt32 radix, Int32 precision, Boolean groupDigitsPerRadix);
         void SetPrecision(Int32 precision);
         void UpdateMaxIntDigits();
+        void SettingsChanged();
         Char DecimalSeparator{ get; };
         HistoryItemWrapper[] GetHistoryItems();
         HistoryItemWrapper[] GetHistoryItemsForMode(CalculatorMode mode);

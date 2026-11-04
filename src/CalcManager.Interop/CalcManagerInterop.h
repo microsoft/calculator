@@ -102,6 +102,7 @@ namespace winrt::CalcManager::Interop::implementation
         hstring GetResultForRadix(uint32_t radix, int32_t precision, bool groupDigitsPerRadix);
         void SetPrecision(int32_t precision);
         void UpdateMaxIntDigits();
+        void SettingsChanged();
         char16_t DecimalSeparator();
 
         com_array<CalcManager::Interop::HistoryItemWrapper> GetHistoryItems();

@@ -974,6 +974,11 @@ namespace CalculatorApp.ViewModel
             _standardCalculatorManager?.Reset(clearMemory);
         }
 
+        public void RefreshNumberGrouping()
+        {
+            _standardCalculatorManager?.SettingsChanged();
+        }
+
         internal void ResetAfterFailedSnapshot(ViewMode mode)
         {
             _standardCalculatorManager?.Reset(true);
