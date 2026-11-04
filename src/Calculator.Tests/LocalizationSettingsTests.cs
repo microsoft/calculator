@@ -93,5 +93,27 @@ namespace Calculator.Tests
             var settings = new LocalizationSettings(formatter);
             Assert.AreEqual("1000000", settings.RemoveGroupSeparators("1,000 000"));
         }
+
+        [TestMethod]
+        public void TestNumberGroupingSystemCanBeChanged()
+        {
+            var formatter = CreateDecimalFormatter("en-US", "US");
+            var settings = new LocalizationSettings(formatter);
+            string groupingSeparator = settings.GetNumberGroupingSeparatorStr();
+
+            Assert.AreEqual("3;0", settings.GetNumberGroupingStr());
+            Assert.AreEqual("123,456,789", settings.ApplyNumberGrouping("123,456,789"));
+            Assert.IsTrue(settings.SetNumberGroupingSystem(NumberGroupingSystem.Indian));
+            Assert.AreEqual("3;2;0", settings.GetNumberGroupingStr());
+            Assert.AreEqual(groupingSeparator, settings.GetNumberGroupingSeparatorStr());
+            Assert.AreEqual("12,34,56,789.01", settings.ApplyNumberGrouping("123,456,789.01"));
+            Assert.AreEqual("1,23,45,678", settings.ApplyNumberGrouping("12,345,678"));
+
+            Assert.IsFalse(settings.SetNumberGroupingSystem(NumberGroupingSystem.Indian));
+            Assert.IsTrue(settings.SetNumberGroupingSystem(NumberGroupingSystem.International));
+            Assert.AreEqual("3;0", settings.GetNumberGroupingStr());
+            Assert.AreEqual("123,456,789.01", settings.ApplyNumberGrouping("12,34,56,789.01"));
+            Assert.AreEqual("12,345,678", settings.ApplyNumberGrouping("1,23,45,678"));
+        }
     }
 }

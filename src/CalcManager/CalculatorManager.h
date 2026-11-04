@@ -86,6 +86,7 @@ namespace CalculationManager
         CalculatorManager(_In_ ICalcDisplay* displayCallback, _In_ IResourceProvider* resourceProvider);
 
         void Reset(bool clearMemory = true);
+        void SettingsChanged();
         void SetStandardMode();
         void SetScientificMode();
         void SetProgrammerMode();

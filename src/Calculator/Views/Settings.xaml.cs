@@ -23,6 +23,9 @@ namespace CalculatorApp
         private const string BUILD_YEAR = "2025";
 
         public event Windows.UI.Xaml.RoutedEventHandler BackButtonClick;
+        public event EventHandler NumberGroupingSystemChanged;
+
+        private bool _isInitializingNumberGrouping;
 
         public GridLength TitleBarHeight
         {
@@ -58,6 +61,28 @@ namespace CalculatorApp
             }
         }
 
+        private void OnNumberGroupingSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_isInitializingNumberGrouping || e.AddedItems.Count == 0 || e.AddedItems[0] is not RadioButton selectedItem)
+            {
+                return;
+            }
+
+            if (!Enum.TryParse(selectedItem.Tag?.ToString(), true, out NumberGroupingSystem system))
+            {
+                return;
+            }
+
+            var localizationSettings = LocalizationSettings.GetInstance();
+            bool groupingChanged = localizationSettings.SetNumberGroupingSystem(system);
+            localizationSettings.SaveNumberGroupingSystemPreference();
+
+            if (groupingChanged)
+            {
+                NumberGroupingSystemChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
         public void SetDefaultFocus()
         {
             AppThemeExpander.Focus(FocusState.Programmatic);
@@ -72,6 +97,11 @@ namespace CalculatorApp
 
             var currentTheme = ThemeHelper.RootTheme.ToString();
             (ThemeRadioButtons.Items.Cast<RadioButton>().FirstOrDefault(c => c?.Tag?.ToString() == currentTheme)).IsChecked = true;
+
+            _isInitializingNumberGrouping = true;
+            var currentGroupingSystem = LocalizationSettings.GetInstance().GetNumberGroupingSystem().ToString();
+            (NumberGroupingRadioButtons.Items.Cast<RadioButton>().FirstOrDefault(c => c?.Tag?.ToString() == currentGroupingSystem)).IsChecked = true;
+            _isInitializingNumberGrouping = false;
 
             SetDefaultFocus();
         }

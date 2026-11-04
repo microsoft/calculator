@@ -9,12 +9,19 @@ using System.Text;
 using Windows.Globalization;
 using Windows.Globalization.DateTimeFormatting;
 using Windows.Globalization.NumberFormatting;
+using Windows.Storage;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 namespace CalculatorApp.ViewModel.Common
 {
+    public enum NumberGroupingSystem
+    {
+        International,
+        Indian
+    }
+
     public enum LanguageFontType
     {
         UIText,
@@ -29,19 +36,33 @@ namespace CalculatorApp.ViewModel.Common
     /// </summary>
     public sealed class LocalizationSettings
     {
-        private static readonly Lazy<LocalizationSettings> s_instance = new Lazy<LocalizationSettings>(() =>
+        public const string NumberGroupingSystemSettingKey = "NumberGroupingSystem";
+
+        private static readonly Lazy<LocalizationSettings> s_instance = new Lazy<LocalizationSettings>(CreateInstance);
+
+        private static LocalizationSettings CreateInstance()
         {
+            LocalizationSettings settings;
             try
             {
                 var locService = new DecimalFormatter();
-                return new LocalizationSettings(locService);
+                settings = new LocalizationSettings(locService);
             }
             catch
             {
                 // Fallback: create with a default formatter for en-US
-                return new LocalizationSettings(null);
+                settings = new LocalizationSettings(null);
             }
-        });
+
+            var savedSystem = ApplicationData.Current.LocalSettings.Values[NumberGroupingSystemSettingKey]?.ToString();
+            if (Enum.TryParse(savedSystem, true, out NumberGroupingSystem numberGroupingSystem)
+                && Enum.IsDefined(typeof(NumberGroupingSystem), numberGroupingSystem))
+            {
+                settings.SetNumberGroupingSystem(numberGroupingSystem);
+            }
+
+            return settings;
+        }
 
         private readonly char[] _digitSymbols = new char[10];
         private static readonly char[] s_hexSymbols = { 'A', 'B', 'C', 'D', 'E', 'F' };
@@ -55,6 +76,7 @@ namespace CalculatorApp.ViewModel.Common
         private int _currencySymbolPrecedence;
         private string _resolvedName;
         private int _currencyTrailingDigits;
+        private NumberGroupingSystem? _numberGroupingSystem;
 
         public LocalizationSettings(DecimalFormatter formatter)
         {
@@ -151,6 +173,98 @@ namespace CalculatorApp.ViewModel.Common
         public string GetDecimalSeparatorStr() => new string(_decimalSeparator, 1);
         public string GetNumberGroupingSeparatorStr() => new string(_numberGroupSeparator, 1);
         public string GetNumberGroupingStr() => _numberGrouping;
+        public NumberGroupingSystem GetNumberGroupingSystem() =>
+            _numberGroupingSystem ?? (_numberGrouping == "3;2;0" ? NumberGroupingSystem.Indian : NumberGroupingSystem.International);
+
+        public string ApplyNumberGrouping(string formattedValue)
+        {
+            if (!_numberGroupingSystem.HasValue || string.IsNullOrEmpty(formattedValue))
+            {
+                return formattedValue;
+            }
+
+            int integerEnd = formattedValue.Length;
+            int exponentIndex = formattedValue.IndexOfAny(new[] { 'e', 'E' });
+            if (exponentIndex >= 0)
+            {
+                integerEnd = exponentIndex;
+            }
+
+            int decimalIndex = formattedValue.IndexOf(_decimalSeparator);
+            if (decimalIndex >= 0 && decimalIndex < integerEnd)
+            {
+                integerEnd = decimalIndex;
+            }
+
+            int firstDigit = -1;
+            int lastDigit = -1;
+            for (int i = 0; i < integerEnd; i++)
+            {
+                if (IsNumberDigit(formattedValue[i]))
+                {
+                    if (firstDigit < 0)
+                    {
+                        firstDigit = i;
+                    }
+                    lastDigit = i;
+                }
+            }
+
+            if (firstDigit < 0)
+            {
+                return formattedValue;
+            }
+
+            var digits = new StringBuilder(lastDigit - firstDigit + 1);
+            for (int i = firstDigit; i <= lastDigit; i++)
+            {
+                if (IsNumberDigit(formattedValue[i]))
+                {
+                    digits.Append(formattedValue[i]);
+                }
+            }
+
+            var groupedDigits = new StringBuilder(digits.Length + digits.Length / 2);
+            for (int i = 0; i < digits.Length; i++)
+            {
+                int remainingDigits = digits.Length - i;
+                if (i > 0
+                    && (remainingDigits == 3
+                        || (remainingDigits > 3 && remainingDigits % 3 == 0)
+                        || (_numberGroupingSystem == NumberGroupingSystem.Indian
+                            && remainingDigits > 3
+                            && (remainingDigits - 3) % 2 == 0)))
+                {
+                    groupedDigits.Append(_numberGroupSeparator);
+                }
+                groupedDigits.Append(digits[i]);
+            }
+
+            return formattedValue.Substring(0, firstDigit)
+                + groupedDigits
+                + formattedValue.Substring(lastDigit + 1);
+        }
+
+        public bool SetNumberGroupingSystem(NumberGroupingSystem system)
+        {
+            if (!Enum.IsDefined(typeof(NumberGroupingSystem), system))
+            {
+                throw new ArgumentOutOfRangeException(nameof(system));
+            }
+
+            string grouping = system == NumberGroupingSystem.Indian ? "3;2;0" : "3;0";
+            bool changed = _numberGrouping != grouping;
+            _numberGrouping = grouping;
+            _numberGroupingSystem = system;
+            return changed;
+        }
+
+        private bool IsNumberDigit(char value) => IsEnUsDigit(value) || IsLocalizedDigit(value);
+
+        public void SaveNumberGroupingSystemPreference()
+        {
+            ApplicationData.Current.LocalSettings.Values[NumberGroupingSystemSettingKey] = GetNumberGroupingSystem().ToString();
+        }
 
         public FlowDirection GetFlowDirection()
         {

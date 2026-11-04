@@ -109,6 +109,29 @@
                     </toolkit:SettingsExpander.Items>
                 </toolkit:SettingsExpander>
 
+                <TextBlock Margin="0,30,0,4"
+                           Style="{StaticResource BodyStrongTextBlockStyle}"
+                           AutomationProperties.HeadingLevel="Level1"
+                           Text="{utils:ResourceString Name=NumberSystemGroupTitle/Text}"/>
+                <toolkit:SettingsExpander x:Name="NumberGroupingExpander"
+                                          Description="{utils:ResourceString Name=NumberGroupingExpander/Description}"
+                                          Header="{utils:ResourceString Name=NumberGroupingExpander/Header}">
+                    <toolkit:SettingsExpander.Items>
+                        <toolkit:SettingsCard ContentAlignment="Left">
+                            <muxc:RadioButtons x:Name="NumberGroupingRadioButtons"
+                                               Margin="0,-8,0,0"
+                                               SelectionChanged="OnNumberGroupingSelectionChanged">
+                                <RadioButton x:Name="InternationalGroupingRadioButton"
+                                             Content="{utils:ResourceString Name=InternationalGroupingRadioButton/Content}"
+                                             Tag="International"/>
+                                <RadioButton x:Name="IndianGroupingRadioButton"
+                                             Content="{utils:ResourceString Name=IndianGroupingRadioButton/Content}"
+                                             Tag="Indian"/>
+                            </muxc:RadioButtons>
+                        </toolkit:SettingsCard>
+                    </toolkit:SettingsExpander.Items>
+                </toolkit:SettingsExpander>
+
                 <TextBlock x:Name="AboutGroupTitle"
                            Margin="0,30,0,4"
                            Style="{StaticResource BodyStrongTextBlockStyle}"

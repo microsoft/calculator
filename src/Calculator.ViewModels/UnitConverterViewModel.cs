@@ -456,6 +456,16 @@ namespace CalculatorApp.ViewModel
             }
         }
 
+        public void RefreshNumberGrouping()
+        {
+            if (_valueFromUnlocalized != null && _valueToUnlocalized != null)
+            {
+                UpdateDisplay(_valueFromUnlocalized, _valueToUnlocalized);
+            }
+
+            RefreshSupplementaryResults();
+        }
+
         public void OnPaste(string stringToPaste)
         {
             if (string.IsNullOrEmpty(stringToPaste) || CopyPasteManager.IsErrorMessage(stringToPaste))
@@ -1328,7 +1338,7 @@ namespace CalculatorApp.ViewModel
                 currencyFormatter.IsDecimalPointAlwaysDisplayed = lastIsDecimalPointAlwaysDisplayed;
             }
 
-            return result;
+            return LocalizationSettings.GetInstance().ApplyNumberGrouping(result);
         }
 
         internal string GetLocalizedAutomationName(string displayValue, string unitName, string format)

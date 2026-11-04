@@ -273,6 +273,11 @@ namespace winrt::CalcManager::Interop::implementation
         m_manager->UpdateMaxIntDigits();
     }
 
+    void CalculatorManagerWrapper::SettingsChanged()
+    {
+        m_manager->SettingsChanged();
+    }
+
     char16_t CalculatorManagerWrapper::DecimalSeparator()
     {
         return static_cast<char16_t>(m_manager->DecimalSeparator());
