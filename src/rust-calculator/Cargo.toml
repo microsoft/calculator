@@ -1,0 +1,12 @@
+[package]
+name = "calculator_rust_winui3"
+version = "0.1.0"
+edition = "2021"
+description = "Rust calculator engine prototype for a WinUI 3 migration"
+license = "MIT"
+
+[dependencies]
+meval = "0.2"
+
+[dev-dependencies]
+assert_matches = "1.5"
