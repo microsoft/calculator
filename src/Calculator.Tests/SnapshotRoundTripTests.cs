@@ -49,6 +49,28 @@ namespace Calculator.Tests
         }
 
         [TestMethod]
+        public void OversizedPrimaryDisplayDoesNotReplaceCurrentState()
+        {
+            var calculator = CreateStandardViewModel();
+            var viewModel = CreateApplicationViewModel(ViewMode.Standard, calculator);
+            Evaluate(calculator, Command3);
+            var display = calculator.DisplayValue;
+            var snapshot = new ApplicationSnapshot
+            {
+                Mode = (int)ViewMode.Scientific,
+                StandardCalculator = new StandardCalculatorSnapshot()
+            };
+            snapshot.StandardCalculator.PrimaryDisplay.DisplayValue =
+                new string('9', SnapshotValidator.MaxPrimaryDisplayLength + 1);
+
+            Assert.ThrowsException<ArgumentException>(() => viewModel.RestoreFromSnapshot(snapshot));
+
+            Assert.AreEqual(ViewMode.Standard, viewModel.Mode);
+            Assert.AreSame(calculator, viewModel.CalculatorViewModel);
+            Assert.AreEqual(display, viewModel.CalculatorViewModel.DisplayValue);
+        }
+
+        [TestMethod]
         public void NonCalculatorSnapshotIgnoresStaleCalculatorState()
         {
             var viewModel = new ApplicationViewModel();

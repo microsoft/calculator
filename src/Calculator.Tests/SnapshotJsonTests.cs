@@ -96,6 +96,37 @@ namespace Calculator.Tests
         }
 
         [DataTestMethod]
+        [DataRow(SnapshotValidator.MaxPrimaryDisplayLength - 1)]
+        [DataRow(SnapshotValidator.MaxPrimaryDisplayLength)]
+        public void PrimaryDisplayWithinLengthLimitIsAccepted(int length)
+        {
+            var snapshot = CreateApplicationSnapshot();
+            snapshot.StandardCalculator.PrimaryDisplay.DisplayValue = new string('9', length);
+
+            var result = ParseSnapshot(snapshot);
+
+            Assert.IsFalse(result.HasError);
+            Assert.AreEqual(snapshot.StandardCalculator.PrimaryDisplay.DisplayValue,
+                result.Snapshot.StandardCalculator.PrimaryDisplay.DisplayValue);
+        }
+
+        [DataTestMethod]
+        [DataRow(false)]
+        [DataRow(true)]
+        public void OversizedPrimaryDisplaySetsLaunchError(bool isError)
+        {
+            var snapshot = CreateApplicationSnapshot();
+            snapshot.StandardCalculator.PrimaryDisplay.DisplayValue =
+                new string('9', SnapshotValidator.MaxPrimaryDisplayLength + 1);
+            snapshot.StandardCalculator.PrimaryDisplay.IsError = isError;
+
+            var result = ParseSnapshot(snapshot);
+
+            Assert.IsTrue(result.HasError);
+            Assert.IsNull(result.Snapshot);
+        }
+
+        [DataTestMethod]
         [DataRow((int)CalculatorCommand.ModeProgrammer)]
         [DataRow(int.MaxValue)]
         public void InvalidDisplayCommandSetsLaunchError(int command)

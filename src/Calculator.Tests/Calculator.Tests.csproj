@@ -90,6 +90,9 @@
          sources to bin\<platform>\<config>\ilc\, and globbing those back in fails the build
          with tens of thousands of errors on any build after the first. -->
     <Compile Include="**\*.cs" Exclude="bin\**\*.cs;obj\**\*.cs" />
+    <Compile Include="..\Calculator\Utils\DeflateUtils.cs">
+      <Link>Utils\DeflateUtils.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="UnitTestApp.xaml">
