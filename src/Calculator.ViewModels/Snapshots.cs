@@ -106,6 +106,9 @@ namespace CalculatorApp.ViewModel.Snapshot
 
     internal static class SnapshotValidator
     {
+        // Allow ample room for numeric formatting and localized error messages.
+        internal const int MaxPrimaryDisplayLength = 4096;
+
         internal static void Validate(ApplicationSnapshot snapshot)
         {
             if (snapshot == null)
@@ -129,6 +132,11 @@ namespace CalculatorApp.ViewModel.Snapshot
                     || snapshot.StandardCalculator.PrimaryDisplay.DisplayValue == null))
             {
                 throw new ArgumentException("Primary display state is missing.", nameof(snapshot));
+            }
+
+            if (snapshot.StandardCalculator?.PrimaryDisplay.DisplayValue.Length > MaxPrimaryDisplayLength)
+            {
+                throw new ArgumentException("Primary display value exceeds the length limit.", nameof(snapshot));
             }
 
             var historyItems = snapshot.StandardCalculator?.CalcManager?.HistoryItems;
