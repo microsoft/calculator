@@ -277,6 +277,44 @@ namespace Calculator.Tests
             Assert.IsTrue(_viewModel.IsMemoryEmpty);
         }
 
+        [DataTestMethod]
+        [DataRow(0, (int)CalculatorCommand.CommandLSHF)]
+        [DataRow(0, (int)CalculatorCommand.CommandRSHF)]
+        [DataRow(0, (int)CalculatorCommand.CommandRSHFL)]
+        [DataRow(1, (int)CalculatorCommand.CommandLSHF)]
+        [DataRow(1, (int)CalculatorCommand.CommandRSHF)]
+        [DataRow(1, (int)CalculatorCommand.CommandRSHFL)]
+        public void SnapshotShiftRejectionPreservesCurrentSession(int mode, int command)
+        {
+            ChangeMode(_viewModel, mode);
+            _viewModel.ButtonPressed.Execute(NumbersAndOperatorsEnum.Nine);
+            _viewModel.OnMemoryButtonPressed();
+
+            for (int location = 0; location < 3; location++)
+            {
+                var snapshot = new StandardCalculatorSnapshot();
+                AppendSnapshotBinaryCommand(snapshot, command);
+                if (location == 1)
+                {
+                    snapshot.ExpressionDisplay = new ExpressionDisplaySnapshot { Commands = snapshot.DisplayCommands };
+                    snapshot.DisplayCommands = new List<ExpressionCommandWrapper>();
+                }
+                else if (location == 2)
+                {
+                    snapshot.CalcManager.HistoryItems = new List<CalcManagerHistoryItem>
+                    {
+                        new CalcManagerHistoryItem { Commands = snapshot.DisplayCommands }
+                    };
+                    snapshot.DisplayCommands = new List<ExpressionCommandWrapper>();
+                }
+
+                Assert.ThrowsException<ArgumentException>(() => _viewModel.Snapshot = snapshot);
+
+                ValidateViewModelValue("9");
+                Assert.IsFalse(_viewModel.IsMemoryEmpty);
+            }
+        }
+
         #endregion
 
         #region Basic Arithmetic Tests

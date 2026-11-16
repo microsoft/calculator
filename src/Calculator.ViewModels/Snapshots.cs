@@ -131,6 +131,8 @@ namespace CalculatorApp.ViewModel.Snapshot
                 throw new ArgumentException("Primary display state is missing.", nameof(snapshot));
             }
 
+            ValidateShiftCommands(snapshot.StandardCalculator, mode);
+
             var historyItems = snapshot.StandardCalculator?.CalcManager?.HistoryItems;
             if (historyItems != null)
             {
@@ -169,6 +171,64 @@ namespace CalculatorApp.ViewModel.Snapshot
             }
 
             ValidateCommands(snapshot.StandardCalculator?.DisplayCommands, "display");
+        }
+
+        internal static void ValidateShiftCommands(StandardCalculatorSnapshot snapshot, ViewMode mode)
+        {
+            if (snapshot == null || mode == ViewMode.Programmer)
+            {
+                return;
+            }
+
+            ValidateShiftCommands(snapshot.DisplayCommands);
+            ValidateShiftCommands(snapshot.ExpressionDisplay?.Commands);
+            var historyItems = snapshot.CalcManager?.HistoryItems;
+            if (historyItems != null)
+            {
+                foreach (var item in historyItems)
+                {
+                    ValidateShiftCommands(item?.Commands);
+                }
+            }
+        }
+
+        private static void ValidateShiftCommands(IList<ExpressionCommandWrapper> commands)
+        {
+            if (commands == null)
+            {
+                return;
+            }
+
+            foreach (var command in commands)
+            {
+                if (command == null)
+                {
+                    continue;
+                }
+
+                if (command.Type == CommandType.BinaryCommand || command.Type == CommandType.Parentheses)
+                {
+                    ValidateShiftCommand(command.Command);
+                }
+                else if (command.Commands != null
+                    && (command.Type == CommandType.UnaryCommand || command.Type == CommandType.OperandCommand))
+                {
+                    foreach (int code in command.Commands)
+                    {
+                        ValidateShiftCommand(code);
+                    }
+                }
+            }
+        }
+
+        private static void ValidateShiftCommand(int command)
+        {
+            if (command == (int)CalculatorCommand.CommandLSHF
+                || command == (int)CalculatorCommand.CommandRSHF
+                || command == (int)CalculatorCommand.CommandRSHFL)
+            {
+                throw new ArgumentException("Shift commands require Programmer mode.");
+            }
         }
 
         private static void ValidateTokenIndexes(
