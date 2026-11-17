@@ -178,6 +178,7 @@ namespace CalculatorManagerTest
         TEST_METHOD(CalculatorManagerTestScientific);
         TEST_METHOD(CalculatorManagerTestScientific2);
         TEST_METHOD(CalculatorManagerTestScientificParenthesis);
+        TEST_METHOD(CalculatorManagerTestNestedImplicitMultiplication);
         TEST_METHOD(CalculatorManagerTestScientificError);
         TEST_METHOD(CalculatorManagerTestScientificModeChange);
 
@@ -676,6 +677,35 @@ namespace CalculatorManagerTest
         Command commands10[] = { Command::CommandOPENP, Command::Command8, Command::CommandCLOSEP,
                                  Command::CommandPNT, Command::Command5, Command::CommandEQU, Command::CommandNULL };
         TestDriver::Test(L"4", L"(8) \x00D7 0.5=", commands10, true, true);
+    }
+
+    void CalculatorManagerTest::CalculatorManagerTestNestedImplicitMultiplication()
+    {
+        Command commands1[] = { Command::CommandOPENP,  Command::CommandOPENP, Command::Command1,   Command::CommandCLOSEP, Command::Command5,
+                                Command::CommandCLOSEP, Command::Command5,     Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"25", L"((1) \x00D7 5) \x00D7 5=", commands1, true, true);
+
+        Command commands2[] = { Command::Command2, Command::CommandADD,    Command::CommandOPENP, Command::CommandOPENP,
+                                Command::Command3, Command::CommandCLOSEP, Command::Command4,     Command::CommandCLOSEP,
+                                Command::Command5, Command::CommandEQU,    Command::CommandNULL };
+        TestDriver::Test(L"62", L"2 + ((3) \x00D7 4) \x00D7 5=", commands2, true, true);
+
+        Command commands3[] = { Command::Command2, Command::CommandMUL,    Command::CommandOPENP, Command::CommandOPENP,
+                                Command::Command3, Command::CommandCLOSEP, Command::Command4,     Command::CommandCLOSEP,
+                                Command::Command5, Command::CommandEQU,    Command::CommandNULL };
+        TestDriver::Test(L"120", L"2 \x00D7 ((3) \x00D7 4) \x00D7 5=", commands3, true, true);
+
+        Command commands4[] = { Command::CommandOPENP, Command::CommandOPENP, Command::Command8,      Command::CommandCLOSEP,
+                                Command::CommandPNT,   Command::Command5,     Command::CommandCLOSEP, Command::CommandPNT,
+                                Command::Command5,     Command::CommandEQU,   Command::CommandNULL };
+        TestDriver::Test(L"2", L"((8) \x00D7 0.5) \x00D7 0.5=", commands4, true, true);
+
+        Command repeatedEquals[] = { Command::CommandOPENP,  Command::CommandOPENP, Command::Command2,   Command::CommandCLOSEP, Command::Command3,
+                                     Command::CommandCLOSEP, Command::Command4,     Command::CommandEQU, Command::CommandEQU,    Command::CommandNULL };
+        TestDriver::Test(L"96", L"24 \x00D7 4=", repeatedEquals, true, true);
+
+        Command commands5[] = { Command::CommandCLEAR, Command::Command1, Command::CommandADD, Command::Command2, Command::CommandEQU, Command::CommandNULL };
+        TestDriver::Test(L"3", L"1 + 2=", commands5, false, true);
     }
 
     void CalculatorManagerTest::CalculatorManagerTestScientificError()

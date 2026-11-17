@@ -96,6 +96,37 @@ namespace Calculator.Tests
         }
 
         [DataTestMethod]
+        [DataRow(SnapshotValidator.MaxPrimaryDisplayLength - 1)]
+        [DataRow(SnapshotValidator.MaxPrimaryDisplayLength)]
+        public void PrimaryDisplayWithinLengthLimitIsAccepted(int length)
+        {
+            var snapshot = CreateApplicationSnapshot();
+            snapshot.StandardCalculator.PrimaryDisplay.DisplayValue = new string('9', length);
+
+            var result = ParseSnapshot(snapshot);
+
+            Assert.IsFalse(result.HasError);
+            Assert.AreEqual(snapshot.StandardCalculator.PrimaryDisplay.DisplayValue,
+                result.Snapshot.StandardCalculator.PrimaryDisplay.DisplayValue);
+        }
+
+        [DataTestMethod]
+        [DataRow(false)]
+        [DataRow(true)]
+        public void OversizedPrimaryDisplaySetsLaunchError(bool isError)
+        {
+            var snapshot = CreateApplicationSnapshot();
+            snapshot.StandardCalculator.PrimaryDisplay.DisplayValue =
+                new string('9', SnapshotValidator.MaxPrimaryDisplayLength + 1);
+            snapshot.StandardCalculator.PrimaryDisplay.IsError = isError;
+
+            var result = ParseSnapshot(snapshot);
+
+            Assert.IsTrue(result.HasError);
+            Assert.IsNull(result.Snapshot);
+        }
+
+        [DataTestMethod]
         [DataRow((int)CalculatorCommand.ModeProgrammer)]
         [DataRow(int.MaxValue)]
         public void InvalidDisplayCommandSetsLaunchError(int command)
@@ -157,6 +188,51 @@ namespace Calculator.Tests
 
             Assert.IsFalse(result.HasError);
             Assert.IsNotNull(result.Snapshot);
+        }
+
+        [DataTestMethod]
+        [DataRow((int)ViewMode.Standard, (int)CalculatorCommand.CommandLSHF)]
+        [DataRow((int)ViewMode.Standard, (int)CalculatorCommand.CommandRSHF)]
+        [DataRow((int)ViewMode.Standard, (int)CalculatorCommand.CommandRSHFL)]
+        [DataRow((int)ViewMode.Scientific, (int)CalculatorCommand.CommandLSHF)]
+        [DataRow((int)ViewMode.Scientific, (int)CalculatorCommand.CommandRSHF)]
+        [DataRow((int)ViewMode.Scientific, (int)CalculatorCommand.CommandRSHFL)]
+        [DataRow((int)ViewMode.Programmer, (int)CalculatorCommand.CommandLSHF)]
+        [DataRow((int)ViewMode.Programmer, (int)CalculatorCommand.CommandRSHF)]
+        [DataRow((int)ViewMode.Programmer, (int)CalculatorCommand.CommandRSHFL)]
+        public void SnapshotShiftsRequireProgrammerMode(int mode, int command)
+        {
+            for (int location = 0; location < 3; location++)
+            {
+                var snapshot = CreateApplicationSnapshot();
+                snapshot.Mode = mode;
+                var commands = new List<ExpressionCommandWrapper>
+                {
+                    new ExpressionCommandWrapper(
+                        CommandType.BinaryCommand, command, System.Array.Empty<int>(), false, false, false)
+                };
+                if (location == 0)
+                {
+                    snapshot.StandardCalculator.DisplayCommands = commands;
+                }
+                else if (location == 1)
+                {
+                    snapshot.StandardCalculator.ExpressionDisplay = new ExpressionDisplaySnapshot { Commands = commands };
+                }
+                else
+                {
+                    snapshot.StandardCalculator.CalcManager.HistoryItems = new List<CalcManagerHistoryItem>
+                    {
+                        new CalcManagerHistoryItem { Commands = commands }
+                    };
+                }
+
+                var result = ParseSnapshot(snapshot);
+
+                bool shouldReject = mode != (int)ViewMode.Programmer;
+                Assert.AreEqual(shouldReject, result.HasError, $"Unexpected validation at location {location}.");
+                Assert.AreEqual(shouldReject, result.Snapshot == null);
+            }
         }
 
         [TestMethod]

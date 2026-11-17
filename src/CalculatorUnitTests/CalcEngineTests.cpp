@@ -16,6 +16,44 @@ static constexpr size_t MAX_HISTORY_SIZE = 20;
 
 namespace CalculatorEngineTests
 {
+    class CalcEngineDisplayTester final : public ICalcDisplay
+    {
+    public:
+        void SetPrimaryDisplay(const wstring&, bool) override
+        {
+        }
+        void SetIsInError(bool) override
+        {
+        }
+        void SetExpressionDisplay(shared_ptr<vector<pair<wstring, int>>> const&, shared_ptr<vector<shared_ptr<IExpressionCommand>>> const&) override
+        {
+        }
+        void SetParenthesisNumber(unsigned int) override
+        {
+        }
+        void OnNoRightParenAdded() override
+        {
+        }
+        void MaxDigitsReached() override
+        {
+        }
+        void BinaryOperatorReceived() override
+        {
+        }
+        void OnHistoryItemAdded(unsigned int) override
+        {
+        }
+        void SetMemorizedNumbers(const vector<wstring>&) override
+        {
+        }
+        void MemoryItemChanged(unsigned int) override
+        {
+        }
+        void InputChanged() override
+        {
+        }
+    };
+
     TEST_CLASS(CalcEngineTests)
     {
         TEST_METHOD_INITIALIZE(CommonSetup)
@@ -24,7 +62,7 @@ namespace CalculatorEngineTests
             m_history = make_shared<CalculatorHistory>(MAX_HISTORY_SIZE);
             CCalcEngine::InitialOneTimeOnlySetup(*(m_resourceProvider.get()));
             m_calcEngine = make_unique<CCalcEngine>(
-                false /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider.get(), nullptr, m_history);
+                false /* Respect Order of Operations */, false /* Set to Integer Mode */, m_resourceProvider.get(), &m_display, m_history);
         }
         TEST_METHOD_CLEANUP(Cleanup)
         {
@@ -235,7 +273,84 @@ namespace CalculatorEngineTests
                 L"Verify expanded form multigroup non-repeating grouping.");
         }
 
+        TEST_METHOD(TestInvalidPrecedenceStackResets)
+        {
+            const pair<size_t, size_t> invalidCounts[] = { { 0, MAXPRECDEPTH + 1 }, { MAXPRECDEPTH + 1, MAXPRECDEPTH }, { 1, 0 } };
+            for (const auto& counts : invalidCounts)
+            {
+                m_calcEngine->m_openParenCount = counts.first;
+                m_calcEngine->m_precedenceOpCount = counts.second;
+
+                m_calcEngine->ProcessCommand(IDC_5);
+
+                VERIFY_ARE_EQUAL(size_t(0), m_calcEngine->m_openParenCount);
+                VERIFY_ARE_EQUAL(size_t(0), m_calcEngine->m_precedenceOpCount);
+                m_calcEngine->ProcessCommand(IDC_1);
+                m_calcEngine->ProcessCommand(IDC_ADD);
+                m_calcEngine->ProcessCommand(IDC_2);
+                m_calcEngine->ProcessCommand(IDC_EQU);
+                VERIFY_ARE_EQUAL(L"3", m_calcEngine->GetCurrentResultForRadix(10, 32, false));
+            }
+        }
+
+        TEST_METHOD(TestMissingParenthesisMarkerResets)
+        {
+            m_calcEngine->m_openParenCount = 1;
+            m_calcEngine->m_precedenceOpCount = 1;
+            m_calcEngine->m_nPrecOp[0] = IDC_ADD;
+
+            m_calcEngine->ProcessCommand(IDC_CLOSEP);
+
+            VERIFY_ARE_EQUAL(size_t(0), m_calcEngine->m_openParenCount);
+            VERIFY_ARE_EQUAL(size_t(0), m_calcEngine->m_precedenceOpCount);
+            m_calcEngine->ProcessCommand(IDC_3);
+            m_calcEngine->ProcessCommand(IDC_EQU);
+            VERIFY_ARE_EQUAL(L"3", m_calcEngine->GetCurrentResultForRadix(10, 32, false));
+        }
+
+        TEST_METHOD(TestFullPrecedenceStackRejectsBinaryOperator)
+        {
+            m_calcEngine->m_fPrecedence = true;
+            for (size_t i = 0; i < MAXPRECDEPTH; i++)
+            {
+                m_calcEngine->ProcessCommand(IDC_OPENP);
+            }
+            m_calcEngine->ProcessCommand(IDC_1);
+            m_calcEngine->ProcessCommand(IDC_ADD);
+            m_calcEngine->ProcessCommand(IDC_2);
+            m_calcEngine->ProcessCommand(IDC_MUL);
+            m_calcEngine->ProcessCommand(IDC_EQU);
+
+            VERIFY_ARE_EQUAL(L"3", m_calcEngine->GetCurrentResultForRadix(10, 32, false));
+            VERIFY_ARE_EQUAL(size_t(0), m_calcEngine->m_openParenCount);
+            VERIFY_ARE_EQUAL(size_t(0), m_calcEngine->m_precedenceOpCount);
+        }
+
+        TEST_METHOD(TestParenthesisMarkerCapacity)
+        {
+            m_calcEngine->m_fPrecedence = true;
+            m_calcEngine->ProcessCommand(IDC_1);
+            m_calcEngine->ProcessCommand(IDC_ADD);
+            m_calcEngine->ProcessCommand(IDC_2);
+            m_calcEngine->ProcessCommand(IDC_MUL);
+            for (size_t i = 0; i < MAXPRECDEPTH; i++)
+            {
+                m_calcEngine->ProcessCommand(IDC_OPENP);
+            }
+
+            VERIFY_ARE_EQUAL(MAXPRECDEPTH - 1, m_calcEngine->m_openParenCount);
+            VERIFY_ARE_EQUAL(MAXPRECDEPTH, m_calcEngine->m_precedenceOpCount);
+
+            m_calcEngine->ProcessCommand(IDC_1);
+            m_calcEngine->ProcessCommand(IDC_EQU);
+
+            VERIFY_ARE_EQUAL(L"3", m_calcEngine->GetCurrentResultForRadix(10, 32, false));
+            VERIFY_ARE_EQUAL(size_t(0), m_calcEngine->m_openParenCount);
+            VERIFY_ARE_EQUAL(size_t(0), m_calcEngine->m_precedenceOpCount);
+        }
+
     private:
+        CalcEngineDisplayTester m_display;
         unique_ptr<CCalcEngine> m_calcEngine;
         shared_ptr<IResourceProvider> m_resourceProvider;
         shared_ptr<CalculatorHistory> m_history;
