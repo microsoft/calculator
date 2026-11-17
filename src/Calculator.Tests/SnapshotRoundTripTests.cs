@@ -5,10 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using CalcManager.Interop;
+using CalculatorApp;
+using CalculatorApp.JsonUtils;
 using CalculatorApp.ViewModel;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Snapshot;
@@ -46,6 +49,28 @@ namespace Calculator.Tests
                 () => viewModel.RestoreFromSnapshot(snapshot));
 
             Assert.AreEqual(ViewMode.Standard, viewModel.Mode);
+        }
+
+        [TestMethod]
+        public void OversizedPrimaryDisplayDoesNotReplaceCurrentState()
+        {
+            var calculator = CreateStandardViewModel();
+            var viewModel = CreateApplicationViewModel(ViewMode.Standard, calculator);
+            Evaluate(calculator, Command3);
+            var display = calculator.DisplayValue;
+            var snapshot = new ApplicationSnapshot
+            {
+                Mode = (int)ViewMode.Scientific,
+                StandardCalculator = new StandardCalculatorSnapshot()
+            };
+            snapshot.StandardCalculator.PrimaryDisplay.DisplayValue =
+                new string('9', SnapshotValidator.MaxPrimaryDisplayLength + 1);
+
+            Assert.ThrowsException<ArgumentException>(() => viewModel.RestoreFromSnapshot(snapshot));
+
+            Assert.AreEqual(ViewMode.Standard, viewModel.Mode);
+            Assert.AreSame(calculator, viewModel.CalculatorViewModel);
+            Assert.AreEqual(display, viewModel.CalculatorViewModel.DisplayValue);
         }
 
         [TestMethod]
@@ -361,6 +386,80 @@ namespace Calculator.Tests
 
             Assert.AreEqual(NumberBase.DecBase, calculator.CurrentRadixType);
             AssertProgrammerIgnoresDecimalPoint(calculator);
+        }
+
+        [DataTestMethod]
+        [DataRow(false, 0)]
+        [DataRow(false, 1)]
+        [DataRow(false, 2)]
+        [DataRow(true, 0)]
+        [DataRow(true, 1)]
+        [DataRow(true, 2)]
+        public void NestedImplicitMultiplicationSnapshotReplays(bool decimalOperand, int location)
+        {
+            var commands = new List<ExpressionCommandWrapper>();
+            CalculatorCommand firstOperand = decimalOperand ? CalculatorCommand.Command8 : CalculatorCommand.Command1;
+            CalculatorCommand[] input =
+            {
+                CalculatorCommand.CommandOPENP, CalculatorCommand.CommandOPENP,
+                firstOperand, CalculatorCommand.CommandCLOSEP,
+                CalculatorCommand.CommandCLOSEP
+            };
+            foreach (CalculatorCommand command in input)
+            {
+                bool isOperand = command == firstOperand;
+                commands.Add(new ExpressionCommandWrapper(
+                    isOperand ? CommandType.OperandCommand : CommandType.Parentheses,
+                    isOperand ? 0 : (int)command,
+                    isOperand ? new[] { (int)command } : Array.Empty<int>(),
+                    false, false, false));
+            }
+
+            int[] operand = decimalOperand ? new[] { CommandPNT, Command5 } : new[] { Command5 };
+            commands.Insert(4, new ExpressionCommandWrapper(
+                CommandType.OperandCommand, 0, operand, false, decimalOperand, false));
+            commands.Add(new ExpressionCommandWrapper(
+                CommandType.OperandCommand, 0, operand, false, decimalOperand, false));
+
+            string expected = decimalOperand ? "2" : "25";
+            var state = new StandardCalculatorSnapshot();
+            if (location == 2)
+            {
+                state.CalcManager.HistoryItems = new List<CalcManagerHistoryItem>
+                {
+                    new CalcManagerHistoryItem { Commands = commands, Result = expected }
+                };
+            }
+            else
+            {
+                state.DisplayCommands = commands;
+                if (location == 1)
+                {
+                    state.ExpressionDisplay = new ExpressionDisplaySnapshot();
+                }
+            }
+
+            var snapshot = new ApplicationSnapshot { Mode = (int)ViewMode.Scientific, StandardCalculator = state };
+            var parsed = SnapshotLaunchArguments.FromJson(
+                JsonSerializer.Serialize(new ApplicationSnapshotAlias(snapshot)));
+            Assert.IsFalse(parsed.HasError);
+
+            var calculator = CreateCalculatorViewModel(ViewMode.Scientific);
+            var viewModel = CreateApplicationViewModel(ViewMode.Scientific, calculator);
+            viewModel.RestoreFromSnapshot(parsed.Snapshot);
+            if (location == 2)
+            {
+                calculator.HistoryVM.ReloadHistory(ViewMode.Scientific);
+                calculator.SelectHistoryItem(calculator.HistoryVM.Items.Single());
+            }
+            else
+            {
+                calculator.SendCommandToCalcManager(CommandEQU);
+            }
+
+            Assert.AreEqual(expected, calculator.DisplayValue);
+            Assert.IsFalse(calculator.IsInError);
+            AssertScientificOrderOfOperations(calculator);
         }
 
         private static StandardCalculatorViewModel CreateStandardViewModel()

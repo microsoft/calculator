@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using CalcManager.Interop;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
+using CalculatorApp.ViewModel.Snapshot;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -677,6 +678,7 @@ namespace CalculatorApp.ViewModel
 
                 // Recall starts a separate session, including empty memory.
                 ViewMode mode = GetCalculatorMode();
+                SnapshotValidator.ValidateShiftCommands(snapshot, mode);
                 _standardCalculatorManager?.Reset(true);
                 ResetManagedCalculatorSubmodes();
                 SetNativeCalculatorMode(mode);

@@ -51,6 +51,50 @@ TEST_METHOD(TestInt32MinIntegerPower)
     VERIFY_ARE_EQUAL(result, 1);
 }
 
+TEST_METHOD(TestShiftCountsOutsideSupportedRange)
+{
+    for (int32_t count : { -100001, 100001, std::numeric_limits<int32_t>::min(), std::numeric_limits<int32_t>::max() })
+    {
+        for (bool shiftLeft : { false, true })
+        {
+            try
+            {
+                (void)(shiftLeft ? Rational(4) << Rational(count) : Rational(4) >> Rational(count));
+                Assert::Fail(L"An out-of-range shift count must be rejected.");
+            }
+            catch (uint32_t error)
+            {
+                VERIFY_ARE_EQUAL(error, static_cast<uint32_t>(CALC_E_DOMAIN));
+            }
+        }
+    }
+}
+
+TEST_METHOD(TestSupportedShiftCounts)
+{
+    VERIFY_ARE_EQUAL(Rational(4) << Rational(1), 8);
+    VERIFY_ARE_EQUAL(Rational(4) >> Rational(1), 2);
+    VERIFY_ARE_EQUAL(Rational(4) << Rational(-1), 2);
+    VERIFY_ARE_EQUAL(Rational(4) >> Rational(-1), 8);
+    VERIFY_ARE_EQUAL(Rational(4) << Rational(0), 4);
+    VERIFY_ARE_EQUAL(Rational(4) >> Rational(0), 4);
+
+    for (int32_t count : { -100000, 100000 })
+    {
+        VERIFY_IS_TRUE((Rational(1) << Rational(count)) != 0);
+        VERIFY_IS_TRUE((Rational(1) >> Rational(count)) != 0);
+    }
+}
+
+TEST_METHOD(TestZeroShiftPreservesFastPath)
+{
+    for (int32_t count : { std::numeric_limits<int32_t>::min(), std::numeric_limits<int32_t>::max() })
+    {
+        VERIFY_ARE_EQUAL(Rational(0) << Rational(count), 0);
+        VERIFY_ARE_EQUAL(Rational(0) >> Rational(count), 0);
+    }
+}
+
 TEST_METHOD(TestModuloInteger)
 {
     // Check with integers
