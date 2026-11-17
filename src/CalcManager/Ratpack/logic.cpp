@@ -26,9 +26,9 @@ void lshrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision)
     if (!zernum((*pa)->pp))
     {
         // If input is zero we're done.
-        if (rat_gt(b, rat_max_exp, precision))
+        if (rat_gt(b, rat_max_exp, precision) || rat_lt(b, rat_min_exp, precision))
         {
-            // Don't attempt lsh of anything big
+            // Both signs construct a power of two before applying the shift.
             throw(CALC_E_DOMAIN);
         }
         const int32_t intb = rattoi32(b, radix, precision);
@@ -48,9 +48,9 @@ void rshrat(_Inout_ PRAT* pa, _In_ PRAT b, uint32_t radix, int32_t precision)
     if (!zernum((*pa)->pp))
     {
         // If input is zero we're done.
-        if (rat_lt(b, rat_min_exp, precision))
+        if (rat_gt(b, rat_max_exp, precision) || rat_lt(b, rat_min_exp, precision))
         {
-            // Don't attempt rsh of anything big and negative.
+            // Both signs construct a power of two before applying the shift.
             throw(CALC_E_DOMAIN);
         }
         const int32_t intb = rattoi32(b, radix, precision);

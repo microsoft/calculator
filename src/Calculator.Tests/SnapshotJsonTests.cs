@@ -159,6 +159,51 @@ namespace Calculator.Tests
             Assert.IsNotNull(result.Snapshot);
         }
 
+        [DataTestMethod]
+        [DataRow((int)ViewMode.Standard, (int)CalculatorCommand.CommandLSHF)]
+        [DataRow((int)ViewMode.Standard, (int)CalculatorCommand.CommandRSHF)]
+        [DataRow((int)ViewMode.Standard, (int)CalculatorCommand.CommandRSHFL)]
+        [DataRow((int)ViewMode.Scientific, (int)CalculatorCommand.CommandLSHF)]
+        [DataRow((int)ViewMode.Scientific, (int)CalculatorCommand.CommandRSHF)]
+        [DataRow((int)ViewMode.Scientific, (int)CalculatorCommand.CommandRSHFL)]
+        [DataRow((int)ViewMode.Programmer, (int)CalculatorCommand.CommandLSHF)]
+        [DataRow((int)ViewMode.Programmer, (int)CalculatorCommand.CommandRSHF)]
+        [DataRow((int)ViewMode.Programmer, (int)CalculatorCommand.CommandRSHFL)]
+        public void SnapshotShiftsRequireProgrammerMode(int mode, int command)
+        {
+            for (int location = 0; location < 3; location++)
+            {
+                var snapshot = CreateApplicationSnapshot();
+                snapshot.Mode = mode;
+                var commands = new List<ExpressionCommandWrapper>
+                {
+                    new ExpressionCommandWrapper(
+                        CommandType.BinaryCommand, command, System.Array.Empty<int>(), false, false, false)
+                };
+                if (location == 0)
+                {
+                    snapshot.StandardCalculator.DisplayCommands = commands;
+                }
+                else if (location == 1)
+                {
+                    snapshot.StandardCalculator.ExpressionDisplay = new ExpressionDisplaySnapshot { Commands = commands };
+                }
+                else
+                {
+                    snapshot.StandardCalculator.CalcManager.HistoryItems = new List<CalcManagerHistoryItem>
+                    {
+                        new CalcManagerHistoryItem { Commands = commands }
+                    };
+                }
+
+                var result = ParseSnapshot(snapshot);
+
+                bool shouldReject = mode != (int)ViewMode.Programmer;
+                Assert.AreEqual(shouldReject, result.HasError, $"Unexpected validation at location {location}.");
+                Assert.AreEqual(shouldReject, result.Snapshot == null);
+            }
+        }
+
         [TestMethod]
         public void UnaryCommandSurvivesTheRoundTrip()
         {
